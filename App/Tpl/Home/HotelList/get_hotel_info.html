@@ -1,0 +1,328 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<meta HTTP-EQUIV="Expires" CONTENT="-1">
+<title>酒店详情页</title>
+<include file="Public:top" />
+<script type="text/javascript" src="{$Think.const.APP_PATH}Public/Home/js/zebra_datepicker.js" /></script>
+<script type="text/javascript" src="{$Think.const.APP_PATH}Public/Home/js/common1.js" /></script>
+<script type="text/javascript" src="{$Think.const.APP_PATH}Public/Home/js/swipe.js" /></script>
+<script type="text/javascript" src="{$Think.const.APP_PATH}Public/Home/My97DatePicker/WdatePicker.js" /></script>
+<!--移动端版本兼容 -->
+<script type="text/javascript">
+
+
+
+function submit_order(id,type){
+      var checkinday  = document.getElementById('checkinday').value;
+      var checkoutday = document.getElementById('checkoutday').value;
+      var user_code = document.getElementById('user_code').value;
+      var hotel_id  = document.getElementById('hotel_id').value;
+      
+      if(checkinday==''){
+        alert('选择入住时间');
+	    $(".stclick1").focus();
+        return flase;
+	
+      }
+      if(checkoutday==''){
+        alert('选择退房时间');
+	    $(".stclick2").focus();
+        return flase;
+	
+      }
+      var d1 = new Date(checkinday.replace(/\-/g, "\/")); 
+      var d2 = new Date(checkoutday.replace(/\-/g, "\/")); 
+      
+       if(checkinday!=""&&checkoutday!=""&&d1 >=d2) 
+      { 
+       alert("结束时间要大于开始时间！"); 
+       return false; 
+      }
+      window.location.href="index.php?s=/Home/HotelList/order/room_id/"+id+'/pay_type/'+type+'/checkinday/'+checkinday+'/checkoutday/'+checkoutday+'/user_code/'+user_code+'/hotel_id/'+hotel_id;
+}	
+	$(function(){
+		$(".liwu").click(function(){
+
+			if($(this).children(".fuwubox").is(":visible")){
+				$(this).children(".fuwubox").hide();
+				
+			 }else{
+				$(this).children(".fuwubox").show();
+				
+			 }
+
+		})
+
+
+	})
+
+	function get_date_price(value){
+		var hotel_id = document.getElementById('hotel_id').value;
+		
+		if(value!=''){
+			
+			var data ={
+				hotel_id : hotel_id,
+				checkinday :value
+			}
+			
+			$.post('?s=/Home/HotelList/ajax_get_date_info',data,function(content){
+				//alert(content);
+				var fangxing= $("#fangxing");
+				fangxing.empty();
+				fangxing.html(content);
+				//result = content;
+			},'html');
+		}
+		
+		
+	}
+	function get_date_prices(value){
+		var hotel_id = document.getElementById('hotel_id').value;
+		var checkinday = document.getElementById('checkinday').value;
+		if(value!=''){
+			var data ={
+				hotel_id : hotel_id,
+				checkinday :checkinday,
+				checkoutday :value
+			}
+			
+			$.post('?s=/Home/HotelList/ajax_get_date_info',data,function(content){
+				//alert(content);
+				var fangxing= $("#fangxing");
+				fangxing.empty();
+				fangxing.html(content);
+				//result = content;
+			},'html');
+		}
+		
+		
+	}
+
+</script>
+<!--移动端版本兼容 end -->
+</head>
+
+<body>
+<!--fly_css-->
+<div class="color_f" >
+  <input type="hidden" value="{$html.user_code}" name="user_code" id="user_code" />
+  <input type="hidden" value="{$html.list.id}" name="hotel_id" id="hotel_id" />
+  <div class="m_nav">
+  <span class="left">
+  <a href="?s=/Home/HotelList/index/hotel_cs/{$html.hotel_cs}/user_code/{$html.user_code}"> <h6 >更多酒店>></h6></a>
+  </span>
+
+    <h6 align="center" style="margin :8px;">酒店详情</h6>
+  </div>
+  <div class="blank8"></div>
+  <div class="autohei m_boxbg1">
+    <div class="right m_img2">
+      <div class="photo1"><Img src="{$html.list.img}" >
+        <div class="touying"> </div>
+        <!--<P align="center">19张</P>-->
+      </div>
+    </div>
+    <div class="autohei">
+      <div class="m_txt1 left"> 
+      <span class=" f30 zx6">{$html.list.hotel_name}{$hotel.link_name}</span> 
+      <br>
+        <span class="zx2 f22"> 
+        <for start="0" end="$html['list']['hotel_xj']" >
+    
+        <img src="{$Think.const.APP_PATH}Public/Home/images/1.png" style="width:26px;height:26px;" title="{$html.list.hotel_xj}星级酒店" alt="{$html.list.hotel_xj}星级" /> 
+		</for>
+		</span>
+		</div>
+      <div class="m_txt1 right pad_pf"> 
+      <span class="zx7  padding_15">{$html.list.hotel_pf}分</span> 
+      </div>
+    </div>
+  </div>
+  <div class="blank1"></div>
+  <div class="m_boxbg1 padding0 jd_info">
+    <ul>
+      <li><span class="left m_dot1 zx2 f24">{$html.list.hotel_syq} ({$html.list.hotel_dz})</span> 
+      <span class="right m_dot4 zx7 f20"> 
+      <a href="?s=/Home/HotelList/map/hotel_id/{$html.list.id}/user_code/{$html.user_code}">地图</a>
+      </span></li>
+      <li style="border-bottom:none;"> 
+      <span class="left m_dot2 zx2 f24">{$html.list.hotel_kynf} 年开业</span> 
+      <span class="right m_dot4 zx7 f20 detail"> 
+      <a href="javascript:;">详情</a></span> </li>
+    </ul>
+  </div>
+  <div class="blank1"></div>
+  <div class="m_boxbg1 zx6 autohei ">
+    <div class="blank"></div>
+    <span class="left m_dot3 f24">入住日期： </span>
+    
+    <input type="text" class="stclick inp3 left stclick2"  onFocus="WdatePicker({$html.date})" value="" name="" id="checkinday" readonly onblur="get_date_price(this.value)" >
+  </div>
+  <div class="m_boxbg1 zx6 autohei "> <span class="left f24 m_dot3">退房日期： </span>
+    <input onFocus="WdatePicker({$html.exit_date})" type="text" clicktag="2_3" class="stclick inp3 left stclick2" value="" name="" id="checkoutday" readonly onblur="get_date_prices(this.value)">
+    <div class="blank"></div>
+  </div>
+  <!-- 房型 -->
+  
+
+  <empty name="html['roomtype']">
+  尊敬的宾客，此房型已售空，给您带来的不便非常抱歉
+  <else />
+  
+  <div class="jdlist2" id="fangxing" >
+  
+    <ul>
+     <volist name="html['roomtype']" id="vo" key='k' >
+     <if condition="($vo['prepay'] neq 0)" >
+      <li>
+        <div class="left plef"> 
+        <span class="left detail2">
+        <img src="{$vo.url}" style="width:80px;"  ></span>
+          <div class="left plef2">
+            <P class="zx6  fj_fx">{$vo.title}</P>
+            <if condition="($html['hotel_lp'] neq '')" >
+            <div class="liwu">
+            <img src="{$Think.const.APP_PATH}Public/Home/images/liwu.png" style="width:37px;" height="36">
+              <div class="fuwubox">
+                <div class="ddt">
+                <img src="{$Think.const.APP_PATH}Public/Home/images/ddt.png"></div>
+                <p>
+                <volist name="html['hotel_lp']" id="v" key='vk'>
+                <span>{$v.name}</span></br>
+                </volist>
+                </p>
+              </div>
+            </div>
+           </if>
+          </div>
+        </div>
+        <div class="right p210"> 
+        <span class="zx7 f30  pr_15">￥{$vo.prepay}</span></br>
+        <if condition="($vo['is_cut_off'] neq 0)" >
+       
+        <span>
+        <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.rid},2)" > 
+        <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> 
+        </a> 
+        </span> 
+        <else/>
+        <span>
+       
+        <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/noyuding.png"> 
+        
+        </span> 
+        </if>
+        </div>
+        </if>
+      </li>
+   </volist>  
+   <volist name="html['roomtype']" id="vo" key='k' >
+   <if condition="($vo['spot_payment'] neq 0)" >
+      <li>
+        <div class="left plef"> 
+        <span class="left detail2">
+        <img src="{$vo.url}" style="width:80px;"  ></span>
+          <div class="left plef2">
+            <P class="zx6  fj_fx">{$vo.title}</P>
+            <if condition="($html['hotel_lp'] neq '')" >
+            <div class="liwu">
+            <img src="{$Think.const.APP_PATH}Public/Home/images/liwu.png" style="width:37px;" height="36">
+              <div class="fuwubox">
+                <div class="ddt">
+                <img src="{$Think.const.APP_PATH}Public/Home/images/ddt.png"></div>
+                
+                <p>
+                <volist name="html['hotel_lp']" id="v" key='vk'>
+                <span>{$v.name}</span></br>
+                </volist>
+                </p>
+              </div>
+            </div>
+            </if>
+          </div>
+        </div>
+        <div class="right p210"> 
+        <span class="zx7 f30  pr_15">￥{$vo.spot_payment}</span><br />
+        <span style="font-size:26px; color:#F4D24B;">预付</span>
+        <if condition="($vo['is_cut_off'] neq 0)" >
+         
+        <span>
+        <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.rid},1)" > 
+        <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 
+        </span> 
+        
+        <else/>
+        
+        <span>      
+        <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/noyuding.png"> 
+        </span> 
+        
+        </if>
+        </div>
+      </li>
+      </if>
+    </volist>
+    </ul>
+    
+  </div>
+  </empty>
+  <!-- 房型 -->
+</div>
+
+
+<!--第一个图片-->
+<div class="show hide showbox1">
+  <div  class="swipe" id="s1">
+    <div class="swipe-wrap">
+      <div><img src="{$html.list.img}" width="580" height="308"></div>
+    </div>
+  </div>
+  <div align="right"  class="price1"> <span class="right close">
+  <a href="javascript:;"> 
+  <img src="{$Think.const.APP_PATH}Public/Home/images/detail_txt3.png">
+  </a></span></div>
+</div>
+
+<!--第一个图片-->
+
+<!--开业的图片-->
+<div class="show hide showbox2">
+  <div align="center">
+  <img width="200px;" src="{$html.list.img}"></div>
+  <div class="jdjs f24">
+    <p style="overflow:scroll;overflow-x:hidden;height:150px;" >{$html.list.hotel_jj}</p>
+  </div>
+  <div align="right" class="price1"> 
+  <span class="right close"><a href="javascript:;"> 
+  <img src="{$Think.const.APP_PATH}Public/Home/images/detail_txt3.png">
+  </a></span>
+  </div>
+</div>
+<!--开业的图片-->
+<!--房型的图片-->
+<div class="show hide showbox3">
+  <div  class="swipe" id="s2">
+    <div class="swipe-wrap">
+	  <volist name="html['roomtype']" id="vo" key='k' >
+      <div><img src="{$vo.url}" width="580" height="308"></div>
+	  </volist>
+    </div>
+  </div>
+  <div class="jdxq f24">
+    <div class="autohei price1"> 
+	<span class="right close"><a href="javascript:;"> 
+	<img src="{$Think.const.APP_PATH}Public/Home/images/detail_txt3.png"></a></span> </div>
+  </div>
+</div>
+
+<!--房型的图片-->
+<div class="backdiv hide"></div>
+</body>
+</html>

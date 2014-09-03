@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<meta HTTP-EQUIV="Expires" CONTENT="-1">
+<title>微信支付</title>
+<include file="Public:top" />
+<!-- 支付的js -->
+<script language="javascript" src="{$Think.const.APP_PATH}Public/Home/js/wx.pay.js"></script>
+<script language="javascript" src="http://res.mail.qq.com/mmr/static/lib/js/jquery.js"></script>
+<script language="javascript" src="http://res.mail.qq.com/mmr/static/lib/js/lazyloadv3.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
+
+<script type="text/javascript" src="http://counter.sina.com.cn/ip/" charset="gb2312"></script>
+
+
+<script type="text/javascript">
+function quxiao(id){
+
+	$data = {
+
+		order_id : id
+	
+	}
+
+    var result = ajax_post_setup('?s=/Home/HotelList/quxiao_dingdan',$data);
+
+	if(result.status==0){
+		   
+	       alert(result.msg);
+	       location.reload();
+	}else{
+	    alert(result.msg);
+	
+	}
+}
+</script>
+
+
+
+
+</head>
+
+<body>
+<!--fly_css-->
+<div>
+  <div class="m_nav f34"> 
+  <span class="left"> 
+  <a href="javascript:history.back();">
+  <img src="{$Think.const.APP_PATH}Public/Home/images/m_dot1.png"></a></span>
+    <h6 align="center" style="margin:8px;">订单详情</h6>
+  </div>
+  <div class="autohei m_boxbg1">
+    <span class="left f30 zx9">订单信息</span>
+    <div class="right zx2 f30">订单总额 <span class="zx7">{$html.total_price}</span> 元
+
+    </div>
+  </div>
+  <div class="autohei m_boxbg2 jd_info padding0">
+    <ul>
+      <li><span class="left zx2 f24 wit120">订单状态</span>
+      <span class="zx5 f22 left padding_15">{$html.is_pay}</span> </li>
+      <li><span class="left zx2 f24 wit120">订单编号</span>
+      <span class="zx5 f22 left padding_15">{$html.order_sn}</span> </li>
+      <li><span class="left zx2 f24 wit120">预定日期</span>
+      <span class="zx5 f22 left padding_15">{$html.order_time}</span> </li>
+      <li><span class="left zx2 f24 wit120">支付方式</span>
+      <span class="zx5 f22 left padding_15">
+      {$html.explain}   
+      </span> 
+      </li>
+    </ul>
+  </div>
+  <div class="blank1"></div>
+  <div class="autohei m_boxbg1"> 
+  <span class="left f30 zx9">酒店信息</span></div>
+  <div class="autohei m_boxbg2 jd_info padding0">
+    <ul>
+      <li><span class="left f30 zx5" style="width:100%;" >{$html.hotel_name}</span>
+      <input type="hidden" name="name" id="name" value="{$html.hotel_name}" />
+      </li>
+      <li> <span class="zx2 f22 left">{$html.in_date}</span>
+       <span class="right zx5 f22">{$html.room_num}间</span> 
+       </li>
+      <li> <span class="zx2 f22 left">入住时间</span> 
+      <span class="right zx5 f22 ">{$html.in_date} 至 {$html.out_date}</span> 
+      <!--<span class="right zx5 f22">3晚</span> -->
+      </li>
+      <li> <span class="left m_dot1 zx2 f24">{$html.hotel_syq}</span> 
+      <span class="right m_dot4 zx7 f20">
+      <a href="index.php?s=/Home/HotelList/map/hotel_id/{$html.hotel_id}/user_code/{$html.user_code}">地图</a></span> 
+      </li>
+
+      <li> <span class="left m_dot5 zx2 f24">{$html.hotel_tel}</span> 
+      <span class="right m_dot4 zx7 f20"><a href="tel:{$html.hotel_tel}">服务热线</a>
+
+      </span> 
+      </li>
+    </ul>
+  </div>
+  <div class="blank1"></div>
+  <div class="autohei m_boxbg1"> 
+  <span class="left f30 zx9">其他信息</span>
+  </div>
+  <div class="m_boxbg3 padding0 jd_info">
+    <ul>
+      <li style="border-bottom:none;"> 
+      <span class="left zx2 f24 wit120">入住人</span>
+
+      <span class="zx5 f22 left padding_15">{$html.in_person}</span> 
+	  </li>
+      <li style="border-bottom:none;"> 
+      <span class="left zx2 f24 wit120">联系人</span>
+      <span class="zx5 f22 left padding_15">{$html.contact_person}</span> 
+	  </li>
+      <li  style="border-bottom:none;">
+      <span class="left zx2 f24 wit120">电话</span> 
+      <span class="zx5 f22 left padding_15">{$html.phone}</span></li>
+      <li style="border-bottom:none;"> 
+      <span class="left zx2 f24 wit120">特殊要求</span> 
+      <span class="zx5 f22 left padding_15">{$html.ask_for}</span> </li>
+    </ul>
+  </div>
+  <if condition="($html['Order_cancellation_rules'] neq '' )" >
+  <div class="beizhu">
+    <div class="beizhubox">
+      <p>
+  {$html.Order_cancellation_rules}    
+      <!--   酒店入住时间为下午14:00，退房结算时间为中午12:00。 如需提前入住或者推迟离店，
+      均需酌情加收一定的费用。
+     如需修改取消订单，请在{$html.Order_cancellation_rules} 12:00以前-->
+      </p>
+    </div>
+  </div>
+  </if>
+  <div class="blank1"></div>
+  <div class="blank8"></div>
+  <div class="foot_dd">
+     <span class="left" style="padding-left:0">
+
+    <if condition="($html['order_type'] eq 1) and ($html['order_status'] neq 3)">
+    <a id="getBrandWCPayRequest" href="javascript:void(0);">
+    <input style="vertical-align: top;" type="image" src="{$Think.const.APP_PATH}Public/Home/images/submit2.jpg" />
+    </a>&nbsp;&nbsp;&nbsp;&nbsp;
+    </if> 
+    <if condition="($html['order_status'] neq 3)">
+    <input style="vertical-align: top;" type="image" src="{$Think.const.APP_PATH}Public/Home/images/submit3.jpg" onclick="javascript:quxiao({$html.order_id})" />
+    <else/>
+    <img style='width:209px;vertical-align: top;' src="{$Think.const.APP_PATH}Public/Home/images/quxiaodingdan.jpg" />
+    </if>
+    </span>
+    <span class="right f30" style="padding-right:30px" >订单总额：{$html.total_price}元
+    <input type="hidden" name="order_total" id="order_total" value="{$html.total_prices}" />
+    <input type="hidden" name="order_sn" id="order_sn" value="{$html.order_sn}" />
+    </span>
+   
+  </div>
+</div>
+</body>
+</html>

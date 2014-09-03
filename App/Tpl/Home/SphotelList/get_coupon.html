@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<meta HTTP-EQUIV="Expires" CONTENT="-1">
+<title>订单详情</title>
+
+<include file="Public:top" />
+<!--移动端版本兼容 -->
+<script type="text/javascript">
+
+
+
+function send(phone,youhui){
+  if(!phone){
+	  
+    alert('没有手机号');
+	return false;
+  }
+  if(!youhui){
+	  alert('没有信息！');
+	  return false;
+  }
+  $data ={
+	  phone : phone,
+	  youhui: youhui
+  }
+  var result = ajax_post_setup('?s=/Home/HotelList/ajax_send',$data);
+
+  if(result.status==0){
+      alert('获取成功');
+  }else{
+	  alert('获取失败');
+  }
+
+}
+
+function get_coupon(){
+
+   var coupon_id = document.getElementById('coupon_id').value;
+   var user_code = document.getElementById('user_code').value;
+
+   var data ={
+	   'coupon_id' : coupon_id,
+		'user_code' : user_code
+	   }
+  var result = ajax_post_setup('?s=/Home/HotelList/ajax_get',data);
+
+  if(result.status==0){
+	  alert(result.msg);
+      //alert('获取成功');
+  }else{
+	  alert(result.msg);
+	  //alert('获取失败');
+  }
+
+}
+
+function qx_coupon(){
+
+   var coupon_id = document.getElementById('coupon_id').value;
+   var user_code = document.getElementById('user_code').value;
+
+   var data ={
+	    'coupon_id' : coupon_id,
+		'user_code' : user_code
+	   }
+  var result = ajax_post_setup('index.php?s=/Home/HotelList/qx_coupon',data);
+
+  if(result.status==0){
+	  alert(result.msg);
+      //alert('获取成功');
+  }else{
+	  alert(result.msg);
+	  //alert('获取失败');
+  }
+
+
+}
+</script>
+</head>
+
+<body>
+<!--fly_css-->
+<div>
+	<div class="share_tit1 f34">
+    	{$html.title}<br>
+        <small>发布时间：{$html.create_time}</small>
+    </div>
+  <if condition="($html.img neq '')"> 
+   <div align="center " class="padding10">
+   <img src="{$html.img}" />
+   </div>
+   </if>
+   <div class="share_body">
+   	<p>{$html.text}</p>
+	<p>开始日期{$html.start_time} 结束日期{$html.over_time}</p>
+    <p align="center">
+   <!-- <input type="hidden" name="phone" id="phone" value="{$html.phone}"/>
+    <input type="hidden" name="youhuiid"  id="youhuiid" value="{$html.msg_content}"/>-->
+	<input type="hidden" name="coupon_id" id="coupon_id" value="{$html.id}" />
+	<input type="hidden" name="user_code" id="user_code" value="{$html.user_code}"/>
+	<!--
+    <a href="javascript:void(0)" onclick="send('{$html.phone}','{$html.msg_content}')" class="btn1">获取优惠券</a>
+	 -->
+	 <if condition="($html.type eq '')"> 
+	 <a href="javascript:void(0)" onclick="get_coupon()" class="btn1">获取优惠券</a>
+	 <else/>
+	 <a href="javascript:void(0)" onclick="qx_coupon()" class="btn1">放弃优惠券</a>
+	 </if>
+    </p>
+   </div>
+</div>
+</body>
+</html>

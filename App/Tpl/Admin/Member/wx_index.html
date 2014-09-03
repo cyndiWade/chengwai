@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>	<!-- 全局样式 -->	<include file="Public:top" />
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" href="{$Think.const.APP_PATH}Public/media/css/select2_metro.css" />
+	<link rel="stylesheet" href="{$Think.const.APP_PATH}Public/media/css/DT_bootstrap.css" />
+	<!-- END PAGE LEVEL STYLES -->	
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/jquery-ui-1.10.3.min.js"></script>	
+	<script type="text/javascript">
+		$(function() {
+			$("#add_user").click(function(e){
+				$("#add").css("left",e.pageX-200).css("top",e.pageY).show("1000");
+				$("#close").click(function(){
+					$("#add").hide("1000");
+				});
+			});
+
+		});
+	</script>
+</head>
+<!-- END HEAD -->
+
+<style type="text/css">
+
+dd{ margin:10px auto; width:150px;}
+#add_user{ cursor:pointer;}
+#add{border:1px solid #ccc; margin:0 auto; width:200px; height:350px; display:none; position:absolute; background:#eee;}
+</style>
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+
+	<include file="Public:header" />
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container row-fluid">
+		<!-- 左侧导航 -->		<include file="Public:sidebar" />
+		<!-- BEGIN PAGE -->
+		<div class="page-content">
+			<!-- BEGIN PAGE CONTAINER-->        
+			<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN PAGE TITLE & BREADCRUMB      data-url="{:U('/Admin/Statement/down_all_wxuser')}"-->
+						<h3 class="page-title">
+							{$global_tpl_view.module_name}<small> {$global_tpl_view.action_name}</small>
+
+							<div id="add_user" style="float:right;">导出Excel</div>
+							
+						<form action="{:U('/Admin/Statement/down_all_wxuser')}" id="form_sample_1" method="post" class="form-horizontal">	
+						<!--导出的选择弹窗  开始-->
+						 <div id="add">
+						   <div style="border-bottom:1px ridge #eee; text-align:center;">选择字段</div>
+							<div>
+								<label class="checkbox line">			
+									<input type="checkbox" value="subscribe" name="feild[]"   /> 是否关注
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="subscribe_time" name="feild[]"   /> 关注日期
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="uname" name="feild[]"   /> 用户姓名
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="phone" name="feild[]"   /> 手机号码
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="is_from" name="feild[]"   /> 来源方式
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="code_id" name="feild[]"   /> 二维码参数
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="hotel_name" name="feild[]"   /> 酒店名字
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="hotel_remarks" name="feild[]"   /> 酒店备注
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="yuangong" name="feild[]"   /> 员工
+								</label>
+									
+							</div>
+							 <div style=" text-align:center;">
+								<button type="submit"  >导出</button>
+								<input type="button" value="关闭" id="close"/>
+							</div>
+						 </div>
+						<!--导出的选择弹窗  结束-->
+					</form>
+					
+						</h3>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+						
+						
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->
+						<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption"><i class="icon-globe"></i>{$global_tpl_view.title_name}</div>
+								<div class="tools">
+									<a href="javascript:;" class="collapse"></a>									
+									<a href="javascript:;" class="reload"></a>			
+								</div>
+							</div>
+							<div class="portlet-body">
+								
+								<table class="table table-striped table-bordered table-hover sample_1">
+									<thead>
+										<tr>
+											<th>序号</th>											<th>微信ID(腾讯加密)</th>
+											<th>关注日期</th>											<th>是否关注</th>											<th>来源方式</th>
+											<th>手机号码</th>											<th>二维码参数</th>											<th>酒店备注</th>											<th>二维码备注</th>											<!-- 	
+											<th>操作</th>											-->	
+										</tr>
+									</thead>
+									<tbody>																		<volist name="html['list']" id="vo" key="i">
+										<tr class="odd gradeX">
+											<td >{$i}</td>											<th>{$vo.wxid}</th>
+											<td>{$vo.subscribe_time}</a></td>											<td>{$vo.subscribe}</td>											<td>{$vo.userfrom}</td>											<td>{$vo.phone}</td>											<td>{$vo.code_id}</td>											<td>{$vo.yuangong}</td>											<td>{$vo.hotel_remarks}</td>											<!--
+											<td class="center">												<a href="javascript:;" class="btn_bak"  data-record_prev="1" data-url="{:U('Admin/Siri/edit',array('act'=>'update','siri_id'=>$vo['id']))}">编辑</a>												| <a href="{:U('Admin/Siri/edit',array('act'=>'delete','siri_id'=>$vo['id']))}" class="check" >删除</a>											</td>											-->
+										</tr>										</volist>
+									</tbody>
+								</table>
+							</div>	
+						</div>
+						<!-- END EXAMPLE TABLE PORTLET-->
+					</div>
+				</div>				<!-- END PAGE CONTENT-->
+			</div>
+			<!-- END PAGE CONTAINER-->
+		</div>
+		<!-- END PAGE -->
+	</div>
+	<!-- END CONTAINER -->
+	
+
+	<!-- 页脚 -->	<include file="Public:foot" />	<!-- 核心插件 -->	<include file="Public:bottom" />
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/select2.min.js"></script>
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/DT_bootstrap.js"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/app.js"></script>		<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/table-managed-Admin-Public.js"></script>   	
+	<script type="text/javascript">
+		jQuery(document).ready(function() {       
+		   App.init();
+		  TableManaged.init();
+		});
+	</script>	</body>
+
+<!-- END BODY -->
+</html>

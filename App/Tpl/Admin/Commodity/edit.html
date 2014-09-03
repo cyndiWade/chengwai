@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<!-- 全局样式 -->	<include file="Public:top" />
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" href="{$Think.const.APP_PATH}Public/media/css/select2_metro.css" />
+	<link rel="stylesheet" type="text/css" href="{$Think.const.APP_PATH}Public/media/css/chosen.css" />
+	<!-- END PAGE LEVEL STYLES -->		<style type="text/css">		.special div{			margin : 0 0 5px 0;		}	</style>	
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+	<include file="Public:header" />
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container row-fluid">
+		<!-- 左侧导航 -->		<include file="Public:sidebar" />
+		<!-- BEGIN PAGE -->  
+		<div class="page-content">
+			<!-- BEGIN PAGE CONTAINER-->
+			<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->   
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN STYLE CUSTOMIZER -->						<!-- END BEGIN STYLE CUSTOMIZER -->     
+						<h3 class="page-title">
+						{$global_tpl_view.module_name}<small> {$global_tpl_view.action_name}</small>
+						</h3>		
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				<!-- BEGIN PAGE CONTENT-->				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN VALIDATION STATES-->
+						<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption"><i class="icon-reorder"></i>{$global_tpl_view.title_name}</div>
+								<div class="tools">
+									<a href="javascript:;" class="collapse"></a>
+									<a href="javascript:;" class="reload"></a>				
+								</div>
+							</div>
+							<div class="portlet-body form">
+								<!-- BEGIN FORM-->
+								<form action="" id="form_sample_1" method="post" class="form-horizontal">                     
+									<div class="alert alert-error hide">
+										<button class="close" data-dismiss="alert"></button>
+										请在文本框输入相应内容.
+									</div>
+									<div class="alert alert-success hide">
+										<button class="close" data-dismiss="alert"></button>
+										验证成功
+									</div>													<div class="control-group">										<label class="control-label">类型：<span class="required">*</span></label>											<div class="controls">												<select class="small m-wrap" tabindex="1" name="commodity_type">																																			<foreach name="html['Merchant_Type']" item="vo">															<if condition="($html['commodity_type'] eq $vo['num'])">														<option value="{$vo.num}" selected="selected">{$vo.explain}</option>													<else />														<option value="{$vo.num}">{$vo.explain}</option>													</if>																					</foreach>												</select>											</div>									</div>									<div class="control-group">										<label class="control-label">名称：<span class="required">*</span></label>										<div class="controls">											<input type="text" name="name" value="{$html.name}" data-required="1" class="span2 m-wrap"/>										</div>									</div>																			<div class="control-group">										<label class="control-label">开始时间：<span class="required">*</span></label>										<div class="controls">											<input type="text" name="indate_start" value="{$html.indate_start}"  readonly="" class="span2 wade_datetimepicker" data-date-format="yyyy-mm-dd">											<span class="add-on">												<i class="icon-calendar"></i>											</span>										</div>									</div>																		<div class="control-group">										<label class="control-label">结束时间：<span class="required">*</span></label>										<div class="controls">											<input type="text" name="indate_over" value="{$html.indate_over}"  readonly="" class="span2 wade_datetimepicker" data-date-format="yyyy-mm-dd">											<span class="add-on">												<i class="icon-calendar"></i>											</span>										</div>									</div>																		<div class="control-group">										<label class="control-label">排名(越大排名越高)：<span class="required">*</span></label>										<div class="controls">											<input type="text" name="sort" value="{$html.sort}" data-required="1" class="span2 m-wrap"/>										</div>									</div>																		<div class="control-group">										<label class="control-label">数量：<span class="required">*</span></label>										<div class="controls">											<input type="text" name="number" value="{$html.number}" data-required="1" class="span2 m-wrap"/>										</div>									</div>																		<div class="control-group">										<label class="control-label">价格：<span class="required">*</span></label>										<div class="controls">											<input type="text" name="price" value="{$html.price}" data-required="1" class="span2 m-wrap"/>										</div>									</div>																		<div class="control-group">										<label class="control-label">产品说明：<span class="required">*</span></label>										<div class="controls">											<textarea rows="3" name="info" class="span4 m-wrap">{$html.info}</textarea>										</div>									</div>																		<div class="control-group">										<label class="control-label">选择策略：<span class="required">*</span></label>										<div class="controls">											<label class="radio">												<input type="radio" name="strategy" value="0" class="strategy" checked="checked">																普通策略											</label>																						<label class="radio">												<input type="radio" name="strategy" class="strategy" value="1">												特价策略 （选中后才可以编辑特价策略）											</label>										</div>									</div>																		<div class="control-group special">										<label class="control-label">特价策略：<span class="required">*</span></label>										<div class="controls">											<label class="radio">												<input type="radio" name="type" value="1" checked="checked">																固定值：											</label>											<input type="text" name="price" value="{$html.special_info.price}" data-required="1" class="span2 m-wrap"/>&nbsp&nbsp&nbsp(具体优惠价格，如：<span class="required">580</span>)										</div>										<div class="controls">											<label class="radio">												<input type="radio" name="type" value="2">																住几送几：											</label>											<input type="text" name="privilege_day" value="{$html.special_info.privilege_day}" data-required="1" class="span2 m-wrap"/>&nbsp&nbsp&nbsp(住3晚送1晚，格式为：<span class="required">3/1</span>)										</div>										<div class="controls">											<label class="radio">												<input type="radio" name="type" value="3">																折扣：											</label>											<input type="text" name="discount" value="{$html.special_info.discount}" data-required="1" class="span2 m-wrap"/>&nbsp&nbsp&nbsp(如打8.5折，格式为：<span class="required">8.5</span>)										</div>									</div>
+									<div class="form-actions">			
+										<button type="submit" class="btn purple">提交</button>										<button class="btn" type="reset">重置</button>
+										<button class="btn blue btn_bak" type="button" data-return_prev="1">返回</button>
+									</div>
+								</form>
+								<!-- END FORM-->
+							</div>
+						</div>
+						<!-- END VALIDATION STATES-->
+					</div>
+				</div>				<!-- END PAGE CONTENT-->         
+			</div>
+			<!-- END PAGE CONTAINER-->
+		</div>
+		<!-- END PAGE -->  
+	</div>
+	<!-- END CONTAINER -->
+	<!-- 页脚 -->	<include file="Public:foot" />
+
+	<!-- 核心插件 -->	<include file="Public:bottom" />
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/additional-methods.min.js"></script>
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/select2.min.js"></script>
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/chosen.jquery.min.js"></script>	
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<script src="{$Think.const.APP_PATH}Public/media/js/app.js"></script>	<script src="{$Think.const.APP_PATH}Public/media/js/form-validation-Admin-Commodity-edit.js"></script> 			
+	<!-- END PAGE LEVEL STYLES -->    
+	<script>
+		jQuery(document).ready(function() {   
+		   // initiate layout and plugins
+		   App.init();
+		   FormValidation.init();				});
+	</script>
+	<!-- END JAVASCRIPTS -->   
+
+<!-- END BODY -->
+</html>

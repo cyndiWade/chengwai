@@ -1,0 +1,11 @@
+<style type="text/css">
+.hotel_show{list-style:none;}
+.hotel_show li{width:200px;float:left;}
+</style>
+<ul class="hotel_show">
+<volist name="data" id="vo">
+<li>
+<input type='checkbox' name='hotel_id[]' value="{$vo.id}" >{$vo.hotel_name}
+</li>
+</volist>
+</ul>

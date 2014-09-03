@@ -1,0 +1,51 @@
+<ul>
+<volist name="html['list']" id="vo" key="k" >
+<li>
+        <a href="index.php?s=/Home/SphotelList/get_hotel_info/hotel_id/{$vo.id}/user_code/{$html.user_code}" >
+	<div class="autohei"> 
+	<span class="left m_img1">
+	<img src="{$vo.img}" >
+	</span>
+          <div class="autohei">
+	        <div class="m_txt1 autohei"> 
+			    <span class="left zx5 f24">{$vo.hotel_name}</span> 
+			    </br>
+			    <span class="right zx2 f18">
+			    
+			  
+			    <for start="0" end="$vo['hotel_xj']" >
+		    
+		        <img src="{$Think.const.APP_PATH}Public/Home/images/1.png" style="width:26px;height:26px;" title="{$vo.hotel_xj}星级酒店" alt="{$vo.hotel_xj}星级" /> 
+				</for>
+			    </span> 	    
+		    </div>
+		    <div style="color:#fff;" class="f18" >
+		    <img src="{$Think.const.APP_PATH}Public/Home/images/liwu.png" style="width:37px;" height="36">
+		    <if condition="($vo['lb'] neq ' ')" >
+		    <foreach name="vo['lb']" item="vod">
+		    {$vod}</br>
+		    </foreach>
+		    </if>
+		    </div>
+	        <div class="m_txt1 autohei"> 
+			    <span class="left zx1 f24">{$vo.hotel_pf}分</span> 
+			    <span class='right zx7 f22'>
+			    <small>￥</small>
+			    <if condition="($vo['spot_payment'] gt 0)" >
+			    {$vo.spot_payment}起
+			    <else/>
+			    <if condition="($vo['prepay'] gt 0)" >
+			    {$vo.prepay}起
+			    </if>
+			    </if>
+			    </span> 
+		    </div>
+	            <div class="m_txt2">
+		    <span class="f24 zx2">{$vo.hotel_syq}</span> 
+		    </div>
+          </div>
+        </div>
+	</a>
+</li>
+</volist>
+</ul>

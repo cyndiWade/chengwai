@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<!-- 全局样式 -->	<include file="Public:top" />
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link href="{$Think.const.APP_PATH}Public/media/css/fullcalendar.css" rel="stylesheet" />		<style type="text/css">		#event_box_hidden {			display:none;		}				.schedule_container span {			line-height:35px;		}				.hand {			cursor:pointer;		}				.wade-right {		}</style>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+	<include file="Public:header" />
+	<!-- BEGIN CONTAINER -->   
+	<div class="page-container row-fluid">
+		<!-- 左侧导航 -->		<include file="Public:sidebar" />
+		<!-- BEGIN PAGE -->
+		<div class="page-content">
+			<!-- BEGIN PAGE CONTAINER-->
+			<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<h3 class="page-title">
+							{$global_tpl_view.module_name}<small> {$global_tpl_view.action_name}</small>
+						</h3>
+						<!-- END PAGE TITLE & BREADCRUMB-->												<include file="Public:cars_menu" />
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="row-fluid">
+					<div class="portlet box blue calendar">
+						<div class="portlet-title">
+							<div class="caption"><i class="icon-reorder"></i>{$global_tpl_view.title_name}</div>
+						</div>
+						<div class="portlet-body light-grey">
+							<div class="row-fluid">
+								<div class="span3 responsive" data-tablet="span12 fix-margin" data-desktop="span8">
+									<!-- BEGIN DRAGGABLE EVENTS PORTLET-->    
+									<!-- <h3 class="event-form-title">编辑日程</h3>-->
+									<div id="external-events">
+										<form class="inline-form">																						<div class="schedule_container">												<span>开始时间：</span>												<input type="hidden" name="hotel_room_id" value="{$html['hotel_room_id']}" readonly />												<input type="text" name="start_time" value="" class="m-wrap span7 wade_datetimepicker" data-date-format="yyyy-mm-dd" readonly  />											</div>																						<div class="schedule_container">												<span>结束时间：</span>												<input type="text" name="over_time" value="" class="m-wrap span7 wade_datetimepicker" readonly />											</div>																						<div class="schedule_container">												<span>房间数量：</span>												<input type="text" name="room_num" value="" class="m-wrap span7"/>											</div>																						<div class="schedule_container">
+												<span>预付(微信支付)：</span>												<input type="text" name="spot_payment" value="" class="m-wrap span7"/>											</div>																						<div class="schedule_container">												<span>现付(酒店支付)：</span>												<input type="text" name="prepay" value="" class="m-wrap span7"  /> 											</div>																						<div class="schedule_container">												<span class="required ">*一次可修改60天内数据</span>											</div>																						<div class="wade-right">												<a href="javascript:;" id="event_add" class="btn green">提交</a>												<a href="javascript:;" class="btn purple btn_bak" data-url="{:U('Admin/RoomSchedule/index',array('hotel_room_id'=>$html['hotel_room_id']))}">更新</a>											</div>
+										</form>
+										<hr class="visible-phone" />
+									</div>
+									<!-- END DRAGGABLE EVENTS PORTLET-->            
+								</div>
+								<div class="span9">
+									<div id="calendar" class="has-toolbar"></div>
+								</div>
+							</div>
+							<!-- END CALENDAR PORTLET-->
+						</div>
+					</div>
+				</div>
+				<!-- END PAGE CONTENT-->
+			</div>
+			<!-- END PAGE CONTAINER--> 
+		</div>
+		<!-- END PAGE -->    
+	</div>
+	<!-- END CONTAINER -->
+	<!-- 页脚 -->	<include file="Public:foot" />
+	<!-- 核心插件 -->	<include file="Public:bottom" />	
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script src="{$Think.const.APP_PATH}Public/media/js/fullcalendar.min.js"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script src="{$Think.const.APP_PATH}Public/media/js/app.js"></script>
+	<script src="{$Think.const.APP_PATH}Public/media/js/calendar-Admin-RoomSchedule-index.js"></script>
+	<script type="text/jscript">
+	jQuery(document).ready(function() {       			App.init();			  		Calendar.init();	
+	});
+	</script>
+
+
+<!-- END BODY -->
+</html>

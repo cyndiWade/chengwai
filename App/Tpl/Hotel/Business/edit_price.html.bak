@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href='{$Think.const.APP_PATH}Public/Hotel/css/date.fullcalendar.css' rel='stylesheet' />
+<link href='{$Think.const.APP_PATH}Public/Hotel/css/date.fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='{$Think.const.APP_PATH}Public/Hotel/js/jquery.min.js'></script>
+<script src='{$Think.const.APP_PATH}Public/Hotel/js/jquery-ui.custom.min.js'></script>
+<script src='{$Think.const.APP_PATH}Public/Hotel/js/date.fullcalendar.min.js'></script>
+<link rel="stylesheet" href="{$Think.const.APP_PATH}Public/Hotel/css/jquery.popup.css" type="text/css">
+<script type="text/javascript" src="{$Think.const.APP_PATH}Public/Hotel/js/jquery.popup.js"></script>
+
+<script>
+	$(document).ready(function() {
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		//alert('Y'+y+'M'+m+'D'+d)
+		var calendar = $('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			selectable: true,
+			selectHelper: true,
+			select: function(start, end, allDay) {
+
+				window.showModalDialog('?s=/Hotel/Business/index','dialogWidth=400');
+				
+				var obj  = $(".fc-day-number");
+				alert(obj.html());
+			var title = prompt('Event Title:');
+			if (room_id) {
+				calendar.fullCalendar('renderEvent',
+					{
+						title: title,
+						start: start,
+						end: end,
+						allDay: allDay
+					},
+					true // make the event "stick"
+				);
+			}
+				
+			},
+			editable: true,
+			events: [
+				{$html['date']}]
+		});
+		
+	});
+
+</script>
+<style>
+
+	body {
+		margin-top: 40px;
+		text-align: center;
+		font-size: 14px;
+		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+		}
+
+	#calendar {
+		width: 900px;
+		margin: 0 auto;
+		}
+
+</style>
+</head>
+<body>
+<div id='calendar'>
+</div>
+<input type="hidden" name="room_id" id="room_id" value="{$html['room_id']}" />
+<div class="p_body js__p_body js__fadeout"></div>
+
+<div class="popup js__popup js__slide_top">
+    <a href="#" class="p_close js__p_close" title="关闭"></a>
+     <h1 style="font-size:20px;font-weight:bold;">房型详情 </h1>
+    <div class="p_content">
+         
+         
+    </div>
+</div>
+
+
+<!--footer-->
+</body>
+</html>

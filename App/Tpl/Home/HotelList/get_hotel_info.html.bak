@@ -1,0 +1,249 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<meta HTTP-EQUIV="Expires" CONTENT="-1">
+<title>酒店详情页</title>
+<include file="Public:top" />
+<script type="text/javascript" src="{$Think.const.APP_PATH}Public/Home/js/zebra_datepicker.js" /></script>
+<script type="text/javascript" src="{$Think.const.APP_PATH}Public/Home/js/common1.js" /></script>
+<script type="text/javascript" src="{$Think.const.APP_PATH}Public/Home/js/swipe.js" /></script>
+<!--移动端版本兼容 -->
+<script type="text/javascript">
+
+function submit_order(id,type){
+      var checkinday  = document.getElementById('checkinday').value;
+      var checkoutday = document.getElementById('checkoutday').value;
+      var user_code = document.getElementById('user_code').value;
+      var hotel_id  = document.getElementById('hotel_id').value;
+      if(checkinday==''){
+        alert('选择入住时间');
+	$(".stclick1").focus();
+        return flase;
+	
+      }
+      if(checkoutday==''){
+        alert('选择退房时间');
+	$(".stclick2").focus();
+        return flase;
+	
+      }
+
+      window.location.href="index.php?s=/Home/HotelList/order/room_id/"+id+'/pay_type/'+type+'/checkinday/'+checkinday+'/checkoutday/'+checkoutday+'/user_code/'+user_code+'/hotel_id/'+hotel_id;
+}	
+	$(function(){
+		$(".liwu").click(function(){
+
+			if($(this).children(".fuwubox").is(":visible")){
+				$(this).children(".fuwubox").hide();
+				
+			 }else{
+				$(this).children(".fuwubox").show();
+				
+			 }
+
+		})
+
+
+	})
+</script>
+<!--移动端版本兼容 end -->
+</head>
+
+<body>
+<!--fly_css-->
+<div class="color_f" >
+  <input type="hidden" value="{$html.user_code}" name="user_code" id="user_code" />
+  <input type="hidden" value="{$html.list.id}" name="hotel_id" id="hotel_id" />
+  <div class="m_nav f34"><span class="left f18">
+  <a href="index.php?s=/Home/HotelList/index/hotel_cs/{$html.hotel_cs}"> 更多酒店>></a></span>
+    <h6 align="center">酒店详情</h6>
+  </div>
+  <div class="blank8"></div>
+  <div class="autohei m_boxbg1">
+    <div class="right m_img2">
+      <div class="photo1"><Img src="{$html.list.img}" >
+        <div class="touying"> </div>
+        <!--<P align="center">19张</P>-->
+      </div>
+    </div>
+    <div class="autohei">
+      <div class="m_txt1 left"> <span class=" f30 zx6">{$html.list.hotel_name}{$hotel.link_name}</span> <br>
+        <span class="zx2 f22"> 
+        <for start="1" end="$html['list']['hotel_xj']" >
+    
+        <img src="{$Think.const.APP_PATH}Public/Home/images/1.png" style="width:26px;height:26px;" title="{$html.list.hotel_xj}星级酒店" alt="{$html.list.hotel_xj}星级" /> 
+		</for>
+		</span>
+		</div>
+      <div class="m_txt1 right pad_pf"> 
+      <span class="zx7  padding_15">{$html.list.hotel_pf}分</span> 
+      </div>
+    </div>
+  </div>
+  <div class="blank1"></div>
+  <div class="m_boxbg1 padding0 jd_info">
+    <ul>
+      <li><span class="left m_dot1 zx2 f24">{$html.list.hotel_syq}</span> 
+      <span class="right m_dot4 zx7 f20"> 
+      <a href="index.php?s=/Home/HotelList/map/hotel_id/{$html.list.id}/user_code/{$html.user_code}">地图</a>
+      </span></li>
+      <li style="border-bottom:none;"> 
+      <span class="left m_dot2 zx2 f24">{$html.list.hotel_kynf}年开业</span> 
+      <span class="right m_dot4 zx7 f20 detail"> 
+      <a href="javascript:;">详情</a></span> </li>
+    </ul>
+  </div>
+  <div class="blank1"></div>
+  <div class="m_boxbg1 zx6 autohei ">
+    <div class="blank"></div>
+    <span class="left m_dot3 f24">入住： </span>
+    <input type="text"  clicktag="2_2" class="stclick inp3 left stclick1" value="" name="" id="checkinday" readonly>
+  </div>
+  <div class="m_boxbg1 zx6 autohei "> <span class="left f24 m_dot3">退房： </span>
+    <input type="text" clicktag="2_3" class="stclick inp3 left stclick2" value="" name="" id="checkoutday" readonly>
+    <div class="blank"></div>
+  </div>
+  <!-- 房型 -->
+  <div class="jdlist2">
+    <ul>
+     <volist name="html['list']['roomtype']" id="vo" key='k' >
+      <li>
+        <div class="left plef"> 
+        <span class="left detail2">
+        <img src="{$vo.img}" style="width:80px;"  ></span>
+          <div class="left plef2">
+            <P class="zx6  fj_fx">{$vo.title}</P>
+            <div class="liwu">
+            <img src="{$Think.const.APP_PATH}Public/Home/images/liwu.png" style="width:37px;" height="36">
+              <div class="fuwubox">
+                <div class="ddt">
+                <img src="{$Think.const.APP_PATH}Public/Home/images/ddt.png"></div>
+                <p> <span>免费宽带</span> <span>空调</span> <span>热水</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="right p210"> 
+        <span class="zx7 f30  pr_15">￥{$vo.prepay}</span> 
+        <span>
+        <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.hotel_room_id},2)" > 
+        <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 
+        </span> 
+        </div>
+      </li>
+   </volist>
+   <volist name="html['list']['roomtype']" id="vo" key='k' >
+      <li>
+        <div class="left plef"> 
+        <span class="left detail2">
+        <img src="{$vo.img}" style="width:80px;"  ></span>
+          <div class="left plef2">
+            <P class="zx6  fj_fx">{$vo.title}</P>
+            <div class="liwu">
+            <img src="{$Think.const.APP_PATH}Public/Home/images/liwu.png" style="width:37px;" height="36">
+              <div class="fuwubox">
+                <div class="ddt">
+                <img src="{$Think.const.APP_PATH}Public/Home/images/ddt.png"></div>
+                <p><span>免费宽带</span> <span>空调</span> <span>热水</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="right p210"> 
+        <span class="zx7 f30  pr_15"><span style="font-size:18px;">预付</span>￥{$vo.spot_payment}</span> 
+        <span>
+        <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.hotel_room_id},1)" > 
+        <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 
+        </span> 
+        </div>
+      </li>
+      </volist>
+
+    </ul>
+  </div>
+  <!-- 房型 -->
+</div>
+
+<!--第一个图片-->
+<div class="show hide showbox1">
+  <div  class="swipe" id="s1">
+    <div class="swipe-wrap">
+      <div><img src="{$html.list.img}" width="580" height="308"></div>
+    
+    </div>
+  </div>
+  <div align="right"  class="price1"> <span class="right close"><a href="javascript:;"> <img src="{$Think.const.APP_PATH}Public/Home/images/detail_txt3.png"></a></span></div>
+</div>
+<!--第一个图片-->
+<!--开业的图片-->
+<div class="show hide showbox2">
+  <div align="center">
+  <img src="{$html.list.img}"></div>
+  <div class="jdjs f24">
+    <p>{$html.list.hotel_jj}</p>
+  </div>
+  <div align="right" class="price1"> <span class="right close"><a href="javascript:;"> <img src="{$Think.const.APP_PATH}Public/Home/images/detail_txt3.png"></a></span></div>
+</div>
+<!--开业的图片-->
+<!--房型的图片-->
+<div class="show hide showbox3">
+  <div  class="swipe" id="s2">
+    <div class="swipe-wrap">
+	  <volist name="html['list']['roomtype']" id="vo" key='k' >
+      <div><img src="{$vo.img}" width="580" height="308"></div>
+	  </volist>
+    </div>
+  </div>
+  <div class="jdxq f24">
+    <!--<ul>
+      <li>
+        <div class="left"> <span class="icon1 zx3">面积:</span><span class="zx8">80平方</span> </div>
+        <div class="left"> <span class="icon2 zx8">可住2人</span> </div>
+      </li>
+      <li>
+        <div class="left"> <span class="icon3 zx3">楼层:</span><span class="zx8">18楼</span> </div>
+        <div class="left"> <span class="icon4 zx8">该房型不可加床</span> </div>
+      </li>
+      <li> <span class="icon5 zx3">床型:</span><span class="zx8">大床2米</span> </li>
+      <li> <span class="icon6 zx3">无烟:</span><span class="zx8">有无烟房</span> </li>
+      <li> <span class="icon6 zx3">宽带:</span><span class="zx8">免费宽带</span> </li>
+    </ul>-->
+    <div class="autohei price1"> 
+	<!--<span class="left zx7"><small>￥</small>400</span> --><span class="right close"><a href="javascript:;"> <img src="{$Think.const.APP_PATH}Public/Home/images/detail_txt3.png"></a></span> </div>
+  </div>
+</div>
+<!--
+<div class="show hide showbox3">
+  <div  class="swipe" id="s2">
+    <div class="swipe-wrap">
+      <div><img src="{$Think.const.APP_PATH}Public/Home/images/detail_img2.jpg" width="580" height="308"></div>
+      <div><img src="{$Think.const.APP_PATH}Public/Home/images/detail_img1.png" width="580" height="308"></div>
+      <div><img src="{$Think.const.APP_PATH}Public/Home/images/small.jpg" width="580" height="308"></div>
+    </div>
+  </div>
+  <div class="jdxq f24">
+    <ul>
+      <li>
+        <div class="left"> <span class="icon1 zx3">面积:</span><span class="zx8">80平方</span> </div>
+        <div class="left"> <span class="icon2 zx8">可住2人</span> </div>
+      </li>
+      <li>
+        <div class="left"> <span class="icon3 zx3">楼层:</span><span class="zx8">18楼</span> </div>
+        <div class="left"> <span class="icon4 zx8">该房型不可加床</span> </div>
+      </li>
+      <li> <span class="icon5 zx3">床型:</span><span class="zx8">大床2米</span> </li>
+      <li> <span class="icon6 zx3">无烟:</span><span class="zx8">有无烟房</span> </li>
+      <li> <span class="icon6 zx3">宽带:</span><span class="zx8">免费宽带</span> </li>
+    </ul>
+    <div class="autohei price1"> <span class="left zx7"><small>￥</small>400</span> <span class="right close"><a href="javascript:;"> <img src="{$Think.const.APP_PATH}Public/Home/images/detail_txt3.png"></a></span> </div>
+  </div>
+</div>-->
+<!--房型的图片-->
+<div class="backdiv hide"></div>
+</body>
+</html>

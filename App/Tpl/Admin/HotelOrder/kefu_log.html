@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<!-- 全局样式 -->
+	<include file="Public:top" />
+
+	<!-- BEGIN PAGE LEVEL STYLES -->
+
+	<link rel="stylesheet" type="text/css" href="{$Think.const.APP_PATH}Public/media/css/select2_metro.css" />
+
+	<link rel="stylesheet" href="{$Think.const.APP_PATH}Public/media/css/DT_bootstrap.css" />
+
+	<!-- END PAGE LEVEL STYLES -->
+	<style type="text/css">
+		
+		
+	</style>
+	<script type="text/javascript">
+	
+	  function add_data(kf_id,order_id){
+          var data={
+        		  kf_id: kf_id,
+        		  order_id: order_id 
+        		  
+                  }
+		  $.post('?s=/Admin/HotelOrder/kefu_log',data,function(content){
+                alert(content.msg);
+				//alert(content);
+			  //var fangxing= $("#fangxing");
+			  //fangxing.empty();
+			  //fangxing.html(content);
+				//result = content;
+			},'json');
+		$("#KF"+kf_id).attr({"disabled":"disabled"});
+		
+
+	}
+	</script>
+</head>
+
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+
+<body class="page-header-fixed">
+
+	<include file="Public:header" />
+
+	<!-- BEGIN CONTAINER -->
+
+	<div class="page-container row-fluid">
+
+		<!-- 左侧导航 -->
+		<include file="Public:sidebar" />
+
+		<!-- BEGIN PAGE -->
+
+		<div class="page-content">
+
+			<!-- BEGIN PAGE CONTAINER-->        
+
+			<div class="container-fluid">
+
+				<!-- BEGIN PAGE HEADER-->
+
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+						<h3 class="page-title">
+
+							{$global_tpl_view.module_name}<small> {$global_tpl_view.action_name}</small>
+
+						</h3>
+
+
+						<!-- END PAGE TITLE & BREADCRUMB-->
+
+					</div>
+
+				</div>
+
+				<!-- END PAGE HEADER-->
+
+				<!-- BEGIN PAGE CONTENT-->
+
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->
+
+						<div class="portlet box blue">
+
+							<div class="portlet-title">
+
+								<div class="caption"><i class="icon-globe"></i>{$global_tpl_view.title_name}</div>
+
+								<div class="tools">
+
+									<a href="javascript:;" class="collapse"></a>
+									
+									<a href="javascript:;" class="reload"></a>
+			
+
+								</div>
+
+							</div>
+
+
+							<div class="portlet-body">
+								
+								<table class="table table-striped table-bordered table-hover sample_1">
+									
+										<tr>
+											<th style="width:20%">流程</th>
+											<th>操作</th>		
+										</tr>
+									</thead>
+									<tbody>								
+										<volist name="html['KF']" id="vo" key="i">
+										<tr class="odd gradeX">
+											<td>{$vo.explain}</td>
+											<td>
+											<input <if condition="($vo['disabled'] eq 1)" >disabled  </if> style="margin-left:-1px;" id="KF{$vo.num}" type="button" value="{$vo.num}" onclick="add_data({$vo.num},{$html.order_id})"  />
+											</td>
+										</tr>
+										</volist>
+									</tbody>
+								</table>
+							</div>
+	
+						</div>
+
+						<!-- END EXAMPLE TABLE PORTLET-->
+
+					</div>
+
+				</div>
+				<!-- END PAGE CONTENT-->
+
+			</div>
+
+			<!-- END PAGE CONTAINER-->
+
+		</div>
+
+		<!-- END PAGE -->
+
+	</div>
+
+	<!-- END CONTAINER -->
+
+	<!-- 页脚 -->
+	<include file="Public:foot" />
+
+	<!-- 核心插件 -->
+	<include file="Public:bottom" />
+
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/select2.min.js"></script>
+
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/jquery.dataTables.js"></script>
+
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/DT_bootstrap.js"></script>
+
+	<!-- END PAGE LEVEL PLUGINS -->
+
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/app.js"></script>
+
+	<!-- 
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/table-managed-Admin-HotelRoom-index.js"></script>   
+	-->
+	<script type="text/javascript">
+
+		jQuery(document).ready(function() {       
+
+		   App.init();
+
+		  // TableManaged.init();
+
+
+		});
+
+	</script>
+	
+</body>
+
+<!-- END BODY -->
+
+</html>

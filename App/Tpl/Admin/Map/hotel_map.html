@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<!-- 全局样式 -->	<include file="Public:top" />
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" href="{$Think.const.APP_PATH}Public/media/css/select2_metro.css" />
+	<link rel="stylesheet" type="text/css" href="{$Think.const.APP_PATH}Public/media/css/chosen.css" />
+	<!-- END PAGE LEVEL STYLES -->	<style type="text/css">		#allmap {width: auto;height: auto;overflow: hidden;hidden;margin:0;}	</style>	
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+	<include file="Public:header" />
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container row-fluid">
+		<!-- 左侧导航 -->		<include file="Public:sidebar" />
+		<!-- BEGIN PAGE -->  
+		<div class="page-content">
+			<!-- BEGIN PAGE CONTAINER-->
+			<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->   
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN STYLE CUSTOMIZER -->						<!-- END BEGIN STYLE CUSTOMIZER -->     
+						<h3 class="page-title">
+						{$global_tpl_view.module_name}<small> {$global_tpl_view.action_name}</small>
+						</h3>		
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				<!-- BEGIN PAGE CONTENT-->				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN VALIDATION STATES-->
+						<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption"><i class="icon-reorder"></i>{$global_tpl_view.title_name}</div>
+								<div class="tools">
+									<a href="javascript:;" class="collapse"></a>
+									<a href="javascript:;" class="reload"></a>				
+								</div>
+							</div>
+							<div class="portlet-body">																	<div id="allmap"></div>
+							</div>							
+						</div>
+						<!-- END VALIDATION STATES-->
+					</div>
+				</div>				<!-- END PAGE CONTENT-->         
+			</div>
+			<!-- END PAGE CONTAINER-->
+		</div>
+		<!-- END PAGE -->  
+	</div>
+	<!-- END CONTAINER -->
+	<!-- 页脚 -->	<include file="Public:foot" />
+	 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=D0e39c6e68bd900c80a2a50882556bae"></script>	
+	<!-- 核心插件 -->	<include file="Public:bottom" />
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<script src="{$Think.const.APP_PATH}Public/media/js/app.js"></script>	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=D0e39c6e68bd900c80a2a50882556bae"></script>	<!-- 	<script src="{$Think.const.APP_PATH}Public/media/js/form-validation-Admin-Hotel-hotel_edit.js"></script> 	-->		
+	<!-- END PAGE LEVEL STYLES -->    
+	<script>
+		jQuery(document).ready(function() {   
+		   // initiate layout and plugins
+		   App.init();		   var allmap =  $('#allmap');			var  portlet_body = $('.portlet-body');						allmap.css({'width':portlet_body.width(),'height':'1000px'})
+			//百度地图			var map = new BMap.Map("allmap");			map.enableScrollWheelZoom();    //启用滚轮放大缩小，默认禁用						var marker1 = new BMap.Marker(new BMap.Point(116.384, 39.925));  // 创建标注			map.addOverlay(marker1); 			map.centerAndZoom(new BMap.Point(116.404, 39.915), 14);	//定位								});
+	</script>
+	<!-- END JAVASCRIPTS -->   
+
+<!-- END BODY -->
+</html>

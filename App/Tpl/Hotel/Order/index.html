@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="{$Think.const.APP_PATH}Public/Hotel/css/hotel.css" type="text/css" rel="stylesheet" />
+<script src="{$Think.const.APP_PATH}Public/Hotel/js/jquery-1.7.1.min.js"></script>
+<script src="{$Think.const.APP_PATH}Public/Hotel/js/hotel.date.js"></script>
+<script src="{$Think.const.APP_PATH}Public/Hotel/js/hotel.common.js"></script>
+<script src='{$Think.const.APP_PATH}Public/Hotel/js/function.js'></script>
+<script>
+$(function (){
+	$(".reserve_date").manhuaDate({					       
+		Event : "click",//可选				       
+		Left : 0,//弹出时间停靠的左边位置
+		Top : -16,//弹出时间停靠的顶部边位置
+		fuhao : "-",//日期连接符默认为-
+		isTime : false,//是否开启时间值默认为false
+		beginY : 2014,//年份的开始默认为1949
+		endY :2025//年份的结束默认为2049
+	});
+	
+});
+$(function (){
+	
+   $(".agree1").click(function(){
+	   var _this = $(this);
+	   _this.data('id');
+	   $data ={
+			   id : _this.data('id')
+	   }
+	   //alert(_this.data('id'));
+	   var result = ajax_post_setup('?s=/Hotel/Order/Ajax_order_status_edit',$data);
+        if(result.status==0){
+        	alert(result.msg);
+        	window.location.href='?s=/Hotel/Order/index/';
+        }else{
+
+        	alert(result.msg);
+        }
+	   })
+})
+
+$(function (){
+	
+   $(".agree2").click(function(){
+	   var _this = $(this);
+	   var id = _this.data('id');
+
+	   var res = window.showModalDialog("?s=/Hotel/Order/noagree/id/"+id,"dialogWidth=200px;dialogHeight=100px");
+        
+        if(res==1){
+        	window.location.href='?s=/Hotel/Order/index/';  
+        }
+	   })
+})
+</script>
+<title>酒店管理系统</title>
+</head>
+
+<body class="bg1">
+<!--fly_css--> 
+<!--header-->
+<include file="Public:header" />
+<!--header-->
+<!--main-->
+<div class="cent">
+  <div class="blank3"></div>
+  <div class="hotle_list">
+  	<div class="search">
+    	
+        <span class="reserve">预定日期: <input type="text" class="reserve_date" readonly="true" /></span>
+        
+        <span class="reserve">入住日期: <input type="text" class="reserve_date" readonly="true" /></span>
+        
+        <span class="search_btn">搜索</span>
+    </div>
+    <div class="blank2"></div>
+    <table width="100%">
+      <tr>
+        <th>订单编号</th>
+        <th>预定日期</th>
+        <th>酒店名称</th>
+        <th>房型名称</th>
+		<th>房间数</th>
+		<th>价格</th>
+        <th>入住人姓名</th>
+        <th>电话</th>
+        <th>入住日期</th>
+		<th>离店日期</th>
+        <th>付款方式</th>
+        <th>会员来源</th>
+        <th>订单状态</th>
+        <th>意见</th>
+        <th>处理</th>
+      </tr>
+      <volist name="html['list']" id="vo" key="k" >
+      <tr>
+        <td>{$vo.order_sn}</td>
+        <td>{$vo.order_time}</td>
+        <td>{$vo.hotel_name}</td>
+        <td>{$vo.title}</td>
+		<td>{$vo.room_num}</td>
+		<td>{$vo.total_price}</td>
+        <td>{$vo.in_person}</td>
+        <td>{$vo.phone}</td>
+        <td>{$vo.in_date}</td>
+		<td>{$vo.out_date}</td>
+        <td><span class="red">{$vo.order_type}</span></td>
+        <td>{$vo.is_from}</td>
+        <td>{$vo.order_status}</td>
+        <td>{$vo.dispose}</td>
+        <td>
+        <if condition="($vo.dispose_status eq 0)" >
+        <input type="button" name="agree" id="agree" class="agree1 login_btns" data-id={$vo.id} value="同意"/>
+        <input type="button" name="agree" id="agree" class="agree2 login_btns" data-id={$vo.id} value="无法确认"/>
+        <else/>
+         已处理
+        </if>
+        </td>
+      </tr>
+      </volist>
+    </table>
+    <div class="blank3"></div>
+    <div align="right">
+    <a href="?s=/Hotel/Statement/dowload_order">
+    <input type="submit" class="login_btn" value="导出" />
+    </a>
+    </div>
+  </div>
+</div>
+
+<!--footer-->
+
+</body>
+</html>

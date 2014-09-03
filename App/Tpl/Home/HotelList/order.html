@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<meta HTTP-EQUIV="Expires" CONTENT="-1">
+<title>订单详情</title>
+<include file="Public:top" />
+
+<script type="text/javascript">
+
+	
+function china(str) {
+	ze = /^([\u4E00-\u9FA5\uf900-\ufa2dA-Za-z]){1,20}$/	 
+
+	var pattern = ze ;
+	return str.match(pattern);
+}
+
+function is_phone(obj){
+	var val = obj.value;
+	re= /^(1[345689][0-9]{9})$/  //判断手机号的正则表达式。
+	
+    if(!re.test(val) || val.length!=11){
+
+    	obj.focus();
+        alert('请输入正确的手机号'); 
+    }
+	
+}
+function submit_order(){
+   var Inperson       = document.getElementById('Inperson').value;
+   var telperson      = document.getElementById('telperson').value;
+   var tel            = document.getElementById('tel').value;
+   var house          = document.getElementById('house').value;
+   var room_id 		  = document.getElementById('room_id').value;
+   var checkinday       = document.getElementById('checkinday').value;
+   var checkoutday      = document.getElementById('checkoutday').value;
+   if(!Inperson){
+     alert('填写入住人');
+     return false;
+   }else {
+	if (!china(Inperson)){
+	     alert('您输入的的名字不正确');
+	     return false;
+	}
+   }
+   if(!telperson){
+     alert('填写联系人');
+     return false;
+   }
+   
+   if(!tel){
+     alert('请填写手机号');
+     return false;
+   }else{
+	    var val = document.getElementById('tel').value;
+		re= /^(1[345689][0-9]{9})$/  //判断手机号的正则表达式。
+		
+	    if(!re.test(val) || val.length!=11){
+	        alert('请输入正确的手机号'); 
+	        return false;
+	    }
+   }
+   $data={
+		   room_id : room_id,
+		   house :house,
+		   checkinday :checkinday,
+		   checkoutday : checkoutday
+   }
+   var result = ajax_post_setup('?s=/Home/HotelList/room_num_enough',$data);
+   if(result.status != 0 ){
+
+      alert(result.msg+result.data);
+      return false;
+   }
+
+   
+}
+
+//选择房间之后改变价格
+
+function changePrice(type){
+   
+   var house            = document.getElementById('house').value;
+   var checkinday       = document.getElementById('checkinday').value;
+   var checkoutday      = document.getElementById('checkoutday').value;
+   var room_id          = document.getElementById('room_id').value;
+   var pay_type             = type;
+   $data ={
+		   house       : house,
+		   checkinday  : checkinday,
+		   checkoutday : checkoutday,
+		   pay_type    : pay_type,
+		   room_id     : room_id
+		   
+  };
+  var result = ajax_post_setup('?s=/Home/HotelList/update_price',$data);
+
+  if(result.status ==0 ){
+       document.getElementById('order_total').innerHTML ='订单总额：'+result.data.total_price+'元';
+       document.getElementById('order_total1').value =result.data.total_price;
+       
+
+  }else{
+	  
+  }	
+  
+}
+
+</script>
+</head>
+<body>
+<!--fly_css-->
+
+<div >
+<form name="form" id="form" action="index.php?s=/Home/HotelList/done_order" method="post" onsubmit="return submit_order()" />
+  <div class="m_nav f34">
+  <span class="left">
+  <a href="javascript:history.back();">
+  <img src="{$Think.const.APP_PATH}Public/Home/images/m_dot1.png"></a></span>
+    <h6 align="center" style="margin :8px;" >订单填写</h6>
+     </div>
+     <div class="blank8"></div>
+  <div class="autohei m_boxbg1">
+   	<div class="m_txt1 ">
+   	<span class="left f30 zx5">{$html.list.title}</span></div>
+        <div class="blank"></div>
+    <div class="m_txt1">
+    <span class="zx2 f22 left">入住时间：</span> 
+    <span class="zx5 f18 left">{$html.checkinday}</span> 
+    <span class="zx2 f22 left padding_15">退房时间：</span> 
+    <span class="zx5 left f18"> {$html.checkoutday}</span>
+    <input type="hidden" value="{$html.checkinday}"  name="checkinday"   id="checkinday" />
+    <input type="hidden" value="{$html.checkoutday}" name="checkoutday"  id ="checkoutday" />
+    </div>
+  </div>
+  <div class="blank1"></div>
+  <div class="m_boxbg1 padding0 jd_info">
+  	<ul>
+    <li><span class="left zx2 f24">{$html.list.title}</span> 
+	    <select id='house' name='house' class="right zx7 f34 sel1" onchange="changePrice({$html.pay_type})" >
+            <for start="1" end="$html['list']['room_num']+1" >
+            <option value="{$i}" >{$i}间</option>
+            </for>
+            
+         </select>
+    </li>
+        <li style="border-bottom:none;">
+	<span class="left zx2 f24 wit120">入住人</span> 
+	<input type="text" id="Inperson" name="Inperson" class="stclick inp3 left stclick2" placeholder="" /> 
+	<!--class="left inp1"  -->
+	</li>
+    </ul>
+  </div>
+  <div class="blank1"></div>
+  <div class="m_boxbg1 padding0 jd_info">
+  	<ul>
+    	<li><span class="left zx2 f24 wit120">联系人</span>  
+	 <input type="text" id="telperson" name="telperson" class="stclick inp3 left stclick2" placeholder="" /></li>
+      <li><span class="left zx2 f24 wit120">手机</span>  
+      <input type="tel" class="stclick inp3 left stclick2" id="tel" name="tel" placeholder="" onblur="is_phone(this)" />
+      </li>
+ 
+      <li style="border-bottom:none;">
+      <span class="left zx2 f24 wit120">特殊要求</span> 
+      <textarea type="tel" name="yq" class="stclick inp3 left stclick2" placeholder="20点之前"></textarea>
+      </li>
+        
+    </ul>
+  </div>
+  <div class="blank1"></div>
+  <div class="foot_dd">
+    <input id="room_id" name="room_id" type="hidden" value="{$html.room_id}" />
+  	<span class="left f30" id="order_total" >订单总额：{$html.total_price}元</span>
+	<input type="hidden" value="{$html.total_price}" name="order_total" id="order_total1" />
+    <span class="right"><input type="image" src="{$Think.const.APP_PATH}Public/Home/images/submit.jpg" style=" vertical-align:top;" />
+    </span>
+  </div>
+  <input type="hidden" value="{$html.pay_type}"  name="pay_type" id="pay_type" />
+  <input type="hidden" value="{$html.user_code}" name="user_code" id="user_code" />
+  <input type="hidden" value="{$html.hotel_id}"   name="hotel_id" id="hotel_id" />
+</from>
+</div>
+</body>
+</html>

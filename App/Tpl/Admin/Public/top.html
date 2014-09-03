@@ -1,0 +1,117 @@
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+	<title>管理系统</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+	<meta content="" name="description" />
+
+	<meta content="" name="author" />
+
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+
+	<link href="{$Think.const.APP_PATH}Public/media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+	<link href="{$Think.const.APP_PATH}Public/media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+
+	<link href="{$Think.const.APP_PATH}Public/media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+	<link href="{$Think.const.APP_PATH}Public/media/css/style-metro.css" rel="stylesheet" type="text/css"/>
+
+	<link href="{$Think.const.APP_PATH}Public/media/css/style.css" rel="stylesheet" type="text/css"/>
+
+	<link href="{$Think.const.APP_PATH}Public/media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+
+	<link href="{$Think.const.APP_PATH}Public/media/css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+
+	<link href="{$Think.const.APP_PATH}Public/media/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+	
+	<link href="{$Think.const.APP_PATH}Public/media/css/flick/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />
+
+	<link href="{$Think.const.APP_PATH}Public/media/css/datetimepicker.css" rel="stylesheet" type="text/css" />
+
+	<!-- END GLOBAL MANDATORY STYLES -->
+
+	<link rel="shortcut icon" href="{$Think.const.APP_PATH}Public/media/image/favicon.ico" />
+	
+	<style type="text/css">
+		.required {
+			color:red;
+		}
+	</style>
+<script type="Text/Javascript" language="JavaScript">
+<!--
+
+onload = function()
+{
+  // 开始检查订单
+  startCheckOrder();
+}
+/* 检查新订单的时间间隔 */
+var NEW_ORDER_INTERVAL = 180000;
+//var NEW_ORDER_INTERVAL = 10000;
+/* *
+ * 开始检查新订单；
+ */
+function startCheckOrder()
+{
+  checkOrder()
+  window.setInterval("checkOrder()", NEW_ORDER_INTERVAL);
+}
+
+function checkOrder()
+{
+  var lastCheckOrder = new Date(getCookie('ECS_LastCheckOrder'));
+  var today = new Date();
+
+  if (lastCheckOrder == null || today-lastCheckOrder >= NEW_ORDER_INTERVAL)
+  {
+	  document.cookie=name + "="+today.toGMTString()
+    //document.setCookie('ECS_LastCheckOrder', today.toGMTString());
+
+    try
+    { 
+        $.ajax({
+        	type: "GET",
+
+            url: "index.php?s=/Admin/HotelOrder/check_order",
+
+            data: {},
+
+            dataType: "json",
+
+            success:function(data){
+                if(data.new_orders>0){
+    
+                   var html = '<span>'+data.msg+'('+data.new_orders+')</span>'+
+                   "<audio src='App/Public/123.mp3'  autoplay='autoplay'  	loop='loop'>Your browser does not support the audio element.</audio>"
+                   
+                   $("#show_order_info").html(html);  
+                   $("#show_order").show();
+                }
+
+            }
+    
+            })
+      //Ajax.call('index.php?is_ajax=1&act=check_order','', checkOrderResponse, 'GET', 'JSON');
+    }
+    catch (e) { }
+  }
+}
+function getCookie(name)
+{
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+ 
+    if(arr=document.cookie.match(reg))
+ 
+        return unescape(arr[2]);
+    else
+        return null;
+} 
+
+function close(){
+	$("#show_order_info").html('');
+  $("#show_order").hide();
+	
+}
+//-->
+</script>
+	

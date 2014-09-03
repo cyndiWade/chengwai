@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>	<!-- 全局样式 -->	<include file="Public:top" />
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" href="{$Think.const.APP_PATH}Public/media/css/select2_metro.css" />
+	<link rel="stylesheet" href="{$Think.const.APP_PATH}Public/media/css/DT_bootstrap.css" />
+	<!-- END PAGE LEVEL STYLES -->	<style type="text/css">					</style>	
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+	<include file="Public:header" />
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container row-fluid">
+		<!-- 左侧导航 -->		<include file="Public:sidebar" />
+		<!-- BEGIN PAGE -->
+		<div class="page-content">
+			<!-- BEGIN PAGE CONTAINER-->        
+			<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<h3 class="page-title">
+							{$global_tpl_view.module_name}<small> {$global_tpl_view.action_name}</small>
+						</h3>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->
+						<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption"><i class="icon-globe"></i>{$global_tpl_view.title_name}</div>
+								<div class="tools">
+									<a href="javascript:;" class="collapse"></a>									
+									<a href="javascript:;" class="reload"></a>			
+								</div>
+							</div>
+							<div class="portlet-body">
+								<div class="clearfix">
+									<div class="btn-group">								
+										<button  class="btn green btn_bak" data-url="{:U('Admin/RoomPutaway/putaway_edit',array('act'=>'add','hotel_room_id'=>$html['hotel_room_id']))}" data-record_prev="1">
+										{$global_tpl_view.add_name} <i class="icon-plus"></i>
+										</button>					
+									</div>									<!--										<div class="btn-group">										<a data-toggle="dropdown" href="#" class="btn">											<i class="m-icon-swapleft"></i>										</a>										<ul class="dropdown-menu">											<li><a href="javascript:;" class="btn_bak" data-url="{:U('Admin/HotelRoom/index',array('hotel_id'=>$html['hotel_id']))}" ><i class="icon-arrow-left"></i> 返回上一层</a></li>										</ul>									</div>									 -->								</div>		
+								<table class="table table-striped table-bordered table-hover sample_1">
+									<thead>
+										<tr>
+											<th>序号</th>
+											<th>开始日期</th>
+											<th>结束日期</th>											<th>添加日期</th>	
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>																		<volist name="html['list']" id="vo" key="i">
+										<tr class="odd gradeX">
+											<td >{$i}</td>
+											<td>{$vo.start_time}</a></td>											<td >{$vo.over_time}</td>											<td >{$vo.create_time}</td>
+											<td class="center">												<a href="javascript:;" class="btn_bak"  data-url="{:U('Admin/RoomPutaway/putaway_edit',array('act'=>'update','room_putaway_id'=>$vo['id']))}" data-record_prev="1">编辑</a>												| <a  href="{:U('Admin/RoomPutaway/putaway_edit',array('act'=>'delete','room_putaway_id'=>$vo['id']))}" class="check" >删除</a>											</td>
+										</tr>										</volist>
+									</tbody>
+								</table>
+							</div>	
+						</div>
+						<!-- END EXAMPLE TABLE PORTLET-->
+					</div>
+				</div>				<!-- END PAGE CONTENT-->
+			</div>
+			<!-- END PAGE CONTAINER-->
+		</div>
+		<!-- END PAGE -->
+	</div>
+	<!-- END CONTAINER -->
+	<!-- 页脚 -->	<include file="Public:foot" />	<!-- 核心插件 -->	<include file="Public:bottom" />
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/select2.min.js"></script>
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/DT_bootstrap.js"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/app.js"></script>	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/table-managed-Admin-RoomPutaway-index.js"></script>   	
+	<script type="text/javascript">
+		jQuery(document).ready(function() {       
+		   App.init();
+		   TableManaged.init();
+		});
+	</script>	</body>
+
+<!-- END BODY -->
+</html>

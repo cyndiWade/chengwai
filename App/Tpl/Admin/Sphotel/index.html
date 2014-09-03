@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- 全局样式 -->	<include file="Public:top" />
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" href="{$Think.const.APP_PATH}Public/media/css/select2_metro.css" />
+	<link rel="stylesheet" href="{$Think.const.APP_PATH}Public/media/css/DT_bootstrap.css" />
+	<!-- END PAGE LEVEL STYLES -->
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+	<!-- 页头 -->	<include file="Public:header" />
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container row-fluid">
+		<!-- 左侧导航 -->		<include file="Public:sidebar" />
+		<!-- BEGIN PAGE -->
+		<div class="page-content">
+			<!-- BEGIN PAGE CONTAINER-->        
+			<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<h3 class="page-title">
+								{$global_tpl_view.module_name}<small> {$global_tpl_view.action_name}</small>
+						</h3>
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->
+						<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption">								<i class="icon-globe"></i>{$global_tpl_view.title_name} 								<if condition="($html['merchant_id'] neq 0 )">								<a href="?s=/Admin/Sphotel/hotel_edit/act/add/merchant_id/{$html.merchant_id}.html">添加								</a>								</if>								</div>
+								<div class="tools">
+									<a href="javascript:;" class="reload"></a>
+									<a href="javascript:;" class="remove"></a>
+								</div>
+							</div>
+							<div class="portlet-body">
+								<table class="table table-striped table-bordered table-hover table-full-width" id="sample_1">
+									<thead>
+										<tr>											<th>标识</th>											<th>酒店名称</th>											<th>星级</th>
+											<th class="hidden-480">省份</th>
+											<th class="hidden-480">城市</th>																					<th class="hidden-480">区域</th>																				<th class="hidden-480">地址</th>										
+											<th class="hidden-480">评分</th>																					<th class="hidden-480">电话</th>											<th >操作</th>											
+										</tr>
+									</thead>
+									<tbody>										<volist name="html['list']" id="vo">
+										<tr>											<td>{$vo.id}</td>
+											<td>{$vo.hotel_name}</td>
+											<td>{$vo.hotel_xj}</td>
+											<td class="hidden-480">{$vo.hotel_sf}</td>
+											<td class="hidden-480">{$vo.hotel_cs}</td>
+											<td class="hidden-480">{$vo.hotel_q}</td>																							<td class="hidden-480">{$vo.hotel_dz}</td>												<td class="hidden-480">{$vo.hotel_pf}</td>											<td class="hidden-480">{$vo.hotel_tel}</td>											<td class="center">												<a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/Sphotel/hotel_edit',array('act'=>'update','hotel_id'=>$vo['id']))}">详情</a>												| <a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/Sphotel/hotel_img',array('hotel_id'=>$vo['id']))}">酒店图片</a>												| <a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/SphotelRoom/index',array('hotel_id'=>$vo['id']))}">房型</a>												<!--												| <a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/Preference/hotel_preference',array('hotel_id'=>$vo['id']))}">设置特惠</a>												-->												| <a  href="{:U('Admin/Sphotel/hotel_edit',array('act'=>'delete','hotel_id'=>$vo['id']))}" class="check" >删除</a>											</td>
+										</tr>										</volist>
+								</table>
+							</div>
+						</div>
+						<!-- END EXAMPLE TABLE PORTLET-->
+					</div>
+				</div>
+				<!-- END PAGE CONTENT-->
+			</div>
+			<!-- END PAGE CONTAINER-->
+		</div>
+		<!-- END PAGE -->
+	</div>
+	<!-- END CONTAINER -->
+	<!-- 页脚 -->	<include file="Public:foot" />	<!-- 核心插件 -->	<include file="Public:bottom" />	
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/select2.min.js"></script>
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/DT_bootstrap.js"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/app.js"></script>
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/table-advanced-Admin-Hotel-index.js"></script>     
+	<script type="text/javascript">
+		jQuery(document).ready(function() {       
+		   App.init();
+		   TableAdvanced.init();
+		});
+	</script>
+ </body>
+<!-- END BODY -->
+</html>

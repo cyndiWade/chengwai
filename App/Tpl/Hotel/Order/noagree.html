@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="{$Think.const.APP_PATH}Public/Hotel/css/hotel.css" type="text/css" rel="stylesheet" />
+<script src="{$Think.const.APP_PATH}Public/Hotel/js/jquery-1.7.1.min.js"></script>
+<script src="{$Think.const.APP_PATH}Public/Hotel/js/hotel.date.js"></script>
+<script src="{$Think.const.APP_PATH}Public/Hotel/js/hotel.common.js"></script>
+<script src='{$Think.const.APP_PATH}Public/Hotel/js/function.js'></script>
+<script>
+$(function (){
+	
+   $("#sub").click(function(){
+	   var id = $("#id").val();
+	   var con = $("#con").val();
+	   if(!con){
+		   alert('输入拒绝理由');
+		   return false;
+	   }
+       $data = {
+    	       id:id,
+    	       con:con
+       }
+	   var result = ajax_post_setup('?s=/Hotel/Order/Ajax_order_jujue_status',$data);
+       if(result.status==0){
+       	alert(result.msg);
+        window.returnValue = 1;
+       	window.close();
+       }else{
+
+       	alert(result.msg);
+       }
+	 
+	  
+	  })
+})
+
+</script>
+<title>酒店管理系统</title>
+</head>
+<body>
+<include file="Public:header" />
+<form action="">
+
+拒绝的理由<textarea id="con" name="con">
+</textarea>
+<input type="hidden" name="id" id="id" value="{$html.id}" />
+<input type="button" name="sub" id='sub' value='确定'> 
+<input type="reset" name="button" id="button" value="取消" />
+</form>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+
+<!-- BEGIN HEAD -->
+
+<head>
+	
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/Hotel/js/jquery-1.7.min.js"></script>
+	<script  src="{$Think.const.APP_PATH}Public/Hotel/bootstrap/js/bootstrap.min.js" type="text/javascript" ></script>
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/Hotel/bootstrap/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+	<script src="{$Think.const.APP_PATH}Public/Hotel/bootstrap/js/locales/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" ></script>
+	<link href="{$Think.const.APP_PATH}Public/Hotel/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="{$Think.const.APP_PATH}Public/Hotel/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+	
+	<link href="{$Think.const.APP_PATH}Public/Hotel/css/hotel.css" type="text/css" rel="stylesheet" />
+	<!-- 全局样式 -->
+	<include file="Public:top1" />
+
+	<!-- BEGIN PAGE LEVEL STYLES -->
+
+	
+	<script type="text/javascript">
+	
+	</script>
+	<title>酒店管理系统</title>
+</head>
+
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+
+<body class="page-header-fixed">
+
+	<include file="Public:header" />
+
+	<!-- BEGIN CONTAINER -->
+
+	<div class="page-container row-fluid">
+
+		<!-- 左侧导航 -->
+		<include file="Public:sidebar" />
+
+		<!-- BEGIN PAGE -->  
+
+		<div class="page-content" style="margin-left:0px;">
+
+			<!-- BEGIN PAGE CONTAINER-->
+
+			<div class="container-fluid">
+
+				<!-- BEGIN PAGE HEADER-->   
+
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN STYLE CUSTOMIZER -->
+						<!-- END BEGIN STYLE CUSTOMIZER -->     
+
+						<h3 class="page-title">
+
+						{$global_tpl_view.module_name}<small> {$global_tpl_view.action_name}</small>
+
+						</h3>
+		
+					</div>
+
+				</div>
+
+				<!-- END PAGE HEADER-->
+
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN VALIDATION STATES-->
+
+						<div class="portlet box blue">
+
+							<div class="portlet-title">
+
+								<div class="caption"><i class="icon-reorder"></i>{$global_tpl_view.title_name}</div>
+
+								<div class="tools">
+
+									<a href="javascript:;" class="collapse"></a>
+
+									<a href="javascript:;" class="reload"></a>				
+
+								</div>
+
+							</div>
+
+							<div class="portlet-body form">
+
+								<!-- BEGIN FORM-->
+
+								<form action="" id="form_sample_1" method="post" class="form-horizontal">
+                     
+									<div class="alert alert-error hide">
+
+										<button class="close" data-dismiss="alert"></button>
+
+										请在文本框输入相应内容.
+
+									</div>
+
+									<div class="alert alert-success hide">
+
+										<button class="close" data-dismiss="alert"></button>
+
+										验证成功
+
+									</div>
+
+									<div class="control-group">
+										<label class="control-label">备注内容：</label>
+										<div class="controls">
+											<textarea rows="3" name="yuangong" class="span4 m-wrap">{$html.yuangong}</textarea>
+										</div>
+									</div>
+									
+									<div class="form-actions">			
+										<button type="submit" class="btn purple">提交</button>
+										<button class="btn" type="reset">重置</button>
+									</div>
+
+								</form>
+
+								<!-- END FORM-->
+
+							</div>
+
+						</div>
+
+						<!-- END VALIDATION STATES-->
+
+					</div>
+
+				</div>
+				<!-- END PAGE CONTENT-->         
+
+			</div>
+
+			<!-- END PAGE CONTAINER-->
+
+		</div>
+
+		<!-- END PAGE -->  
+
+	</div>
+
+	<!-- END CONTAINER -->
+
+	<!-- 页脚 -->
+	<include file="Public:foot" />
+
+
+	<script type="text/javascript">
+
+	var wade_datetimepicker = function () {
+		var options = {
+		    format: 'yyyy-mm-dd',
+			language:  'zh-CN',
+	        weekStart: 1,
+	        todayBtn:  1,
+			autoclose: 1,
+			todayHighlight: 1,
+			startView: 2,
+			forceParse: 0,
+	        showMeridian:1,
+			 todayBtn:1,
+			forceParse: 0,
+			minView: 2,
+		};
+		$('.tjr_datetimepicker').datetimepicker(options);
+	}();
+
+	</script>
+
+	<!-- END JAVASCRIPTS -->   
+
+
+<!-- END BODY -->
+
+</html>

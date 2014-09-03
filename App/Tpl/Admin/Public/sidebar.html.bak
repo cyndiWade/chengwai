@@ -1,0 +1,315 @@
+<!-- BEGIN SIDEBAR -->
+
+		<div class="page-sidebar nav-collapse collapse">
+
+			<!-- BEGIN SIDEBAR MENU -->        
+
+			<ul class="page-sidebar-menu wade_menu">
+
+				<li>
+
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+
+					<div class="sidebar-toggler hidden-phone"></div>
+  
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+
+				</li>
+	
+				<li class="">
+					<a href="javascript:;">
+
+					<i class="icon-user"></i> 
+
+					<span class="title">个人中心</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+						<li >
+							<a href="{:U('Admin/User/personal')}">个人信息</a>
+						</li>
+					</ul>
+				</li>
+	
+	
+				<li class="">
+					<a href="javascript:;">
+
+					<i class="icon-group"></i> 
+
+					<span class="title">商家管理</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+						<li >
+							<a href="{:U('Admin/Hotel/index')}">酒店列表</a>
+						</li>
+					</ul>
+				</li>
+				
+				<li class="">
+					<a href="javascript:;">
+
+					<i class="icon-file-text"></i> 
+
+					<span class="title">订单管理</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+						<li>
+							<a href="{:U('Admin/HotelOrder/index')}">所有订单</a>
+						</li>
+						<li>
+							<a href="{$global_tpl_view['order']['url'][0]}">酒店拒绝订单</a>
+						</li>
+					</ul>
+				</li>
+				
+				<li class="">
+					<a href="javascript:;">
+
+					<i class="icon-gift"></i> 
+
+					<span class="title">优惠管理</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+						<li>
+							<a href="{:U('Admin/Coupon/index')}">优惠列表</a>
+						</li>
+						<li>
+							<a href="{:U('Admin/Coupon/coupon_edit',array('act'=>'add'))}">添加优惠</a>
+						</li>
+					</ul>
+				</li>
+				
+				<li class="">
+					<a href="javascript:;">
+
+					<i class="icon-gift"></i> 
+
+					<span class="title">会员礼遇</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+						<li>
+							<a href="{:U('Admin/Gift/index')}">礼包列表</a>
+						</li>
+					</ul>
+				</li>
+				
+				<li class="">
+					<a href="javascript:;">
+
+					<i class="icon-gift"></i> 
+
+					<span class="title">每日特惠</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+						<!-- <li>
+							<a href="{:U('Admin/Merchant/index')}">商家管理</a>
+						</li> -->
+						<li>
+							<a href="{:U('Admin/Spmerchant/index')}">特惠商家管理</a>
+						</li>
+						<li>
+							<a href="{:U('Admin/SphotelOrder/index')}">每日特惠订单</a>
+						</li>
+
+					
+						<!-- 
+						<li>
+							<a href="{:U('Admin/Coupon/coupon_edit',array('act'=>'add'))}">添加优惠</a>
+						</li>
+						-->
+					</ul>
+				</li>
+				
+				<li class="">
+					<a href="javascript:;">
+
+					<i class="icon-book"></i> 
+
+					<span class="title">语义分析</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+						<li>
+							<a href="{:U('Admin/Siri/index')}">关键字集</a>
+						</li>
+						<li>
+							<a href="{:U('Admin/Siri/edit',array('act'=>'add'))}">添加关键字</a>
+						</li>
+					</ul>
+				</li>
+				
+				<li class="">
+					<a href="javascript:;">
+
+					<i class="icon-male"></i> 
+
+					<span class="title">会员管理</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+						<li>
+							<a href="{:U('Admin/Member/wx_index')}">微信会员</a>
+						</li>
+	
+					</ul>
+				</li>
+				
+				<li class="">
+					<a href="javascript:;">
+
+					<i class="icon-barcode"></i> 
+
+					<span class="title">二维码管理</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+						
+						<li>
+							<a href="{:U('Admin/WxCode/manage')}">已分配</a>
+						</li>
+						
+						<li>
+							<a href="{:U('Admin/WxCode/allocation')}">待分配</a>
+						</li>
+					</ul>
+				</li>
+				
+				<li class="">
+					<a href="javascript:;">
+					<i class="icon-cogs"></i>
+					<span class="title">图文回复管理</span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a href="{:U('Admin/Msg/index')}">图文回复</a>
+						</li>
+						
+					</ul>
+				</li>
+
+				<li class="">
+					<a href="javascript:;">
+					<i class="icon-cogs"></i>
+					<span class="title">系统管理</span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a href="{:U('Admin/User/index')}">账号管理</a>
+						</li>
+						<li>
+							<a href="{:U('Admin/Rbac/rbac_node',array('pid'=>0))}">节点管理</a>
+						</li>
+						<li >
+							<a href="{:U('Admin/Rbac/group')}">分组授权</a>
+						</li>
+						<!--
+						<li >
+							<a href="{:U('Admin/Rbac/group_node')}">
+							组权限</a>
+						</li>
+						 -->
+					</ul>
+				</li>
+				
+				<!--
+				<li class="">
+
+					<a href="javascript:;">
+
+					<i class="icon-th"></i> 
+
+					<span class="title">数据表</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+
+						<li >
+
+							<a href="?s=/Admin/Table/table_basic.html">
+
+							基本表</a>
+
+						</li>
+
+						<li >
+
+							<a href="?s=/Admin/Table/table_responsive.html">
+
+							响应表</a>
+
+						</li>
+
+						<li >
+
+							<a href="?s=/Admin/Table/table_managed.html">
+
+							管理表</a>
+
+						</li>
+
+						<li >
+
+							<a href="?s=/Admin/Table/table_editable.html">
+
+							可编辑表格</a>
+
+						</li>
+
+						<li >
+
+							<a href="?s=/Admin/Table/table_advanced.html">
+
+							高级表</a>
+
+						</li>
+
+					</ul>
+		
+				</li>
+				 -->
+
+			</ul>
+
+			
+		<!-- END SIDEBAR MENU -->
+		</div>
+
+		<!-- END SIDEBAR -->

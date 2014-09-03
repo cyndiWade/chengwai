@@ -1,0 +1,36 @@
+<!--header-->
+<div class="head">
+  <div class="cent" style=" ">
+    <h1 class="left"><img src="{$Think.const.APP_PATH}Public/Hotel/image/hotel.logo.jpg" /></h1>
+	
+    <div style="float:right; margin-top:76px;">
+		<a style="color:#fff; font-size:16px;" href="?s=/Hotel/Login/logout.html" >退出</a></br>
+		<a style="color:#fff; font-size:16px;" href="?s=/Hotel/Login/setPassWord.html" >修改密码</a>
+	</div>
+	 
+    <div class="menu right">
+      <ul>
+        <li class="menulist1"> 
+          <a href="?s=/Hotel/Business/index/" <if condition="($html['hover'] eq '/Hotel/Business/')">class="hover"</if> >商家管理</a>
+         <!--  <div class="menulist_cont1">
+            <p><a href="#">我的酒店</a></p>
+            <p><a href="#">餐饮</a></p>
+            <p><a href="#">旅游</a></p>
+            <p><a href="#">租车</a></p>
+            <p><a href="#">娱乐</a></p>
+            <p><a href="#">购物</a></p>
+          </div> -->
+        </li>
+        <li><a href="?s=/Hotel/Order/index/" <if condition="($html['hover'] eq '/Hotel/Order/')">class="hover"</if> >订单管理</a></li>
+        <li><a href="?s=/Hotel/Index/index/"  <if condition="($html['hover'] eq '/Hotel/Index/')">class="hover"</if>>客户管理</a> </li>
+        <li><a href="?s=/Hotel/Property/index/" <if condition="($html['hover'] eq '/Hotel/Property/')">class="hover"</if>>财务管理</a> </li>
+      
+      </ul>
+      
+    </div>
+     <div class="clear"></div>
+     
+  </div>
+  
+</div>
+<!--header-->

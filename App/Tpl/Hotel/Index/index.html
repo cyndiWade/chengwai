@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="{$Think.const.APP_PATH}Public/Hotel/css/hotel.css" type="text/css" rel="stylesheet" />
+<script src="{$Think.const.APP_PATH}Public/Hotel/js/jquery-1.7.1.min.js"></script>
+<script src="{$Think.const.APP_PATH}Public/Hotel/js/hotel.common.js"></script>
+<title>酒店管理系统</title>
+</head>
+<body class="bg1">
+<!--fly_css--> 
+<!--header-->
+<include file="Public:header" />
+<!--header-->
+<!--main-->
+<div class="cent">
+
+  <div class="blank3"></div>
+  <div class="hotle_list">
+    <table width="100%">
+      <tr>
+        <th>编号</th>
+        <th>会员姓名</th>
+        <th>手机号</th>
+        <th>关注时间</th>
+        <th>来源推荐人</th>
+      </tr>
+      <volist name="html['list']" id="vo" key="k" >
+      <tr>
+        <td>{$vo.uid}</td>
+        <td>{$vo.uname}</td>
+        <td>{$vo.phone} 
+        <if condition="($vo['phone'] neq '')">
+                     <a target='_blank' href='?s=/Hotel/Index/send_sms/phone/{$vo.phone}.html'>发送短信</a>
+        </if>
+        </td>
+        <td>{$vo.subscribe_time}</td>
+        <!--<td>{$vo.hotel_remarks}</td>-->
+        <td>{$vo.yuangong}</td>
+      </tr>
+      </volist>
+    </table>
+    <div class="blank3"></div>
+    <div align="center">
+    <a href="?s=/Hotel/Statement/down_wxuser" >
+    <input type="button" class="login_btn" value="导出" />
+    </a>
+    </div>
+  </div>
+</div>
+<!-- main -->
+<!--footer-->
+<!--footer-->
+</body>
+</html>

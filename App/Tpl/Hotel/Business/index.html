@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="{$Think.const.APP_PATH}Public/Hotel/css/hotel.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="{$Think.const.APP_PATH}Public/Hotel/css/jquery.popup.css" type="text/css">
+
+<script src="{$Think.const.APP_PATH}Public/Hotel/js/jquery-1.7.1.min.js"></script>
+<script src="{$Think.const.APP_PATH}Public/Hotel/js/hotel.common.js"></script>
+
+<!--
+<script type="text/javascript" src="{$Think.const.APP_PATH}Public/Hotel/js/jquery-1.7.min.js"></script>
+ -->
+<script type="text/javascript" src="{$Think.const.APP_PATH}Public/Hotel/js/jquery.popup.js"></script>
+<script type="text/javascript">
+    $(function() {
+		
+		
+		//查看详情
+		(function () {
+			var btn_alert_check = $(".js__p_start");
+			btn_alert_check.click(function () {
+				var _this = $(this);
+				
+				$.get("?s=/Hotel/Business/ajax_info",{id:_this.data('id')}, function(data){
+				 
+				  $(".p_content").html(data);
+				});			
+				
+			});
+			btn_alert_check.simplePopup();
+			
+		})();
+		
+		
+    });
+</script>
+<title>酒店管理系统</title>
+</head>
+<body class="bg1">
+<!--fly_css--> 
+<!--header-->
+<include file="Public:header" />
+<!--header-->
+<!--main-->
+
+<volist name="html['list']" id="vo" key="k" >
+<div class="cent">
+  <div class="blank3"></div>
+  <div class="tit1 autohei">
+    <h3 class="blue left">{$vo.hotel_name}</h3>
+    <span class="star">
+    <for start="0" end="$vo['hotel_xj']">
+    <img src="{$Think.const.APP_PATH}Public/Hotel/image/hotel.star1.png" />
+    </for>
+    </span> 
+ </div>
+  <div class="autohei hotel_info">
+    	<span class="left">   
+    	  <img src="{$vo.logo.url}" width="120" height="120" />
+    	</span>       
+        <div class="autohei">
+        	<p ><span class="red score">{$vo.hotel_pf}分</span></p>
+            <P>{$vo.hotel_sf}{$vo.hotel_cs}{$vo.hotel_q}| {$vo.hotel_syq} | {$vo.hotel_dz}</P>
+            <P>电话: <span  class="phone">{$vo.hotel_tel}</span>
+				<span class="phone"><a target="_blank" href="?s=/Hotel/WxCode/index/hotel_id/{$vo.id}">查看二维码</a></span>
+			</P>
+        </div>
+    </div>
+  <div class="hotle_list">
+    
+   	<table width="100%">
+    	<tr>
+        	<th>房型</th>
+            <th>详情</th>
+            <th>价格</th>
+            <th>操作</th>
+        </tr>
+        <volist name="vo['room']" id="vo_room" >
+        <tr>
+       	    <td><span class="blue">{$vo_room.title}</span></td>
+            <td><a href="javasrcipt:;" class="js__p_start" data-id="{$vo_room.id}">查看详情</a></td>
+            <td><a target="_blank" href="?s=/Hotel/RoomSchedule/index/hotel_room_id/{$vo_room.id}" >日历编辑</a></td>
+            <td><a target="_blank" href="?s=/Hotel/RoomPutaway/index/hotel_room_id/{$vo_room.id}/hotel_id/{$vo_room.hotel_id}" >下架设置</a></td>
+        </tr>
+        </volist>
+       
+    </table>
+    
+ </div>
+</div>
+</volist>
+<!--main-->
+<!--footer-->
+<div class="p_body js__p_body js__fadeout"></div>
+
+<div class="popup js__popup js__slide_top">
+    <a href="#" class="p_close js__p_close" title="关闭"></a>
+     <h1 style="font-size:20px;font-weight:bold;">房型详情 </h1>
+    <div class="p_content">
+         
+         
+    </div>
+</div>
+
+
+<!--footer-->
+</body>
+</html>

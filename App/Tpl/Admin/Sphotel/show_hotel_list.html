@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- 全局样式 -->	<include file="Public:top" />
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" href="{$Think.const.APP_PATH}Public/media/css/select2_metro.css" />
+	<link rel="stylesheet" href="{$Think.const.APP_PATH}Public/media/css/DT_bootstrap.css" />
+	<!-- END PAGE LEVEL STYLES -->	<style type="text/css">		.hotel_checkbox {		}	</style>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-sidebar-closed">
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container row-fluid">
+
+		<!-- BEGIN PAGE -->
+		<div class="page-content">
+			<!-- BEGIN PAGE CONTAINER-->        
+			<div class="container-fluid">
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->
+						<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption"><i class="icon-globe"></i>{$global_tpl_view.title_name}</div>
+								<div class="tools">
+									<a href="javascript:;" class="reload"></a>
+									<a href="javascript:;" class="remove"></a>
+								</div>
+							</div>
+							<div class="portlet-body">
+								<table class="table table-striped table-bordered table-hover sample_1">
+									<thead>
+										<tr>											<th>标识</th>											<th>酒店名称</th>											<th>星级</th>
+											<th >省份</th>
+											<th>城市</th>																					<th>区域</th>																		
+											<th>评分</th>																					<th>选择</th>											
+										</tr>
+									</thead>
+									<tbody>										<volist name="html['list']" id="vo">
+										<tr>											<td>{$vo.id}</td>
+											<td>{$vo.hotel_name}</td>
+											<td>{$vo.hotel_xj}</td>
+											<td class="hidden-480">{$vo.hotel_sf}</td>
+											<td class="hidden-480">{$vo.hotel_cs}</td>
+											<td class="hidden-480">{$vo.hotel_q}</td>																							<td class="hidden-480">{$vo.hotel_pf}</td>											<td class="center">												<!--												<input type="checkbox"  class="hotel_checkbox" value="{$vo.id}" />												 -->												 <input type="radio" name="hotel_id" class="hotel_checkbox" value="{$vo.id}" />											</td>
+										</tr>										</volist>
+								</table>								<p><button class="btn green big btn-block" id="btn_affirm">确认分配！</button></p>
+							</div>							
+						</div>
+					</div>
+				</div>
+				<!-- END PAGE CONTENT-->
+			</div>
+			<!-- END PAGE CONTAINER-->
+		</div>
+		<!-- END PAGE -->
+	</div>
+	<!-- END CONTAINER -->
+	<!-- 页脚 -->	<include file="Public:foot" />	<!-- 核心插件 -->	<include file="Public:bottom" />	
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/select2.min.js"></script>
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/DT_bootstrap.js"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/table-managed-Admin-Public.js"></script>     
+	<script type="text/javascript">
+		jQuery(document).ready(function() {       
+		    TableManaged.init();			var btn_affirm = $('#btn_affirm');			var url = '?s=/Admin/WxCode/AJAX_set_code_from_hotel';						btn_affirm.click(function () {				var hotel_checkbox = $('.hotel_checkbox');	//酒店的ID				var hotel_ipt_check = false;				var hotel_id;								hotel_checkbox.each(function () {					var _this = $(this);						if (_this.prop('checked') == true) {											hotel_ipt_check = true;						hotel_id = _this.val();						return false;					} 				});								if (hotel_ipt_check == false) {						alert('请选择一家酒店')						return false;				}								var server_result = ajax_post_setup(url,{'code_ids':getQueryString('code_ids'), 'hotel_id':hotel_id});				if (server_result == false) {					alert('连接超时');				} else if (server_result.status == 0) {					alert(server_result.msg);				} else {					alert(server_result.msg);				}							});
+		});
+	</script>
+ </body>
+<!-- END BODY -->
+</html>

@@ -1,0 +1,92 @@
+@CHARSET "UTF-8";
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, font { padding:0; margin: 0; font-family: "黑体", Arial, Helvetica, sans-serif; }
+table { border-collapse:collapse; border-spacing:0; }
+fieldset, img { border:0; vertical-align:top; }
+h1, h2, h3, h4, h5, h6 { font-weight:normal; font-size:100%; }
+ol, ul, li, dl, dt, dd { list-style:none; }
+input, button, textarea, checkbox, select, radio, form { vertical-align: top; }
+a { color:#000; text-decoration:none; }
+a:link, a:visited { text-decoration:none; }
+a:hover { text-decoration:underline; }
+.red, .red a { color:#f56504; }
+.blue,.blue a{ color:#1089c8}
+.left { float:left; }
+.right { float:right; }
+.autohei { height:auto; overflow:hidden; zoom:1; }
+.clear { font-size:0; line-height:0; clear:both; overflow:hidden; zoom:1; }
+.blank { height:10px; font-size:0; line-height:0; clear:both; overflow:hidden; }
+.blank2 { height:20px; font-size:0; line-height:0; clear:both; overflow:hidden; }
+.blank3 { height:30px; font-size:0; line-height:0; clear:both; overflow:hidden; }
+body { font-size:12px;}
+.bg0{ background:#000}
+.bg1{ background:#e7e7e7}
+
+
+/*main-login*/
+.login{ width:449px; height:440px;  position:absolute; top:50%;  left:50%;margin-top:-220px; margin-left:-190px;}
+.logo{ padding-bottom:80px;}
+.login_form p { padding:0 0 25px;}
+.login_form p label{ color:#fff; font-size:18px; line-height:40px; width:90px; padding:0 15px; text-align:right; display:inline-block;}
+.login_name{ color:#999}
+.input1{ border:#ffc05e 1px solid; background:#fff4cb; width:230px; padding:0 10px; height:38px; line-height:38px; font-size:18px;}
+.login_btn{ background:#fc7317; font-size:24px; line-height:35px; color:#fff; width:85pxpx; display:inline-block; text-align:center; height:32px; border:none; cursor:pointer;}
+.login_btns{ margin-top:7px;background:#fc7317; font-size:20px; line-height:35px; color:#fff; width:85px; display:inline-block; text-align:center; height:32px; border:none; cursor:pointer;}
+.login_btn_hover{ background:#f29e66;}
+
+/* merchant */
+.head{ background:#000; height:120px;}
+.cent{ width:1000px; margin:0 auto;}
+.head h1.left{ padding-top:24px;}
+.menu ul li{ float:left; width:180px;position:relative;}
+.menu ul li a{ display:block; height:80px; padding-top:40px; text-align:center; line-height:80px; font-size:30px; color:#dfddd7;}
+.menu_hover{ background:#3c3c3c; text-decoration:none}
+.menu ul li a:hover,.menu ul li a.hover{ background:#3c3c3c; text-decoration:none}
+.menu ul li p a{ height:60px; line-height:60px; padding:0; font-size:24px;}
+.menu ul li p a:hover{ background:#000; color:#e1b24a}
+
+.menulist_cont1{ background:#3c3c3c; display:none;  position:absolute; left:0;top:120px; width:180px;}
+
+.tit1 h3{ display:inline;font-size:30px; padding:30px 0; line-height:30px;height:30px;}
+.tit1 span { padding:35px 0 25px 20px; display:inline-block;}
+.tit1 span img{ vertical-align: middle; margin:0 1px;}
+
+.hotel_info{ padding:10px 0 30px;}
+.hotel_info span.left{ display:inline; margin-right:30px;}
+.hotel_info p{ font-size:18px; color:#4f4f4f; line-height:38px;}
+.phone{ color:#3c3c3c}
+
+.hotle_list{ text-align:center;}
+.hotle_list th{ height:50px; text-align:center; line-height:50px;background:#000; color:#e1b24a; font-size:16px;}
+.hotle_list td{ border-right:1px solid #E1B24A; height:50px; line-height:50px;  font-size:18px; color:#3c3c3c}
+.hotle_list tr{ border-bottom:#e1b24a 2px solid;}
+.hotle_list tr.hover{ background:#eccd92;}
+/* merchant_repast_detail */
+.hotle_main{ width:630px; margin:30px auto 0;}
+.f30{ font-size:30px;}
+.p1{ font-size:18px; line-height:30px; color:#3c3c3c}
+/*order_info*/
+.order_info{ padding:30px; line-height:50px;}
+.btn1{ padding:30px 0 0 100px;;}
+
+.search_btn{ background:#fc7317; font-size:22px; line-height:34px; color:#fff; width:80px; display:inline-block; text-align:center; height:34px; border:none; cursor:pointer;}
+.search_btn:hover{ opacity:0.8}
+.reserve{ font-size:24px; color:#4f4f4f; padding-right:70px; line-height:40px; float:left;}
+.reserve_date{ background:#fff url(../images/dot1.jpg) no-repeat 125px center; border:#a7a7a7 1px solid; color:#3c3c3c; font-size:18px; height:28px; line-height:28px; padding:0 10px; width:130px; vertical-align:middle;}
+
+/*calender*/
+.calender{ width:255px; margin:50px auto; top:0; left:0; border:4px #D6D6D6 solid; background:#EBEBEB; position:absolute; display:none; z-index:999;}
+.calendertb{width:100%;}
+.calender select{ vertical-align:middle;}
+.calendertb td{width:35px; height:35px;border:1px #CCCCCC solid; text-align:center; vertical-align:middle; cursor:pointer; font-size:14px; font-weight:bold;}
+.calendertb td.hover,.calendertb td.weekendhover{background:#D6D6D6;}
+.calendertb th{width:35px; height:30px;border:1px #CCCCCC solid; text-align:center; vertical-align:middle; cursor:pointer; color:#979797; }
+.tdtoday{ background:#0080FF;color:#fff;width:35px; height:35px;border:1px #CCCCCC solid; text-align:center; vertical-align:middle; cursor:pointer; font-size:14px; font-weight:bold;}
+.getyear{ height:35px; line-height:35px; width:100%; text-align:center;}
+.preMonth{ font-size:14px; font-weight:bold; cursor:pointer; margin-right:18px;color:#0080FF;}
+.nextMonth{ font-size:14px; font-weight:bold; cursor:pointer; margin-left:18px;color:#0080FF;}
+.mh_date{width:249px; height:20px; line-height:20px; padding:5px; border:2px #AA9FFF solid; cursor:pointer; background:url(dateIco.png) no-repeat right center;}
+.zhezhao{width:100%; height:100%; position:fixed; z-index:998;	background:#fff;filter:alpha(opacity=10);opacity:0.1; display:none; }
+/**/
+
+
+
