@@ -10,7 +10,7 @@ $system  = array(
 	    'DB_FIELDTYPE_CHECK'    => false,       // 是否进行字段类型检查
 	    'DB_FIELDS_CACHE'       => true,        // 启用字段缓存
 	    'DB_CHARSET'            => 'utf8',      // 数据库编码默认采用utf8
-	    'DB_DEPLOY_TYPE'        => 0, // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
+	    'DB_DEPLOY_TYPE'        => 0, 			// 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
 	    'DB_RW_SEPARATE'        => false,       // 数据库读写是否分离 主从式有效
 	    'DB_MASTER_NUM'         => 1, // 读写分离后 主服务器数量
 	    'DB_SLAVE_NO'           => '', // 指定从服务器序号
@@ -42,15 +42,15 @@ $system  = array(
 
 		//项目分组
 		'APP_GROUP_LIST'        => 'Home,Admin,Api,Main,Hotel',  	// 项目分组设定,多个组之间用逗号分隔,例如'Home,Admin'
-		'DEFAULT_GROUP'         => 'Hotel',  					// 默认分组
+		'DEFAULT_GROUP'         => 'Admin',  					// 默认分组
 		'DEFAULT_ACTION'        => 'index', 						// 默认操作名称
 		'APP_GROUP_MODE'        =>  0, 							 // 分组模式 0 普通分组 1 独立分组
 		
 		'APP_SUB_DOMAIN_DEPLOY' => false,  			 // 是否开启子域名部署
 		'APP_SUB_DOMAIN_RULES'  => array(
 		
-			'admin.zunlvhui.com.cn'=>array('Admin/'),  // admin域名指向Admin分组
-			'hotel.zunlvhui.com.cn'=>array('Hotel/'),  // hotel域名指向Hotel分组
+			//'admin.zunlvhui.com.cn'=>array('Admin/'),  // admin域名指向Admin分组
+			//'hotel.zunlvhui.com.cn'=>array('Hotel/'),  // hotel域名指向Hotel分组
 			//'www.zunlvhui.com.cn'  =>array('Api/'),
 			// 子域名部署规则
 			//'192.168.1.100'    => array('Api/'),	//指向对应的分组。
@@ -108,22 +108,22 @@ $custom= array (
 		'ACCOUNT_STATUS' => array (
 				0 => '正常',
 				1 => '审核中',
-				2=> '禁用'
+				2 => '禁用'
 		),
 			
 		//上传文件目录
 		'UPLOAD_DIR' => array(
 				'web_dir' => $_SERVER['DOCUMENT_ROOT'].'/',
-				'image' => 'files/zun/images/',		//图片地址
-				'mapimage'=>'Public/Home/mapimages/',
+				'image' => 'files/chengwai/images/',		//图片地址
+				//'mapimage'=>'Public/Home/mapimages/',
 		),
 
 		
 		//外部文件访问地址(用来填写专用的文件服务器)
 		'PUBLIC_VISIT' => array(
- 				'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
-				//'domain' =>	'http://zunimages.jsonlin.cn/',
- 				'dir' => 'files/zun/',							//项目文件目录
+ 				//'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
+				'domain' =>	'http://images.jsonlin.cn/',
+ 				'dir' => 'files/chengwai/',							//项目文件目录
 		),
 
 		//短信平台账号
@@ -141,16 +141,17 @@ $custom= array (
 		),
 		
 		/* 错误类型 */
-		'STATUS_SUCCESS' => '0',					//没有错误
+		'STATUS_SUCCESS' => '0',				//没有错误
+		
 		'STATUS_NOT_LOGIN'	=> '1002',			//未登录
 		'STATUS_UPDATE_DATA'	=> '2001',		//没有成功修改数据
 		'STATUS_HAVE_DATA' => '2002',			//数据已存在
 		'STATUS_NOT_DATA'	=> '2004',			//没有数据
-		'STATUS_RBAC' => '3001',						//RBAC权限不通过
+		'STATUS_RBAC' => '3001',				//RBAC权限不通过
 		'STATUS_ACCESS' => '4001',				//非法访问
 		'STATUS_DATA_LOST' => '5001',			//上传数据丢失
-		'STATUS_OTHER' => '9999',					//其他错误
-		'STATUS_NOT_CHECK'=>'6001',			//验证不通过
+		'STATUS_OTHER' => '9999',				//其他错误
+		'STATUS_NOT_CHECK'=>'6001',				//验证不通过
 		
 		
 		//优惠类型
