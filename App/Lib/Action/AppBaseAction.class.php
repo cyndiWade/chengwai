@@ -124,6 +124,9 @@ class AppBaseAction extends GlobalParameterAction {
 			$this->global_tpl_view['button']['prve'] = C('PREV_URL');
 			//别名
 			$this->global_tpl_view['user_info']['nickname'] = $this->oUser->nickname;
+			
+			$this->global_tpl_view['prve_url'] = C('PREV_URL');
+			
 		}
 			
 		//写入模板

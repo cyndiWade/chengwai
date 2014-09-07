@@ -19,15 +19,14 @@ var FormValidation = function () {
                 rules: {
                 	title : {
                 		required: true,
-                		minlength: 2,
-						maxlength:50
+                		minlength: 1,
+						maxlength:10
                 	},
-					info : {
-                		required: true,
-                		minlength: 5,
-						maxlength:255
+					val : {
+                		required: false,
+                		minlength: 0,
+						maxlength:50
                 	}
-	
 
                 },
 
@@ -66,40 +65,6 @@ var FormValidation = function () {
                 }
             });
 
-     
-			
-			
-			//搜索用户
-			(function ($) {
-				var btn_search = $('#btn_search');					//搜索账号
-				var select_member  = $('#select_member');		//用户选择框
-				var ipt_content = $('#ipt_content');					//搜索框内容
-				
-				//查找用户数据
-				btn_search.click(function () {
-					var val = ipt_content.val();
-					if (val == '') {
-						alert('查询内容不得为空！');
-						return false;
-					}
-					
-					$.post('?s=/Admin/Rank/ajax_search_account',{
-						account:val	
-					},function(result){
-						select_member.empty();	//清空
-						select_member.append('<option value="">--请选择用户--</option>');
-						if (result.status == 0) {	
-							alert('找到'+result.data.length+'条相似数据');
-							for(var key in result.data){
-								select_member.append("<option value="+result.data[key].id+">"+result.data[key].account+"--"+result.data[key].nickname+"</option>");
-							}
-						} else {
-							alert('没有查找到指定数据！');
-						}						
-					},'json');	
-					
-				});
-			})(jQuery);
 
         }
 		

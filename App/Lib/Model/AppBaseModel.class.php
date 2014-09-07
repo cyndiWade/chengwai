@@ -26,7 +26,7 @@ class AppBaseModel extends Model {
 	
 	//逻辑删除
 	public function delete_data ($condition) {
-		return $this->where($condition)->data(array('is_del'=>-2))->save();
+		return $this->where($condition)->data(array('is_del'=>1))->save();
 	}
 	
 	//获取所有数据 
