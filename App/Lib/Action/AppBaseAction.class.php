@@ -113,7 +113,7 @@ class AppBaseAction extends GlobalParameterAction {
 	/**
 	 * 全局模板变量
 	 */
-	protected  function global_tpl_view (Array $extend) {
+	protected function global_tpl_view (Array $extend) {
 	
 		if (is_array($extend)) {
 			foreach ($extend as $key=>$val) {
@@ -135,7 +135,7 @@ class AppBaseAction extends GlobalParameterAction {
 	 * 传出数据到view层
 	 * @param Array $view_data
 	 */
-	private function data_to_view(Array $view_data = array())
+	protected function data_to_view(Array $view_data = array())
 	{
 		//添加数据
 		if (is_array($view_data) && !empty($view_data)) {

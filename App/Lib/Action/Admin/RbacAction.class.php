@@ -65,8 +65,8 @@ class RbacAction extends AdminBaseAction {
 			$this->assign('nodeFind',$nodeFind);
 		} else if ($type == 'delete') {			//删除
 				
-			//$Node->where(array('id'=>$pid))->delete(array('status'=>-2)) ? $this->success('删除成功') : $this->error('删除失败');
-			$Node->where(array('id'=>$pid))->save(array('status'=>-2)) ? $this->success('删除成功') : $this->error('删除失败');
+			$Node->where(array('id'=>$pid))->delete() ? $this->success('删除成功') : $this->error('删除失败');
+			//$Node->where(array('id'=>$pid))->save(array('status'=>-2)) ? $this->success('删除成功') : $this->error('删除失败');
 			exit;
 		}
 		
