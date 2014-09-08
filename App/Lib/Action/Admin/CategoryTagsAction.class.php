@@ -77,7 +77,31 @@ class CategoryTagsAction extends AdminBaseAction {
 		} elseif ($act == 'delete') {
 			$CategoryTags->delete_data(array('id'=>$id)) ? $this->success('删除成功') : $this->error('删除错误');
 			exit;
-		} else {
+		} elseif ($act == 'init_data') {
+			
+			//$data = '不限,男女,泛';
+	
+			$title_array = explode(',', $data);
+			foreach ($title_array as $key=>$val) {
+				$CategoryTags->parent_id = $this->parent_id;
+				$CategoryTags->title = $val;
+				//$CategoryTags->add();
+			}
+			$this->success('成功');
+			exit;
+		} elseif ($act == 'cp_data') {
+			//$mubiao_id = 364;
+			
+			//获取当前父级下的数据
+			$list = $CategoryTags->get_spe_data(array('parent_id'=>$this->parent_id,'is_del'=>0));
+			foreach ($list as $key=>$val) {
+				$CategoryTags->parent_id = $mubiao_id;
+				$CategoryTags->title = $val['title'];
+				//$CategoryTags->add();
+			}
+			$this->success('成功');
+			exit;
+		}else {
 			$this->error('非法操作');
 			exit;
 		}
