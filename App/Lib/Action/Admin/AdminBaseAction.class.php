@@ -18,8 +18,7 @@ class AdminBaseAction extends AppBaseAction {
 		//全局系统变量
 		$this->global_system();
 		
-		//全局模板变量
-		$this->global_tpl_view();
+		
 	}
 	
 	
@@ -90,7 +89,8 @@ class AdminBaseAction extends AppBaseAction {
 		}  		
 
 		if (empty($this->oUser) && !in_array(MODULE_NAME,explode(',',C('NOT_AUTH_MODULE')))) {		
-			$this->error('请先登录','?s=/Admin/Login/login');
+			//$this->error('请先登录','/Admin/Login/login');
+			$this->error('请先登录',U('/Admin/Login/login'));
 			exit;
 		}
 	
@@ -106,13 +106,21 @@ class AdminBaseAction extends AppBaseAction {
 
 	}
 	
-
 	
 	/**
 	 * 全局系统用到的数据
 	 */
 	private function global_system () {
-		
+		//初始化局模板变量
+		parent::global_tpl_view(array(
+				'user_info' => array(
+						'nickname' => $this->oUser->nickname
+				),
+				'button' => array (
+						'prve' => C('PREV_URL')
+				),
+				'prve_url' => C('PREV_URL'),
+		));
 	}
 	
 	

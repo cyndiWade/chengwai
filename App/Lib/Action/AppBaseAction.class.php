@@ -113,20 +113,12 @@ class AppBaseAction extends GlobalParameterAction {
 	/**
 	 * 全局模板变量
 	 */
-	protected function global_tpl_view (Array $extend) {
+	protected function global_tpl_view (Array $extend = array()) {
 	
 		if (is_array($extend)) {
 			foreach ($extend as $key=>$val) {
 				$this->global_tpl_view[$key] = $val;
 			}
-		} else {
-			//上一页地址
-			$this->global_tpl_view['button']['prve'] = C('PREV_URL');
-			//别名
-			$this->global_tpl_view['user_info']['nickname'] = $this->oUser->nickname;
-			
-			$this->global_tpl_view['prve_url'] = C('PREV_URL');
-			
 		}
 			
 		//写入模板

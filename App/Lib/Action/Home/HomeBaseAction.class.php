@@ -18,9 +18,8 @@ class HomeBaseAction extends AppBaseAction {
 		
 		//全局系统变量
 		$this->global_system();
-		
-		//全局模板变量
-		$this->global_tpl_view();
+	
+
 	}
 	
 	
@@ -85,7 +84,7 @@ class HomeBaseAction extends AppBaseAction {
 	//初始化用户数据
 	private function admin_base_init() {
 		/* SESSION信息验证保存 */
-		//$session_userinfo = $_SESSION['hotle']['user_info'];				//保存用户信息
+
 		$session_userinfo = $_SESSION[C('SESSION_DOMAIN')][GROUP_NAME]['user_info'];				//保存用户信息
 		if (!empty($session_userinfo)) {
 			$this->oUser = (object) $session_userinfo;					//转换成对象
@@ -104,36 +103,18 @@ class HomeBaseAction extends AppBaseAction {
 	 * 全局系统用到的数据
 	 */
 	private function global_system () {
-		
+		$path = preg_replace("/[\\\+]/", "/",dirname($_SERVER['SCRIPT_NAME']));
+		//全局模板变量
+		parent::global_tpl_view(array(
+				'button'=>array(
+						'prve'=>C('PREV_URL')
+				),
+				'path'=>'http://'.$_SERVER['SERVER_NAME'].$path.''.'/Public/Home/',
+				'group_name' =>GROUP_NAME
+		));
 	}
 	
 	
-
-	/**
-	 * 全局模板变量
-	 */
-	protected  function global_tpl_view (Array $extend) {
-
-		if (is_array($extend)) {
-			foreach ($extend as $key=>$val) {
-				$this->global_tpl_view[$key] = $val;
-			}
-		} else {
-			//上一页地址
-			$this->global_tpl_view['button']['prve'] = C('PREV_URL');
-			//外部引入文件地址。
-			$path = preg_replace("/[\\\+]/", "/",dirname($_SERVER['SCRIPT_NAME']));
-			$this->global_tpl_view['path'] = 'http://'.$_SERVER['SERVER_NAME'].$path.''.'/Public/Home/';
-			
-			$this->global_tpl_view['group_name'] = GROUP_NAME;
-		}
-			
-		//写入模板
-		$this->assign('global_tpl_view',$this->global_tpl_view);
-	}
-	
-	
-
 	/**
 	 * 上传文件
 	 * @param Array    $file  $_FILES['pic']	  上传的数组

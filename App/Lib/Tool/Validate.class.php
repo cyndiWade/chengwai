@@ -29,6 +29,11 @@ class Validate { //表单验证
 		return preg_match("/^1[358]\d{9}$/", $string);
 	}
 	
+	static public function checkQQ($string){
+		return preg_match("/^([1-9][0-9]{4,16}$)/", $string);
+		
+	}
+	
 	
 	//长度是否合法
 	static public function checkLength ($_data,$_length,$_flag) {

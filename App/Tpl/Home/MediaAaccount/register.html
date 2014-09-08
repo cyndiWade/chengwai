@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<!-- 全局样式 -->
+<include file="Public:top" />
+
+</head>
+<body>
+
+<form method="post" action="{:U('Home/MediaAaccount/register_accout')}">
+<p>用户名:<input type="text" name="account" /></p>
+<p>密码:<input type="text" name="password" /></p>
+<p>重复密码:<input type="text" name="password_check" /></p>
+<p>QQ:<input type="text" name="qq" /></p>
+<p>手机号码:<input type="text" name="iphone" /></p>
+<p>验证码:<input type="text"  name="validateImage" />
+<span><img src="{:U('Home/Public/verify')}" data-image_url="{:U('Home/Public/verify')}" alt="点击刷新验证码" class="validateImage"/></span>
+
+</p>
+
+<p>短信验证码:<input type="text" name="user_name" />
+</p>
+<p><input type="submit" /></p>
+
+</form>
+
+
+<include file="Public:bottom" />
+
+<script type="text/javascript">
+
+
+
+</script>
+
+
+</body>
+</html>

@@ -183,6 +183,31 @@ class ApiBaseAction extends AppBaseAction {
 	}
 
 	
+	/**
+	 * 短信验证模块
+	 * @param String $telephone		//验证的手机号码
+	 * @param Number $type				//验证类型：1为注册验证
+	 */
+	protected function check_verify ($telephone,$type) {
+	
+		//	$Verify = D('Verify');							//短信表
+		$Verify = $this->db['Verify'];
+		$verify_code = $this->request['verify'];		//短信验证码
+	
+		$shp_info = $Verify->seek_verify_data($telephone,$type);
+	
+		//手机验证码验证
+		if (empty($shp_info)) {
+			self::callback(C('STATUS_NOT_DATA'),'验证码不存在');
+		} elseif ($verify_code != $shp_info['verify']) {
+			self::callback(C('STATUS_OTHER'),'验证码错误');
+		} elseif ($shp_info['expired'] - time() < 0 ) {
+			self::callback(C('STATUS_OTHER'),'验证码已过期');
+		}
+		//把验证码状态变成已使用
+		$Verify->save_verify_status($shp_info['id']);
+	}
+	
 }
 
 
