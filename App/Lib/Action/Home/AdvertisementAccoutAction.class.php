@@ -12,16 +12,7 @@ class IAdvertisementAccoutAction extends HomeBaseAction {
 		$this->display();
 	}
 
-
-	public function get () {
-		
-		$this->display();
-	}
 	
-	
-	public function demo() {
-		$this->display();
-	}
 }
 
 ?>

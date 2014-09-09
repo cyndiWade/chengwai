@@ -58,7 +58,7 @@ class LoginAction extends AdminBaseAction {
     			}
     				
     			//写入SESSION
-    			$_SESSION[C('SESSION_DOMAIN')][GROUP_NAME]['user_info'] = $tmp_arr;		//写入session
+    			parent::set_session(array('user_info'=>$tmp_arr));
     			//更新用户信息
     			$Users->up_login_info($user_info['id']);
     			$this->redirect('/Admin/User/personal');
@@ -72,8 +72,7 @@ class LoginAction extends AdminBaseAction {
     //退出登陆
     public function logout () {
     	if (session_start()) {
-    		unset($_SESSION[C('SESSION_DOMAIN')][GROUP_NAME]);
-    		//dump($_SESSION);
+    		parent::del_session(GROUP_NAME);
     		$this->success('退出成功',U(GROUP_NAME.'/Login/login'));
     	} 
     }

@@ -41,12 +41,27 @@ class MediaAaccountAction extends HomeBaseAction {
 
 			if (!Validate::checkEquals(md5($validateImage),$_SESSION['verify'])) $this->error('验证码错误！');
 			
+			//这里自定义设置session
+			$db_data= array('user_info'=>'xxxxxxx');
+			parent::set_session(array(
+				'MediaAaccount' =>$db_data
+			));
 			
 		} else {
 			$this->error('非法访问！');
 		}
 	}
 	
+	
+	
+ //退出登陆
+    public function logout () {
+    	if (session_start()) {
+    		parent::del_session('MediaAaccount');
+    		$this->success('退出成功',U(GROUP_NAME.'/Login/login'));
+    	} 
+    }
+    
 	
 	
 }

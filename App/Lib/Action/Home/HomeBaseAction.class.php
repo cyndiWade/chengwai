@@ -84,7 +84,9 @@ class HomeBaseAction extends AppBaseAction {
 	private function admin_base_init() {
 		/* SESSION信息验证保存 */
 
-		$session_userinfo = $_SESSION[C('SESSION_DOMAIN')][GROUP_NAME]['user_info'];				//保存用户信息
+		//$session_userinfo = $_SESSION[C('SESSION_DOMAIN')][GROUP_NAME]['user_info'];	//保存用户信息
+		
+		$session_userinfo = parent::get_session('user_info');
 		if (!empty($session_userinfo)) {
 			$this->oUser = (object) $session_userinfo;					//转换成对象
 		}  		

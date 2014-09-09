@@ -28,6 +28,8 @@ class IndexAction extends HomeBaseAction {
 
 
 	public function index () {
+		
+		
 
 		//连接数据库(所有的数据库的链接都这么写，要在相应的Model里面写入方法)
 		$CategoryTags= $this->db['CategoryTags'];	
