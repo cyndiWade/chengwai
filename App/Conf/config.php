@@ -41,9 +41,9 @@ $system  = array(
 		'OUTPUT_ENCODE'         =>  false, 			// 页面压缩输出
 
 		//项目分组
-		'APP_GROUP_LIST'        => 'Home,Admin,Api,Main,Hotel',  	// 项目分组设定,多个组之间用逗号分隔,例如'Home,Admin'
-		'DEFAULT_GROUP'         => 'Admin',  					// 默认分组
-		'DEFAULT_ACTION'        => 'index', 						// 默认操作名称
+		'APP_GROUP_LIST'        => 'Home,Admin,Api,Main',  	// 项目分组设定,多个组之间用逗号分隔,例如'Home,Admin'
+		'DEFAULT_GROUP'         => 'Home',  					// 默认分组
+		'DEFAULT_ACTION'        => 'index', 					// 默认操作名称
 		'APP_GROUP_MODE'        =>  0, 							 // 分组模式 0 普通分组 1 独立分组
 		
 		'APP_SUB_DOMAIN_DEPLOY' => false,  			 // 是否开启子域名部署
@@ -93,7 +93,7 @@ $system  = array(
 
 /* 自定设置 */
 $custom= array (		
-		'SESSION_DOMAIN' => 'lottery',	//项目session域
+		'SESSION_DOMAIN' => 'chengwai',	//项目session域
 		
 		//用户类型
 		'ACCOUNT_TYPE' => array (
@@ -118,7 +118,7 @@ $custom= array (
 		//上传文件目录
 		'UPLOAD_DIR' => array(
 				'web_dir' => $_SERVER['DOCUMENT_ROOT'].'/',
-				'image' => 'files/lottery/images/',		//图片地址
+				'image' => 'files/chengwai/images/',		//图片地址
 		),
 
 		
@@ -126,7 +126,7 @@ $custom= array (
 		'PUBLIC_VISIT' => array(
  				//'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
  				'domain' =>	'http://images.jsonlin.cn/',
-				'dir' => 'files/lottery/',							//项目文件目录
+				'dir' => 'files/chengwai/',							//项目文件目录
 		),
 
 		//短信平台账号

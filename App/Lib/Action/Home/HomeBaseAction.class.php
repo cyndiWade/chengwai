@@ -5,7 +5,6 @@
  */
 class HomeBaseAction extends AppBaseAction {
 
-	protected $global_tpl_view;		//全局模板变量
 	
 	//构造方法
 	public function __construct() {
