@@ -6,12 +6,19 @@
 class AccountAction extends MediaBaseAction {
 	
 	//每个类都要重写此变量
-	protected  $is_check_rbac = true;		//是否需要RBAC登录验证
+	protected  $is_check_rbac = false;		//是否需要RBAC登录验证
 	
 	protected  $not_check_fn = array('register','check_login','login','logout');	//无需登录和验证rbac的方法名
 	
 	//控制器说明
 	private $module_name = '我是说明';
+	
+	//初始化数据库连接
+	protected  $db = array(
+			'CategoryTags'=>'CategoryTags',
+			'Users' => 'Users',
+			'Verify'=>'Verify'
+	);
 	
 	//和构造方法
 	public function __construct() {
@@ -21,16 +28,26 @@ class AccountAction extends MediaBaseAction {
 	}
 
 	public function user_system () {
-		echo 123;	
+		echo 123;	//check_verify
+	}
+	
+	
+	//验证注册的短信的模拟方法
+	public function check_phone () {
+		
+		$phone_nub = 13761951734;
+		$type = 1;	//1表示查询媒体主的注册，2表示查询广告主的注册，
+		$phone_vr = 112446;	//手机上的验证码
+		//执行验证
+		$phone_check_info = parent::check_verify(13761951734,1,112446);
+		//验证结果
+		if ($phone_check_info['status'] == false) $this->error($phone_check_info['msg']);
+		
 	}
 	
 	
 	
-	//初始化数据库连接
-	protected  $db = array(
-		'CategoryTags'=>'CategoryTags',
-		'Users' => 'Users',
-	);
+	
 	
 	
 	public function login () {

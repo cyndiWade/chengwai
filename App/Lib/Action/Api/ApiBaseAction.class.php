@@ -29,6 +29,9 @@ class ApiBaseAction extends AppBaseAction {
 		//$this->request['user_key'] = "UWRSbwgxBWsHNFVhAGUFYgUxA2gEaFUxAjxbO1E0CWRRbAY1BSBXMVdlUngNYVc0";
 		$this->request['verify'] = $this->_post('verify');					//短信验证码
 		
+		//下面开始写$thi->
+		
+		//$this->oUser = (object) $session_userinfo;
 		
 	}
 	
