@@ -97,35 +97,21 @@ $custom= array (
 		
 		//用户类型
 		'ACCOUNT_TYPE' => array (
-				'ADMIN' => 0,			//管理员
-				'HOTEL' => 1,			//酒店用户
+			'ADMIN' => 0,			//管理员
+			'Media' => 1,			//媒体主
+			'Advert' => 2,			//广告主
+		),
 
-		),
-		
-		//账号状态
-		'ACCOUNT_STATUS_NUM' => array(
-				'normal' => 0,		
-				'audit' => 1,
-				'forbidden' =>2
-		),
-		//账号说明
-		'ACCOUNT_STATUS' => array (
-				0 => '正常',
-				1 => '审核中',
-				2 => '禁用'
-		),
-			
 		//上传文件目录
 		'UPLOAD_DIR' => array(
 				'web_dir' => $_SERVER['DOCUMENT_ROOT'].'/',
 				'image' => 'files/chengwai/images/',		//图片地址
 		),
-
 		
 		//外部文件访问地址(用来填写专用的文件服务器)
 		'PUBLIC_VISIT' => array(
- 				//'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
- 				'domain' =>	'http://images.jsonlin.cn/',
+ 				'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
+ 				//'domain' =>	'http://images.jsonlin.cn/',
 				'dir' => 'files/chengwai/',							//项目文件目录
 		),
 
@@ -139,8 +125,8 @@ $custom= array (
 // 				'PWD'=>'zyzylove2'	
 				
 			'TYPE' => 'RD_SHP',				//使用哪种短信接口
-				'NAME'=>'shyqxx',
-				'PWD'=>'cheshen818'
+				'NAME'=>'gztzwl',
+				'PWD'=>'gztzwl'
 		),
 		
 		/* 错误类型 */

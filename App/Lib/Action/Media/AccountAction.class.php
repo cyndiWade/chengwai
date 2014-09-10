@@ -8,7 +8,7 @@ class AccountAction extends MediaBaseAction {
 	//每个类都要重写此变量
 	protected  $is_check_rbac = true;		//是否需要RBAC登录验证
 	
-	protected  $not_check_fn = array('register');	//无需登录和验证rbac的方法名
+	protected  $not_check_fn = array('register','check_login','login','logout');	//无需登录和验证rbac的方法名
 	
 	//控制器说明
 	private $module_name = '我是说明';
@@ -19,13 +19,27 @@ class AccountAction extends MediaBaseAction {
 		
 		parent::global_tpl_view(array('module_name'=>$this->module_name));
 	}
-	
 
+	public function user_system () {
+		echo 123;	
+	}
+	
+	
+	
 	//初始化数据库连接
 	protected  $db = array(
-			'CategoryTags'=>'CategoryTags',
+		'CategoryTags'=>'CategoryTags',
+		'Users' => 'Users',
 	);
 	
+	
+	public function login () {
+		
+		//$info = parent::send_shp(13761951734,'你好，我是测试短信');
+		//dump($info);
+		
+		$this->display('register');
+	}
 	
 	//账号注册	
 	public function register () {
@@ -61,10 +75,8 @@ class AccountAction extends MediaBaseAction {
 			if (!Validate::checkEquals(md5($validateImage),$_SESSION['verify'])) $this->error('验证码错误！');
 			
 			//这里自定义设置session
-			$db_data= array('user_info'=>'xxxxxxx');
-			parent::set_session(array(
-				'MediaAaccount' =>$db_data
-			));
+			//$db_data= array('user_info'=>'xxxxxxx');
+			parent::set_session($db_data);
 			
 		} else {
 			$this->error('非法访问！');
@@ -79,7 +91,7 @@ class AccountAction extends MediaBaseAction {
 	public function check_login() {
 	
 		if ($this->isPost()) {
-			$Users = D('Users');									//系统用户表模型
+			$Users = $this->db['Users'];									//系统用户表模型
 	
 			import("@.Tool.Validate");							//验证类
 			 
@@ -91,19 +103,21 @@ class AccountAction extends MediaBaseAction {
 			if (Validate::checkNull($password)) $this->error('密码不得为空');
 			if (!Validate::check_string_num($account)) $this->error('账号密码只能输入英文或数字');
 			 
+			$user_type = C('ACCOUNT_TYPE.Media');
 			//读取用户数据
-			$user_info = $Users->get_user_info(array('account'=>$account,'is_del'=>0));
-			 
+			$user_info = $Users->get_user_info(array('account'=>$account,'type'=>$user_type,'is_del'=>0));
+
 			//验证用户数据
 			if (empty($user_info)) {
 				$this->error('此用户不存在或被删除！');
 			} else {
+ 				
+				$status_info = C('ACCOUNT_STATUS');
 				//状态验证
-				if ($user_info['status'] != C('ACCOUNT_STATUS_NUM.normal')) {
-					$status_info = C('ACCOUNT_STATUS');
-					$this->error($status_info[$user_info['status']]);
+				if ($user_info['status'] != $status_info[0]['status']) {
+					$this->error($status_info[$user_info['status']]['explain']);
 				}
-				 
+				
 				//验证密码
 				if (md5($password) != $user_info['password']) {
 					$this->error('密码错误！');
@@ -121,10 +135,10 @@ class AccountAction extends MediaBaseAction {
 				parent::set_session(array('user_info'=>$tmp_arr));
 				//更新用户信息
 				$Users->up_login_info($user_info['id']);
-				//$this->redirect('/Admin/User/personal');
+				$this->redirect('/Media/Account/user_system');
 			}
 		} else {
-			//$this->redirect('/Admin/Login/login');
+			$this->redirect('/Media/Account/login');
 		}
 	}
 	

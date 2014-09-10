@@ -38,10 +38,10 @@ class LoginAction extends AdminBaseAction {
     		if (empty($user_info)) {
     			$this->error('此用户不存在或被删除！');
     		} else {
+    			$status_info = C('ACCOUNT_STATUS');
     			//状态验证
-    			if ($user_info['status'] != C('ACCOUNT_STATUS_NUM.normal')) {
-  					$status_info = C('ACCOUNT_STATUS');
-    				$this->error($status_info[$user_info['status']]);
+    			if ($user_info['status'] != $status_info[0]['status']) {	
+    				$this->error($status_info[$user_info['status']]['explain']);
     			}
     			
     			//验证密码

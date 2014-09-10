@@ -36,10 +36,10 @@ class RD_SHP {
 		$post_data['username'] = $this->name;		//用户名
 		$post_data['password'] = $this->pwd;			//密码
 		$post_data['mobile'] = $phone;					//手机号，多个号码以分号分隔，如：13407100000;13407100001;13407100002
-		$post_data['content'] = urlencode($msg."【车神集团】");	//内容，如为中文一定要使用一下urlencode函数
+		$post_data['content'] = urlencode($msg."【城外圈】");	//内容，如为中文一定要使用一下urlencode函数
 		$post_data['extcode'] = "";							//扩展号，可选
 		$post_data['senddate'] = $time;					//发送时间，格式：yyyy-MM-dd HH:mm:ss，可选
-		$post_data['batchID'] = "";								//批次号，可选
+		$post_data['batchID'] = "";							//批次号，可选
 		$url='http://116.213.72.20/SMSHttpService/send.aspx';		//发送接口
 		
 		$o="";

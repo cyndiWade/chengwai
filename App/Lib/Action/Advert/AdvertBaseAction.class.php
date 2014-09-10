@@ -3,12 +3,12 @@
 /**
  * 后台核心类--所有后台方法必须继承此类
  */
-class MediaBaseAction extends AppBaseAction {
+class AdvertBaseAction extends AppBaseAction {
 
 	
 	protected  $is_check_rbac = true;		//当前控制是否需要验证RBAC
 	
-	protected  $not_check_fn = array();	//登陆后无需登录验证方法
+	protected  $log_not_check_fn = array();	//登陆后无需登录验证方法
 	
 	//构造方法
 	public function __construct() {
@@ -40,7 +40,6 @@ class MediaBaseAction extends AppBaseAction {
 	
 		/* SESSION信息验证保存 */
 		$session_userinfo = parent::get_session('user_info');
-		
 		if (!empty($session_userinfo)) {
 			$this->oUser = (object) $session_userinfo;					//转换成对象
 		}

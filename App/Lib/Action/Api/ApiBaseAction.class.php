@@ -5,122 +5,103 @@
  */
 class ApiBaseAction extends AppBaseAction {
 
-	/**
-	 * 数据表对象
-	 * @var Array   访问如：$this->db['Verify']->where(id=10)->save();
-	 */
-	protected $db = array(
-		//'MemberRank' => 'MemberRank'
-	);
+	protected  $is_check_rbac = true;		//当前控制是否需要验证RBAC
 	
-	protected $Verify = array();	//需要验证的方法名
-
+	protected  $not_check_fn = array();	//登陆后无需登录验证方法
+	
 	protected $request;					//获取请求的数据
 	
-
-	
-	/**
-	 * 构造方法
-	 */
+	//构造方法
 	public function __construct() {
-		$this->Init_Request();		//初始化数据		
-		$this->Add_to_db();			//追加的表模型
+		
 		parent:: __construct();			//重写父类构造方法
-	
-		$this->Api_loading();			//加载	
-		$this->Api_init();					//初始化
+		
+		//全局系统变量
+		$this->global_system();
+		
+		//初始化用户数据
+		$this->check_system_info();
 
 	}
 	
-	
-	/**
-	 * 初始化
-	 */
-	private function Init_Request () {
+	private function global_system () {
 		$this->request['user_key'] = $this->_post('user_key');		//身份验证的user_key
 		//$this->request['user_key'] = "UWRSbwgxBWsHNFVhAGUFYgUxA2gEaFUxAjxbO1E0CWRRbAY1BSBXMVdlUngNYVc0";
 		$this->request['verify'] = $this->_post('verify');					//短信验证码
+		
+		
 	}
 	
+	private function check_system_info() {
+		$check_result = $this->init_check($this->oUser);
+		if ($check_result['status'] == false) parent::callback(C('STATUS_NOT_DATA'),$check_result['message']);
+	}
+	
+	//初始化用户数据
+	private function init_check($user_info) {
+		
+		if (C('USER_AUTH_ON') == true) {	//权限验证开启
+	
+			//当前的Action开启RBAC权限
+			if ($this->is_check_rbac == true) {
+	
+				//当前Action里放行无需验证的方法
+				if (in_array(ACTION_NAME,$this->not_check_fn) == true) {
+					return array('status'=>true,'message'=>'放行，本方法无需验证');
+				}
+	
+				if (empty($user_info)) {
+					return array('status'=>false,'message'=>'身份信息为空');
+				}
+	
+				/* 对于不是管理员的用户进行权限验证 */
+				if (in_array($user_info->account,explode(',',C('ADMIN_AUTH_KEY')))) {
+					return array('status'=>true,'message'=>'本账号无需验证');
+				} else {
+					//初始化rbac
+					$this->init_rbac();
+					/* RBAC权限验证 */
+					$check_result = RBAC::check($user_info->id);
+	
+					return array('status'=>$check_result['status'],'message'=>$check_result['message']);
+				}
+	
+			} else {
+				return array('status'=>true,'message'=>'放行，本Action验证关闭');
+			}
+	
+		} else {
+			return array('status'=>true,'message'=>'放行，权限验证已关闭。');
+		}
+	
+	}
 	
 	
 	/**
-	 * 追加数据库链接
+	 * 初始化RBAC方法
 	 */
-	private function Add_to_db() {
-		if (!empty($this->add_db)) {
-			foreach ($this->add_db AS $key=>$val) {
-				$this->db[$key] = $val;
-			}
-		}	
-	}
-	
-	
-	
-	//记载RBAC权限控制类库
-	private function Api_loading() {
-		import("@.Tool.RBAC"); 				//权限控制类库
+	private function init_rbac() {
+		import("@.Tool.RBAC"); 	//权限控制类库
 		/* 初始化数据 */
-		$ApiConf = new stdClass();
+		$Combination = new stdClass();
 	
 		/* 数据表配置 */
-		$ApiConf->table_prefix =  C('DB_PREFIX');
-		$ApiConf->node_table = C('RBAC_NODE_TABLE');
-		$ApiConf->group_table = C('RBAC_GROUP_TABLE');
-		$ApiConf->group_node_table = C('RBAC_GROUP_NODE_TABLE');
-		$ApiConf->group_user_table = C('RBAC_GROUP_USER_TABLE');
+		$Combination->table_prefix =  C('DB_PREFIX');
+		$Combination->node_table = C('RBAC_NODE_TABLE');
+		$Combination->group_table = C('RBAC_GROUP_TABLE');
+		$Combination->group_node_table = C('RBAC_GROUP_NODE_TABLE');
+		$Combination->group_user_table = C('RBAC_GROUP_USER_TABLE');
 	
 		/* 方法配置 */
-		$ApiConf->group = GROUP_NAME;					//当前分组
+		$Combination->group = GROUP_NAME;					//当前分组
 		$Combination->module = MODULE_NAME;				//当前模块
-		$ApiConf->action = ACTION_NAME;					//当前方法
-		$ApiConf->not_auth_group = C('NOT_AUTH_GROUP');			//无需认证分组
-		$ApiConf->not_auth_module = C('NOT_AUTH_MODULE');		//无需认证模块
-		$ApiConf->not_auth_action = C('NOT_AUTH_ACTION');			//无需认证操作
+		$Combination->action = ACTION_NAME;					//当前方法
+		$Combination->not_auth_group = C('NOT_AUTH_GROUP');			//无需认证分组
+		$Combination->not_auth_module = C('NOT_AUTH_MODULE');		//无需认证模块
+		$Combination->not_auth_action = C('NOT_AUTH_ACTION');			//无需认证操作
 	
-		RBAC::init($ApiConf);		//初始化数据
+		RBAC::init($Combination);		//初始化数据
 	}
-	
-	
-	//初始化用户数据
-	private function Api_init() {
-		
-// 		$demo = array(
-// 			'id'=>'2',
-// 			'account'=>'user1',
-// 			'type'=>'1',
-// 		) ;
-// 		 $this->oUser = (object) $demo;
-		 
-		
-		//验证需要登录，有身份标识的模块
-		if (in_array(ACTION_NAME,$this->Verify)) {
-			if (empty($this->oUser)) {
-				$this->deciphering_user_info();
-			}
-		}
-		
-		/* 身份标识验证验证 
-		if (empty($this->oUser) && !in_array(MODULE_NAME,explode(',',C('NOT_AUTH_MODULE')))) {
-			$this->deciphering_user_info();
-		}*/
-		
-		 /* RBAC权限系统验证 */
-		 if (C('USER_AUTH_ON') == true) {
-		 
-		 	/* 对于不是管理员的用户进行权限验证 */
-		 	if (!in_array($this->oUser->account,explode(',',C('ADMIN_AUTH_KEY')))) {
-
-		 		/* 权限验证 */
-		 		$check_result = RBAC::check($this->oUser->id);
-
-		 		if ($check_result['status'] == false) {
-		 			parent::callback(C('STATUS_NOT_LOGIN'),$check_result['message']);
-		 		}
-		 	}
-		 }
-	}
-	
 	
 	/**
 	 * 解密客户端秘钥，获取用户数据
@@ -151,8 +132,7 @@ class ApiBaseAction extends AppBaseAction {
 
 	}
 	
-	
-	
+		
 	/**
 	 * 上传文件
 	 * @param Array    $file  $_FILES['pic']	  上传的数组
@@ -190,7 +170,6 @@ class ApiBaseAction extends AppBaseAction {
 	 */
 	protected function check_verify ($telephone,$type) {
 	
-		//	$Verify = D('Verify');							//短信表
 		$Verify = $this->db['Verify'];
 		$verify_code = $this->request['verify'];		//短信验证码
 	
