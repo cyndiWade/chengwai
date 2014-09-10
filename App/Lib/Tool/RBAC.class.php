@@ -38,7 +38,7 @@ class RBAC {
 		
 		/* 无需认证过滤 */
 		self::$not_auth_group =  explode(',', $parameter->not_auth_group);				//无需认证分组
-		self::$not_auth_module = explode(',', $parameter->not_auth_module);			//无需认证模块
+		self::$not_auth_module = explode(',', $parameter->not_auth_module);				//无需认证模块
 		self::$not_auth_action = explode(',', $parameter->not_auth_action);				//无需认证操作
 		
 		$parameter = null;	//清除对象引用，释放资源

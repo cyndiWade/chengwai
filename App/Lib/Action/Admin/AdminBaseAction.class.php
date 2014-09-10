@@ -10,7 +10,7 @@ class AdminBaseAction extends AppBaseAction {
 		
 		parent:: __construct();			//重写父类构造方法
 		
-		$this->Admin_loading();		//RBAC权限控制类库
+		$this->init_rbac();		//RBAC权限控制类库
 		
 		//初始化用户数据
 		$this->admin_base_init();
@@ -24,7 +24,7 @@ class AdminBaseAction extends AppBaseAction {
 	
 	
 	//记载RBAC权限控制类库
-	private function Admin_loading() {	
+	private function init_rbac() {	
 		import("@.Tool.RBAC"); 	//权限控制类库
 		/* 初始化数据 */
 		$Combination = new stdClass();

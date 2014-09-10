@@ -4,7 +4,7 @@
  * 后台管理模型类
  */
 
-class HomeBaseModel extends AppBaseModel {
+class MediaBaseModel extends AppBaseModel {
 	
 
 	public function __construct() {

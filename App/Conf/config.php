@@ -41,7 +41,7 @@ $system  = array(
 		'OUTPUT_ENCODE'         =>  false, 			// 页面压缩输出
 
 		//项目分组
-		'APP_GROUP_LIST'        => 'Home,Admin,Api,Main',  	// 项目分组设定,多个组之间用逗号分隔,例如'Home,Admin'
+		'APP_GROUP_LIST'        => 'Home,Admin,Api,Main,Media,Advert',  	// 项目分组设定,多个组之间用逗号分隔,例如'Home,Admin'
 		'DEFAULT_GROUP'         => 'Home',  					// 默认分组
 		'DEFAULT_ACTION'        => 'index', 					// 默认操作名称
 		'APP_GROUP_MODE'        =>  0, 							 // 分组模式 0 普通分组 1 独立分组

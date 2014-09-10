@@ -1,0 +1,73 @@
+一、Action
+
+1、所有类必须继承 *BaseAction 
+2、本组（HOME）的公共方法放入HomeBase里面
+3、用的类库 要加上@表示引入的本项目目录下的文件
+	import("@.Tool.Validate");
+4、session
+	session的规则是：域、组名、值(array)	
+	$_SESSION[C('SESSION_DOMAIN')][GROUP_NAME][$data]
+	必须通过AppBaseAction.class.php中的session方法操作，这里会自动去设置域的值
+	parent::set_session($data)、parent::get_session($key)、parent::del_session($key)
+
+
+二、Model
+
+1、每个表都必须建立一个属性模型文件，位置在当前的分组下
+
+2、每个模型都必须继承AppBaseModel.class.php，里面有常见的一些操作CURD方法，可直接拿来用
+
+3、所有的Model需要通过以下方法在action初始化
+
+	//初始化数据库连接
+	protected  $db = array(
+		'CategoryTags'=>'CategoryTags',	//key表示连接名、val表示实例的数据库
+	);	
+
+
+	public function index () {
+		//连接数据库(所有的数据库的链接都这么写，要在相应的Model里面写入方法)
+		$CategoryTags= $this->db['CategoryTags'];	//直接调用，获取一个D()方法实例
+	}
+
+
+三、VIEW
+
+1、视图的变量现在分为2种（本组全局的$global_tpl_view 和 当前页面的$view_data）
+
+2、不允许出现$this->assign()；
+	统一使用
+	1) 注入全局模板变量
+		parent::global_tpl_view( array(
+			'action_name'=>'数据列表',
+			'title_name'=>'数据列表',
+			'add_name'=>'添加类别'	
+		));
+		
+		//html中访问
+		{$global_tpl_view.action_name}
+		
+	2) 注入本页面魔板变量
+		parent::data_to_view(array(
+			'a' => 123
+		));
+
+		//html中访问
+		{$view_data.a}
+		
+		
+四、请只改动自己分组下的代码，每次提交都要最新的数据库备份在bak里面一起提交
+
+
+五、详细的例子见Lib/Home/Index/index
+
+
+六、Over~谢谢观赏		
+
+
+
+
+
+
+
+	
