@@ -81,9 +81,9 @@ class AccoutAction extends AdvertBaseAction {
 				$media = array('users_id'=>$id,'iphone'=>$iphone);
 				$User_media->add_account_list($media);
 				parent::set_session(array('user_info'=>$db_data));
-				echo 'ok';exit;
+				parent::callback(C('STATUS_OTHER'),'ok');
 			}else{
-				echo 'no';exit;
+				parent::callback(C('STATUS_OTHER'),'数据有误！');
 			}
 		} else {
 			$this->error('非法访问！');

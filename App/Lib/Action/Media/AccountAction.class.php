@@ -74,7 +74,7 @@ class AccountAction extends MediaBaseAction {
 			$User_media = $this->db['User_media'];
 			if ($User_media->iphone_is_have($iphone)!='') parent::callback(C('STATUS_OTHER'),'手机号已存在');
 			$phone = array('phone'=>$iphone,'type'=>C('ACCOUNT_TYPE.Media'),'phone_vr'=>$phone_verify);
-			if($this->check_phone($phone)===false) parent::callback(C('STATUS_OTHER'),'手机验证码错误');
+			//if($this->check_phone($phone)===false) parent::callback(C('STATUS_OTHER'),'手机验证码错误');
 			$id = $Users->add_account($account,$password);
 			if($id!='')
 			{
@@ -83,9 +83,9 @@ class AccountAction extends MediaBaseAction {
 				$media = array('users_id'=>$id,'iphone'=>$iphone);
 				$User_media->add_account_list($media);
 				parent::set_session(array('user_info'=>$db_data));
-				echo 'ok';exit;
+				parent::callback(C('STATUS_OTHER'),'ok');
 			}else{
-				echo 'no';exit;
+				parent::callback(C('STATUS_OTHER'),'数据有误！');
 			}
 		} else {
 			$this->error('非法访问！');
