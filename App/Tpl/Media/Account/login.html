@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<!-- 全局样式 -->
+<include file="Public:top" />
+
+</head>
+<body>
+<form action="{:U('Media/Account/check_login')}" method="POST">
+<p>会员名:<input type="text" name="account" /></p>
+<p>登入密码:<input type="text" name="password" /></p>
+<p><input type="submit" value="登入" id="submit"/></p>
+</form>
+<include file="Public:bottom" />
+<script type="text/javascript">
+</script>
+</body>
+</html>
