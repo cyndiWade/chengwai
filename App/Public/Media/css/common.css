@@ -1,0 +1,133 @@
+﻿/* CSS Document */
+body,h1,h2,h3,h4,h5,h6,p,ul,ol,li,form,img,dl,dt,dd,table,th,td,blockquote,fieldset,div,strong,label,em{margin:0;padding:0;border:0;}
+ul,ol,li{list-style:none;}
+input,button{margin:0;font-size:12px;vertical-align:middle;}
+body{font-size:12px;font-family:Arial, Helvetica, sans-serif;  text-align:center; margin:0 auto;color:#000;font-family:"宋体";}
+table{border-collapse:collapse;border-spacing:0;}
+a{color:#383838;text-decoration:none;}
+a:hover{color:#f60;}
+
+img{ display:block;}
+.fl{float: left; _display: inline;}
+.fr{float:right; _display: inline;}
+.l{ width:100%; float:left;}
+.cf{ clear:both;}
+.tl{ text-align:left;}
+.tc{text-align: center;}
+.tr{ text-align:right;}
+.btn{ display:inline-block; cursor:pointer;}
+.oh{ overflow:hidden;}
+.none{display: none;}
+.red{ color:#e24d46;}
+.btn{ display:inline-block; cursor:pointer; border:none;}
+.pr{ position:relative;}
+.pa{ position:absolute;}
+.fx{ position:fixed;}
+.radio{ margin:8px 4px 0 0;}
+em{ font-style:normal;}
+strong{ font-weight:normal;}
+.yel{ color:#ff7e00;}
+.blue{ color:#238cc8;}
+.red{ color:#ea6060}
+h6{ font-size:12px; font-weight:normal;}
+h5{ font-size:12px;}
+h4{ font-size:14px; font-weight:normal;}
+h3{ font-size:14px;}
+
+/*按钮*/
+.bluebtn{ width:197px; height:50px; background:#00a6e5; line-height:50px; font-size:18px; color:#fff;}
+.bluebtn:hover{ background:#238cc8;}
+.redbtn{ width:197px; height:50px; background:#ea6060; line-height:50px; font-size:18px; color:#fff;}
+.redbtn:hover{ background:#f00;}
+body{ background:#fefefe;}
+.phd{ background:url(../images/hdbg01.gif) repeat-x left top; height:140px;}
+.box-hd{ width:1000px; margin:0 auto}
+.box01-hd{ height:40px; line-height:40px;}
+.box01-hd .tel{font-size:14px; margin-top:2px; padding-left:42px; background:url(../images/tel_icon.png) no-repeat left center; color:#ea6060; font-size:30px; font-family:Arial, Helvetica, sans-serif;}
+.box01-hd a{ padding-right:5px; margin-left:5px;}
+.part01-hd{ margin-right:40px;}
+.box02-hd{ height:63px;}
+.logo{ margin-top:8px;}
+.logafter a{ margin-left:18px; text-decoration:underline;}
+.phd .news{ padding-right:16px;}
+.phd .logafter .count{ display:block; background:url(../images/newsbg.png) no-repeat; width:16px; height:16px; text-align:center; line-height:16px; color:#fff; right:0; position:absolute; text-decoration:none; top:2px; right:40px;}
+.phd .logafter span em{ font-size:14px; padding:0 3px;}
+.part01-wel a{ text-decoration:none; margin-left:12px;}
+/*菜单*/
+.nav li{ margin-left:25px; float:left; padding-left:30px; background:url(../images/nav_home.png) no-repeat 0 0; font-family:"宋体";}
+.nav li a{ font-size:16px; color:#2e4653; font-weight:bold; display:block; padding:2px 0;}
+.nav li a:hover{ color:#f60;}
+.nav .nav-new{background:url(../images/nav_new.png) no-repeat 0 1px;}
+.nav .nav-wx{background:url(../images/nav_wx.png) no-repeat 0 0; padding-left:33px;}
+.nav .nav-wb{background:url(../images/nav_wb.png) no-repeat 0 0; padding-left:33px;}
+.nav .nav-mr{background:url(../images/nav_mr.png) no-repeat 0 0;}
+.nav .nav-kh{background:url(../images/nav_kh.png) no-repeat 0 0; padding-left:33px;}
+.nav .nav-fw{background:url(../images/nav_fw.png) no-repeat 0 0; padding-left:33px;}
+
+/*会员中心头部*/
+.phd-member{ background:url(../images/mem_bg01.png) repeat-x left top;}
+
+/* CSS Document */
+#slides{ width:100%; margin:0 auto;height:254px; position:relative; margin-top:7px; margin-bottom:21px;}
+#slides .slide{ width:1100px; height:254px;}
+#slides .slide .item{ width:1100px; height:254px;}
+#slides .slide .item a{ display:block; width:1100px; height:254px;}
+#slides .slide img{ width:1100px; height:254px;}
+#slides .pagination{ position:absolute; bottom:10px; width:100%; text-align:center; height:15px;z-index:10;}
+#slides .pagination li{ width:15px; height:15px; display:inline-block; margin:0 2px;}
+#slides .pagination li a{ display:inline-block;width:11px; margin-bottom:3px; border-radius:50%; height:11px; background:#fff; text-indent:-999em;}
+#slides .pagination li.current a{ background:#72cef5;}
+
+.searchbox{ background:url(../images/seabg.png) no-repeat; margin-top:7px; width:188px; height:24px; line-height:24px;}
+.searchbox .seatext{ width:147px; height:20px; line-height:20px; border:1px solid #fff; margin-left:11px;}
+.seabtn{ background:url(../images/seabtn.png) no-repeat; width:19px; height:18px; text-indent:-999em; margin-top:2px;}
+
+/*面包导航*/
+.location{ height:39px; border-bottom:1px solid #e5ece9; line-height:39px; margin-bottom:15px;}
+.part01-location{ font-size:14px; padding-bottom:0px; padding-left:27px; width:978px;}
+.part01-location span{ font-size:36px;}
+.part01-location em{ width:87px; height:17px; background:#1a1a1a; font-size:12px; text-align:center; color:#fff; margin:18px 0 0 16px;}
+/*分页*/
+.page a{ display:inline-block; height:30px; line-height:30px; background:#fff; border:1px solid #ccc; border-left:none; padding:0 15px;}
+.page a:hover,.page a.active{ color:#7497ce; background:#f5f5f5;}
+.page strong{ color:#ccc; margin-left:15px;}
+.page a.prev{ border-left:1px solid #ccc; border-radius:5px 0 0 5px;}
+.page a.next{ border-radius:0 5px 5px 0;}
+
+.wrap{ padding-bottom:50px;}
+.pbd{ width:1000px; margin:0 auto; text-align:left;}
+
+/*脚部*/
+.pfd{ border-top:1px solid #ea6060; padding-top:30px;}
+.box-ft{ width:1000px; margin:0 auto;}
+.box01-ft{ width:998px; height:204px; border:1px solid #d1d6d4; padding-top:23px;}
+.part01-ft{ width:130px; height:180px; border-right:1px solid #f0f0f2; margin-left:34px;}
+.part01-ft h5{ padding:5px 0 5px 30px; margin-bottom:14px; font-size:14px;}
+.linkul{ margin-left:30px;}
+.linkul li{ font-size:14px; padding-bottom:15px;}
+.linkul li a{ color:#888;}
+.linkul li a:hover{ color:#f60;}
+.h5-fwzx{background:url(../images/ft_icon01.png) no-repeat 0 2px;}
+.h5-ysgg{background:url(../images/ft_icon02.png) no-repeat 0 2px;}
+.h5-gywm{background:url(../images/ft_icon03.png) no-repeat 0 2px;}
+
+.part02-ft{ width:325px;height:180px; border-right:1px solid #f0f0f2;}
+.part02-ft .grp01{ width:81px; margin-left:31px; padding-top:10px;}
+.part02-ft .grp02{ width:210px;}
+.part02-ft .grp02 h6{ font-size:14px; color:#30262d; padding-bottom:13px; font-weight:bold;}
+.tel-ft{ font-size:24px; font-family:Arial, Helvetica, sans-serif; color:#ea6060; margin-bottom:8px;}
+.part02-ft .qq{ padding-bottom:10px; font-size:14px; color:#929292;}
+.part02-ft .qq span{ display:inline-block; cursor:pointer}
+
+.sharebox img{ display:inline; margin-right:7px;}
+.title-kf{ height:58px;}
+.title-kf strong{ padding-left:23px; background:url(../images/ft_icon01.gif) no-repeat 0 0;}
+.time-ft{ padding-bottom:14px;}
+.part03-ft{ width:172px;}
+.part03-ft p{ padding-bottom:9px; font-size:14px;}
+.ewm{ margin:0 auto; display:inline-block; width:125px;}
+
+.box02-ft{ padding:30px 0 10px 0; color:#929292; line-height:28px;}
+.safe-ft{ padding-bottom:10px;}
+.safe-ft a{ display:inline-block; margin-left:15px;}
+.box02-ft span{ padding-right:10px; margin-left:10px;}

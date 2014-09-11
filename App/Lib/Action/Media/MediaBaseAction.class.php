@@ -34,7 +34,13 @@ class MediaBaseAction extends AppBaseAction {
 						'prve'=>C('PREV_URL')
 				),
 				'path'=>'http://'.$_SERVER['SERVER_NAME'].$path.''.'/Public/'.GROUP_NAME.'/',
-				'group_name' =>GROUP_NAME
+				
+				'group_name' =>GROUP_NAME,
+				
+				'action_name'=>ACTION_NAME,
+				
+				//网站当前分组资源路径
+				'Group_Resource_Path'=>APP_PATH.'Public/'.GROUP_NAME.'/'
 		));
 	
 	
