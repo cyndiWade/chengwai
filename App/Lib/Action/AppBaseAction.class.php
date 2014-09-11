@@ -13,7 +13,8 @@ class AppBaseAction extends GlobalParameterAction {
 		//G('begin'); 							// 记录开始标记位（运行开始）
 		
 		//初始化数据库连接
-		$this->db_init();	
+		$this->db_init();
+		
 		
 		parent::__construct();
 

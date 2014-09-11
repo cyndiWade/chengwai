@@ -8,7 +8,7 @@ class AdvertBaseAction extends AppBaseAction {
 	
 	protected  $is_check_rbac = true;		//当前控制是否需要验证RBAC
 	
-	protected  $log_not_check_fn = array();	//登陆后无需登录验证方法
+	protected  $not_check_fn = array();	//登陆后无需登录验证方法
 	
 	//构造方法
 	public function __construct() {
@@ -34,7 +34,16 @@ class AdvertBaseAction extends AppBaseAction {
 						'prve'=>C('PREV_URL')
 				),
 				'path'=>'http://'.$_SERVER['SERVER_NAME'].$path.''.'/Public/'.GROUP_NAME.'/',
-				'group_name' =>GROUP_NAME
+				
+				'group_name' =>GROUP_NAME,
+				
+				'model_name'=>MODULE_NAME,
+				
+				'action_name'=>ACTION_NAME,
+				
+				//网站当前分组资源路径
+				'Group_Resource_Path'=>APP_PATH.'Public/'.GROUP_NAME.'/'
+				
 		));
 	
 	
