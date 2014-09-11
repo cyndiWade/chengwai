@@ -37,6 +37,8 @@ class MediaBaseAction extends AppBaseAction {
 				
 				'group_name' =>GROUP_NAME,
 				
+				'model_name'=>MODULE_NAME,
+				
 				'action_name'=>ACTION_NAME,
 				
 				//网站当前分组资源路径
