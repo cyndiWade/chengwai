@@ -80,7 +80,7 @@ class AccountAction extends MediaBaseAction {
 			{
 				//这里自定义设置session
 				$db_data= array('user_id'=>$id,'user_name'=>$account);
-				$media = array('user_id'=>$id,'iphone'=>$iphone);
+				$media = array('users_id'=>$id,'iphone'=>$iphone);
 				$User_media->add_account_list($media);
 				parent::set_session(array('user_info'=>$db_data));
 				echo 'ok';exit;

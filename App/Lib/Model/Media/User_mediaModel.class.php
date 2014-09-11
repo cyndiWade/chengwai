@@ -8,9 +8,7 @@ class User_mediaModel extends MediaBaseModel
 	{
 		if($this->account_is_have($array['users_id'])=='')
 		{
-			$this->users_id = $array['users_id'];
-			$this->iphone = $array['iphone'];
-			$this->add();
+			$this->add($array);
 		}else{
 			
 		}

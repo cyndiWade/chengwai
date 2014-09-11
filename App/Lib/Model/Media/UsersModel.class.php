@@ -6,15 +6,14 @@ class UsersModel extends MediaBaseModel {
 	//添加账号
 	public function add_account($account,$password) {
 		//写入数据库
-		$time = time();
-		$this->account = $account;
-		$this->password = md5($password);
-		$this->last_login_time = $time;
-		$this->last_login_ip = get_client_ip();
-		$this->create_time = $time;
-		$this->update_time = $time;
-		$this->type = C('ACCOUNT_TYPE.Media');				//用户类型
-		return $this->add();
+		$map['account'] = $account;
+		$map['password'] = md5($password);
+		$map['last_login_time'] = time();
+		$map['last_login_ip'] = get_client_ip();
+		$map['create_time'] = time();
+		$map['update_time'] = time();
+		$map['type'] = C('ACCOUNT_TYPE.Media');				//用户类型
+		return $this->add($map);
 	}
 
 	//通过账号验证账号是否存在

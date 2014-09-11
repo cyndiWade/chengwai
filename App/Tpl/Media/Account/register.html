@@ -41,8 +41,32 @@
 			}
 		});
 	});
-
-
+	$('input[name="iphone"]').keyup(function(){
+		var _this = $(this);
+		if(phone(_this.val())===true)
+		{
+			$.ajax({
+				url : "{:U('Api/SendMsg/media_register_send')}",
+				type : "POST",
+				async : false,
+				cache :　false,
+				data : {telephone:_this.val()},
+				success : function(value)
+				{
+					alert('发送成功!');
+				}
+			});
+		}
+	});
+	function phone(num)
+	{
+		var patten = /^1[3,5,7,8]\d{9}$/;
+		if(patten.test(num)){
+	    	return true;
+	    }else{
+	    	return false;
+	    }
+	}
 </script>
 
 
