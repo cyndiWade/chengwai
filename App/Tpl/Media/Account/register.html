@@ -7,21 +7,16 @@
 
 </head>
 <body>
-
-<form method="post" action="{:U('Media/Account/check_login')}">
-<p>用户名:<input type="text" name="account" /></p>
-<p>密码:<input type="text" name="password" /></p>
-<p>重复密码:<input type="text" name="password_check" /></p>
-<p>QQ:<input type="text" name="qq" /></p>
+<?php print_r($_SESSION);?>
+<form method="post" action="">
+<p>会员名:<input type="text" name="account" /></p>
+<p>登入密码:<input type="text" name="password" /></p>
+<p>重复输入密码:<input type="text" name="password_check" /></p>
 <p>手机号码:<input type="text" name="iphone" /></p>
-<p>验证码:<input type="text"  name="validateImage" />
-<span><img src="{:U('Media/Public/verify')}" data-image_url="{:U('Media/Public/verify')}" alt="点击刷新验证码" class="validateImage"/></span>
-
-</p>
-
-<p>短信验证码:<input type="text" name="user_name" />
-</p>
-<p><input type="submit" /></p>
+<!-- <p>验证码:<input type="text"  name="phone_verify" />
+<span><img src="{:U('Media/Public/verify')}" data-image_url="{:U('Media/Public/verify')}" alt="点击刷新验证码" class="validateImage"/></span></p> -->
+<p>输入手机验证码:<input type="text" name="phone_verify" /></p>
+<p><input type="button" value="提交注册" id="submit"/></p>
 
 </form>
 
@@ -29,7 +24,29 @@
 <include file="Public:bottom" />
 
 <script type="text/javascript">
-
+	$('#submit').click(function()
+	{
+		var account =  $('input[name="account"]').val();
+		var password =  $('input[name="password"]').val();
+		var password_check =  $('input[name="password_check"]').val();
+		var iphone =  $('input[name="iphone"]').val();
+		var phone_verify =  $('input[name="phone_verify"]').val();
+		$.ajax({
+			url : "{:U('Media/Account/register_accout')}",
+			type : "POST",
+			async : false,
+			cache :　false,
+			data : {account:account,password:password,password_check:password_check,iphone:iphone,phone_verify:phone_verify},
+			success : function(val){
+				if(val=='ok')
+				{
+					alert('通过');
+				}else{
+					alert(val);
+				}
+			}
+		});
+	});
 
 
 </script>

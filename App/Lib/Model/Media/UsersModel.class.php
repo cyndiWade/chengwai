@@ -4,22 +4,21 @@
 class UsersModel extends MediaBaseModel {
 	
 	//添加账号
-	public function add_account($type) {
+	public function add_account($account,$password) {
 		//写入数据库
-		$this->password = md5($this->password);
 		$time = time();
+		$this->account = $account;
+		$this->password = md5($password);
 		$this->last_login_time = $time;
 		$this->last_login_ip = get_client_ip();
 		$this->create_time = $time;
 		$this->update_time = $time;
-		$this->type = $type;				//用户类型
+		$this->type = C('ACCOUNT_TYPE.Media');				//用户类型
 		return $this->add();
 	}
-	
-	
+
 	//通过账号验证账号是否存在
 	public function account_is_have ($account) {
-
 		return $this->where(array('account'=>$account))->getField('id');
 	}
 	
@@ -42,16 +41,12 @@ class UsersModel extends MediaBaseModel {
 	
 	//更新登录信息
 	public function up_login_info ($uid) {
-		
 		$time = time();
 		$con['last_login_time'] = $time;
 		$con['last_login_ip'] = get_client_ip();
 		$con['login_count'] = array('exp','login_count+1');
 		return $this->where(array('id'=>$uid))->save($con);
-
-	
 	}
-	
 	
 	public function seek_all_data () {
 		$data = $this->field('u.id,u.account,u.last_login_time,u.last_login_ip,u.type,u.status')
@@ -61,11 +56,6 @@ class UsersModel extends MediaBaseModel {
 		parent::set_all_time($data, array('last_login_time'));
 		return $data;
 	}
-
-	
-	
-	
-	
 	
 }
 
