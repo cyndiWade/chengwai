@@ -17,20 +17,38 @@ class AccountAction extends MediaBaseAction {
 	private $type  = 1;
 
 
+	//初始化数据库连接
+	protected  $db = array(
+			'CategoryTags'=>'CategoryTags',
+			'Users' => 'Users',
+			'Verify'=>'Verify',
+			'User_media' => 'User_media'
+	);
+	
 	//和构造方法
 	public function __construct() {
 		parent::__construct();
-		
 		parent::global_tpl_view(array('module_name'=>$this->module_name));
 	}
 
+
+	public function user_system () {
+		echo 123;	//check_verify
+	}
 	
-	//初始化数据库连接
-	protected  $db = array(
-		'Users' => 'Users',
-		'User_media' => 'User_media'
-	);
 	
+	//验证注册的短信的模拟方法
+	public function check_phone () {
+		
+		$phone_nub = 13761951734;
+		$type = 1;	//1表示查询媒体主的注册，2表示查询广告主的注册，
+		$phone_vr = 112446;	//手机上的验证码
+		//执行验证
+		$phone_check_info = parent::check_verify(13761951734,1,112446);
+		//验证结果
+		if ($phone_check_info['status'] == false) $this->error($phone_check_info['msg']);
+		
+	}
 	
 	public function login () {
 		$this->display();
@@ -47,7 +65,7 @@ class AccountAction extends MediaBaseAction {
 			$account = $this->_post('account');					//用户账号
 			$password = $this->_post('password');				//用户密码
 			$password_check = $this->_post('password_check');	//二次用户密码
-			$media['iphone'] = $iphone = $this->_post('iphone');
+			$iphone = $this->_post('iphone');
 			$phone_verify= $this->_post('phone_verify');
 			$Users = $this->db['Users'];
 			$User_media = $this->db['User_media'];
@@ -60,9 +78,10 @@ class AccountAction extends MediaBaseAction {
 			if($Users->account_is_have($account)!=''){echo '会员名已存在!';exit;}
 			if($User_media->iphone_is_have($iphone)!=''){echo '手机号已存在!';exit;}
 			// if (!Validate::checkEquals(md5($validateImage),$_SESSION['verify'])) $this->error('验证码错误！');
-			$media['users_id'] = $id = $Users->add_account($account,$password);
+			$id = $Users->add_account($account,$password);
 			//这里自定义设置session
 			$db_data= array('user_id'=>$id,'user_name'=>$account);
+			$media = array('user_id'=>$id,'iphone'=>$iphone);
 			$User_media->add_account_list($media);
 			parent::set_session($db_data);echo 'ok';exit;
 		} else {
