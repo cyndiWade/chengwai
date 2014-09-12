@@ -19,7 +19,7 @@ class UsersModel extends AdvertBaseModel {
 
 	//通过账号验证账号是否存在
 	public function account_is_have ($account) {
-		return $this->where(array('account'=>$account))->getField('id');
+		return $this->where(array('account'=>$account,'type'=>2))->getField('id');
 	}
 	
 	//获取账号数据

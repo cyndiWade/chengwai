@@ -25,7 +25,7 @@ class AccountAction extends AdvertBaseAction {
 			'CategoryTags'=>'CategoryTags',
 			'Users' => 'Users',
 			'Verify'=>'Verify',
-			'User_media' => 'User_media'
+			'User_advertisement' => 'User_advertisement'
 	);
 	
 	
@@ -66,17 +66,17 @@ class AccountAction extends AdvertBaseAction {
 			if (!Validate::check_string_num($account)) parent::callback(C('STATUS_OTHER'),'账号密码只能输入英文或数字');
 			if (!Validate::checkEquals($password,$password_check)) parent::callback(C('STATUS_OTHER'),'2次密码输入不一致');
 			if (!Validate::checkPhone($iphone)) parent::callback(C('STATUS_OTHER'),'手机号码格式错误');
-			$User_media = $this->db['User_media'];
-			if ($User_media->iphone_is_have($iphone)!='') parent::callback(C('STATUS_OTHER'),'手机号已存在');
-			$phone = array('phone'=>$iphone,'type'=>C('ACCOUNT_TYPE.Media'),'phone_vr'=>$phone_verify);
+			$User_advertisement = $this->db['User_advertisement'];
+			if ($User_advertisement->iphone_is_have($iphone)!='') parent::callback(C('STATUS_OTHER'),'手机号已存在');
+			$phone = array('phone'=>$iphone,'type'=>2,'phone_vr'=>$phone_verify);
 			if($this->check_phone($phone)===false) parent::callback(C('STATUS_OTHER'),'手机验证码错误');
 			$id = $Users->add_account($account,$password);
 			if($id!='')
 			{
 				//这里自定义设置session
 				$db_data= array('user_id'=>$id,'user_name'=>$account);
-				$media = array('users_id'=>$id,'iphone'=>$iphone);
-				$User_media->add_account_list($media);
+				$advert = array('users_id'=>$id,'contact_phone'=>$iphone);
+				$User_advertisement->add_account_list($advert);
 				parent::set_session(array('user_info'=>$db_data));
 				parent::callback(C('STATUS_OTHER'),'ok');
 			}else{

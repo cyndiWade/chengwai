@@ -189,6 +189,31 @@ class AdvertBaseAction extends AppBaseAction {
 			return array('status'=>true,'info'=>$execute);
 		}
 	}
+
+	/**
+	 * 短信验证模块
+	 * @param String $telephone		//验证的手机号码
+	 * @param Number $type				//验证类型：1为注册验证
+	 */
+	protected function check_verify ($telephone,$type,$verify) {
+	
+		$Verify = $this->db['Verify'];
+		$verify_code = $verify;		//短信验证码
+	
+		$shp_info = $Verify->seek_verify_data($telephone,$type);
+	
+		//手机验证码验证
+		if (empty($shp_info)) {
+			return array('status'=>false,'msg'=>'验证码不存在');
+		} elseif ($verify_code != $shp_info['verify']) {
+			return array('status'=>false,'msg'=>'验证码错误');
+		} elseif ($shp_info['expired'] - time() < 0 ) {
+			return array('status'=>false,'msg'=>'验证码已过期');
+		}
+		//把验证码状态变成已使用
+		$Verify->save_verify_status($shp_info['id']);
+		return array('status'=>true,'msg'=>'验证通过');
+	}
     	
 }
 

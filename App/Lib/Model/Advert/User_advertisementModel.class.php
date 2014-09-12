@@ -1,16 +1,14 @@
 <?php
 
 //用户数据模型
-class User_mediaModel extends AdvertBaseModel 
+class User_advertisementModel extends AdvertBaseModel 
 {
 	//判断信息是否存在
 	public function add_account_list($array)
 	{
 		if($this->account_is_have($array['users_id'])=='')
 		{
-			$this->users_id = $array['users_id'];
-			$this->iphone = $array['iphone'];
-			$this->add();
+			$this->add($array);
 		}else{
 			
 		}
