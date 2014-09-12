@@ -106,7 +106,7 @@
 			});
 		}
 	});
-	$('input[name="iphone"]').keyup(function(){
+	$('input[name="iphone"]').focusout(function(){
 		var _this = $(this);
 		if(phone(_this.val())===true)
 		{

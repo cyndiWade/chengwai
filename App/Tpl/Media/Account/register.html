@@ -27,7 +27,7 @@
 			<table class="tab01-reg l">
 			  <tr>
 				<td class="t1"><span><em>*</em>会员名：</span></td>
-				<td class="t2"><input type="text" class="text text-error" name="account"/><div class="oktip"></div><div class="errortip">会员名不能为空</div></td>
+				<td class="t2"><input type="text" class="text" name="account"/><div class="oktip"></div><div class="errortip">会员名不能为空</div></td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><em>*</em>登录密码：</span></td>
@@ -108,7 +108,7 @@
 			});
 		}
 	});
-	$('input[name="iphone"]').keyup(function(){
+	$('input[name="iphone"]').focusout(function(){
 		var _this = $(this);
 		if(phone(_this.val())===true)
 		{

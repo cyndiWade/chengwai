@@ -9,16 +9,16 @@ function phone(num)
 }
 $('.errortip').hide();
 $('.oktip').hide();
-$('input[name="account"]').keyup(function(){
+$('input[name="account"]').focusout(function(){
 	check_val($(this));
 });
-$('input[name="password"]').keyup(function(){
+$('input[name="password"]').focusout(function(){
 	check_val($(this));
 });
-$('input[name="phone_verify"]').keyup(function(){
+$('input[name="phone_verify"]').focusout(function(){
 	check_val($(this));
 });
-$('input[name="password_check"]').keyup(function(){
+$('input[name="password_check"]').focusout(function(){
 	var pass = $('input[name="password"]').val();
 	var _this = $(this)
 	if(pass==_this.val())
