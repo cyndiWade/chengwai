@@ -12,12 +12,20 @@ class AppBaseAction extends GlobalParameterAction {
 	public function __construct() {
 		//G('begin'); 							// 记录开始标记位（运行开始）
 		
+		parent::__construct();
+		
 		//初始化数据库连接
 		$this->db_init();
-		
-		
-		parent::__construct();
 
+		$this->global_system();		
+
+	}
+	
+	private function global_system() {
+		$this->global_tpl_view(array(
+			//网站公共的资源路径
+			'Global_Resource_Path'=>APP_PATH.'Public/Global/'	
+		));
 	}
 
 	

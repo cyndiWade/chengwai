@@ -37,12 +37,15 @@ class MediaBaseAction extends AppBaseAction {
 				
 				'group_name' =>GROUP_NAME,
 				
-				'model_name'=>MODULE_NAME,
+				'module_name'=>MODULE_NAME,
 				
 				'action_name'=>ACTION_NAME,
 				
 				//网站当前分组资源路径
-				'Group_Resource_Path'=>APP_PATH.'Public/'.GROUP_NAME.'/'
+				'Group_Resource_Path'=>APP_PATH.'Public/'.GROUP_NAME.'/',
+				
+				//模块级页面路径
+				'Module_Resource_Path'=>APP_PATH.'Public/'.GROUP_NAME.'/Module/'.MODULE_NAME.'/',
 		));
 	
 	
