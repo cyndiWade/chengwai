@@ -97,7 +97,7 @@
 				success : function(val){
 					if(val=='ok')
 					{
-						alert('通过');
+						window.location.href = "{:U('/Advert/Member/datum_edit')}";
 					}else{
 						alert(val['msg']);
 					}

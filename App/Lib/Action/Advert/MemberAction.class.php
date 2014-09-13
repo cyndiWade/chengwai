@@ -18,7 +18,9 @@ class MemberAction extends AdvertBaseAction {
 	public function __construct() {
 		parent::__construct();
 		parent::global_tpl_view(array('module_explain'=>$this->module_explain));
+		//用户所有的信息都保存在$this->oUser 中，对象方式调用
 		$this->_user_id =$this->oUser->id;
+		parent::data_to_view(array('account'=>$_this->oUser->account));
 	}
 	
 	//初始化数据库连接
