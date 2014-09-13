@@ -10,7 +10,8 @@ class User_advertisementModel extends AdvertBaseModel
 		{
 			$this->add($array);
 		}else{
-			
+			$id = get_session('user_info');
+			$this->where(array('users_id'=>$id['id']))->save($array);
 		}
 	}
 	
