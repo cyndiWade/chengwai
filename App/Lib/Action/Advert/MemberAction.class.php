@@ -33,10 +33,13 @@ class MemberAction extends AdvertBaseAction {
 
 	//资料编辑
 	public function datum_edit() {
-		
 		$this->data_to_view(array(
 			'member_sidebar_datum_edit_class'=>'class="on"',
 		));
+		if($this->isPost())
+		{
+			var_dump($_POST);
+		}
 		$this->display();
 	}
 	

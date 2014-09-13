@@ -3,6 +3,7 @@
 <head>
 	<include file="Public:top" />
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/manager.css" type="text/css" />
+	<script src="{$global_tpl_view.Group_Resource_Path}jquery/jquery-1.9.1.js"></script>
 	<title>资料修改</title>
 </head>
 <body>
@@ -34,75 +35,95 @@
 						</table>
 					</div>
 				</div>
-				<div class="box01-edit l">
-					<div class="top-edit l"><strong>企业信息编辑</strong></div>
-					<div class="mid-edit l">
-						<table class="tab01-edit l">
-						  <tr>
-							<td class="t1">公司全称：</td>
-							<td class="t2"><input type="text" class="text" /></td>
-						  </tr>
-						  <tr>
-							<td class="t1">公司地址：</td>
-							<td class="t2"><input type="text" class="text" /></td>
-						  </tr>
-						  <tr>
-							<td class="t1">公司网站地址：</td>
-							<td class="t2"><input type="text" class="text" /></td>
-						  </tr>
-						  <tr>
-							<td class="t1">公司官方微博：</td>
-							<td class="t2"><input type="text" class="text" /></td>
-						  </tr>
-						  <tr>
-							<td class="t1">公司官方微博：</td>
-							<td class="t2"><textarea class="textarea"></textarea></td>
-						  </tr>
-						</table>
+				<form class="demoform" action="" method="POST">
+					<div class="box01-edit l">
+						<div class="top-edit l"><strong>企业信息编辑</strong></div>
+						<div class="mid-edit l">
+							<table class="tab01-edit l">
+							  <tr>
+								<td class="t1">公司全称：</td>
+								<td class="t2"><input type="text" class="text" name="company_name" datatype="*6-15" errormsg="密码范围在6~15位之间！" /></td>
+							  </tr>
+							  <tr>
+								<td class="t1">公司地址：</td>
+								<td class="t2"><input type="text" class="text" name="company_address" /></td>
+							  </tr>
+							  <tr>
+								<td class="t1">公司网站地址：</td>
+								<td class="t2"><input type="text" class="text" name="company_websize" /></td>
+							  </tr>
+							  <tr>
+								<td class="t1">公司官方微博：</td>
+								<td class="t2"><input type="text" class="text" name="company_weibo" /></td>
+							  </tr>
+							  <tr>
+								<td class="t1">公司简介：</td>
+								<td class="t2"><textarea class="textarea" name="company_info"></textarea></td>
+							  </tr>
+							</table>
+						</div>
 					</div>
-				</div>
-				<div class="box01-edit l">
-					<div class="top-edit l"><strong>联系方式</strong></div>
-					<div class="mid-edit l">
-						<table class="tab01-edit l">
-						  <tr>
-							<td class="t1">联系人姓名：</td>
-							<td class="t2"><input type="text" class="text" /></td>
-						  </tr>
-						  <tr>
-							<td class="t1">联系人手机号：</td>
-							<td class="t2"><input type="text" class="text" /></td>
-						  </tr>
-						  <tr>
-							<td class="t1">联系人邮箱：</td>
-							<td class="t2"><input type="text" class="text" /></td>
-						  </tr>
-						  <tr>
-							<td class="t1">固定电话：</td>
-							<td class="t2"><input type="text" class="text" /></td>
-						  </tr>
-						  <tr>
-							<td class="t1">QQ：</td>
-							<td class="t2"><input type="text" class="text" /></td>
-						  </tr>
-						  <tr>
-							<td class="t1">MSN：</td>
-							<td class="t2"><input type="text" class="text" /></td>
-						  </tr>
-						</table>
-						<input type="submit" class="btn brownbtn" value="确 定" />
+					<div class="box01-edit l">
+						<div class="top-edit l"><strong>联系方式</strong></div>
+						<div class="mid-edit l">
+							<table class="tab01-edit l">
+							  <tr>
+								<td class="t1">联系人姓名：</td>
+								<td class="t2"><input type="text" class="text" name="contact_people"/></td>
+							  </tr>
+							  <tr>
+								<td class="t1">联系人手机号：</td>
+								<td class="t2"><input type="text" class="text" name="contact_phone" /></td>
+							  </tr>
+							  <tr>
+								<td class="t1">联系人邮箱：</td>
+								<td class="t2"><input type="text" class="text" name="contact_email" /></td>
+							  </tr>
+							  <tr>
+								<td class="t1">固定电话：</td>
+								<td class="t2"><input type="text" class="text" name="contact_tel" /></td>
+							  </tr>
+							  <tr>
+								<td class="t1">QQ：</td>
+								<td class="t2"><input type="text" class="text" name="contact_qq" /></td>
+							  </tr>
+							  <tr>
+								<td class="t1">MSN：</td>
+								<td class="t2"><input type="text" class="text" name="contact_msn" /></td>
+							  </tr>
+							</table>
+							<input type="submit" class="btn brownbtn" id="btn_sub" value="确 定" />
+						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>
 </div>
 </div>
-
+<script src="{$global_tpl_view.Global_Resource_Path}Validform/js/Validform_v5.3.2.js"></script>
 <include file="Public:member_footer" />
-
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
+<script>
+	$(".demoform").Validform({
+		btnSubmit:"#btn_sub",
 
+
+		//函数
+		//表单验证之前，提交时执行的函数
+		beforeCheck:function(curform){	
+			//在表单提交执行验证之前执行的函数，curform参数是当前表单对象。
+			//这里明确return false的话将不会继续执行验证操作;	
+		},
+		
+		//表单验证成功，提交时执行的函数
+		beforeSubmit:function(curform){
+			//在验证成功后，表单提交前执行的函数，curform参数是当前表单对象。
+			//这里明确return false的话表单将不会提交;
+			return false;
+		}
+	});
+</script>
 </body>
 </html>
