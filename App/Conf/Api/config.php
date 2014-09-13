@@ -8,7 +8,7 @@ return array(
 	//	'DEFAULT_ACTION'        => 'index', // 默认操作名称
 
 		/* 后台不需要验证的模块 */
-		'USER_AUTH_ON' => true,							//是否开启
+		'USER_AUTH_ON' => false,							//是否开启
 		'ADMIN_AUTH_KEY' => 'admin',					//管理员账号标识，不用认证的账号
 		//'NOT_AUTH_GROUP'=> '',							//无需认证分组，多个用,号分割
 		'NOT_AUTH_MODULE' => '', 						// 默认无需认证模块，多个用,号分割
