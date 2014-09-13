@@ -18,7 +18,11 @@ class MemberAction extends AdvertBaseAction {
 	public function __construct() {
 		parent::__construct();
 		parent::global_tpl_view(array('module_explain'=>$this->module_explain));
-		$this->_user_id = parent::get_session('user_info')['user_id'];
+		
+		//dump($this->oUser);
+		//exit;
+		//$this->_user_id = parent::get_session('user_info')['user_id'];
+		$this->_user_id =$this->oUser->id;
 	}
 	
 	//初始化数据库连接
@@ -34,12 +38,18 @@ class MemberAction extends AdvertBaseAction {
 
 	//资料编辑
 	public function datum_edit() {
-
 		if($this->isPost())
 		{
-			
+	
 			$bool = $this->db['User_advertisement']->save_account_list($_POST,$this->_user_id);
+
+			if ($bool == true) {
+				parent::callback(C('STATUS_SUCCESS'),'','',array('info'=>'提交成功'));
+			} else {
+				parent::callback(C('STATUS_UPDATE_DATA'),'','',array('info'=>'请重新尝试下'));
+			}
 		}
+
 		//选中样式
 		$this->data_to_view(array('member_sidebar_datumEdit_class'=>'class="on"',));
 		$big_list = $this->db['User_advertisement']->select_account_list($this->_user_id);

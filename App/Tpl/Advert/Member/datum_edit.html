@@ -4,6 +4,8 @@
 	<include file="Public:top" />
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/manager.css" type="text/css" />
 	
+	<link href="{$global_tpl_view.Global_Resource_Path}Validform/css/style.css" type="text/css" rel="stylesheet" />
+	
 	<title>资料修改</title>
 </head>
 <body>
@@ -18,7 +20,7 @@
 	<div class="area01-memwb l">
 		
 		<include file="Public:member_sidebar" />
-		
+			
 		<div class="content-user fr">
 			<div class="top-user l">
 				<strong>资料编辑</strong>
@@ -30,36 +32,38 @@
 						<table class="tab01-edit l">
 						  <tr>
 							<td class="t1">公司简称：</td>
-							<td class="t2"><span class="blue">{$view_data.short}</span></td>
+							<td class="t2"><span class="blue">{$view_data.company_short}</span></td>
 						  </tr>
 						</table>
 					</div>
 				</div>
-				<form action="{:U('/Advert/Member/datum_edit')}" method="POST">
+
+				<form class="demoform" action="{:U('Advert/Member/datum_edit')}" method="POST">
+
 					<div class="box01-edit l">
 						<div class="top-edit l"><strong>企业信息编辑</strong></div>
 						<div class="mid-edit l">
 							<table class="tab01-edit l">
 							  <tr>
 								<td class="t1">公司全称：</td>
-								<td class="t2"><input type="text" class="text" value="{$view_data.company_name}" name="company_name"/></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.company_name}" name="company_name" datatype="*1-50" errormsg="请正确填写范围是1-50个字符" /></td>
 							  </tr>
 							  <tr>
 								<td class="t1">公司地址：</td>
-								<td class="t2"><input type="text" class="text" value="{$view_data.company_address}" name="company_address" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.company_address}" name="company_address" datatype="*1-50" errormsg="请正确填写范围是1-50个字符" /></td>
 							  </tr>
 							  <tr>
 								<td class="t1">公司网站地址：</td>
-								<td class="t2"><input type="text" class="text" value="{$view_data.company_websize}" name="company_websize" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.company_websize}" name="company_websize" datatype="*1-50" errormsg="请正确填写范围是1-50个字符"/></td>
 							  </tr>
 							  <tr>
 								<td class="t1">公司官方微博：</td>
-								<td class="t2"><input type="text" class="text" value="{$view_data.company_weibo}" name="company_weibo" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.company_weibo}" name="company_weibo" datatype="*1-50" errormsg="请正确填写范围是1-50个字符" /></td>
 							  </tr>
 							  <tr>
 								<td class="t1">公司简介：</td>
-								<td class="t2"><textarea class="textarea" value="{$view_data.company_info}" name="company_info"></textarea></td>
-							  </tr>
+								<td class="t2"><textarea class="textarea"  name="company_info" datatype="*10-500" errormsg="请正确填写范围是10-500个字符" >{$view_data.company_info}</textarea></td>
+							 </tr>
 							</table>
 						</div>
 					</div>
@@ -69,28 +73,29 @@
 							<table class="tab01-edit l">
 							  <tr>
 								<td class="t1">联系人姓名：</td>
-								<td class="t2"><input type="text" class="text" value="{$view_data.contact_people}" name="contact_people"/></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.contact_people}" name="contact_people" datatype="*2-20" errormsg="请正确填写范围是2-20个字符"/></td>
 							  </tr>
 							  <tr>
 								<td class="t1">联系人手机号：</td>
-								<td class="t2"><input type="text" class="text" value="{$view_data.contact_phone}" name="contact_phone" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.contact_phone}" name="contact_phone" datatype="m" errormsg="请正确填写手机号码"/></td>
 							  </tr>
 							  <tr>
 								<td class="t1">联系人邮箱：</td>
-								<td class="t2"><input type="text" class="text" value="{$view_data.contact_email}" name="contact_email" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.contact_email}" name="contact_email" datatype="e" errormsg="请正确填写email"/></td>
 							  </tr>
 							  <tr>
 								<td class="t1">固定电话：</td>
-								<td class="t2"><input type="text" class="text" value="{$view_data.contact_tel}" name="contact_tel" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.contact_tel}" name="contact_tel" datatype="*3-15" errormsg="请正确填写固定电话"/></td>
 							  </tr>
 							  <tr>
 								<td class="t1">QQ：</td>
-								<td class="t2"><input type="text" class="text" value="{$view_data.contact_qq}" name="contact_qq" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.contact_qq}" name="contact_qq" datatype="/^[1-9][0-9]{4,15}$/gim" errormsg="请正确填写qq"/></td>
 							  </tr>
 							  <tr>
 								<td class="t1">MSN：</td>
-								<td class="t2"><input type="text" class="text" value="{$view_data.contact_msn}" name="contact_msn" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.contact_msn}" name="contact_msn" datatype="*2-10" errormsg="请正确填写范围是2-10个字符"/></td>
 							  </tr>
+							  
 							</table>
 							<input type="submit" class="btn brownbtn" value="确 定" />
 						</div>
@@ -98,6 +103,8 @@
 				</form>
 			</div>
 		</div>
+	
+	
 	</div>
 </div>
 </div>
@@ -107,25 +114,8 @@
 <include file="Public:bottom" />
 
 <script src="{$global_tpl_view.Global_Resource_Path}Validform/js/Validform_v5.3.2.js"></script>
-<script>
-	$(".demoform").Validform({
-		btnSubmit:"#btn_sub",
 
+<script src="{$global_tpl_view.Module_Resource_Path}datum_edit.js"></script>
 
-		//函数
-		//表单验证之前，提交时执行的函数
-		beforeCheck:function(curform){	
-			//在表单提交执行验证之前执行的函数，curform参数是当前表单对象。
-			//这里明确return false的话将不会继续执行验证操作;	
-		},
-		
-		//表单验证成功，提交时执行的函数
-		beforeSubmit:function(curform){
-			//在验证成功后，表单提交前执行的函数，curform参数是当前表单对象。
-			//这里明确return false的话表单将不会提交;
-			return false;
-		}
-	});
-</script>
 </body>
 </html>

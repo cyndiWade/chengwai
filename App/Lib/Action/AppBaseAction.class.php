@@ -80,13 +80,18 @@ class AppBaseAction extends GlobalParameterAction {
 	 * @param unknown_type $msg
 	 * @param unknown_type $data
 	 */
-	protected function callback($status, $msg = 'Yes!',$data = array()) {
+	protected function callback($status, $msg = 'Yes!',$data = array(),$extend=array()) {
 		$return = array(
 				'status' => $status,
 				'msg' => $msg,
 				'data' => $data,
 				'num' => count($data),
-		);	
+		);
+		if (!empty($extend) && is_array($extend)) {
+			foreach ($extend as $key=>$val) {
+				$return[$key]  = $val;
+			}
+		}
 		
 		header('Content-Type:application/json;charset=utf-8');
 	//	header("Content-type: text/xml;charset=utf-8");
