@@ -22,63 +22,6 @@ class AdminBaseAction extends AppBaseAction {
 	}
 	
 	
-	
-	//记载RBAC权限控制类库
-	private function init_rbac() {	
-		import("@.Tool.RBAC"); 	//权限控制类库
-		/* 初始化数据 */
-		$Combination = new stdClass();
-	
-		/* 数据表配置 */
-		$Combination->table_prefix =  C('DB_PREFIX');
-		$Combination->node_table = C('RBAC_NODE_TABLE');
-		$Combination->group_table = C('RBAC_GROUP_TABLE');
-		$Combination->group_node_table = C('RBAC_GROUP_NODE_TABLE');
-		$Combination->group_user_table = C('RBAC_GROUP_USER_TABLE');
-	
-		/* 方法配置 */
-		$Combination->group = GROUP_NAME;					//当前分组
-		$Combination->module = MODULE_NAME;				//当前模块
-		$Combination->action = ACTION_NAME;					//当前方法
-		$Combination->not_auth_group = C('NOT_AUTH_GROUP');			//无需认证分组
-		$Combination->not_auth_module = C('NOT_AUTH_MODULE');		//无需认证模块
-		$Combination->not_auth_action = C('NOT_AUTH_ACTION');			//无需认证操作
-	
-		RBAC::init($Combination);		//初始化数据
-	}
-	
-	/**
-	 * 手动验证当前用户权限
-	 * @param String $module		//验证模块名
-	 * @param String $action			//验证分组名
-	 */
-	protected function chenk_user_rbac ($module,$action,$group = GROUP_NAME) {
-		$assign = new stdClass();
-		$assign->group = $group;									//当前分组
-		$assign->module = $module;							//当前模块
-		$assign->action = $action;								//当前方法
-		$assign->table_prefix =  C('DB_PREFIX');			//表前缀
-	
-		$assign->not_auth_group = C('NOT_AUTH_GROUP');			//无需认证分组
-		$assign->not_auth_module = C('NOT_AUTH_MODULE');		//无需认证模块
-		$assign->not_auth_action = C('NOT_AUTH_ACTION');			//无需认证操作
-		RBAC::init($assign);		//初始化数据
-	
-		/* RBAC权限系统开启 */
-		if (C('USER_AUTH_ON') == true) {
-			/* 对于不是管理员的用户进行权限验证 */
-			if (!in_array($this->oUser->account,explode(',',C('ADMIN_AUTH_KEY')))) {
-				/* RBAC权限验证 */
-				$check_result = RBAC::check($this->oUser->id);
-				return array('status'=>$check_result['status'],'message'=>$check_result['message']);
-			} else {
-				return array('status'=>true,'message'=>'放行，管理员账号无需验证。');
-			}
-		} else {
-			return array('status'=>true,'message'=>'放行，权限验证已关闭。');
-		}
-	}
-	
 
 	//初始化用户数据
 	private function admin_base_init() {
