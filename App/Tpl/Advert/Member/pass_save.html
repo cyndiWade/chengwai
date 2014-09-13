@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/manager.css" type="text/css" />
+	<title>密码修改</title>
+</head>
+<body>
+<!-- 头部 -->
+<include file="Public:member_header" />
+
+<div class="wrap l">
+<div class="pbd">
+	<div class="location l">
+		当前位置：<a href="#">用户信息</a>  >  <span class="blue">修改密码</span>
+	</div>
+	<div class="area01-memwb l">
+		
+		<include file="Public:member_sidebar" />
+		
+		<div class="content-user fr">
+			<div class="top-user l"><strong>修改密码</strong></div>
+			<div class="mid-user l">
+				<div class="part01-user fl">
+					<p>系统提示：为了您的账号安全，修改密码前请输入注册手机号进行验证！</p>
+					<div class="phone-reg l">
+						<div class="grp01 fl">注册手机号：</div>
+						<div class="grp02 fl">
+							<input type="text" class="phonetext" />
+							<p class="red">如果您忘记注册手机号，请联系销售经理！</p>
+							<input type="submit" class="btn brownbtn" value="下一步" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	</div>
+</div>
+</div>
+
+<include file="Public:member_footer" />
+
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+
+</body>
+</html>

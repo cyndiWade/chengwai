@@ -1,0 +1,48 @@
+﻿@charset "utf-8";
+/* CSS Document */
+.side-user{ width:200px;}
+.content-user{ width:780px;}
+.usernav li{ height:50px; line-height:50px; border-bottom:1px solid #fff;}
+.usernav li a{ display:block; background:#e2e7ea; padding-left:20px; width:180px; color:#2e4653;}
+.usernav li a:hover,.usernav li a.on{ background:url(../images/mem_bg02.gif) no-repeat; color:#fff; font-weight:bold;}
+.top-user{ height:50px; background:#eff3f4;}
+.top-user strong{ display:block; width:200px; height:48px; border-bottom:2px solid #ea6060; line-height:48px; text-align:
+center; font-size:14px; color:#ea6060; font-weight:bold;}
+.mid-user{ padding-top:79px;}
+.part01-user{ margin-left:110px; width:590px;}
+.part01-user p{ padding-bottom:28px;}
+.phone-reg .grp01{ width:93px; padding-top:19px; font-size:14px; font-weight:bold;}
+.phone-reg .grp02{ width:438px;}
+.phone-reg .grp02 .phonetext{ width:430px; height:44px; margin-bottom:17px; line-height:44px; border:1px solid #d1d6d4; padding-left:6px;}
+/*评论*/
+.comment-num{ margin-top:19px;}
+.comment-num span{ margin-right:19px;}
+.box01-comment-search{ padding:10px 0; color:#30262d;}
+.part01-comment-search .grp01{ padding-top:4px; padding-right:15px; font-style:normal;}
+.part01-comment-search .grp01 i{ font-style:normal;}
+.part02-comment-search .counttext{ width:138px; height:26px; line-height:26px; margin-top:2px; border:1px solid #d1d6d4; border-right:none;}
+.part02-comment-search strong{ padding-top:10px;}
+.seabtn{ display:block; background:url(../images/seabtn.gif) no-repeat; width:30px; height:30px; border:none;}
+.tab01-comment th{ height:50px; border-top:1px solid #2e4653;}
+.tab01-comment .t1{ padding-left:10px; width:85px;}
+.tab01-comment .t2{  width:143px;}
+.tab01-comment .t3{  width:82px;}
+.tab01-comment .t4{  width:92px;}
+.tab01-comment .t5{  width:227px;}
+.tab01-comment td{ padding:15px 0;}
+.tab01-comment td{ background:#eff3f4;}
+.tab01-comment tr.even td{ background:#fff;}
+.starbox .star{ display:block; background:url(../images/star_red.png) no-repeat; width:12px; height:12px; float:left;}
+.starbox .star-gray{ display:block; background:url(../images/star_gray.png) no-repeat; width:12px; height:12px; float:left;}
+.ctrl{color:#238cc8;}
+.ctrl a{ color:#238cc8; margin-right:3px; margin-left:3px;}
+
+/*资料编辑*/
+.box01-edit{ padding-top:37px;}
+.top-edit{ padding-bottom:16px; border-bottom:1px solid #e9ece6; margin-bottom:30px;}
+.top-edit strong{ padding-left:21px; font-weight:bold; color:#929292; font-size:14px;}
+.tab01-edit .t1{ width:134px; padding-right:4px; text-align:right;}
+.tab01-edit td{ padding-bottom:30px;}
+.tab01-edit .text{ width:443px; color:#238cc8; height:28px; padding-left:11px;line-height:28px; border:1px solid #d1d6d4;}
+.tab01-edit .textarea{ width:450px; height:80px; border:1px solid #d1d6d4;}
+.mid-edit .brownbtn{ margin-left:138px;}

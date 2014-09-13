@@ -33,6 +33,10 @@ class MemberAction extends AdvertBaseAction {
 
 	//资料编辑
 	public function datum_edit() {
+		
+		$this->data_to_view(array(
+			'member_sidebar_datum_edit_class'=>'class="on"',
+		));
 		$this->display();
 	}
 	
@@ -45,7 +49,7 @@ class MemberAction extends AdvertBaseAction {
     
     //评价list
     public function evaluate () {
-    	
+    	$this->display();
     }
     
 }

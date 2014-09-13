@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/manager.css" type="text/css" />
+	<title>评价管理</title>
+</head>
+<body>
+<!-- 头部 -->
+<include file="Public:member_header" />
+
+<div class="wrap l">
+<div class="pbd">
+	<div class="location l">
+		当前位置：<a href="#">用户信息</a>  >  <span class="blue">评价管理</span>
+	</div>
+	<div class="area01-memwb l">
+		
+		<include file="Public:member_sidebar" />
+		
+		<div class="content-user fr">
+			<div class="top-user l">
+				<div class="comment-num fr"><span>总评价数<b class="red">【0】</b></span><span>好评<b class="red">【0】</b></span><span>中评<b class="red">【0】</b></span><span>差评<b class="red">【0】</b></span></div>
+				<strong>评价管理</strong>
+			</div>
+			<div class="mid-comment l">
+				<div class="box01-comment-search l">
+					<div class="part02-comment-search fr">
+						<strong class="fl">账号名称：</strong><input type="text" class="counttext fl" /><input type="text" class="btn seabtn fl" />
+					</div>
+					<div class="part01-comment-search fl">
+						<div class="grp01 fl"><i>评价来源：</i><select><option>全部</option></select></div>
+						<div class="grp01 fl"><i>评价：</i><select><option>全部</option></select></div>
+						<div class="grp01 fl"><i>申诉处理状态：</i><select><option>全部</option></select></div>
+					</div>
+				</div>
+				<div class="box02-comment-search l">
+					<table class="tab01-comment l">
+					  <tr>
+						<th class="t1">评价</th>
+						<th class="t2">评价内容</th>
+						<th class="t3">账号名称</th>
+						<th class="t4">订单号</th>
+						<th class="t5">账号申诉内容</th>
+						<th class="last">操作</th>
+					  </tr>
+					  <tr>
+						<td class="t1"><div class="starbox"><em class="star"></em><em class="star"></em><em class="star"></em><em class="star"></em><em class="star"></em><em class="star-gray"></em></div></td>
+						<td class="t2">非常满意，效果不错!</td>
+						<td class="t3">wdbhbg</td>
+						<td class="t4">145472134356</td>
+						<td class="t5"></td>
+						<td class="last"><div class="ctrl"><a href="#">查看</a> | <a href="#">删除</a> | <a href="#">申述</a></div></td>
+					  </tr>
+					  <tr>
+						<td class="t1"><div class="starbox"><em class="star"></em><em class="star"></em><em class="star"></em><em class="star"></em><em class="star"></em><em class="star-gray"></em></div></td>
+						<td class="t2">非常满意，效果不错!</td>
+						<td class="t3">wdbhbg</td>
+						<td class="t4">145472134356</td>
+						<td class="t5"></td>
+						<td class="last"><div class="ctrl"><a href="#">查看</a> | <a href="#">删除</a> | <a href="#">申述</a></div></td>
+					  </tr>
+					  <tr>
+						<td class="t1"><div class="starbox"><em class="star"></em><em class="star"></em><em class="star"></em><em class="star"></em><em class="star"></em><em class="star-gray"></em></div></td>
+						<td class="t2">非常满意，效果不错!</td>
+						<td class="t3">wdbhbg</td>
+						<td class="t4">145472134356</td>
+						<td class="t5"></td>
+						<td class="last"><div class="ctrl"><a href="#">查看</a> | <a href="#">删除</a> | <a href="#">申述</a></div></td>
+					  </tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	
+	</div>
+</div>
+</div>
+
+<include file="Public:member_footer" />
+
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+
+<script type="text/javascript">
+$(function(){
+	$('.tab01-comment tr:even').addClass('even')
+})
+</script>
+
+</body>
+</html>
