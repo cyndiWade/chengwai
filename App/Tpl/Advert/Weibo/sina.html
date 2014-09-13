@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+	
+    <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/member.css" type="text/css" />
+	
+	<title>微博列表页</title>
+</head>
+<body>
+
+<!-- 头部 -->
+<include file="Public:member_header" />
+
+<div class="wrap l">
+<div class="pbd">
+<div class="location l">
+	当前位置：<a href="#">首页</a>  >  <a href="#">微博推广</a> > <span class="blue">查看名人新浪微博</span>
+</div>
+<div class="area01-memwb l">
+	<ul class="wbtab l">
+		<li class="select"><a href="#" class="wbzh">全部微博账号 </a></li>
+		<li><a href="#" class="wntj">为您推荐 </a></li>
+		<li><a href="#" class="hotzh">热门新浪微博账号 </a></li>
+		<li><a href="#" class="xstj">限时特价</a></li>
+		<li><a href="#" class="cksc">查看收藏</a></li>
+		<li><a href="#" class="hmd">查看黑名单</a></li>
+	</ul>
+	<div class="searchbox fl">
+		<div class="top-search l"><strong class="on">搜索账号名称</strong><strong>搜索关键字 </strong></div>
+		<div class="mid-search l">
+			<input type="text" class="seatext" value="输入您要找的账号名称,例：微博搞笑排行榜" /><input type="submit" class="btn seabtn" value="搜索" />
+		</div>
+	</div>
+	<div class="catebox l">
+		<table class="tab01-cate l">
+		  <tr>
+			<td class="t1">常见分类：</td>
+			<td class="t2"><div class="part01-cate fl"><span>所有</span><span class="select">时尚</span><span>家居生活</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>母婴育儿</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>母婴育儿</span><span>娱乐</span><span>娱乐</span></div><div class="more fl" id="morecate">更多</div></td>
+		  </tr>
+		  <tr>
+			<td class="t1">价格：</td>
+			<td class="t2"><div class="part01-price fl"><select><option>硬广转发报价</option></select></div><div class="part02-price fl"><span class="select">所有</span><span>50-100元</span><span>100-200元</span><span>200-500元</span><span>500-1000元</span><span>1000元以上</span></div><div class="part03-price fl"><input type="text" class="text" /><i>-</i><input type="text" class="text" /><i>元</i></div><span class="btn okbtn fl">确定</span></td>
+		  </tr>
+		  <tr>
+			<td class="t1">粉丝量：</td>
+			<td class="t2"><div class="part02-price fl"><span class="select">所有</span><span>50-100元</span><span>100-200元</span><span>200-500元</span><span>500-1000元</span><span>1000元以上</span></div><div class="part03-price fl"><input type="text" class="text" /><i>-</i><input type="text" class="text" /><i>元</i></div><span class="btn okbtn fl">确定</span></td>
+		  </tr>
+		  <tr>
+			<td class="t1">粉丝性别：</td>
+			<td class="t2"><div class="part02-price fl"><span class="select">不限</span><span>男</span><span>女</span><span>泛</span></div></td>
+		  </tr>
+		</table>
+		<div class="senior-search tc l"><strong>高级搜索</strong></div>
+	</div>
+	<div class="orderbox l">
+		<b class="total fr">共11178个</b><b class="total fr">200页</b>
+		<select class="fl"><option>选择排序方式</option></select><span class="orderspan orderspan-select fl">默认排序</span><span class="orderspan">粉丝量</span><span class="orderspan">相关性</span><span class="orderspan">月订单</span>
+	</div>
+	<div class="col01-weibo l">
+		<table class="tab01-weibo l">
+		  <tr>
+			<th class="t1"><b>微博名称</b></th>
+			<th class="t2">粉丝数</th>
+			<th class="t3">转评值</th>
+			<th class="t4">硬广转发价</th>
+			<th class="t5">软广转发价</th>
+			<th class="t6">硬广直发价</th>
+			<th class="t7">软广直发价</th>
+			<th class="t8">周订单</th>
+			<th class="t9">粉丝性别</th>
+			<th class="t10">可用广告位</th>
+			<th class="last">操作</th>
+		  </tr>
+		  <tr>
+			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wb_img01.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="address l">北京东城区</div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
+			<td class="t2"><b class="red">6323万</b></td>
+			<td class="t3">1.00</td>
+			<td class="t4">540.00元</td>
+			<td class="t5">540.00元</td>
+			<td class="t6">540.00元</td>
+			<td class="t7">540.00元</td>
+			<td class="t8">12</td>
+			<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>
+			<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
+			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wb_img01.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="address l">北京东城区</div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
+			<td class="t2"><b class="red">6323万</b></td>
+			<td class="t3">1.00</td>
+			<td class="t4">540.00元</td>
+			<td class="t5">540.00元</td>
+			<td class="t6">540.00元</td>
+			<td class="t7">540.00元</td>
+			<td class="t8">12</td>
+			<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>
+			<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
+			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wb_img01.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="address l">北京东城区</div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
+			<td class="t2"><b class="red">6323万</b></td>
+			<td class="t3">1.00</td>
+			<td class="t4">540.00元</td>
+			<td class="t5">540.00元</td>
+			<td class="t6">540.00元</td>
+			<td class="t7">540.00元</td>
+			<td class="t8">12</td>
+			<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>
+			<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
+			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wb_img01.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="address l">北京东城区</div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
+			<td class="t2"><b class="red">6323万</b></td>
+			<td class="t3">1.00</td>
+			<td class="t4">540.00元</td>
+			<td class="t5">540.00元</td>
+			<td class="t6">540.00元</td>
+			<td class="t7">540.00元</td>
+			<td class="t8">12</td>
+			<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>
+			<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
+			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
+		  </tr>
+		</table>
+		<div class="weibo-bot l">
+			<div class="page-wb fr">
+				<a href="#" class="prev"><</a><a href="#" class="num on">1</a><a href="#" class="num">2</a><a href="#" class="num">3</a><a href="#" class="num">4</a><em>...</em><a href="#" class="num">25</a><a href="#" class="next">></a><b class="total fl">共25页</b><div class="count fl"><i class="fl">到第</i><input type="text" class="text fl" /><i class="fl">页</i><span class="aok fl">前往</span><strong class="show fl">显示<select><option>10</option></select>条</strong></div>
+			</div>
+			<div class="controlbox fl">
+				<span>全选</span><span id="batch">批量添加账号</span><span>批量导出报价单</span>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+
+
+<!-- 批量添加弹窗 -->
+<div class="batchbox none tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选微信主</b></div>
+	<div class="mid-batch l">
+		<div class="part01-batch fl">
+			已选择<b>3</b>位微信主，计费<b>1164.00</b>元
+		</div>
+		<ul class="part02-batch fl">
+			<li><span class="del fr"></span><strong>陈晓明</strong></li>
+			<li><span class="del fr"></span><strong>猪大肠</strong></li>
+			<li><span class="del fr"></span><strong>冷笑话</strong></li>
+		</ul>
+		<a href="#" class="btn bluebtn">立即派单</a>
+	</div>
+</div>
+
+<include file="Public:member_footer" />
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+
+<script src="{$global_tpl_view.Module_Resource_Path}sina.js"></script>
+
+<script type="text/javascript">
+
+</script>
+</body>
+</html>
