@@ -18,6 +18,8 @@ class GlobalParameterAction extends Action {
 	
 	protected $oUser;							//全局身份标示
 	
+	protected $is_login = false;				//是否登录
+	
 
 	
 	/**
