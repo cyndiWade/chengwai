@@ -9,12 +9,32 @@ class User_advertisementModel extends AdvertBaseModel
 		if($this->account_is_have($array['users_id'])=='')
 		{
 			$this->add($array);
-		}else{
-			$id = get_session('user_info');
-			$this->where(array('users_id'=>$id['id']))->save($array);
 		}
 	}
 	
+	//修改用户信息
+	public function save_account_list($array,$id)
+	{
+		$new_array = array();
+		foreach($array as $key => $value)
+		{
+			$new_array[$key] = addslashes($value);
+		}
+		return $this->where(array('users_id'=>$id))->save($new_array);
+	}
+
+	//查询用户信息
+	public function select_account_list($id)
+	{
+		$list  = $this->where(array('users_id'=>$id))->find();
+		$new_array = array();
+		foreach($list as $key => $value)
+		{
+			$new_array[$key] = str_ireplace('\\', '', $value);
+		}
+		return $new_array;
+	}
+
 	//通过账号验证账号是否存在
 	private function account_is_have($id) 
 	{

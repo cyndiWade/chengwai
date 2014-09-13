@@ -30,35 +30,35 @@
 						<table class="tab01-edit l">
 						  <tr>
 							<td class="t1">公司简称：</td>
-							<td class="t2"><span class="blue">小朋友的</span></td>
+							<td class="t2"><span class="blue">{$view_data.short}</span></td>
 						  </tr>
 						</table>
 					</div>
 				</div>
-				<form class="demoform" action="" method="POST">
+				<form action="{:U('/Advert/Member/datum_edit')}" method="POST">
 					<div class="box01-edit l">
 						<div class="top-edit l"><strong>企业信息编辑</strong></div>
 						<div class="mid-edit l">
 							<table class="tab01-edit l">
 							  <tr>
 								<td class="t1">公司全称：</td>
-								<td class="t2"><input type="text" class="text" name="company_name" datatype="*6-15" errormsg="密码范围在6~15位之间！" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.company_name}" name="company_name"/></td>
 							  </tr>
 							  <tr>
 								<td class="t1">公司地址：</td>
-								<td class="t2"><input type="text" class="text" name="company_address" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.company_address}" name="company_address" /></td>
 							  </tr>
 							  <tr>
 								<td class="t1">公司网站地址：</td>
-								<td class="t2"><input type="text" class="text" name="company_websize" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.company_websize}" name="company_websize" /></td>
 							  </tr>
 							  <tr>
 								<td class="t1">公司官方微博：</td>
-								<td class="t2"><input type="text" class="text" name="company_weibo" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.company_weibo}" name="company_weibo" /></td>
 							  </tr>
 							  <tr>
 								<td class="t1">公司简介：</td>
-								<td class="t2"><textarea class="textarea" name="company_info"></textarea></td>
+								<td class="t2"><textarea class="textarea" value="{$view_data.company_info}" name="company_info"></textarea></td>
 							  </tr>
 							</table>
 						</div>
@@ -69,30 +69,30 @@
 							<table class="tab01-edit l">
 							  <tr>
 								<td class="t1">联系人姓名：</td>
-								<td class="t2"><input type="text" class="text" name="contact_people"/></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.contact_people}" name="contact_people"/></td>
 							  </tr>
 							  <tr>
 								<td class="t1">联系人手机号：</td>
-								<td class="t2"><input type="text" class="text" name="contact_phone" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.contact_phone}" name="contact_phone" /></td>
 							  </tr>
 							  <tr>
 								<td class="t1">联系人邮箱：</td>
-								<td class="t2"><input type="text" class="text" name="contact_email" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.contact_email}" name="contact_email" /></td>
 							  </tr>
 							  <tr>
 								<td class="t1">固定电话：</td>
-								<td class="t2"><input type="text" class="text" name="contact_tel" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.contact_tel}" name="contact_tel" /></td>
 							  </tr>
 							  <tr>
 								<td class="t1">QQ：</td>
-								<td class="t2"><input type="text" class="text" name="contact_qq" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.contact_qq}" name="contact_qq" /></td>
 							  </tr>
 							  <tr>
 								<td class="t1">MSN：</td>
-								<td class="t2"><input type="text" class="text" name="contact_msn" /></td>
+								<td class="t2"><input type="text" class="text" value="{$view_data.contact_msn}" name="contact_msn" /></td>
 							  </tr>
 							</table>
-							<input type="submit" class="btn brownbtn" id="btn_sub" value="确 定" />
+							<input type="submit" class="btn brownbtn" value="确 定" />
 						</div>
 					</div>
 				</form>
@@ -127,6 +127,5 @@
 		}
 	});
 </script>
-
 </body>
 </html>

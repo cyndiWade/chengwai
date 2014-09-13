@@ -125,7 +125,7 @@ class AccountAction extends AdvertBaseAction {
 					echo '密码错误！';exit;
 				} else {
 					$tmp_arr = array(
-						'id' =>$user_info['id'],
+						'user_id' =>$user_info['id'],
 						'account' => $user_info['account'],
 						'nickname' => $user_info['nickname'],
 						'type'=>$user_info['type'],

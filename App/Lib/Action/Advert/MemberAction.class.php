@@ -18,6 +18,7 @@ class MemberAction extends AdvertBaseAction {
 	public function __construct() {
 		parent::__construct();
 		parent::global_tpl_view(array('module_explain'=>$this->module_explain));
+		$this->_user_id = parent::get_session('user_info')['user_id'];
 	}
 	
 	//初始化数据库连接
@@ -36,13 +37,13 @@ class MemberAction extends AdvertBaseAction {
 
 		if($this->isPost())
 		{
-			var_dump($_POST);
+			
+			$bool = $this->db['User_advertisement']->save_account_list($_POST,$this->_user_id);
 		}
-		
 		//选中样式
-		$this->data_to_view(array(
-			'member_sidebar_datumEdit_class'=>'class="on"',
-		));
+		$this->data_to_view(array('member_sidebar_datumEdit_class'=>'class="on"',));
+		$big_list = $this->db['User_advertisement']->select_account_list($this->_user_id);
+		parent::data_to_view($big_list);
 		$this->display();
 	}
 	
