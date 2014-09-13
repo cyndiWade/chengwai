@@ -19,9 +19,8 @@ class MemberAction extends AdvertBaseAction {
 		parent::__construct();
 		parent::global_tpl_view(array('module_explain'=>$this->module_explain));
 		
-		//dump($this->oUser);
-		//exit;
-		//$this->_user_id = parent::get_session('user_info')['user_id'];
+		//用户所有的信息都保存在$this->oUser 中，对象方式调用
+		
 		$this->_user_id =$this->oUser->id;
 	}
 	
