@@ -87,7 +87,7 @@ class AccountAction extends AdvertBaseAction {
 				parent::set_session(array('user_info'=>$db_data));
 				parent::callback(C('STATUS_OTHER'),'ok');
 			}else{
-				parent::callback(C('STATUS_OTHER'),'数据有误！');
+				parent::callback(C('STATUS_OTHER'),'请重新输入数据!');
 			}
 		} else {
 			$this->error('非法访问！');
