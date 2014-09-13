@@ -18,10 +18,6 @@ class MemberAction extends AdvertBaseAction {
 	public function __construct() {
 		parent::__construct();
 		parent::global_tpl_view(array('module_explain'=>$this->module_explain));
-		
-		//dump($this->oUser);
-		//exit;
-		//$this->_user_id = parent::get_session('user_info')['user_id'];
 		$this->_user_id =$this->oUser->id;
 	}
 	

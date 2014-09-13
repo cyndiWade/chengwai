@@ -74,7 +74,12 @@ class AccountAction extends AdvertBaseAction {
 			if($id!='')
 			{
 				//这里自定义设置session
-				$db_data= array('user_id'=>$id,'user_name'=>$account);
+				$db_data= array(
+					'id'=>$id,
+					'account'=>$account,
+					'nickname' => '',
+					'type' => 2
+				);
 				$advert = array('users_id'=>$id,'contact_phone'=>$iphone);
 				$User_advertisement->add_account_list($advert);
 				parent::set_session(array('user_info'=>$db_data));
@@ -125,7 +130,7 @@ class AccountAction extends AdvertBaseAction {
 					echo '密码错误！';exit;
 				} else {
 					$tmp_arr = array(
-						'user_id' =>$user_info['id'],
+						'id' =>$user_info['id'],
 						'account' => $user_info['account'],
 						'nickname' => $user_info['nickname'],
 						'type'=>$user_info['type'],
@@ -135,10 +140,10 @@ class AccountAction extends AdvertBaseAction {
 				parent::set_session(array('user_info'=>$tmp_arr));
 				//更新用户信息
 				$Users->up_login_info($user_info['id']);
-				$this->redirect('/Media/Account/user_system');
+				$this->redirect('/Advert/Account/user_system');
 			}
 		} else {
-			$this->redirect('/Media/Account/login');
+			$this->redirect('/Advert/Account/login');
 		}
 	}
 	
