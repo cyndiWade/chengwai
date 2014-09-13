@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+	
+    <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/member.css" type="text/css" />
+	
+	<title>微信列表页</title>
+</head>
+<body>
+
+<!-- 头部 -->
+<include file="Public:member_header" />
+
+<div class="wrap l">
+<div class="pbd">
+<div class="location l">
+	当前位置：<a href="#">首页</a>  >  <a href="#">微信推广</a> > <span class="blue">查看名人微信</span>
+</div>
+<div class="area01-memwb area01-memwx l">
+	<ul class="wbtab l">
+		<li class="select"><a href="#" class="wxzh">全部微信账号</a></li>
+		<li><a href="#" class="wntj">为您推荐 </a></li>
+		<li><a href="#" class="hotzh">热门新浪微博账号 </a></li>
+		<li><a href="#" class="xstj">限时特价</a></li>
+		<li><a href="#" class="cksc">查看收藏</a></li>
+		<li><a href="#" class="hmd">查看黑名单</a></li>
+	</ul>
+	<div class="searchbox fl">
+		<div class="top-search l"><strong class="on">搜账号名称/微信号</strong><strong>搜索关键字 </strong></div>
+		<div class="mid-search l">
+			<input type="text" class="seatext" value="请输入微信账号的名称或微信号" /><input type="submit" class="btn seabtn" value="搜索" />
+		</div>
+	</div>
+	<div class="catebox l">
+		<table class="tab01-cate l">
+		  <tr>
+			<td class="t1">常见分类：</td>
+			<td class="t2"><div class="part01-cate fl"><span>所有</span><span class="select">时尚</span><span>家居生活</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>母婴育儿</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>母婴育儿</span><span>娱乐</span><span>娱乐</span></div><div class="more fl" id="morecate">更多</div></td>
+		  </tr>
+		  <tr>
+			<td class="t1">价格：</td>
+			<td class="t2"><div class="part01-price fl"><select><option>单图文报价 </option></select></div><div class="part02-price fl"><span class="select">所有</span><span>50-100元</span><span>100-200元</span><span>200-500元</span><span>500-1000元</span><span>1000元以上</span></div><div class="part03-price fl"><input type="text" class="text" /><i>-</i><input type="text" class="text" /><i>元</i></div><span class="btn okbtn fl">确定</span></td>
+		  </tr>
+		  <tr>
+			<td class="t1">粉丝量：</td>
+			<td class="t2"><div class="part02-price fl"><span class="select">所有</span><span>50-100元</span><span>100-200元</span><span>200-500元</span><span>500-1000元</span><span>1000元以上</span></div><div class="part03-price fl"><input type="text" class="text" /><i>-</i><input type="text" class="text" /><i>元</i></div><span class="btn okbtn fl">确定</span></td>
+		  </tr>
+		  <tr>
+			<td class="t1">视频认证  <img src="{$global_tpl_view.Group_Resource_Path}images/qa_icon.png" />：</td>
+			<td class="t2"><div class="part01-video fl"><span class="fl"><input type="checkbox" class="check"><em>粉丝量已认证</em></span><span class="fl"><input type="checkbox" class="check"><em>粉丝量已认证</em></span></td>
+		  </tr>
+		  <tr>
+			<td class="t1">其它筛选：</td>
+			<td class="t2"><div class="part01-select fl"><span>账号是否认证</span><span>受众性别</span><span>粉丝量认证时间</span><span>周平均阅读数</span></div></td>
+		  </tr>
+		</table>
+		<div class="resultbox tc l">
+			<div class="trash fr">清空选择筛选条件 </div>
+			<span class="span-ok fl">已选择 ：</span>
+			<ul class="grp fl">
+				<li><strong>常见分类 > <b>时尚</b></strong><em class="del"></em></li>
+				<li><strong>价格 > <b>50-100元</b></strong><em class="del"></em></li>
+				<li><strong>粉丝量 > <b>1-5万</b></strong><em class="del"></em></li>
+				<li><strong>视频认证 > <b>粉丝量已认证</b></strong><em class="del"></em></li>
+			</ul>
+		</div>
+	</div>
+	<div class="orderbox l">
+		<b class="total fr">共11178个</b><b class="total fr">200页</b>
+		<select class="fl"><option>选择排序方式</option></select><span class="orderspan orderspan-select fl">默认排序</span><span class="orderspan">粉丝数量</span><span class="orderspan">单图文报价</span>
+	</div>
+	<div class="col01-wx l">
+		<table class="tab01-weibo tab01-wx l">
+		  <tr>
+			<th class="t1"><b>微信名称</b></th>
+			<th class="t2">行业分类</th>
+			<th class="t3">粉丝</th>
+			<th class="t4">价格</th>
+			<th class="t5">性别比例</th>
+			<th class="t6">效果值</th>
+			<th class="t7">月订单量</th>
+			<th class="t8">可用广告位</th>
+			<th class="t9">二维码</th>
+			<th class="last">操作</th>
+		  </tr>
+		  <tr>
+			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：quiadaa</span><i class="i-rz"></i><i class="i-sp"></i></div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
+			<td class="t2"><b class="red">娱乐圈</b></td>
+			<td class="t3"><div class="fsbox"><p>93000</p><img width="44" src="{$global_tpl_view.Group_Resource_Path}images/wx_img01.gif" /></div></td>
+			<td class="t4"><div class="pricebox"><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p></div></td>
+			<td class="t5"><p>男：占20%</p></td>
+			<td class="t6"><p>图文打开率：占20%</p><p>周平均阅读数：占20%</p></td>
+			<td class="t7">8000</td>
+			<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
+			<td class="t9"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>
+			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：quiadaa</span><i class="i-rz"></i><i class="i-sp"></i></div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
+			<td class="t2"><b class="red">娱乐圈</b></td>
+			<td class="t3"><div class="fsbox"><p>93000</p><img width="44" src="{$global_tpl_view.Group_Resource_Path}images/wx_img01.gif" /></div></td>
+			<td class="t4"><div class="pricebox"><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p></div></td>
+			<td class="t5"><p>男：占20%</p></td>
+			<td class="t6"><p>图文打开率：占20%</p><p>周平均阅读数：占20%</p></td>
+			<td class="t7">8000</td>
+			<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
+			<td class="t9"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>
+			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：quiadaa</span><i class="i-rz"></i><i class="i-sp"></i></div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
+			<td class="t2"><b class="red">娱乐圈</b></td>
+			<td class="t3"><div class="fsbox"><p>93000</p><img width="44" src="{$global_tpl_view.Group_Resource_Path}images/wx_img01.gif" /></div></td>
+			<td class="t4"><div class="pricebox"><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p></div></td>
+			<td class="t5"><p>男：占20%</p></td>
+			<td class="t6"><p>图文打开率：占20%</p><p>周平均阅读数：占20%</p></td>
+			<td class="t7">8000</td>
+			<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
+			<td class="t9"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>
+			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="address l">北京东城区</div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
+			<td class="t2"><b class="red">娱乐圈</b></td>
+			<td class="t3"><div class="fsbox"><p>93000</p><img width="44" src="{$global_tpl_view.Group_Resource_Path}images/wx_img01.gif" /></div></td>
+			<td class="t4"><div class="pricebox"><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p></div></td>
+			<td class="t5"><p>男：占20%</p></td>
+			<td class="t6"><p>图文打开率：占20%</p><p>周平均阅读数：占20%</p></td>
+			<td class="t7">8000</td>
+			<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
+			<td class="t9"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>
+			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
+		  </tr>
+		</table>
+		<div class="weibo-bot l">
+			<div class="page-wb fr">
+				<a href="#" class="prev"><</a><a href="#" class="num on">1</a><a href="#" class="num">2</a><a href="#" class="num">3</a><a href="#" class="num">4</a><em>...</em><a href="#" class="num">25</a><a href="#" class="next">></a><b class="total fl">共25页</b><div class="count fl"><i class="fl">到第</i><input type="text" class="text fl" /><i class="fl">页</i><span class="aok fl">前往</span><strong class="show fl">显示<select><option>10</option></select>条</strong></div>
+			</div>
+			<div class="controlbox fl">
+				<span>全选</span><span id="batch">批量添加账号</span><span>批量导出报价单</span>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+
+
+<!-- 批量添加弹窗 -->
+<div class="batchbox none tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选微信主</b></div>
+	<div class="mid-batch l">
+		<div class="part01-batch fl">
+			已选择<b>3</b>位微信主，计费<b>1164.00</b>元
+		</div>
+		<ul class="part02-batch fl">
+			<li><span class="del fr"></span><strong>陈晓明</strong></li>
+			<li><span class="del fr"></span><strong>猪大肠</strong></li>
+			<li><span class="del fr"></span><strong>冷笑话</strong></li>
+		</ul>
+		<a href="#" class="btn bluebtn">立即派单</a>
+	</div>
+</div>
+
+<include file="Public:member_footer" />
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+
+<script src="{$global_tpl_view.Module_Resource_Path}weixin.js"></script>
+
+<script type="text/javascript">
+
+</script>
+</body>
+</html>
