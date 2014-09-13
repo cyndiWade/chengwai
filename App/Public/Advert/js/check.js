@@ -58,20 +58,28 @@ function all_submit(){
 		alert('请先同意服务协议!');
 	}else{
 		var str_array = [$('input[name="account"]'),$('input[name="password"]'),$('input[name="password_check"]'),$('input[name="iphone"]'),$('input[name="phone_verify"]')];
-		var strBool = false;
+		var strBool = new Array();
 		for(var i= 0 ; i < str_array.length ; i++)
 		{
 			var _this = str_array[i];
 			if(_this.val()!='')
 			{
-				strBool = true;
+				_this.attr('class','text');
+				_this.next().show();
+				_this.next().next().hide();
+				strBool.push(1);
 			}else{
 				_this.attr('class','text text-error');
 				_this.next().hide();
 				_this.next().next().show();
-				strBool = false;
+				strBool.push(0);
 			}
 		}
-		return strBool;
+		if(strBool.indexOf(0)=='-1' )
+		{
+			return true;
+		}else{
+			return false;
+		}
 	}
 }
