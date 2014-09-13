@@ -1,0 +1,1 @@
+$('.tab01-comment tr:even').addClass('even')
