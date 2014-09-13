@@ -20,7 +20,7 @@ class MemberAction extends AdvertBaseAction {
 		parent::global_tpl_view(array('module_explain'=>$this->module_explain));
 		//用户所有的信息都保存在$this->oUser 中，对象方式调用
 		$this->_user_id =$this->oUser->id;
-		parent::data_to_view(array('account'=>$_this->oUser->account));
+		parent::data_to_view(array('account'=>$this->oUser->account));
 	}
 	
 	//初始化数据库连接
@@ -38,7 +38,6 @@ class MemberAction extends AdvertBaseAction {
 	public function datum_edit() {
 		if($this->isPost())
 		{
-	
 			$bool = $this->db['User_advertisement']->save_account_list($_POST,$this->_user_id);
 
 			if ($bool == true) {
@@ -60,9 +59,7 @@ class MemberAction extends AdvertBaseAction {
     public function pass_save() {
     	
     	//选中样式
-    	$this->data_to_view(array(
-    			'member_sidebar_passSave_class'=>'class="on"',
-    	));
+    	$this->data_to_view(array('member_sidebar_passSave_class'=>'class="on"'));
     	$this->display();
     }
    

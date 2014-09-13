@@ -41,12 +41,14 @@ class AccountAction extends AdvertBaseAction {
 		if ($phone_check_info['status'] == false) return false;
 	}
 	
-	public function login () {
+	public function login ()
+	{
 		$this->display();
 	}
 	
 	//账号注册	
-	public function register () {
+	public function register ()
+	{
 		$this->display();	
 	}
 	
@@ -92,6 +94,12 @@ class AccountAction extends AdvertBaseAction {
 		}
 	}
 	
+	//输出验证码
+	public function verify()
+	{
+	    import('ORG.Util.Image');
+	    Image::buildImageVerify();
+	}
 
 	/**
 	 * 登陆验证
@@ -103,14 +111,15 @@ class AccountAction extends AdvertBaseAction {
 	
 			import("@.Tool.Validate");							//验证类
 			 
-			$account = $_POST['account'];					//用户账号
-			$password = $_POST['password'];					//用户密码
-			 
+			$account = $this->_post('account');					//用户账号
+			$password = $this->_post('password');					//用户密码
+			$verify = $this->_post('verify');
+
 			//数据过滤
 			if (Validate::checkNull($account)){echo '账号不能为空!';exit;};
 			if (Validate::checkNull($password)){echo '密码不能为空!';exit;};
 			if (!Validate::check_string_num($account)){echo '账号密码只能输入英文或数字';exit;};
-			 
+			if (md5($verify)!=$_SESSION['verify']){echo '验证码错误!';exit;}
 			$user_type = 2;
 			//读取用户数据
 			$user_info = $Users->get_user_info(array('account'=>$account,'type'=>$user_type,'is_del'=>0));
@@ -140,7 +149,7 @@ class AccountAction extends AdvertBaseAction {
 				parent::set_session(array('user_info'=>$tmp_arr));
 				//更新用户信息
 				$Users->up_login_info($user_info['id']);
-				$this->redirect('/Advert/Account/user_system');
+				$this->redirect('/Advert/Member/datum_edit');
 			}
 		} else {
 			$this->redirect('/Advert/Account/login');
@@ -152,7 +161,7 @@ class AccountAction extends AdvertBaseAction {
     public function logout () {
     	if (session_start()) {
     		parent::del_session('user_info');
-    		//$this->success('退出成功',U(GROUP_NAME.'/Login/login'));
+    		$this->success('退出成功',U(GROUP_NAME.'/Account/login'));
     	} 
     }
 }

@@ -8,7 +8,6 @@
 <body>
 <!-- 头部 -->
 <include file="Public:member_header" />
-
 <div class="wrap l">
 <div class="pbd">
 	<div class="location l">
@@ -26,7 +25,7 @@
 					<div class="phone-reg l">
 						<div class="grp01 fl">注册手机号：</div>
 						<div class="grp02 fl">
-							<input type="text" class="phonetext" />
+							<input type="text" class="phonetext" value=""/>
 							<p class="red">如果您忘记注册手机号，请联系销售经理！</p>
 							<input type="submit" class="btn brownbtn" value="下一步" />
 						</div>
@@ -39,12 +38,20 @@
 </div>
 </div>
 <include file="Public:member_footer" />
-
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
+<script type="text/javascript" src="{$global_tpl_view.Module_Resource_Path}XXXX.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Global_Resource_Path}jquery/check_zhuce.js"></script>
+<script>
+	$('.brownbtn').click(function(){
+		var iphone = $('.phonetext').val();
+		if(phone(iphone)==true)
+		{
 
-
-<script type="text/javascript" src={$global_tpl_view.Module_Resource_Path}XXXX.js></script>
-
+		}else{
+			alert('手机号错误!');
+		}
+	});
+</script>
 </body>
 </html>

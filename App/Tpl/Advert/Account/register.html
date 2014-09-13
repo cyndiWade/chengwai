@@ -95,7 +95,7 @@
 				cache :　false,
 				data : {account:account,password:password,password_check:password_check,iphone:iphone,phone_verify:phone_verify},
 				success : function(val){
-					if(val=='ok')
+					if(val['msg']=='ok')
 					{
 						window.location.href = "{:U('/Advert/Member/datum_edit')}";
 					}else{
