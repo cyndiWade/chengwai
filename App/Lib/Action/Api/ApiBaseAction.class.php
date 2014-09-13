@@ -7,9 +7,9 @@ class ApiBaseAction extends AppBaseAction {
 
 	protected  $is_check_rbac = true;		//当前控制是否需要验证RBAC
 	
-	protected  $not_check_fn = array();	//登陆后无需登录验证方法
+	protected  $not_check_fn = array();		//登陆后无需登录验证方法
 	
-	protected $request;					//获取请求的数据
+	protected $request;						//获取请求的数据
 	
 	//构造方法
 	public function __construct() {
