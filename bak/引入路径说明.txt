@@ -1,0 +1,10 @@
+整个网站全局的放在：Public/Global/自己的目录   
+引用 比如：{$global_tpl_view.Global_Resource_Path}jquery/jquery-1.9.1.js
+
+当前分组->模块的特有css、js、图片、 放在 Public/分组/Module/类名  下。
+比如{$global_tpl_view.Module_Resource_Path}register.js  
+表示引入Public/Advert/Module/Account/register.js
+
+当前分组->公用的直接放在 ，当前模块下的css、js、images里面即可  比如 
+{$global_tpl_view.Group_Resource_Path}js/check.js    
+表示 引入 Pubic/Advert/js/check.js
