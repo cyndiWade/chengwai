@@ -129,6 +129,22 @@ $custom= array (
 				'PWD'=>'gztzwl'
 		),
 		
+
+		'ACCOUNT_STATUS' => array(
+				0 => array(
+						'status' => 0,
+						'explain' => '正常',
+				),
+				1 => array(
+						'status' => 1,
+						'explain' => '审核中',
+				),
+				2 => array(
+						'status' => 2,
+						'explain' => '禁用',
+				),
+		),
+		
 		/* 错误类型 */
 		'STATUS_SUCCESS' => '0',					//没有错误
 		'STATUS_NOT_LOGIN'	=> '1002',			//未登录
