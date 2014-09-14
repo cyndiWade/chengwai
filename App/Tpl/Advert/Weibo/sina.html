@@ -195,17 +195,36 @@
 		<a href="#" class="btn bluebtn">立即派单</a>
 	</div>
 </div>
-
 <include file="Public:member_footer" />
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 <script src="{$global_tpl_view.Module_Resource_Path}sina.js"></script>
+
+<script src="{$global_tpl_view.Global_Resource_Path}jquery/page.js"></script>
+
 <script type="text/javascript">
-	//必备参数 总数 和 当前页数
+
+	//第一次必须传入 总数 和 当前页数
 	var all = 20000;
 	var now_page = 1;
-	var limit = 10;
+	//第一次刷新页面 需要传递数值
+	$(function(){
+		page_now_list(all,now_page,limit);
+	});
+
+
+
+
+
+	
+	//页面完成通过AJAX调用传入数值
+	$('.start').click(function(){
+		obj_demoPage.empty();
+		page_now_list(100,1,10);
+	});
+
+
+	
 </script>
-<script src="{$global_tpl_view.Global_Resource_Path}jquery/page.js"></script>
 </body>
 </html>
