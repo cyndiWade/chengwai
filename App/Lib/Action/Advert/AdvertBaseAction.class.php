@@ -28,6 +28,14 @@ class AdvertBaseAction extends AppBaseAction {
 	 * 全局系统用到的数据
 	 */
 	private function global_system () {
+		
+		/* SESSION信息验证保存 */
+		$session_userinfo = parent::get_session('user_info');
+		if (!empty($session_userinfo)) {
+			$this->is_login = true;
+			$this->oUser = (object) $session_userinfo;					//转换成对象
+		}
+		
 		$path = preg_replace("/[\\\+]/", "/",dirname($_SERVER['SCRIPT_NAME']));
 		//全局模板变量
 		parent::global_tpl_view(array(
@@ -47,15 +55,14 @@ class AdvertBaseAction extends AppBaseAction {
 				
 				//模块级页面路径
 				'Module_Resource_Path'=>APP_PATH.'Public/'.GROUP_NAME.'/Module/'.MODULE_NAME.'/',
-		));
+		
+				'user_info' => array(
+					'account' => $this->oUser->account
+				),
+			));
 	
 	
-		/* SESSION信息验证保存 */
-		$session_userinfo = parent::get_session('user_info');
-		if (!empty($session_userinfo)) {
-			$this->is_login = true;
-			$this->oUser = (object) $session_userinfo;					//转换成对象
-		}
+		
 	}
 	
 	
