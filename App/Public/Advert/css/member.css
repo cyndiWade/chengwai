@@ -106,7 +106,7 @@
 .tab01-weibo .date p{ width:50px; background:#fff; height:14px; line-height:14px; margin-bottom:5px; text-align:center; border:1px solid #ccc;}
 .tab01-weibo .date p.select{ border:1px solid #86c900; background:#86c900; color:#fff;}
 
-.controlbox span{display:inline-block; height:34px; margin-right:6px; line-height:34px; cursor:pointer; padding:0 11px; border:1px solid #d1d6d4;}
+.controlbox span{display:inline-block; height:34px; margin-right:6px; line-height:34px; cursor:pointer; padding:0 5px; border:1px solid #d1d6d4;}
 .weibo-bot{ margin-top:30px;}
 /*批量添加弹窗*/
 .batchbox{ width:487px; border:5px solid #a3a3a3; background:#fff; border-radius:3px; position:absolute;}

@@ -167,8 +167,8 @@
 		  </tr>
 		</table>
 		<div class="weibo-bot l">
-			<div class="page-wb fr">
-				<a href="#" class="prev"><</a><a href="#" class="num on">1</a><a href="#" class="num">2</a><a href="#" class="num">3</a><a href="#" class="num">4</a><em>...</em><a href="#" class="num">25</a><a href="#" class="next">></a><b class="total fl">共25页</b><div class="count fl"><i class="fl">到第</i><input type="text" class="text fl" /><i class="fl">页</i><span class="aok fl">前往</span><strong class="show fl">显示<select><option>10</option></select>条</strong></div>
+			<div class="page-wb fr demo_page">
+
 			</div>
 			<div class="controlbox fl">
 				<span>全选</span><span id="batch">批量添加账号</span><span>批量导出报价单</span>
@@ -199,11 +199,13 @@
 <include file="Public:member_footer" />
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
-
 <script src="{$global_tpl_view.Module_Resource_Path}sina.js"></script>
-
 <script type="text/javascript">
-
+	//必备参数 总数 和 当前页数
+	var all = 20000;
+	var now_page = 1;
+	var limit = 10;
 </script>
+<script src="{$global_tpl_view.Global_Resource_Path}jquery/page.js"></script>
 </body>
 </html>

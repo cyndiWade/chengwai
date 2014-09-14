@@ -169,7 +169,7 @@ body{ background:#fefefe;}
 .page-wb i{ font-style:normal;}
 .page-wb .total{ font-weight:normal; padding:0 10px;}
 .page-wb select{ margin:2px 10px 0 10px; height:32px;}
-.page-wb .aok{ text-align:center; margin-left:10px; cursor:pointer; margin-right:10px; display:block; width:78px; letter-spacing:4px; height:36px; background:#e5ece9; line-height:36px;}
+.page-wb .aok{ text-align:center; margin-left:10px; cursor:pointer; margin-right:10px; display:block; width:50px; letter-spacing:4px; height:36px; background:#e5ece9; line-height:36px;}
 
 .popBox{position:absolute;left:0px; top:0px; z-index:10000;}
 .popBox .popMask {display:block;  background:#000\9; filter:alpha(opacity=50)\9; background:rgba(0,0,0,0.5);}
