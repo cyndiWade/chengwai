@@ -6,11 +6,15 @@
 
 class AdvertBaseModel extends AppBaseModel {
 	
+	
 
 	public function __construct() {
 		parent::__construct();
 		
 	}
+	
+	
+	
 	
 	
 	

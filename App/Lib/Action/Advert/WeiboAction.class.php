@@ -14,6 +14,8 @@ class WeiboAction extends AdvertBaseAction {
 	//控制器说明
 	private $module_explain = '微博账号';
 	
+
+	
 	//和构造方法
 	public function __construct() {
 		parent::__construct();
@@ -37,6 +39,8 @@ class WeiboAction extends AdvertBaseAction {
 	//新浪微博
 	public function sina() {
 		
+		$this->get_category_tags(293);
+		
 		parent::data_to_view(array(
 			//二级导航加样式
 			'sidebar_two'=>array(
@@ -45,6 +49,17 @@ class WeiboAction extends AdvertBaseAction {
 		));
 		$this->display();
 		
+	}
+	
+	
+	/**
+	 * 获取标签类别表
+	 */
+	private function get_category_tags ($parent_id) {
+		$CategoryTags = $this->db['CategoryTags'];
+		//$CategoryTags->seek_parent_list($parent_id);
+		($CategoryTags->get_classify_data($parent_id));
+		//exit;
 	}
 
     
