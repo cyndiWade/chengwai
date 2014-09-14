@@ -17,6 +17,11 @@ class CategoryTagsModel extends AdvertBaseModel {
 		}
 	}
 	
+	/**
+	 * 获取子类下所有的分类数据
+	 * @param INT $parent_id
+	 * @return Array
+	 */
 	public function get_classify_data ($parent_id) {
 		$this->seek_parent_list($parent_id);
 		$data = $this->data_list;
@@ -25,6 +30,8 @@ class CategoryTagsModel extends AdvertBaseModel {
 		foreach ($data as $key=>$val) {
 			$result[$val['parent_id']][] = $val;
 		}
+		
+		return $result;
 	}
 	
 	private function sort_classify () {
