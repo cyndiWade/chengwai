@@ -105,38 +105,33 @@ class AccountAction extends AdvertBaseAction {
 	 * 登陆验证
 	 */
 	public function check_login() {
-	
 		if ($this->isPost()) {
 			$Users = $this->db['Users'];						//系统用户表模型
-	
 			import("@.Tool.Validate");							//验证类
-			 
 			$account = $this->_post('account');					//用户账号
 			$password = $this->_post('password');					//用户密码
 			$verify = $this->_post('verify');
-
 			//数据过滤
-			if (Validate::checkNull($account)){echo '账号不能为空!';exit;};
-			if (Validate::checkNull($password)){echo '密码不能为空!';exit;};
-			if (!Validate::check_string_num($account)){echo '账号密码只能输入英文或数字';exit;};
-			if (md5($verify)!=$_SESSION['verify']){echo '验证码错误!';exit;}
+			if (Validate::checkNull($account)){ $this->error('账号不能为空！'); };
+			if (Validate::checkNull($password)){ $this->error('密码不能为空！'); };
+			if (!Validate::check_string_num($account)){ $this->error('账号密码只能输入英文或数字!'); };
+			if (md5($verify)!=$_SESSION['verify']){ $this->error('验证码错误!'); }
 			$user_type = 2;
 			//读取用户数据
 			$user_info = $Users->get_user_info(array('account'=>$account,'type'=>$user_type,'is_del'=>0));
 
 			//验证用户数据
 			if (empty($user_info)) {
-				echo '此用户不存在或被删除！';exit;
+				$this->error('此用户不存在或被删除！'); 
 			} else {
 				$status_info = C('ACCOUNT_STATUS');
 				//状态验证
 				if ($user_info['status'] != $status_info[0]['status']) {
-					echo $status_info[$user_info['status']]['explain'];exit;
+					$this->error($status_info[$user_info['status']]['explain']); 
 				}
-				
 				//验证密码
 				if (md5($password) != $user_info['password']) {
-					echo '密码错误！';exit;
+					 $this->error('密码错误！'); 
 				} else {
 					$tmp_arr = array(
 						'id' =>$user_info['id'],

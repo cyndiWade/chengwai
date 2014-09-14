@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2014 年 09 月 13 日 14:51
+-- 生成日期: 2014 年 09 月 14 日 00:10
 -- 服务器版本: 5.1.73
 -- PHP 版本: 5.3.3
 
@@ -558,6 +558,24 @@ CREATE TABLE IF NOT EXISTS `app_evaluate` (
   `info` varchar(255) NOT NULL DEFAULT '' COMMENT '评价内容',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='评价表' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `app_fastindex_weibo`
+--
+
+CREATE TABLE IF NOT EXISTS `app_fastindex_weibo` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `common` smallint(6) DEFAULT NULL COMMENT '常见分类',
+  `price_low` int(10) unsigned DEFAULT NULL COMMENT '价格区间低',
+  `price_height` int(10) unsigned DEFAULT NULL COMMENT '价格区间高',
+  `fans_low` int(10) unsigned DEFAULT NULL COMMENT '粉丝数量区间低',
+  `fans_height` int(10) unsigned DEFAULT NULL COMMENT '价格区间高',
+  `sex` tinyint(1) unsigned DEFAULT NULL COMMENT '用户类型:1男，0女，2中性',
+  `weibo_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -4324,30 +4342,29 @@ CREATE TABLE IF NOT EXISTS `app_system` (
 
 CREATE TABLE IF NOT EXISTS `app_users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `account` char(11) NOT NULL,
-  `nickname` varchar(20) DEFAULT NULL COMMENT '称呢',
-  `password` char(32) NOT NULL,
+  `account` char(11) NOT NULL DEFAULT '',
+  `nickname` varchar(20) NOT NULL DEFAULT '' COMMENT '称呢',
+  `password` char(32) NOT NULL DEFAULT '',
   `last_login_time` int(11) unsigned NOT NULL DEFAULT '0',
-  `last_login_ip` char(20) DEFAULT NULL,
+  `last_login_ip` char(20) NOT NULL DEFAULT '',
   `login_count` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '登陆次数',
-  `create_time` int(11) unsigned NOT NULL,
-  `update_time` int(11) unsigned NOT NULL,
+  `create_time` int(11) unsigned NOT NULL DEFAULT '0',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0',
   `type` tinyint(1) unsigned NOT NULL COMMENT '用户类型:0管理员，1媒体主，2广告主',
-  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0正常',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0正常',
   `is_del` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除，0正常，1删除',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`),
-  UNIQUE KEY `account` (`account`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户账号表' AUTO_INCREMENT=4 ;
+  KEY `idx_ac_st` (`account`,`is_del`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户账号表' AUTO_INCREMENT=9 ;
 
 --
 -- 转存表中的数据 `app_users`
 --
 
 INSERT INTO `app_users` (`id`, `account`, `nickname`, `password`, `last_login_time`, `last_login_ip`, `login_count`, `create_time`, `update_time`, `type`, `status`, `is_del`) VALUES
-(1, 'admin', '管理员', 'e10adc3949ba59abbe56e057f20f883e', 1410582268, '115.173.210.249', 406, 1376561926, 1376561926, 0, 0, 0),
+(1, 'admin', '管理员', 'e10adc3949ba59abbe56e057f20f883e', 1410623299, '115.173.210.249', 408, 1376561926, 1376561926, 0, 0, 0),
 (2, 'media', '媒体用户', 'e10adc3949ba59abbe56e057f20f883e', 1410343595, '180.166.126.90', 407, 1376561926, 1376561926, 1, 0, 0),
-(3, 'advert', '广告用户', 'e10adc3949ba59abbe56e057f20f883e', 1410582792, '115.173.210.249', 406, 1376561926, 1376561926, 2, 0, 0);
+(3, 'advert', '广告用户', 'e10adc3949ba59abbe56e057f20f883e', 1410613882, '115.173.210.249', 410, 1376561926, 1376561926, 2, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -4382,7 +4399,7 @@ CREATE TABLE IF NOT EXISTS `app_user_advertisement` (
 --
 
 INSERT INTO `app_user_advertisement` (`id`, `users_id`, `company_short`, `company_name`, `company_websize`, `company_address`, `company_weibo`, `company_info`, `contact_people`, `industry_id`, `contact_position`, `contact_email`, `contact_phone`, `contact_tel`, `contact_qq`, `contact_msn`, `money`, `freeze_funds`) VALUES
-(1, 3, '', 'qeqwewqeq', 'qwe', 'weqwe', 'qweqw', 'qqweqweqeqewe', '123132a', 0, '', '12312@qq.com', '13761951734', 'qweqwe', '12412414', 'qwe1232', '0.00', '0.00');
+(1, 3, '', 'qeqwewqeq', 'qwe', 'weqwe', 'qweqw', 'qqweqweqeqewe4', '123132a', 0, '', '12312@qq.com', '13761951734', 'qweqwe', '12412414', 'qwe1232', '0.00', '0.00');
 
 -- --------------------------------------------------------
 
@@ -4425,7 +4442,7 @@ CREATE TABLE IF NOT EXISTS `app_verify` (
   KEY `telephone` (`telephone`),
   KEY `telephone_2` (`telephone`),
   KEY `telephone_3` (`telephone`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='短信发送表' AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='短信发送表' AUTO_INCREMENT=12 ;
 
 --
 -- 转存表中的数据 `app_verify`
@@ -4439,7 +4456,10 @@ INSERT INTO `app_verify` (`id`, `telephone`, `verify`, `expired`, `type`, `statu
 (5, '13761951734', '112446', 1410363049, 1, 0),
 (6, '18011995189', '625339', 1410406701, 1, 0),
 (7, '13761951734', '963610', 1410406707, 1, 0),
-(8, '13761951734', '759568', 1410591279, 1, 0);
+(8, '13761951734', '759568', 1410591279, 1, 0),
+(9, '13761951734', '603838', 1410614324, 2, 0),
+(10, '13761951734', '533747', 1410614402, 2, 0),
+(11, '13761951734', '424160', 1410614405, 2, 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
