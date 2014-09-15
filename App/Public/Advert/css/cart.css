@@ -1,0 +1,22 @@
+﻿@charset "utf-8";
+/* CSS Document */
+.box01-recharge{ padding-left:15px; width:985px; margin-bottom:20px; height:50px; line-height:50px; background:#eff3f4;}
+.box02-recharge h5{ padding-left:19px; width:981px; padding-bottom:20px;}
+.tab01-recharge{ width:100%; margin-bottom:30px;}
+.tab01-recharge td{ height:48px; border:1px solid #ccc; padding-left:20px; color:#929292; font-weight:bold;}
+.box03-recharge{ margin-bottom:60px;}
+.top-pay{ height:50px; border-top:1px solid #2e4653; background:#eff3f4; line-height:50px;}
+.top-pay b{ padding-left:12px; color:#2e4653;}
+.part01-pay{ padding:26px 0;}
+.part01-pay input{ margin-top:10px;}
+.part01-pay img{ margin-left:12px;}
+.part02-pay{ margin-bottom:30px; height:50px; line-height:50px; border-bottom:1px solid #2e4653; background:#eff3f4;}
+.part02-pay b{ padding-left:12px;}
+.part02-pay .text{ width:136px; height:26px; line-height:26px; border:1px solid #d1d6d4; margin-right:16px;}
+.grp01-bank{ color:#ea6060; padding-bottom:18px; font-weight:bold;}
+.grp02-bank{padding-bottom:18px;}
+.tab01-bank{ width:100%;}
+.tab01-bank td{ padding:15px 0; background:#eff3f4; border-bottom:1px solid #fff;}
+.tab01-bank .t1{ width:310px; padding-left:16px;}
+.tab01-bank .t2{ width:250px; }
+.tab01-bank p{ padding-bottom:5px;}

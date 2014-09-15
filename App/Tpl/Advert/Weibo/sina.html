@@ -19,14 +19,10 @@
 	当前位置：<a href="#">首页</a>  >  <a href="#">微博推广</a> > <span class="blue">查看名人新浪微博</span>
 </div>
 <div class="area01-memwb l">
-	<ul class="wbtab l">
-		<li class="select"><a href="#" class="wbzh">全部微博账号 </a></li>
-		<li><a href="#" class="wntj">为您推荐 </a></li>
-		<li><a href="#" class="hotzh">热门新浪微博账号 </a></li>
-		<li><a href="#" class="xstj">限时特价</a></li>
-		<li><a href="#" class="cksc">查看收藏</a></li>
-		<li><a href="#" class="hmd">查看黑名单</a></li>
-	</ul>
+	
+	<!-- 微博三级导航 -->
+	<include file="Public:weibo_sidebar_three" />
+	
 	<div class="searchbox fl">
 		<div class="top-search l"><strong class="on">搜索账号名称</strong><strong>搜索关键字 </strong></div>
 		<div class="mid-search l">
@@ -175,6 +171,7 @@
 </div>
 </div>
 
+<include file="Public:member_footer" />
 
 <!-- 批量添加弹窗 -->
 <div class="batchbox none tl">
@@ -191,7 +188,7 @@
 		<a href="#" class="btn bluebtn">立即派单</a>
 	</div>
 </div>
-<include file="Public:member_footer" />
+
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 <script src="{$global_tpl_view.Module_Resource_Path}sina.js"></script>

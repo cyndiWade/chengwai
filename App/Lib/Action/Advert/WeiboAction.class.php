@@ -31,6 +31,14 @@ class WeiboAction extends AdvertBaseAction {
 			'sidebar_one'=> array('wb'=>'select')	
 		));
 		
+		//URL
+		parent::data_to_view(array(
+			'sidebar_two_url'=> array(
+				0 => U('/Advert/Weibo/sina_celebrity'),
+				1 => U('/Advert/Weibo/sina')
+			),//URL
+		));
+		
 		
 	}
 	
@@ -41,23 +49,36 @@ class WeiboAction extends AdvertBaseAction {
 	);
 	
 	
+	//新浪名人微博
+	public function sina_celebrity () {
+		
+		parent::data_to_view(array(
+			//二级导航属性
+			'sidebar_two'=>array(0=>'select',),//第一个加依次类推
+			
+		));
+		$this->display();
+	}
+	
+	
 	//新浪微博
 	public function sina() {
-		//$this->get_category_tags($this->top_tags_parentId);
-		
+
 		//显示常见分类
 		$this->show_category_tags();
 		
 		parent::data_to_view(array(
-			//二级导航加样式
-			'sidebar_two'=>array(
-				0=>'select',//第一个加
-			)
-				
+			//二级导航属性
+			'sidebar_two'=>array(1=>'select'),//第一个加
+			
 		));
 		$this->display();
 		
 	}
+	
+	
+	
+	
 	
 	
 	//显示常见分类

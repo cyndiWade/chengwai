@@ -1,0 +1,125 @@
+﻿@charset "utf-8";
+/* CSS Document */
+.nav-mem li{ padding:0 10px; width:110px; height:40px; text-align:left;}
+.nav-mem li.select{ background:url(../images/nav_bg01.gif) no-repeat;}
+.nav-mem li.select a{ color:#ea6060;}
+.phd-member{ height:177px;}
+.box04-hd{ padding-top:3px;}
+.box04-hd a{ display:inline-block; height:32px; line-height:32px; padding:0 20px; background:url(../images/line.gif) no-repeat right 6px; border-radius:3px; font-size:14px; margin-right:5px; font-weight:bold;color:#2e4653;}
+.box04-hd a.last{ background:none;}
+.box04-hd a.select,.box04-hd a:hover{color:#fff; background:#2e4653;}
+.area01-intention{ border:1px solid #e9ece6; padding:26px 0 26px 94px; width:902px;}
+.box01-intention{ margin-bottom:19px;}
+.int-tip{ margin-bottom:52px;}
+.tab01-inten td{ padding-bottom:24px; vertical-align:top; color:#30262d; font-size:14px;}
+.tab01-inten .t1{ width:181px; text-align:right; padding-right:6px;}
+.tab01-inten .t1 span{ float:right; padding-top:8px;}
+.tab01-inten .t1 i{ font-style:normal; padding-right:5px; color:#ea6060;}
+.tab01-inten .t2 select{ width:130px; height:29px; margin-bottom:7px;}
+.tab01-inten .t2 p{ color:#929292; font-size:12px;}
+.tab01-inten .soft{ margin-right:43px;}
+.tab01-inten .soft img{ float:left; margin-top:7px;}
+.tab01-inten .soft input{ float:left;}
+.tab01-inten .soft strong{ float:left; margin:7px 2px 0 4px;}
+.tab01-inten .text{ width:640px; margin-bottom:7px; height:26px; line-height:normal; line-height:26px\9; border:1px solid #d1d6d4; padding-left:6px;}
+.tab01-inten .why{ font-size:12px; text-decoration:underline; margin-left:10px;}
+.tab01-inten .text-error{ border:1px solid #ea6060;}
+.errortip{ padding-left:20px; background:url(../images/qa_red.png) no-repeat 0 1px; font-size:12px; color:#ea6060; padding-top:2px; padding-bottom:2px;}
+.tab01-inten .textarea{ width:640px; margin-bottom:7px; height:90px; padding-top:6px; line-height:26px; border:1px solid #d1d6d4; padding-left:6px;}
+.linkbox{ padding-bottom:5px;}
+.tab01-inten .text-time{ width:150px; margin-right:10px;}
+.timestart span{ margin-right:24px;}
+.timestart span select{ margin-right:10px;}
+.timestart .check{ margin-right:5px;}
+.provebox{ padding-bottom:9px;}
+.provebox input{ width:132px; margin-top:5px; margin-right:10px;}
+.provebox .btn{ width:102px; height:30px; line-height:30px; font-size:12px; text-align:center;}
+.tab01-inten p.red{ padding-top:3px;}
+.tab01-inten .check{ margin-right:12px;}
+.tab01-inten a{ text-decoration:underline;}
+.tab01-inten .file{ margin:4px 0;}
+.coverselect{ margin-right:20px;}
+.tab01-inten .phone{ margin-right:10px;}
+.phonebox{ background:url(../images/phonebg.png) no-repeat; width:258px; height:540px; position:absolute;}
+.phonebox .previmg{ width:216px; height:313px; margin:76px 0 0 22px;}
+.phonebox .close{ right:-40px; top:-10px;}
+/*订单详情*/
+.top-myorder{height:48px; border:1px solid #e9ece6; background:#eff3f4; line-height:48px; border-bottom:none; width:998px;}
+.top-myorder b{ padding-left:18px; color:#2e4653;}
+.tab01-myorder td,.tab01-myorder th{ border:1px solid #e9ece6; height:48px; line-height:48px;}
+.tab01-myorder td{ padding-left:10px;}
+.tab01-myorder th{ width:118px; padding-right:6px; text-align:right; color:#929292;}
+.tab01-myorder .t2{ width:220px;}
+.tab01-myorder .t3{ width:170px;}
+.box01-myorder{ margin-bottom:15px;}
+.box02-myorder .top-myorder{ width:100%; border:none;}
+.searnum{ padding:20px; border-bottom:1px solid #e9ece6; margin-bottom:10px;}
+.searnum b{ font-weight:normal;}
+.box01-status{ margin-bottom:10px;}
+.box01-status select{ width:169px; height:30px; margin-right:25px;}
+.box01-status .first{ margin-right:118px;}
+.box01-status span{ margin-right:12px;}
+.box01-status span select{ margin-right:0;}
+.tab01-order th{ height:50px; line-height:50px; background:#eff3f4; border-top:1px solid #2e4653; color:#2e4653;}
+.tab01-order .t1{ padding-left:18px; width:65px;}
+.tab01-order .t2{ width:204px;}
+.tab01-order .t3{ width:65px;}
+.tab01-order .t4{ width:56px;}
+.tab01-order .t5{ width:70px;}
+.tab01-order .t6{ width:72px;}
+.tab01-order .t7{ width:83px;}
+.tab01-order .t8{ width:59px;}
+.tab01-order .t9{ width:72px;}
+.tab01-order .t10{ width:109px;}
+.tab01-order .t11{ width:73px;}
+.weibopart input{ float:left; margin-top:23px;}
+.tab01-order td{ padding:22px 0;}
+.weibopart .wbimg{ float:left; width:54px; height:54px; margin:0 7px 0 0;}
+.weibopart .grp{ float:left; width:135px; text-align:left;}
+.weibopart .grp h5{ padding-bottom:7px;}
+.weibopart .grp h5 b{ color:#2687c0; float:left; padding-left:0;}
+.heart{ background:url(../images/heart.png) no-repeat; width:15px; display:block; float:left; height:13px; margin-left:3px;}
+.tab01-order .ctrl{ width:30px;}
+.tab01-order .ctrl span{ cursor:pointer; display:inline-block; margin-bottom:8px; border-bottom:1px solid #2687c0; color:#2687c0;}
+.tab01-order tr.even td{ background:#eff3f4;}
+.norz{ width:44px; height:16px; line-height:16px; background:#d1d6d4; color:#929292; padding:2px 4px;}
+.tab01-order p{ padding-bottom:5px;}
+.tab01-order .t4 p{ padding-left:5px;}
+.finish{ padding-right:15px; background:url(../images/block_green.png) no-repeat right 0;}
+.tab01-order .t7 a{ text-decoration:underline;}
+/*活动订单*/
+.box01-addorder .bluebtn{ width:116px; height:50px; text-align:center; line-height:50px;}
+.box01-addorder .searnum{ padding-top:19px; border-bottom:none; padding-bottom:0;}
+.box01-addorder .searnum b{ color:#238cc8;}
+.box01-addorder .help{ margin-top:19px; color:#238cc8;}
+.box01-addorder{ padding-bottom:10px; border-bottom:1px solid #e9ece6; margin-bottom:10px;}
+.startime{ width:138px; height:28px;border:1px solid #e9ece6;}
+.box01-time{ margin-bottom:10px;}
+.box01-time i{ display:block; width:11px; text-align:center; height:28px; line-height:28px; padding-right:5px;}
+.startime input{ width:115px; height:24px; line-height:24px; border:1px solid #fff;}
+.startime em{ display:block; background:url(../images/time_icon.png) no-repeat; width:14px; cursor:pointer; height:15px; top:6px; right:8px;} 
+.search{ margin-left:10px;}
+.search .seatext{ width:127px; height:26px; line-height:normal; line-height:26px\9; border:1px solid #e9ece6; border-right:none; color:#929292; padding-left:11px;}
+.search .seabtn{ background:url(../images/seabtn.gif) no-repeat; width:30px; height:30px; margin-top:0;}
+.span-start{ padding-top:7px;}
+.box01-time select{ width:167px; height:28px; color:#929292;}
+.tab01-addorder{ margin-bottom:16px;}
+.tab01-addorder th{ height:50px; line-height:50px; background:#eff3f4; border-top:1px solid #2e4653; color:#2e4653;}
+.tab01-addorder .t1{ padding-left:11px; width:89px;}
+.tab01-addorder .t2{ width:122px;}
+.tab01-addorder .t3{ width:77px;}
+.tab01-addorder .t4{ width:48px;}
+.tab01-addorder .t5{ width:122px;}
+.tab01-addorder .t6{ width:86px;}
+.tab01-addorder .t7{ width:103px;}
+.tab01-addorder .t8{ width:178px;}
+.tab01-addorder td{ padding:19px 0;}
+.tab01-addorder tr.even td{ background:#eff3f4;}
+.tab01-addorder .ctrl{ color:#238cc8;}
+.tab01-addorder .ctrl span{ cursor:pointer; display:inline-block;  border-bottom:1px solid #2687c0; color:#2687c0;}
+.tab01-addorder .wpd{ padding-right:15px; background:url(../images/wpd_icon.png) no-repeat right 0;}
+.tab01-addorder .cg{ padding-right:15px; background:url(../images/cg_icon.png) no-repeat right 0;}
+/*添加推广*/
+.area01-extension{ border:1px solid #e9ece6; width:998px; padding:37px 0;}
+.box01-extension img{ margin:0 auto; padding-bottom:27px;}
+.area01-extension .box02-intention{ padding-left:94px;}
