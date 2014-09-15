@@ -40,7 +40,7 @@
 			<td class="t2">
 				<div class="part01-cate fl">
 					<volist name="view_data['cjfl']" id="vo">
-					<span data-classifyName="常见分类" data- data-val="{$vo.val}">{$vo.title}</span>
+					<span class="cjfl_tags" data-tag_class="cjfl_tags" data-tag_id="{$vo.id}"  data-classify="常见分类" data-field="cjfl" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
 					</volist>
 				</div>
 				<div class="more fl" id="morecate">更多</div>
@@ -54,27 +54,27 @@
 				</div>
 				<div class="part02-price fl">
 					<volist name="view_data['jg']" id="vo">
-					<span data-val="{$vo.val}">{$vo.title}</span>
+					<span class="jg_tags" data-tag_class="jg_tags"  data-tag_id="{$vo.id}" data-classify="价格" data-field="jg" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
 					</volist>
 				</div>
-				<div class="part03-price fl"><input type="text" class="text" /><i>-</i><input type="text" class="text" /><i>元</i></div><span class="btn okbtn fl">确定</span></td>
+				<div class="part03-price fl"><input type="text" class="text ipt_jiage_start" /><i>-</i><input type="text" class="text ipt_jiage_over" /><i>元</i></div><span class="btn okbtn fl btn_jiage_yes" data-tag_class="jg_tags">确定</span></td>
 		  </tr>
 		  <tr>
 			<td class="t1">粉丝量：</td>
 			<td class="t2">
 				<div class="part02-price fl">
-					<volist name="view_data['fans_num']" id="vo">
-						<span data-val="{$vo.val}">{$vo.title}</span>
-					</volist>
-				</div><div class="part03-price fl"><input type="text" class="text" /><i>-</i><input type="text" class="text" /><i>元</i></div><span class="btn okbtn fl">确定</span></td>
+				<volist name="view_data['fans_num']" id="vo">
+					<span class="fans_num_tags" data-tag_class="fans_num_tags" data-tag_id="{$vo.id}" data-classify="粉丝量" data-field="fans_num" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>
+				</div><div class="part03-price fl"><input type="text" class="text ipt_fansNum_start" /><i>-</i><input type="text" class="text ipt_fansNum_over" /><i>元</i></div><span class="btn okbtn fl btn_fansNum_yes" data-tag_class="fans_num_tags">确定</span></td>
 		  </tr>
 		  <tr>
 			<td class="t1">粉丝性别：</td>
 			<td class="t2">
 				<div class="part02-price fl">
-					<volist name="view_data['fans_sex']" id="vo">
-						<span data-val="{$vo.val}">{$vo.title}</span>
-					</volist>
+				<volist name="view_data['fans_sex']" id="vo">
+					<span class="fans_sex_tags" data-tag_class="fans_sex_tags" data-tag_id="{$vo.id}" data-classify="粉丝性别" data-field="fans_sex" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>
 				</div>
 			</td>
 		  </tr>
@@ -85,11 +85,7 @@
 			<div class="trash fr">清空选择筛选条件 </div>
 			<span class="span-ok fl">已选择 ：</span>
 			<ul class="grp fl select_tags_vessel">
-				<li>
-					<strong>常见分类 &gt; <b>时尚</b></strong>
-					<em class="del"></em>
-				</li>
-				<li><strong>价格 &gt; <b>50-100元</b></strong><em class="del"></em></li>
+				
 			</ul>
 		</div>
 	</div>
