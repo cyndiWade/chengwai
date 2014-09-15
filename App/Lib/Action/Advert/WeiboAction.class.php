@@ -44,9 +44,9 @@ class WeiboAction extends AdvertBaseAction {
 	
 	//初始化数据库连接
 	protected  $db = array(
-			'CategoryTags'=>'CategoryTags',
-			'Users' => 'Users',
-			''
+		'CategoryTags'=>'CategoryTags',
+		'Users' => 'Users',
+		'AccountWeibo' => 'AccountWeibo',
 	);
 	
 	
@@ -66,16 +66,21 @@ class WeiboAction extends AdvertBaseAction {
 	public function sina() {
 		//显示常见分类
 		$this->show_category_tags();
+		$data = $this->get_new_list();
 		//二级导航属性
 		parent::data_to_view(array('sidebar_two'=>array(1=>'select'),));//第一个加
+		parent::data_to_view($data);
 		$this->display();
-		
 	}
 	
 	//获得列表数据
 	public function get_new_list()
 	{
-		
+		if($this->isPost()){
+
+		}else{
+			return $this->db['AccountWeibo']->getListTen();
+		}
 	}
 	
 	

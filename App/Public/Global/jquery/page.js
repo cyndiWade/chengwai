@@ -29,19 +29,131 @@ function page_now_list(number,start,limit)
 		//总共多少数据 all_num
 		var number_all = 'now_num="'+page_now_start+'" big_num="'+num_ceil+'" all_num="'+number+'"';
 		var str = '<a href="javascript:;" '+number_all+' class="click_index"> 首页 </a><a href="javascript:;" '+number_all+' class="click_prev"> < </a>';
-		if( page_now_start<=5 )
+		if( page_now_start<=5)
 		{
-			var number_low = page_now_start + 2 ;
-			for(var i=1 ;i<= number_low ; i++ )
+			if(page_now_number <= 50)
 			{
-				if(i == page_now_start)
+				switch(num_ceil)
 				{
-					str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
+					case 1:
+						str += '<a href="javascript:;" '+number_all+' class="click_this on"> 1 </a>';
+					break;
+					case 2:
+						for(var i=1 ;i<= 2 ; i++ )
+						{
+							if(i == page_now_start)
+							{
+								str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
+							}else{
+								str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
+							}
+						}
+					break;
+					case 3:
+						for(var i=1 ;i<= 3 ; i++ )
+						{
+							if(i == page_now_start)
+							{
+								str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
+							}else{
+								str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
+							}
+						}
+					break;
+					case 4:
+						if(page_now_start<2)
+						{
+							for(var i=1 ;i<= 2 ; i++ )
+							{
+								if(i == page_now_start)
+								{
+									str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
+								}else{
+									str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
+								}
+							}
+							str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
+						}else{
+							for(var i=1 ;i<= 4 ; i++ )
+							{
+								if(i == page_now_start)
+								{
+									str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
+								}else{
+									str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
+								}
+							}
+						}
+					break;
+					case 5:
+						switch(page_now_start)
+						{
+							case 1:
+								for(var i=1 ;i<= 3 ; i++ )
+								{
+									if(i == page_now_start)
+									{
+										str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
+									}else{
+										str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
+									}
+								}
+								str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
+							break;
+							case 2:
+								for(var i=1 ;i<= 4 ; i++ )
+								{
+									if(i == page_now_start)
+									{
+										str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
+									}else{
+										str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
+									}
+								}
+								str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
+							break;
+							default:
+								for(var i=1 ;i<= 5 ; i++ )
+								{
+									if(i == page_now_start)
+									{
+										str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
+									}else{
+										str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
+									}
+								}
+							break;
+						}
+					break;
+				}
+			}else{
+				if(page_now_start >= 4 )
+				{
+					str += '<a href="javascript:;" '+number_all+' class="click_this on"> 1 </a><em> ... </em>';
+					var num_ceil_j = num_ceil - 2;
+					for(var i=num_ceil_j ;i<= num_ceil ; i++ )
+					{
+						if(i == page_now_start)
+						{
+							str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
+						}else{
+							str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
+						}
+					}
 				}else{
-					str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
+					var page_now_j =  page_now_start+2;
+					for(var i=1 ;i<= page_now_j ; i++ )
+					{
+						if(i == page_now_start)
+						{
+							str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
+						}else{
+							str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
+						}
+					}
+					str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
 				}
 			}
-			str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
 		}else{
 			str += '<a href="javascript:;" '+number_all+' class="click_this num"> 1 </a><em> ... </em>';
 			for(var j=2;j>=1;j--)
