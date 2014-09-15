@@ -29,133 +29,49 @@ function page_now_list(number,start,limit)
 		//总共多少数据 all_num
 		var number_all = 'now_num="'+page_now_start+'" big_num="'+num_ceil+'" all_num="'+number+'"';
 		var str = '<a href="javascript:;" '+number_all+' class="click_index"> 首页 </a><a href="javascript:;" '+number_all+' class="click_prev"> < </a>';
-		if( page_now_start<=5)
+		if( page_now_start<=3)
 		{
-			if(page_now_number <= 50)
+			if(page_now_number <= 30)
 			{
-				switch(num_ceil)
-				{
-					case 1:
-						str += '<a href="javascript:;" '+number_all+' class="click_this on"> 1 </a>';
-					break;
-					case 2:
-						for(var i=1 ;i<= 2 ; i++ )
+				for(var i=1 ;i<= num_ceil ; i++ )
+					{
+						if(i == page_now_start)
 						{
-							if(i == page_now_start)
-							{
-								str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-							}else{
-								str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-							}
-						}
-					break;
-					case 3:
-						for(var i=1 ;i<= 3 ; i++ )
-						{
-							if(i == page_now_start)
-							{
-								str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-							}else{
-								str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-							}
-						}
-					break;
-					case 4:
-						if(page_now_start<2)
-						{
-							for(var i=1 ;i<= 2 ; i++ )
-							{
-								if(i == page_now_start)
-								{
-									str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-								}else{
-									str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-								}
-							}
-							str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
+							str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
 						}else{
-							for(var i=1 ;i<= 4 ; i++ )
-							{
-								if(i == page_now_start)
-								{
-									str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-								}else{
-									str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-								}
-							}
+							str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
 						}
-					break;
-					case 5:
-						switch(page_now_start)
-						{
-							case 1:
-								for(var i=1 ;i<= 3 ; i++ )
-								{
-									if(i == page_now_start)
-									{
-										str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-									}else{
-										str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-									}
-								}
-								str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
-							break;
-							case 2:
-								for(var i=1 ;i<= 4 ; i++ )
-								{
-									if(i == page_now_start)
-									{
-										str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-									}else{
-										str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-									}
-								}
-								str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
-							break;
-							default:
-								for(var i=1 ;i<= 5 ; i++ )
-								{
-									if(i == page_now_start)
-									{
-										str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-									}else{
-										str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-									}
-								}
-							break;
-						}
-					break;
-				}
+					}
 			}else{
-				if(page_now_start >= 4 )
+				for(var i=1 ;i<= 4 ; i++ )
 				{
-					str += '<a href="javascript:;" '+number_all+' class="click_this on"> 1 </a><em> ... </em>';
-					var num_ceil_j = num_ceil - 2;
-					for(var i=num_ceil_j ;i<= num_ceil ; i++ )
+					if(i == page_now_start)
 					{
-						if(i == page_now_start)
-						{
-							str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-						}else{
-							str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-						}
+						str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
+					}else{
+						str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
 					}
-				}else{
-					var page_now_j =  page_now_start+2;
-					for(var i=1 ;i<= page_now_j ; i++ )
+				}
+				if(num_ceil!=4)
+				{
+					if(num_ceil-4==2)
 					{
-						if(i == page_now_start)
-						{
-							str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-						}else{
-							str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-						}
+						str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
+					}else if(num_ceil-4==1)
+					{
+						str += '<a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
+					}else{
+						str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
 					}
-					str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
 				}
 			}
+			//此处结束
 		}else{
-			str += '<a href="javascript:;" '+number_all+' class="click_this num"> 1 </a><em> ... </em>';
+			str += '<a href="javascript:;" '+number_all+' class="click_this num"> 1 </a>';
+			if(page_now_start-2-1!=1)
+			{
+				str +='<em> ... </em>';
+			}
 			for(var j=2;j>=1;j--)
 			{
 				str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+(page_now_start-j)+' </a>';
@@ -282,3 +198,14 @@ function live_index()
 		page_now_list(all_num,1,page_limit);
 	});
 }
+
+//第一次必须传入 总数 和 当前页数
+var first_all = 18;
+var first_page = 1;
+//第一次刷新页面 需要传递数值
+$(function(){
+	page_now_list(first_all,first_page,page_limit);
+});
+
+
+

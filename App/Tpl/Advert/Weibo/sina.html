@@ -16,7 +16,7 @@
 <div class="wrap l">
 <div class="pbd">
 <div class="location l">
-	当前位置：<a href="#">首页</a>  >  <a href="#">微博推广</a> > <span class="blue">查看草根新浪微博</span>
+	当前位置：<a href="#">首页</a>  >  <a href="#">微博推广</a> > <span class="blue">查看名人新浪微博</span>
 </div>
 <div class="area01-memwb l">
 	
@@ -193,19 +193,12 @@
 
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
-
-
-<script src="{$global_tpl_view.Module_Resource_Path}caogen_weibo.js"></script>
+<script src="{$global_tpl_view.Module_Resource_Path}sina.js"></script>
 
 <script src="{$global_tpl_view.Global_Resource_Path}jquery/page.js"></script>
+
 <script type="text/javascript">
-
-//console.log(Weibo.get_selected_tags())	//就这么调取我这个函数就好了
-
-
-//第一次必须传入 总数 和 当前页数
-//第一次刷新页面 需要传递数值
-	page_now_list(first_all,first_page,page_limit);
+	var select_all_value = {:U('Advert/Weibo/get_new_list')}
 </script>
 </body>
 </html>

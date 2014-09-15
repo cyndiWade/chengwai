@@ -92,7 +92,8 @@ class WeiboAction extends AdvertBaseAction {
 			'sidebar_two'=>array($show_num=>'select'),//第一个加
 			
 		));
-
+		$list = $this->get_new_list();
+		parent::data_to_view($list);
 		$this->display();
 	}
 	
