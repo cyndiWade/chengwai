@@ -43,6 +43,7 @@ class AccountAction extends AdvertBaseAction {
 	
 	public function login ()
 	{
+		if (!empty($this->oUser)) $this->redirect('/Advert/Member/datum_edit');
 		$this->display();
 	}
 	

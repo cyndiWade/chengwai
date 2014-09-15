@@ -7,7 +7,7 @@ class WeiboAction extends AdvertBaseAction {
 	
 	
 	//每个类都要重写此变量
-	protected  $is_check_rbac = false;		//是否需要RBAC登录验证
+	protected  $is_check_rbac = true;		//是否需要RBAC登录验证
 	
 	protected  $not_check_fn = array();	//无需登录和验证rbac的方法名
 	
@@ -18,58 +18,81 @@ class WeiboAction extends AdvertBaseAction {
 	
 	private $weibo_search_classify_data = array();
 
+	private $pt_type;	//平台类型
 	
+	private $big_type = 2;	//当前平台大分类
+	
+	//初始化数据库连接
+	protected  $db = array(
+			'CategoryTags'=>'CategoryTags',
+			'Users' => 'Users',
+			'AccountWeibo' => 'AccountWeibo',
+	);
 	
 	//和构造方法
 	public function __construct() {
 		parent::__construct();
 		
+		$this->_init_data();
+	}
+	
+	//初始化需要的数据
+	private function _init_data () {
 		parent::global_tpl_view(array(
 			'module_explain'=>$this->module_explain,
-				
-			//给微博页面加样式
-			'sidebar_one'=> array('wb'=>'select')	
 		));
 		
-		//URL
+		parent::big_type_urls($this->big_type);		//大分类URL
+		
+		//初始化URL
+		parent::two_urls($this->big_type);			//微博二级分类URL
+		
+		
+		$this->pt_type = $this->_get('pt_type');	//平台类型
+		
+		
+		//$data[1]['查看名人新浪微博'] =
 		parent::data_to_view(array(
-			'sidebar_two_url'=> array(
-				0 => U('/Advert/Weibo/sina_celebrity'),
-				1 => U('/Advert/Weibo/sina')
-			),//URL
+			
+			
 		));
-		
 		
 	}
 	
-	//初始化数据库连接
-	protected  $db = array(
-		'CategoryTags'=>'CategoryTags',
-		'Users' => 'Users',
-		'AccountWeibo' => 'AccountWeibo',
-	);
-	
-	
-	//新浪名人微博
-	public function sina_celebrity () {
+
+	//名人微博
+	public function celebrity_weibo () {
 		
+		if ($this->pt_type == 1) {
+			$show_num = 0;
+		} elseif ($this->pt_type == 2) {
+			$show_num = 2;
+		}
 		parent::data_to_view(array(
 			//二级导航属性
-			'sidebar_two'=>array(0=>'select',),//第一个加依次类推
-			
+			'sidebar_two'=>array($show_num=>'select',),//第一个加依次类推
 		));
 		$this->display();
 	}
 	
 	
-	//新浪微博
-	public function sina() {
+	//草根微博
+	public function caogen_weibo() {
+
 		//显示常见分类
 		$this->show_category_tags();
-		$data = $this->get_new_list();
-		//二级导航属性
-		parent::data_to_view(array('sidebar_two'=>array(1=>'select'),));//第一个加
-		parent::data_to_view($data);
+		
+		if ($this->pt_type == 1) {
+			$show_num = 1;
+		} elseif ($this->pt_type == 2) {
+			$show_num = 3;
+		}
+		parent::data_to_view(array(
+			//二级导航属性
+			'sidebar_two'=>array($show_num=>'select'),//第一个加
+			
+		));
+
 		$this->display();
 	}
 	

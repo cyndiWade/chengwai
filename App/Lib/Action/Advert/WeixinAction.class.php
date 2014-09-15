@@ -14,23 +14,31 @@ class WeixinAction extends AdvertBaseAction {
 	//控制器说明
 	private $module_explain = '微信账号';
 	
-	//和构造方法
-	public function __construct() {
-		parent::__construct();
-		parent::global_tpl_view(array(
-			'module_explain'=>$this->module_explain,
-				
-			//给导航加样式，wx表示给微信页面加样式
-			'sidebar_one'=> array('wx'=>'select'),
-		));
-	
-	}
-	
 	//初始化数据库连接
 	protected  $db = array(
 			'CategoryTags'=>'CategoryTags',
 			'Users' => 'Users',
 	);
+	
+	//和构造方法
+	public function __construct() {
+		parent::__construct();
+		
+		$this->_init_data();
+	}
+	
+	
+	private function _init_data () {
+		parent::global_tpl_view(array(
+				'module_explain'=>$this->module_explain,
+		));
+		
+		parent::big_type_urls(1);		//大分类URL
+		
+		//初始化URL
+		//parent::weixin_urls();
+	}
+	
 	
 	
 	//微信

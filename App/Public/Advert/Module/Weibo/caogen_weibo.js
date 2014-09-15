@@ -313,15 +313,7 @@ Weibo.prototype.btn_click_create_tags = function () {
 		});
 	});
 	
-	//_father_this.ipt_fansNum_start.val(ipt_val[0]);
-	//_father_this.ipt_fansNum_over.val(ipt_val[1]);
-	//_father_this.ipt_jiage_start.val(ipt_val[0]);
-	//_father_this.ipt_jiage_over.val(ipt_val[1]);
-	
-	//var now_class = $(obj).data('tag_class');
-	//$('.'+now_class).removeClass("select");
-	//$('.'+now_class).eq(0).addClass("select");
-	//_father_this.init_tags_selected();
+
 	
 }
 
