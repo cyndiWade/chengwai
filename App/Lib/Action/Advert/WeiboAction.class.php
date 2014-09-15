@@ -46,6 +46,7 @@ class WeiboAction extends AdvertBaseAction {
 	protected  $db = array(
 			'CategoryTags'=>'CategoryTags',
 			'Users' => 'Users',
+			''
 	);
 	
 	
@@ -63,20 +64,19 @@ class WeiboAction extends AdvertBaseAction {
 	
 	//新浪微博
 	public function sina() {
-
 		//显示常见分类
 		$this->show_category_tags();
-		
-		parent::data_to_view(array(
-			//二级导航属性
-			'sidebar_two'=>array(1=>'select'),//第一个加
-			
-		));
+		//二级导航属性
+		parent::data_to_view(array('sidebar_two'=>array(1=>'select'),));//第一个加
 		$this->display();
 		
 	}
 	
-	
+	//获得列表数据
+	public function get_new_list()
+	{
+		
+	}
 	
 	
 	
@@ -84,8 +84,6 @@ class WeiboAction extends AdvertBaseAction {
 	//显示常见分类
 	private function show_category_tags () {
 		$this->get_category_tags($this->top_tags_parentId);
-		
-		
 		$data['cjfl'] = $this->cjfl;
 		$data['jg'] = $this->jg;
 		$data['fans_num'] = $this->fans_num;

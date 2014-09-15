@@ -28,7 +28,7 @@ class MemberAction extends AdvertBaseAction {
 			'CategoryTags'=>'CategoryTags',
 			'Users' => 'Users',
 			'Verify'=>'Verify',
-			'User_advertisement' => 'User_advertisement'
+			'UserAdvertisement' => 'UserAdvertisement'
 	);
 	
 	
@@ -38,7 +38,7 @@ class MemberAction extends AdvertBaseAction {
 	public function datum_edit() {
 		if($this->isPost())
 		{
-			$bool = $this->db['User_advertisement']->save_account_list($_POST,$this->_user_id);
+			$bool = $this->db['UserAdvertisement']->save_account_list($_POST,$this->_user_id);
 
 			if ($bool == true) {
 				parent::callback(C('STATUS_SUCCESS'),'','',array('info'=>'提交成功'));
@@ -49,7 +49,7 @@ class MemberAction extends AdvertBaseAction {
 
 		//选中样式
 		$this->data_to_view(array('member_sidebar_datumEdit_class'=>'class="on"',));
-		$big_list = $this->db['User_advertisement']->select_account_list($this->_user_id);
+		$big_list = $this->db['UserAdvertisement']->select_account_list($this->_user_id);
 		parent::data_to_view($big_list);
 		$this->display();
 	}
@@ -57,7 +57,6 @@ class MemberAction extends AdvertBaseAction {
 	
 	//密码修改
     public function pass_save() {
-    	
     	//选中样式
     	$this->data_to_view(array('member_sidebar_passSave_class'=>'class="on"'));
     	$this->display();

@@ -198,11 +198,11 @@
 <script type="text/javascript">
 
 	//第一次必须传入 总数 和 当前页数
-	var all = 20000;
-	var now_page = 1;
+	var first_all = 20000;
+	var first_page = 1;
 	//第一次刷新页面 需要传递数值
 	$(function(){
-		page_now_list(all,now_page,limit);
+		page_now_list(first_all,first_page,page_limit);
 	});
 
 
@@ -212,7 +212,6 @@
 	
 	//页面完成通过AJAX调用传入数值
 	$('.start').click(function(){
-		obj_demoPage.empty();
 		page_now_list(100,1,10);
 	});
 
