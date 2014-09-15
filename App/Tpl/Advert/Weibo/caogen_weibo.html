@@ -193,14 +193,27 @@
 
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
+
+<script type="text/javascript">
+
+</script>
+
 <script src="{$global_tpl_view.Module_Resource_Path}caogen_weibo.js"></script>
 
 <script src="{$global_tpl_view.Global_Resource_Path}jquery/page.js"></script>
 
 <script type="text/javascript">
 
+//公共JS方法
+var public_post_fn = function () {
+	
+	var tags_json =	Weibo.get_selected_tags();	//获取我的值
+	console.log(tags_json);	//打印
+	
+	
+	//下面写你的方法
+}
 
-console.log(Weibo.get_selected_tags())	//就这么调取我这个函数就好了
 
 	//第一次必须传入 总数 和 当前页数
 	var first_all = 18;
