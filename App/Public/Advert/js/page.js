@@ -276,9 +276,7 @@ function live_next()
 			'this_number':this_number,
 			'page_limit':page_limit
 		});
-		public_post_fn(all_num,this_number,page_limit);
-		//该函数需要替换 AJAX
-		//page_now_list(all_num,now_page,page_limit);
+		
 	});
 }
 

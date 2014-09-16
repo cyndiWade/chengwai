@@ -171,7 +171,8 @@ var public_post_fn = function (obj_data) {
 		post_data.p = obj_data.this_number;
 	}
 
-	//post_data.zfjg_type = '';
+	//这历史转发价格的类型，把这个注释就可以接收到转发价格的值
+	post_data.zfjg_type = '';
 
 	//AJAX获取数据
 	var result = System.ajax_post_setup('{:U('/Advert/Weibo/get_new_list')}',post_data,'JSON');
