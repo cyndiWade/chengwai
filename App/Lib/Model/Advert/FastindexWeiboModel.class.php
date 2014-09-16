@@ -74,6 +74,11 @@
 			if($addslArray['sex']!='')
 			{
 				$wheres['sex'] = 1;
+				$price = explode('-', $addslArray['jgqj']);
+				if(empty($price['1']))
+				{
+					$where['price_height'] = '';
+				}
 			}
 			return $wheres;
 		}

@@ -166,13 +166,24 @@
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 
-
 <script src="{$global_tpl_view.Module_Resource_Path}caogen_weibo.js"></script>
+<script src="{$global_tpl_view.Group_Resource_Path}js/page.js"></script>
 
-<script src="{$global_tpl_view.Global_Resource_Path}jquery/page.js"></script>
 <script type="text/javascript">
 
-//console.log(Weibo.get_selected_tags())	//就这么调取我这个函数就好了
+//公共JS方法。每个事件都要触发这个函数
+var public_post_fn = function () {
+	
+	var tags_json =	Weibo.get_selected_tags();	//获取我的值
+	console.log(tags_json);	//打印
+	
+	
+	//下面写你的方法
+	//如AJAX、获取当前分页的页码等等
+	
+	
+}
+
 
 
 //第一次刷新页面 第一次必须传入 总数 和 当前页数
@@ -190,10 +201,10 @@ $(function(){
 
 
 $(function(){
-	var new_obj = get_page_tags();
-	console.log(new_obj['allnumber']);
-	console.log(new_obj['nowpage']);
-	console.log(Weibo.get_selected_tags());
+	//var new_obj = get_page_tags();
+	//console.log(new_obj['allnumber']);
+	//console.log(new_obj['nowpage']);
+	//console.log(Weibo.get_selected_tags());
 })
 
 </script>

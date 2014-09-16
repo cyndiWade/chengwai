@@ -21,6 +21,8 @@ class MemberAction extends AdvertBaseAction {
 		//用户所有的信息都保存在$this->oUser 中，对象方式调用
 		$this->_user_id =$this->oUser->id;
 		parent::data_to_view(array('account'=>$this->oUser->account));
+		
+		parent::big_type_urls($this->big_type);		//大分类URL
 	}
 	
 	//初始化数据库连接
