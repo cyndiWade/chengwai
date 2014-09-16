@@ -51,13 +51,7 @@ class WeiboAction extends AdvertBaseAction {
 		
 		$this->pt_type = $this->_get('pt_type');	//平台类型
 		
-		
-		//$data[1]['查看名人新浪微博'] =
-		parent::data_to_view(array(
-			
-			
-		));
-		
+	
 	}
 	
 
@@ -72,6 +66,8 @@ class WeiboAction extends AdvertBaseAction {
 		parent::data_to_view(array(
 			//二级导航属性
 			'sidebar_two'=>array($show_num=>'select',),//第一个加依次类推
+			
+				
 		));
 		$this->display();
 	}

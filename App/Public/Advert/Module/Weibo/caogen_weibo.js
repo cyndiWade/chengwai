@@ -248,7 +248,7 @@ Weibo.prototype.init_tags_selected = function () {
 		_father_this.resultbox.css('display','none');
 	}
 	
-	public_post_fn();
+	//public_post_fn();
 }
 
 

@@ -1,6 +1,6 @@
 <?php
 	
-	class FastindexWeiboModel extends AdvertBaseModel()
+	class FastindexWeiboModel extends AdvertBaseModel
 	{
 
 
@@ -25,12 +25,12 @@
 				$price = explode('-', $addslArray['jgqj']);
 				if(empty($price['1']))
 				{
-					$where['price_height'] = ''
+					$where['price_height'] = '';
 				}
 			}
 			
 			//判断是分页提交还是分栏提交
-			if($addslArray['p']!='' &&　$addslArray['count']!='')
+			if($addslArray['p']!='' && $addslArray['count'] !='')
 			{
 				//总数
 				$count = $addslArray['count'];
