@@ -27,6 +27,7 @@ class WeiboAction extends AdvertBaseAction {
 			'CategoryTags'=>'CategoryTags',
 			'Users' => 'Users',
 			'AccountWeibo' => 'AccountWeibo',
+			'FastindexWeibo' => 'FastindexWeibo'
 	);
 	
 	//和构造方法
@@ -101,14 +102,11 @@ class WeiboAction extends AdvertBaseAction {
 	public function get_new_list()
 	{
 		if($this->isPost()){
-
+			$this->db['FastindexWeibo']->getPostArray($_POST);
 		}else{
 			return $this->db['AccountWeibo']->getListTen();
 		}
 	}
-	
-	
-	
 	
 	//显示常见分类
 	private function show_category_tags () {

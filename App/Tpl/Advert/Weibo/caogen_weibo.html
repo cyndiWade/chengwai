@@ -90,8 +90,6 @@
 		<b class="total fr">共11178个</b><b class="total fr">200页</b>
 		<select class="fl"><option>选择排序方式</option></select><span class="orderspan orderspan-select fl">默认排序</span><span class="orderspan">粉丝量</span><span class="orderspan">相关性</span><span class="orderspan">月订单</span>
 	</div>
-	<?php //echo '<pre>';print_r($view_data['list']);echo '</pre>';?>
-	<?php //echo $view_data['count'];?>
 	<div class="col01-weibo l">
 		<table class="tab01-weibo l">
 		  <tr>
@@ -108,57 +106,31 @@
 			<th class="last">操作</th>
 		  </tr>
 		  <tr>
-			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wb_img01.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="address l">北京东城区</div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
-			<td class="t2"><b class="red">6323万</b></td>
-			<td class="t3">1.00</td>
-			<td class="t4">540.00元</td>
-			<td class="t5">540.00元</td>
-			<td class="t6">540.00元</td>
-			<td class="t7">540.00元</td>
-			<td class="t8">12</td>
-			<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>
-			<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
-			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
-		  </tr>
-		  <tr>
-			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wb_img01.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="address l">北京东城区</div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
-			<td class="t2"><b class="red">6323万</b></td>
-			<td class="t3">1.00</td>
-			<td class="t4">540.00元</td>
-			<td class="t5">540.00元</td>
-			<td class="t6">540.00元</td>
-			<td class="t7">540.00元</td>
-			<td class="t8">12</td>
-			<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>
-			<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
-			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
-		  </tr>
-		  <tr>
-			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wb_img01.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="address l">北京东城区</div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
-			<td class="t2"><b class="red">6323万</b></td>
-			<td class="t3">1.00</td>
-			<td class="t4">540.00元</td>
-			<td class="t5">540.00元</td>
-			<td class="t6">540.00元</td>
-			<td class="t7">540.00元</td>
-			<td class="t8">12</td>
-			<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>
-			<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
-			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
-		  </tr>
-		  <tr>
-			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wb_img01.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="address l">北京东城区</div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
-			<td class="t2"><b class="red">6323万</b></td>
-			<td class="t3">1.00</td>
-			<td class="t4">540.00元</td>
-			<td class="t5">540.00元</td>
-			<td class="t6">540.00元</td>
-			<td class="t7">540.00元</td>
-			<td class="t8">12</td>
-			<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>
-			<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
-			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
-		  </tr>
+			<volist name="view_data['list']" id="vo">
+				<td class="t1">
+					<div class="weibopart">
+						<input type="checkbox" class="check" />
+						<img src="{$global_tpl_view.Group_Resource_Path}images/wb_img01.gif" class="wbimg" />
+						<div class="grp fl">
+							<h5 class="l"><b>全球头条新闻</b>
+							<span class="heart"></span>
+							<span class="heart"></span></h5>
+							<div class="address l">{$vo['account_name']}</div><div class="desc l">简介：全球头条新闻全球头条新闻</div>
+						</div>
+					</div>
+				</td>
+				<td class="t2"><b class="red">{$vo['fans_num']}万</b></td>
+				<td class="t3">1.00</td>
+				<td class="t4">{$vo['yg_zhuanfa']}元</td>
+				<td class="t5">{$vo['rg_zhuanfa']}元</td>
+				<td class="t6">{$vo['yg_zhifa']}元</td>
+				<td class="t7">{$vo['rg_zhuanfa']}元</td>
+				<td class="t8">{$vo['week_order_num']}</td>
+				<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>
+				<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
+				<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
+			  </tr>
+			</volist>
 		</table>
 		<div class="weibo-bot l">
 			<div class="page-wb fr demo_page">

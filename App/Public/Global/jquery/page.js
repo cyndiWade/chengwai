@@ -211,14 +211,3 @@ function get_page_tags()
 	returnArray['nowpage'] = nowpage;
 	return returnArray;
 }
-
-//第一次必须传入 总数 和 当前页数
-var first_all = 18;
-var first_page = 1;
-//第一次刷新页面 需要传递数值
-$(function(){
-	page_now_list(first_all,first_page,page_limit);
-});
-
-
-
