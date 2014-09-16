@@ -22,6 +22,8 @@ class WeiboAction extends AdvertBaseAction {
 	
 	private $big_type = 2;	//当前平台大分类
 	
+	private $pt_page_data;	//平台类型的数据
+	
 	//初始化数据库连接
 	protected  $db = array(
 			'CategoryTags'=>'CategoryTags',
@@ -48,16 +50,28 @@ class WeiboAction extends AdvertBaseAction {
 		//初始化URL
 		parent::two_urls($this->big_type);			//微博二级分类URL
 		
-		
 		$this->pt_type = $this->_get('pt_type');	//平台类型
 		
-	
+		$this->pt_page_data = array(
+			1 => array(
+				'pt_type'=>1,
+				'pt_name'=> '新浪'
+			),
+			2 => array(
+				'pt_type'=>2,
+				'pt_name'=> '腾讯'
+			),
+		);
+		parent::data_to_view(array(
+			'pt_info'=>$this->pt_page_data[$this->pt_type]
+		));
+		
+		
 	}
 	
 
 	//名人微博
 	public function celebrity_weibo () {
-		
 		
 		if ($this->pt_type == 1) {
 			$show_num = 0;
@@ -67,8 +81,6 @@ class WeiboAction extends AdvertBaseAction {
 		parent::data_to_view(array(
 			//二级导航属性
 			'sidebar_two'=>array($show_num=>'select',),//第一个加依次类推
-			
-				
 		));
 		$this->display();
 	}

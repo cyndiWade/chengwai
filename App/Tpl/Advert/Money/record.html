@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+    <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/manager.css" type="text/css" />
+	<title>流水</title>
+</head>
+<body>
+
+<!-- 头部 -->
+<include file="Public:member_header" />
+
+<div class="wrap l">
+<div class="pbd">
+	<div class="location l">
+		当前位置：<a href="#">用户信息</a>  >  <span class="blue">流水明细</span>
+	</div>
+	<div class="area01-memwb l">
+		<table class="tab01-water l">
+		  <tr>
+			<th class="t1">流水号</th>
+			<th class="t2">日期</th>
+			<th class="t3">记录</th>
+			<th class="last">余额</th>
+		  </tr>
+		  <tr>
+			<td class="t1">0111111111</td>
+			<td class="t2">2014-10-18 00:32</td>
+			<td class="t3">消费<span class="red">1000.00</span>元</td>
+			<td class="last"><span class="red">10.00</span>元</td>
+		  </tr>
+		  <tr>
+			<td class="t1">0111111111</td>
+			<td class="t2">2014-10-18 00:32</td>
+			<td class="t3">退款<span class="red">1000.00</span>元</td>
+			<td class="last"><span class="red">10.00</span>元</td>
+		  </tr>
+		  <tr>
+			<td class="t1">0111111111</td>
+			<td class="t2">2014-10-18 00:32</td>
+			<td class="t3">充值<span class="red">1000.00</span>元</td>
+			<td class="last"><span class="red">10.00</span>元</td>
+		  </tr>
+		  <tr>
+			<td class="t1">0111111111</td>
+			<td class="t2">2014-10-18 00:32</td>
+			<td class="t3">消费<span class="red">1000.00</span>元</td>
+			<td class="last"><span class="red">10.00</span>元</td>
+		  </tr>
+		  <tr>
+			<td class="t1">0111111111</td>
+			<td class="t2">2014-10-18 00:32</td>
+			<td class="t3">消费<span class="red">1000.00</span>元</td>
+			<td class="last"><span class="red">10.00</span>元</td>
+		  </tr>
+		</table>
+		<div class="page-wb fr">
+			<a href="#" class="prev"><</a><a href="#" class="num on">1</a><a href="#" class="num">2</a><a href="#" class="num">3</a><a href="#" class="num">4</a><em>...</em><a href="#" class="num">25</a><a href="#" class="next">></a><b class="total fl">共25页</b><div class="count fl"><i class="fl">到第</i><input type="text" class="text fl" /><i class="fl">页</i><span class="aok fl">前往</span><strong class="show fl">显示<select><option>10</option></select>条</strong></div>
+		</div>
+	</div>
+</div>
+</div>
+
+<include file="Public:member_footer" />
+
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.tab01-water tr:even').addClass('even')
+})
+</script>
+</body>
+</html>

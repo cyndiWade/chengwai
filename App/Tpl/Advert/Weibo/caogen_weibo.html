@@ -16,7 +16,7 @@
 <div class="wrap l">
 <div class="pbd">
 <div class="location l">
-	当前位置：<a href="#">首页</a>  >  <a href="#">微博推广</a> > <span class="blue">查看草根新浪微博</span>
+	当前位置：<a href="#">首页</a>  >  <a href="#">微博推广</a> > <span class="blue">查看草根{$view_data.pt_info.pt_name}微博</span>
 </div>
 <div class="area01-memwb l">
 	
@@ -179,11 +179,12 @@
 <script src="{$global_tpl_view.Group_Resource_Path}js/page.js"></script>
 
 <script type="text/javascript">
-
-
 $.ajaxSetup({
 	async: false,//async:false 同步请求  true为异步请求
 });
+
+var post_extend = {};
+post_extend.pt_type = {$view_data.pt_info.pt_type};
 
 //公共JS方法。每个事件都要触发这个函数
 var public_post_fn = function ($obj_data) {

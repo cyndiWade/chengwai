@@ -7,12 +7,12 @@
 			<div class="logbefore none l">
 				<div class="tel fr"><b>4006 - 876 - 308</b></div>
 				<div class="part01-hd fr">
-					<a href="#">免费注册</a> | <a href="#">立即登陆</a> | <a href="#">港澳专区</a> | <a href="#">推广讲坛</a> | <a href="#">帮助中心</a> | <a href="#">联系我们</a>			
+					<a href="#">免费注册</a> | <a href="#">立即登陆</a> | <a href="#">港澳专区</a> | <a href="#">推广讲坛</a> | <a href="">帮助中心</a> | <a href="#">联系我们</a>			
 				</div>
 			</div>
 			<!-- 登录后 -->
 			<div class="logafter l">
-				<div class="userctrl pr fr"><em class="count">1</em><span>资金(<em class="red">84.44</em>元)</span><a href="{:U('/Advert/Member/pass_save')}">修改密码</a><a href="#">客服中心</a><a href="#">帮助中心</a><a href="#">消息</a><a href="{:U('/Advert/Account/logout')}">退出</a></div>
+				<div class="userctrl pr fr"><em class="count">1</em><span>资金(<em class="red">84.44</em>元)</span><a href="{:U('/Advert/Member/pass_save')}">修改密码</a><a href="#">客服中心</a><a href="{:U('/Advert/Help/index')}">帮助中心</a><a href="#">消息</a><a href="{:U('/Advert/Account/logout')}">退出</a></div>
 				<div class="part01-wel fl">
 					  欢来到城外圈<a href="#" class="blue">{$global_tpl_view.user_info.account}</a>
 				</div>
@@ -22,7 +22,7 @@
 			<a href="{:U('/Advert/Member/datum_edit')}" class="logo fl"><img src="{$global_tpl_view.Group_Resource_Path}images/logo_member.png" alt="城外圈会员中心" /></a>		
 		</div>
 		<div class="box03-hd l">
-			<div class="mem-hd fr"><a href="#" class="help fl">帮助中心</a><a href="#" class="cash fl">在线充值</a></div>
+			<div class="mem-hd fr"><a href="{$global_tpl_view['big_type_urls'][3]}" class="help fl {$global_tpl_view['big_type_class'][3]}">帮助中心</a><a href="{$global_tpl_view['big_type_urls'][4]}" class="help fl {$global_tpl_view['big_type_class'][4]}">在线充值</a></div>
 			<!-- 一级导航 -->
 			<ul class="nav-mem fl">
 				<li class="nav-new {$global_tpl_view['big_type_class'][0]}" ><a class="xwmt" href="{$global_tpl_view['big_type_urls'][0]}">新闻媒体</a></li>
@@ -30,14 +30,15 @@
 				<li class="nav-wb {$global_tpl_view['big_type_class'][2]}"><a class="wbtg" href="{$global_tpl_view['big_type_urls'][2]}">微博推广</a></li>
 			</ul>
 		</div>
-		
+
 		<!-- 二级导航 -->
 		<if condition="($global_tpl_view['big_type_class'][0] eq true)"> 
-			
+			<include file="Public:news_sidebar" />
 		<elseif condition="($global_tpl_view['big_type_class'][1] eq true)"/>
 			<include file="Public:weixin_sidebar" />
 		<elseif condition="($global_tpl_view['big_type_class'][2] eq true)"/>
 			<include file="Public:weibo_sidebar" />	
 		</if>
+		
 	</div>
 </div>
