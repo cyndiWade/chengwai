@@ -76,7 +76,8 @@ class WeiboAction extends AdvertBaseAction {
 	
 	//草根微博
 	public function caogen_weibo() {
-
+		$list = $this->get_new_list();
+		
 		//显示常见分类
 		$this->show_category_tags();
 		
@@ -90,7 +91,7 @@ class WeiboAction extends AdvertBaseAction {
 			'sidebar_two'=>array($show_num=>'select'),//第一个加
 			
 		));
-		$list = $this->get_new_list();
+		print_r($global_tpl_view);
 		parent::data_to_view($list);
 		$this->display();
 	}

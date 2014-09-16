@@ -105,32 +105,34 @@
 			<th class="t10">可用广告位</th>
 			<th class="last">操作</th>
 		  </tr>
-		  <tr>
-			<volist name="view_data['list']" id="vo">
-				<td class="t1">
-					<div class="weibopart">
-						<input type="checkbox" class="check" />
-						<img src="{$global_tpl_view.Group_Resource_Path}images/wb_img01.gif" class="wbimg" />
-						<div class="grp fl">
-							<h5 class="l"><b>全球头条新闻</b>
-							<span class="heart"></span>
-							<span class="heart"></span></h5>
-							<div class="address l">{$vo['account_name']}</div><div class="desc l">简介：全球头条新闻全球头条新闻</div>
-						</div>
-					</div>
-				</td>
-				<td class="t2"><b class="red">{$vo['fans_num']}万</b></td>
-				<td class="t3">1.00</td>
-				<td class="t4">{$vo['yg_zhuanfa']}元</td>
-				<td class="t5">{$vo['rg_zhuanfa']}元</td>
-				<td class="t6">{$vo['yg_zhifa']}元</td>
-				<td class="t7">{$vo['rg_zhuanfa']}元</td>
-				<td class="t8">{$vo['week_order_num']}</td>
-				<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>
-				<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
-				<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
-			  </tr>
-			</volist>
+		  	<tbody class="tbody">
+				<volist name="view_data['list']" id="vo">
+					<tr>
+						<td class="t1">
+							<div class="weibopart">
+								<input type="checkbox" class="check" />
+								<img src="{$global_tpl_view.Group_Resource_Path}images/wb_img01.gif" class="wbimg" />
+								<div class="grp fl">
+									<h5 class="l"><b>全球头条新闻</b>
+									<span class="heart"></span>
+									<span class="heart"></span></h5>
+									<div class="address l">{$vo['account_name']}</div><div class="desc l">简介：全球头条新闻全球头条新闻</div>
+								</div>
+							</div>
+						</td>
+						<td class="t2"><b class="red">{$vo['fans_num']}万</b></td>
+						<td class="t3">1.00</td>
+						<td class="t4">{$vo['yg_zhuanfa']}元</td>
+						<td class="t5">{$vo['rg_zhuanfa']}元</td>
+						<td class="t6">{$vo['yg_zhifa']}元</td>
+						<td class="t7">{$vo['rg_zhuanfa']}元</td>
+						<td class="t8">{$vo['week_order_num']}</td>
+						<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>
+						<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
+						<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
+				  	</tr>
+				</volist>
+			</tbody>
 		</table>
 		<div class="weibo-bot l">
 			<div class="page-wb fr demo_page">
@@ -171,11 +173,40 @@
 
 <script type="text/javascript">
 
+
+$.ajaxSetup({
+	async: false,//async:false 同步请求  true为异步请求
+});
+
 //公共JS方法。每个事件都要触发这个函数
 var public_post_fn = function () {
-	
+	var tbody = $('.tbody');
 	var tags_json =	Weibo.get_selected_tags();	//获取我的值
-	console.log(tags_json);	//打印
+	//这里是AJAX请求的方法
+	var result = {};
+	$.post('{:U('/Advert/Weibo/get_new_list')}',tags_json,function($result){
+		console.log($result);	//打印
+		tbody.empty();
+		tbody.html($result.list);
+		page_now_list($result.count,$result.p,page_limit);
+	},'JSON');
+
+	//为空时，表示从筛选框上选择数据
+	if ($obj_data == '') {		
+		var all_num = $obj_data.all_num ;
+		var this_number = $obj_data.this_number;
+		var page_limit = $obj_data.page_limit;
+		page_now_list(all_num,this_number,page_limit);	
+		
+	//不为空时，表示点击的翻页	
+	} else {
+		var all_num = $obj_data.all_num ;
+		var this_number = $obj_data.this_number;
+		var page_limit = $obj_data.page_limit;
+		page_now_list(all_num,this_number,page_limit);	
+	}
+
+	//console.log(tags_json);	//打印
 	
 	
 	//下面写你的方法
@@ -186,26 +217,26 @@ var public_post_fn = function () {
 
 
 
-//第一次刷新页面 第一次必须传入 总数 和 当前页数
-var first_all = "{$view_data['count']}";
-//第一次刷新页面 默认第一个
-var first_page = 1;
-//第一次刷新页面 需要传递数值
-$(function(){
-	//只在页面第一次载入的时候执行 后面AJAX请求内容返回总数 
-	page_now_list(first_all,first_page,page_limit);
-});
+// //第一次刷新页面 第一次必须传入 总数 和 当前页数
+// var first_all = "{$view_data['count']}";
+// //第一次刷新页面 默认第一个
+// var first_page = 1;
+// //第一次刷新页面 需要传递数值
+// $(function(){
+// 	//只在页面第一次载入的时候执行 后面AJAX请求内容返回总数 
+// 	page_now_list(first_all,first_page,page_limit);
+// });
 
-//当前分页直接调用page_now_list(AJAX返回总数,当前页数,可以沈略)
-//这是当页面加载完执行的函数
+// //当前分页直接调用page_now_list(AJAX返回总数,当前页数,可以沈略)
+// //这是当页面加载完执行的函数
 
 
-$(function(){
-	//var new_obj = get_page_tags();
-	//console.log(new_obj['allnumber']);
-	//console.log(new_obj['nowpage']);
-	//console.log(Weibo.get_selected_tags());
-})
+// $(function(){
+// 	//var new_obj = get_page_tags();
+// 	//console.log(new_obj['allnumber']);
+// 	//console.log(new_obj['nowpage']);
+// 	//console.log(Weibo.get_selected_tags());
+// })
 
 </script>
 </body>
