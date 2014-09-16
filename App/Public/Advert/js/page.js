@@ -224,7 +224,12 @@ function live_select()
 			this_number = 1;
 		}
 		
-		public_post_fn();
+		public_post_fn({
+			'all_num':all_num,
+			'this_number':this_number,
+			'page_limit':page_limit
+		});
+		//public_post_fn();
 		
 		obj_nowPages.val(this_number);
 	});
@@ -242,7 +247,11 @@ function live_prev()
 			this_number = 1;
 		}
 		
-		public_post_fn(all_num,this_number,page_limit);
+		public_post_fn({
+			'all_num':all_num,
+			'this_number':this_number,
+			'page_limit':page_limit
+		});
 		//该函数需要替换 AJAX
 		//page_now_list(all_num,this_number,page_limit);
 	});
@@ -262,6 +271,11 @@ function live_next()
 			var now_page = big_number;
 		}
 		
+		public_post_fn({
+			'all_num':all_num,
+			'this_number':this_number,
+			'page_limit':page_limit
+		});
 		public_post_fn(all_num,this_number,page_limit);
 		//该函数需要替换 AJAX
 		//page_now_list(all_num,now_page,page_limit);
@@ -292,7 +306,12 @@ function live_index()
 		var _this = $(this);
 		var all_num = parseInt(_this.attr('all_num'));
 		
-		public_post_fn(all_num,1,page_limit);
+		public_post_fn({
+			'all_num':all_num,
+			'this_number':1,
+			'page_limit':page_limit
+		});
+		//public_post_fn(all_num,1,page_limit);
 		//该函数需要替换 AJAX
 		//page_now_list(all_num,1,page_limit);
 	});
