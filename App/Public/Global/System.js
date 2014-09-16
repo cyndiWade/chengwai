@@ -16,6 +16,23 @@ System.prototype.validateImageFn = function () {
 	});
 }
 
+/**
+ * 同步模式AJAX提交
+ */
+System.prototype.ajax_post_setup = function ($url,$data,$type = 'JSON') {
+	$.ajaxSetup({
+		async: false,//async:false 同步请求  true为异步请求
+	});
+	var result = false;
+	//提交的地址，post传入的参数
+	$.post($url,$data,function(content){
+		result = content;
+	},$type);
+	
+	return result;
+}
+
+
 
 System.prototype.run = function () {
 	var _fater_this = this;

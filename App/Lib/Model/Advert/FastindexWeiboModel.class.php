@@ -18,7 +18,7 @@
 				$where = $this->getWhere($addvalue);
 				//判断是分页提交还是分栏提交
 				$limit = 10;
-				if( ($addvalue['p']!='')  &&　($addvalue['count']!='') )
+				if( ($addvalue['p']!='') && ($addvalue['count']!='') )
 				{
 					//总数
 					$count = $addvalue['count'];
@@ -29,14 +29,16 @@
 					->table('app_fastindex_weibo as w')
 					->join('app_account_weibo as b on b.id = w.weibo_id')
 					->limit($p_limit,$limit)->field('b.*')->select();
-					return $new_list = array('list'=>$this->setList($list),'p'=>$p,'count'=>$count);
+					//return $new_list = array('list'=>$this->setList($list),'p'=>$p,'count'=>$count);
+					return $new_list = array('list'=>$this->$list,'p'=>$p,'count'=>$count);
 				}else{
 					$count = $this->where($where)->count();
 					$list = $this->where($where)
 					->table('app_fastindex_weibo as w')
 					->join('app_account_weibo as b on b.id = w.weibo_id')
 					->limit(0,$limit)->field('b.*')->select();
-					return $new_list = array('list'=>$this->setList($list),'p'=>1,'count'=>$count);
+					//return $new_list = array('list'=>$this->setList($list),'p'=>1,'count'=>$count);
+ 					return $new_list = array('list'=>$list,'p'=>1,'count'=>$count);
 				}
 			}
 		}
@@ -47,30 +49,33 @@
 			$str = '';
 			foreach($array as $value)
 			{
-				$str .= '<tr>
-					<td class="t1">
-						<div class="weibopart"><input type="checkbox" class="check" />
-							<img src="" class="wbimg" />
-							<div class="grp fl">
-								<h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5>
-								<div class="address l">'.$value['account_name'].'</div>
-								<div class="desc l">简介：全球头条新闻全球头条新闻</div>
-							</div>
-						</div>
-					</td>
-					<td class="t2"><b class="red">'.$value['fans_num'].'万</b></td>
-					<td class="t3">1.00</td>
-					<td class="t4">'.$value['yg_zhuanfa'].'元</td>
-					<td class="t5">'.$value['rg_zhuanfa'].'元</td>
-					<td class="t6">'.$value['yg_zhifa'].'元</td>
-					<td class="t7">'.$value['rg_zhuanfa'].'元</td>
-					<td class="t8">'.$value['week_order_num'].'</td>
-					<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>
-					<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
-					<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
-			  	</tr>';
+				$str .= '<tr>';
+				$str .= '<td class="t1">';
+				$str .= '<div class="weibopart"><input type="checkbox" class="check" />';
+				$str .= 	'<img src="" class="wbimg" />';
+				$str .= 		'<div class="grp fl">';
+				$str .= 		'<h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5>';
+				$str .= 		'<div class="address l">'.$value['account_name'].'</div>';
+				$str .= 		'<div class="desc l">简介：全球头条新闻全球头条新闻</div>';
+				$str .= 		'</div>';
+				$str .= '</div>';
+				$str .= '</td>';
+				$str .= '<td class="t2"><b class="red">'.$value['fans_num'].'万</b></td>';
+				$str .= '<td class="t3">1.00</td>';
+				$str .= '<td class="t4">'.$value['yg_zhuanfa'].'元</td>';
+				$str .= '<td class="t5">'.$value['rg_zhuanfa'].'元</td>';
+				$str .= '<td class="t6">'.$value['yg_zhifa'].'元</td>';
+				$str .= '<td class="t7">'.$value['rg_zhuanfa'].'元</td>';
+				$str .= '<td class="t8">'.$value['week_order_num'].'</td>';
+				$str .= '<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>';
+				$str .= '<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
+				$str .= '<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>';
+			  	$str .= '</tr>';
 			}
-			return $str;
+			$json_str_clear = str_replace('"]', "']", $str);
+       	 	$json_str_clear = str_replace('","', "','", $json_str_clear);
+        	$json_str_clear = preg_replace("'([\s])[\s]+'", '', $json_str_clear);
+			return $json_str_clear;
 		}
 
 

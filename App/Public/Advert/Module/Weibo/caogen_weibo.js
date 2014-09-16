@@ -335,7 +335,6 @@ Weibo.prototype.get_selected_tags = function () {
 	var zfjg_type = _father_this.select_zfjg_type.val()
 	
 	var result = {};
-	
 	result.zfjg_type = zfjg_type;
 	if (search_tag_data.size() > 0 ){
 		search_tag_data.each (function () {

@@ -88,7 +88,7 @@ class WeiboAction extends AdvertBaseAction {
 	
 	//草根微博
 	public function caogen_weibo() {
-		$list = $this->get_new_list();
+		//$list = $this->get_new_list();
 		
 		//显示常见分类
 		$this->show_category_tags();
@@ -108,17 +108,18 @@ class WeiboAction extends AdvertBaseAction {
 	
 	//获得列表数据
 	public function get_new_list()
-	{
-		if($this->isPost()){
-			if(!empty($_POST))
+	{	//parent::callback(1,'获取成功所有');
+		$data = $_POST;
+		//if($this->isPost()){
+			if(!empty($data))
 			{
-				$list_new = $this->db['FastindexWeibo']->getPostArray($_POST);
-				parent::callback(1,'提示消息',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
+				$list_new = $this->db['FastindexWeibo']->getPostArray($data);
+				parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
 			}else{
 				$list_first = $this->db['AccountWeibo']->getListTen();
-				parent::callback(1,'提示消息',array('list'=>$list_first['list'],'count'=>$list_first['count'],'p'=>1));
+				parent::callback(1,'提示消息部分',array('list'=>$list_first['list'],'count'=>$list_first['count'],'p'=>1));
 			}
-		}
+		//}
 	}
 	
 	//显示常见分类
