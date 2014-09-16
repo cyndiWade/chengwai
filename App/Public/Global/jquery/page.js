@@ -121,6 +121,8 @@ function page_now_list(number,start,limit)
 	live_index();
 }
 
+
+
 //查找页
 function live_select()
 {
@@ -197,6 +199,17 @@ function live_index()
 		//该函数需要替换 AJAX
 		page_now_list(all_num,1,page_limit);
 	});
+}
+
+//返回函数
+function get_page_tags()
+{
+	var returnArray = [];
+	var allnumber = obj_startSelect.attr('all_num');
+	returnArray['allnumber'] = allnumber;
+	var nowpage = obj_startSelect.attr('now_num');
+	returnArray['nowpage'] = nowpage;
+	return returnArray;
 }
 
 //第一次必须传入 总数 和 当前页数

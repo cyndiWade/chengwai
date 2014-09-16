@@ -203,9 +203,27 @@
 //console.log(Weibo.get_selected_tags())	//就这么调取我这个函数就好了
 
 
-//第一次必须传入 总数 和 当前页数
+//第一次刷新页面 第一次必须传入 总数 和 当前页数
+var first_all = "{$view_data['count']}";
+//第一次刷新页面 默认第一个
+var first_page = 1;
 //第一次刷新页面 需要传递数值
+$(function(){
+	//只在页面第一次载入的时候执行 后面AJAX请求内容返回总数 
 	page_now_list(first_all,first_page,page_limit);
+});
+
+//当前分页直接调用page_now_list(AJAX返回总数,当前页数,可以沈略)
+//这是当页面加载完执行的函数
+
+
+$(function(){
+	var new_obj = get_page_tags();
+	console.log(new_obj['allnumber']);
+	console.log(new_obj['nowpage']);
+	console.log(Weibo.get_selected_tags());
+})
+
 </script>
 </body>
 </html>
