@@ -180,6 +180,11 @@
 
 <script type="text/javascript">
 
+
+$.ajaxSetup({
+	async: false,//async:false 同步请求  true为异步请求
+});
+
 //公共JS方法。每个事件都要触发这个函数
 var public_post_fn = function ($obj_data) {
 
@@ -187,15 +192,25 @@ var public_post_fn = function ($obj_data) {
 	var tags_json =	Weibo.get_selected_tags();	
 	
 	//这里是AJAX请求的方法
-	
+	var result = {};
+	$.post('{:U('/Advert/Weibo/caogen_weibo')}',tags_json,function($result){
+		console.log($result);	//打印
+	});
 
-	if ($obj_data == '') {	//为空时，表示从筛选框上选择数据
-		
+	//为空时，表示从筛选框上选择数据
+	if ($obj_data == '') {		
 		var all_num = $obj_data.all_num ;
 		var this_number = $obj_data.this_number;
 		var page_limit = $obj_data.page_limit;
 		page_now_list(all_num,this_number,page_limit);	
-	} 
+		
+	//不为空时，表示点击的翻页	
+	} else {
+		var all_num = $obj_data.all_num ;
+		var this_number = $obj_data.this_number;
+		var page_limit = $obj_data.page_limit;
+		page_now_list(all_num,this_number,page_limit);	
+	}
 
 	console.log(tags_json);	//打印
 }
