@@ -66,7 +66,7 @@
 				<volist name="view_data['fans_num']" id="vo">
 					<span class="fans_num_tags" data-tag_class="fans_num_tags" data-tag_id="{$vo.id}" data-classify="粉丝量" data-field="fans_num" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
 				</volist>
-				</div><div class="part03-price fl"><input type="text" class="text ipt_fansNum_start" /><i>-</i><input type="text" class="text ipt_fansNum_over" /><i>元</i></div><span class="btn okbtn fl btn_fansNum_yes" data-tag_class="fans_num_tags">确定</span></td>
+				</div><div class="part03-price fl"><input type="text" class="text ipt_fansNum_start" /><i>-</i><input type="text" class="text ipt_fansNum_over" /><i>个</i></div><span class="btn okbtn fl btn_fansNum_yes" data-tag_class="fans_num_tags">确定</span></td>
 		  </tr>
 		  <tr>
 			<td class="t1">粉丝性别：</td>
@@ -154,25 +154,24 @@
 
 <script type="text/javascript">
 
-
-var post_data = {};
-post_data.pt_type = {$view_data.pt_info.pt_type};	//平台类型，1新浪、2腾讯
+var _tbody = $('.tbody');
 
 //公共JS方法。每个事件都要触发这个函数
 var public_post_fn = function (obj_data) {
-	var _tbody = $('.tbody');
-	
-	
-	if (obj_data.this_number != undefined) {
-		post_data.p = obj_data.this_number;
-	}
+	var post_data = {};
+	post_data.pt_type = {$view_data.pt_info.pt_type};	//平台类型，1新浪、2腾讯
 	
 	//组合提交数据
 	var tags_selected =	Weibo.get_selected_tags();	//获取选中标签数据
 	for (var field in tags_selected) {
 		post_data[field]= tags_selected[field];
 	}
-	post_data.zfjg_type = '';
+	
+	if (obj_data.this_number != undefined) {
+		post_data.p = obj_data.this_number;
+	}
+
+	//post_data.zfjg_type = '';
 
 	//AJAX获取数据
 	var result = System.ajax_post_setup('{:U('/Advert/Weibo/get_new_list')}',post_data,'JSON');

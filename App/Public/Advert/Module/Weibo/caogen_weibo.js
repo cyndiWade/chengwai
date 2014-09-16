@@ -58,6 +58,7 @@ Weibo.prototype.select_tag_fn = function () {
 			'repetition' : _this.data('repetition')
 			
 		});
+		
 	});
 	
 	_father_this.jg_tags.click(function (){
@@ -250,7 +251,9 @@ Weibo.prototype.init_tags_selected = function () {
 		_father_this.resultbox.css('display','none');
 	}
 	
+	
 	public_post_fn({});
+	//_father_this.get_selected_tags();
 }
 
 
@@ -319,7 +322,6 @@ Weibo.prototype.btn_click_create_tags = function () {
 		});
 	});
 	
-
 	
 }
 
@@ -343,6 +345,7 @@ Weibo.prototype.get_selected_tags = function () {
 		});
 	
 	}
+	
 	return result;
 }
 
