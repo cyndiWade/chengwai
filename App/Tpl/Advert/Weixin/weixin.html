@@ -2,10 +2,8 @@
 <html>
 <head>
 	<include file="Public:top" />
-	
     <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/member.css" type="text/css" />
-	
 	<title>微信列表页</title>
 </head>
 <body>
@@ -16,7 +14,7 @@
 <div class="wrap l">
 <div class="pbd">
 <div class="location l">
-	当前位置：<a href="#">首页</a>  >  <a href="#">微信推广</a> > <span class="blue">查看名人微信</span>
+	当前位置：<a href="#">首页</a>  >  <a href="#">微信推广</a> > <span class="blue">查看草根微信</span>
 </div>
 <div class="area01-memwb area01-memwx l">
 	<ul class="wbtab l">
@@ -147,6 +145,7 @@
 </div>
 </div>
 
+<include file="Public:member_footer" />
 
 <!-- 批量添加弹窗 -->
 <div class="batchbox none tl">
@@ -164,12 +163,13 @@
 	</div>
 </div>
 
-<include file="Public:member_footer" />
+
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/page.js"></script>
 <script src="{$global_tpl_view.Module_Resource_Path}weixin.js"></script>
-<script type="text/javascript" src="{$global_tpl_view.Global_Resource_Path}jquery/page.js"></script>
+
 <script type="text/javascript">
 
 </script>

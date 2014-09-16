@@ -22,7 +22,7 @@ class MemberAction extends AdvertBaseAction {
 		$this->_user_id =$this->oUser->id;
 		parent::data_to_view(array('account'=>$this->oUser->account));
 		
-		parent::big_type_urls($this->big_type);		//大分类URL
+		parent::big_type_urls();		//大分类URL
 	}
 	
 	//初始化数据库连接

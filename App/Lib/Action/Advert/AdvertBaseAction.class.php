@@ -60,9 +60,7 @@ class AdvertBaseAction extends AppBaseAction {
 					'account' => $this->oUser->account
 				),
 			));
-	
-	
-		
+
 	}
 	
 	
@@ -133,13 +131,20 @@ class AdvertBaseAction extends AppBaseAction {
 	 */
 	protected function big_type_urls ($big_type) {
 		
+		$data[0] = array(0=>'select');
+		$data[1] = array(1=>'select');
+		$data[2] = array(2=>'select');
+		$data[3] = array(3=>'cash');
+		$data[4] = array(4=>'cash');
 		parent::global_tpl_view(array(
-			'big_type_class' => array($big_type=>'select'),	//
-				
+			'big_type_class' => $data[$big_type],	//
+			
 			'big_type_urls'=>array(
-				0 => U('/Advert/Weibo/celebrity_weibo'),	
-				1 => U('Advert/Weixin/weixin'),	
-				2 => U('/Advert/Weibo/celebrity_weibo',array('pt_type'=>1)),	
+				0 => U('/Advert/News/news_list'),	
+				1 => U('Advert/Weixin/celebrity_weixin'),	
+				2 => U('/Advert/Weibo/celebrity_weibo',array('pt_type'=>1)),
+				3 => U('/Advert/Help/index'),
+				4 => U('/Advert/Money/index'),
 			),
 		));
 
@@ -152,13 +157,18 @@ class AdvertBaseAction extends AppBaseAction {
 	 */
 	protected function two_urls ($big_type) {
 		
-		$this->big_type_urls($big_type);
 		//新闻媒体
-		$big_type[$big_type]['sidebar_two_url'] = array();
+		$data[0] = array(
+			0 => U('/Advert/News/news_list'),
+			1 => U('/Advert/News/add_generalize'),		
+		);
 		//微信
-		$big_type[$big_type]['sidebar_two_url'] = array();
+		$data[1] = array(
+			0 => U('/Advert/Weixin/celebrity_weixin'),	
+			1 => U('/Advert/Weixin/weixin'),		
+		);
 		//微博
-		$big_type[$big_type]['sidebar_two_url'] = array(
+		$data[2] = array(
 			0 => U('/Advert/Weibo/celebrity_weibo',array('pt_type'=>1)),	//新浪名人微博
 			1 => U('/Advert/Weibo/caogen_weibo',array('pt_type'=>1)),		//新浪草根微博
 			2 => U('/Advert/Weibo/celebrity_weibo',array('pt_type'=>2)),	//腾讯名人微博
@@ -166,31 +176,11 @@ class AdvertBaseAction extends AppBaseAction {
 		);
 		parent::data_to_view(array(	
 			//二级导航	
-			'sidebar_two_url'=> array(
-				0 => U('/Advert/Weibo/celebrity_weibo',array('pt_type'=>1)),	//新浪名人微博
-				1 => U('/Advert/Weibo/caogen_weibo',array('pt_type'=>1)),		//新浪草根微博
-				2 => U('/Advert/Weibo/celebrity_weibo',array('pt_type'=>2)),	//腾讯名人微博
-				3 => U('/Advert/Weibo/caogen_weibo',array('pt_type'=>2))				//腾讯草根微博
-			),//URL		
+			'sidebar_two_url'=> $data[$big_type],//URL		
 		));
 	}
 	
 	
-	/**
-	 * 微博大分类URL集合
-	 */
-	protected function weixin_urls () {
-		//URL
-		parent::data_to_view(array(
-				//二级导航
-			'sidebar_two_url'=> array(
-					0 => U('/Advert/Weibo/celebrity_weibo',array('pt_type'=>1)),	//新浪名人微博
-					1 => U('/Advert/Weibo/caogen_weibo',array('pt_type'=>1)),		//新浪草根微博
-					2 => U('/Advert/Weibo/celebrity_weibo',array('pt_type'=>2)),	//腾讯名人微博
-					3 => U('/Advert/Weibo/caogen_weibo',array('pt_type'=>2))				//腾讯草根微博
-			),//URL
-		));
-	}
 	
 }
 

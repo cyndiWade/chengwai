@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+    <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/member.css" type="text/css" />
+	<title>新闻媒体列表</title>
+</head>
+<body>
+
+<!-- 头部 -->
+<include file="Public:member_header" />
+
+<div class="wrap l">
+<div class="pbd">
+<div class="location l">
+	当前位置：<a href="#">首页</a>  >  <a href="#">新闻媒体</a> > <span class="blue">查看新闻媒体</span>
+</div>
+<div class="area01-memwb area01-memmt l">
+	<ul class="wbtab l">
+		<li class="select"><a href="#" class="mtzh">全部媒体账号</a></li>
+		<li><a href="#" class="wntj">为您推荐 </a></li>
+		<li><a href="#" class="hotzh">热门新浪微博账号 </a></li>
+		<li><a href="#" class="xstj">限时特价</a></li>
+		<li><a href="#" class="cksc">查看收藏</a></li>
+		<li><a href="#" class="hmd">查看黑名单</a></li>
+	</ul>
+	<div class="searchbox fl">
+		<div class="top-search l"><strong class="on">搜索新闻媒体账号</strong><strong>搜索关键字 </strong></div>
+		<div class="mid-search l">
+			<input type="text" class="seatext" value="请输入微信账号的名称或微信号" /><input type="submit" class="btn seabtn" value="搜索" />
+		</div>
+	</div>
+	<div class="catebox l">
+		<table class="tab01-cate l">
+		  <tr>
+			<td class="t1">行业分类：</td>
+			<td class="t2"><div class="part01-cate fl"><span>所有</span><span class="select">时尚</span><span>家居生活</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>母婴育儿</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>母婴育儿</span><span>娱乐</span><span>娱乐</span></div><div class="more fl" id="morecate">更多</div></td>
+		  </tr>
+		  <tr>
+			<td class="t1">地区筛选：</td>
+			<td class="t2"><div class="part01-city fl"><span>所有</span><span class="select">北京</span><span>上海</span><span>上海</span><span>北京</span><span>上海</span><span>上海</span><span>北京</span><span>上海</span><span>上海</span><span>上海</span><span>上海</span><span>北京</span><span>广州</span><span>南京</span><span>上海</span><span>北京</span><span>上海</span><span>上海</span><span>上海</span><span>上海</span><span>北京</span><span>广州</span><span>南京</span><span>上海</span><span>北京</span><span>上海</span><span>上海</span><span>上海</span><span>上海</span><span>北京</span><span>广州</span><span>南京</span></div><div class="more fl" id="morecity">更多</div></td>
+		  </tr>
+		  <tr>
+			<td class="t1">优惠专区：</td>
+			<td class="t2"><div class="part02-price fl"><span class="select">所有</span><span>无优惠</span><span>特价活动</span><span>特惠套餐</span></div></td>
+		  </tr>
+		  <tr>
+			<td class="t1">价格：</td>
+			<td class="t2"><div class="part02-price fl"><span class="select">所有</span><span>50-100元</span><span>100-200元</span><span>200-500元</span><span>500-1000元</span><span>1000元以上</span><span>自定义</span></div><div class="part03-price fl"><input type="text" class="text" /><i>-</i><input type="text" class="text" /><i>元</i></div><span class="btn okbtn fl">确定</span></td>
+		  </tr>
+		  <tr>
+			<td class="t1">门户类型：</td>
+			<td class="t2"><div class="part02-price fl"><span class="select">所有</span><span>中央门户</span><span>行业门户</span><span>行业门户</span><span>其它门户</span></div></td>
+		  </tr>
+		  <tr>
+			<td class="t1">是否新闻源：</td>
+			<td class="t2"><div class="part02-price fl"><span class="select">所有</span><span>是</span><span>否</span><span>百度新闻源</span></div></td>
+		  </tr>
+		  <tr>
+			<td class="t1">带链接情况：</td>
+			<td class="t2"><div class="part02-price fl"><span class="select">无</span><span>可带文本网址</span><span>可带文本网址</span><span>不能带网址</span></div></td>
+		  </tr>
+		</table>
+		<div class="resultbox tc l">
+			<div class="trash fr">清空选择筛选条件 </div>
+			<span class="span-ok fl">已选择 ：</span>
+			<ul class="grp fl">
+				<li><strong>行业分类 > <b>时尚</b></strong><em class="del"></em></li>
+			</ul>
+		</div>
+	</div>
+	<div class="orderbox l">
+		<b class="total fr">共11178个</b><b class="total fr">200页</b>
+		<select class="fl"><option>选择排序方式</option></select><span class="orderspan orderspan-select fl">默认排序</span><span class="orderspan">价格升降</span>
+	</div>
+	<div class="col01-wx l">
+		<table class="tab01-weibo tab01-mt l">
+		  <tr>
+			<th class="t1"><b>媒体名称</b></th>
+			<th class="t2">频道</th>
+			<th class="t3">价格</th>
+			<th class="t4">入口</th>
+			<th class="t5">新闻源</th>
+			<th class="t6">网页收录</th>
+			<th class="t7">标题字数</th>
+			<th class="t8">是否需要来源</th>
+			<th class="t9">地区</th>
+			<th class="t10">周末能否发稿</th>
+			<th class="t11">能否带文本链接</th>
+			<th class="last">案例</th>
+		  </tr>
+		  <tr>
+			<td class="t1"><div class="mediapart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/mt_img01.gif" class="mtimg" /><div class="grp fl"><h5 class="l"><b>21cn-财经</b></h5><div class="desc l">综合门户</div></div></div></td>
+			<td class="t2">新闻频道</td>
+			<td class="t3"><b class="red">60元</b></td>
+			<td class="t4">是</td>
+			<td class="t5">是</td>
+			<td class="t6">收录否</td>
+			<td class="t7">20</td>
+			<td class="t8">是</td>
+			<td class="t9">广州</td>
+			<td class="t10">是</td>
+			<td class="t11">是</td>
+			<td class="last"><a class="blue" href="#">查看案例</a></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><div class="mediapart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/mt_img01.gif" class="mtimg" /><div class="grp fl"><h5 class="l"><b>21cn-财经</b></h5><div class="desc l">综合门户</div></div></div></td>
+			<td class="t2">新闻频道</td>
+			<td class="t3"><b class="red">60元</b></td>
+			<td class="t4">是</td>
+			<td class="t5">是</td>
+			<td class="t6">收录否</td>
+			<td class="t7">20</td>
+			<td class="t8">是</td>
+			<td class="t9">广州</td>
+			<td class="t10">是</td>
+			<td class="t11">是</td>
+			<td class="last"><a class="blue" href="#">查看案例</a></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><div class="mediapart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/mt_img01.gif" class="mtimg" /><div class="grp fl"><h5 class="l"><b>21cn-财经</b></h5><div class="desc l">综合门户</div></div></div></td>
+			<td class="t2">新闻频道</td>
+			<td class="t3"><b class="red">60元</b></td>
+			<td class="t4">是</td>
+			<td class="t5">是</td>
+			<td class="t6">收录否</td>
+			<td class="t7">20</td>
+			<td class="t8">是</td>
+			<td class="t9">广州</td>
+			<td class="t10">是</td>
+			<td class="t11">是</td>
+			<td class="last"><a class="blue" href="#">查看案例</a></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><div class="mediapart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/mt_img01.gif" class="mtimg" /><div class="grp fl"><h5 class="l"><b>21cn-财经</b></h5><div class="desc l">综合门户</div></div></div></td>
+			<td class="t2">新闻频道</td>
+			<td class="t3"><b class="red">60元</b></td>
+			<td class="t4">是</td>
+			<td class="t5">是</td>
+			<td class="t6">收录否</td>
+			<td class="t7">20</td>
+			<td class="t8">是</td>
+			<td class="t9">广州</td>
+			<td class="t10">是</td>
+			<td class="t11">是</td>
+			<td class="last"><a class="blue" href="#">查看案例</a></td>
+		  </tr>
+		</table>
+		<div class="weibo-bot l">
+			<div class="page-wb fr">
+				<a href="#" class="prev"><</a><a href="#" class="num on">1</a><a href="#" class="num">2</a><a href="#" class="num">3</a><a href="#" class="num">4</a><em>...</em><a href="#" class="num">25</a><a href="#" class="next">></a><b class="total fl">共25页</b><div class="count fl"><i class="fl">到第</i><input type="text" class="text fl" /><i class="fl">页</i><span class="aok fl">前往</span><strong class="show fl">显示<select><option>10</option></select>条</strong></div>
+			</div>
+			<div class="controlbox fl">
+				<span>全选</span><span id="batch">批量添加账号</span><span>批量导出报价单</span>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+
+<include file="Public:member_footer" />
+
+<!-- 批量添加弹窗 -->
+<div class="batchbox none tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选微信主</b></div>
+	<div class="mid-batch l">
+		<div class="part01-batch fl">
+			已选择<b>3</b>位微信主，计费<b>1164.00</b>元
+		</div>
+		<ul class="part02-batch fl">
+			<li><span class="del fr"></span><strong>陈晓明</strong></li>
+			<li><span class="del fr"></span><strong>猪大肠</strong></li>
+			<li><span class="del fr"></span><strong>冷笑话</strong></li>
+		</ul>
+		<a href="#" class="btn bluebtn">立即派单</a>
+	</div>
+</div>
+
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.tab01-weibo tr:even').addClass('even');
+	$('#batch').click(function(){
+		$('.batchbox').popOn();
+	})
+	$('.top-search strong').click(function(){
+		$(this).siblings().removeClass('on')
+		$(this).addClass('on');
+	})
+	$('#morecate').click(function(){
+		$('.part01-cate').toggleClass('part01-cate-auot');
+	})
+	$('#morecity').click(function(){
+		$('.part01-city').toggleClass('part01-city-auot');
+	})
+})
+</script>
+</body>
+</html>
