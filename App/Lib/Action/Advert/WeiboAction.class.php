@@ -99,7 +99,8 @@ class WeiboAction extends AdvertBaseAction {
 	public function get_new_list()
 	{
 		if($this->isPost()){
-			$this->db['FastindexWeibo']->getPostArray($_POST);
+			$list_new = $this->db['FastindexWeibo']->getPostArray($_POST);
+			echo json_encode($list_new);
 		}else{
 			return $this->db['AccountWeibo']->getListTen();
 		}

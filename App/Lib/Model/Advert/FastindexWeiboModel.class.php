@@ -24,13 +24,15 @@
 					//分页 p
 					$p = $addvalue['p'];
 					$p_limit = ($p - 1) * 10;
-					$list = $this->where($where)->table('app_fastindex_weibo as w')
+					$list = $this->where($where)
+					->table('app_fastindex_weibo as w')
 					->join('app_account_weibo as b on b.id = w.weibo_id')
 					->limit($p_limit,$limit)->field('b.*')->select();
 					return $new_list = array('list'=>$list,'p'=>$p,'count'=>$count);
 				}else{
 					$count = $this->where($where)->count();
-					$list = $this->where($where)->table('app_fastindex_weibo as w')
+					$list = $this->where($where)
+					->table('app_fastindex_weibo as w')
 					->join('app_account_weibo as b on b.id = w.weibo_id')
 					->limit(0,$limit)->field('b.*')->select();
 					return $new_list = array('list'=>$list,'p'=>1,'count'=>$count);
@@ -48,37 +50,32 @@
 				$wheres['common'] = $addslArray['cjfl'];
 			}
 			//粉丝数量
-			if($addslArray['fans']!='')
+			if($addslArray['fans_num']!='')
 			{
-				$wheres['fans_num'] = $this->getLeftRightstr($addslArray['fans'],'-');
+				$wheres['fans_num'] = $this->getLeftRightstr($addslArray['fans_num'],'-');
 			}
 			//价格区间
 			if($addslArray['zfjg_type']!='')
 			{
 				switch ($addslArray['zfjg_type']) {
 					case 1:
-						$wheres['yg_zhuanfa'] = $this->getLeftRightstr($addslArray['fans'],'-');
+						$wheres['yg_zhuanfa'] = $this->getLeftRightstr($addslArray['jg'],'-');
 					break;
 					case 2:
-						$wheres['yg_zhuanfa'] = $this->getLeftRightstr($addslArray['fans'],'-');
+						$wheres['yg_zhifa'] = $this->getLeftRightstr($addslArray['jg'],'-');
 					break;
 					case 3:
-						$wheres['yg_zhuanfa'] = $this->getLeftRightstr($addslArray['fans'],'-');
+						$wheres['rg_zhuanfa'] = $this->getLeftRightstr($addslArray['jg'],'-');
 					break;
 					case 4:
-						$wheres['yg_zhuanfa'] = $this->getLeftRightstr($addslArray['fans'],'-');
+						$wheres['rg_zhifa'] = $this->getLeftRightstr($addslArray['jg'],'-');
 					break;
 				}
 			}
 			//性别区分
-			if($addslArray['sex']!='')
+			if($addslArray['fans_sex']!='')
 			{
-				$wheres['sex'] = 1;
-				$price = explode('-', $addslArray['jgqj']);
-				if(empty($price['1']))
-				{
-					$where['price_height'] = '';
-				}
+				$wheres['fans_sex'] = $addslArray['fans_sex'];
 			}
 			return $wheres;
 		}
