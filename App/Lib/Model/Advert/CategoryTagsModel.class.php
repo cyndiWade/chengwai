@@ -7,7 +7,7 @@ class CategoryTagsModel extends AdvertBaseModel {
 	
 	//地柜调用一个父级下所有的子分类数据
 	private function seek_parent_list($parent_id) {
-		$now_data_list = $this->where(array('parent_id'=>$parent_id,'is_del'=>0))->select();
+		$now_data_list = $this->where(array('parent_id'=>$parent_id,'is_del'=>0,'show_status'=>1))->select();
 		
 		if ($now_data_list == true) {
 			foreach ($now_data_list as $key=>$val) {

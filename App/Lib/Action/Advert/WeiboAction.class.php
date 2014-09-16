@@ -58,6 +58,7 @@ class WeiboAction extends AdvertBaseAction {
 	//名人微博
 	public function celebrity_weibo () {
 		
+		
 		if ($this->pt_type == 1) {
 			$show_num = 0;
 		} elseif ($this->pt_type == 2) {
@@ -111,6 +112,7 @@ class WeiboAction extends AdvertBaseAction {
 		$data['jg'] = $this->jg;
 		$data['fans_num'] = $this->fans_num;
 		$data['fans_sex'] = $this->fans_sex;
+		$data['zfjg_type'] = $this->zfjg_type;
 		parent::data_to_view($data);
 	}
 	
@@ -124,6 +126,7 @@ class WeiboAction extends AdvertBaseAction {
 		$this->jg = $this->weibo_search_classify_data[296];
 		$this->fans_num = $this->weibo_search_classify_data[297];
 		$this->fans_sex = $this->weibo_search_classify_data[298];
+		$this->zfjg_type = $this->weibo_search_classify_data[421];
 	}
 
     

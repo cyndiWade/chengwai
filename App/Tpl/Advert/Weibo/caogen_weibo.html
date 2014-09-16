@@ -46,7 +46,11 @@
 			<td class="t1">价格：</td>
 			<td class="t2">
 				<div class="part01-price fl">
-					<select><option>硬广转发报价</option></select>
+					<select id="select_zfjg_type">
+						<volist name="view_data['zfjg_type']" id="vo">
+						<option value="{$vo.val}">{$vo.title}</option>
+						</volist>
+					</select>
 				</div>
 				<div class="part02-price fl">
 					<volist name="view_data['jg']" id="vo">
@@ -62,7 +66,7 @@
 				<volist name="view_data['fans_num']" id="vo">
 					<span class="fans_num_tags" data-tag_class="fans_num_tags" data-tag_id="{$vo.id}" data-classify="粉丝量" data-field="fans_num" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
 				</volist>
-				</div><div class="part03-price fl"><input type="text" class="text ipt_fansNum_start" /><i>-</i><input type="text" class="text ipt_fansNum_over" /><i>元</i></div><span class="btn okbtn fl btn_fansNum_yes" data-tag_class="fans_num_tags">确定</span></td>
+				</div><div class="part03-price fl"><input type="text" class="text ipt_fansNum_start" /><i>-</i><input type="text" class="text ipt_fansNum_over" /><i>个</i></div><span class="btn okbtn fl btn_fansNum_yes" data-tag_class="fans_num_tags">确定</span></td>
 		  </tr>
 		  <tr>
 			<td class="t1">粉丝性别：</td>
@@ -163,8 +167,13 @@
 	</div>
 </div>
 
+
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
+
+<script type="text/javascript">
+	var page_data;
+</script>
 
 <script src="{$global_tpl_view.Module_Resource_Path}caogen_weibo.js"></script>
 <script src="{$global_tpl_view.Group_Resource_Path}js/page.js"></script>
@@ -172,40 +181,42 @@
 <script type="text/javascript">
 
 //公共JS方法。每个事件都要触发这个函数
-var public_post_fn = function () {
+var public_post_fn = function ($obj_data) {
+
+	//筛选标签数据
+	var tags_json =	Weibo.get_selected_tags();	
 	
-	var tags_json =	Weibo.get_selected_tags();	//获取我的值
+	//这里是AJAX请求的方法
+	
+
+	if ($obj_data == '') {	//为空时，表示从筛选框上选择数据
+		
+		var all_num = $obj_data.all_num ;
+		var this_number = $obj_data.this_number;
+		var page_limit = $obj_data.page_limit;
+		page_now_list(all_num,this_number,page_limit);	
+	} 
+
 	console.log(tags_json);	//打印
-	
-	
-	//下面写你的方法
-	//如AJAX、获取当前分页的页码等等
-	
-	
 }
 
 
 
+
+
+
 //第一次刷新页面 第一次必须传入 总数 和 当前页数
-var first_all = "{$view_data['count']}";
+//var first_all = "{$view_data['count']}";
+
 //第一次刷新页面 默认第一个
-var first_page = 1;
+//var first_page = 1;
+
 //第一次刷新页面 需要传递数值
-$(function(){
-	//只在页面第一次载入的时候执行 后面AJAX请求内容返回总数 
-	page_now_list(first_all,first_page,page_limit);
-});
 
 //当前分页直接调用page_now_list(AJAX返回总数,当前页数,可以沈略)
 //这是当页面加载完执行的函数
 
 
-$(function(){
-	//var new_obj = get_page_tags();
-	//console.log(new_obj['allnumber']);
-	//console.log(new_obj['nowpage']);
-	//console.log(Weibo.get_selected_tags());
-})
 
 </script>
 </body>

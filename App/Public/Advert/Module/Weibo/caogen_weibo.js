@@ -5,6 +5,7 @@ var Weibo = function () {
 
 //初始化对象
 Weibo.prototype.init = function () {
+	this.select_zfjg_type = $('#select_zfjg_type');		//抓发价格类型
 	this.select_tags_vessel = $('.select_tags_vessel');	//选择标签容器Ul
 	
 	this.cjfl_tags = $('.cjfl_tags');		//常见分类标签
@@ -145,6 +146,7 @@ Weibo.prototype.create_selete_tags = function ($title,$val,$extend) {
 
 	//填充了已选标签后家首选
 	_father_this.init_tags_selected();
+	
 }
 
 
@@ -248,7 +250,7 @@ Weibo.prototype.init_tags_selected = function () {
 		_father_this.resultbox.css('display','none');
 	}
 	
-	//public_post_fn();
+	public_post_fn({});
 }
 
 
@@ -260,7 +262,6 @@ Weibo.prototype.del_select_tag_fn = function () {
 	_father_this.delete_tags.click(function () {
 		$(this).parent().remove();
 		_father_this.bu_xian_init_fn(this);
-		
 	});
 
 }
@@ -287,7 +288,9 @@ Weibo.prototype.btn_click_create_tags = function () {
 		var _this = $(this);
 		var tag_class = _this.data('tag_class');
 		var obj = $('.'+tag_class).eq(1);
-		var val = _father_this.ipt_jiage_start.val() + '-' + _father_this.ipt_jiage_over.val();
+		var start = _father_this.ipt_jiage_start.val() ? _father_this.ipt_jiage_start.val() : 0;
+		var over = _father_this.ipt_jiage_over.val() ? _father_this.ipt_jiage_over.val() : 10000000;
+		var val = start + '-' + over;
 		
 		_father_this.create_selete_tags(val+'元',val,{
 			'tag_class' : obj.data('tag_class'),
@@ -303,9 +306,11 @@ Weibo.prototype.btn_click_create_tags = function () {
 		var _this = $(this);
 		var tag_class = _this.data('tag_class');
 		var obj = $('.'+tag_class).eq(1);
-		var val = _father_this.ipt_fansNum_start.val() + '-' + _father_this.ipt_fansNum_over.val();
+		var start = _father_this.ipt_fansNum_start.val() ? _father_this.ipt_fansNum_start.val() : 0;
+		var over = _father_this.ipt_fansNum_over.val() ? _father_this.ipt_fansNum_over.val() : 10000000;
+		var val = start + '-' + over;
 		
-		_father_this.create_selete_tags(val+'万',val,{
+		_father_this.create_selete_tags(val+'个',val,{
 			'tag_class' : obj.data('tag_class'),
 			//'tag_id':obj.data('tag_id'),
 			'classify':obj.data('classify'),
@@ -325,9 +330,13 @@ Weibo.prototype.btn_click_create_tags = function () {
 Weibo.prototype.get_selected_tags = function () {
 	var _father_this = this;
 	_father_this.init();
-	var search_tag_data = _father_this.search_tag_data;
+
+	var search_tag_data = _father_this.search_tag_data;	//获取选中的标签值
+	var zfjg_type = _father_this.select_zfjg_type.val()
 	
 	var result = {};
+	
+	result.zfjg_type = zfjg_type;
 	if (search_tag_data.size() > 0 ){
 		search_tag_data.each (function () {
 			var _this = $(this);
