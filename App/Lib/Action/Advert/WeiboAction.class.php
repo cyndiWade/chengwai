@@ -103,8 +103,6 @@ class WeiboAction extends AdvertBaseAction {
 			'sidebar_two'=>array($show_num=>'select'),//第一个加
 			
 		));
-		print_r($global_tpl_view);
-		parent::data_to_view($list);
 		$this->display();
 	}
 	
@@ -112,10 +110,14 @@ class WeiboAction extends AdvertBaseAction {
 	public function get_new_list()
 	{
 		if($this->isPost()){
-			$list_new = $this->db['FastindexWeibo']->getPostArray($_POST);
-			echo json_encode($list_new);
-		}else{
-			return $this->db['AccountWeibo']->getListTen();
+			if(!empty($_POST))
+			{
+				$list_new = $this->db['FastindexWeibo']->getPostArray($_POST);
+				parent::callback(1,'提示消息',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
+			}else{
+				$list_first = $this->db['AccountWeibo']->getListTen();
+				parent::callback(1,'提示消息',array('list'=>$list_first['list'],'count'=>$list_first['count'],'p'=>1));
+			}
 		}
 	}
 	

@@ -6,14 +6,15 @@
 		//接受参数
 		public function getPostArray($array)
 		{
+			
+			if(!empty($array))
+			{
 			//过滤数据
-			$addvalue = array();
-			foreach($array as $key=>$value)
-			{
-				$addvalue[$key] = addslashes($value);
-			}
-			if(!empty($addvalue))
-			{
+				$addvalue = array();
+				foreach($array as $key=>$value)
+				{
+					$addvalue[$key] = addslashes($value);
+				}
 				$where = $this->getWhere($addvalue);
 				//判断是分页提交还是分栏提交
 				$limit = 10;
