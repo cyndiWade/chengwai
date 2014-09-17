@@ -30,7 +30,8 @@ class WeiboAction extends AdvertBaseAction {
 			'Users' => 'Users',
 			'AccountWeibo' => 'AccountWeibo',
 			'GrassrootsWeibo' => 'GrassrootsWeibo',
-			'CeleprityindexWeibo' => 'CeleprityindexWeibo'
+			'CeleprityindexWeibo' => 'CeleprityindexWeibo',
+			'BlackorcollectionWeibo' => 'BlackorcollectionWeibo'
 	);
 	
 	//和构造方法
@@ -132,9 +133,28 @@ class WeiboAction extends AdvertBaseAction {
 		}
 	}
 
-
-
-
+	//拉黑
+	public function insert_blackorcollection()
+	{
+		$bool = $this->db['BlackorcollectionWeibo']->insertBlackorcollection($_POST,$this->oUser->id);
+		if($bool)
+		{
+			if($_POST['or_type']==0)
+			{
+				parent::callback(1,'拉入黑名单成功!','ok');
+			}else{
+				parent::callback(1,'收藏成功!','ok');
+			}
+		}else{
+			if($_POST['or_type']==0)
+			{
+				parent::callback(1,'拉入黑名单失败!','ok');
+			}else{
+				parent::callback(1,'收藏失败!','ok');
+			}
+		}
+		
+	}
 
 
 	//显示常见分类

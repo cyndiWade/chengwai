@@ -17,5 +17,17 @@
 			return $collection;
 		}
 
+		//拉黑 or 收藏
+		public function insertBlackorcollection($array,$user_id)
+		{
+			$addDate = array(
+				'pt_type'=>$array['pt_type'],
+				'is_celebrity'=>$array['is_celebrity'],
+				'or_type'=>$array['or_type'],
+				'user_id'=>$user_id,
+				'weibo_id'=>$array['weibo_id']
+			);
+			return $this->add($addDate);
+		}
 
 	}
