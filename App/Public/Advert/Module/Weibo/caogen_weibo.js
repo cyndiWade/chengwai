@@ -26,6 +26,14 @@ Weibo.prototype.init = function () {
 	this.btn_fansNum_yes = $('.btn_fansNum_yes');	//粉丝按钮
 	this.ipt_fansNum_start = $('.ipt_fansNum_start');//开始粉丝数
 	this.ipt_fansNum_over = $('.ipt_fansNum_over');	//结束粉丝数
+	
+	this.clear_tags = $('.clear_tags');	//清空选项
+	
+	this.three_sidebar_type = $('.three_sidebar_type');	//三级导航选项
+	
+	
+	this.search = $('#search');				//search按钮
+	this.search_account = $('.search_account');		//搜索的值
 }
 
 
@@ -350,6 +358,81 @@ Weibo.prototype.get_selected_tags = function () {
 }
 
 
+/**
+ * 清空选中的标签
+ */
+Weibo.prototype.clear_tags_fn = function () {
+	var _father_this = this;
+
+	_father_this.clear_tags.click(function () {
+		//清除已选的标签
+		_father_this.select_tags_vessel.empty();
+		
+		//清空搜索框
+		_father_this.search_account.val('');
+		_father_this.search_account.data('ischeck',0);
+		
+		//重新请求
+		_father_this.init_tags_selected();
+	});
+}
+
+
+//点击切换三级分类
+Weibo.prototype.three_sidebar_type_fn = function () {
+	var _father_this = this;
+	_father_this.init();
+	
+	_father_this.three_sidebar_type.click(function () {
+		_father_this.three_sidebar_type.removeClass("select");
+		var _this = $(this);
+		_this.addClass("select");
+		public_post_fn({});
+	});
+	
+	
+} 
+
+
+//获取3级导航当前选中的数据
+Weibo.prototype.get_three_sidebar_selected = function () {
+	var _father_this = this;
+	_father_this.init();
+	
+	var result = {};
+	_father_this.three_sidebar_type.each(function () {
+		var _this = $(this);
+		if (_this.is('.select')) {
+			result[_this.data('field')] = _this.data('val');
+			return false;
+		}
+	});
+	return result;
+}
+
+
+//点击search的按钮
+Weibo.prototype.search_fn = function () {
+	var _father_this = this;
+	_father_this.init();
+	_father_this.search.click(function () {
+		_father_this.search_account.data('ischeck',1);	//状态变成已点击
+		public_post_fn({});
+	});
+}
+
+//获取搜索框的值
+Weibo.prototype.get_search_account = function () {
+	var _father_this = this;
+	_father_this.init();
+	var _this = _father_this.search_account;
+	if (_this.data('ischeck') == 1) {
+		return {'field':_this.data('field'),'val':_this.val()};
+	} else {
+		return false;
+	}
+}
+
 
 //执行
 Weibo.prototype.run = function () {
@@ -361,8 +444,18 @@ Weibo.prototype.run = function () {
 	
 	_father_this.init_tags_selected();	//加首选
 	
-	_father_this.btn_click_create_tags();
+	_father_this.btn_click_create_tags();	//创建标签
+	
+	_father_this.three_sidebar_type_fn();	//三级导航分类方法
+	
+	_father_this.clear_tags_fn();	//清空已选择标签
+	
+	_father_this.search_fn();
 }
+
+
+
+
 
 
 //运行

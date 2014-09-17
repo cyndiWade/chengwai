@@ -21,12 +21,24 @@
 <div class="area01-memwb l">
 	
 	<!-- 微博三级导航 -->
-	<include file="Public:weibo_sidebar_three" />
+	<ul class="wbtab l">
+		<li class="select three_sidebar_type" data-field="all" data-val=""><a href="javascript:;" class="wbzh">全部微博账号 </a></li>
+		<li class="three_sidebar_type" data-field="tj" data-val="1"><a href="javascript:;" class="wntj">为您推荐 </a></li>
+		<li class="three_sidebar_type" data-field="rmwb" data-val="1"><a href="javascript:;" class="hotzh">热门{$view_data.pt_info.pt_name}微博账号 </a></li>
+		<li class="three_sidebar_type" data-field="xstj" data-val="1"><a href="javascript:;" class="xstj">限时特价</a></li>
+		<li class="three_sidebar_type" data-field="cksc" data-val="1"><a href="javascript:;" class="cksc">查看收藏</a></li>
+		<li class="three_sidebar_type" data-field="ckhmd" data-val="1"><a href="javascript:;" class="hmd">查看黑名单</a></li>
+	</ul>
 	
 	<div class="searchbox fl">
-		<div class="top-search l"><strong class="on">搜索账号名称</strong><strong>搜索关键字 </strong></div>
+		<div class="top-search l">
+			<strong class="on">搜索账号名称</strong>
+			<!--
+			<strong>搜索关键字 </strong>
+			 -->
+		</div>
 		<div class="mid-search l">
-			<input type="text" class="seatext" value="输入您要找的账号名称,例：微博搞笑排行榜" /><input type="submit" class="btn seabtn" value="搜索" />
+			<input type="text" class="seatext search_account" data-field="account" data-ischeck="0" value="" placeholder="输入您要找的账号名称,例：微博搞笑排行榜" /><input type="submit" class="btn seabtn" id="search" value="搜索" />
 		</div>
 	</div>
 	<div class="catebox l">
@@ -79,10 +91,11 @@
 			</td>
 		  </tr>
 		</table>
+		<!-- 
 		<div class="senior-search tc l"><strong>高级搜索</strong></div>
-		
+		-->
 		<div class="resultbox tc l">
-			<div class="trash fr">清空选择筛选条件 </div>
+			<div class="trash fr clear_tags">清空选择筛选条件 </div>
 			<span class="span-ok fl">已选择 ：</span>
 			<ul class="grp fl select_tags_vessel">
 				
@@ -161,19 +174,35 @@ var public_post_fn = function (obj_data) {
 	var post_data = {};
 	post_data.pt_type = {$view_data.pt_info.pt_type};	//平台类型，1新浪、2腾讯
 	
-	//组合提交数据
+	//三级导航已选择数据
+	var three_sidebar_selected = Weibo.get_three_sidebar_selected();
+	for (var key in three_sidebar_selected) {
+		post_data[key] = three_sidebar_selected[key];
+	}
+
+	//获取搜索框的数据
+	var account_data = Weibo.get_search_account();
+	if (account_data != false) {
+		post_data[account_data.field] = account_data.val;
+	}
+	
+	//获取选中的标签数据
 	var tags_selected =	Weibo.get_selected_tags();	//获取选中标签数据
 	for (var field in tags_selected) {
 		post_data[field]= tags_selected[field];
 	}
 	
+
+	//获取点击后的分页数据
 	if (obj_data.this_number != undefined) {
 		post_data.p = obj_data.this_number;
 	}
 
 	//这历史转发价格的类型，把这个注释就可以接收到转发价格的值
-	post_data.zfjg_type = '';
+	//post_data.zfjg_type = '';
 
+	//console.log(post_data)
+	
 	//AJAX获取数据
 	var result = System.ajax_post_setup('{:U('/Advert/Weibo/get_grassroots_list')}',post_data,'JSON');
 	
