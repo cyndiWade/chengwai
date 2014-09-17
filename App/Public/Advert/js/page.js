@@ -273,7 +273,7 @@ function live_next()
 		
 		public_post_fn({
 			'all_num':all_num,
-			'this_number':this_number,
+			'this_number':now_page,
 			'page_limit':page_limit
 		});
 		
