@@ -93,7 +93,6 @@ class WeiboAction extends AdvertBaseAction {
 		
 		//显示常见分类
 		$this->show_category_tags();
-		
 		if ($this->pt_type == 1) {
 			$show_num = 1;
 		} elseif ($this->pt_type == 2) {
@@ -107,6 +106,7 @@ class WeiboAction extends AdvertBaseAction {
 		$this->display();
 	}
 	
+	//草根控制器
 	//获得草根 新浪,腾讯微博 列表数据 0
 	public function get_grassroots_list()
 	{
@@ -114,11 +114,12 @@ class WeiboAction extends AdvertBaseAction {
 		$pt_type = intval($_POST['pt_type']);
 		if(!empty($pt_type))
 		{
-			$list_new = $this->db['GrassrootsWeibo']->getPostArray($_POST,$pt_type);
+			$list_new = $this->db['GrassrootsWeibo']->getPostArray($_POST,$pt_type,$this->oUser->id);
 			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
 		}
 	}
 
+	//名人控制器
 	//获得名人 新浪 腾讯微博 数据列表 1
 	public function get_celeprity_list()
 	{

@@ -4,8 +4,8 @@
 	class GrassrootsWeiboModel extends AdvertBaseModel
 	{
 
-		//接受参数 返回草根信息数据 $type区分新浪 1 或者腾讯 2
-		public function getPostArray($array,$type)
+		//接受参数 返回草根信息数据 | $type区分新浪 1 或者腾讯 2  | 用户ID
+		public function getPostArray($array,$type,$id)
 		{
 			
 			if(!empty($array))
@@ -32,22 +32,31 @@
 					//分页 p
 					$p = $addvalue['p'];
 					$p_limit = ($p - 1) * 10;
-					$returnList = $this->setSql($p_limit,$limit,$where);
+					$returnList = $this->setSql($p_limit,$limit,$where,$type,$id,0);
 					return $new_list = array('list'=>$returnList['list'],'p'=>$p,'count'=>$returnList['count']);
 				}else{
-					$returnList = $this->setSql(0,$limit,$where);
+					$returnList = $this->setSql(0,$limit,$where,$type,$id,0);
 					return $new_list = array('list'=>$returnList['list'],'p'=>1,'count'=>$returnList['count']);
 				}
 			}
 		}
 
-		//sql查询
-		private function setSql($now_page,$limit,$where)
+		//sql查询	
+		private function setSql($now_page,$limit,$where,$type,$id,$is_celebrity)
 		{
+			//查询出该用户拉黑的名单
+			$Blackorcollection = D('BlackorcollectionWeibo');
+			$weiboId_array = $Blackorcollection->getAdvertUser($type,$id,$is_celebrity,0);
+			//去除黑名单的weibo_id
+			if(!empty($weiboId_array))
+			{
+				$where['w.weibo_id'] = array('NOT IN',$weiboId_array);
+			}
 			$count = $this->where($where)
 			->table('app_grassroots_weibo as w')
 			->join('app_account_weibo as b on b.id = w.weibo_id')
 			->count();
+			//差集统计长度
 			$list = $this->where($where)
 			->table('app_grassroots_weibo as w')
 			->join('app_account_weibo as b on b.id = w.weibo_id')
@@ -91,6 +100,27 @@
 			if($addslArray['fans_sex']!='')
 			{
 				$wheres['w.fans_sex'] = $addslArray['fans_sex'];
+			}
+			//为您推荐
+			if($addslArray['tj']!='')
+			{
+				$wheres['w.recommend'] = 1;
+			}
+			//热门微博
+			if($addslArray['rmwb']!='')
+			{
+				$wheres['w.is_hot'] = 1;
+			}
+			//折扣
+			if($addslArray['xstj']!='')
+			{
+				$wheres['w.specialoffer'] = 1;
+			}
+			//搜索框的账号名
+			$account_name = trim($addslArray['account']);
+			if($account_name!='')
+			{
+				$wheres['b.account_name'] = array('like','%'.$account_name.'%');
 			}
 			return $wheres;
 		}
