@@ -175,7 +175,7 @@ var public_post_fn = function (obj_data) {
 	post_data.zfjg_type = '';
 
 	//AJAX获取数据
-	var result = System.ajax_post_setup('{:U('/Advert/Weibo/get_new_list')}',post_data,'JSON');
+	var result = System.ajax_post_setup('{:U('/Advert/Weibo/get_grassroots_list')}',post_data,'JSON');
 	
 	if (result.status == 1) {
 		_tbody.empty();

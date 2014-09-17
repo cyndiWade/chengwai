@@ -29,7 +29,8 @@ class WeiboAction extends AdvertBaseAction {
 			'CategoryTags'=>'CategoryTags',
 			'Users' => 'Users',
 			'AccountWeibo' => 'AccountWeibo',
-			'FastindexWeibo' => 'FastindexWeibo'
+			'GrassrootsWeibo' => 'GrassrootsWeibo',
+			'CeleprityindexWeibo' => 'CeleprityindexWeibo'
 	);
 	
 	//和构造方法
@@ -106,22 +107,35 @@ class WeiboAction extends AdvertBaseAction {
 		$this->display();
 	}
 	
-	//获得列表数据
-	public function get_new_list()
-	{	//parent::callback(1,'获取成功所有');
-		$data = $_POST;
-		//if($this->isPost()){
-			if(!empty($data))
-			{
-				$list_new = $this->db['FastindexWeibo']->getPostArray($data);
-				parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
-			}else{
-				$list_first = $this->db['AccountWeibo']->getListTen();
-				parent::callback(1,'提示消息部分',array('list'=>$list_first['list'],'count'=>$list_first['count'],'p'=>1));
-			}
-		//}
+	//获得草根 新浪,腾讯微博 列表数据 0
+	public function get_grassroots_list()
+	{
+		//草根 新浪 1 或者 腾讯 2
+		$pt_type = intval($_POST['pt_type']);
+		if(!empty($pt_type))
+		{
+			$list_new = $this->db['GrassrootsWeibo']->getPostArray($_POST,$pt_type);
+			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
+		}
 	}
-	
+
+	//获得名人 新浪 腾讯微博 数据列表 1
+	public function get_celeprity_list()
+	{
+		//名人 新浪 1 或者 腾讯 2
+		$pt_type = intval($_POST['pt_type']);
+		if(!empty($pt_type))
+		{
+			$list_new = $this->db['CeleprityindexWeibo']->getPostArry($_POST,$pt_type);
+			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
+		}
+	}
+
+
+
+
+
+
 	//显示常见分类
 	private function show_category_tags () {
 		$this->get_category_tags($this->top_tags_parentId);
