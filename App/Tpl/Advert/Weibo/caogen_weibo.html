@@ -168,11 +168,23 @@
 <script type="text/javascript">
 
 var _tbody = $('.tbody');
+var system_info = {
+	pt_type:{$view_data.pt_info.pt_type},	//平台类型1新浪、2腾讯
+	is_celeprity : 0	//是否是名人1是、0不是
+}
+
+/**
+ pt_type
+is_celeprity
+or_type
+weibo_id
+
+ */
 
 //公共JS方法。每个事件都要触发这个函数
 var public_post_fn = function (obj_data) {
 	var post_data = {};
-	post_data.pt_type = {$view_data.pt_info.pt_type};	//平台类型，1新浪、2腾讯
+	post_data.pt_type = system_info.pt_type;	//平台类型，1新浪、2腾讯
 	
 	//三级导航已选择数据
 	var three_sidebar_selected = Weibo.get_three_sidebar_selected();
@@ -212,12 +224,15 @@ var public_post_fn = function (obj_data) {
 			_tbody.append(create_now_html(result.data.list[key]));
 		}
 		
+		Weibo.lahei_and_shoucang_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+		
 		page_now_list(result.data.count,result.data.p,page_limit);
 	}	
 }
 
 
 var create_now_html = function ($data) {
+	//console.log($data);
 	
 	var html = '';
 	html += '<tr>';
@@ -240,7 +255,7 @@ var create_now_html = function ($data) {
 	html += '<td class="t8">'+$data.week_order_num+'</td>';
 	html += '<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>';
 	html += '<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
-	html += '<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>';
+	html += '<td class="last"><div class="ctrl"><span>详情</span><span class="lahei_and_shoucang" data-or_type="1" data-weibo_id="'+$data.id+'"  >收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weibo_id="'+$data.id+'">拉黑</span></div></td>';
   	html += '</tr>';
   	return html;
 } 

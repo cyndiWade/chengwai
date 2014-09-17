@@ -34,6 +34,8 @@ Weibo.prototype.init = function () {
 	
 	this.search = $('#search');				//search按钮
 	this.search_account = $('.search_account');		//搜索的值
+	
+	this.lahei_and_shoucang = $('.lahei_and_shoucang');
 }
 
 
@@ -431,6 +433,34 @@ Weibo.prototype.get_search_account = function () {
 	} else {
 		return false;
 	}
+}
+
+
+//拉黑收藏功能
+Weibo.prototype.lahei_and_shoucang_fn = function ($urL) {
+	var _father_this = this;
+	_father_this.init();
+	_father_this.lahei_and_shoucang.click(function () {
+		var _this = $(this);
+		var post_data = {
+			'pt_type' :system_info.pt_type,	
+			'is_celeprity' :system_info.is_celeprity,
+			'or_type' : _this.data('or_type'),
+			'weibo_id' : _this.data('weibo_id')
+		};
+		var result = System.ajax_post_setup($urL,post_data,'JSON');
+		
+		if (result.status == 1) {
+			alert(result.msg)
+		} else {
+			alert(result.msg)
+		}
+	
+	});
+	
+	
+
+	
 }
 
 
