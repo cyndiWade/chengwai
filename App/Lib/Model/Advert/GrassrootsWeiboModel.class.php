@@ -32,25 +32,47 @@
 					//分页 p
 					$p = $addvalue['p'];
 					$p_limit = ($p - 1) * 10;
-					$returnList = $this->setSql($p_limit,$limit,$where,$type,$id,0);
+					$returnList = $this->setSql($addvalue,$p_limit,$limit,$where,$type,$id,0);
 					return $new_list = array('list'=>$returnList['list'],'p'=>$p,'count'=>$returnList['count']);
 				}else{
-					$returnList = $this->setSql(0,$limit,$where,$type,$id,0);
+					$returnList = $this->setSql($addvalue,0,$limit,$where,$type,$id,0);
 					return $new_list = array('list'=>$returnList['list'],'p'=>1,'count'=>$returnList['count']);
 				}
 			}
 		}
 
 		//sql查询	
-		private function setSql($now_page,$limit,$where,$type,$id,$is_celebrity)
+		private function setSql($addvalue,$now_page,$limit,$where,$type,$id,$is_celebrity)
 		{
 			//查询出该用户拉黑的名单
 			$Blackorcollection = D('BlackorcollectionWeibo');
-			$weiboId_array = $Blackorcollection->getAdvertUser($type,$id,$is_celebrity,0);
-			//去除黑名单的weibo_id
-			if(!empty($weiboId_array))
+			if($addvalue['ckhmd']==1)
 			{
-				$where['w.weibo_id'] = array('NOT IN',$weiboId_array);
+				$weiboId_array = $Blackorcollection->getAdvertUser($type,$id,$is_celebrity,0);
+				//去除黑名单的weibo_id
+				if(!empty($weiboId_array))
+				{
+					$where['w.weibo_id'] = array('IN',$weiboId_array);
+				}else{
+					return false;
+				}
+			}else if($addvalue['cksc']==1)
+			{
+				$weiboId_array = $Blackorcollection->getAdvertUser($type,$id,$is_celebrity,1);
+				//去除黑名单的weibo_id
+				if(!empty($weiboId_array))
+				{
+					$where['w.weibo_id'] = array('IN',$weiboId_array);
+				}else{
+					return false;
+				}
+			}else{
+				$weiboId_array = $Blackorcollection->getAdvertUser($type,$id,$is_celebrity,0);
+				//去除黑名单的weibo_id
+				if(!empty($weiboId_array))
+				{
+					$where['w.weibo_id'] = array('NOT IN',$weiboId_array);
+				}
 			}
 			$count = $this->where($where)
 			->table('app_grassroots_weibo as w')

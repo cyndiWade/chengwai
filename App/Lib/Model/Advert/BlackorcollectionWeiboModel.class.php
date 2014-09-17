@@ -27,7 +27,15 @@
 				'user_id'=>$user_id,
 				'weibo_id'=>$array['weibo_id']
 			);
-			return $this->add($addDate);
+			$count = $this->where($addDate)->count();
+			if($count==0)
+			{
+				$this->add($addDate);
+				return true;
+			}else{
+				return false;
+			}
+			
 		}
 
 	}

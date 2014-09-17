@@ -143,14 +143,14 @@ class WeiboAction extends AdvertBaseAction {
 			{
 				parent::callback(1,'拉入黑名单成功!','ok');
 			}else{
-				parent::callback(1,'收藏成功!','no');
+				parent::callback(1,'收藏成功!','ok');
 			}
 		}else{
 			if($_POST['or_type']==0)
 			{
-				parent::callback(0,'拉入黑名单失败!','ok');
+				parent::callback(0,'拉入黑名单失败,数据已存在!','no');
 			}else{
-				parent::callback(0,'收藏失败!','no');
+				parent::callback(0,'收藏失败,数据已存在!','no');
 			}
 		}
 		
