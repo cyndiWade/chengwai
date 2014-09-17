@@ -104,7 +104,7 @@
 	</div>
 	
 	<div class="orderbox l">
-		<b class="total fr">共11178个</b><b class="total fr">200页</b>
+		<b class="total fr">共<span id="all_data_num"></span>个</b><b class="total fr"><span id="all_page_num"></span>页</b>
 		<select class="fl"><option>选择排序方式</option></select><span class="orderspan orderspan-select fl">默认排序</span><span class="orderspan">粉丝量</span><span class="orderspan">相关性</span><span class="orderspan">月订单</span>
 	</div>
 	<div class="col01-weibo l">
@@ -129,7 +129,7 @@
 			</tbody>
 		</table>
 		<div class="weibo-bot l">
-			<div class="page-wb fr demo_page">
+			<div class="page-wb fr system_page">
 
 			</div>
 			<div class="controlbox fl">
@@ -162,25 +162,21 @@
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 
+<script type="text/javascript">
+
+var system_info = {
+	pt_type:{$view_data.pt_info.pt_type},	//平台类型1新浪、2腾讯
+	is_celeprity : 0,	//是否是名人1是、0不是
+	page_limit : 10,	//每页条数
+}
+</script>
+
 <script src="{$global_tpl_view.Module_Resource_Path}caogen_weibo.js"></script>
 <script src="{$global_tpl_view.Group_Resource_Path}js/page.js"></script>
 
 <script type="text/javascript">
 
 var _tbody = $('.tbody');
-var system_info = {
-	pt_type:{$view_data.pt_info.pt_type},	//平台类型1新浪、2腾讯
-	is_celeprity : 0	//是否是名人1是、0不是
-}
-
-/**
- pt_type
-is_celeprity
-or_type
-weibo_id
-
- */
-
 //公共JS方法。每个事件都要触发这个函数
 var public_post_fn = function (obj_data) {
 	var post_data = {};
@@ -224,15 +220,18 @@ var public_post_fn = function (obj_data) {
 			_tbody.append(create_now_html(result.data.list[key]));
 		}
 		
+		//拉黑和收藏功能
 		Weibo.lahei_and_shoucang_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+
+		Weibo.dataNum_And_PageNum(result.data.count);
 		
-		page_now_list(result.data.count,result.data.p,page_limit);
-	}	
+		//更新page
+		page_now_list(result.data.count,result.data.p,system_info.page_limit);
+	} 
 }
 
 
 var create_now_html = function ($data) {
-	//console.log($data);
 	
 	var html = '';
 	html += '<tr>';

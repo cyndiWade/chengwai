@@ -1,5 +1,5 @@
 //分页开始
-var page_limit = 10;
+var page_limit = system_info.page_limit;
 var ipt_ojb;
 //绑定对象
 var init_obj = function () {
@@ -15,7 +15,7 @@ function page_now_list(number,start,limit)
 {
 
 	//执行之间进行清空
-	$('.demo_page').empty();
+	$('.system_page').empty();
 	var page_now_number = number;
 	//开始当前页
 	var page_now_start = start;
@@ -196,7 +196,7 @@ function page_now_list(number,start,limit)
 		str += '<div class="count fl"><i class="fl">到第</i><input type="text" name="tiaozhuan" class="text fl now_pages"/><i class="fl">页</i>';
 		str += '<span '+number_all+' class="aok fl start_select">前往</span>';
 		str += '</div>';
-		$('.demo_page').append(str);
+		$('.system_page').append(str);
 	}
 	init_obj();
 	live_this();

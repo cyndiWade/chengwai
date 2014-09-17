@@ -36,6 +36,9 @@ Weibo.prototype.init = function () {
 	this.search_account = $('.search_account');		//搜索的值
 	
 	this.lahei_and_shoucang = $('.lahei_and_shoucang');
+	
+	this.all_data_num = $('#all_data_num');	//所有数据
+	this.all_page_num = $('#all_page_num');	//所有分页数
 }
 
 
@@ -451,18 +454,22 @@ Weibo.prototype.lahei_and_shoucang_fn = function ($urL) {
 		var result = System.ajax_post_setup($urL,post_data,'JSON');
 		
 		if (result.status == 1) {
-			alert(result.msg)
+			alert(result.msg);
+			public_post_fn({});
 		} else {
-			alert(result.msg)
+			alert(result.msg);
 		}
 	
 	});
-	
-	
-
-	
 }
 
+//更新分页记录条数，和页数
+Weibo.prototype.dataNum_And_PageNum = function (data) {
+	var _father_this = this;
+	
+	_father_this.all_data_num.text(data);
+	_father_this.all_page_num.text(Math.ceil(data / system_info.page_limit));
+}
 
 //执行
 Weibo.prototype.run = function () {
