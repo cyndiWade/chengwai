@@ -79,7 +79,7 @@
 				$wheres['w.fans_num'] = $this->getLeftRightstr($addslArray['fans_num'],'-');
 			}
 			//价格区间
-			if($addslArray['zfjg_type']!='')
+			if($addslArray['zfjg_type']!='' && $addslArray['jg']!='')
 			{
 				switch ($addslArray['zfjg_type']) {
 					case 1:
