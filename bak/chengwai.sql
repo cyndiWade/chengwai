@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2014 年 09 月 14 日 00:10
+-- 生成日期: 2014 年 09 月 17 日 16:53
 -- 服务器版本: 5.1.73
 -- PHP 版本: 5.3.3
 
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `app_account_news` (
 CREATE TABLE IF NOT EXISTS `app_account_weibo` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `users_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属人',
-  `big_type` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '大类型：1名人/媒体、2草根、3朋友圈红人',
+  `is_celebrity` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '1是名人，0是草根',
   `pt_type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '媒体账号类型(1新浪、2腾讯)',
   `account_name` varchar(50) NOT NULL DEFAULT '' COMMENT '账号名',
   `fans_num` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '粉丝数量',
@@ -84,7 +84,31 @@ CREATE TABLE IF NOT EXISTS `app_account_weibo` (
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
   `is_del` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='新浪、腾讯微博账号' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='新浪、腾讯微博账号' AUTO_INCREMENT=19 ;
+
+--
+-- 转存表中的数据 `app_account_weibo`
+--
+
+INSERT INTO `app_account_weibo` (`id`, `users_id`, `is_celebrity`, `pt_type`, `account_name`, `fans_num`, `yg_zhuanfa`, `yg_zhifa`, `rg_zhuanfa`, `rg_zhifa`, `dj_money`, `week_order_num`, `month_order_nub`, `audit_status`, `receiving_status`, `putaway_status`, `tmp_receiving_status`, `is_yg_status`, `receiving_num_status`, `receiving_num`, `url_status`, `trusteeship_status`, `integral`, `create_time`, `status`, `is_del`) VALUES
+(1, 9, 0, 1, '__猪十八', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(2, 9, 0, 1, '__张玮林', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(3, 9, 0, 1, '__张玮林1', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(4, 9, 0, 1, '__张玮林2', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5, 9, 0, 1, '__张玮林3', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(6, 9, 0, 1, '__张玮林4', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(7, 9, 0, 1, '__张玮林5', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(8, 9, 0, 1, '__张玮林6', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(9, 9, 0, 1, '__张玮林7', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(10, 9, 0, 1, '__张玮林8', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(11, 9, 0, 1, '__张玮林9', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(12, 9, 0, 1, '__朱晨聪1', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(13, 9, 0, 1, '__朱晨聪2', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(14, 9, 0, 1, '__朱晨聪3', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(15, 9, 0, 1, '__朱晨聪4', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(16, 9, 0, 1, '__朱晨聪5', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(17, 9, 0, 1, '__朱晨聪6', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(18, 9, 0, 1, '__朱晨聪7', 1000, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -115,7 +139,22 @@ CREATE TABLE IF NOT EXISTS `app_account_weixin` (
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
   `is_del` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信账号表' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='微信账号表' AUTO_INCREMENT=2 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `app_blackorcollection_weibo`
+--
+
+CREATE TABLE IF NOT EXISTS `app_blackorcollection_weibo` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `pt_type` tinyint(6) NOT NULL COMMENT '1是新浪 2是腾讯',
+  `is_celeprity` tinyint(6) NOT NULL COMMENT '1是名人 0是草根',
+  `or` tinyint(6) NOT NULL COMMENT '收藏为1 黑名单为0',
+  `weibo_id` int(10) NOT NULL COMMENT '微博ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收藏或者黑名单' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -132,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `app_category_tags` (
   `show_status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否显示',
   `is_del` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态：0正常、1删除',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='类别标签表' AUTO_INCREMENT=420 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='类别标签表' AUTO_INCREMENT=426 ;
 
 --
 -- 转存表中的数据 `app_category_tags`
@@ -427,47 +466,45 @@ INSERT INTO `app_category_tags` (`id`, `parent_id`, `category`, `title`, `val`, 
 (297, 293, 0, '粉丝量', '', 1, 0),
 (298, 293, 0, '粉丝性别', '', 1, 0),
 (299, 295, 0, '不限', '', 1, 0),
-(300, 295, 0, '娱乐', '', 1, 0),
-(301, 295, 0, '音乐', '', 1, 0),
-(302, 295, 0, '电影', '', 1, 0),
-(303, 295, 0, '美食', '', 1, 0),
-(304, 295, 0, '粮油生鲜', '', 1, 0),
-(305, 295, 0, '休闲', '', 1, 0),
-(306, 295, 0, '星座命理', '', 1, 0),
-(307, 295, 0, '星座', '', 1, 0),
-(308, 295, 0, '时尚', '', 1, 0),
-(309, 295, 0, '服装箱包', '', 1, 0),
-(310, 295, 0, '服装', '', 1, 0),
-(311, 295, 0, '美容美体', '', 1, 0),
-(312, 295, 0, '美容', '', 1, 0),
-(313, 295, 0, '家居生活', '', 1, 0),
-(314, 295, 0, '情感', '', 1, 0),
-(315, 295, 0, '资讯', '', 1, 0),
-(316, 295, 0, '时政新闻', '', 1, 0),
-(317, 295, 0, '社会新闻', '', 1, 0),
-(318, 295, 0, '文艺', '', 1, 0),
-(319, 295, 0, '购物', '', 1, 0),
+(300, 295, 0, '娱乐', '1', 1, 0),
+(301, 295, 0, '音乐', '2', 1, 0),
+(302, 295, 0, '电影', '3', 1, 0),
+(303, 295, 0, '美食', '4', 1, 0),
+(304, 295, 0, '粮油生鲜', '5', 1, 0),
+(305, 295, 0, '休闲', '6', 1, 0),
+(306, 295, 0, '星座命理', '7', 1, 0),
+(307, 295, 0, '星座', '8', 1, 0),
+(308, 295, 0, '时尚', '9', 1, 0),
+(309, 295, 0, '服装箱包', '10', 1, 0),
+(310, 295, 0, '服装', '11', 1, 0),
+(311, 295, 0, '美容美体', '12', 1, 0),
+(312, 295, 0, '美容', '13', 1, 0),
+(313, 295, 0, '家居生活', '14', 1, 0),
+(314, 295, 0, '情感', '15', 1, 0),
+(315, 295, 0, '资讯', '16', 1, 0),
+(316, 295, 0, '时政新闻', '17', 1, 0),
+(317, 295, 0, '社会新闻', '18', 1, 0),
+(318, 295, 0, '文艺', '19', 1, 0),
+(319, 295, 0, '购物', '20', 1, 0),
 (320, 296, 0, '不限', '', 1, 0),
-(321, 296, 0, '20元以下', '', 1, 0),
-(322, 296, 0, '20-50元', '', 1, 0),
-(323, 296, 0, '50-100元', '', 1, 0),
-(324, 296, 0, '100-200元', '', 1, 0),
-(325, 296, 0, '200-500元', '', 1, 0),
-(326, 296, 0, '500-1000元', '', 1, 0),
-(327, 296, 0, '1000元以上', '', 1, 0),
+(321, 296, 0, '50-100元', '50-100', 1, 0),
+(322, 296, 0, '100-200元', '100-200', 1, 0),
+(323, 296, 0, '200-500元', '200-500', 1, 0),
+(324, 296, 0, '500-100元', '500-1000', 1, 0),
+(325, 296, 0, '1000元以上', '1000-', 1, 0),
 (328, 297, 0, '不限', '', 1, 0),
-(329, 297, 0, '1万以下', '', 1, 0),
-(330, 297, 0, '1-5万', '', 1, 0),
-(331, 297, 0, '5-10万', '', 1, 0),
-(332, 297, 0, '10-20万', '', 1, 0),
-(333, 297, 0, '20-40万', '', 1, 0),
-(334, 297, 0, '40-80万', '', 1, 0),
-(335, 297, 0, '80-120万', '', 1, 0),
-(336, 297, 0, '120-200万', '', 1, 0),
-(337, 297, 0, '200万以上', '', 1, 0),
+(329, 297, 0, '1万以下', '0-9999', 1, 0),
+(330, 297, 0, '1-5万', '10000-50000', 1, 0),
+(331, 297, 0, '5-10万', '50000-100000', 1, 0),
+(332, 297, 0, '10-20万', '100000-200000', 1, 0),
+(333, 297, 0, '20-40万', '200000-400000', 1, 0),
+(334, 297, 0, '40-80万', '400000-800000', 1, 0),
+(335, 297, 0, '80-120万', '800000-1200000', 1, 0),
+(336, 297, 0, '120-200万', '1200000-2000000', 1, 0),
+(337, 297, 0, '200万以上', '2000000-', 1, 0),
 (338, 298, 0, '不限', '', 1, 0),
-(339, 298, 0, '男女', '', 1, 0),
-(340, 298, 0, '泛', '', 1, 0),
+(339, 298, 0, '男', '1', 1, 0),
+(340, 298, 0, '女', '2', 1, 0),
 (341, 293, 0, '高级查询', '', 1, 0),
 (342, 341, 0, '转评值', '', 1, 0),
 (343, 341, 0, '拒单率', '', 1, 0),
@@ -541,7 +578,34 @@ INSERT INTO `app_category_tags` (`id`, `parent_id`, `category`, `title`, `val`, 
 (416, 364, 0, '账号地域分布', '', 1, 0),
 (417, 364, 0, '全部分类', '', 1, 0),
 (418, 364, 0, '是否可接特殊活动', '', 1, 0),
-(419, 364, 0, '上架时间', '', 1, 0);
+(419, 364, 0, '上架时间', '', 1, 0),
+(420, 298, 0, '泛', '3', 1, 0),
+(421, 293, 0, '转发价格分类', '', 1, 0),
+(422, 421, 0, '硬广转发报价', '1', 1, 0),
+(423, 421, 0, '硬广直发报价', '2', 1, 0),
+(424, 421, 0, '软广转发报价', '3', 1, 0),
+(425, 421, 0, '软广直发报价', '4', 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `app_celeprityindex_weibo`
+--
+
+CREATE TABLE IF NOT EXISTS `app_celeprityindex_weibo` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `occupation` int(10) DEFAULT NULL COMMENT '名人职业',
+  `field` int(10) DEFAULT NULL COMMENT '媒体领域',
+  `price` int(10) DEFAULT NULL COMMENT '价格',
+  `cirymedia` int(10) DEFAULT NULL COMMENT '地方名人/媒体',
+  `interest` int(10) DEFAULT NULL COMMENT '兴趣标签',
+  `cmcategoris` tinyint(4) DEFAULT NULL COMMENT '名人/媒体类别 不限0 名人1 媒体',
+  `coordination` tinyint(4) DEFAULT NULL COMMENT '配合度 不限0 高1 中2 低3',
+  `fansnumber` int(10) NOT NULL DEFAULT '0' COMMENT '粉丝数',
+  `originality` tinyint(4) DEFAULT NULL COMMENT '是否支持原创 不限0 是1 否2',
+  `weibo_id` int(10) NOT NULL COMMENT '微博ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -562,24 +626,6 @@ CREATE TABLE IF NOT EXISTS `app_evaluate` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `app_fastindex_weibo`
---
-
-CREATE TABLE IF NOT EXISTS `app_fastindex_weibo` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `common` smallint(6) DEFAULT NULL COMMENT '常见分类',
-  `price_low` int(10) unsigned DEFAULT NULL COMMENT '价格区间低',
-  `price_height` int(10) unsigned DEFAULT NULL COMMENT '价格区间高',
-  `fans_low` int(10) unsigned DEFAULT NULL COMMENT '粉丝数量区间低',
-  `fans_height` int(10) unsigned DEFAULT NULL COMMENT '价格区间高',
-  `sex` tinyint(1) unsigned DEFAULT NULL COMMENT '用户类型:1男，0女，2中性',
-  `weibo_id` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `app_fund`
 --
 
@@ -594,6 +640,50 @@ CREATE TABLE IF NOT EXISTS `app_fund` (
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资金表（资金总值存于会员表）' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `app_grassroots_weibo`
+--
+
+CREATE TABLE IF NOT EXISTS `app_grassroots_weibo` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `common` smallint(6) DEFAULT NULL COMMENT '常见分类',
+  `fans_num` int(10) unsigned DEFAULT NULL COMMENT '粉丝数量',
+  `yg_zhuanfa` int(10) unsigned DEFAULT NULL COMMENT '价格区间低',
+  `yg_zhifa` int(10) unsigned DEFAULT NULL COMMENT '价格区间高',
+  `rg_zhuanfa` int(10) unsigned DEFAULT NULL COMMENT '粉丝数量区间低',
+  `rg_zhifa` int(10) unsigned DEFAULT NULL COMMENT '价格区间高',
+  `sex` tinyint(1) unsigned DEFAULT NULL COMMENT '用户类型:1男，0女，2中性',
+  `recommend` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否推荐 1为推荐0 为不推荐',
+  `weibo_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+
+--
+-- 转存表中的数据 `app_grassroots_weibo`
+--
+
+INSERT INTO `app_grassroots_weibo` (`id`, `common`, `fans_num`, `yg_zhuanfa`, `yg_zhifa`, `rg_zhuanfa`, `rg_zhifa`, `sex`, `recommend`, `weibo_id`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2),
+(3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 3),
+(4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 4),
+(5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 5),
+(6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 6),
+(7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 7),
+(8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 8),
+(9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 9),
+(10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 10),
+(11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 11),
+(12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 12),
+(13, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 13),
+(14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 14),
+(15, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 15),
+(16, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 16),
+(17, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 17),
+(18, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 18);
 
 -- --------------------------------------------------------
 
@@ -4355,16 +4445,19 @@ CREATE TABLE IF NOT EXISTS `app_users` (
   `is_del` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除，0正常，1删除',
   PRIMARY KEY (`id`),
   KEY `idx_ac_st` (`account`,`is_del`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户账号表' AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户账号表' AUTO_INCREMENT=12 ;
 
 --
 -- 转存表中的数据 `app_users`
 --
 
 INSERT INTO `app_users` (`id`, `account`, `nickname`, `password`, `last_login_time`, `last_login_ip`, `login_count`, `create_time`, `update_time`, `type`, `status`, `is_del`) VALUES
-(1, 'admin', '管理员', 'e10adc3949ba59abbe56e057f20f883e', 1410623299, '115.173.210.249', 408, 1376561926, 1376561926, 0, 0, 0),
+(1, 'admin', '管理员', 'e10adc3949ba59abbe56e057f20f883e', 1410921040, '180.166.126.90', 411, 1376561926, 1376561926, 0, 0, 0),
 (2, 'media', '媒体用户', 'e10adc3949ba59abbe56e057f20f883e', 1410343595, '180.166.126.90', 407, 1376561926, 1376561926, 1, 0, 0),
-(3, 'advert', '广告用户', 'e10adc3949ba59abbe56e057f20f883e', 1410613882, '115.173.210.249', 410, 1376561926, 1376561926, 2, 0, 0);
+(3, 'advert', '广告用户', 'e10adc3949ba59abbe56e057f20f883e', 1410747592, '180.166.126.90', 412, 1376561926, 1376561926, 2, 0, 0),
+(9, 'zhuchencong', '', '39ee5c8419a613a768d38c196bbd0ee5', 1410655533, '127.0.0.1', 1, 1410655461, 1410655461, 2, 0, 0),
+(10, 'cyndi123456', '', 'e10adc3949ba59abbe56e057f20f883e', 1410937247, '180.166.126.90', 13, 1410789280, 1410789280, 2, 0, 0),
+(11, 'bumtime', '', 'a120ff5915b6ad74ce827f7aaa88a92f', 1410874658, '14.145.132.169', 0, 1410874658, 1410874658, 2, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -4392,14 +4485,17 @@ CREATE TABLE IF NOT EXISTS `app_user_advertisement` (
   `money` decimal(9,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '广告主余额',
   `freeze_funds` decimal(9,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '冻结资金(*)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='广告主信息表' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='广告主信息表' AUTO_INCREMENT=5 ;
 
 --
 -- 转存表中的数据 `app_user_advertisement`
 --
 
 INSERT INTO `app_user_advertisement` (`id`, `users_id`, `company_short`, `company_name`, `company_websize`, `company_address`, `company_weibo`, `company_info`, `contact_people`, `industry_id`, `contact_position`, `contact_email`, `contact_phone`, `contact_tel`, `contact_qq`, `contact_msn`, `money`, `freeze_funds`) VALUES
-(1, 3, '', 'qeqwewqeq', 'qwe', 'weqwe', 'qweqw', 'qqweqweqeqewe4', '123132a', 0, '', '12312@qq.com', '13761951734', 'qweqwe', '12412414', 'qwe1232', '0.00', '0.00');
+(1, 3, '', 'qeqwewqeq', 'qwe', 'weqwe', 'qweqw', 'qqweqweqeqewe4', '123132a', 0, '', '12312@qq.com', '13761951734', 'qweqwe', '12412414', 'qwe1232', '0.00', '0.00'),
+(2, 9, '', '', '', '', '', '', '', 0, '', '', '13472798110', '', '', '', '0.00', '0.00'),
+(3, 10, '', '公司全称', '公司网站地址', '公司地址', '公司官方微博', '公司简介公司简介公司简介公司简介公司简介公司简介', '联系人姓名', 0, '', 'ucd@126.com', '15900462077', '固定电话', '2312312', '12313', '0.00', '0.00'),
+(4, 11, '', '', '', '', '', '', '', 0, '', '', '15975318093', '', '', '', '0.00', '0.00');
 
 -- --------------------------------------------------------
 
@@ -4442,7 +4538,7 @@ CREATE TABLE IF NOT EXISTS `app_verify` (
   KEY `telephone` (`telephone`),
   KEY `telephone_2` (`telephone`),
   KEY `telephone_3` (`telephone`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='短信发送表' AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='短信发送表' AUTO_INCREMENT=17 ;
 
 --
 -- 转存表中的数据 `app_verify`
@@ -4459,7 +4555,12 @@ INSERT INTO `app_verify` (`id`, `telephone`, `verify`, `expired`, `type`, `statu
 (8, '13761951734', '759568', 1410591279, 1, 0),
 (9, '13761951734', '603838', 1410614324, 2, 0),
 (10, '13761951734', '533747', 1410614402, 2, 0),
-(11, '13761951734', '424160', 1410614405, 2, 0);
+(11, '13761951734', '424160', 1410614405, 2, 0),
+(12, '13472798110', '883035', 1410656018, 2, 1),
+(13, '15900462077', '347192', 1410789849, 2, 1),
+(14, '18011995189', '389817', 1410874984, 2, 0),
+(15, '18011995189', '473218', 1410875009, 2, 0),
+(16, '15975318093', '848288', 1410875133, 2, 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

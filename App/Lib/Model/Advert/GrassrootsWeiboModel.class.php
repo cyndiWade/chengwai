@@ -4,7 +4,7 @@
 	class GrassrootsWeiboModel extends AdvertBaseModel
 	{
 
-		//接受参数 返回草根信息数据 $type区分新浪 1 或者腾讯 0
+		//接受参数 返回草根信息数据 $type区分新浪 1 或者腾讯 2
 		public function getPostArray($array,$type)
 		{
 			
@@ -16,12 +16,12 @@
 				{
 					$addvalue[$key] = addslashes($value);
 				}
+				//组合生成查询SQL
+				$where = $this->getWhere($addvalue);
 				//草根表 微博人类型 1 是新浪 2是腾讯
 				$where['b.pt_type'] = $type;
 				//为草根 传参 0
 				$where['b.is_celebrity'] = 0;
-				//组合生成查询SQL
-				$where = $this->getWhere($addvalue);
 				//判断是分页提交还是分栏提交
 				$limit = 10;
 				//如果有分页参数
