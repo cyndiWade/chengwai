@@ -29,11 +29,17 @@
 <div class="area01-memwb area01-memmr l">
 	
 	<!-- 名人微博3级导航-->
-	<include file="Public:weibo_sidebar_celebrity_three" />
+	<!-- 微博名人三级导航 -->
+	<ul class="wbtab l">
+		<li class="select three_sidebar_type" data-field="all" data-val=""><a class="mbmr" href="javascript:;">全部名人/媒体 </a></li>
+		<li class="three_sidebar_type" data-field="zlhzmr_mt" data-val="1"><a class="hzr" href="javascript:;">战略合作名人/媒体</a></li>
+		<li class="three_sidebar_type" data-field="cksc" data-val="1"><a class="cksc" href="javascript:;">查看收藏</a></li>
+		<li class="three_sidebar_type" data-field="ckhmd" data-val="1"><a class="hmd" href="javascript:;">查看黑名单</a></li>
+	</ul>
 	
 	<div class="searchbox searchbox-mr fl">
 		<div class="mid-search l">
-			<input type="text" class="seatext" value="请输名人/媒体名、账号名或关键字，若搜索多组关键字请用空格隔开例：李亚鹏或一号立井" /><input type="submit" class="btn seabtn" value="搜索" />
+			<input type="text" class="seatext search_account" data-field="account" data-ischeck="0" value="" placeholder="请输名人/媒体名、账号名或关键字，若搜索多组关键字请用空格隔开例：李亚鹏或一号立井"/><input type="submit" class="btn seabtn" id="search" value="搜索" />
 		</div>
 	</div>
 	<div class="catebox l">
@@ -69,8 +75,8 @@
 					</volist>
 				</div>
 				<div class="part03-price fl">
-					<input type="text" class="text" /><i>-</i><input type="text" class="text" /><i>元</i>
-				</div><span class="btn okbtn fl">确定</span></td>
+					<input type="text" class="text ipt_jiage_start" /><i>-</i><input type="text" class="text ipt_jiage_over" /><i>元</i>
+				</div><span class="btn okbtn fl btn_jiage_yes" data-tag_class="jg_tags">确定</span></td>
 		  </tr>
 		  <tr>
 			<td class="t1">地方名人/媒体：</td>
@@ -82,8 +88,8 @@
 				</div>
 				<div class="part01-citysel fl">
 					<select class="fl region_left"></select>
-					<select class="fl region_right"></select>
-				</div><span class="btn okbtn fl">确定</span></td>
+					<select class="fl region_right" data-tag_class="dfmr_mt_tags" data-classify="地方名人/媒体" data-repetition="no"  data-field="dfmr_mt"></select>
+				</div><span class="btn okbtn fl btn_confirm_dqmr">确定</span></td>
 		  </tr>
 		  <tr>
 			<td class="t1">兴趣标签：</td>
@@ -100,171 +106,33 @@
 		  </tr>
 		</table>
 		<div class="resultbox tc l">
-			<div class="trash fr">清空选择筛选条件 </div>
+			<div class="trash fr clear_tags">清空选择筛选条件 </div>
 			<span class="span-ok fl">已选择 ：</span>
-			<ul class="grp fl">
-				<li><strong>平台 > <b>新浪</b></strong><em class="del"></em></li>
+			<ul class="grp fl select_tags_vessel">
+				
 			</ul>
 		</div>
+
 	</div>
-	<div class="orderbox l">
-		<b class="total fr">共11178个</b><b class="total fr">200页</b>
-		<span class="orderspan orderspan-select fl">默认排序</span><span class="ordermt fl">粉丝度</span><span class="ordermt fl">配合度</span>
-	</div>
-	<div class="col01-mr l">
-		<div class="box01-cele fl">
-			<input type="checkbox" class="check fl" />
-			<div class="part01-cele fl">
-				<img src="{$global_tpl_view.Group_Resource_Path}images/cer_img01.gif" />
-				<div class="ctrl">
-					<span>收藏</span><span>拉黑</span>
-				</div>
-			</div>
-			<div class="part02-cele fl">
-				<div class="grp01-cele l">
-					<span class="mrdetail cur fr">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl">苏花</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>
-				</div>
-				<div class="grp02-cele l">
-					<ul class="arr01-cele l">
-						<li><span class="blue">职业：</span>歌手 <em>影视演员</em></li>
-						<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>
-						<li><span class="blue">参考报价：</span><b class="red">41万</b></li>
-						<li><span class="blue">配合度：</span>高</li>
-					</ul>
-					<div class="arr02-cele l">
-						<div class="tem01-cele fr">
-							<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-						<div class="tem02-cele fl">
-							影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-					</div>
-				</div>
-			</div>
+		<div class="orderbox l">
+			<b class="total fr">共<span id="all_data_num"></span>个</b><b class="total fr"><span id="all_page_num"></span>页</b>
+			<span class="orderspan orderspan-select fl">默认排序</span><span class="ordermt fl">粉丝度</span><span class="ordermt fl">配合度</span>
 		</div>
-		<div class="box01-cele fl">
-			<input type="checkbox" class="check fl" />
-			<div class="part01-cele fl">
-				<img src="{$global_tpl_view.Group_Resource_Path}images/cer_img01.gif" />
-				<div class="ctrl">
-					<span>收藏</span><span>拉黑</span>
-				</div>
+		<div class="col01-mr l" >
+		
+			<div id="list_content">
+			
+			
 			</div>
-			<div class="part02-cele fl">
-				<div class="grp01-cele l">
-					<span class="mrdetail cur fr">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl">苏花</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>
-				</div>
-				<div class="grp02-cele l">
-					<ul class="arr01-cele l">
-						<li><span class="blue">职业：</span>歌手 <em>影视演员</em></li>
-						<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>
-						<li><span class="blue">参考报价：</span><b class="red">41万</b></li>
-						<li><span class="blue">配合度：</span>高</li>
-					</ul>
-					<div class="arr02-cele l">
-						<div class="tem01-cele fr">
-							<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-						<div class="tem02-cele fl">
-							影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-					</div>
-				</div>
-			</div>
+				
 		</div>
-		<div class="box01-cele fl">
-			<input type="checkbox" class="check fl" />
-			<div class="part01-cele fl">
-				<img src="{$global_tpl_view.Group_Resource_Path}images/cer_img01.gif" />
-				<div class="ctrl">
-					<span>收藏</span><span>拉黑</span>
-				</div>
-			</div>
-			<div class="part02-cele fl">
-				<div class="grp01-cele l">
-					<span class="mrdetail cur fr">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl">苏花</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>
-				</div>
-				<div class="grp02-cele l">
-					<ul class="arr01-cele l">
-						<li><span class="blue">职业：</span>歌手 <em>影视演员</em></li>
-						<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>
-						<li><span class="blue">参考报价：</span><b class="red">41万</b></li>
-						<li><span class="blue">配合度：</span>高</li>
-					</ul>
-					<div class="arr02-cele l">
-						<div class="tem01-cele fr">
-							<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-						<div class="tem02-cele fl">
-							影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-					</div>
-				</div>
-			</div>
+		
 		</div>
-		<div class="box01-cele fl">
-			<input type="checkbox" class="check fl" />
-			<div class="part01-cele fl">
-				<img src="{$global_tpl_view.Group_Resource_Path}images/cer_img01.gif" />
-				<div class="ctrl">
-					<span>收藏</span><span>拉黑</span>
-				</div>
-			</div>
-			<div class="part02-cele fl">
-				<div class="grp01-cele l">
-					<span class="mrdetail cur fr">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl">苏花</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>
-				</div>
-				<div class="grp02-cele l">
-					<ul class="arr01-cele l">
-						<li><span class="blue">职业：</span>歌手 <em>影视演员</em></li>
-						<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>
-						<li><span class="blue">参考报价：</span><b class="red">41万</b></li>
-						<li><span class="blue">配合度：</span>高</li>
-					</ul>
-					<div class="arr02-cele l">
-						<div class="tem01-cele fr">
-							<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-						<div class="tem02-cele fl">
-							影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="box01-cele fl">
-			<input type="checkbox" class="check fl" />
-			<div class="part01-cele fl">
-				<img src="{$global_tpl_view.Group_Resource_Path}images/cer_img01.gif" />
-				<div class="ctrl">
-					<span>收藏</span><span>拉黑</span>
-				</div>
-			</div>
-			<div class="part02-cele fl">
-				<div class="grp01-cele l">
-					<span class="mrdetail cur fr">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl">苏花</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>
-				</div>
-				<div class="grp02-cele l">
-					<ul class="arr01-cele l">
-						<li><span class="blue">职业：</span>歌手 <em>影视演员</em></li>
-						<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>
-						<li><span class="blue">参考报价：</span><b class="red">41万</b></li>
-						<li><span class="blue">配合度：</span>高</li>
-					</ul>
-					<div class="arr02-cele l">
-						<div class="tem01-cele fr">
-							<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-						<div class="tem02-cele fl">
-							影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+	
+	
 		<div class="weibo-bot l">
-			<div class="page-wb fr">
-				<a href="#" class="prev"><</a><a href="#" class="num on">1</a><a href="#" class="num">2</a><a href="#" class="num">3</a><a href="#" class="num">4</a><em>...</em><a href="#" class="num">25</a><a href="#" class="next">></a><b class="total fl">共25页</b><div class="count fl"><i class="fl">到第</i><input type="text" class="text fl" /><i class="fl">页</i><span class="aok fl">前往</span><strong class="show fl">显示<select><option>10</option></select>条</strong></div>
+			<div class="page-wb fr system_page">
+
 			</div>
 			<div class="controlbox fl">
 				<span>全选</span><span id="batch">批量添加账号</span><span>批量导出报价单</span>
@@ -341,26 +209,115 @@
 <include file="Public:bottom" />
 
 <script type="text/javascript">
-
 var system_info = {
 	pt_type:{$view_data.pt_info.pt_type},	//平台类型1新浪、2腾讯
 	is_celeprity : 1,	//是否是名人1是、0不是
 	page_limit : 10,	//每页条数
 }
+var list_content = $('#list_content');
 </script>
-
 
 <script src="{$global_tpl_view.Global_Resource_Path}Tool/Region.js"></script>
 <script src="{$global_tpl_view.Module_Resource_Path}celebrity_weibo.js"></script>
-
-
+<script src="{$global_tpl_view.Group_Resource_Path}js/page.js"></script>
 <script type="text/javascript">
-//?s=/Advert/Tool/get_Region_Data/
+
+
+//公共JS方法。每个事件都要触发这个函数
+var public_post_fn = function (obj_data) {
+	var post_data = {};
+	post_data.pt_type = system_info.pt_type;	//平台类型，1新浪、2腾讯
+	
+	//三级导航已选择数据
+	var three_sidebar_selected = Weibo.get_three_sidebar_selected();
+	for (var key in three_sidebar_selected) {
+		post_data[key] = three_sidebar_selected[key];
+	}
+
+	//获取搜索框的数据
+	var account_data = Weibo.get_search_account();
+	if (account_data != false) {
+		post_data[account_data.field] = account_data.val;
+	}
+	
+	//获取选中的标签数据
+	var tags_selected =	Weibo.get_selected_tags();	//获取选中标签数据
+	for (var field in tags_selected) {
+		post_data[field]= tags_selected[field];
+	}
+	
+
+	//获取点击后的分页数据
+	if (obj_data.this_number != undefined) {
+		post_data.p = obj_data.this_number;
+	}
+
+	//console.log(post_data)
+	
+	//AJAX获取数据
+	var result = System.ajax_post_setup('{:U('/Advert/Weibo/get_grassroots_list')}',post_data,'JSON');
+	
+	if (result.status == 1) {
+		list_content.empty();
+		for (var key in result.data.list) {
+			list_content.append(create_now_html(result.data.list[key]));
+		}
+		
+		//拉黑和收藏功能
+		Weibo.lahei_and_shoucang_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+
+		Weibo.dataNum_And_PageNum(result.data.count);
+		
+		//更新page
+		page_now_list(result.data.count,result.data.p,system_info.page_limit);
+	} 
+}
+
+
+
+var create_now_html = function ($data) {
+	
+	var html = '';
+	html += '<div class="box01-cele fl">';
+	html += '<input type="checkbox" class="check fl" />';
+	html += '<div class="part01-cele fl">';
+	html += '<img src="images/cer_img01.gif" />';
+	html += '<div class="ctrl">';
+	html += '<span>收藏</span><span>拉黑</span>';
+	html += '</div>';
+	html += '</div>';
+	html += '<div class="part02-cele fl">';
+	html += '<div class="grp01-cele l">';
+	html += '<span class="mrdetail cur fr">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl">苏花</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>';
+	html += '</div>';
+	html += '<div class="grp02-cele l">';
+	html += '<ul class="arr01-cele l">';
+	html += '<li><span class="blue">职业：</span>歌手 <em>影视演员</em></li>';
+	html += '<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>';
+	html += '<li><span class="blue">参考报价：</span><b class="red">41万</b></li>';
+	html += '<li><span class="blue">配合度：</span>高</li>';
+	html += '</ul>';
+	html += '<div class="arr02-cele l">';
+	html += '<div class="tem01-cele fr">';
+	html += '<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员';
+	html += '</div>';
+	html += '<div class="tem02-cele fl">';
+	html += '影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员';
+	html += '</div>';
+	html += '</div>';
+	html += '</div>';
+	html += '</div>';
+	html += '</div>';
+
+  	return html;
+} 
 
 //地区菜单
 var Region = new Region('{:U('/Advert/Tool/get_Region_Data')}');
 Region.init();
 Region.run();	
+
+
 
 </script>
 </body>

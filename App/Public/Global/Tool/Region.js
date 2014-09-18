@@ -11,7 +11,7 @@ Region.prototype.init = function () {
 Region.prototype.get_sf_data_fn = function () {
 	var _father_this = this;
 	_father_this.init();
-	_father_this.region_left.append('<option>请选择</option>');
+	_father_this.region_left.append('<option value="">请选择</option>');
 	//AJAX获取数据
 	var post_data = {'parent_id':1};
 	var result = System.ajax_post_setup(_father_this.post_url,post_data,'JSON');
@@ -26,7 +26,7 @@ Region.prototype.get_sf_data_fn = function () {
 Region.prototype.select_city_fn = function () {
 	var _father_this = this;
 	_father_this.init();
-	_father_this.region_right.append('<option>请选择</option>');
+	_father_this.region_right.append('<option value="">请选择</option>');
 	_father_this.region_left.change(function () {
 		var _this = $(this);
 		_father_this.region_right.empty();
