@@ -41,21 +41,58 @@
 		  <tr>
 			<td class="t1">职业/领域：</td>
 			<td class="t2">
-			<div class="box01-procsess box01-procsess-first l"><strong class="blue fl">名人职业：</strong><div class="part01-cate fl"><span>不限</span><span class="select">影视演员</span><span>歌手</span><span>模特</span><span>主持人</span><span>腾讯微博</span><span>微淘</span><span>歌手</span><span>模特</span><span>主持人</span><span>腾讯微博</span><span>微淘</span><span>歌手</span><span>模特</span><span>主持人</span><span>腾讯微博</span><span>微淘</span></div><div class="more fl" id="morecate">更多</div></div>
-			<div class="box01-procsess l"><strong class="blue fl">媒体领域：</strong><div class="part01-city fl"><span>不限</span><span class="select">创意/生活</span><span>新闻时政</span><span>IT/互联网</span><span>综合媒体</span><span>新闻时政</span><span>IT/互联网</span><span>综合媒体</span><span>新闻时政</span><span>IT/互联网</span><span>综合媒体</span><span>新闻时政</span><span>IT/互联网</span><span>综合媒体</span><span>腾讯微博</span><span>微淘</span></div><div class="more fl" id="morecity">更多</div></div>
+			<div class="box01-procsess box01-procsess-first l"><strong class="blue fl">名人职业：</strong><div class="part01-cate fl">
+				<volist name="view_data['mrzy']" id="vo">
+					<span class="mrzy_tags" data-tag_class="mrzy_tags" data-tag_id="{$vo.id}"  data-classify="名人职业" data-field="mrzy" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>
+			</div><div class="more fl" id="morecate">更多</div></div>
+			<div class="box01-procsess l"><strong class="blue fl">媒体领域：</strong><div class="part01-city fl">
+				<volist name="view_data['mtly']" id="vo">
+					<span class="mtly_tags" data-tag_class="mtly_tags" data-tag_id="{$vo.id}"  data-classify="媒体领域" data-field="mtly" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>
+			</div><div class="more fl" id="morecity">更多</div></div>
 			</td>
 		  </tr>
 		  <tr>
 			<td class="t1">价格：</td>
-			<td class="t2"><div class="part01-price fl"><select><option>参考报价</option></select></div><div class="part02-price fl"><span class="select">所有</span><span>50-100元</span><span>100-200元</span><span>200-500元</span><span>500-1000元</span><span>1000元以上</span></div><div class="part03-price fl"><input type="text" class="text" /><i>-</i><input type="text" class="text" /><i>元</i></div><span class="btn okbtn fl">确定</span></td>
+			<td class="t2">
+				<div class="part01-price fl">
+					<select id="select_ckbj_type">
+						<volist name="view_data['ckbj_type']" id="vo">
+							<option value="{$vo.val}">{$vo.title}</option>
+						</volist>
+					</select>
+				</div>
+				<div class="part02-price fl">
+					<volist name="view_data['jg']" id="vo">
+					<span class="jg_tags" data-tag_class="jg_tags"  data-tag_id="{$vo.id}" data-classify="价格" data-field="jg" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+				</div>
+				<div class="part03-price fl">
+					<input type="text" class="text" /><i>-</i><input type="text" class="text" /><i>元</i>
+				</div><span class="btn okbtn fl">确定</span></td>
 		  </tr>
 		  <tr>
 			<td class="t1">地方名人/媒体：</td>
-			<td class="t2"><div class="part02-price fl"><span class="select">不限</span><span>上海</span><span>北京</span><span>台湾</span><span>香港</span><span>广州</span></div><div class="part01-citysel fl"><select class="fl"><option>请选择</option></select><select class="fl"><option>请选择</option></select></div><span class="btn okbtn fl">确定</span></td>
+			<td class="t2">
+				<div class="part02-price fl">
+				<volist name="view_data['dfmr_mt']" id="vo">
+					<span class="dfmr_mt_tags" data-tag_class="dfmr_mt_tags" data-tag_id="{$vo.id}"  data-classify="地方名人/媒体" data-field="dfmr_mt" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>		
+				</div>
+				<div class="part01-citysel fl">
+					<select class="fl region_left"></select>
+					<select class="fl region_right"></select>
+				</div><span class="btn okbtn fl">确定</span></td>
 		  </tr>
 		  <tr>
 			<td class="t1">兴趣标签：</td>
-			<td class="t2"><div class="part01-tag fl"><span class="select">不限</span><span>影视</span><span>音乐</span><span>新闻 </span><span>美食</span><span>美食</span><span>体育</span></div><div class="more fl" id="moreta">更多</div></td>
+			<td class="t2">
+				<div class="part01-cate fl part01-xqbq">
+					<volist name="view_data['xqbq']" id="vo">
+						<span class="xqbq_tags" data-tag_class="xqbq_tags" data-tag_id="{$vo.id}"  data-classify="兴趣标签" data-field="xqbq" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+				</div><div class="more fl" id="moreta">更多</div></td>
 		  </tr>
 		  <tr>
 			<td class="t1">其它筛选：</td>
@@ -303,13 +340,27 @@
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 
-<script src="{$global_tpl_view.Module_Resource_Path}sina_celebrity.js"></script>
+<script type="text/javascript">
+
+var system_info = {
+	pt_type:{$view_data.pt_info.pt_type},	//平台类型1新浪、2腾讯
+	is_celeprity : 1,	//是否是名人1是、0不是
+	page_limit : 10,	//每页条数
+}
+</script>
+
+
+<script src="{$global_tpl_view.Global_Resource_Path}Tool/Region.js"></script>
+<script src="{$global_tpl_view.Module_Resource_Path}celebrity_weibo.js"></script>
 
 
 <script type="text/javascript">
-var post_extend = {};
-post_extend.pt_type = {$view_data.pt_info.pt_type};
+//?s=/Advert/Tool/get_Region_Data/
 
+//地区菜单
+var Region = new Region('{:U('/Advert/Tool/get_Region_Data')}');
+Region.init();
+Region.run();	
 
 </script>
 </body>

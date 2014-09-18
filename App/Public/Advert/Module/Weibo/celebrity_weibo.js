@@ -16,4 +16,8 @@ $(function(){
 	$('#morecity').click(function(){
 		$('.part01-city').toggleClass('part01-city-auot');
 	})
+	$('#moreta').click(function(){
+		$('.part01-xqbq').toggleClass('part01-city-auot');
+	})
+	
 })

@@ -37,6 +37,16 @@ class CategoryTagsAction extends AdminBaseAction {
 
 		$data['list']  = $CategoryTags->get_spe_data(array('parent_id'=>$this->parent_id,'is_del'=>0));
 		
+		if ($data['list'] == true) {
+			foreach ($data['list'] as $key=>$val) {
+				if ($val['show_status'] == 1) {
+					$data['list'][$key]['show_status_explain'] = '显示';
+				} elseif($val['show_status'] == 0) {
+					$data['list'][$key]['show_status_explain'] = '不显示';
+				}
+			}
+		}
+		
 		parent::global_tpl_view( array(
 			'action_name'=>'数据列表',
 			'title_name'=>'数据列表',
@@ -44,6 +54,11 @@ class CategoryTagsAction extends AdminBaseAction {
 		));
 		$data['parent_id'] = $this->parent_id;
 		
+		$CategoryTags->get_spe_data(array('parent_id'=>$this->parent_id,'is_del'=>0));
+		
+		$prev_parent_info = $CategoryTags->get_one_data(array('id'=>$this->parent_id),'parent_id');
+		$data['prev_parent_id'] = $prev_parent_info['parent_id'];
+
 		parent::data_to_view($data);
 		$this->display();
 	}
@@ -52,8 +67,10 @@ class CategoryTagsAction extends AdminBaseAction {
 	public function edit () {
 		$act = $this->_get('act');						//操作类型
 		$id = $this->_get('id');						//上一页地址
+		$show_status = $this->_get('show_status');		//显示状态
 		$prve_url = $this->_post('prev_url');			//上一页地址
 		$CategoryTags= $this->db['CategoryTags'];		//标签类型表
+		
 		
 		
 		if ($act == 'add') {
@@ -101,7 +118,13 @@ class CategoryTagsAction extends AdminBaseAction {
 			}
 			$this->success('成功');
 			exit;
-		}else {
+		//是否显示	
+		}elseif($act == 'is_show') {
+			$CategoryTags->show_status = $show_status;
+			$is_up = $CategoryTags->save_one_data(array('id'=>$id));
+			$is_up ? $this->success('修改成功！') : $this->error('修改失败！');
+			exit;
+		} else {
 			$this->error('非法操作');
 			exit;
 		}
