@@ -44,6 +44,7 @@
 		//sql查询	
 		private function setSql($addvalue,$now_page,$limit,$where,$type,$id,$is_celebrity)
 		{
+			//0是黑名单 1是收藏
 			//查询出该用户拉黑的名单
 			$Blackorcollection = D('BlackorcollectionWeibo');
 			if($addvalue['ckhmd']==1)
