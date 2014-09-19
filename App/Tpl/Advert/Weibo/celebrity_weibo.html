@@ -104,6 +104,33 @@
 			<td class="t1">其它筛选：</td>
 			<td class="t2"><div class="part01-select fl"><span>名人/媒体类别</span><span>配合度</span><span>粉丝数</span><span>是否支持原创</span></div></td>
 		  </tr>
+		  
+		   <tr>
+			<td class="t1">其它筛选：</td>
+			<td class="t2">
+				<div class="box01-procsess box01-procsess-first l"><strong class="blue fl">名人/媒体类别：</strong><div class="part01-cate fl">
+					<volist name="view_data['mr_mtlb']" id="vo">
+						<span class="mr_mtlb_tags" data-tag_class="mr_mtlb_tags" data-tag_id="{$vo.id}"  data-classify="名人/媒体类别" data-field="mr_mtlb" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+				</div>
+				<div class="box01-procsess l"><strong class="blue fl">配合度：</strong><div class="part01-cate fl">
+					<volist name="view_data['phd']" id="vo">
+						<span class="phd_tags" data-tag_class="phd_tags" data-tag_id="{$vo.id}"  data-classify="配合度" data-field="phd" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+				</div>
+				<div class="box01-procsess l"><strong class="blue fl">粉丝数：</strong><div class="part01-cate fl">
+					<volist name="view_data['mr_fans_num']" id="vo">
+						<span class="mr_fans_num_tags" data-tag_class="mr_fans_num_tags" data-tag_id="{$vo.id}"  data-classify="粉丝数" data-field="mr_fans_num" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+				</div>
+				<div class="box01-procsess l"><strong class="blue fl">是否支持原创：</strong><div class="part01-cate fl">
+					<volist name="view_data['zhyc']" id="vo">
+						<span class="zhyc_tags" data-tag_class="zhyc_tags" data-tag_id="{$vo.id}"  data-classify="是否支持原创" data-field="zhyc" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+				</div>
+			</td>
+		  </tr>
+		  
 		</table>
 		<div class="resultbox tc l">
 			<div class="trash fr clear_tags">清空选择筛选条件 </div>

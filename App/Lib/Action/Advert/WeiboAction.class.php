@@ -192,7 +192,11 @@ class WeiboAction extends AdvertBaseAction {
 		$this->jg = $this->now_classify_data[95];	//价格
 		$this->dfmr_mt = $this->now_classify_data[106];		//地方名人媒体
 		$this->xqbq = $this->now_classify_data[118];	//兴趣标签
-
+		
+		$this->mr_mtlb = $this->now_classify_data[150];	//名人/媒体类别
+		$this->phd = $this->now_classify_data[154];	//配合度
+		$this->mr_fans_num = $this->now_classify_data[159];	//名人粉丝数
+		$this->zhyc = $this->now_classify_data[169];	//是否支持原创
 		
 		$data['mrzy'] = $this->mrzy;
 		$data['mtly'] = $this->mtly;
@@ -200,6 +204,11 @@ class WeiboAction extends AdvertBaseAction {
 		$data['jg'] = $this->jg;
 		$data['dfmr_mt'] = $this->dfmr_mt;
 		$data['xqbq'] = $this->xqbq;
+		
+		$data['mr_mtlb'] = $this->mr_mtlb;
+		$data['phd'] = $this->phd;
+		$data['mr_fans_num'] = $this->mr_fans_num;
+		$data['zhyc'] = $this->zhyc;
 		
 		parent::data_to_view($data);
 	}

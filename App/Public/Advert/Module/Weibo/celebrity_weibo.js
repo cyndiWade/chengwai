@@ -12,7 +12,7 @@ Weibo.prototype.init = function () {
 	this.mtly_tags = $('.mtly_tags');		//媒体领域
 	this.jg_tags = $('.jg_tags');			//价格标签
 	this.dfmr_mt_tags = $('.dfmr_mt_tags');	//地方名人/媒体：
-	this.xqbq_tags = $('.xqbq_tags');				//兴趣标签
+	this.xqbq_tags = $('.xqbq_tags');		//兴趣标签
 	
 	this.region_right = $('.region_right');//城市选择框
 	this.btn_confirm_dqmr = $('.btn_confirm_dqmr');	//区域选择确认按钮
@@ -20,6 +20,11 @@ Weibo.prototype.init = function () {
 	this.btn_jiage_yes = $('.btn_jiage_yes');		//价格按钮
 	this.ipt_jiage_start = $('.ipt_jiage_start');	//开始价格
 	this.ipt_jiage_over = $('.ipt_jiage_over');		//结束价格
+	
+	this.mr_mtlb_tags = $('.mr_mtlb_tags');		//名人/媒体类别
+	this.phd_tags = $('.phd_tags');			//配合度
+	this.mr_fans_num_tags = $('.mr_fans_num_tags');		//粉丝数
+	this.zhyc_tags = $('.zhyc_tags');		//是否支持原创
 	
 	this.search_tag_data = $('.search_tag_data');	//已选标签
 
@@ -77,10 +82,8 @@ Weibo.prototype.select_tag_fn = function () {
 			'tag_id':_this.data('tag_id'),
 			'classify':_this.data('classify'),
 			'field' : _this.data('field'),
-			'repetition' : _this.data('repetition')
-			
-		});
-		
+			'repetition' : _this.data('repetition')	
+		});	
 	});
 	
 	
@@ -149,7 +152,51 @@ Weibo.prototype.select_tag_fn = function () {
 			'repetition' : _father_this.region_right.data('repetition')
 		});
 	});
-
+	
+	
+	_father_this.mr_mtlb_tags.click(function (){
+		var _this = $(this);
+		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
+			'tag_class' : _this.data('tag_class'),
+			'tag_id':_this.data('tag_id'),
+			'classify':_this.data('classify'),
+			'field' : _this.data('field'),
+			'repetition' : _this.data('repetition')	
+		});
+	});
+	
+	_father_this.phd_tags.click(function (){
+		var _this = $(this);
+		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
+			'tag_class' : _this.data('tag_class'),
+			'tag_id':_this.data('tag_id'),
+			'classify':_this.data('classify'),
+			'field' : _this.data('field'),
+			'repetition' : _this.data('repetition')	
+		});
+	});
+	
+	_father_this.mr_fans_num_tags.click(function (){
+		var _this = $(this);
+		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
+			'tag_class' : _this.data('tag_class'),
+			'tag_id':_this.data('tag_id'),
+			'classify':_this.data('classify'),
+			'field' : _this.data('field'),
+			'repetition' : _this.data('repetition')	
+		});
+	});
+	
+	_father_this.zhyc_tags.click(function (){
+		var _this = $(this);
+		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
+			'tag_class' : _this.data('tag_class'),
+			'tag_id':_this.data('tag_id'),
+			'classify':_this.data('classify'),
+			'field' : _this.data('field'),
+			'repetition' : _this.data('repetition')	
+		});
+	});
 }
 
 
@@ -208,8 +255,7 @@ Weibo.prototype.init_tags_selected = function () {
 	//为已选标签加上首选或者清除首选
 	_father_this.search_tag_data.each(function () {
 		var _this = $(this);
-		
-	
+
 		_father_this.mrzy_tags.each(function () {
 			var now_this = $(this);
 			if (
@@ -296,6 +342,82 @@ Weibo.prototype.init_tags_selected = function () {
 				now_this.data('val') == _this.data('val')
 			) {
 				_father_this.xqbq_tags.removeClass("select");
+				if (_this.data('val') == '') {
+					_this.parent().remove();
+				}
+				now_this.addClass("select");
+				return false;
+			}
+		});
+		
+		
+		_father_this.mr_mtlb_tags.each(function () {
+			var now_this = $(this);
+			if (
+				now_this.data('classify') == _this.data('classify') &&
+				
+		 		now_this.data('title') == _this.data('title') && 
+				
+				now_this.data('val') == _this.data('val')
+			) {
+				_father_this.mr_mtlb_tags.removeClass("select");
+				if (_this.data('val') == '') {
+					_this.parent().remove();
+				}
+				now_this.addClass("select");
+				return false;
+			}
+		});
+		
+		
+		_father_this.phd_tags.each(function () {
+			var now_this = $(this);
+			if (
+				now_this.data('classify') == _this.data('classify') &&
+				
+		 		now_this.data('title') == _this.data('title') && 
+				
+				now_this.data('val') == _this.data('val')
+			) {
+				_father_this.phd_tags.removeClass("select");
+				if (_this.data('val') == '') {
+					_this.parent().remove();
+				}
+				now_this.addClass("select");
+				return false;
+			}
+		});
+		
+		
+		_father_this.mr_fans_num_tags.each(function () {
+			var now_this = $(this);
+			if (
+				now_this.data('classify') == _this.data('classify') &&
+				
+		 		now_this.data('title') == _this.data('title') && 
+				
+				now_this.data('val') == _this.data('val')
+			) {
+				_father_this.mr_fans_num_tags.removeClass("select");
+				if (_this.data('val') == '') {
+					_this.parent().remove();
+				}
+				now_this.addClass("select");
+				return false;
+			}
+		});
+		
+		
+		_father_this.zhyc_tags.each(function () {
+			var now_this = $(this);
+			if (
+				now_this.data('classify') == _this.data('classify') &&
+				
+		 		now_this.data('title') == _this.data('title') && 
+				
+				now_this.data('val') == _this.data('val')
+			) {
+				_father_this.zhyc_tags.removeClass("select");
 				if (_this.data('val') == '') {
 					_this.parent().remove();
 				}
