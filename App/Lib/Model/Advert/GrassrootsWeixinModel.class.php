@@ -14,7 +14,10 @@
 				$addvalue = array();
 				foreach($array as $key=>$value)
 				{
-					$addvalue[$key] = addslashes($value);
+					if($value!='')
+					{
+						$addvalue[$key] = addslashes($value);
+					}
 				}
 				//组合生成查询SQL
 				$where = $this->getWhere($addvalue);
@@ -40,33 +43,33 @@
 		private function setSql($addvalue,$now_page,$limit,$where,$type,$id,$is_celebrity)
 		{
 			//查询出该用户拉黑的名单
-			$Blackorcollection = D('BlackorcollectionWeibo');
+			$Blackorcollection = D('BlackorcollectionWeixin');
 			if($addvalue['ckhmd']==1)
 			{
-				$weiboId_array = $Blackorcollection->getAdvertUser($type,$id,$is_celebrity,0);
+				$weixinId_array = $Blackorcollection->getAdvertUser($type,$id,$is_celebrity,0);
 				//去除黑名单的weibo_id
-				if(!empty($weiboId_array))
+				if(!empty($weixinId_array))
 				{
-					$where['w.weixin_id'] = array('IN',$weiboId_array);
+					$where['w.weixin_id'] = array('IN',$weixinId_array);
 				}else{
 					return false;
 				}
 			}else if($addvalue['cksc']==1)
 			{
-				$weiboId_array = $Blackorcollection->getAdvertUser($type,$id,$is_celebrity,1);
+				$weixinId_array = $Blackorcollection->getAdvertUser($type,$id,$is_celebrity,1);
 				//去除黑名单的weibo_id
-				if(!empty($weiboId_array))
+				if(!empty($weixinId_array))
 				{
-					$where['w.weixin_id'] = array('IN',$weiboId_array);
+					$where['w.weixin_id'] = array('IN',$weixinId_array);
 				}else{
 					return false;
 				}
 			}else{
-				$weiboId_array = $Blackorcollection->getAdvertUser($type,$id,$is_celebrity,0);
+				$weixinId_array = $Blackorcollection->getAdvertUser($type,$id,$is_celebrity,0);
 				//去除黑名单的weibo_id
-				if(!empty($weiboId_array))
+				if(!empty($weixinId_array))
 				{
-					$where['w.weixin_id'] = array('NOT IN',$weiboId_array);
+					$where['w.weixin_id'] = array('NOT IN',$weixinId_array);
 				}
 			}
 			$count = $this->where($where)

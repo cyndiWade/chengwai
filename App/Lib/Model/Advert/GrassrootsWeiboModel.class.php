@@ -14,7 +14,10 @@
 				$addvalue = array();
 				foreach($array as $key=>$value)
 				{
-					$addvalue[$key] = addslashes($value);
+					if($value!='')
+					{
+						$addvalue[$key] = addslashes($value);
+					}
 				}
 				//组合生成查询SQL
 				$where = $this->getWhere($addvalue);
