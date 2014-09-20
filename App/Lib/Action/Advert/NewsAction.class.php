@@ -28,7 +28,8 @@ class NewsAction extends AdvertBaseAction {
 			'CategoryTags'=>'CategoryTags',
 			'Users' => 'Users',
 			'AccountWeibo' => 'AccountWeibo',
-			'FastindexWeibo' => 'FastindexWeibo'
+			'FastindexWeibo' => 'FastindexWeibo',
+			'IndexNews' => 'IndexNews'
 	);
 	
 	//和构造方法
@@ -74,6 +75,15 @@ class NewsAction extends AdvertBaseAction {
 				'sidebar_two'=>array(1=>'select',),//第一个加依次类推
 		));
 		$this->display();	
+	}
+
+
+	//提供新闻接口
+	public function get_news_list()
+	{
+		//判断是名人还是草根
+		$list_new = $this->db['IndexNews']->getPostArray($_POST,$this->oUser->id);
+		parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
 	}
 	
 }	

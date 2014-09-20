@@ -116,10 +116,10 @@ class WeixinAction extends AdvertBaseAction {
 		$is_celeprity = intval($_POST['is_celeprity']);
 		if($is_celeprity==0)
 		{
-			$list_new = $this->db['GrassrootsWeixin']->getPostArray($_POST,3,$this->oUser->id);
+			$list_new = $this->db['GrassrootsWeixin']->getPostArray($_POST,$this->oUser->id);
 			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
 		}else{
-			$list_new = $this->db['CeleprityindexWeixin']->getPostArray($_POST,3,$this->oUser->id);
+			$list_new = $this->db['CeleprityindexWeixin']->getPostArray($_POST,$this->oUser->id);
 			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
 		}
     }

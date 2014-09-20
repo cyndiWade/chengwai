@@ -1,10 +1,10 @@
 <?php
-	//微信草根表
+	//新闻信息表
 
-	class GrassrootsWeixinModel extends AdvertBaseModel
+	class IndexNewsModel extends AdvertBaseModel
 	{
 
-		//接受参数 返回草根信息数据 | $type区分新浪 1  腾讯 2  微信 3 新闻 4 | 用户ID
+		//接受参数 返回新闻信息数据
 		public function getPostArray($array,$id)
 		{
 			
@@ -30,56 +30,56 @@
 				{
 					$p = $addvalue['p'];
 					$p_limit = ($p - 1) * 10;
-					$returnList = $this->setSql($addvalue,$p_limit,$limit,$where,$id,0);
+					$returnList = $this->setSql($addvalue,$p_limit,$limit,$where,$id);
 					return $new_list = array('list'=>$returnList['list'],'p'=>$p,'count'=>$returnList['count']);
 				}else{
-					$returnList = $this->setSql($addvalue,0,$limit,$where,$id,0);
+					$returnList = $this->setSql($addvalue,0,$limit,$where,$id);
 					return $new_list = array('list'=>$returnList['list'],'p'=>1,'count'=>$returnList['count']);
 				}
 			}
 		}
 
 		//sql查询	
-		private function setSql($addvalue,$now_page,$limit,$where,$id,$is_celebrity)
+		private function setSql($addvalue,$now_page,$limit,$where,$id)
 		{
 			//查询出该用户拉黑的名单
-			$Blackorcollection = D('BlackorcollectionWeixin');
+			$Blackorcollection = D('BlackorcollectionNews');
 			if($addvalue['ckhmd']==1)
 			{
-				$weixinId_array = $Blackorcollection->getAdvertUser($id,$is_celebrity,0);
+				$newsId_array = $Blackorcollection->getAdvertUser($id,0);
 				//去除黑名单的weibo_id
-				if(!empty($weixinId_array))
+				if(!empty($newsId_array))
 				{
-					$where['w.weixin_id'] = array('IN',$weixinId_array);
+					$where['w.news_id'] = array('IN',$newsId_array);
 				}else{
 					return false;
 				}
 			}else if($addvalue['cksc']==1)
 			{
-				$weixinId_array = $Blackorcollection->getAdvertUser($id,$is_celebrity,1);
+				$weixinId_array = $Blackorcollection->getAdvertUser($id,1);
 				//去除黑名单的weibo_id
 				if(!empty($weixinId_array))
 				{
-					$where['w.weixin_id'] = array('IN',$weixinId_array);
+					$where['w.news_id'] = array('IN',$newsId_array);
 				}else{
 					return false;
 				}
 			}else{
-				$weixinId_array = $Blackorcollection->getAdvertUser($id,$is_celebrity,0);
+				$weixinId_array = $Blackorcollection->getAdvertUser($id,0);
 				//去除黑名单的weibo_id
 				if(!empty($weixinId_array))
 				{
-					$where['w.weixin_id'] = array('NOT IN',$weixinId_array);
+					$where['w.news_id'] = array('NOT IN',$newsId_array);
 				}
 			}
 			$count = $this->where($where)
-			->table('app_grassroots_weixin as w')
-			->join('app_account_weixin as b on b.id = w.weixin_id')
+			->table('app_index_news as w')
+			->join('app_account_news as b on b.id = w.news_id')
 			->count();
 			//差集统计长度
 			$list = $this->where($where)
-			->table('app_grassroots_weixin as w')
-			->join('app_account_weixin as b on b.id = w.weixin_id')
+			->table('app_index_news as w')
+			->join('app_account_news as b on b.id = w.news_id')
 			->limit($now_page,$limit)->field('*')->select();
 			return array('list'=>$list,'count'=>$count);
 		}
