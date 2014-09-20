@@ -4,7 +4,7 @@
 	class GrassrootsWeixinModel extends AdvertBaseModel
 	{
 
-		//接受参数 返回草根信息数据 | $type区分新浪 1  腾讯 2  微信 3 新闻 4 | 用户ID
+		//接受参数 返回草根信息数据  用户ID
 		public function getPostArray($array,$id)
 		{
 			
