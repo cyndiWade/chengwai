@@ -27,9 +27,14 @@
 	
 	</ul>
 	<div class="searchbox fl">
-		<div class="top-search l"><strong class="on">搜账号名称/微信号</strong><strong>搜索关键字 </strong></div>
+		<div class="top-search l">
+			<strong class="on">搜账号名称/微信号</strong>
+			<!--  
+			<strong>搜索关键字 </strong>
+			 -->
+		</div>
 		<div class="mid-search l">
-			<input type="text" class="seatext" value="请输入微信账号的名称或微信号" /><input type="submit" class="btn seabtn" value="搜索" />
+			<input type="text" class="seatext search_account" data-field="account" data-ischeck="0" value="" placeholder="请输入微信账号的名称或微信号" /><input type="submit" class="btn seabtn" id="search" value="搜索" />
 		</div>
 	</div>
 	<div class="catebox l">
@@ -129,7 +134,7 @@
 		</div>
 	</div>
 	<div class="orderbox l">
-		<b class="total fr">共11178个</b><b class="total fr">200页</b>
+		<b class="total fr">共<span id="all_data_num"></span>个</b><b class="total fr"><span id="all_page_num"></span>页</b>
 		<select class="fl"><option>选择排序方式</option></select><span class="orderspan orderspan-select fl">默认排序</span><span class="orderspan">粉丝数量</span><span class="orderspan">单图文报价</span>
 	</div>
 	<div class="col01-wx l">
@@ -154,8 +159,8 @@
 		  </tbody>
 		</table>
 		<div class="weibo-bot l">
-			<div class="page-wb fr">
-				<a href="#" class="prev"><</a><a href="#" class="num on">1</a><a href="#" class="num">2</a><a href="#" class="num">3</a><a href="#" class="num">4</a><em>...</em><a href="#" class="num">25</a><a href="#" class="next">></a><b class="total fl">共25页</b><div class="count fl"><i class="fl">到第</i><input type="text" class="text fl" /><i class="fl">页</i><span class="aok fl">前往</span><strong class="show fl">显示<select><option>10</option></select>条</strong></div>
+			<div class="page-wb fr system_page">
+
 			</div>
 			<div class="controlbox fl">
 				<span>全选</span><span id="batch">批量添加账号</span><span>批量导出报价单</span>
@@ -192,7 +197,6 @@
 <script type="text/javascript">
 
 var system_info = {
-	//pt_type:{$view_data.pt_info.pt_type},	//平台类型1新浪、2腾讯
 	is_celeprity : 0,	//是否是名人1是、0不是
 	page_limit : 10,	//每页条数
 }
@@ -208,6 +212,7 @@ var list_content = $('#list_content');
 var public_post_fn = function (obj_data) {
 	var post_data = {};
 	post_data.pt_type = system_info.pt_type;	//平台类型，1新浪、2腾讯
+	post_data.is_celeprity = system_info.is_celeprity;	//是否是名人
 	
 	//三级导航已选择数据
 	var three_sidebar_selected = Weixin.get_three_sidebar_selected();

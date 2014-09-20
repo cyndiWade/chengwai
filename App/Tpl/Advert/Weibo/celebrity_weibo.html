@@ -268,6 +268,7 @@ var list_content = $('#list_content');
 var public_post_fn = function (obj_data) {
 	var post_data = {};
 	post_data.pt_type = system_info.pt_type;	//平台类型，1新浪、2腾讯
+	post_data.is_celeprity = system_info.is_celeprity;	//是否是名人
 	
 	//三级导航已选择数据
 	var three_sidebar_selected = Weibo.get_three_sidebar_selected();

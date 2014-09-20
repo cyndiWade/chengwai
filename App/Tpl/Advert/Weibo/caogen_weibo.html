@@ -183,6 +183,7 @@ var _tbody = $('.tbody');
 var public_post_fn = function (obj_data) {
 	var post_data = {};
 	post_data.pt_type = system_info.pt_type;	//平台类型，1新浪、2腾讯
+	post_data.is_celeprity = system_info.is_celeprity;	//是否是名人
 	
 	//三级导航已选择数据
 	var three_sidebar_selected = Weibo.get_three_sidebar_selected();
@@ -208,11 +209,6 @@ var public_post_fn = function (obj_data) {
 		post_data.p = obj_data.this_number;
 	}
 
-	//这历史转发价格的类型，把这个注释就可以接收到转发价格的值
-	//post_data.zfjg_type = '';
-
-	//console.log(post_data)
-	
 	//AJAX获取数据
 	var result = System.ajax_post_setup('{:U('/Advert/Weibo/get_grassroots_list')}',post_data,'JSON');
 	
