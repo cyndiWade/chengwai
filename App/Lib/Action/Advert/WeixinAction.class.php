@@ -22,6 +22,8 @@ class WeixinAction extends AdvertBaseAction {
 	protected  $db = array(
 			'CategoryTags'=>'CategoryTags',
 			'Users' => 'Users',
+			'CeleprityindexWeixin' => 'CeleprityindexWeixin',
+			'GrassrootsWeixin' => 'GrassrootsWeixin'
 	);
 	
 	//和构造方法
@@ -75,7 +77,25 @@ class WeixinAction extends AdvertBaseAction {
 		
 	}
 
-    
+    	
+    //微信草根 或者 名人 接口
+    public function get_weixin_list()
+    {
+    	//判断是名人还是草根
+		$is_celeprity = intval($_POST['is_celeprity']);
+		if($is_celeprity==0)
+		{
+			$list_new = $this->db['GrassrootsWeixin']->getPostArray($_POST,3,$this->oUser->id);
+			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
+		}else{
+			$list_new = $this->db['CeleprityindexWeixin']->getPostArray($_POST,3,$this->oUser->id);
+			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
+		}
+    }
+
+
+
+
 }
 
 ?>
