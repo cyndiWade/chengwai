@@ -93,33 +93,77 @@
 			{
 				$wheres['w.common'] = $addslArray['cjfl'];
 			}
-			//粉丝数量
-			if($addslArray['fans_num']!='')
-			{
-				$wheres['w.fans_num'] = $this->getLeftRightstr($addslArray['fans_num'],'-');
-			}
 			//价格区间
 			if($addslArray['zfjg_type']!='' && $addslArray['jg']!='')
 			{
 				switch ($addslArray['zfjg_type']) {
 					case 1:
-						$wheres['w.yg_zhuanfa'] = $this->getLeftRightstr($addslArray['jg'],'-');
+						$wheres['w.more_ying_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
 					break;
 					case 2:
-						$wheres['w.yg_zhifa'] = $this->getLeftRightstr($addslArray['jg'],'-');
+						$wheres['w.more_ruang_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
 					break;
 					case 3:
-						$wheres['w.rg_zhuanfa'] = $this->getLeftRightstr($addslArray['jg'],'-');
+						$wheres['w.one_yingg_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
 					break;
 					case 4:
-						$wheres['w.rg_zhifa'] = $this->getLeftRightstr($addslArray['jg'],'-');
+						$wheres['w.one_ruangg_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
+					break;
+					case 5:
+						$wheres['w.more_twoy_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
+					break;
+					case 6:
+						$wheres['w.more_twor_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
+					break;
+					case 7:
+						$wheres['w.more_ny_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
+					break;
+					case 8:
+						$wheres['w.more_nr_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
 					break;
 				}
 			}
-			//性别区分
-			if($addslArray['fans_sex']!='')
+			//粉丝数量
+			if($addslArray['fans_num']!='')
 			{
-				$wheres['w.fans_sex'] = $addslArray['fans_sex'];
+				$wheres['w.fans_number'] = $this->getLeftRightstr($addslArray['fans_num'],'-');
+			}
+			//视频认证  粉丝量已认证
+			if($addslArray['fs_num_rz']!='')
+			{
+				$wheres['w.video_fans_on'] = $addslArray['fs_num_rz'];
+			}
+			//视频认证   受众性别已认证	
+			if($addslArray['fs_sex_rz']!='')
+			{
+				$wheres['w.video_sex_on'] = $addslArray['fs_sex_rz'];
+			}
+			//账号是否认证
+			if($addslArray['zhsfrz']!='')
+			{
+				$wheres['w.account_on'] = $addslArray['zhsfrz'];
+			}
+			//受众性别
+			if($addslArray['szxb']!='')
+			{
+				$sex = substr($addslArray['szxb'],0,1);
+				$bfb = substr($addslArray['szxb'],1,2);
+				if($sex=='x')
+				{
+					$wheres['w.audience_man'] = array('GT',$bfb);
+				}else{
+					$wheres['w.audience_women'] = array('GT',$bfb);
+				}
+			}
+			//粉丝量认证时间
+			if($addslArray['fsrzsj']!='')
+			{
+				$wheres['w.fans_c_time'] = array('LT',$addslArray['fsrzsj']);
+			}
+			//周平均阅读数
+			if($addslArray['zpjyds']!='')
+			{
+				$wheres['w.fans_c_time'] = $this->getLeftRightstr($addslArray['zpjyds'],'-');
 			}
 			//为您推荐
 			if($addslArray['tj']!='')
@@ -127,7 +171,7 @@
 				$wheres['w.recommend'] = 1;
 			}
 			//热门微博
-			if($addslArray['rmwb']!='')
+			if($addslArray['rmwx']!='')
 			{
 				$wheres['w.is_hot'] = 1;
 			}
