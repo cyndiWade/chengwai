@@ -27,7 +27,7 @@ class WeixinAction extends AdvertBaseAction {
 			'CategoryTags'=>'CategoryTags',
 			'Users' => 'Users',
 			'CeleprityindexWeixin' => 'CeleprityindexWeixin',
-			//'GrassrootsWeixin' => 'GrassrootsWeixin'
+			'GrassrootsWeixin' => 'GrassrootsWeixin'
 	);
 	
 	//和构造方法
@@ -129,7 +129,6 @@ class WeixinAction extends AdvertBaseAction {
 		}else{
 			$list_new = $this->db['CeleprityindexWeixin']->getPostArray($_POST,$this->oUser->id);
 			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
-
 		}
     }
 
