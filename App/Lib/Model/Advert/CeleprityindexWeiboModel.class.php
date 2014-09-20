@@ -14,7 +14,10 @@
 				$addvalue = array();
 				foreach($array as $key=>$value)
 				{
-					$addvalue[$key] = addslashes($value);
+					if($value!='')
+					{
+						$addvalue[$key] = addslashes($value);
+					}
 				}
 				//组合生成查询SQL
 				$where = $this->getWhere($addvalue);
@@ -108,6 +111,9 @@
 					case 1:
 						$wheres['w.ck_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
 					break;
+					case 2:
+						$wheres['w.yc_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
+					break;
 				}
 			}
 			//地方名人/媒体
@@ -120,10 +126,30 @@
 			{
 				$wheres['w.interest'] = $addslArray['xqbq'];
 			}
-			//暂略合作名人
+			//名人/媒体类别
+			if($addslArray['mr_mtlb']!='')
+			{
+				$wheres['w.cmcategoris'] = $addslArray['mr_mtlb'];
+			}
+			//配合度
+			if($addslArray['phd']!='')
+			{
+				$wheres['w.coordination'] = $addslArray['phd'];
+			}
+			//粉丝数
+			if($addslArray['mr_fans_num']!='')
+			{
+				$wheres['w.fansnumber'] = $this->getLeftRightstr($addslArray['mr_fans_num'],'-');
+			}
+			//支持原创
+			if($addslArray['zhyc']!='')
+			{
+				$wheres['w.originality'] = $addslArray['zhyc'];
+			}
+			//战略合作媒体
 			if($addslArray['zlhzmr_mt']!='')
 			{
-				$wheres['w.strategic_c'] = $addslArray['zlhzmr_mt'];
+				$wheres['strategic_c'] = $addslArray['zlhzmr_mt'];
 			}
 			//搜索框的账号名
 			$account_name = trim($addslArray['account']);

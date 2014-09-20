@@ -1,7 +1,7 @@
 <?php
 	//微信草根表
 
-	class GrassrootsWeiboModel extends AdvertBaseModel
+	class GrassrootsWeixinModel extends AdvertBaseModel
 	{
 
 		//接受参数 返回草根信息数据 | $type区分新浪 1  腾讯 2  微信 3 新闻 4 | 用户ID
