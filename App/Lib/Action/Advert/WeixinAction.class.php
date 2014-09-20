@@ -15,6 +15,10 @@ class WeixinAction extends AdvertBaseAction {
 	
 	private $big_type = 1;	//当前平台大分类
 	
+	private $caogen_Top_Tags_ParentId = 251;	//草根微信账号顶层ID
+	
+	private $now_classify_data;
+	
 	//控制器说明
 	private $module_explain = '微信账号';
 	
@@ -65,7 +69,7 @@ class WeixinAction extends AdvertBaseAction {
 	
 	//微信
 	public function weixin() {
-		
+		$this->show_caogen_category_tags();
 		parent::data_to_view(array(
 			
 			//二级导航加样式
@@ -76,6 +80,33 @@ class WeixinAction extends AdvertBaseAction {
 		$this->display();
 		
 	}
+	
+	
+	/**
+	 * 草根导航分类数据
+	 */
+	private function show_caogen_category_tags () {
+		$CategoryTags = $this->db['CategoryTags'];
+		$this->now_classify_data = $CategoryTags->get_classify_data($this->caogen_Top_Tags_ParentId);
+	
+		$this->cjfl = $this->now_classify_data[222];
+		$this->jg = $this->now_classify_data[253];
+		$this->fans_num = $this->now_classify_data[262];
+		
+		$this->sprz = $this->now_classify_data[273];	//粉丝数量认证
+		//$this->fans_sex = $this->now_classify_data[298];
+		//$this->zfjg_type = $this->now_classify_data[421];
+		
+		
+		$data['cjfl'] = $this->cjfl;
+		$data['jg'] = $this->jg;
+		$data['fans_num'] = $this->fans_num;
+		$data['sprz'] = $this->sprz;
+		//$data['zfjg_type'] = $this->zfjg_type;
+		parent::data_to_view($data);
+	}
+	
+	
 
     	
     //微信草根 或者 名人 接口

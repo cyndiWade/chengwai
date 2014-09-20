@@ -35,19 +35,49 @@
 		<table class="tab01-cate l">
 		  <tr>
 			<td class="t1">常见分类：</td>
-			<td class="t2"><div class="part01-cate fl"><span>所有</span><span class="select">时尚</span><span>家居生活</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>母婴育儿</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>母婴育儿</span><span>娱乐</span><span>娱乐</span></div><div class="more fl" id="morecate">更多</div></td>
+			<td class="t2">
+			<div class="part01-cate fl">
+			<volist name="view_data['cjfl']" id="vo">
+				<span class="cjfl_tags" data-tag_class="cjfl_tags" data-tag_id="{$vo.id}"  data-classify="常见分类" data-field="cjfl" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+			</volist>
+			</div><div class="more fl" id="morecate">更多</div></td>
 		  </tr>
 		  <tr>
 			<td class="t1">价格：</td>
-			<td class="t2"><div class="part01-price fl"><select><option>单图文报价 </option></select></div><div class="part02-price fl"><span class="select">所有</span><span>50-100元</span><span>100-200元</span><span>200-500元</span><span>500-1000元</span><span>1000元以上</span></div><div class="part03-price fl"><input type="text" class="text" /><i>-</i><input type="text" class="text" /><i>元</i></div><span class="btn okbtn fl">确定</span></td>
+			<td class="t2">
+				<div class="part01-price fl">
+				<select><option>单图文报价 </option></select>
+				</div>
+				<div class="part02-price fl">
+				<volist name="view_data['jg']" id="vo">
+				<span class="jg_tags" data-tag_class="jg_tags"  data-tag_id="{$vo.id}" data-classify="价格" data-field="jg" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>
+				</div>
+				<div class="part03-price fl">
+				<input type="text" class="text ipt_jiage_start" /><i>-</i><input type="text" class="text ipt_jiage_over" /><i>元</i>
+				</div>
+				<span class="btn okbtn fl btn_jiage_yes" data-tag_class="jg_tags">确定</span>
+				</td>
 		  </tr>
 		  <tr>
 			<td class="t1">粉丝量：</td>
-			<td class="t2"><div class="part02-price fl"><span class="select">所有</span><span>50-100元</span><span>100-200元</span><span>200-500元</span><span>500-1000元</span><span>1000元以上</span></div><div class="part03-price fl"><input type="text" class="text" /><i>-</i><input type="text" class="text" /><i>元</i></div><span class="btn okbtn fl">确定</span></td>
+			<td class="t2">
+				<div class="part02-price fl">
+				<volist name="view_data['fans_num']" id="vo">
+					<span class="fans_num_tags" data-tag_class="fans_num_tags" data-tag_id="{$vo.id}" data-classify="粉丝量" data-field="fans_num" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>
+				</div><div class="part03-price fl"><input type="text" class="text ipt_fansNum_start" /><i>-</i><input type="text" class="text ipt_fansNum_over" /><i>个</i></div><span class="btn okbtn fl btn_fansNum_yes" data-tag_class="fans_num_tags">确定</span></td>
 		  </tr>
 		  <tr>
 			<td class="t1">视频认证  <img src="{$global_tpl_view.Group_Resource_Path}images/qa_icon.png" />：</td>
-			<td class="t2"><div class="part01-video fl"><span class="fl"><input type="checkbox" class="check"><em>粉丝量已认证</em></span><span class="fl"><input type="checkbox" class="check"><em>粉丝量已认证</em></span></td>
+			<td class="t2">
+			<div class="part01-video fl">
+				<volist name="view_data['sprz']" id="vo" key="i">
+				<span class="fl" ><input type="checkbox" class="check sprz_tags_{$i}" data-tag_id="{$vo.id}" data-classify="视频认证" data-field="{$vo.field_name}" data-repetition="yes" data-title="{$vo.title}" data-val="{$vo.val}" value="{$vo.val}"><em>{$vo.title}</em></span>
+			
+				</volist>
+				
+			</td>
 		  </tr>
 		  <tr>
 			<td class="t1">其它筛选：</td>
@@ -55,13 +85,10 @@
 		  </tr>
 		</table>
 		<div class="resultbox tc l">
-			<div class="trash fr">清空选择筛选条件 </div>
+			<div class="trash fr clear_tags">清空选择筛选条件 </div>
 			<span class="span-ok fl">已选择 ：</span>
-			<ul class="grp fl">
-				<li><strong>常见分类 > <b>时尚</b></strong><em class="del"></em></li>
-				<li><strong>价格 > <b>50-100元</b></strong><em class="del"></em></li>
-				<li><strong>粉丝量 > <b>1-5万</b></strong><em class="del"></em></li>
-				<li><strong>视频认证 > <b>粉丝量已认证</b></strong><em class="del"></em></li>
+			<ul class="grp fl select_tags_vessel">
+				
 			</ul>
 		</div>
 	</div>
@@ -167,10 +194,102 @@
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 
+<scritp type="text/javascript">
+<script type="text/javascript">
+
+var system_info = {
+	//pt_type:{$view_data.pt_info.pt_type},	//平台类型1新浪、2腾讯
+	is_celeprity : 0,	//是否是名人1是、0不是
+	page_limit : 10,	//每页条数
+}
+</script>
+
+</scritp>
+
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/page.js"></script>
 <script src="{$global_tpl_view.Module_Resource_Path}weixin.js"></script>
 
 <script type="text/javascript">
+var public_post_fn = function (obj_data) {
+	var post_data = {};
+	post_data.pt_type = system_info.pt_type;	//平台类型，1新浪、2腾讯
+	
+	//三级导航已选择数据
+	var three_sidebar_selected = Weixin.get_three_sidebar_selected();
+	for (var key in three_sidebar_selected) {
+		post_data[key] = three_sidebar_selected[key];
+	}
+
+	//获取搜索框的数据
+	var account_data = Weixin.get_search_account();
+	if (account_data != false) {
+		post_data[account_data.field] = account_data.val;
+	}
+	
+	//获取选中的标签数据
+	var tags_selected =	Weixin.get_selected_tags();	//获取选中标签数据
+	for (var field in tags_selected) {
+		post_data[field]= tags_selected[field];
+	}
+	
+
+	//获取点击后的分页数据
+	if (obj_data.this_number != undefined) {
+		post_data.p = obj_data.this_number;
+	}
+
+	//这历史转发价格的类型，把这个注释就可以接收到转发价格的值
+	//post_data.zfjg_type = '';
+
+	//console.log(post_data)
+	
+	//AJAX获取数据
+//	var result = System.ajax_post_setup('{:U('/Advert/Weibo/get_grassroots_list')}',post_data,'JSON');
+	var result = {};
+	if (result.status == 1) {
+		//_tbody.empty();
+		for (var key in result.data.list) {
+			//_tbody.append(create_now_html(result.data.list[key]));
+		}
+		
+		//拉黑和收藏功能
+		Weixin.lahei_and_shoucang_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+
+		Weixin.dataNum_And_PageNum(result.data.count);
+		
+		//更新page
+		page_now_list(result.data.count,result.data.p,system_info.page_limit);
+	} 
+}
+
+
+var create_now_html = function ($data) {
+	
+	var html = '';
+	html += '<tr>';
+	html += '<td class="t1">';
+	html += '<div class="weibopart"><input type="checkbox" class="check" />';
+	html += 	'<img src="" class="wbimg" />';
+	html += 		'<div class="grp fl">';
+	html += 		'<h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5>';
+	html += 		'<div class="address l">'+$data.account_name+'</div>';
+	html += 		'<div class="desc l">简介：全球头条新闻全球头条新闻</div>';
+	html += 		'</div>';
+	html += '</div>';
+	html += '</td>';
+	html += '<td class="t2"><b class="red">'+$data.fans_num+'万</b></td>';
+	html += '<td class="t3">1.00</td>';
+	html += '<td class="t4">'+$data.yg_zhuanfa+'元</td>';
+	html += '<td class="t5">'+$data.rg_zhuanfa+'元</td>';
+	html += '<td class="t6">'+$data.yg_zhifa+'元</td>';
+	html += '<td class="t7">'+$data.rg_zhuanfa+'元</td>';
+	html += '<td class="t8">'+$data.week_order_num+'</td>';
+	html += '<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>';
+	html += '<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
+	html += '<td class="last"><div class="ctrl"><span>详情</span><span class="lahei_and_shoucang" data-or_type="1" data-weibo_id="'+$data.id+'"  >收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weibo_id="'+$data.id+'">拉黑</span></div></td>';
+  	html += '</tr>';
+  	return html;
+} 
 
 </script>
 </body>
