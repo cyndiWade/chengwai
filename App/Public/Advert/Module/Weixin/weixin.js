@@ -5,14 +5,25 @@ var Weixin = function () {
 
 //初始化对象
 Weixin.prototype.init = function () {
-	this.select_ckbj_type = $('#select_ckbj_type');		//价格类型
+	this.select_zfjg_type = $('#select_zfjg_type');		//价格类型
 	this.select_tags_vessel = $('.select_tags_vessel');	//选择标签容器Ul
 		
 	this.cjfl_tags = $('.cjfl_tags');		//常见分类
 	this.jg_tags = $('.jg_tags');			//价格标签
 	this.fans_num_tags = $('.fans_num_tags');	//粉丝数据量
-	this.sprz_tags = $('.sprz_tags');	//视频认证
+	
+	this.sprz_rq = $('#sprz_rq');	//视频认证容器
+	this.sprz_ra_size = this.sprz_rq.children('span').size();
+	for (var i=1;i<=this.sprz_ra_size;i++) {
+		this['sprz_tags_'+i] = $('.sprz_tags_'+i);	//粉丝量认证
+	}
 
+	this.zhsfrz_tags = $('.zhsfrz_tags');	//账号是否认证：
+	this.szxb_tags = $('.szxb_tags');		//受众性别
+	this.fsrzsj_tags = $('.fsrzsj_tags');	//粉丝量认证时间
+	this.zpjyds_tags = $('.zpjyds_tags');		//周平均阅读数
+	
+	
 	this.btn_jiage_yes = $('.btn_jiage_yes');		//价格按钮
 	this.ipt_jiage_start = $('.ipt_jiage_start');	//开始价格
 	this.ipt_jiage_over = $('.ipt_jiage_over');		//结束价格
@@ -66,6 +77,7 @@ Weixin.prototype.add_table_class = function () {
 	})
 }
 
+
 //点击创建标签
 Weixin.prototype.select_tag_fn = function () {
 	var _father_this = this;
@@ -80,7 +92,6 @@ Weixin.prototype.select_tag_fn = function () {
 			'repetition' : _this.data('repetition')	
 		});	
 	});
-	
 
 	_father_this.jg_tags.click(function (){
 		var _this = $(this);
@@ -96,7 +107,6 @@ Weixin.prototype.select_tag_fn = function () {
 		_father_this.ipt_jiage_over.val(ipt_val[1]);
 	});
 		
-	
 	_father_this.fans_num_tags.click(function (){
 		var _this = $(this);
 		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
@@ -128,18 +138,76 @@ Weixin.prototype.select_tag_fn = function () {
 		});
 	});
 	
-	this.sprz_tags.click(function () {
+	for (var i=1;i<=this.sprz_ra_size;i++) {
+		_father_this['sprz_tags_'+i].click(function () {
+			var _this = $(this);
+			if(_this.prop('checked') == true) {
+				_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
+					//'tag_class' : _this.data('tag_class'),
+					'tag_id':_this.data('tag_id'),
+					'classify':_this.data('classify'),
+					'field' : _this.data('field'),
+					'repetition' : _this.data('repetition')
+				});
+			} else {
+				_father_this.search_tag_data.each(function () {
+					_select_obj  = $(this);
+					if (_select_obj.data('tag_id') == _this.data('tag_id')) {
+						_select_obj.parent().remove();
+						_father_this.init_tags_selected();
+						return false;
+					}
+				});
+			}	
+		});
+	}
+	
+	_father_this.zhsfrz_tags.click(function (){
 		var _this = $(this);
 		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
-			//'tag_class' : _this.data('tag_class'),
+			'tag_class' : _this.data('tag_class'),
 			'tag_id':_this.data('tag_id'),
 			'classify':_this.data('classify'),
 			'field' : _this.data('field'),
-			'repetition' : _this.data('repetition')
-		});
+			'repetition' : _this.data('repetition')	
+		});	
+	});
+	
+	_father_this.szxb_tags.click(function (){
+		var _this = $(this);
+		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
+			'tag_class' : _this.data('tag_class'),
+			'tag_id':_this.data('tag_id'),
+			'classify':_this.data('classify'),
+			'field' : _this.data('field'),
+			'repetition' : _this.data('repetition')	
+		});	
+	});
+	
+	_father_this.fsrzsj_tags.click(function (){
+		var _this = $(this);
+		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
+			'tag_class' : _this.data('tag_class'),
+			'tag_id':_this.data('tag_id'),
+			'classify':_this.data('classify'),
+			'field' : _this.data('field'),
+			'repetition' : _this.data('repetition')	
+		});	
 	});
 	
 	
+	_father_this.zpjyds_tags.click(function (){
+		var _this = $(this);
+		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
+			'tag_class' : _this.data('tag_class'),
+			'tag_id':_this.data('tag_id'),
+			'classify':_this.data('classify'),
+			'field' : _this.data('field'),
+			'repetition' : _this.data('repetition')	
+		});	
+	});
+	
+		
 }
 
 
@@ -255,7 +323,78 @@ Weixin.prototype.init_tags_selected = function () {
 				return false;
 			}
 		});
-	
+		
+		_father_this.zhsfrz_tags.each(function () {
+			var now_this = $(this);
+			if (
+				now_this.data('classify') == _this.data('classify') &&
+				
+		 		now_this.data('title') == _this.data('title') && 
+				
+				now_this.data('val') == _this.data('val')
+			) {
+				_father_this.zhsfrz_tags.removeClass("select");
+				if (_this.data('val') == '') {
+					_this.parent().remove();
+				}
+				now_this.addClass("select");
+				return false;
+			}
+		});
+		
+		_father_this.szxb_tags.each(function () {
+			var now_this = $(this);
+			if (
+				now_this.data('classify') == _this.data('classify') &&
+				
+		 		now_this.data('title') == _this.data('title') && 
+				
+				now_this.data('val') == _this.data('val')
+			) {
+				_father_this.szxb_tags.removeClass("select");
+				if (_this.data('val') == '') {
+					_this.parent().remove();
+				}
+				now_this.addClass("select");
+				return false;
+			}
+		});
+		
+		_father_this.fsrzsj_tags.each(function () {
+			var now_this = $(this);
+			if (
+				now_this.data('classify') == _this.data('classify') &&
+				
+		 		now_this.data('title') == _this.data('title') && 
+				
+				now_this.data('val') == _this.data('val')
+			) {
+				_father_this.fsrzsj_tags.removeClass("select");
+				if (_this.data('val') == '') {
+					_this.parent().remove();
+				}
+				now_this.addClass("select");
+				return false;
+			}
+		});
+		
+		_father_this.zpjyds_tags.each(function () {
+			var now_this = $(this);
+			if (
+				now_this.data('classify') == _this.data('classify') &&
+				
+		 		now_this.data('title') == _this.data('title') && 
+				
+				now_this.data('val') == _this.data('val')
+			) {
+				_father_this.zpjyds_tags.removeClass("select");
+				if (_this.data('val') == '') {
+					_this.parent().remove();
+				}
+				now_this.addClass("select");
+				return false;
+			}
+		});
 		
 	});
 	
@@ -265,7 +404,6 @@ Weixin.prototype.init_tags_selected = function () {
 	} else {
 		_father_this.resultbox.css('display','none');
 	}
-	
 	
 	public_post_fn({});
 	//_father_this.get_selected_tags();
@@ -293,6 +431,14 @@ Weixin.prototype.bu_xian_init_fn = function (obj) {
 	var now_class = $(obj).data('tag_class');
 	$('.'+now_class).removeClass("select");
 	$('.'+now_class).eq(0).addClass("select");
+	
+	//认证数据处理
+	for (var i=1;i<=this.sprz_ra_size;i++) {
+		if (_father_this['sprz_tags_'+i].data('tag_id') == $(obj).data('tag_id')) {
+			_father_this['sprz_tags_'+i].prop("checked", false);
+		}
+	}
+	
 	_father_this.init_tags_selected();
 	
 }
@@ -319,7 +465,7 @@ Weixin.prototype.btn_click_create_tags = function () {
 			'repetition' : obj.data('repetition')
 		});
 	});
-		
+
 }
 
 
@@ -331,10 +477,10 @@ Weixin.prototype.get_selected_tags = function () {
 	_father_this.init();
 
 	var search_tag_data = _father_this.search_tag_data;	//获取选中的标签值
-	var ckbj_type = _father_this.select_ckbj_type.val()
+	var zfjg_type = _father_this.select_zfjg_type.val()
 	
 	var result = {};
-	result.ckbj_type = ckbj_type;
+	result.zfjg_type = zfjg_type;
 	if (search_tag_data.size() > 0 ){
 		search_tag_data.each (function () {
 			var _this = $(this);
@@ -413,6 +559,7 @@ Weixin.prototype.search_fn = function () {
 	});
 }
 
+
 //获取搜索框的值
 Weixin.prototype.get_search_account = function () {
 	var _father_this = this;
@@ -424,6 +571,7 @@ Weixin.prototype.get_search_account = function () {
 		return false;
 	}
 }
+
 
 //拉黑收藏功能
 Weixin.prototype.lahei_and_shoucang_fn = function ($urL) {
@@ -458,6 +606,7 @@ Weixin.prototype.dataNum_And_PageNum = function (data) {
 	_father_this.all_page_num.text(Math.ceil(data / system_info.page_limit));
 }
 
+
 //执行
 Weixin.prototype.run = function () {
 	var _father_this = this;
@@ -476,7 +625,6 @@ Weixin.prototype.run = function () {
 	
 	_father_this.search_fn();
 }
-
 
 
 

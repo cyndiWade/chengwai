@@ -46,7 +46,11 @@
 			<td class="t1">价格：</td>
 			<td class="t2">
 				<div class="part01-price fl">
-				<select><option>单图文报价 </option></select>
+				<select id="select_zfjg_type">
+						<volist name="view_data['zfjg_type']" id="vo">
+							<option value="{$vo.val}">{$vo.title}</option>
+						</volist>
+					</select>
 				</div>
 				<div class="part02-price fl">
 				<volist name="view_data['jg']" id="vo">
@@ -71,17 +75,48 @@
 		  <tr>
 			<td class="t1">视频认证  <img src="{$global_tpl_view.Group_Resource_Path}images/qa_icon.png" />：</td>
 			<td class="t2">
-			<div class="part01-video fl">
+			<div class="part01-video fl" id="sprz_rq">
 				<volist name="view_data['sprz']" id="vo" key="i">
-				<span class="fl" ><input type="checkbox" class="check sprz_tags_{$i}" data-tag_id="{$vo.id}" data-classify="视频认证" data-field="{$vo.field_name}" data-repetition="yes" data-title="{$vo.title}" data-val="{$vo.val}" value="{$vo.val}"><em>{$vo.title}</em></span>
-			
-				</volist>
-				
+				<span class="fl" ><input type="checkbox" class="check sprz_tags_{$i}" data-tag_id="{$vo.id}" data-classify="{$vo.title}" data-field="{$vo.field_name}" data-repetition="yes" data-title="已认证" data-val="{$vo.val}" value="{$vo.val}"><em>{$vo.title}</em></span>
+				</volist>	
 			</td>
 		  </tr>
 		  <tr>
 			<td class="t1">其它筛选：</td>
-			<td class="t2"><div class="part01-select fl"><span>账号是否认证</span><span>受众性别</span><span>粉丝量认证时间</span><span>周平均阅读数</span></div></td>
+			<td class="t2">
+				<div class="box01-procsess l">
+					<strong class="blue fl">账号是否认证：</strong>
+					<div class="part01-cate fl">
+					<volist name="view_data['zhsfrz']" id="vo">
+						<span class="zhsfrz_tags" data-tag_class="zhsfrz_tags" data-tag_id="{$vo.id}"  data-classify="账号是否认证" data-field="zhsfrz" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+					</div>
+				</div>
+				<div class="box01-procsess l">
+					<strong class="blue fl">受众性别：</strong>
+					<div class="part01-cate fl">
+					<volist name="view_data['szxb']" id="vo">
+						<span class="szxb_tags" data-tag_class="szxb_tags" data-tag_id="{$vo.id}"  data-classify="受众性别" data-field="szxb" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+					</div>	
+				</div>
+				<div class="box01-procsess l">
+					<strong class="blue fl">粉丝量认证时间：</strong>
+					<div class="part01-cate fl">
+					<volist name="view_data['fsrzsj']" id="vo">
+						<span class="fsrzsj_tags" data-tag_class="fsrzsj_tags" data-tag_id="{$vo.id}"  data-classify="粉丝量认证时间" data-field="fsrzsj" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+					</div>
+				</div>
+				<div class="box01-procsess l">
+					<strong class="blue fl">周平均阅读数：</strong>
+					<div class="part01-cate fl">
+					<volist name="view_data['zpjyds']" id="vo">
+						<span class="zpjyds_tags" data-tag_class="zpjyds_tags" data-tag_id="{$vo.id}"  data-classify="周平均阅读数" data-field="zpjyds" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+					</div>
+				</div>
+			</td>
 		  </tr>
 		</table>
 		<div class="resultbox tc l">
@@ -98,6 +133,7 @@
 	</div>
 	<div class="col01-wx l">
 		<table class="tab01-weibo tab01-wx l">
+		 <tbody>
 		  <tr>
 			<th class="t1"><b>微信名称</b></th>
 			<th class="t2">行业分类</th>
@@ -110,54 +146,11 @@
 			<th class="t9">二维码</th>
 			<th class="last">操作</th>
 		  </tr>
-		  <tr>
-			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：quiadaa</span><i class="i-rz"></i><i class="i-sp"></i></div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
-			<td class="t2"><b class="red">娱乐圈</b></td>
-			<td class="t3"><div class="fsbox"><p>93000</p><img width="44" src="{$global_tpl_view.Group_Resource_Path}images/wx_img01.gif" /></div></td>
-			<td class="t4"><div class="pricebox"><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p></div></td>
-			<td class="t5"><p>男：占20%</p></td>
-			<td class="t6"><p>图文打开率：占20%</p><p>周平均阅读数：占20%</p></td>
-			<td class="t7">8000</td>
-			<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
-			<td class="t9"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>
-			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
-		  </tr>
-		  <tr>
-			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：quiadaa</span><i class="i-rz"></i><i class="i-sp"></i></div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
-			<td class="t2"><b class="red">娱乐圈</b></td>
-			<td class="t3"><div class="fsbox"><p>93000</p><img width="44" src="{$global_tpl_view.Group_Resource_Path}images/wx_img01.gif" /></div></td>
-			<td class="t4"><div class="pricebox"><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p></div></td>
-			<td class="t5"><p>男：占20%</p></td>
-			<td class="t6"><p>图文打开率：占20%</p><p>周平均阅读数：占20%</p></td>
-			<td class="t7">8000</td>
-			<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
-			<td class="t9"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>
-			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
-		  </tr>
-		  <tr>
-			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：quiadaa</span><i class="i-rz"></i><i class="i-sp"></i></div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
-			<td class="t2"><b class="red">娱乐圈</b></td>
-			<td class="t3"><div class="fsbox"><p>93000</p><img width="44" src="{$global_tpl_view.Group_Resource_Path}images/wx_img01.gif" /></div></td>
-			<td class="t4"><div class="pricebox"><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p></div></td>
-			<td class="t5"><p>男：占20%</p></td>
-			<td class="t6"><p>图文打开率：占20%</p><p>周平均阅读数：占20%</p></td>
-			<td class="t7">8000</td>
-			<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
-			<td class="t9"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>
-			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
-		  </tr>
-		  <tr>
-			<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="address l">北京东城区</div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>
-			<td class="t2"><b class="red">娱乐圈</b></td>
-			<td class="t3"><div class="fsbox"><p>93000</p><img width="44" src="{$global_tpl_view.Group_Resource_Path}images/wx_img01.gif" /></div></td>
-			<td class="t4"><div class="pricebox"><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p></div></td>
-			<td class="t5"><p>男：占20%</p></td>
-			<td class="t6"><p>图文打开率：占20%</p><p>周平均阅读数：占20%</p></td>
-			<td class="t7">8000</td>
-			<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>
-			<td class="t9"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>
-			<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>
-		  </tr>
+		  </tbody>
+		  <tbody id="list_content">
+		  
+
+		  </tbody>
 		</table>
 		<div class="weibo-bot l">
 			<div class="page-wb fr">
@@ -202,6 +195,7 @@ var system_info = {
 	is_celeprity : 0,	//是否是名人1是、0不是
 	page_limit : 10,	//每页条数
 }
+var list_content = $('#list_content');
 </script>
 
 </scritp>
@@ -238,22 +232,18 @@ var public_post_fn = function (obj_data) {
 		post_data.p = obj_data.this_number;
 	}
 
-	//这历史转发价格的类型，把这个注释就可以接收到转发价格的值
-	//post_data.zfjg_type = '';
-
-	//console.log(post_data)
 	
 	//AJAX获取数据
-//	var result = System.ajax_post_setup('{:U('/Advert/Weibo/get_grassroots_list')}',post_data,'JSON');
-	var result = {};
+	var result = System.ajax_post_setup('{:U('/Advert/Weixin/get_weixin_list')}',post_data,'JSON');
+	
 	if (result.status == 1) {
-		//_tbody.empty();
+		list_content.empty();
 		for (var key in result.data.list) {
-			//_tbody.append(create_now_html(result.data.list[key]));
+			list_content.append(create_now_html(result.data.list[key]));
 		}
 		
 		//拉黑和收藏功能
-		Weixin.lahei_and_shoucang_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+		//Weixin.lahei_and_shoucang_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
 
 		Weixin.dataNum_And_PageNum(result.data.count);
 		
@@ -267,27 +257,17 @@ var create_now_html = function ($data) {
 	
 	var html = '';
 	html += '<tr>';
-	html += '<td class="t1">';
-	html += '<div class="weibopart"><input type="checkbox" class="check" />';
-	html += 	'<img src="" class="wbimg" />';
-	html += 		'<div class="grp fl">';
-	html += 		'<h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5>';
-	html += 		'<div class="address l">'+$data.account_name+'</div>';
-	html += 		'<div class="desc l">简介：全球头条新闻全球头条新闻</div>';
-	html += 		'</div>';
-	html += '</div>';
-	html += '</td>';
-	html += '<td class="t2"><b class="red">'+$data.fans_num+'万</b></td>';
-	html += '<td class="t3">1.00</td>';
-	html += '<td class="t4">'+$data.yg_zhuanfa+'元</td>';
-	html += '<td class="t5">'+$data.rg_zhuanfa+'元</td>';
-	html += '<td class="t6">'+$data.yg_zhifa+'元</td>';
-	html += '<td class="t7">'+$data.rg_zhuanfa+'元</td>';
-	html += '<td class="t8">'+$data.week_order_num+'</td>';
-	html += '<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>';
-	html += '<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
-	html += '<td class="last"><div class="ctrl"><span>详情</span><span class="lahei_and_shoucang" data-or_type="1" data-weibo_id="'+$data.id+'"  >收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weibo_id="'+$data.id+'">拉黑</span></div></td>';
-  	html += '</tr>';
+	html += '<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：quiadaa</span><i class="i-rz"></i><i class="i-sp"></i></div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>';
+	html += '<td class="t2"><b class="red">娱乐圈</b></td>';
+	html += '<td class="t3"><div class="fsbox"><p>93000</p><img width="44" src="{$global_tpl_view.Group_Resource_Path}images/wx_img01.gif" /></div></td>';
+	html += '<td class="t4"><div class="pricebox"><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p></div></td>';
+	html += '<td class="t5"><p>男：占20%</p></td>';
+	html += '<td class="t6"><p>图文打开率：占20%</p><p>周平均阅读数：占20%</p></td>';
+	html += '<td class="t7">8000</td>';
+	html += '<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
+	html += '<td class="t9"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>';
+	html += '<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>';
+	html += '</tr>';
   	return html;
 } 
 

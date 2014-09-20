@@ -27,7 +27,7 @@ class WeixinAction extends AdvertBaseAction {
 			'CategoryTags'=>'CategoryTags',
 			'Users' => 'Users',
 			'CeleprityindexWeixin' => 'CeleprityindexWeixin',
-			'GrassrootsWeixin' => 'GrassrootsWeixin'
+			//'GrassrootsWeixin' => 'GrassrootsWeixin'
 	);
 	
 	//和构造方法
@@ -89,20 +89,28 @@ class WeixinAction extends AdvertBaseAction {
 		$CategoryTags = $this->db['CategoryTags'];
 		$this->now_classify_data = $CategoryTags->get_classify_data($this->caogen_Top_Tags_ParentId);
 	
-		$this->cjfl = $this->now_classify_data[222];
+		$this->cjfl = $this->now_classify_data[222];	
+		$this->zfjg_type = $this->now_classify_data[436];
 		$this->jg = $this->now_classify_data[253];
 		$this->fans_num = $this->now_classify_data[262];
+		$this->sprz = $this->now_classify_data[273];	
 		
-		$this->sprz = $this->now_classify_data[273];	//粉丝数量认证
-		//$this->fans_sex = $this->now_classify_data[298];
-		//$this->zfjg_type = $this->now_classify_data[421];
-		
+		$this->zhsfrz = $this->now_classify_data[277];
+		$this->szxb = $this->now_classify_data[278];
+		$this->fsrzsj = $this->now_classify_data[279];
+		$this->zpjyds = $this->now_classify_data[431];
+
 		
 		$data['cjfl'] = $this->cjfl;
 		$data['jg'] = $this->jg;
+		$data['zfjg_type'] = $this->zfjg_type;
 		$data['fans_num'] = $this->fans_num;
 		$data['sprz'] = $this->sprz;
-		//$data['zfjg_type'] = $this->zfjg_type;
+		
+		$data['zhsfrz'] = $this->zhsfrz;
+		$data['szxb'] = $this->szxb;
+		$data['fsrzsj'] = $this->fsrzsj;
+		$data['zpjyds'] = $this->zpjyds;
 		parent::data_to_view($data);
 	}
 	
@@ -121,6 +129,7 @@ class WeixinAction extends AdvertBaseAction {
 		}else{
 			$list_new = $this->db['CeleprityindexWeixin']->getPostArray($_POST,$this->oUser->id);
 			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
+
 		}
     }
 
