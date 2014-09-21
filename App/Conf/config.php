@@ -146,6 +146,71 @@ $custom= array (
 				),
 		),
 		
+		
+		//大导航分类ID集合
+		'Big_Nav_Class_Ids' => array(
+			//新浪、腾讯名人分类ID集合
+			'celebrity_tags_ids' => array(
+				'top_parent_id'=>252,//新浪、腾讯名人分类最顶层ID
+				'mrzy' => 21,			//名人职业
+				'mtly' => 22,			//名人领域
+				'ckbj_type' => 426,		//参考报价类型
+				'jg' => 95,				//价格
+				'dfmr_mt' => 106,		//地方名人媒体
+				'xqbq' => 118,			//兴趣标签
+				'mr_mtlb' => 150,		//名人/媒体类别
+				'phd' => 154,			//配合度
+				'mr_fans_num' => 159,	//名人粉丝数
+				'zhyc' => 169			//是否支持原创					
+			),
+			
+			//新浪、腾讯草根分类ID集合
+			'caogen_tags_ids' => array(
+				'top_parent_id'=>293,	//新浪、腾讯草根分类最顶层ID
+				'cjfl' => 295,			//常见分类
+				'jg' => 296,			//价格
+				'fans_num' => 297,		//粉丝量
+				'fans_sex' => 298,		//粉丝性别
+				'zfjg_type' => 421,		//转发价格
+			),
+				
+			//微信草根ids
+			'weixin_caogen_tags_ids' => array(
+				'top_parent_id'=>251,	//微信草根分类最顶层ID
+				'cjfl' => 222,		//常见分类
+				'zfjg_type' => 436,	//转发价格类型
+				'jg' => 253,		//价格
+				'fans_num' => 262,	//粉丝量
+				'sprz' => 273,		//视频认证
+				'zhsfrz' => 277,	//账号是否认证
+				'szxb' => 278,		//受众性别
+				'fsrzsj' => 279,	//粉丝量认证时间
+				'zpjyds' => 431,	//周平均阅读数	
+			),	
+				
+			//微信名人IDS
+			'weixin_celebrity_tags_ids' => array(
+				'top_parent_id'=>445,		//微信名人分类最顶层ID
+				'mrzy' => 453,				//名人职业
+				'mtly' => 452,				//名人领域
+				'ckbj_type' => 451,			//参考报价类型
+				'jg' => 447,				//价格
+				'dfmr_mt' => 448,			//地方名人媒体
+				'xqbq' => 449,				//兴趣标签
+					
+				'mr_mtlb' => 577,			//名人/媒体类别
+				'phd' => 578,				//配合度
+				'mr_fans_num' => 579,		//名人粉丝数
+				'zhyc' => 580,				//是否支持原创
+				'mrxb' => 581,				//名人性别		
+			), 
+
+			
+				
+			
+		),
+		
+		
 		/* 错误类型 */
 		'STATUS_SUCCESS' => '0',					//没有错误
 		'STATUS_NOT_LOGIN'	=> '1002',			//未登录

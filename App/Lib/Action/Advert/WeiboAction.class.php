@@ -13,11 +13,7 @@ class WeiboAction extends AdvertBaseAction {
 	
 	//控制器说明
 	private $module_explain = '微博账号';
-	
-	private $caogen_Top_Tags_ParentId = 293;	//草根分类顶层
-	
-	private $celebrity_Top_Tags_ParentId = 252;	//名人分类顶层
-	
+		
 	private $now_classify_data = array();	//当前分类数据
 
 	private $pt_type;	//平台类型
@@ -162,19 +158,16 @@ class WeiboAction extends AdvertBaseAction {
 	 */
 	private function show_caogen_category_tags () {
 		$CategoryTags = $this->db['CategoryTags'];
-		$this->now_classify_data = $CategoryTags->get_classify_data($this->caogen_Top_Tags_ParentId);
 		
-		$this->cjfl = $this->now_classify_data[295];
-		$this->jg = $this->now_classify_data[296];
-		$this->fans_num = $this->now_classify_data[297];
-		$this->fans_sex = $this->now_classify_data[298];
-		$this->zfjg_type = $this->now_classify_data[421];
+		$tags_ids = C('Big_Nav_Class_Ids.caogen_tags_ids');
+	
+		$this->now_classify_data = $CategoryTags->get_classify_data($tags_ids['top_parent_id']);
 		
-		$data['cjfl'] = $this->cjfl;
-		$data['jg'] = $this->jg;
-		$data['fans_num'] = $this->fans_num;
-		$data['fans_sex'] = $this->fans_sex;
-		$data['zfjg_type'] = $this->zfjg_type;
+		$data['cjfl'] = $this->now_classify_data[$tags_ids['cjfl']];
+		$data['jg'] = $this->now_classify_data[$tags_ids['jg']];
+		$data['fans_num'] = $this->now_classify_data[$tags_ids['fans_num']];
+		$data['fans_sex'] = $this->now_classify_data[$tags_ids['fans_sex']];
+		$data['zfjg_type'] = $this->now_classify_data[$tags_ids['zfjg_type']];
 		parent::data_to_view($data);
 	}
 	
@@ -184,31 +177,22 @@ class WeiboAction extends AdvertBaseAction {
 	 */
 	private function show_celebrity_category_tags () {
 		$CategoryTags = $this->db['CategoryTags'];
-		$this->now_classify_data = $CategoryTags->get_classify_data($this->celebrity_Top_Tags_ParentId);
-	
-		$this->mrzy = $this->now_classify_data[21];	//名人职业
-		$this->mtly = $this->now_classify_data[22];	//名人领域
-		$this->ckbj_type = $this->now_classify_data[426];	//参考报价类型
-		$this->jg = $this->now_classify_data[95];	//价格
-		$this->dfmr_mt = $this->now_classify_data[106];		//地方名人媒体
-		$this->xqbq = $this->now_classify_data[118];	//兴趣标签
 		
-		$this->mr_mtlb = $this->now_classify_data[150];	//名人/媒体类别
-		$this->phd = $this->now_classify_data[154];	//配合度
-		$this->mr_fans_num = $this->now_classify_data[159];	//名人粉丝数
-		$this->zhyc = $this->now_classify_data[169];	//是否支持原创
+		$tags_ids = C('Big_Nav_Class_Ids.celebrity_tags_ids');
+
+		$this->now_classify_data = $CategoryTags->get_classify_data($tags_ids['top_parent_id']);
 		
-		$data['mrzy'] = $this->mrzy;
-		$data['mtly'] = $this->mtly;
-		$data['ckbj_type'] = $this->ckbj_type;
-		$data['jg'] = $this->jg;
-		$data['dfmr_mt'] = $this->dfmr_mt;
-		$data['xqbq'] = $this->xqbq;
+		$data['mrzy'] = $this->now_classify_data[$tags_ids['mrzy']];	//名人职业
+		$data['mtly'] = $this->now_classify_data[$tags_ids['mtly']];	//名人领域
+		$data['ckbj_type'] = $this->now_classify_data[$tags_ids['ckbj_type']];	//参考报价类型
+		$data['jg'] = $this->now_classify_data[$tags_ids['jg']];	//价格
+		$data['dfmr_mt'] = $this->now_classify_data[$tags_ids['dfmr_mt']];		//地方名人媒体
+		$data['xqbq'] = $this->now_classify_data[$tags_ids['xqbq']];	//兴趣标签
 		
-		$data['mr_mtlb'] = $this->mr_mtlb;
-		$data['phd'] = $this->phd;
-		$data['mr_fans_num'] = $this->mr_fans_num;
-		$data['zhyc'] = $this->zhyc;
+		$data['mr_mtlb'] = $this->now_classify_data[$tags_ids['mr_mtlb']];	//名人/媒体类别
+		$data['phd'] = $this->now_classify_data[$tags_ids['phd']];	//配合度
+		$data['mr_fans_num'] = $this->now_classify_data[$tags_ids['mr_fans_num']];	//名人粉丝数
+		$data['zhyc'] = $this->now_classify_data[$tags_ids['zhyc']];	//是否支持原创
 		
 		parent::data_to_view($data);
 	}

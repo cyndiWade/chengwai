@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+    <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/member.css" type="text/css" />
+	<title>微信名人名媒列表页</title>
+</head>
+<body>
+
+<!-- 头部 -->
+<include file="Public:member_header" />
+
+<div class="wrap l">
+<div class="pbd">
+<div class="location l">
+	当前位置：<a href="#">首页</a>  >  <a href="#">微信推广</a> > <span class="blue">查看名人微信</span><a href="#" class="order">【预约功能上线啦！】可以约名人、名媒、意见领袖等优质自媒体帮您发广告啦！赶紧试试吧！</a>
+</div>
+<div class="box01-process l">
+	<p class="red l">名人/媒体执行流程：</p>
+	<ul class="fl">
+		<li><div class="grp01 fl">免费<br/>获取报价</div><div class="grp02 fl">通过预约，免费获取您心仪的名人 / 媒体报价</div></li>
+		<li><div class="grp01 fl">多方比价<br/>择优使用</div><div class="grp02 fl">根据报价及意向，确认想使用的名人 / 媒体</div></li>
+		<li><div class="grp01 fl">沟通细节<br/>力保执行</div><div class="grp02 fl">微播易全程监管迅速调节，力保执行</div></li>
+		<li><div class="grp01 fl">完成后<br/>扣款</div><div class="grp02 fl">执行完成后扣除执行金额，规避收钱不执行风险</div></li>
+	</ul>
+	<a href="#" class="btn bluebtn fl">立即创建预约需求</a>
+</div>
+<div class="area01-memwb area01-memwxmr l">
+	<ul class="wbtab l">
+		<li class="select"><a href="#" class="mbmr">全部名人/媒体</a></li>
+		<li><a href="#" class="hzr">战略合作名人/媒体</a></li>
+		<li><a href="#" class="cksc">查看收藏</a></li>
+		<li><a href="#" class="hmd">查看黑名单</a></li>
+	</ul>
+	<div class="searchbox searchbox-mr fl">
+		<div class="mid-search l">
+			<input type="text" class="seatext" value="请输名人/媒体名、账号名或关键字，若搜索多组关键字请用空格隔开例：李亚鹏或一号立井" /><input type="submit" class="btn seabtn" value="搜索" />
+		</div>
+	</div>
+	<div class="catebox l">
+		<table class="tab01-cate l">
+		  <tr>
+			<td class="t1">职业/领域：</td>
+			<td class="t2">
+			<div class="box01-procsess box01-procsess-first l"><strong class="blue fl">名人职业：</strong><div class="part01-cate fl"><span>不限</span><span class="select">影视演员</span><span>歌手</span><span>模特</span><span>主持人</span><span>腾讯微博</span><span>微淘</span><span>歌手</span><span>模特</span><span>主持人</span><span>腾讯微博</span><span>微淘</span><span>歌手</span><span>模特</span><span>主持人</span><span>腾讯微博</span><span>微淘</span></div><div class="more fl" id="morecate">更多</div></div>
+			<div class="box01-procsess l"><strong class="blue fl">媒体领域：</strong><div class="part01-city fl"><span>不限</span><span class="select">创意/生活</span><span>新闻时政</span><span>IT/互联网</span><span>综合媒体</span><span>新闻时政</span><span>IT/互联网</span><span>综合媒体</span><span>新闻时政</span><span>IT/互联网</span><span>综合媒体</span><span>新闻时政</span><span>IT/互联网</span><span>综合媒体</span><span>腾讯微博</span><span>微淘</span></div><div class="more fl" id="morecity">更多</div></div>
+			</td>
+		  </tr>
+		  <tr>
+			<td class="t1">价格：</td>
+			<td class="t2"><div class="part01-price fl"><select><option>参考报价</option></select></div><div class="part02-price fl"><span class="select">所有</span><span>50-100元</span><span>100-200元</span><span>200-500元</span><span>500-1000元</span><span>1000元以上</span></div><div class="part03-price fl"><input type="text" class="text" /><i>-</i><input type="text" class="text" /><i>元</i></div><span class="btn okbtn fl">确定</span></td>
+		  </tr>
+		  <tr>
+			<td class="t1">地方名人/媒体：</td>
+			<td class="t2"><div class="part02-price fl"><span class="select">不限</span><span>上海</span><span>北京</span><span>台湾</span><span>香港</span><span>广州</span></div><div class="part01-citysel fl"><select class="fl"><option>请选择</option></select><select class="fl"><option>请选择</option></select></div><span class="btn okbtn fl">确定</span></td>
+		  </tr>
+		  <tr>
+			<td class="t1">兴趣标签：</td>
+			<td class="t2"><div class="part01-tag fl"><span class="select">不限</span><span>影视</span><span>音乐</span><span>新闻 </span><span>美食</span><span>美食</span><span>体育</span></div><div class="more fl" id="moreta">更多</div></td>
+		  </tr>
+		  <tr>
+			<td class="t1">其它筛选：</td>
+			<td class="t2"><div class="part01-select fl"><span>名人/媒体类别</span><span>配合度</span><span>粉丝数</span><span>是否支持原创</span><span>名人性别</span><span>所在地</span><span>是否战略合作伙伴</span></div></td>
+		  </tr>
+		</table>
+		<div class="resultbox tc l">
+			<div class="trash fr">清空选择筛选条件 </div>
+			<span class="span-ok fl">已选择 ：</span>
+			<ul class="grp fl">
+				<li><strong>平台 > <b>新浪</b></strong><em class="del"></em></li>
+			</ul>
+		</div>
+	</div>
+	<div class="orderbox l">
+		<b class="total fr">共11178个</b><b class="total fr">200页</b>
+		<span class="orderspan orderspan-select fl">默认排序</span><span class="ordermt fl">粉丝度</span><span class="ordermt fl">配合度</span>
+	</div>
+	<div class="col01-mr l">
+		<div class="box01-cele fl">
+			<input type="checkbox" class="check fl" />
+			<div class="part01-cele fl">
+				<img src="{$global_tpl_view.Group_Resource_Path}images/cer_img01.gif" />
+				<div class="ctrl">
+					<span>收藏</span><span>拉黑</span>
+				</div>
+			</div>
+			<div class="part02-cele fl">
+				<div class="grp01-cele l">
+					<span class="mrdetail cur fr">查看详情</span><i class="weixin fl"></i><i class="v fl"></i><span class="name fl">微杂志</span>
+				</div>
+				<div class="grp02-cele l">
+					<ul class="arr01-cele l">
+						<li><span class="blue">领域：</span>教育 <em>旅游</em></li>
+						<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>
+						<li><span class="blue">参考报价：</span><b class="red">41万</b></li>
+						<li><span class="blue">配合度：</span>高</li>
+					</ul>
+					<div class="arr02-cele l">
+						<div class="tem01-cele fr">
+							<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员
+						</div>
+						<div class="tem02-cele fl">
+							影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box01-cele fl">
+			<input type="checkbox" class="check fl" />
+			<div class="part01-cele fl">
+				<img src="{$global_tpl_view.Group_Resource_Path}images/cer_img01.gif" />
+				<div class="ctrl">
+					<span>收藏</span><span>拉黑</span>
+				</div>
+			</div>
+			<div class="part02-cele fl">
+				<div class="grp01-cele l">
+					<span class="mrdetail cur fr">查看详情</span><i class="weixin fl"></i><i class="v fl"></i><span class="name fl">微杂志</span>
+				</div>
+				<div class="grp02-cele l">
+					<ul class="arr01-cele l">
+						<li><span class="blue">领域：</span>教育 <em>旅游</em></li>
+						<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>
+						<li><span class="blue">参考报价：</span><b class="red">41万</b></li>
+						<li><span class="blue">配合度：</span>高</li>
+					</ul>
+					<div class="arr02-cele l">
+						<div class="tem01-cele fr">
+							<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员
+						</div>
+						<div class="tem02-cele fl">
+							影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box01-cele fl">
+			<input type="checkbox" class="check fl" />
+			<div class="part01-cele fl">
+				<img src="{$global_tpl_view.Group_Resource_Path}images/cer_img01.gif" />
+				<div class="ctrl">
+					<span>收藏</span><span>拉黑</span>
+				</div>
+			</div>
+			<div class="part02-cele fl">
+				<div class="grp01-cele l">
+					<span class="mrdetail cur fr">查看详情</span><i class="weixin fl"></i><i class="v fl"></i><span class="name fl">微杂志</span>
+				</div>
+				<div class="grp02-cele l">
+					<ul class="arr01-cele l">
+						<li><span class="blue">领域：</span>教育 <em>旅游</em></li>
+						<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>
+						<li><span class="blue">参考报价：</span><b class="red">41万</b></li>
+						<li><span class="blue">配合度：</span>高</li>
+					</ul>
+					<div class="arr02-cele l">
+						<div class="tem01-cele fr">
+							<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员
+						</div>
+						<div class="tem02-cele fl">
+							影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box01-cele fl">
+			<input type="checkbox" class="check fl" />
+			<div class="part01-cele fl">
+				<img src="{$global_tpl_view.Group_Resource_Path}images/cer_img01.gif" />
+				<div class="ctrl">
+					<span>收藏</span><span>拉黑</span>
+				</div>
+			</div>
+			<div class="part02-cele fl">
+				<div class="grp01-cele l">
+					<span class="mrdetail cur fr">查看详情</span><i class="weixin fl"></i><i class="v fl"></i><span class="name fl">微杂志</span>
+				</div>
+				<div class="grp02-cele l">
+					<ul class="arr01-cele l">
+						<li><span class="blue">领域：</span>教育 <em>旅游</em></li>
+						<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>
+						<li><span class="blue">参考报价：</span><b class="red">41万</b></li>
+						<li><span class="blue">配合度：</span>高</li>
+					</ul>
+					<div class="arr02-cele l">
+						<div class="tem01-cele fr">
+							<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员
+						</div>
+						<div class="tem02-cele fl">
+							影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="weibo-bot l">
+			<div class="page-wb fr">
+				<a href="#" class="prev"><</a><a href="#" class="num on">1</a><a href="#" class="num">2</a><a href="#" class="num">3</a><a href="#" class="num">4</a><em>...</em><a href="#" class="num">25</a><a href="#" class="next">></a><b class="total fl">共25页</b><div class="count fl"><i class="fl">到第</i><input type="text" class="text fl" /><i class="fl">页</i><span class="aok fl">前往</span><strong class="show fl">显示<select><option>10</option></select>条</strong></div>
+			</div>
+			<div class="controlbox fl">
+				<span>全选</span><span id="batch">批量添加账号</span><span>批量导出报价单</span>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+
+
+<include file="Public:member_footer" />
+
+<!-- 批量添加弹窗 -->
+<div class="batchbox none tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选微信主</b></div>
+	<div class="mid-batch l">
+		<div class="part01-batch fl">
+			已选择<b>3</b>位微信主，计费<b>1164.00</b>元
+		</div>
+		<ul class="part02-batch fl">
+			<li><span class="del fr"></span><strong>陈晓明</strong></li>
+			<li><span class="del fr"></span><strong>猪大肠</strong></li>
+			<li><span class="del fr"></span><strong>冷笑话</strong></li>
+		</ul>
+		<a href="#" class="btn bluebtn">立即派单</a>
+	</div>
+</div>
+
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+
+
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.tab01-weibo tr:even').addClass('even');
+	$('#batch').click(function(){
+		$('.batchbox').popOn();
+	})
+	$('.top-search strong').click(function(){
+		$(this).siblings().removeClass('on')
+		$(this).addClass('on');
+	})
+	$('#morecate').click(function(){
+		$('.part01-cate').toggleClass('part01-cate-auot');
+	})
+	$('#morecity').click(function(){
+		$('.part01-city').toggleClass('part01-city-auot');
+	})
+})
+</script>
+</body>
+</html>

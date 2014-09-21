@@ -4,7 +4,7 @@
 	<include file="Public:top" />
     <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/member.css" type="text/css" />
-	<title>微信名人名媒列表页</title>
+	<title>查看名人微信</title>
 </head>
 <body>
 
@@ -14,7 +14,7 @@
 <div class="wrap l">
 <div class="pbd">
 <div class="location l">
-	当前位置：<a href="#">首页</a>  >  <a href="#">微信推广</a> > <span class="blue">查看名人微信</span><a href="#" class="order">【预约功能上线啦！】可以约名人、名媒、意见领袖等优质自媒体帮您发广告啦！赶紧试试吧！</a>
+	当前位置：<a href="#">首页</a>  >  <a href="#">微博推广</a> > <span class="blue">查看名人微信</span><a href="#" class="order">【预约功能上线啦！】可以约名人、名媒、意见领袖等优质自媒体帮您发广告啦！赶紧试试吧！</a>
 </div>
 <div class="box01-process l">
 	<p class="red l">名人/媒体执行流程：</p>
@@ -27,15 +27,19 @@
 	<a href="#" class="btn bluebtn fl">立即创建预约需求</a>
 </div>
 <div class="area01-memwb area01-memwxmr l">
+
+	<!-- 名人微博3级导航-->
+	<!-- 微博名人三级导航 -->
 	<ul class="wbtab l">
-		<li class="select"><a href="#" class="mbmr">全部名人/媒体</a></li>
-		<li><a href="#" class="hzr">战略合作名人/媒体</a></li>
-		<li><a href="#" class="cksc">查看收藏</a></li>
-		<li><a href="#" class="hmd">查看黑名单</a></li>
+		<li class="select three_sidebar_type" data-field="all" data-val=""><a class="mbmr" href="javascript:;">全部名人/媒体 </a></li>
+		<li class="three_sidebar_type" data-field="zlhzmr_mt" data-val="1"><a class="hzr" href="javascript:;">战略合作名人/媒体</a></li>
+		<li class="three_sidebar_type" data-field="cksc" data-val="1"><a class="cksc" href="javascript:;">查看收藏</a></li>
+		<li class="three_sidebar_type" data-field="ckhmd" data-val="1"><a class="hmd" href="javascript:;">查看黑名单</a></li>
 	</ul>
+	
 	<div class="searchbox searchbox-mr fl">
 		<div class="mid-search l">
-			<input type="text" class="seatext" value="请输名人/媒体名、账号名或关键字，若搜索多组关键字请用空格隔开例：李亚鹏或一号立井" /><input type="submit" class="btn seabtn" value="搜索" />
+			<input type="text" class="seatext search_account" data-field="account" data-ischeck="0" value="" placeholder="请输名人/媒体名、账号名或关键字，若搜索多组关键字请用空格隔开例：李亚鹏或一号立井"/><input type="submit" class="btn seabtn" id="search" value="搜索" />
 		</div>
 	</div>
 	<div class="catebox l">
@@ -43,163 +47,141 @@
 		  <tr>
 			<td class="t1">职业/领域：</td>
 			<td class="t2">
-			<div class="box01-procsess box01-procsess-first l"><strong class="blue fl">名人职业：</strong><div class="part01-cate fl"><span>不限</span><span class="select">影视演员</span><span>歌手</span><span>模特</span><span>主持人</span><span>腾讯微博</span><span>微淘</span><span>歌手</span><span>模特</span><span>主持人</span><span>腾讯微博</span><span>微淘</span><span>歌手</span><span>模特</span><span>主持人</span><span>腾讯微博</span><span>微淘</span></div><div class="more fl" id="morecate">更多</div></div>
-			<div class="box01-procsess l"><strong class="blue fl">媒体领域：</strong><div class="part01-city fl"><span>不限</span><span class="select">创意/生活</span><span>新闻时政</span><span>IT/互联网</span><span>综合媒体</span><span>新闻时政</span><span>IT/互联网</span><span>综合媒体</span><span>新闻时政</span><span>IT/互联网</span><span>综合媒体</span><span>新闻时政</span><span>IT/互联网</span><span>综合媒体</span><span>腾讯微博</span><span>微淘</span></div><div class="more fl" id="morecity">更多</div></div>
+			<div class="box01-procsess box01-procsess-first l"><strong class="blue fl">名人职业：</strong><div class="part01-cate fl">
+				<volist name="view_data['mrzy']" id="vo">
+					<span class="mrzy_tags" data-tag_class="mrzy_tags" data-tag_id="{$vo.id}"  data-classify="名人职业" data-field="mrzy" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>
+			</div><div class="more fl" id="morecate">更多</div></div>
+			<div class="box01-procsess l"><strong class="blue fl">媒体领域：</strong><div class="part01-city fl">
+				<volist name="view_data['mtly']" id="vo">
+					<span class="mtly_tags" data-tag_class="mtly_tags" data-tag_id="{$vo.id}"  data-classify="媒体领域" data-field="mtly" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>
+			</div><div class="more fl" id="morecity">更多</div></div>
 			</td>
 		  </tr>
 		  <tr>
 			<td class="t1">价格：</td>
-			<td class="t2"><div class="part01-price fl"><select><option>参考报价</option></select></div><div class="part02-price fl"><span class="select">所有</span><span>50-100元</span><span>100-200元</span><span>200-500元</span><span>500-1000元</span><span>1000元以上</span></div><div class="part03-price fl"><input type="text" class="text" /><i>-</i><input type="text" class="text" /><i>元</i></div><span class="btn okbtn fl">确定</span></td>
+			<td class="t2">
+				<div class="part01-price fl">
+					<select id="select_ckbj_type">
+						<volist name="view_data['ckbj_type']" id="vo">
+							<option value="{$vo.val}">{$vo.title}</option>
+						</volist>
+					</select>
+				</div>
+				<div class="part02-price fl">
+					<volist name="view_data['jg']" id="vo">
+					<span class="jg_tags" data-tag_class="jg_tags"  data-tag_id="{$vo.id}" data-classify="价格" data-field="jg" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+				</div>
+				<div class="part03-price fl">
+					<input type="text" class="text ipt_jiage_start" /><i>-</i><input type="text" class="text ipt_jiage_over" /><i>元</i>
+				</div><span class="btn okbtn fl btn_jiage_yes" data-tag_class="jg_tags">确定</span></td>
 		  </tr>
 		  <tr>
 			<td class="t1">地方名人/媒体：</td>
-			<td class="t2"><div class="part02-price fl"><span class="select">不限</span><span>上海</span><span>北京</span><span>台湾</span><span>香港</span><span>广州</span></div><div class="part01-citysel fl"><select class="fl"><option>请选择</option></select><select class="fl"><option>请选择</option></select></div><span class="btn okbtn fl">确定</span></td>
+			<td class="t2">
+				<div class="part02-price fl">
+				<volist name="view_data['dfmr_mt']" id="vo">
+					<span class="dfmr_mt_tags" data-tag_class="dfmr_mt_tags" data-tag_id="{$vo.id}"  data-classify="地方名人/媒体" data-field="dfmr_mt" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>		
+				</div>
+				<div class="part01-citysel fl">
+					<select class="fl region_left"></select>
+					<select class="fl region_right" data-tag_class="dfmr_mt_tags" data-classify="地方名人/媒体" data-repetition="no"  data-field="dfmr_mt"></select>
+				</div><span class="btn okbtn fl btn_confirm_dqmr">确定</span></td>
 		  </tr>
 		  <tr>
 			<td class="t1">兴趣标签：</td>
-			<td class="t2"><div class="part01-tag fl"><span class="select">不限</span><span>影视</span><span>音乐</span><span>新闻 </span><span>美食</span><span>美食</span><span>体育</span></div><div class="more fl" id="moreta">更多</div></td>
+			<td class="t2">
+				<div class="part01-cate fl part01-xqbq">
+					<volist name="view_data['xqbq']" id="vo">
+						<span class="xqbq_tags" data-tag_class="xqbq_tags" data-tag_id="{$vo.id}"  data-classify="兴趣标签" data-field="xqbq" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+				</div><div class="more fl" id="moreta">更多</div></td>
 		  </tr>
+		  <!--
 		  <tr>
 			<td class="t1">其它筛选：</td>
-			<td class="t2"><div class="part01-select fl"><span>名人/媒体类别</span><span>配合度</span><span>粉丝数</span><span>是否支持原创</span><span>名人性别</span><span>所在地</span><span>是否战略合作伙伴</span></div></td>
+			<td class="t2"><div class="part01-select fl"><span>名人/媒体类别</span><span>配合度</span><span>粉丝数</span><span>是否支持原创</span></div></td>
 		  </tr>
+		   -->
+		  
+		   <tr>
+			<td class="t1">其它筛选：</td>
+			<td class="t2">
+				<div class="box01-procsess l">
+					<strong class="blue fl">名人/媒体类别：</strong>
+					<div class="part01-cate fl">
+					<volist name="view_data['mr_mtlb']" id="vo">
+						<span class="mr_mtlb_tags" data-tag_class="mr_mtlb_tags" data-tag_id="{$vo.id}"  data-classify="名人/媒体类别" data-field="mr_mtlb" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+					</div>
+				</div>
+				<div class="box01-procsess l">
+					<strong class="blue fl">配合度：</strong>
+					<div class="part01-cate fl">
+					<volist name="view_data['phd']" id="vo">
+						<span class="phd_tags" data-tag_class="phd_tags" data-tag_id="{$vo.id}"  data-classify="配合度" data-field="phd" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+					</div>
+				</div>
+				<div class="box01-procsess l">
+					<strong class="blue fl">粉丝数：</strong>
+					<div class="part01-cate fl">
+					<volist name="view_data['mr_fans_num']" id="vo">
+						<span class="mr_fans_num_tags" data-tag_class="mr_fans_num_tags" data-tag_id="{$vo.id}"  data-classify="粉丝数" data-field="mr_fans_num" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+					</div>
+				</div>
+				<div class="box01-procsess l">
+					<strong class="blue fl">是否支持原创：</strong>
+					<div class="part01-cate fl">
+					<volist name="view_data['zhyc']" id="vo">
+						<span class="zhyc_tags" data-tag_class="zhyc_tags" data-tag_id="{$vo.id}"  data-classify="是否支持原创" data-field="zhyc" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+					</div>
+				</div>
+				<div class="box01-procsess l">
+					<strong class="blue fl">名人性别：</strong>
+					<div class="part01-cate fl">
+					<volist name="view_data['mrxb']" id="vo">
+						<span class="mrxb_tags" data-tag_class="mrxb_tags" data-tag_id="{$vo.id}"  data-classify="名人性别" data-field="mrxb" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					</volist>
+					</div>
+				</div>
+			</td>
+		  </tr>
+		  
 		</table>
 		<div class="resultbox tc l">
-			<div class="trash fr">清空选择筛选条件 </div>
+			<div class="trash fr clear_tags">清空选择筛选条件 </div>
 			<span class="span-ok fl">已选择 ：</span>
-			<ul class="grp fl">
-				<li><strong>平台 > <b>新浪</b></strong><em class="del"></em></li>
+			<ul class="grp fl select_tags_vessel">
+				
 			</ul>
 		</div>
+
 	</div>
-	<div class="orderbox l">
-		<b class="total fr">共11178个</b><b class="total fr">200页</b>
-		<span class="orderspan orderspan-select fl">默认排序</span><span class="ordermt fl">粉丝度</span><span class="ordermt fl">配合度</span>
-	</div>
-	<div class="col01-mr l">
-		<div class="box01-cele fl">
-			<input type="checkbox" class="check fl" />
-			<div class="part01-cele fl">
-				<img src="{$global_tpl_view.Group_Resource_Path}images/cer_img01.gif" />
-				<div class="ctrl">
-					<span>收藏</span><span>拉黑</span>
-				</div>
-			</div>
-			<div class="part02-cele fl">
-				<div class="grp01-cele l">
-					<span class="mrdetail cur fr">查看详情</span><i class="weixin fl"></i><i class="v fl"></i><span class="name fl">微杂志</span>
-				</div>
-				<div class="grp02-cele l">
-					<ul class="arr01-cele l">
-						<li><span class="blue">领域：</span>教育 <em>旅游</em></li>
-						<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>
-						<li><span class="blue">参考报价：</span><b class="red">41万</b></li>
-						<li><span class="blue">配合度：</span>高</li>
-					</ul>
-					<div class="arr02-cele l">
-						<div class="tem01-cele fr">
-							<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-						<div class="tem02-cele fl">
-							影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-					</div>
-				</div>
-			</div>
+		<div class="orderbox l">
+			<b class="total fr">共<span id="all_data_num"></span>个</b><b class="total fr"><span id="all_page_num"></span>页</b>
+			<span class="orderspan orderspan-select fl">默认排序</span><span class="ordermt fl">粉丝度</span><span class="ordermt fl">配合度</span>
 		</div>
-		<div class="box01-cele fl">
-			<input type="checkbox" class="check fl" />
-			<div class="part01-cele fl">
-				<img src="{$global_tpl_view.Group_Resource_Path}images/cer_img01.gif" />
-				<div class="ctrl">
-					<span>收藏</span><span>拉黑</span>
-				</div>
+		<div class="col01-mr l" >
+		
+			<div id="list_content">
+			
+			
 			</div>
-			<div class="part02-cele fl">
-				<div class="grp01-cele l">
-					<span class="mrdetail cur fr">查看详情</span><i class="weixin fl"></i><i class="v fl"></i><span class="name fl">微杂志</span>
-				</div>
-				<div class="grp02-cele l">
-					<ul class="arr01-cele l">
-						<li><span class="blue">领域：</span>教育 <em>旅游</em></li>
-						<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>
-						<li><span class="blue">参考报价：</span><b class="red">41万</b></li>
-						<li><span class="blue">配合度：</span>高</li>
-					</ul>
-					<div class="arr02-cele l">
-						<div class="tem01-cele fr">
-							<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-						<div class="tem02-cele fl">
-							影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-					</div>
-				</div>
-			</div>
+				
 		</div>
-		<div class="box01-cele fl">
-			<input type="checkbox" class="check fl" />
-			<div class="part01-cele fl">
-				<img src="{$global_tpl_view.Group_Resource_Path}images/cer_img01.gif" />
-				<div class="ctrl">
-					<span>收藏</span><span>拉黑</span>
-				</div>
-			</div>
-			<div class="part02-cele fl">
-				<div class="grp01-cele l">
-					<span class="mrdetail cur fr">查看详情</span><i class="weixin fl"></i><i class="v fl"></i><span class="name fl">微杂志</span>
-				</div>
-				<div class="grp02-cele l">
-					<ul class="arr01-cele l">
-						<li><span class="blue">领域：</span>教育 <em>旅游</em></li>
-						<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>
-						<li><span class="blue">参考报价：</span><b class="red">41万</b></li>
-						<li><span class="blue">配合度：</span>高</li>
-					</ul>
-					<div class="arr02-cele l">
-						<div class="tem01-cele fr">
-							<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-						<div class="tem02-cele fl">
-							影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-					</div>
-				</div>
-			</div>
+		
 		</div>
-		<div class="box01-cele fl">
-			<input type="checkbox" class="check fl" />
-			<div class="part01-cele fl">
-				<img src="{$global_tpl_view.Group_Resource_Path}images/cer_img01.gif" />
-				<div class="ctrl">
-					<span>收藏</span><span>拉黑</span>
-				</div>
-			</div>
-			<div class="part02-cele fl">
-				<div class="grp01-cele l">
-					<span class="mrdetail cur fr">查看详情</span><i class="weixin fl"></i><i class="v fl"></i><span class="name fl">微杂志</span>
-				</div>
-				<div class="grp02-cele l">
-					<ul class="arr01-cele l">
-						<li><span class="blue">领域：</span>教育 <em>旅游</em></li>
-						<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>
-						<li><span class="blue">参考报价：</span><b class="red">41万</b></li>
-						<li><span class="blue">配合度：</span>高</li>
-					</ul>
-					<div class="arr02-cele l">
-						<div class="tem01-cele fr">
-							<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-						<div class="tem02-cele fl">
-							影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+	
+	
 		<div class="weibo-bot l">
-			<div class="page-wb fr">
-				<a href="#" class="prev"><</a><a href="#" class="num on">1</a><a href="#" class="num">2</a><a href="#" class="num">3</a><a href="#" class="num">4</a><em>...</em><a href="#" class="num">25</a><a href="#" class="next">></a><b class="total fl">共25页</b><div class="count fl"><i class="fl">到第</i><input type="text" class="text fl" /><i class="fl">页</i><span class="aok fl">前往</span><strong class="show fl">显示<select><option>10</option></select>条</strong></div>
+			<div class="page-wb fr system_page">
+
 			</div>
 			<div class="controlbox fl">
 				<span>全选</span><span id="batch">批量添加账号</span><span>批量导出报价单</span>
@@ -208,6 +190,50 @@
 	</div>
 </div>
 </div>
+</div>
+
+<!-- 详情弹窗 -->
+<div class="batchboxdetail none tl">
+	<div class="top-batchdetail l pr">
+		<span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span>
+		<ul class="mrnav fl">
+			<li class="select">名人基本信息</li>
+		
+		</ul>
+	</div>
+	<div class="mid-batchdetail l">
+		<div class="box01-mrfx">
+			<div class="part01-mrfx fl">
+				<div class="grp01 fl">
+					<img src="{$global_tpl_view.Group_Resource_Path}images/mr_img01.gif" />
+				</div>
+				<div class="grp02 fl">
+					<h6><b>苏经</b>的详细信息</h6>
+					<table class="tab01-mr">
+					  <tr>
+						<td class="t1">国籍:</td>
+						<td class="t2">中国</td>
+					  </tr>
+					  <tr>
+						<td class="t1">主要成就:</td>
+						<td class="t2">暂无数据</td>
+					  </tr>
+					</table>
+				</div>
+			</div>
+			<div class="part02-mrfx fl">
+				<h6><strong>履历介绍</strong></h6>
+				<p>苏芩，著名作家，历任媒体主编、国内多家电（视）台、平面媒体特邀顾问。她长期以大视角关注女性发展，关爱女性成长，为女人立言，其“苏芩女学馆”是
+目前国内最受欢迎、流量最大的情感交流空间，吸引超过六亿人次访问，倍受年轻读者追捧。其文经典精悍，睿智深远，洞穿世情人心却不乏温暖励志，都市女
+性几乎无人不知</p>
+			</div>
+			<div class="part02-mrfx fl">
+				<h6><strong>账号信息</strong></h6>
+				<div class="info"><span>平均转发数： <b class="red">1934.591</b></span><span>平均评论数： <b class="red">1934.591</b></span></div>
+			</div>
+		</div>
+		
+	</div>
 </div>
 
 
@@ -228,29 +254,119 @@
 		<a href="#" class="btn bluebtn">立即派单</a>
 	</div>
 </div>
-
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 
-
-<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
 <script type="text/javascript">
-$(function(){
-	$('.tab01-weibo tr:even').addClass('even');
-	$('#batch').click(function(){
-		$('.batchbox').popOn();
-	})
-	$('.top-search strong').click(function(){
-		$(this).siblings().removeClass('on')
-		$(this).addClass('on');
-	})
-	$('#morecate').click(function(){
-		$('.part01-cate').toggleClass('part01-cate-auot');
-	})
-	$('#morecity').click(function(){
-		$('.part01-city').toggleClass('part01-city-auot');
-	})
-})
+var system_info = {
+	is_celeprity : 1,	//是否是名人1是、0不是
+	page_limit : 10,	//每页条数
+}
+var list_content = $('#list_content');
+</script>
+
+<script src="{$global_tpl_view.Global_Resource_Path}Tool/Region.js"></script>
+<script src="{$global_tpl_view.Module_Resource_Path}celebrity_weixin.js"></script>
+<script src="{$global_tpl_view.Group_Resource_Path}js/page.js"></script>
+<script type="text/javascript">
+
+
+//公共JS方法。每个事件都要触发这个函数
+var public_post_fn = function (obj_data) {
+	var post_data = {};
+	post_data.is_celeprity = system_info.is_celeprity;	//是否是名人
+	
+	//三级导航已选择数据
+	var three_sidebar_selected = Weibo.get_three_sidebar_selected();
+	for (var key in three_sidebar_selected) {
+		post_data[key] = three_sidebar_selected[key];
+	}
+
+	//获取搜索框的数据
+	var account_data = Weibo.get_search_account();
+	if (account_data != false) {
+		post_data[account_data.field] = account_data.val;
+	}
+	
+	//获取选中的标签数据
+	var tags_selected =	Weibo.get_selected_tags();	//获取选中标签数据
+	for (var field in tags_selected) {
+		post_data[field]= tags_selected[field];
+	}
+	
+
+	//获取点击后的分页数据
+	if (obj_data.this_number != undefined) {
+		post_data.p = obj_data.this_number;
+	}
+
+	//console.log(post_data)
+	
+	//AJAX获取数据
+	var result = System.ajax_post_setup('{:U('/Advert/Weixin/get_weixin_list')}',post_data,'JSON');
+	
+	if (result.status == 1) {
+		list_content.empty();
+		for (var key in result.data.list) {
+			list_content.append(create_now_html(result.data.list[key]));
+		}
+		
+		//拉黑和收藏功能
+		Weibo.lahei_and_shoucang_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+
+		Weibo.dataNum_And_PageNum(result.data.count);
+		
+		//更新page
+		page_now_list(result.data.count,result.data.p,system_info.page_limit);
+	} 
+}
+
+
+
+var create_now_html = function ($data) {
+	
+	var html = '';
+	html += '<div class="box01-cele fl">';
+	html += '<input type="checkbox" class="check fl" />';
+	html += '<div class="part01-cele fl">';
+	html += '<img src="images/cer_img01.gif" />';
+	html += '<div class="ctrl">';
+	html += '<span>收藏</span><span>拉黑</span>';
+	html += '</div>';
+	html += '</div>';
+	html += '<div class="part02-cele fl">';
+	html += '<div class="grp01-cele l">';
+	html += '<span class="mrdetail cur fr">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl">苏花</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>';
+	html += '</div>';
+	html += '<div class="grp02-cele l">';
+	html += '<ul class="arr01-cele l">';
+	html += '<li><span class="blue">职业：</span>歌手 <em>影视演员</em></li>';
+	html += '<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>';
+	html += '<li><span class="blue">参考报价：</span><b class="red">41万</b></li>';
+	html += '<li><span class="blue">配合度：</span>高</li>';
+	html += '</ul>';
+	html += '<div class="arr02-cele l">';
+	html += '<div class="tem01-cele fr">';
+	html += '<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员';
+	html += '</div>';
+	html += '<div class="tem02-cele fl">';
+	html += '影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员';
+	html += '</div>';
+	html += '</div>';
+	html += '</div>';
+	html += '</div>';
+	html += '</div>';
+
+  	return html;
+} 
+
+//地区菜单
+var Region = new Region('{:U('/Advert/Tool/get_Region_Data')}');
+Region.init();
+Region.run();	
+
+
+
 </script>
 </body>
 </html>
