@@ -29,7 +29,8 @@ class WeixinAction extends AdvertBaseAction {
 			'CategoryTags'=>'CategoryTags',
 			'Users' => 'Users',
 			'CeleprityindexWeixin' => 'CeleprityindexWeixin',
-			'GrassrootsWeixin' => 'GrassrootsWeixin'
+			'GrassrootsWeixin' => 'GrassrootsWeixin',
+			'BlackorcollectionWeixin' => 'BlackorcollectionWeixin'
 	);
 	
 	//和构造方法
@@ -150,7 +151,27 @@ class WeixinAction extends AdvertBaseAction {
 		}
     }
 
-
+    //微信拉黑或者收藏
+    public function get_weixin_borc()
+    {
+    	$bool = $this->db['BlackorcollectionWeixin']->insertBlackorcollection($_POST,$this->oUser->id);
+    	if($bool)
+		{
+			if($_POST['or_type']==0)
+			{
+				parent::callback(1,'拉入黑名单成功!','ok');
+			}else{
+				parent::callback(1,'收藏成功!','ok');
+			}
+		}else{
+			if($_POST['or_type']==0)
+			{
+				parent::callback(0,'拉入黑名单失败,数据已存在!','no');
+			}else{
+				parent::callback(0,'收藏失败,数据已存在!','no');
+			}
+		}
+    }
 
 
 }
