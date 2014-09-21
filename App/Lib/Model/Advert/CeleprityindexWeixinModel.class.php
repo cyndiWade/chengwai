@@ -4,7 +4,7 @@
 	class CeleprityindexWeixinModel extends AdvertBaseModel
 	{
 
-		//接受参数 返回草根信息数据 | $type区分新浪 1  腾讯 2  微信 3 新闻 4 | 用户ID
+		//接受参数 返回草根信息数据  | 用户ID
 		public function getPostArray($array,$id)
 		{
 			
@@ -88,53 +88,67 @@
 		private function getWhere($addslArray)
 		{
 			$wheres = array();
-			//处理分类数据 常见分类
-			if($addslArray['cjfl']!='')
+			//名人职业
+			if($addslArray['mrzy']!='')
 			{
-				$wheres['w.common'] = $addslArray['cjfl'];
+				$wheres['w.occupation'] = $addslArray['mrzy'];
 			}
-			//粉丝数量
-			if($addslArray['fans_num']!='')
+			//媒体领域
+			if($addslArray['mtly']!='')
 			{
-				$wheres['w.fans_num'] = $this->getLeftRightstr($addslArray['fans_num'],'-');
+				$wheres['w.field'] = $addslArray['mtly'];
 			}
 			//价格区间
-			if($addslArray['zfjg_type']!='' && $addslArray['jg']!='')
+			if($addslArray['ckbj_type']!='' && $addslArray['jg']!='')
 			{
-				switch ($addslArray['zfjg_type']) {
+				switch ($addslArray['ckbj_type']) {
 					case 1:
-						$wheres['w.yg_zhuanfa'] = $this->getLeftRightstr($addslArray['jg'],'-');
+						$wheres['w.ck_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
 					break;
 					case 2:
-						$wheres['w.yg_zhifa'] = $this->getLeftRightstr($addslArray['jg'],'-');
-					break;
-					case 3:
-						$wheres['w.rg_zhuanfa'] = $this->getLeftRightstr($addslArray['jg'],'-');
-					break;
-					case 4:
-						$wheres['w.rg_zhifa'] = $this->getLeftRightstr($addslArray['jg'],'-');
+						$wheres['w.yc_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
 					break;
 				}
 			}
-			//性别区分
-			if($addslArray['fans_sex']!='')
+			//地方名人媒体
+			if($addslArray['dfmr_mt']!='')
 			{
-				$wheres['w.fans_sex'] = $addslArray['fans_sex'];
+				$wheres['w.cirymedia'] = $addslArray['dfmr_mt'];
 			}
-			//为您推荐
-			if($addslArray['tj']!='')
+			//兴趣标签
+			if($addslArray['xqbq']!='')
 			{
-				$wheres['w.recommend'] = 1;
+				$wheres['w.interest'] = $addslArray['xqbq'];
 			}
-			//热门微博
-			if($addslArray['rmwb']!='')
+			//名人/媒体类别
+			if($addslArray['mr_mtlb']!='')
 			{
-				$wheres['w.is_hot'] = 1;
+				$wheres['w.cmcategoris'] = $addslArray['mr_mtlb'];
 			}
-			//折扣
-			if($addslArray['xstj']!='')
+			//配合度
+			if($addslArray['phd']!='')
 			{
-				$wheres['w.specialoffer'] = 1;
+				$wheres['w.coordination'] = $addslArray['phd'];
+			}
+			//粉丝数
+			if($addslArray['mr_fans_num']!='')
+			{
+				$wheres['w.fansnumber'] = $this->getLeftRightstr($addslArray['mr_fans_num'],'-');
+			}
+			//支持原创
+			if($addslArray['zhyc']!='')
+			{
+				$wheres['w.originality'] = $addslArray['zhyc'];
+			}
+			//名人性别
+			if($addslArray['mrxb']!='')
+			{
+				$wheres['w.sex'] = $addslArray['mrxb'];
+			}
+			//战略合作媒体
+			if($addslArray['zlhzmr_mt']!='')
+			{
+				$wheres['w.ctrategy_c'] = 1;
 			}
 			//搜索框的账号名
 			$account_name = trim($addslArray['account']);
