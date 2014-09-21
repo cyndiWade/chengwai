@@ -7,7 +7,7 @@
 		//获得用户拉黑微信ID  用户名id 是否是名人 是收藏还是黑名单
 		public function getAdvertUser($id,$is_celebrity,$or)
 		{
-			$where = array('user_id'=>$id,'is_celeprity'=>$is_celebrity,'or_type'=>$or);
+			$where = array('user_id'=>$id,'is_celebrity'=>$is_celebrity,'or_type'=>$or);
 			$volist = $this->where($where)->field('weixin_id')->select();
 			$collection = array();
 			foreach($volist as $value)
