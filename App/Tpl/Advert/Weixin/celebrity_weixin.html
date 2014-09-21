@@ -259,7 +259,7 @@
 
 <script type="text/javascript">
 var system_info = {
-	is_celeprity : 1,	//是否是名人1是、0不是
+	is_celebrity : 1,	//是否是名人1是、0不是
 	page_limit : 10,	//每页条数
 }
 var list_content = $('#list_content');
@@ -274,7 +274,7 @@ var list_content = $('#list_content');
 //公共JS方法。每个事件都要触发这个函数
 var public_post_fn = function (obj_data) {
 	var post_data = {};
-	post_data.is_celeprity = system_info.is_celeprity;	//是否是名人
+	post_data.is_celebrity = system_info.is_celebrity;	//是否是名人
 	
 	//三级导航已选择数据
 	var three_sidebar_selected = Weixin.get_three_sidebar_selected();
@@ -300,8 +300,7 @@ var public_post_fn = function (obj_data) {
 		post_data.p = obj_data.this_number;
 	}
 
-	//console.log(post_data)
-	
+
 	//AJAX获取数据
 	var result = System.ajax_post_setup('{:U('/Advert/Weixin/get_weixin_list')}',post_data,'JSON');
 	
@@ -331,7 +330,7 @@ var create_now_html = function ($data) {
 	html += '<div class="part01-cele fl">';
 	html += '<img src="images/cer_img01.gif" />';
 	html += '<div class="ctrl">';
-	html += '<span>收藏</span><span>拉黑</span>';
+	html += '<span class="lahei_and_shoucang" data-or_type="1" data-weixin_id="'+$data.id+'">收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weixin_id="'+$data.id+'">拉黑</span>';
 	html += '</div>';
 	html += '</div>';
 	html += '<div class="part02-cele fl">';
