@@ -602,7 +602,7 @@ Weibo.prototype.lahei_and_shoucang_fn = function ($urL) {
 		var _this = $(this);
 		var post_data = {
 			'pt_type' :system_info.pt_type,	
-			'is_celeprity' :system_info.is_celeprity,
+			'is_celebrity' :system_info.is_celebrity,
 			'or_type' : _this.data('or_type'),
 			'weibo_id' : _this.data('weibo_id')
 		};
