@@ -59,6 +59,7 @@ class NewsAction extends AdvertBaseAction {
 	//新闻媒体列表
 	public function news_list () {
 
+		$this->show_news_category_tags();
 		parent::data_to_view(array(
 			//二级导航属性
 			'sidebar_two'=>array(0=>'select',),//第一个加依次类推
@@ -84,6 +85,28 @@ class NewsAction extends AdvertBaseAction {
 		//判断是名人还是草根
 		$list_new = $this->db['IndexNews']->getPostArray($_POST,$this->oUser->id);
 		parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
+	}
+	
+
+	/**
+	 * 新闻媒体导航分类
+	 */
+	private function show_news_category_tags () {
+		$CategoryTags = $this->db['CategoryTags'];
+	
+		$tags_ids = C('Big_Nav_Class_Ids.xinwen_tags_ids');
+	
+		$this->now_classify_data = $CategoryTags->get_classify_data($tags_ids['top_parent_id']);
+
+		$data['hyfl'] = $this->now_classify_data[$tags_ids['hyfl']];	
+		$data['dqsx'] = $this->now_classify_data[$tags_ids['dqsx']];	
+		$data['yhzq'] = $this->now_classify_data[$tags_ids['yhzq']];
+		$data['jg'] = $this->now_classify_data[$tags_ids['jg']];	
+		$data['mh_type'] = $this->now_classify_data[$tags_ids['mh_type']];		
+		$data['sfxwy'] = $this->now_classify_data[$tags_ids['sfxwy']];	
+		$data['dljzk'] = $this->now_classify_data[$tags_ids['dljzk']];		
+	
+		parent::data_to_view($data);
 	}
 	
 }	

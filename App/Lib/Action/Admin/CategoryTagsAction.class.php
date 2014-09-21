@@ -107,7 +107,7 @@ class CategoryTagsAction extends AdminBaseAction {
 			$this->success('成功');
 			exit;
 		} elseif ($act == 'cp_data') {
-			//$mubiao_id = 583;
+			//$mubiao_id = 666;
 			
 			//获取当前父级下的数据
 			$list = $CategoryTags->get_spe_data(array('parent_id'=>$this->parent_id,'is_del'=>0));
@@ -117,7 +117,7 @@ class CategoryTagsAction extends AdminBaseAction {
 				$CategoryTags->title = $val['title'];
 				$CategoryTags->val = $val['val'];
 				$CategoryTags->field = $val['field'];
-				$CategoryTags->add();
+				//$CategoryTags->add();
 			}
 			$this->success('成功');
 			exit;

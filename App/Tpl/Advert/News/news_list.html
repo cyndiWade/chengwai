@@ -18,138 +18,142 @@
 </div>
 <div class="area01-memwb area01-memmt l">
 	<ul class="wbtab l">
-		<li class="select"><a href="#" class="mtzh">全部媒体账号</a></li>
-		<li><a href="#" class="wntj">为您推荐 </a></li>
-		<li><a href="#" class="hotzh">热门新浪微博账号 </a></li>
-		<li><a href="#" class="xstj">限时特价</a></li>
-		<li><a href="#" class="cksc">查看收藏</a></li>
-		<li><a href="#" class="hmd">查看黑名单</a></li>
+		<li class="select three_sidebar_type" data-field="all" data-val=""><a href="javascript:;" class="mtzh">全部媒体账号 </a></li>
+		<li class="three_sidebar_type" data-field="tj" data-val="1"><a href="javascript:;" class="wntj">为您推荐 </a></li>
+		<li class="three_sidebar_type" data-field="rmwx" data-val="1"><a href="javascript:;" class="hotzh">热门媒体账号 </a></li>
+		<li class="three_sidebar_type" data-field="xstj" data-val="1"><a href="javascript:;" class="xstj">限时特价</a></li>
+		<li class="three_sidebar_type" data-field="cksc" data-val="1"><a href="javascript:;" class="cksc">查看收藏</a></li>
+		<li class="three_sidebar_type" data-field="ckhmd" data-val="1"><a href="javascript:;" class="hmd">查看黑名单</a></li>
+	
 	</ul>
 	<div class="searchbox fl">
-		<div class="top-search l"><strong class="on">搜索新闻媒体账号</strong><strong>搜索关键字 </strong></div>
+		<div class="top-search l">
+			<strong class="on">搜索新闻媒体账号</strong>
+			<!--
+			<strong>搜索关键字 </strong>
+			  -->
+		</div>
 		<div class="mid-search l">
-			<input type="text" class="seatext" value="请输入微信账号的名称或微信号" /><input type="submit" class="btn seabtn" value="搜索" />
+			<input type="text" class="seatext search_account" data-field="account" data-ischeck="0" value="" placeholder="请输入名称" /><input type="submit" class="btn seabtn" id="search" value="搜索" />
 		</div>
 	</div>
 	<div class="catebox l">
 		<table class="tab01-cate l">
 		  <tr>
 			<td class="t1">行业分类：</td>
-			<td class="t2"><div class="part01-cate fl"><span>所有</span><span class="select">时尚</span><span>家居生活</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>母婴育儿</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>娱乐</span><span>母婴育儿</span><span>娱乐</span><span>娱乐</span></div><div class="more fl" id="morecate">更多</div></td>
+			<td class="t2">
+				<div class="part01-cate fl">
+				<volist name="view_data['hyfl']" id="vo">
+					<span class="hyfl_tags" data-tag_class="hyfl_tags" data-tag_id="{$vo.id}"  data-classify="行业分类" data-field="hyfl" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>			
+				</div><div class="more fl" id="morecate">更多</div>
+			</td>
 		  </tr>
 		  <tr>
 			<td class="t1">地区筛选：</td>
-			<td class="t2"><div class="part01-city fl"><span>所有</span><span class="select">北京</span><span>上海</span><span>上海</span><span>北京</span><span>上海</span><span>上海</span><span>北京</span><span>上海</span><span>上海</span><span>上海</span><span>上海</span><span>北京</span><span>广州</span><span>南京</span><span>上海</span><span>北京</span><span>上海</span><span>上海</span><span>上海</span><span>上海</span><span>北京</span><span>广州</span><span>南京</span><span>上海</span><span>北京</span><span>上海</span><span>上海</span><span>上海</span><span>上海</span><span>北京</span><span>广州</span><span>南京</span></div><div class="more fl" id="morecity">更多</div></td>
+			<td class="t2">
+				<div class="part02-price fl">
+				<volist name="view_data['dqsx']" id="vo">
+					<span class="dqsx_tags" data-tag_class="dqsx_tags" data-tag_id="{$vo.id}"  data-classify="地区筛选" data-field="dqsx" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>		
+				</div>
+				<div class="part01-citysel fl">
+					<select class="fl region_left"></select>
+					<select class="fl region_right" data-tag_class="dqsx_tags" data-classify="地区筛选" data-repetition="no"  data-field="dqsx"></select>
+				</div><span class="btn okbtn fl btn_confirm_dqmr">确定</span></td>
 		  </tr>
 		  <tr>
 			<td class="t1">优惠专区：</td>
-			<td class="t2"><div class="part02-price fl"><span class="select">所有</span><span>无优惠</span><span>特价活动</span><span>特惠套餐</span></div></td>
+			<td class="t2">
+				<div class="part02-price fl">
+				<volist name="view_data['yhzq']" id="vo">
+					<span class="yhzq_tags" data-tag_class="yhzq_tags" data-tag_id="{$vo.id}"  data-classify="优惠专区" data-field="yhzq" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>
+				</div>
+			</td>
 		  </tr>
 		  <tr>
 			<td class="t1">价格：</td>
-			<td class="t2"><div class="part02-price fl"><span class="select">所有</span><span>50-100元</span><span>100-200元</span><span>200-500元</span><span>500-1000元</span><span>1000元以上</span><span>自定义</span></div><div class="part03-price fl"><input type="text" class="text" /><i>-</i><input type="text" class="text" /><i>元</i></div><span class="btn okbtn fl">确定</span></td>
+			<td class="t2">
+				<div class="part02-price fl">
+				<volist name="view_data['jg']" id="vo">
+					<span class="jg_tags" data-tag_class="jg_tags" data-tag_id="{$vo.id}"  data-classify="价格" data-field="jg" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>
+				</div>
+				<div class="part03-price fl">
+					<input type="text" class="text ipt_jiage_start" /><i>-</i><input type="text" class="text ipt_jiage_over" /><i>元</i>
+				</div><span class="btn okbtn fl btn_jiage_yes" data-tag_class="jg_tags">确定</span>
+			</td>
 		  </tr>
 		  <tr>
 			<td class="t1">门户类型：</td>
-			<td class="t2"><div class="part02-price fl"><span class="select">所有</span><span>中央门户</span><span>行业门户</span><span>行业门户</span><span>其它门户</span></div></td>
+			<td class="t2">
+				<div class="part02-price fl">
+				<volist name="view_data['mh_type']" id="vo">
+					<span class="mh_type_tags" data-tag_class="mh_type_tags" data-tag_id="{$vo.id}"  data-classify="门户类型" data-field="mh_type" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>
+				</div>
+			</td>
 		  </tr>
 		  <tr>
 			<td class="t1">是否新闻源：</td>
-			<td class="t2"><div class="part02-price fl"><span class="select">所有</span><span>是</span><span>否</span><span>百度新闻源</span></div></td>
+			<td class="t2">
+				<div class="part02-price fl">
+				<volist name="view_data['sfxwy']" id="vo">
+				<span class="sfxwy_tags" data-tag_class="sfxwy_tags" data-tag_id="{$vo.id}"  data-classify="是否新闻源" data-field="sfxwy" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>
+				</div>
+			</td>
 		  </tr>
 		  <tr>
 			<td class="t1">带链接情况：</td>
-			<td class="t2"><div class="part02-price fl"><span class="select">无</span><span>可带文本网址</span><span>可带文本网址</span><span>不能带网址</span></div></td>
+			<td class="t2">
+				<div class="part02-price fl">
+				<volist name="view_data['dljzk']" id="vo">
+				<span class="dljzk_tags" data-tag_class="dljzk_tags" data-tag_id="{$vo.id}"  data-classify="带链接情况" data-field="dljzk" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>
+				</div>
+			</td>
 		  </tr>
 		</table>
 		<div class="resultbox tc l">
-			<div class="trash fr">清空选择筛选条件 </div>
+			<div class="trash fr clear_tags">清空选择筛选条件 </div>
 			<span class="span-ok fl">已选择 ：</span>
-			<ul class="grp fl">
-				<li><strong>行业分类 > <b>时尚</b></strong><em class="del"></em></li>
+			<ul class="grp fl select_tags_vessel">
+				
 			</ul>
 		</div>
 	</div>
 	<div class="orderbox l">
-		<b class="total fr">共11178个</b><b class="total fr">200页</b>
+		<b class="total fr">共<span id="all_data_num"></span>个</b><b class="total fr"><span id="all_page_num"></span>页</b>
 		<select class="fl"><option>选择排序方式</option></select><span class="orderspan orderspan-select fl">默认排序</span><span class="orderspan">价格升降</span>
 	</div>
 	<div class="col01-wx l">
 		<table class="tab01-weibo tab01-mt l">
-		  <tr>
-			<th class="t1"><b>媒体名称</b></th>
-			<th class="t2">频道</th>
-			<th class="t3">价格</th>
-			<th class="t4">入口</th>
-			<th class="t5">新闻源</th>
-			<th class="t6">网页收录</th>
-			<th class="t7">标题字数</th>
-			<th class="t8">是否需要来源</th>
-			<th class="t9">地区</th>
-			<th class="t10">周末能否发稿</th>
-			<th class="t11">能否带文本链接</th>
-			<th class="last">案例</th>
-		  </tr>
-		  <tr>
-			<td class="t1"><div class="mediapart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/mt_img01.gif" class="mtimg" /><div class="grp fl"><h5 class="l"><b>21cn-财经</b></h5><div class="desc l">综合门户</div></div></div></td>
-			<td class="t2">新闻频道</td>
-			<td class="t3"><b class="red">60元</b></td>
-			<td class="t4">是</td>
-			<td class="t5">是</td>
-			<td class="t6">收录否</td>
-			<td class="t7">20</td>
-			<td class="t8">是</td>
-			<td class="t9">广州</td>
-			<td class="t10">是</td>
-			<td class="t11">是</td>
-			<td class="last"><a class="blue" href="#">查看案例</a></td>
-		  </tr>
-		  <tr>
-			<td class="t1"><div class="mediapart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/mt_img01.gif" class="mtimg" /><div class="grp fl"><h5 class="l"><b>21cn-财经</b></h5><div class="desc l">综合门户</div></div></div></td>
-			<td class="t2">新闻频道</td>
-			<td class="t3"><b class="red">60元</b></td>
-			<td class="t4">是</td>
-			<td class="t5">是</td>
-			<td class="t6">收录否</td>
-			<td class="t7">20</td>
-			<td class="t8">是</td>
-			<td class="t9">广州</td>
-			<td class="t10">是</td>
-			<td class="t11">是</td>
-			<td class="last"><a class="blue" href="#">查看案例</a></td>
-		  </tr>
-		  <tr>
-			<td class="t1"><div class="mediapart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/mt_img01.gif" class="mtimg" /><div class="grp fl"><h5 class="l"><b>21cn-财经</b></h5><div class="desc l">综合门户</div></div></div></td>
-			<td class="t2">新闻频道</td>
-			<td class="t3"><b class="red">60元</b></td>
-			<td class="t4">是</td>
-			<td class="t5">是</td>
-			<td class="t6">收录否</td>
-			<td class="t7">20</td>
-			<td class="t8">是</td>
-			<td class="t9">广州</td>
-			<td class="t10">是</td>
-			<td class="t11">是</td>
-			<td class="last"><a class="blue" href="#">查看案例</a></td>
-		  </tr>
-		  <tr>
-			<td class="t1"><div class="mediapart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/mt_img01.gif" class="mtimg" /><div class="grp fl"><h5 class="l"><b>21cn-财经</b></h5><div class="desc l">综合门户</div></div></div></td>
-			<td class="t2">新闻频道</td>
-			<td class="t3"><b class="red">60元</b></td>
-			<td class="t4">是</td>
-			<td class="t5">是</td>
-			<td class="t6">收录否</td>
-			<td class="t7">20</td>
-			<td class="t8">是</td>
-			<td class="t9">广州</td>
-			<td class="t10">是</td>
-			<td class="t11">是</td>
-			<td class="last"><a class="blue" href="#">查看案例</a></td>
-		  </tr>
+			<thead>
+			  <tr>
+				<th class="t1"><b>媒体名称</b></th>
+				<th class="t2">频道</th>
+				<th class="t3">价格</th>
+				<th class="t4">入口</th>
+				<th class="t5">新闻源</th>
+				<th class="t6">网页收录</th>
+				<th class="t7">标题字数</th>
+				<th class="t8">是否需要来源</th>
+				<th class="t9">地区</th>
+				<th class="t10">周末能否发稿</th>
+				<th class="t11">能否带文本链接</th>
+				<th class="last">案例</th>
+			  </tr>
+		  	</thead>
+		  	<tbody id="list_content">
+			 
+			</tbody>
+  
 		</table>
 		<div class="weibo-bot l">
-			<div class="page-wb fr">
-				<a href="#" class="prev"><</a><a href="#" class="num on">1</a><a href="#" class="num">2</a><a href="#" class="num">3</a><a href="#" class="num">4</a><em>...</em><a href="#" class="num">25</a><a href="#" class="next">></a><b class="total fl">共25页</b><div class="count fl"><i class="fl">到第</i><input type="text" class="text fl" /><i class="fl">页</i><span class="aok fl">前往</span><strong class="show fl">显示<select><option>10</option></select>条</strong></div>
+			<div class="page-wb fr system_page">
+
 			</div>
 			<div class="controlbox fl">
 				<span>全选</span><span id="batch">批量添加账号</span><span>批量导出报价单</span>
@@ -181,24 +185,97 @@
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 
-<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
 <script type="text/javascript">
-$(function(){
-	$('.tab01-weibo tr:even').addClass('even');
-	$('#batch').click(function(){
-		$('.batchbox').popOn();
-	})
-	$('.top-search strong').click(function(){
-		$(this).siblings().removeClass('on')
-		$(this).addClass('on');
-	})
-	$('#morecate').click(function(){
-		$('.part01-cate').toggleClass('part01-cate-auot');
-	})
-	$('#morecity').click(function(){
-		$('.part01-city').toggleClass('part01-city-auot');
-	})
-})
+var system_info = {
+	is_celeprity : 1,	//是否是名人1是、0不是
+	page_limit : 10,	//每页条数
+}
+var list_content = $('#list_content');
+</script>
+
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+<script src="{$global_tpl_view.Global_Resource_Path}Tool/Region.js"></script>
+<script src="{$global_tpl_view.Group_Resource_Path}js/page.js"></script>
+<script src="{$global_tpl_view.Module_Resource_Path}new_list.js"></script>
+
+<script type="text/javascript">
+
+
+//公共JS方法。每个事件都要触发这个函数
+var public_post_fn = function (obj_data) {
+	var post_data = {};
+	post_data.is_celeprity = system_info.is_celeprity;	//是否是名人
+	
+	//三级导航已选择数据
+	var three_sidebar_selected = News.get_three_sidebar_selected();
+	for (var key in three_sidebar_selected) {
+		post_data[key] = three_sidebar_selected[key];
+	}
+
+	//获取搜索框的数据
+	var account_data = News.get_search_account();
+	if (account_data != false) {
+		post_data[account_data.field] = account_data.val;
+	}
+	
+	//获取选中的标签数据
+	var tags_selected =	News.get_selected_tags();	//获取选中标签数据
+	for (var field in tags_selected) {
+		post_data[field]= tags_selected[field];
+	}
+	
+	//获取点击后的分页数据
+	if (obj_data.this_number != undefined) {
+		post_data.p = obj_data.this_number;
+	}
+	
+	//AJAX获取数据
+	var result = System.ajax_post_setup('{:U('/Advert/Weixin/get_weixin_list')}',post_data,'JSON');
+	
+	if (result.status == 1) {
+		list_content.empty();
+		for (var key in result.data.list) {
+			list_content.append(create_now_html(result.data.list[key]));
+		}
+		
+		//拉黑和收藏功能
+		News.lahei_and_shoucang_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+
+		News.dataNum_And_PageNum(result.data.count);
+		
+		//更新page
+		page_now_list(result.data.count,result.data.p,system_info.page_limit);
+	} 
+}
+
+
+
+var create_now_html = function ($data) {
+	
+	var html = '';
+	html += '<tr>';
+	html += '<td class="t1"><div class="mediapart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/mt_img01.gif" class="mtimg" /><div class="grp fl"><h5 class="l"><b>21cn-财经</b></h5><div class="desc l">综合门户</div></div></div></td>';
+	html += '<td class="t2">新闻频道</td>';
+	html += '<td class="t3"><b class="red">60元</b></td>';
+	html += '<td class="t4">是</td>';
+	html += '<td class="t5">是</td>';
+	html += '<td class="t6">收录否</td>';
+	html += '<td class="t7">20</td>';
+	html += '<td class="t8">是</td>';
+	html += '<td class="t9">广州</td>';
+	html += '<td class="t10">是</td>';
+	html += '<td class="t11">是</td>';
+	html += '<td class="last"><a class="blue" href="#">查看案例</a></td>';
+	html += '</tr>';
+	return html;
+} 
+
+//地区菜单
+var Region = new Region('{:U('/Advert/Tool/get_Region_Data')}');
+Region.init();
+Region.run();	
+
+
 </script>
 </body>
 </html>

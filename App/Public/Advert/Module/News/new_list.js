@@ -1,19 +1,21 @@
-var Weixin = function () {
-	//this.tab01-Weixin = $('.tab01-Weixin tr:even');
+var News = function () {
+	//this.tab01-News = $('.tab01-News tr:even');
 	//this.now_page_url = {:U('/DMIN/')}
 }
 
 //初始化对象
-Weixin.prototype.init = function () {
+News.prototype.init = function () {
 	this.select_ckbj_type = $('#select_ckbj_type');		//价格类型
 	this.select_tags_vessel = $('.select_tags_vessel');	//选择标签容器Ul
 		
-	this.mrzy_tags = $('.mrzy_tags');		//名人职业
-	this.mtly_tags = $('.mtly_tags');		//媒体领域
+	this.hyfl_tags = $('.hyfl_tags');		//行业分类
+	this.dqsx_tags = $('.dqsx_tags');		//地区筛选
+	this.yhzq_tags = $('.yhzq_tags');		//优惠专区
 	this.jg_tags = $('.jg_tags');			//价格标签
-	this.dfmr_mt_tags = $('.dfmr_mt_tags');	//地方名人/媒体：
-	this.xqbq_tags = $('.xqbq_tags');		//兴趣标签
-	this.mrxb_tags = $('.mrxb_tags');		//名人性别
+	this.mh_type_tags = $('.mh_type_tags');	//门户类型
+	this.sfxwy_tags = $('.sfxwy_tags');		//是否新闻源
+	this.dljzk_tags = $('.dljzk_tags');		//带链接情况
+
 	
 	this.region_right = $('.region_right');//城市选择框
 	this.btn_confirm_dqmr = $('.btn_confirm_dqmr');	//区域选择确认按钮
@@ -48,9 +50,8 @@ Weixin.prototype.init = function () {
 
 
 //添加相关样式
-Weixin.prototype.add_table_class = function () {
-	$('.tab01-Weixin tr:even').addClass('even');
-	
+News.prototype.add_table_class = function () {
+	$('.tab01-News tr:even').addClass('even');
 	$('#batch').click(function(){
 		$('.batchbox').popOn();
 	})
@@ -58,25 +59,19 @@ Weixin.prototype.add_table_class = function () {
 		$(this).siblings().removeClass('on')
 		$(this).addClass('on');
 	})
-	$('.mrdetail').click(function(){
-		$('.batchboxdetail').popOn();
-	})
 	$('#morecate').click(function(){
 		$('.part01-cate').toggleClass('part01-cate-auot');
 	})
 	$('#morecity').click(function(){
 		$('.part01-city').toggleClass('part01-city-auot');
 	})
-	$('#moreta').click(function(){
-		$('.part01-xqbq').toggleClass('part01-city-auot');
-	})
 }
 
 //点击创建标签
-Weixin.prototype.select_tag_fn = function () {
+News.prototype.select_tag_fn = function () {
 	var _father_this = this;
 	
-	_father_this.mrzy_tags.click(function (){
+	_father_this.hyfl_tags.click(function (){
 		var _this = $(this);
 		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
 			'tag_class' : _this.data('tag_class'),
@@ -87,30 +82,40 @@ Weixin.prototype.select_tag_fn = function () {
 		});	
 	});
 	
-	
-	_father_this.mtly_tags.click(function (){
+	_father_this.dqsx_tags.click(function (){
 		var _this = $(this);
 		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
 			'tag_class' : _this.data('tag_class'),
 			'tag_id':_this.data('tag_id'),
 			'classify':_this.data('classify'),
 			'field' : _this.data('field'),
-			'repetition' : _this.data('repetition')
-			
+			'repetition' : _this.data('repetition')	
+		});	
+	});
+	
+	_father_this.btn_confirm_dqmr.click(function () {
+		var _this = $(this);
+		if (_father_this.region_right.val() == '') {
+			return false;
+		}
+		_father_this.create_selete_tags(_father_this.region_right.find("option:selected").text(),_father_this.region_right.val(),{
+			'tag_class' : _father_this.region_right.data('tag_class'),
+			'classify':_father_this.region_right.data('classify'),
+			'field' : _father_this.region_right.data('field'),
+			'repetition' : _father_this.region_right.data('repetition')
 		});
-		
 	});
 	
 	
-	_father_this.dfmr_mt_tags.click(function (){
+	_father_this.yhzq_tags.click(function (){
 		var _this = $(this);
 		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
 			'tag_class' : _this.data('tag_class'),
 			'tag_id':_this.data('tag_id'),
 			'classify':_this.data('classify'),
 			'field' : _this.data('field'),
-			'repetition' : _this.data('repetition')
-		});
+			'repetition' : _this.data('repetition')	
+		});	
 	});
 	
 	
@@ -129,91 +134,47 @@ Weixin.prototype.select_tag_fn = function () {
 	});
 	
 	
-	_father_this.xqbq_tags.click(function (){
+	_father_this.mh_type_tags.click(function (){
 		var _this = $(this);
 		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
 			'tag_class' : _this.data('tag_class'),
 			'tag_id':_this.data('tag_id'),
 			'classify':_this.data('classify'),
 			'field' : _this.data('field'),
-			'repetition' : _this.data('repetition')	
+			'repetition' : _this.data('repetition')
 		});
 	});
 	
 	
-	_father_this.btn_confirm_dqmr.click(function () {
-		var _this = $(this);
-		if (_father_this.region_right.val() == '') {
-			return false;
-		}
-		_father_this.create_selete_tags(_father_this.region_right.find("option:selected").text(),_father_this.region_right.val(),{
-			'tag_class' : _father_this.region_right.data('tag_class'),
-			'classify':_father_this.region_right.data('classify'),
-			'field' : _father_this.region_right.data('field'),
-			'repetition' : _father_this.region_right.data('repetition')
-		});
-	});
-	
-	
-	_father_this.mr_mtlb_tags.click(function (){
+	_father_this.sfxwy_tags.click(function (){
 		var _this = $(this);
 		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
 			'tag_class' : _this.data('tag_class'),
 			'tag_id':_this.data('tag_id'),
 			'classify':_this.data('classify'),
 			'field' : _this.data('field'),
-			'repetition' : _this.data('repetition')	
+			'repetition' : _this.data('repetition')
 		});
 	});
 	
-	_father_this.phd_tags.click(function (){
+	
+	_father_this.dljzk_tags.click(function (){
 		var _this = $(this);
 		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
 			'tag_class' : _this.data('tag_class'),
 			'tag_id':_this.data('tag_id'),
 			'classify':_this.data('classify'),
 			'field' : _this.data('field'),
-			'repetition' : _this.data('repetition')	
+			'repetition' : _this.data('repetition')
 		});
 	});
 	
-	_father_this.mr_fans_num_tags.click(function (){
-		var _this = $(this);
-		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
-			'tag_class' : _this.data('tag_class'),
-			'tag_id':_this.data('tag_id'),
-			'classify':_this.data('classify'),
-			'field' : _this.data('field'),
-			'repetition' : _this.data('repetition')	
-		});
-	});
-	
-	_father_this.zhyc_tags.click(function (){
-		var _this = $(this);
-		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
-			'tag_class' : _this.data('tag_class'),
-			'tag_id':_this.data('tag_id'),
-			'classify':_this.data('classify'),
-			'field' : _this.data('field'),
-			'repetition' : _this.data('repetition')	
-		});
-	});
-	
-	_father_this.mrxb_tags.click(function (){
-		var _this = $(this);
-		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
-			'tag_class' : _this.data('tag_class'),
-			'tag_id':_this.data('tag_id'),
-			'classify':_this.data('classify'),
-			'field' : _this.data('field'),
-			'repetition' : _this.data('repetition')	
-		});
-	});
+
 }
 
 
 //创建常见分类
-Weixin.prototype.create_selete_tags = function ($title,$val,$extend) {
+News.prototype.create_selete_tags = function ($title,$val,$extend) {
 	var _father_this = this;
 	_father_this.init();
 	
@@ -260,7 +221,7 @@ Weixin.prototype.create_selete_tags = function ($title,$val,$extend) {
 
 
 //追加样式以及首选(重要)
-Weixin.prototype.init_tags_selected = function () {
+News.prototype.init_tags_selected = function () {
 	var _father_this = this;
 	_father_this.init();
 	
@@ -268,7 +229,7 @@ Weixin.prototype.init_tags_selected = function () {
 	_father_this.search_tag_data.each(function () {
 		var _this = $(this);
 
-		_father_this.mrzy_tags.each(function () {
+		_father_this.hyfl_tags.each(function () {
 			var now_this = $(this);
 			if (
 				now_this.data('classify') == _this.data('classify') &&
@@ -277,7 +238,7 @@ Weixin.prototype.init_tags_selected = function () {
 				
 				now_this.data('val') == _this.data('val')
 			) {
-				_father_this.mrzy_tags.removeClass("select");
+				_father_this.hyfl_tags.removeClass("select");
 				if (_this.data('val') == '') {
 					_this.parent().remove();
 				}
@@ -286,7 +247,7 @@ Weixin.prototype.init_tags_selected = function () {
 			}
 		});
 		
-		_father_this.mtly_tags.each(function () {
+		_father_this.dqsx_tags.each(function () {
 			var now_this = $(this);
 			if (
 				now_this.data('classify') == _this.data('classify') &&
@@ -295,7 +256,7 @@ Weixin.prototype.init_tags_selected = function () {
 				
 				now_this.data('val') == _this.data('val')
 			) {
-				_father_this.mtly_tags.removeClass("select");
+				_father_this.dqsx_tags.removeClass("select");
 				if (_this.data('val') == '') {
 					_this.parent().remove();
 				}
@@ -304,7 +265,7 @@ Weixin.prototype.init_tags_selected = function () {
 			}
 		});
 		
-		_father_this.dfmr_mt_tags.each(function () {
+		_father_this.yhzq_tags.each(function () {
 			var now_this = $(this);
 			if (
 				now_this.data('classify') == _this.data('classify') &&
@@ -313,7 +274,7 @@ Weixin.prototype.init_tags_selected = function () {
 				
 				now_this.data('val') == _this.data('val')
 			) {
-				_father_this.dfmr_mt_tags.removeClass("select");
+				_father_this.yhzq_tags.removeClass("select");
 				if (_this.data('val') == '') {
 					_this.parent().remove();
 				}
@@ -321,10 +282,8 @@ Weixin.prototype.init_tags_selected = function () {
 				return false;
 			}
 		});
-		
 		
 	
-		//处理价格标签
 		_father_this.jg_tags.each(function () {
 			var now_this = $(this);
 			if (
@@ -343,17 +302,16 @@ Weixin.prototype.init_tags_selected = function () {
 			}
 		});
 		
-		
-		_father_this.xqbq_tags.each(function () {
+		_father_this.mh_type_tags.each(function () {
 			var now_this = $(this);
 			if (
 				now_this.data('classify') == _this.data('classify') &&
 				
-		 		now_this.data('title') == _this.data('title') && 
+				now_this.data('title') == _this.data('title') && 
 				
 				now_this.data('val') == _this.data('val')
 			) {
-				_father_this.xqbq_tags.removeClass("select");
+				_father_this.mh_type_tags.removeClass("select");
 				if (_this.data('val') == '') {
 					_this.parent().remove();
 				}
@@ -362,17 +320,16 @@ Weixin.prototype.init_tags_selected = function () {
 			}
 		});
 		
-		
-		_father_this.mr_mtlb_tags.each(function () {
+		_father_this.sfxwy_tags.each(function () {
 			var now_this = $(this);
 			if (
 				now_this.data('classify') == _this.data('classify') &&
 				
-		 		now_this.data('title') == _this.data('title') && 
+				now_this.data('title') == _this.data('title') && 
 				
 				now_this.data('val') == _this.data('val')
 			) {
-				_father_this.mr_mtlb_tags.removeClass("select");
+				_father_this.sfxwy_tags.removeClass("select");
 				if (_this.data('val') == '') {
 					_this.parent().remove();
 				}
@@ -381,74 +338,16 @@ Weixin.prototype.init_tags_selected = function () {
 			}
 		});
 		
-		
-		_father_this.phd_tags.each(function () {
+		_father_this.dljzk_tags.each(function () {
 			var now_this = $(this);
 			if (
 				now_this.data('classify') == _this.data('classify') &&
 				
-		 		now_this.data('title') == _this.data('title') && 
+				now_this.data('title') == _this.data('title') && 
 				
 				now_this.data('val') == _this.data('val')
 			) {
-				_father_this.phd_tags.removeClass("select");
-				if (_this.data('val') == '') {
-					_this.parent().remove();
-				}
-				now_this.addClass("select");
-				return false;
-			}
-		});
-		
-		
-		_father_this.mr_fans_num_tags.each(function () {
-			var now_this = $(this);
-			if (
-				now_this.data('classify') == _this.data('classify') &&
-				
-		 		now_this.data('title') == _this.data('title') && 
-				
-				now_this.data('val') == _this.data('val')
-			) {
-				_father_this.mr_fans_num_tags.removeClass("select");
-				if (_this.data('val') == '') {
-					_this.parent().remove();
-				}
-				now_this.addClass("select");
-				return false;
-			}
-		});
-		
-		
-		_father_this.zhyc_tags.each(function () {
-			var now_this = $(this);
-			if (
-				now_this.data('classify') == _this.data('classify') &&
-				
-		 		now_this.data('title') == _this.data('title') && 
-				
-				now_this.data('val') == _this.data('val')
-			) {
-				_father_this.zhyc_tags.removeClass("select");
-				if (_this.data('val') == '') {
-					_this.parent().remove();
-				}
-				now_this.addClass("select");
-				return false;
-			}
-		});
-		
-		
-		_father_this.mrxb_tags.each(function () {
-			var now_this = $(this);
-			if (
-				now_this.data('classify') == _this.data('classify') &&
-				
-		 		now_this.data('title') == _this.data('title') && 
-				
-				now_this.data('val') == _this.data('val')
-			) {
-				_father_this.mrxb_tags.removeClass("select");
+				_father_this.dljzk_tags.removeClass("select");
 				if (_this.data('val') == '') {
 					_this.parent().remove();
 				}
@@ -473,7 +372,7 @@ Weixin.prototype.init_tags_selected = function () {
 
 
 //删除选中标签
-Weixin.prototype.del_select_tag_fn = function () {
+News.prototype.del_select_tag_fn = function () {
 	var _father_this = this;
 	_father_this.init();
 	
@@ -486,7 +385,7 @@ Weixin.prototype.del_select_tag_fn = function () {
 
 
 //删除标签执行的方法
-Weixin.prototype.bu_xian_init_fn = function (obj) {
+News.prototype.bu_xian_init_fn = function (obj) {
 	var _father_this = this;
 	_father_this.init();
 	
@@ -498,7 +397,7 @@ Weixin.prototype.bu_xian_init_fn = function (obj) {
 }
 
 //点击确认安按钮
-Weixin.prototype.btn_click_create_tags = function () {
+News.prototype.btn_click_create_tags = function () {
 	var _father_this = this;
 	_father_this.init();
 	
@@ -526,7 +425,7 @@ Weixin.prototype.btn_click_create_tags = function () {
 /**
  * 获取选中的标签数据，返回成key=>val 类型
  */
-Weixin.prototype.get_selected_tags = function () {
+News.prototype.get_selected_tags = function () {
 	var _father_this = this;
 	_father_this.init();
 
@@ -550,7 +449,7 @@ Weixin.prototype.get_selected_tags = function () {
 /**
  * 清空选中的标签
  */
-Weixin.prototype.clear_tags_fn = function () {
+News.prototype.clear_tags_fn = function () {
 	var _father_this = this;
 
 	_father_this.clear_tags.click(function () {
@@ -568,7 +467,7 @@ Weixin.prototype.clear_tags_fn = function () {
 
 
 //点击切换三级分类
-Weixin.prototype.three_sidebar_type_fn = function () {
+News.prototype.three_sidebar_type_fn = function () {
 	var _father_this = this;
 	_father_this.init();
 	
@@ -583,7 +482,7 @@ Weixin.prototype.three_sidebar_type_fn = function () {
 
 
 //获取3级导航当前选中的数据
-Weixin.prototype.get_three_sidebar_selected = function () {
+News.prototype.get_three_sidebar_selected = function () {
 	var _father_this = this;
 	_father_this.init();
 	
@@ -600,7 +499,7 @@ Weixin.prototype.get_three_sidebar_selected = function () {
 
 
 //点击search的按钮
-Weixin.prototype.search_fn = function () {
+News.prototype.search_fn = function () {
 	var _father_this = this;
 	_father_this.init();
 	_father_this.search.click(function () {
@@ -614,7 +513,7 @@ Weixin.prototype.search_fn = function () {
 }
 
 //获取搜索框的值
-Weixin.prototype.get_search_account = function () {
+News.prototype.get_search_account = function () {
 	var _father_this = this;
 	_father_this.init();
 	var _this = _father_this.search_account;
@@ -626,7 +525,7 @@ Weixin.prototype.get_search_account = function () {
 }
 
 //拉黑收藏功能
-Weixin.prototype.lahei_and_shoucang_fn = function ($urL) {
+News.prototype.lahei_and_shoucang_fn = function ($urL) {
 	var _father_this = this;
 	_father_this.init();
 	_father_this.lahei_and_shoucang.click(function () {
@@ -635,7 +534,7 @@ Weixin.prototype.lahei_and_shoucang_fn = function ($urL) {
 			'pt_type' :system_info.pt_type,	
 			'is_celeprity' :system_info.is_celeprity,
 			'or_type' : _this.data('or_type'),
-			'Weixin_id' : _this.data('Weixin_id')
+			'News_id' : _this.data('News_id')
 		};
 		var result = System.ajax_post_setup($urL,post_data,'JSON');
 		
@@ -651,7 +550,7 @@ Weixin.prototype.lahei_and_shoucang_fn = function ($urL) {
 
 
 //更新分页记录条数，和页数
-Weixin.prototype.dataNum_And_PageNum = function (data) {
+News.prototype.dataNum_And_PageNum = function (data) {
 	var _father_this = this;
 	
 	_father_this.all_data_num.text(data);
@@ -659,7 +558,7 @@ Weixin.prototype.dataNum_And_PageNum = function (data) {
 }
 
 //执行
-Weixin.prototype.run = function () {
+News.prototype.run = function () {
 	var _father_this = this;
 	
 	_father_this.add_table_class();
@@ -681,10 +580,10 @@ Weixin.prototype.run = function () {
 
 
 //运行
-var Weixin = new Weixin();
+var News = new News();
 window.onload = function () {
-	Weixin.init();
-	Weixin.run();	
+	News.init();
+	News.run();	
 }
 
 

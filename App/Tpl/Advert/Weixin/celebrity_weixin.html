@@ -277,19 +277,19 @@ var public_post_fn = function (obj_data) {
 	post_data.is_celeprity = system_info.is_celeprity;	//是否是名人
 	
 	//三级导航已选择数据
-	var three_sidebar_selected = Weibo.get_three_sidebar_selected();
+	var three_sidebar_selected = Weixin.get_three_sidebar_selected();
 	for (var key in three_sidebar_selected) {
 		post_data[key] = three_sidebar_selected[key];
 	}
 
 	//获取搜索框的数据
-	var account_data = Weibo.get_search_account();
+	var account_data = Weixin.get_search_account();
 	if (account_data != false) {
 		post_data[account_data.field] = account_data.val;
 	}
 	
 	//获取选中的标签数据
-	var tags_selected =	Weibo.get_selected_tags();	//获取选中标签数据
+	var tags_selected =	Weixin.get_selected_tags();	//获取选中标签数据
 	for (var field in tags_selected) {
 		post_data[field]= tags_selected[field];
 	}
@@ -312,9 +312,9 @@ var public_post_fn = function (obj_data) {
 		}
 		
 		//拉黑和收藏功能
-		Weibo.lahei_and_shoucang_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+		Weixin.lahei_and_shoucang_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
 
-		Weibo.dataNum_And_PageNum(result.data.count);
+		Weixin.dataNum_And_PageNum(result.data.count);
 		
 		//更新page
 		page_now_list(result.data.count,result.data.p,system_info.page_limit);
