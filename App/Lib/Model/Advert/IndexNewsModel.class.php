@@ -21,8 +21,6 @@
 				}
 				//组合生成查询SQL
 				$where = $this->getWhere($addvalue);
-				//为草根 传参 0
-				$where['b.is_celebrity'] = 0;
 				//判断是分页提交还是分栏提交
 				$limit = 10;
 				//如果有分页参数
@@ -88,48 +86,50 @@
 		private function getWhere($addslArray)
 		{
 			$wheres = array();
-			//处理分类数据 常见分类
-			if($addslArray['cjfl']!='')
+			//行业分类
+			if($addslArray['hyfl']!='')
 			{
-				$wheres['w.common'] = $addslArray['cjfl'];
+				$wheres['w.classification'] = $addslArray['hyfl'];
 			}
-			//粉丝数量
-			if($addslArray['fans_num']!='')
+			//地区筛选
+			if($addslArray['dqsx']!='')
 			{
-				$wheres['w.fans_num'] = $this->getLeftRightstr($addslArray['fans_num'],'-');
+				$wheres['w.area'] = $addslArray['dqsx'];
 			}
-			//价格区间
-			if($addslArray['zfjg_type']!='' && $addslArray['jg']!='')
+			//优惠专区
+			if($addslArray['yhzq']!='')
 			{
-				switch ($addslArray['zfjg_type']) {
-					case 1:
-						$wheres['w.yg_zhuanfa'] = $this->getLeftRightstr($addslArray['jg'],'-');
-					break;
-					case 2:
-						$wheres['w.yg_zhifa'] = $this->getLeftRightstr($addslArray['jg'],'-');
-					break;
-					case 3:
-						$wheres['w.rg_zhuanfa'] = $this->getLeftRightstr($addslArray['jg'],'-');
-					break;
-					case 4:
-						$wheres['w.rg_zhifa'] = $this->getLeftRightstr($addslArray['jg'],'-');
-					break;
-				}
+				$wheres['w.discount'] = $addslArray['yhzq'];
 			}
-			//性别区分
-			if($addslArray['fans_sex']!='')
+			//价格
+			if($addslArray['jg']!='')
 			{
-				$wheres['w.fans_sex'] = $addslArray['fans_sex'];
+				$wheres['w.price'] = $this->getLeftRightstr($addslArray['jg'],'-');
 			}
-			//为您推荐
+			//是否新闻源
+			if($addslArray['sfxwy']!='')
+			{
+				$wheres['w.is_news'] = $addslArray['sfxwy'];
+			}
+			//门户类型
+			if($addslArray['mh_type']!='')
+			{
+				$wheres['w.type_of_portal'] = $addslArray['mh_type'];
+			}
+			//带链接情况
+			if($addslArray['dljzk']!='')
+			{
+				$wheres['w.links'] = $addslArray['dljzk'];
+			}
+			//推荐情况
 			if($addslArray['tj']!='')
 			{
-				$wheres['w.recommend'] = 1;
+				$wheres['w.recommend'] = $addslArray['tj'];
 			}
 			//热门微博
-			if($addslArray['rmwb']!='')
+			if($addslArray['rmwx']!='')
 			{
-				$wheres['w.is_hot'] = 1;
+				$wheres['w.is_hot'] = $addslArray['rmwx'];
 			}
 			//折扣
 			if($addslArray['xstj']!='')

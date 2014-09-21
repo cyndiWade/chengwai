@@ -230,7 +230,7 @@ var public_post_fn = function (obj_data) {
 	}
 	
 	//AJAX获取数据
-	var result = System.ajax_post_setup('{:U('/Advert/Weixin/get_weixin_list')}',post_data,'JSON');
+	var result = System.ajax_post_setup('{:U('/Advert/News/get_news_list')}',post_data,'JSON');
 	
 	if (result.status == 1) {
 		list_content.empty();
