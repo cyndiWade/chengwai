@@ -43,6 +43,9 @@ Weibo.prototype.init = function () {
 	
 	this.all_data_num = $('#all_data_num');	//所有数据
 	this.all_page_num = $('#all_page_num');	//所有分页数
+	
+	this.list_content = $('#list_content');
+	this.mrdetail = $('.mrdetail');
 }
 
 
@@ -56,9 +59,6 @@ Weibo.prototype.add_table_class = function () {
 	$('.top-search strong').click(function(){
 		$(this).siblings().removeClass('on')
 		$(this).addClass('on');
-	})
-	$('.mrdetail').click(function(){
-		$('.batchboxdetail').popOn();
 	})
 	$('#morecate').click(function(){
 		$('.part01-cate').toggleClass('part01-cate-auot');
@@ -626,6 +626,116 @@ Weibo.prototype.dataNum_And_PageNum = function (data) {
 	_father_this.all_data_num.text(data);
 	_father_this.all_page_num.text(Math.ceil(data / system_info.page_limit));
 }
+
+
+//创建列表HTML
+Weibo.prototype.create_now_html = function (result) {
+	var _father_this = this;
+	_father_this.list_content.empty();
+	
+	for (var key in result) {
+		var $data = result[key];
+		var html = '';
+		html += '<div class="box01-cele fl">';
+		html += '<input type="checkbox" class="check fl" />';
+		html += '<div class="part01-cele fl">';
+		html += '<img src="images/cer_img01.gif" />';
+		html += '<div class="ctrl">';
+		html += '<span class="lahei_and_shoucang" data-or_type="1" data-weibo_id="'+$data.id+'">收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weibo_id="'+$data.id+'">拉黑</span>';
+		html += '</div>';
+		html += '</div>';
+		html += '<div class="part02-cele fl">';
+		html += '<div class="grp01-cele l">';
+		html += '<span class="mrdetail cur fr" data-weibo_id="'+$data.id+'">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl">'+$data.account_name+'</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>';
+		html += '</div>';
+		html += '<div class="grp02-cele l">';
+		html += '<ul class="arr01-cele l">';
+		html += '<li><span class="blue">职业：</span>歌手 <em>影视演员</em></li>';
+		html += '<li><span class="blue">粉丝量：</span><b class="red">'+$data.fans_num+'万</b></li>';
+		html += '<li><span class="blue">参考报价：</span><b class="red">'+$data.yg_zhuanfa+'万</b></li>';
+		html += '<li><span class="blue">配合度：</span>'+$data.coordination+'</li>';
+		html += '</ul>';
+		html += '<div class="arr02-cele l">';
+		html += '<div class="tem01-cele fr">';
+		html += '<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员';
+		html += '</div>';
+		html += '<div class="tem02-cele fl">';
+		html += '影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员';
+		html += '</div>';
+		html += '</div>';
+		html += '</div>';
+		html += '</div>';
+		html += '</div>';
+	
+		_father_this.list_content.append(html);
+	}
+	
+}
+
+
+//创建详情页面
+Weibo.prototype.create_details = function (data) {
+	var _father_this = this;
+	_father_this.init();
+	
+	_father_this.mrdetail.click(function(){
+		var _this = $(this);
+		var weibo_id = _this.data('weibo_id');
+		//alert(weibo_id)
+		
+		//$('.batchboxdetail').popOn();
+	})
+	
+	//var result = System.ajax_post_setup('{:U('/Advert/Weibo/get_celeprity_list')}',post_data,'JSON');
+	
+	var html = '';
+html += '<div class="batchboxdetail none tl">';
+html += '<div class="top-batchdetail l pr">';
+html += '<span class="close cur pa"><img src="images/close.gif" /></span>';
+html += '<ul class="mrnav fl">';
+html += '<li class="select">名人基本信息</li>	';
+html += '</ul>';
+html += '</div>';
+html += '<div class="mid-batchdetail l">';
+html += '<div class="box01-mrfx">';
+html += '<div class="part01-mrfx fl">';
+html += '<div class="grp01 fl">';
+html += '<img src="images/mr_img01.gif" />';
+html += '</div>';
+html += '<div class="grp02 fl">';
+html += '<h6><b>苏经</b>的详细信息</h6>';
+html += '<table class="tab01-mr">';
+html += '<tr>';
+html += '<td class="t1">国籍:</td>';
+html += '<td class="t2">中国</td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">主要成就:</td>';
+html += '<td class="t2">暂无数据</td>';
+html += '</tr>';
+html += '</table>';
+html += '</div>';
+html += '</div>';
+html += '<div class="part02-mrfx fl">';
+html += '<h6><strong>履历介绍</strong></h6>';
+html += '<p>苏芩，著名作家，历任媒体主编、国内多家电（视）台、平面媒体特邀顾问。</p>';
+html += '</div>';
+html += '<div class="part02-mrfx fl">';
+html += '<h6><strong>账号信息</strong></h6>';
+html += '<div class="info"><span>平均转发数： <b class="red">1934.591</b></span><span>平均评论数： <b class="red">1934.591</b></span></div>';
+html += '</div>';
+html += '</div>';		
+html += '</div>';
+html += '</div>';
+	
+
+//$('.mrdetail').click(function(){
+//	$('.batchboxdetail').popOn();
+//})
+
+}
+
+
 
 //执行
 Weibo.prototype.run = function () {
