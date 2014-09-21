@@ -152,7 +152,7 @@ class WeixinAction extends AdvertBaseAction {
     }
 
     //微信拉黑或者收藏
-    public function get_weixin_borc()
+    public function insert_weixin_borc()
     {
     	$bool = $this->db['BlackorcollectionWeixin']->insertBlackorcollection($_POST,$this->oUser->id);
     	if($bool)
