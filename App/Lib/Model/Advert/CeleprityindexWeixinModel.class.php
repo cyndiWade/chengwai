@@ -21,7 +21,7 @@
 				}
 				//组合生成查询SQL
 				$where = $this->getWhere($addvalue);
-				//为草根 传参 1
+				//为名人 传参 1
 				$where['b.is_celebrity'] = 1;
 				//判断是分页提交还是分栏提交
 				$limit = 10;

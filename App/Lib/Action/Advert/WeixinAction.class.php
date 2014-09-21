@@ -140,7 +140,7 @@ class WeixinAction extends AdvertBaseAction {
     public function get_weixin_list()
     {
     	//判断是名人还是草根
-		$is_celeprity = intval($_POST['is_celeprity']);
+		$is_celeprity = intval($_POST['is_celebrity']);
 		if($is_celeprity==0)
 		{
 			$list_new = $this->db['GrassrootsWeixin']->getPostArray($_POST,$this->oUser->id);
