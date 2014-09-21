@@ -580,10 +580,9 @@ Weixin.prototype.lahei_and_shoucang_fn = function ($urL) {
 	_father_this.lahei_and_shoucang.click(function () {
 		var _this = $(this);
 		var post_data = {
-			'pt_type' :system_info.pt_type,	
-			'is_celeprity' :system_info.is_celeprity,
+			'is_celebrity' :system_info.is_celebrity,
 			'or_type' : _this.data('or_type'),
-			'Weixin_id' : _this.data('Weixin_id')
+			'weixin_id' : _this.data('weixin_id')
 		};
 		var result = System.ajax_post_setup($urL,post_data,'JSON');
 		

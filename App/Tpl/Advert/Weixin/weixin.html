@@ -197,7 +197,7 @@
 <script type="text/javascript">
 
 var system_info = {
-	is_celeprity : 0,	//是否是名人1是、0不是
+	is_celebrity : 0,	//是否是名人1是、0不是
 	page_limit : 10,	//每页条数
 }
 var list_content = $('#list_content');
@@ -212,7 +212,7 @@ var list_content = $('#list_content');
 var public_post_fn = function (obj_data) {
 	var post_data = {};
 	post_data.pt_type = system_info.pt_type;	//平台类型，1新浪、2腾讯
-	post_data.is_celeprity = system_info.is_celeprity;	//是否是名人
+	post_data.is_celebrity = system_info.is_celebrity;	//是否是名人
 	
 	//三级导航已选择数据
 	var three_sidebar_selected = Weixin.get_three_sidebar_selected();
@@ -249,7 +249,7 @@ var public_post_fn = function (obj_data) {
 		}
 		
 		//拉黑和收藏功能
-		//Weixin.lahei_and_shoucang_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+		Weixin.lahei_and_shoucang_fn('{:U('/Advert/Weixin/insert_weixin_borc')}');
 
 		Weixin.dataNum_And_PageNum(result.data.count);
 		
@@ -272,7 +272,7 @@ var create_now_html = function ($data) {
 	html += '<td class="t7">8000</td>';
 	html += '<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
 	html += '<td class="t9"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>';
-	html += '<td class="last"><div class="ctrl"><span>详情</span><span>收藏</span><span>拉黑</span></div></td>';
+	html += '<td class="last"><div class="ctrl"><span>详情</span><span class="lahei_and_shoucang" data-or_type="1" data-weixin_id="'+$data.id+'">收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weixin_id="'+$data.id+'">拉黑</span></div></td>';
 	html += '</tr>';
   	return html;
 } 
