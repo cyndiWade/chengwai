@@ -22,7 +22,7 @@
 		{
 			$addDate = array(
 				'pt_type'=>$array['pt_type'],
-				'is_celebrity'=>$array['is_celebrity'],
+				'is_celeprity'=>$array['is_celeprity'],
 				'or_type'=>$array['or_type'],
 				'user_id'=>$user_id,
 				'weibo_id'=>$array['weibo_id']
@@ -35,7 +35,6 @@
 			}else{
 				return false;
 			}
-			
 		}
 
 	}

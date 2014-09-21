@@ -124,7 +124,7 @@ class WeiboAction extends AdvertBaseAction {
 		$pt_type = intval($_POST['pt_type']);
 		if(!empty($pt_type))
 		{
-			$list_new = $this->db['CeleprityindexWeibo']->getPostArray($_POST,$pt_type);
+			$list_new = $this->db['CeleprityindexWeibo']->getPostArray($_POST,$pt_type,$this->oUser->id);
 			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
 		}
 	}
