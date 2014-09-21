@@ -294,11 +294,10 @@ var public_post_fn = function (obj_data) {
 		post_data.p = obj_data.this_number;
 	}
 
-	//console.log(post_data)
-	
 	//AJAX获取数据
 	var result = System.ajax_post_setup('{:U('/Advert/Weibo/get_celeprity_list')}',post_data,'JSON');
 	
+	console.log(result);
 	if (result.status == 1) {
 		list_content.empty();
 		for (var key in result.data.list) {
@@ -318,19 +317,19 @@ var public_post_fn = function (obj_data) {
 
 
 var create_now_html = function ($data) {
-	
+	//
 	var html = '';
 	html += '<div class="box01-cele fl">';
 	html += '<input type="checkbox" class="check fl" />';
 	html += '<div class="part01-cele fl">';
 	html += '<img src="images/cer_img01.gif" />';
 	html += '<div class="ctrl">';
-	html += '<span>收藏</span><span>拉黑</span>';
+	html += '<span class="lahei_and_shoucang" data-or_type="1" data-weibo_id="'+$data.id+'">收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weibo_id="'+$data.id+'">拉黑</span>';
 	html += '</div>';
 	html += '</div>';
 	html += '<div class="part02-cele fl">';
 	html += '<div class="grp01-cele l">';
-	html += '<span class="mrdetail cur fr">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl">苏花</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>';
+	html += '<span class="mrdetail cur fr">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl">'+$data.account_name+'</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>';
 	html += '</div>';
 	html += '<div class="grp02-cele l">';
 	html += '<ul class="arr01-cele l">';
