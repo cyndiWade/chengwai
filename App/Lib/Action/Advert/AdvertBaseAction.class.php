@@ -165,14 +165,21 @@ class AdvertBaseAction extends AppBaseAction {
 		//微信
 		$data[1] = array(
 			0 => U('/Advert/Weixin/celebrity_weixin'),	
-			1 => U('/Advert/Weixin/weixin'),		
+			1 => U('/Advert/Weixin/weixin'),	
+			2 => U('/Advert/WeixinOrder/add_generalize'),					
+			3 => U('/Advert/WeixinOrder/generalize_activity'),
+			4 => U('/Advert/WeixinOrder/add_intention'),	
 		);
 		//微博
 		$data[2] = array(
 			0 => U('/Advert/Weibo/celebrity_weibo',array('pt_type'=>1)),	//新浪名人微博
 			1 => U('/Advert/Weibo/caogen_weibo',array('pt_type'=>1)),		//新浪草根微博
 			2 => U('/Advert/Weibo/celebrity_weibo',array('pt_type'=>2)),	//腾讯名人微博
-			3 => U('/Advert/Weibo/caogen_weibo',array('pt_type'=>2))				//腾讯草根微博
+			3 => U('/Advert/Weibo/caogen_weibo',array('pt_type'=>2)),		//腾讯草根微博
+			4 => U('/Advert/WeiboOrder/add_generalize'),					
+			5 => U('/Advert/WeiboOrder/generalize_activity'),
+			6 => U('/Advert/WeiboOrder/intention_list'),	
+			//6 => U('/Advert/WeiboOrder/add_intention'),		
 		);
 		parent::data_to_view(array(	
 			//二级导航	

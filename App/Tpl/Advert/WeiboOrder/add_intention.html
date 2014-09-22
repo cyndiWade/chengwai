@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+    <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/page.css" type="text/css" />
+	<title>创建微博意向单页</title>
+</head>
+<body>
+
+<!-- 头部 -->
+<include file="Public:member_header" />
+
+<div class="wrap l">
+<div class="pbd">
+	<div class="location l">
+		当前位置：<a href="#">首页</a>  >  <a href="#">微博推广</a> > <span class="blue">意向单</span>
+	</div>
+	<div class="area01-intention fl">
+		<div class="box01-intention l">
+			<img src="{$global_tpl_view.Group_Resource_Path}images/step01.png" />
+		</div>
+		<div class="box02-intention l">
+			<div class="int-tip l">注：<b class="red">*</b> 为必填项</div>
+			<table class="tab01-inten l">
+			  <tr>
+				<td class="t1"><i>*</i><strong>投放平台：</strong></td>
+				<td class="t2">新浪微博</td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><i>*</i><strong>发送类型：</strong></span></td>
+				<td class="t2"><select><option>转发</option></select>
+					<p>转发：将已有的微博链接转发</p>
+				</td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><i>*</i><strong>软硬广：</strong></span></td>
+				<td class="t2"><span class="soft fl"><input type="radio" name="extension" checked="checked" class="radio" /><strong>硬广</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span><span class="soft fl"><input type="radio" name="extension" class="radio" /><strong>软广</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span></td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><i>*</i><strong>意向单名称：</strong></span></td>
+				<td class="t2"><input type="text" class="text text-error" /><div class="errortip">名称不能为空</div></td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><i>*</i><strong>转发链接：</strong></span></td>
+				<td class="t2"><input type="text" class="text" /><div class="writetip"><span class="gray">例：http://weibo.com/1675718025/xhUXoBAJa </span><a class="why blue" href="#">什么是转发链接? </a></div></td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><i>*</i><strong>转发语类型：</strong></span></td>
+				<td class="t2"><span class="soft fl"><input type="radio" class="radio" /><strong>指定转发语</strong></span><span class="soft fl"><input type="radio" class="radio" /><strong>博主自拟转发语</strong></span><span class="soft fl"><input type="radio" class="radio" /><strong>无转发语</strong></span></td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><i>*</i><strong>转发语：</strong></span></td>
+				<td class="t2"><div class="forward"><textarea class="textarea"></textarea><p>此内容会直接发出，请不要填写与转发语无关的信息。请不要超过140字，您还可以输入140个字</p></div></td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><strong>文案是否含链接：</strong></span></td>
+				<td class="t2"><div class="linkbox l"><span class="soft fl"><input type="radio" class="radio" /><strong>包含</strong></span><span class="soft fl"><input type="radio" class="radio" /><strong>不包含</strong></span></div><p class="l">请您如实选择，以免影响后续创建的活动类型</p></td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><i>*</i><strong>预计执行时间：</strong></span></td>
+				<td class="t2"><div class="timestart"><input type="text" class="text text-time" /><span><select><option>23</option></select>时</span><span><select><option>23</option></select>分</span><span><input type="checkbox" class="check" />延期</span></div><p>请选择当前时间60分钟后，14天之内的时间</p></td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><i>*</i><strong>反馈截止时间：</strong></span></td>
+				<td class="t2"><div class="timestart"><input type="text" class="text text-time" /><span><select><option>23</option></select>时</span><span><select><option>23</option></select>分</span></div><p>博主会在该时间之前反馈，请选择当前时间30分钟后，14天之内的时间</p></td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><strong>短信通知反馈结果：</strong></span></td>
+				<td class="t2"><span class="soft fl"><input type="radio" class="radio" /><strong>需要</strong></span><span class="soft fl"><input type="radio" class="radio" /><strong>需要</strong></span></td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><strong>手机号：</strong></span></td>
+				<td class="t2"><input type="text" class="text" /><p class="writetip">请准确填写您的手机号码，以便及时短信告知您确认结果</p></td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><strong>备注：</strong></span></td>
+				<td class="t2"><div class="forward"><textarea class="textarea"></textarea><p>请填写备注信息，请不要超过300个汉字！</p></div></td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><i>*</i><strong>上传正品证明：</strong></span></td>
+				<td class="t2"><div class="provebox l"><input type="file" class="file fl" /><span class="btn brownbtn fl">使用历史证明</span></div><p class="l">仅支持jpg、gif、png图片文件，文件小于5M，且允许上传5张</p><p class="red l"><span class="red">若您推广的单品属于知名品牌，请务必上传该商品的正品证明</span></p></td>
+			  </tr>
+			  <tr>
+				<td class="t1"></td>
+				<td class="t2"><div class="agreebox f12"><input type="checkbox" class="check fl" /><strong class="fl">同意<a class="blue" href="#">服务协议</a></strong></div></td>
+			  </tr>
+			  <tr>
+				<td class="t1"></td>
+				<td class="t2"><input type="submit" class="btn brownbtn" value="下一步" /></td>
+			  </tr>
+			</table>
+		</div>
+	</div>
+</div>
+</div>
+
+
+<include file="Public:member_footer" />
+
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+</body>
+</html>

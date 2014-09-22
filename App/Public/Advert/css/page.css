@@ -89,6 +89,8 @@
 .tab01-order .t7 a{ text-decoration:underline;}
 /*活动订单*/
 .box01-addorder .bluebtn{ width:116px; height:50px; text-align:center; line-height:50px;}
+.box01-addorder .brownbtn{ width:160px; text-align:center;}
+.box01-addorder .searnum b.red{ color:#e24d46;}
 .box01-addorder .searnum{ padding-top:19px; border-bottom:none; padding-bottom:0;}
 .box01-addorder .searnum b{ color:#238cc8;}
 .box01-addorder .help{ margin-top:19px; color:#238cc8;}
@@ -123,3 +125,11 @@
 .area01-extension{ border:1px solid #e9ece6; width:998px; padding:37px 0;}
 .box01-extension img{ margin:0 auto; padding-bottom:27px;}
 .area01-extension .box02-intention{ padding-left:94px;}
+
+.tab01-addorder-page .t1{ padding-left:11px; width:181px;}
+.tab01-addorder-page .t2{ width:112px;}
+.tab01-addorder-page .t3{ width:103px;}
+.tab01-addorder-page .t4{ width:102px;}
+.tab01-addorder-page .t5{ width:70px;}
+.tab01-addorder-page .t6{ width:152px;}
+.tab01-addorder-page .t7{ width:152px ;}
