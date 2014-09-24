@@ -22,7 +22,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 	
 	//初始化数据库连接
 	protected  $db = array(
-		'GeneralizeOrder' => 'GeneralizeOrder'
+		'GeneralizeOrder' => 'GeneralizeOrder',
+		'GeneralizeFiles' => 'GeneralizeFiles'
 	);
 	
 	//和构造方法
@@ -99,21 +100,29 @@ class WeiboOrderAction extends AdvertBaseAction {
 			if($id!='')
 			{
 				$img_array = array();
-				$file_one = $_FILES[''];
+				$contentTypeRetweet = $_FILES['contentTypeRetweet'];
 				$upload_dir = C('UPLOAD_DIR');
 				$dir = $upload_dir['web_dir'].$upload_dir['image'];
-				$status_one = parent::upload_file($file_one,$dir,5120000);
-				if($status_one['status']==true)
+				$status_content = parent::upload_file($contentTypeRetweet,$dir,5120000);
+				if($status_content['status']==true)
 				{
-
+					$img_array['contentTypeRetweet']['users_id'] = $this->oUser->id;
+					$img_array['contentTypeRetweet']['generalize_order_id'] = $id;
+					$img_array['contentTypeRetweet']['type'] = 1;
+					$img_array['contentTypeRetweet']['url'] = $status_content['info'][0]['savename'];
 				}
-				$file_two = $_FILES[''];
-				$status_two = parent::upload_file($file_one,$dir,5120000);
-				if($status_two['status']==true)
+				$genuineFile = $_FILES['genuineFile'];
+				$status_genuineFile = parent::upload_file($genuineFile,$dir,5120000);
+				if($status_genuineFile['status']==true)
 				{
-
+					$img_array['genuineFile']['users_id'] = $this->oUser->id;
+					$img_array['genuineFile']['generalize_order_id'] = $id;
+					$img_array['genuineFile']['type'] = 2;
+					$img_array['genuineFile']['url'] = $status_genuineFile['info'][0]['savename'];
 				}
-				
+				$this->db['GeneralizeFiles']->insertImg($img_array);
+				//根据ID跳转
+				parent::callback(C('STATUS_DATA_LOST'),'成功!');
 			}else{
 				parent::callback(C('STATUS_DATA_LOST'),'参数错误!');
 			}

@@ -12,20 +12,21 @@
 			{
 				$new_post[$key] = addslashes($value);
 			}
-			$date['users_id'] = $id;
-			$date['tfpt_type'] = $new_post[''];
-			$date['fslx_type'] = $new_post[''];
-			$date['ryg_type'] = $new_post[''];
-			$date['hd_name'] = $new_post[''];
-			$date['zf_url'] = $new_post[''];
-			$date['zfy_type'] = $new_post[''];
-			$date['zw_info'] = $new_post[''];
-			$date['zfnr_type'] = $new_post[''];
-			$date['wasfbalj'] = $new_post[''];
-			$date['start_time'] = $new_post[''];
-			$date['over_time'] = $new_post[''];
-			$date['bz_info'] = $new_post[''];
-			return $this->add($date);
+			$now_val['users_id'] = $id;
+			$now_val['tfpt_type'] = $new_post['tfpt_type'];
+			$now_val['fslx_type'] = $new_post['fslx_type'];
+			$now_val['ryg_type'] = $new_post['ryg_type'];
+			$now_val['hd_name'] = $new_post['hd_name'];
+			$now_val['zf_url'] = $new_post['zf_url'];
+			$now_val['zfy_type'] = $new_post['zfy_type'];
+			$now_val['zw_info'] = $new_post['zw_info'];
+			$now_val['zfnr_type'] = $new_post['zfnr_type'];
+			$now_val['wasfbalj'] = $new_post['wasfbalj'];
+			$now_val['start_time'] = strtotime($new_post['start_time']);
+			$now_val['sfyq'] = $new_post['sfyq'];
+			$now_val['bz_info'] = $new_post['bz_info'];
+			$now_val['create_time'] = time();
+			return $this->add($now_val);
 		}
 
 	}

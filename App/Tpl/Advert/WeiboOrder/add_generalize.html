@@ -23,7 +23,7 @@
 		<div class="box02-intention l">
 			<div class="int-tip l">注：<b class="red">*</b> 为必填项</div>
 			
-			<form action="" method="post" class="generalize_form" enctype="multipart/form-data" >
+			<form action="{:U('Advert/WeiboOrder/add_extension')}" method="post" class="generalize_form" enctype="multipart/form-data" >
 			<table class="tab01-inten l">
 			  <tr>
 				<td class="t1"><i>*</i><strong>投放平台：</strong></td>
@@ -106,7 +106,7 @@
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>上传正品证明：</strong></span></td>
-				<td class="t2"><div class="provebox l"><input type="file" class="file fl" /><span class="btn brownbtn fl use_history_img">使用历史证明</span></div><p class="l">仅支持jpg、gif、png图片文件，文件小于5M，且允许上传5张</p><p class="red l"><span class="red">若您推广的单品属于知名品牌，请务必上传该商品的正品证明</span></p></td>
+				<td class="t2"><div class="provebox l"><input type="file" class="file fl" name="genuineFile"/><span class="btn brownbtn fl use_history_img">使用历史证明</span></div><p class="l">仅支持jpg、gif、png图片文件，文件小于5M，且允许上传5张</p><p class="red l"><span class="red">若您推广的单品属于知名品牌，请务必上传该商品的正品证明</span></p></td>
 			  </tr>
 			  <tr>
 				<td class="t1"></td>
@@ -114,7 +114,7 @@
 			  </tr>
 			  <tr>
 				<td class="t1"></td>
-				<td class="t2"><input type="button" class="btn brownbtn btn_sub" value="下一步" /></td>
+				<td class="t2"><input type="submit" class="btn brownbtn btn_sub" value="下一步" /></td>
 			  </tr>
 			</table>
 			</form>
