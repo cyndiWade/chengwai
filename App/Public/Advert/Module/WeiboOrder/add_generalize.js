@@ -5,7 +5,7 @@ $(".generalize_form").Validform({
 	showAllError:false,				//提示所有错误
 	postonce:false,					//true：数据成功提交后，表单将不能再继续提交。false：关闭
 	ajaxPost:false,					//是否使用ajax提交数据，true时，提交的地址就是action地址
-	tipSweep:false ,				//		默认为false，在各种tiptype下， 为true时提示信息将只会在表单提交时触发显示，各表单元素blur时不会触发信息提示；
+	tipSweep:false ,				//默认为false，在各种tiptype下， 为true时提示信息将只会在表单提交时触发显示，各表单元素blur时不会触发信息提示；
 
 	
 	
