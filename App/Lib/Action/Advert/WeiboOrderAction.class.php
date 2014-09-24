@@ -22,7 +22,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 	
 	//初始化数据库连接
 	protected  $db = array(
-			
+		'GeneralizeOrder' => 'GeneralizeOrder'
 	);
 	
 	//和构造方法
@@ -88,6 +88,38 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$this->display();
 	}
 	
+
+	//添加推广
+	public function add_extension()
+	{
+		if($this->isPost())
+		{
+			//获得新增数据ID
+			$id = $this->db['GeneralizeOrder']->insertPost($_POST,$this->oUser->id);
+			if($id!='')
+			{
+				$img_array = array();
+				$file_one = $_FILES[''];
+				$upload_dir = C('UPLOAD_DIR');
+				$dir = $upload_dir['web_dir'].$upload_dir['image'];
+				$status_one = parent::upload_file($file_one,$dir,5120000);
+				if($status_one['status']==true)
+				{
+
+				}
+				$file_two = $_FILES[''];
+				$status_two = parent::upload_file($file_one,$dir,5120000);
+				if($status_two['status']==true)
+				{
+
+				}
+				
+			}else{
+				parent::callback(C('STATUS_DATA_LOST'),'参数错误!');
+			}
+		}
+	}
+
 }
 
 ?>
