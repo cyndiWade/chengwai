@@ -266,7 +266,7 @@ var public_post_fn = function (obj_data) {
 		//数据条数以及分页条数
 		Weibo.dataNum_And_PageNum(result.data.count);
 		
-		Weibo.create_details('{:U('/Advert/Weibo/insert_blackorcollection')}');
+		Weibo.create_details_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
 		
 		//更新page
 		page_now_list(result.data.count,result.data.p,system_info.page_limit);

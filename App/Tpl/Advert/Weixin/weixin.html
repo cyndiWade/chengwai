@@ -253,6 +253,8 @@ var public_post_fn = function (obj_data) {
 
 		Weixin.dataNum_And_PageNum(result.data.count);
 		
+		Weixin.create_details_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+		
 		//更新page
 		page_now_list(result.data.count,result.data.p,system_info.page_limit);
 	} 
@@ -272,7 +274,7 @@ var create_now_html = function ($data) {
 	html += '<td class="t7">8000</td>';
 	html += '<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
 	html += '<td class="t9"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>';
-	html += '<td class="last"><div class="ctrl"><span>详情</span><span class="lahei_and_shoucang" data-or_type="1" data-weixin_id="'+$data.id+'">收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weixin_id="'+$data.id+'">拉黑</span></div></td>';
+	html += '<td class="last"><div class="ctrl"><span class="wxdetail">详情</span><span class="lahei_and_shoucang" data-or_type="1" data-weixin_id="'+$data.id+'">收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weixin_id="'+$data.id+'">拉黑</span></div></td>';
 	html += '</tr>';
   	return html;
 } 

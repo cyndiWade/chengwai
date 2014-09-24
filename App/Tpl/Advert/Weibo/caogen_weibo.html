@@ -223,6 +223,8 @@ var public_post_fn = function (obj_data) {
 
 		Weibo.dataNum_And_PageNum(result.data.count);
 		
+		Weibo.create_details_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+		
 		//更新page
 		page_now_list(result.data.count,result.data.p,system_info.page_limit);
 	} 
@@ -235,7 +237,7 @@ var create_now_html = function ($data) {
 	html += '<tr>';
 	html += '<td class="t1">';
 	html += '<div class="weibopart"><input type="checkbox" class="check" />';
-	html += 	'<img src="" class="wbimg" />';
+	html += 	'<img src="App/Public/Advert/images/wb_img01.gif" class="wbimg" />';
 	html += 		'<div class="grp fl">';
 	html += 		'<h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5>';
 	html += 		'<div class="address l">'+$data.account_name+'</div>';
@@ -252,7 +254,7 @@ var create_now_html = function ($data) {
 	html += '<td class="t8">'+$data.week_order_num+'</td>';
 	html += '<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>';
 	html += '<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
-	html += '<td class="last"><div class="ctrl"><span>详情</span><span class="lahei_and_shoucang" data-or_type="1" data-weibo_id="'+$data.id+'"  >收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weibo_id="'+$data.id+'">拉黑</span></div></td>';
+	html += '<td class="last"><div class="ctrl"><span class="wbdetail">详情</span><span class="lahei_and_shoucang" data-or_type="1" data-weibo_id="'+$data.id+'"  >收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weibo_id="'+$data.id+'">拉黑</span></div></td>';
   	html += '</tr>';
   	return html;
 } 

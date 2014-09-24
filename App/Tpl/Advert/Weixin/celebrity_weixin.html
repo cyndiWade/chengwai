@@ -192,51 +192,6 @@
 </div>
 </div>
 
-<!-- 详情弹窗 -->
-<div class="batchboxdetail none tl">
-	<div class="top-batchdetail l pr">
-		<span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span>
-		<ul class="mrnav fl">
-			<li class="select">名人基本信息</li>
-		
-		</ul>
-	</div>
-	<div class="mid-batchdetail l">
-		<div class="box01-mrfx">
-			<div class="part01-mrfx fl">
-				<div class="grp01 fl">
-					<img src="{$global_tpl_view.Group_Resource_Path}images/mr_img01.gif" />
-				</div>
-				<div class="grp02 fl">
-					<h6><b>苏经</b>的详细信息</h6>
-					<table class="tab01-mr">
-					  <tr>
-						<td class="t1">国籍:</td>
-						<td class="t2">中国</td>
-					  </tr>
-					  <tr>
-						<td class="t1">主要成就:</td>
-						<td class="t2">暂无数据</td>
-					  </tr>
-					</table>
-				</div>
-			</div>
-			<div class="part02-mrfx fl">
-				<h6><strong>履历介绍</strong></h6>
-				<p>苏芩，著名作家，历任媒体主编、国内多家电（视）台、平面媒体特邀顾问。她长期以大视角关注女性发展，关爱女性成长，为女人立言，其“苏芩女学馆”是
-目前国内最受欢迎、流量最大的情感交流空间，吸引超过六亿人次访问，倍受年轻读者追捧。其文经典精悍，睿智深远，洞穿世情人心却不乏温暖励志，都市女
-性几乎无人不知</p>
-			</div>
-			<div class="part02-mrfx fl">
-				<h6><strong>账号信息</strong></h6>
-				<div class="info"><span>平均转发数： <b class="red">1934.591</b></span><span>平均评论数： <b class="red">1934.591</b></span></div>
-			</div>
-		</div>
-		
-	</div>
-</div>
-
-
 <include file="Public:member_footer" />
 
 <!-- 批量添加弹窗 -->
@@ -266,8 +221,9 @@ var list_content = $('#list_content');
 </script>
 
 <script src="{$global_tpl_view.Global_Resource_Path}Tool/Region.js"></script>
-<script src="{$global_tpl_view.Module_Resource_Path}celebrity_weixin.js"></script>
 <script src="{$global_tpl_view.Group_Resource_Path}js/page.js"></script>
+<script src="{$global_tpl_view.Module_Resource_Path}celebrity_weixin.js"></script>
+
 <script type="text/javascript">
 
 
@@ -288,7 +244,7 @@ var public_post_fn = function (obj_data) {
 		post_data[account_data.field] = account_data.val;
 	}
 	
-	//获取选中的标签数据
+	//获取选中的qeqw标签数据
 	var tags_selected =	Weixin.get_selected_tags();	//获取选中标签数据
 	for (var field in tags_selected) {
 		post_data[field]= tags_selected[field];
@@ -314,6 +270,8 @@ var public_post_fn = function (obj_data) {
 		Weixin.lahei_and_shoucang_fn('{:U('/Advert/Weixin/insert_weixin_borc')}');
 
 		Weixin.dataNum_And_PageNum(result.data.count);
+		
+		Weixin.create_details_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
 		
 		//更新page
 		page_now_list(result.data.count,result.data.p,system_info.page_limit);

@@ -49,11 +49,16 @@ Weixin.prototype.init = function () {
 	
 	this.all_data_num = $('#all_data_num');	//所有数据
 	this.all_page_num = $('#all_page_num');	//所有分页数
+	
+	this.body = $('body');
+	this.list_content = $('#list_content');
+	this.wxdetail = $('.wxdetail');
+	this.batchboxdetail = $('.batchboxdetail');
 }
 
 
 //添加相关样式
-Weixin.prototype.add_table_class = function () {
+Weixin.prototype.add_old_class = function () {
 	$('.tab01-Weixin tr:even').addClass('even');
 	
 	$('#batch').click(function(){
@@ -63,9 +68,7 @@ Weixin.prototype.add_table_class = function () {
 		$(this).siblings().removeClass('on')
 		$(this).addClass('on');
 	})
-	$('.mrdetail').click(function(){
-		$('.batchboxdetail').popOn();
-	})
+
 	$('#morecate').click(function(){
 		$('.part01-cate').toggleClass('part01-cate-auot');
 	})
@@ -74,6 +77,13 @@ Weixin.prototype.add_table_class = function () {
 	})
 	$('#moreta').click(function(){
 		$('.part01-xqbq').toggleClass('part01-city-auot');
+	})
+	$('.top-batchdetail li').click(function(){
+		var i=$(this).index();
+		$(this).siblings().removeClass('select');
+		$(this).addClass('select');
+		$('.box01-batchdetail').hide();
+		$('.box01-batchdetail').eq(i).show();
 	})
 }
 
@@ -606,11 +616,130 @@ Weixin.prototype.dataNum_And_PageNum = function (data) {
 }
 
 
+//创建详情页面
+Weixin.prototype.create_details_fn = function ($url) {
+	var _father_this = this;
+	_father_this.init();
+	
+	_father_this.wxdetail.click(function(){
+		var _this = $(this);
+		var weibo_id = _this.data('weibo_id');
+		var post_data = {};
+		post_data.weibo_id = weibo_id;
+		var result = System.ajax_post_setup($url,post_data,'JSON');
+		
+		if (result.status == 1) {
+			create_pop_html(result)	
+		}
+	})
+	
+	//创建HTML
+	var create_pop_html = function (data) {
+		_father_this.init();
+		
+		_father_this.batchboxdetail.remove();
+		
+		var html = '';
+	
+html += '<div class="batchboxdetail none tl">';
+html += '<div class="top-batchdetail l pr">';
+html += '<div class="title pa"><i></i><span>全球头条新闻事件</span></div>';
+html += '<span class="close cur pa"><img src="App/Public/Advert/images/close.gif" /></span>';
+html += '<ul class="fl">';
+html += '<li class="li_a select"><strong>账号详情</strong></li><li class="li_b"><strong>账号被占用时段</strong></li>';
+html += '</ul>';
+html += '</div>';
+html += '<div class="mid-batchdetail l">';
+html += '<div class="box01-batchdetail fl">';
+html += '<table class="tab01-batchdetail">';
+html += '<tr>';
+html += '<td class="t1">月订单：<em>54646</em></td>';
+html += '<td class="t1">周订单：<em>54646</em></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">万粉丝硬广转发单价：<em>54646</em></td>';
+html += '<td class="t1">万粉丝软广转发单价：<em>54646</em></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">万粉丝硬广直发单价：<em>54646</em></td>';
+html += '<td class="t1">万粉丝软广直发单价：<em>54646</em></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">月流单率：<em>暂无报价</em></td>';
+html += '<td class="t1">月拒单率：<em>5%</em></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">月合格率：<em>5%</em></td>';
+html += '<td class="t1">是否接硬广：<em>是</em></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td colspan="2">账号ID：<em>1903188000</em></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td colspan="2">账号分类：<em>资讯</em><em>时尚</em><em>服装箱包</em><em>服装</em></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td colspan="2">账号标签：<em>IT数码游戏</em><em>母婴资讯</em><em>留学教育</em><em>服装</em></td>';
+html += '</tr>';
+html += '</table>';
+html += '<a href="#" class="btn graybtn fr">? 疑问建议</a>';
+html += '</div>';
+html += '<div class="box01-batchdetail none fl">';
+html += '<div class="part01-data fl">';
+html += '<strong>选择日期：</strong><span class="on">09月10日</span><span>09月11日</span><span>09月12日</span><span>09月13日</span>';
+html += '</div>';
+html += '<div class="datetip fl">明天（2014年09月12日） 账号的不可用时间段: </div>';
+html += '<table class="tab01-date">';
+html += '<tr>';
+html += '<td class="t1">早晨：</td>';
+html += '<td class="t2"></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">上午：</td>';
+html += '<td class="t2"></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">中午：</td>';
+html += '<td class="t2"> 12:30 -12:45</td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">下午：</td>';
+html += '<td class="t2"> 17:30 -17:45</td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">晚上： </td>';
+html += '<td class="t2"></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">凌晨： </td>';
+html += '<td class="t2"></td>';
+html += '</tr>';
+html += '</table>';
+html += '<p class="datetip gray fl">除以上时段外，其他时间均可用！</p>';
+html += '<a href="#" class="btn graybtn fr">? 疑问建议</a>';
+html += '</div>';
+html += '</div>';
+html += '</div>';
+		
+		_father_this.body.append(html);
+		
+		_father_this.init();
+		
+		_father_this.add_old_class();
+		
+		_father_this.batchboxdetail.popOn();
+
+	}
+	
+}
+
+
+
 //执行
 Weixin.prototype.run = function () {
 	var _father_this = this;
 	
-	_father_this.add_table_class();
+	_father_this.add_old_class();
 	
 	_father_this.select_tag_fn();	//点击创建标签
 	
