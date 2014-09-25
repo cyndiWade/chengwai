@@ -9,7 +9,6 @@
 	<title>微博列表页</title>
 </head>
 <body>
-
 <!-- 头部 -->
 <include file="Public:member_header" />
 
@@ -160,6 +159,10 @@
 		<a href="#" class="btn bluebtn">立即派单</a>
 	</div>
 </div>
+
+<input type="hidden" id="pt_type" value="{$view_data.pt_type}"/>
+<input type="hidden" id="order_id" value="{$view_data.order_id}"/>
+
 
 <!-- JS底部文件 -->
 <include file="Public:bottom" />

@@ -99,7 +99,10 @@ class WeiboAction extends AdvertBaseAction {
 		parent::data_to_view(array(
 			//二级导航属性
 			'sidebar_two'=>array($show_num=>'select'),//第一个加
+			'pt_type' => $this->pt_type,
+			'order_id' => $this->_get('order_id')
 		));
+		
 		$this->display();
 	}
 	
