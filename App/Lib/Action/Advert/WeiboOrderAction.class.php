@@ -22,9 +22,9 @@ class WeiboOrderAction extends AdvertBaseAction {
 	
 	//初始化数据库连接
 	protected  $db = array(
+		'GeneralizeAccount' => 'GeneralizeAccount',
 		'GeneralizeOrder' => 'GeneralizeOrder',
-		'GeneralizeFiles' => 'GeneralizeFiles',
-		'GeneralizeAccount' =>　'GeneralizeAccount'
+		'GeneralizeFiles' => 'GeneralizeFiles'
 	);
 	
 	//和构造方法
