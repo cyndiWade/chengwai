@@ -23,7 +23,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 	//初始化数据库连接
 	protected  $db = array(
 		'GeneralizeOrder' => 'GeneralizeOrder',
-		'GeneralizeFiles' => 'GeneralizeFiles'
+		'GeneralizeFiles' => 'GeneralizeFiles',
+		'GeneralizeAccount' =>　'GeneralizeAccount'
 	);
 	
 	//和构造方法
@@ -89,8 +90,20 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$this->display();
 	}
 	
+	//添加推广 选择账号
+	public function add_users()
+	{
 
-	//添加推广
+		if($this->isPost())
+		{
+			$this->db['GeneralizeAccount']->insertAll($_POST,$this->oUser->id);
+
+		}
+	}
+
+
+
+	//添加推广 填写意向单信息
 	public function add_extension()
 	{
 		if($this->isPost())
@@ -122,7 +135,14 @@ class WeiboOrderAction extends AdvertBaseAction {
 				}
 				$this->db['GeneralizeFiles']->insertImg($img_array);
 				//根据ID跳转
-				parent::callback(C('STATUS_DATA_LOST'),'成功!');
+				if($_POST['tfpt_type']==1)
+				{
+					//新浪草根
+					$this->redirect('Advert/Weibo/caogen_weibo',array('pt_type'=>1,'order_id'=>$id));
+				}else{
+					//腾讯草根
+					$this->redirect('Advert/Weibo/caogen_weibo',array('pt_type'=>2,'order_id'=>$id));
+				}
 			}else{
 				parent::callback(C('STATUS_DATA_LOST'),'参数错误!');
 			}
