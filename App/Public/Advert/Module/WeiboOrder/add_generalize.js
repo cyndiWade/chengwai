@@ -40,5 +40,44 @@ $(".generalize_form").Validform({
 		//注意：如果不是ajax方式提交表单，传入callback，这时data参数是当前表单对象，回调函数会在表单验证全部通过后执行，然后判断是否提交表单，如果callback里明确return false，则表单不会提交，如果return true或没有return，则会提交表单。
 	}
 	
-	
 });
+
+(function () {	
+	
+	//显示时间的选择
+	$(".timeSubject").ymdateplugin({
+		//attr 属性 ，更多格式参加书本
+		altField:'#otherField',			//同步元素日期到其他元素上
+		dateFormat:'yy-mm-dd',		//日期格式设置
+		minDate: new Date(),		//最小选择日期为今天
+		changeYear:true,				//显示年份
+		changeMonth:true,				//显示月份
+		showMonthAfterYear:true,	//互换位置
+		showTimePanel: true
+	});
+	
+	var options = {
+		//attr 属性 ，更多格式参加书本
+		altField:'#otherField',			//同步元素日期到其他元素上
+		dateFormat:'yy-mm-dd',		//日期格式设置
+		minDate: new Date(),		//最小选择日期为今天
+		showButtonPanel:true,		//开启今天标示
+		changeYear:true,				//显示年份
+		changeMonth:true,				//显示月份
+		showMonthAfterYear:true,	//互换位置
+		
+		
+		
+		//fn 执行函数
+		onSelect : function () {			//选择日期执行函数
+			//alert(this.value);
+		},
+		onClose : function () {			//关闭窗口执行函数
+			//$('#demo').html(this.value)
+		},
+		
+	};	
+	
+	$('.timeSubject1').datepicker(options);		//指定元素上添加
+
+})();
