@@ -176,7 +176,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 
 
 
-	//上传图片 传入表单路径 和 订单ID
+	//上传图片 传入表单路径 和 订单ID 上传文件name contentTypeRetweet genuineFile
 	private function upload_img($save_file,$order_id)
 	{
 		$img_where = array();
