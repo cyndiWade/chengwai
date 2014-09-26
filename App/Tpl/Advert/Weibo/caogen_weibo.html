@@ -134,7 +134,7 @@
 
 			</div>
 			<div class="controlbox fl">
-				<span>全选</span><span id="batch">批量添加账号</span><span>批量导出报价单</span>
+				<span class="all_selected">全选</span><span id="batch" class="add_selected_box">批量添加账号</span><span>批量导出报价单</span>
 			</div>
 		</div>
 	</div>
@@ -228,6 +228,7 @@ var public_post_fn = function (obj_data) {
 		
 		Weibo.create_details_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
 		
+		
 		//更新page
 		page_now_list(result.data.count,result.data.p,system_info.page_limit);
 	} 
@@ -239,7 +240,7 @@ var create_now_html = function ($data) {
 	var html = '';
 	html += '<tr>';
 	html += '<td class="t1">';
-	html += '<div class="weibopart"><input type="checkbox" class="check" />';
+	html += '<div class="weibopart"><input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.id+'"/>';
 	html += 	'<img src="App/Public/Advert/images/wb_img01.gif" class="wbimg" />';
 	html += 		'<div class="grp fl">';
 	html += 		'<h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5>';

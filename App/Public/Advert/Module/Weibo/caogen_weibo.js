@@ -44,6 +44,10 @@ Weibo.prototype.init = function () {
 	this.list_content = $('#list_content');
 	this.wbdetail = $('.wbdetail');
 	this.batchboxdetail = $('.batchboxdetail');
+	
+	this.all_selected = $('.all_selected');	//全选
+	this.now_selected = $('.now_selected');	//当前选中的值
+	this.add_selected_box = $('.add_selected_box');	//添加选中的数据
 }
 
 
@@ -51,9 +55,7 @@ Weibo.prototype.init = function () {
 Weibo.prototype.add_table_class = function () {
 	
 	$('.tab01-weibo tr:even').addClass('even');
-	$('#batch').click(function(){
-		$('.batchbox').popOn();
-	})
+	
 	$('.wbdetail').click(function(){
 		$('.batchboxdetail').popOn();
 	})
@@ -601,6 +603,49 @@ html += '</div>';
 	
 }
 
+//全选
+Weibo.prototype.all_selected_fn = function () {
+	var _father_this = this;
+	_father_this.all_selected.click(function () {
+		_father_this.init();
+		_father_this.now_selected.prop('checked',true);
+	});
+}
+
+
+Weibo.prototype.add_selected_box_fn = function () {
+	var _father_this = this;
+
+	_father_this.add_selected_box.click(function () {
+		_father_this.init();
+		var _ids = [];
+		_father_this.now_selected.each(function () {
+			var _this = $(this);
+			if (_this.prop('checked') == true) {
+				_ids.push(_this.data('id'))
+			}
+		});
+		if (_ids == '') {
+			alert('请选择账号！');
+			return false;
+		}
+		ajax_post_weibo_info();
+	});
+	
+	
+	
+	
+	var ajax_post_weibo_info	  = function () {
+		
+	}
+	
+	//
+//	$('#batch').click(function(){
+//		$('.batchbox').popOn();
+//	})
+}
+
+
 //执行
 Weibo.prototype.run = function () {
 	var _father_this = this;
@@ -618,6 +663,11 @@ Weibo.prototype.run = function () {
 	_father_this.clear_tags_fn();	//清空已选择标签
 	
 	_father_this.search_fn();
+	
+	_father_this.all_selected_fn();	//全选
+	
+	_father_this.add_selected_box_fn();
+	
 }
 
 
