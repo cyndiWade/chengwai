@@ -145,18 +145,16 @@
 <include file="Public:member_footer" />
 
 <!-- 批量添加弹窗 -->
-<div class="batchbox none tl">
-	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选微信主</b></div>
-	<div class="mid-batch l">
+<div class="batchbox none tl order_vessel">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选择账号</b></div>
+	<div class="mid-batch l" >
 		<div class="part01-batch fl">
-			已选择<b>3</b>位微信主，计费<b>1164.00</b>元
+			已选择<b class="account_num">3</b>个账号，计费<b class="account_money">1164.00</b>元
 		</div>
-		<ul class="part02-batch fl">
-			<li><span class="del fr"></span><strong>陈晓明</strong></li>
-			<li><span class="del fr"></span><strong>猪大肠</strong></li>
-			<li><span class="del fr"></span><strong>冷笑话</strong></li>
+		<ul class="part02-batch fl account_selected" >
+
 		</ul>
-		<a href="#" class="btn bluebtn">立即派单</a>
+		<a href="javascript:;" class="btn bluebtn confirm_order">立即派单</a>
 	</div>
 </div>
 
@@ -173,6 +171,7 @@ var system_info = {
 	pt_type:{$view_data.pt_info.pt_type},	//平台类型1新浪、2腾讯
 	is_celebrity : 0,	//是否是名人1是、0不是
 	page_limit : 10,	//每页条数
+	post_order_url : '{:U('Advert/Weibo/add_users')}',
 }
 </script>
 
@@ -214,7 +213,7 @@ var public_post_fn = function (obj_data) {
 
 	//AJAX获取数据
 	var result = System.ajax_post_setup('{:U('/Advert/Weibo/get_grassroots_list')}',post_data,'JSON');
-	
+	//console.log(result)
 	if (result.status == 1) {
 		_tbody.empty();
 		for (var key in result.data.list) {
@@ -238,12 +237,12 @@ var public_post_fn = function (obj_data) {
 var create_now_html = function ($data) {
 	
 	var html = '';
-	html += '<tr>';
+	html += '<tr class="accounts_'+$data.id+'" >';
 	html += '<td class="t1">';
 	html += '<div class="weibopart"><input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.id+'"/>';
 	html += 	'<img src="App/Public/Advert/images/wb_img01.gif" class="wbimg" />';
 	html += 		'<div class="grp fl">';
-	html += 		'<h5 class="l"><b>全球头条新闻</b><span class="heart"></span><span class="heart"></span></h5>';
+	html += 		'<h5 class="l"><b class="account_name" data-account_name="'+$data.account_name+'">'+$data.account_name+'</b><span class="heart"></span><span class="heart"></span></h5>';
 	html += 		'<div class="address l">'+$data.account_name+'</div>';
 	html += 		'<div class="desc l">简介：全球头条新闻全球头条新闻</div>';
 	html += 		'</div>';
@@ -251,11 +250,11 @@ var create_now_html = function ($data) {
 	html += '</td>';
 	html += '<td class="t2"><b class="red">'+$data.fans_num+'万</b></td>';
 	html += '<td class="t3">1.00</td>';
-	html += '<td class="t4">'+$data.yg_zhuanfa+'元</td>';
-	html += '<td class="t5">'+$data.rg_zhuanfa+'元</td>';
-	html += '<td class="t6">'+$data.yg_zhifa+'元</td>';
-	html += '<td class="t7">'+$data.rg_zhuanfa+'元</td>';
-	html += '<td class="t8">'+$data.week_order_num+'</td>';
+	html += '<td class="t4 now_money" data-money="'+$data.yg_zhuanfa+'">'+$data.yg_zhuanfa+'元</td>';
+	html += '<td class="t5" data-money="'+$data.rg_zhuanfa+'">'+$data.rg_zhuanfa+'元</td>';
+	html += '<td class="t6" data-money="'+$data.yg_zhifa+'">'+$data.yg_zhifa+'元</td>';
+	html += '<td class="t7" data-money="'+$data.rg_zhuanfa+'">'+$data.rg_zhuanfa+'元</td>';
+	html += '<td class="t8" data-money="'+$data.week_order_num+'">'+$data.week_order_num+'</td>';
 	html += '<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>';
 	html += '<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
 	html += '<td class="last"><div class="ctrl"><span class="wbdetail">详情</span><span class="lahei_and_shoucang" data-or_type="1" data-weibo_id="'+$data.id+'"  >收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weibo_id="'+$data.id+'">拉黑</span></div></td>';

@@ -39,7 +39,21 @@ System.prototype.run = function () {
 	_fater_this.validateImageFn();
 }
 
-
+/**
+ * @desc 判断数组内是否包含字符串
+ * @param str
+ * @param arr
+ * @returns {boolean}
+ */
+System.prototype.in_array = function (str, arr) {
+    var i = arr.length;
+    while (i--) {
+        if (arr[i] === str) {
+            return true;
+        }
+    }
+    return false;
+}
 
 var System = new System();
 window.onload = function () {

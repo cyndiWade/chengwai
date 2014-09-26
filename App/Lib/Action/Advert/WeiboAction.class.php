@@ -29,7 +29,8 @@ class WeiboAction extends AdvertBaseAction {
 			'AccountWeibo' => 'AccountWeibo',
 			'GrassrootsWeibo' => 'GrassrootsWeibo',
 			'CeleprityindexWeibo' => 'CeleprityindexWeibo',
-			'BlackorcollectionWeibo' => 'BlackorcollectionWeibo'
+			'BlackorcollectionWeibo' => 'BlackorcollectionWeibo',
+			'GeneralizeOrder'=>'GeneralizeOrder'
 	);
 	
 	//和构造方法
@@ -89,6 +90,17 @@ class WeiboAction extends AdvertBaseAction {
 	
 	//草根微博
 	public function caogen_weibo() {
+		
+		//验证
+		$order_id = $this->_get('order_id') ;
+		if (!empty($order_id)) {
+			$order_info = $this->db['GeneralizeOrder']->get_OrderInfo_By_Id($order_id,$this->oUser->id);
+			if ($order_info == false) {
+				$this->redirect('/Advert/WeiboOrder/add_generalize');
+			}
+		}
+ 		
+	
 		//显示常见分类
 		$this->show_caogen_category_tags();
 		if ($this->pt_type == 1) {
@@ -100,7 +112,7 @@ class WeiboAction extends AdvertBaseAction {
 			//二级导航属性
 			'sidebar_two'=>array($show_num=>'select'),//第一个加
 			'pt_type' => $this->pt_type,
-			'order_id' => $this->_get('order_id')
+			'order_id' => $order_id
 		));
 		
 		$this->display();
