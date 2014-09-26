@@ -37,4 +37,28 @@
 			return parent::get_one_data($where);
 		}
 
+		//获得推广订单数据
+		public function get_OrderInfo_list($id)
+		{
+			$where['users_id'] = $id;
+			return parent::get_spe_data($where);
+		}
+
+		//统计确认和执行的数量
+		public function get_OrderInfo_num($id)
+		{
+			$val = $this->where(array('users_id'=>$id))->field('status')->select();
+			$i = 0;
+			$j = 0;
+			foreach($val as $v)
+			{
+				if($v['status']==0)
+				{
+					$i++;
+				}else{
+					$j++;
+				}
+			}
+			return array('0'=>$i,'1'=>$j);
+		}
 	}

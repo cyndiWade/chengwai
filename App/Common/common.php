@@ -10,6 +10,11 @@
 /*	判断是否为post提交
  * @$value  post提交的值
 */
+
+//倒入状态位
+include 'status.php';
+
+
 function isPost($value) {
 	//是post提交 ，并且post值存在，或者post值不为空
 	if ($_SERVER['REQUEST_METHOD'] == 'POST' && sizeof($value) && !empty($value)) {
@@ -538,5 +543,15 @@ function is_phone($phone_num){
   }  
   
   
+  //过滤字符
+  function addsltrim($val)
+  {
+  	$new = array();
+  	foreach($val as $k=>$v)
+  	{
+  		$new[$k] = trim(addslashes($v));
+  	}
+  	return $new;
+  }
 
 ?>

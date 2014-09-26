@@ -67,6 +67,46 @@ class WeiboOrderAction extends AdvertBaseAction {
 				//二级导航属性
 				'sidebar_two'=>array(5=>'select'),//第一个加依次类推
 		));
+		$number = $this->db['GeneralizeOrder']->get_OrderInfo_num($this->oUser->id);
+		//过滤去空格 防SQL
+		$new_array = addsltrim($_REQUEST);
+		$start_time = strtotime($new_array['start_time']);
+		$end_time = strtotime($new_array['end_time']);
+		//时间范围
+		if($new_array['start_time']!='' && $new_array['end_time']=='')
+		{
+			$where['start_time'] = array('EGT',$start_time);
+		}
+		if($new_array['start_time']=='' && $new_array['end_time']!='')
+		{
+			$where['start_time'] = array('ELT',$end_time);
+		}
+		if($new_array['start_time']!='' && $new_array['end_time']!='')
+		{
+			$where['start_time'] = array('between',array($start_time,$end_time));
+		}
+		//活动名字
+		if($new_array['search_name']!='')
+		{
+			$where['hd_name'] = array('like','%'.$new_array['search_name'].'%');
+		}
+		import('ORG.Util.Page');
+		$GeneralizeOrder = D('GeneralizeOrder');
+		$where 		= array('users_id'=>$this->oUser->id);
+		$count      = $GeneralizeOrder->where($where)->count();
+		$Page       = new Page($count,1);
+		$show       = $Page->show();
+		$list = $GeneralizeOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
+		->field('id,hd_name,tfpt_type,fslx_type,ryg_type,start_time,status')->select();
+		parent::data_to_view(array(
+				'page' => $show ,
+				'list' => $list,
+				'search_name' => $new_array['search_name'],
+				'start_time' => $new_array['start_time'],
+				'end_time' => $new_array['end_time'],
+				'status_0' => $number[0],
+				'status_1' => $number[1]
+		));
 		$this->display();
 	}
 	
