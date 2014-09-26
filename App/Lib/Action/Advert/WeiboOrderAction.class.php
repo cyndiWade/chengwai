@@ -94,7 +94,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$GeneralizeOrder = D('GeneralizeOrder');
 		$where 		= array('users_id'=>$this->oUser->id);
 		$count      = $GeneralizeOrder->where($where)->count();
-		$Page       = new Page($count,1);
+		$Page       = new Page($count,10);
 		$show       = $Page->show();
 		$list = $GeneralizeOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
 		->field('id,hd_name,tfpt_type,fslx_type,ryg_type,start_time,status')->select();
@@ -157,7 +157,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 			$id = $this->db['GeneralizeOrder']->insertPost($_POST,$this->oUser->id);
 			if($id!='')
 			{
-				$img_array = $this->upload_img($_FILES);
+				$img_array = $this->upload_img($_FILES,$id);
 				$this->db['GeneralizeFiles']->insertImg($img_array);
 				//根据ID跳转
 				if($_POST['tfpt_type']==1)
@@ -176,31 +176,31 @@ class WeiboOrderAction extends AdvertBaseAction {
 
 
 
-	//上传图片
-	private function upload_img($save_file)
+	//上传图片 传入表单路径 和 订单ID
+	private function upload_img($save_file,$order_id)
 	{
-		$img_array = array();
+		$img_where = array();
 		$contentTypeRetweet = $save_file['contentTypeRetweet'];
 		$upload_dir = C('UPLOAD_DIR');
 		$dir = $upload_dir['web_dir'].$upload_dir['image'];
 		$status_content = parent::upload_file($contentTypeRetweet,$dir,5120000);
 		if($status_content['status']==true)
 		{
-			$img_array['contentTypeRetweet']['users_id'] = $this->oUser->id;
-			$img_array['contentTypeRetweet']['generalize_order_id'] = $id;
-			$img_array['contentTypeRetweet']['type'] = 1;
-			$img_array['contentTypeRetweet']['url'] = $status_content['info'][0]['savename'];
+			$img_where['contentTypeRetweet']['users_id'] = $this->oUser->id;
+			$img_where['contentTypeRetweet']['generalize_order_id'] = $order_id;
+			$img_where['contentTypeRetweet']['type'] = 1;
+			$img_where['contentTypeRetweet']['url'] = $status_content['info'][0]['savename'];
 		}
 		$genuineFile = $save_file['genuineFile'];
 		$status_genuineFile = parent::upload_file($genuineFile,$dir,5120000);
 		if($status_genuineFile['status']==true)
 		{
-			$img_array['genuineFile']['users_id'] = $this->oUser->id;
-			$img_array['genuineFile']['generalize_order_id'] = $id;
-			$img_array['genuineFile']['type'] = 2;
-			$img_array['genuineFile']['url'] = $status_genuineFile['info'][0]['savename'];
+			$img_where['genuineFile']['users_id'] = $this->oUser->id;
+			$img_where['genuineFile']['generalize_order_id'] = $order_id;
+			$img_where['genuineFile']['type'] = 2;
+			$img_where['genuineFile']['url'] = $status_genuineFile['info'][0]['savename'];
 		}
-		return $img_array;
+		return $img_where;
 	}
 }
 
