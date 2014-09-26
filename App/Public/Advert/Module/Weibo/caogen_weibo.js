@@ -738,9 +738,11 @@ Weibo.prototype.add_selected_box_fn = function () {
 				post_data.pt_type = _father_this.pt_type.val();
 				post_data.order_id = _father_this.order_id.val();
 		
+				//提交操作
 				var result = System.ajax_post_setup(system_info.post_order_url,post_data,'JSON');
-				if (result.status == 1) {
-					
+				if (result.status == 0) {
+					alert('提交成功！');
+					window.location.href= result.data.go_to_url;	//跳转
 				} else {
 					alert('添加失败请稍后重新再试！');
 				}

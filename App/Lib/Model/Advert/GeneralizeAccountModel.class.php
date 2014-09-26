@@ -22,9 +22,13 @@
 			foreach($account_id as $value)
 			{
 				$arr['account_id'] = $value;
-				$this->add($arr);
+				if (parent::get_one_data($arr) == false) {
+					$status = $this->add($arr);
+				}
+				
 			}
 
+			return $status;
 		}
 
 		

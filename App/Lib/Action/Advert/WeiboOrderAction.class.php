@@ -96,8 +96,13 @@ class WeiboOrderAction extends AdvertBaseAction {
 
 		if($this->isPost())
 		{
-			$this->db['GeneralizeAccount']->insertAll($_POST,$this->oUser->id);
-			parent::callback(C('STATUS_DATA_LOST'),'ok');
+			$status = $this->db['GeneralizeAccount']->insertAll($_POST,$this->oUser->id);
+			if ($status == true) {
+				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('/Advert/WeiboOrder/generalize_activity')));
+			} else {
+				parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
+			}
+			
 		}
 	}
 
