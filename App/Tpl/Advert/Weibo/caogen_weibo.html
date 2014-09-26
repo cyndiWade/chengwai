@@ -106,7 +106,7 @@
 	
 	<div class="orderbox l">
 		<b class="total fr">共<span id="all_data_num"></span>个</b><b class="total fr"><span id="all_page_num"></span>页</b>
-		<select class="fl"><option>选择排序方式</option></select><span class="orderspan orderspan-select fl">默认排序</span><span class="orderspan">粉丝量</span><span class="orderspan">相关性</span><span class="orderspan">月订单</span>
+		<select class="fl"><option>选择排序方式</option></select><span class="orderspan fl orderspan-select" data-sort_type="order_id">默认排序</span><span class="orderspan" data-sort_type="fans_num" >粉丝量</span><span class="orderspan" data-sort_type="order_num">月订单</span>
 	</div>
 	<div class="col01-weibo l">
 		<table class="tab01-weibo l">
@@ -172,6 +172,7 @@ var system_info = {
 	is_celebrity : 0,	//是否是名人1是、0不是
 	page_limit : 10,	//每页条数
 	post_order_url : '{:U('Advert/WeiboOrder/add_users')}',
+	
 }
 </script>
 
@@ -227,6 +228,7 @@ var public_post_fn = function (obj_data) {
 		
 		Weibo.create_details_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
 		
+		Weibo.page_init_fn();	//加载页面初始化
 		
 		//更新page
 		page_now_list(result.data.count,result.data.p,system_info.page_limit);
@@ -237,7 +239,7 @@ var public_post_fn = function (obj_data) {
 var create_now_html = function ($data) {
 	
 	var html = '';
-	html += '<tr class="accounts_'+$data.id+'" >';
+	html += '<tr class="accounts_'+$data.id+'" data-order_id="'+$data.id+'" data-order_num="'+$data.week_order_num+'"  data-fans_num="'+$data.fans_num+'">';
 	html += '<td class="t1">';
 	html += '<div class="weibopart"><input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.id+'"/>';
 	html += 	'<img src="App/Public/Advert/images/wb_img01.gif" class="wbimg" />';
@@ -254,7 +256,7 @@ var create_now_html = function ($data) {
 	html += '<td class="t5" data-money="'+$data.rg_zhuanfa+'">'+$data.rg_zhuanfa+'元</td>';
 	html += '<td class="t6" data-money="'+$data.yg_zhifa+'">'+$data.yg_zhifa+'元</td>';
 	html += '<td class="t7" data-money="'+$data.rg_zhuanfa+'">'+$data.rg_zhuanfa+'元</td>';
-	html += '<td class="t8" data-money="'+$data.week_order_num+'">'+$data.week_order_num+'</td>';
+	html += '<td class="t8" data-week_order_num="'+$data.week_order_num+'">'+$data.week_order_num+'</td>';
 	html += '<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>';
 	html += '<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
 	html += '<td class="last"><div class="ctrl"><span class="wbdetail">详情</span><span class="lahei_and_shoucang" data-or_type="1" data-weibo_id="'+$data.id+'"  >收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weibo_id="'+$data.id+'">拉黑</span></div></td>';

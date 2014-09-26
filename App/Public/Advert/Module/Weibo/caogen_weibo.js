@@ -58,7 +58,8 @@ Weibo.prototype.init = function () {
 	this.account_selected = $('.account_selected');	//已选择账号
 	this.delet_account = $('.delet_account');	//删除账号
 	this.confirm_order = $('.confirm_order');	//确认订单
-	this.tbody = $('.tbody');	//
+	this.tbody = $('.tbody');	//微博账号容器
+	this.orderspan = $('.orderspan');
 }
 
 
@@ -617,12 +618,6 @@ html += '</div>';
 //全选
 Weibo.prototype.all_selected_fn = function () {
 	var _father_this = this;
-	
-	//对没有订单的情况进行隐藏
-	if (_father_this.pt_type.val() =='' || _father_this.order_id.val() == '') {
-		_father_this.all_selected.css({'display':'none'});
-		_father_this.add_selected_box.css({'display':'none'});
-	}
 
 	_father_this.all_selected.click(function () {
 		_father_this.init();
@@ -750,36 +745,63 @@ Weibo.prototype.add_selected_box_fn = function () {
 			
 		});
 	}();
-	
-
 }
 
-Weibo.prototype.sort_table_fn = function () {
+Weibo.prototype.orderspan_fn = function () {
+	var _father_this = this; 
+	
+	_father_this.orderspan.click(function () {	//orderspan-select
+		var _this = $(this);
+		_father_this.orderspan.removeClass('orderspan-select');
+		_this.addClass('orderspan-select');
+		
+		//排序
+		var _sort_type = _this.data('sort_type');//排序类型
+		_father_this.sort_table_fn(_sort_type);	//执行排序
+	});
+}
+
+//排序表单
+Weibo.prototype.sort_table_fn = function ($sort_type) {
 	
 	var _father_this = this;
 	var tr = _father_this.tbody.children();
-	//alert(tr.size())
-	return false;
+	var tr_arr = [];
 	
-	//1、对象转换为数组
-	for (var i=0;i<length.size();i++) {
-		arr[i] = length[i];
-	}
+	//把tr放入数组中，用作排序
+	tr.each (function () {
+		tr_arr.push(this);
+	});
 	
-	arr.sort(function (v1,v2) {
-		if (Number(v1.cells[0].innerHTML) > Number(v2.cells[0].innerHTML)) {
+	tr_arr.sort(function (v1,v2) {
+		var obj1 = $(v1);
+		var obj2 = $(v2);
+		if ( Number(obj1.data($sort_type)) > Number(obj2.data($sort_type)) ) {
 			return -1;
-		} else if (Number(v1.cells[0].innerHTML) < Number(v2.cells[0].innerHTML)) {
+		} else if (Number(obj1.data($sort_type)) < Number(obj2.data($sort_type))) {
 			return 1;
 		} else {
 			return 0;
 		}
 	});
 	
-	//排序完毕插入对象
-	//for (var i=0;i<_father_this.tbody.length;i++) {
-		//tbody.append(arr[i]);
-	//}
+	//重新插入到table中
+	for (var i=0;i<tr_arr.length;i++) {
+		_father_this.tbody.append(tr_arr[i]);
+	}
+}
+
+
+//页面记载完毕后执行的方法
+Weibo.prototype.page_init_fn = function () {
+	var _father_this = this;
+	
+	//对没有订单的情况进行隐藏
+	if (_father_this.pt_type.val() =='' || _father_this.order_id.val() == '') {
+		_father_this.all_selected.css({'display':'none'});
+		_father_this.add_selected_box.css({'display':'none'});
+		_father_this.now_selected.remove();
+	}
 }
 
 
@@ -801,12 +823,16 @@ Weibo.prototype.run = function () {
 	
 	_father_this.search_fn();
 	
+	
+	_father_this.page_init_fn();	//加载页面初始化
+	
 	_father_this.all_selected_fn();	//全选
 	
 	_father_this.add_selected_box_fn();	//添加
 	
+	_father_this.orderspan_fn();
 	
-	_father_this.sort_table_fn();
+	_father_this.sort_table_fn('mr');
 }
 
 
