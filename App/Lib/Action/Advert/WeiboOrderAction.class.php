@@ -97,7 +97,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 		if($this->isPost())
 		{
 			$this->db['GeneralizeAccount']->insertAll($_POST,$this->oUser->id);
-
+			parent::callback(C('STATUS_DATA_LOST'),'ok');
 		}
 	}
 
