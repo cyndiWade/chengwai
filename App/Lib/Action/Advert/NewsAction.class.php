@@ -61,6 +61,15 @@ class NewsAction extends AdvertBaseAction {
 	//新闻媒体列表
 	public function news_list () {
 
+		//验证
+		$order_id = $this->_get('order_id') ;
+		if (!empty($order_id)) {
+			$order_info = $this->db['GeneralizeNewsOrder']->get_OrderInfo_By_Id($order_id,$this->oUser->id);
+			if ($order_info == false) {
+				$this->redirect('Advert/News/add_generalize');
+			}
+		}
+
 		$this->show_news_category_tags();
 		parent::data_to_view(array(
 			//二级导航属性
@@ -85,6 +94,46 @@ class NewsAction extends AdvertBaseAction {
 		parent::data_to_view(array(
 				//二级导航属性
 			'sidebar_two'=>array(2=>'select'),//第一个加依次类推
+		));
+
+		$number = $this->db['GeneralizeNewsOrder']->get_OrderInfo_num($this->oUser->id);
+		$new_array = addsltrim($_REQUEST);
+		$start_time = strtotime($new_array['start_time']);
+		$end_time = strtotime($new_array['end_time']);
+		//时间范围
+		if($new_array['start_time']!='' && $new_array['end_time']=='')
+		{
+			$where['start_time'] = array('EGT',$start_time);
+		}
+		if($new_array['start_time']=='' && $new_array['end_time']!='')
+		{
+			$where['start_time'] = array('ELT',$end_time);
+		}
+		if($new_array['start_time']!='' && $new_array['end_time']!='')
+		{
+			$where['start_time'] = array('between',array($start_time,$end_time));
+		}
+		//活动名字
+		if($new_array['search_name']!='')
+		{
+			$where['title'] = array('like','%'.$new_array['search_name'].'%');
+		}
+		import('ORG.Util.Page');
+		$GeneralizeNewsOrder = D('GeneralizeNewsOrder');
+		$where['users_id'] =  $this->oUser->id;
+		$count      = $GeneralizeNewsOrder->where($where)->count();
+		$Page       = new Page($count,10);
+		$show       = $Page->show();
+		$list = $GeneralizeNewsOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
+		->order('id desc')->field('id,title,start_time,web_url,status')->select();
+		parent::data_to_view(array(
+				'page' => $show ,
+				'list' => $list,
+				'search_name' => $new_array['search_name'],
+				'start_time' => $new_array['start_time'],
+				'end_time' => $new_array['end_time'],
+				'status_0' => $number[0],
+				'status_1' => $number[1]
 		));
 		$this->display();
 	}
@@ -145,6 +194,27 @@ class NewsAction extends AdvertBaseAction {
 				parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
 			}
 			
+		}
+	}
+
+
+	//删除操作
+	public function del_info()
+	{
+		$del_id = intval($_POST['id']);
+		$GeneralizeNewsOrder = D('GeneralizeNewsOrder');
+		$bool = $GeneralizeNewsOrder->del_info($del_id,$this->oUser->id);
+		switch($bool)
+		{
+			case 1:
+				parent::callback(C('STATUS_SUCCESS'),'删除成功');
+			break;
+			case 2:
+				parent::callback(C('STATUS_SUCCESS'),'删除失败');
+			break;
+			case 3:
+				parent::callback(C('STATUS_SUCCESS'),'已审核通过，禁止删除');
+			break;
 		}
 	}
 	

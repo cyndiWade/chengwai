@@ -1,6 +1,6 @@
 <?php
 	
-	//推广信息表
+	//微博推广信息表
 	class GeneralizeOrderModel extends AdvertBaseModel
 	{
 
