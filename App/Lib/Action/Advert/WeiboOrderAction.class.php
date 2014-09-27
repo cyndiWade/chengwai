@@ -24,7 +24,10 @@ class WeiboOrderAction extends AdvertBaseAction {
 	protected  $db = array(
 		'GeneralizeAccount' => 'GeneralizeAccount',
 		'GeneralizeOrder' => 'GeneralizeOrder',
-		'GeneralizeFiles' => 'GeneralizeFiles'
+		'GeneralizeFiles' => 'GeneralizeFiles',
+		'IntentionWeiboOrder' => 'IntentionWeiboOrder',
+		'IntentionWeiboFiles' => 'IntentionWeiboFiles',
+		'IntentionWeiboAccount' => 'IntentionWeiboAccount'
 	);
 	
 	//和构造方法
@@ -146,9 +149,46 @@ class WeiboOrderAction extends AdvertBaseAction {
 		}
 	}
 
+	//添加意向单 选择账号
+	public function add_intens()
+	{
 
+		if($this->isPost())
+		{
+			$status = $this->db['IntentionWeiboAccount']->insertAll($_POST,$this->oUser->id);
+			if ($status == true) {
+				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('/Advert/WeiboOrder/generalize_activity')));
+			} else {
+				parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
+			}
+			
+		}
+	}
 
-	//添加推广 填写意向单信息
+	//填写意向单
+	public function add_inten()
+	{
+		//新增数据
+		if($this->isPost())
+		{
+			$id = $this->db['IntentionWeiboOrder']->insertPost($_POST,$this->oUser->id);
+			if($id!='')
+			{
+				$img_array = $this->upload_img($_FILES,$id,false);
+				$this->db['IntentionWeiboFiles']->insertImg($img_array);
+				if($_POST['tfpt_type']==1)
+				{
+					$this->redirect('Advert/Weibo/celebrity_weibo',array('pt_type'=>1,'order_id'=>$id));
+				}else{
+					$this->redirect('Advert/Weibo/celebrity_weibo',array('pt_type'=>2,'order_id'=>$id));
+				}
+			}else{
+				parent::callback(C('STATUS_DATA_LOST'),'参数错误!');
+			}
+		}
+	}
+
+	//添加推广 填写信息
 	public function add_extension()
 	{
 		if($this->isPost())
@@ -177,28 +217,44 @@ class WeiboOrderAction extends AdvertBaseAction {
 
 
 	//上传图片 传入表单路径 和 订单ID 上传文件name contentTypeRetweet genuineFile
-	private function upload_img($save_file,$order_id)
+	private function upload_img($save_file,$order_id,$bool=true)
 	{
 		$img_where = array();
 		$contentTypeRetweet = $save_file['contentTypeRetweet'];
-		$upload_dir = C('UPLOAD_DIR');
-		$dir = $upload_dir['web_dir'].$upload_dir['image'];
-		$status_content = parent::upload_file($contentTypeRetweet,$dir,5120000);
-		if($status_content['status']==true)
+		if($contentTypeRetweet!='')
 		{
-			$img_where['contentTypeRetweet']['users_id'] = $this->oUser->id;
-			$img_where['contentTypeRetweet']['generalize_order_id'] = $order_id;
-			$img_where['contentTypeRetweet']['type'] = 1;
-			$img_where['contentTypeRetweet']['url'] = $status_content['info'][0]['savename'];
+			$upload_dir = C('UPLOAD_DIR');
+			$dir = $upload_dir['web_dir'].$upload_dir['image'];
+			$status_content = parent::upload_file($contentTypeRetweet,$dir,5120000);
+			if($status_content['status']==true)
+			{
+				$img_where['contentTypeRetweet']['users_id'] = $this->oUser->id;
+				if($bool==true)
+				{
+					$img_where['contentTypeRetweet']['generalize_order_id'] = $order_id;
+				}else{
+					$img_where['contentTypeRetweet']['intention_order_id'] = $order_id;
+				}
+				$img_where['contentTypeRetweet']['type'] = 1;
+				$img_where['contentTypeRetweet']['url'] = $status_content['info'][0]['savename'];
+			}
 		}
 		$genuineFile = $save_file['genuineFile'];
-		$status_genuineFile = parent::upload_file($genuineFile,$dir,5120000);
-		if($status_genuineFile['status']==true)
+		if($genuineFile!='')
 		{
-			$img_where['genuineFile']['users_id'] = $this->oUser->id;
-			$img_where['genuineFile']['generalize_order_id'] = $order_id;
-			$img_where['genuineFile']['type'] = 2;
-			$img_where['genuineFile']['url'] = $status_genuineFile['info'][0]['savename'];
+			$status_genuineFile = parent::upload_file($genuineFile,$dir,5120000);
+			if($status_genuineFile['status']==true)
+			{
+				$img_where['genuineFile']['users_id'] = $this->oUser->id;
+				if($bool==true)
+				{
+					$img_where['genuineFile']['generalize_order_id'] = $order_id;
+				}else{
+					$img_where['genuineFile']['intention_order_id'] = $order_id;
+				}
+				$img_where['genuineFile']['type'] = 2;
+				$img_where['genuineFile']['url'] = $status_genuineFile['info'][0]['savename'];
+			}
 		}
 		return $img_where;
 	}
