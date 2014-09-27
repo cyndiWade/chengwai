@@ -145,7 +145,7 @@ class AccountAction extends AdvertBaseAction {
 				parent::set_session(array('user_info'=>$tmp_arr));
 				//更新用户信息
 				$Users->up_login_info($user_info['id']);
-				$this->redirect('/Advert/Member/datum_edit');
+				$this->redirect('Advert/News/news_list');
 			}
 		} else {
 			$this->redirect('/Advert/Account/login');
