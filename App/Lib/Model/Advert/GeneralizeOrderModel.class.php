@@ -68,21 +68,27 @@
 			$upload_dir = C('UPLOAD_DIR');
 			$dir = $upload_dir['web_dir'].$upload_dir['image'];
 			$where = array('users_id'=>$users_id,'id'=>$del_id);
-			D('GeneralizeWeixinAccount')->where($where)->delete();
-			$GeneralizeWeixinFiles = D('GeneralizeWeixinFiles');
-			$url = $GeneralizeWeixinFiles->where($where)->field('url')->select();
-			//删除文件
-			foreach($url as $value)
+			$status = $this->where($where)->filed('status')->find();
+			if($status['status']==0)
 			{
-				@unlink($dir . $value['url']);
-			}
-			$GeneralizeWeixinFiles->where($where)->delete();
-			$bool = $this->where($where)->delete();
-			if($bool)
-			{
-				return true;
+				D('GeneralizeWeixinAccount')->where($where)->delete();
+				$GeneralizeWeixinFiles = D('GeneralizeWeixinFiles');
+				$url = $GeneralizeWeixinFiles->where($where)->field('url')->select();
+				//删除文件
+				foreach($url as $value)
+				{
+					@unlink($dir . $value['url']);
+				}
+				$GeneralizeWeixinFiles->where($where)->delete();
+				$bool = $this->where($where)->delete();
+				if($bool)
+				{
+					return '1';
+				}else{
+					return '2';
+				}
 			}else{
-				return false;
+				return '3';
 			}
 		}
 	}

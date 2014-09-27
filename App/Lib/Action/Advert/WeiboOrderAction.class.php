@@ -119,11 +119,17 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$del_id = intval($_POST['id']);
 		$GeneralizeOrder = D('GeneralizeOrder');
 		$bool = $GeneralizeOrder->del_info($del_id,$this->oUser->id);
-		if($bool==true)
+		switch($bool)
 		{
-			parent::callback(C('STATUS_UPDATE_DATA'),'删除成功');
-		}else{
-			parent::callback(C('STATUS_UPDATE_DATA'),'删除失败');
+			case 1:
+				parent::callback(C('STATUS_SUCCESS'),'删除成功');
+			break;
+			case 2:
+				parent::callback(C('STATUS_SUCCESS'),'删除失败');
+			break;
+			case 3:
+				parent::callback(C('STATUS_SUCCESS'),'已审核通过，禁止删除');
+			break;
 		}
 	}
 
@@ -133,11 +139,17 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$del_id = intval($_POST['id']);
 		$IntentionWeiboOrder = D('IntentionWeiboOrder');
 		$bool = $IntentionWeiboOrder->del_info($del_id,$this->oUser->id);
-		if($bool==true)
+		switch($bool)
 		{
-			parent::callback(C('STATUS_UPDATE_DATA'),'删除成功');
-		}else{
-			parent::callback(C('STATUS_UPDATE_DATA'),'删除失败');
+			case 1:
+				parent::callback(C('STATUS_SUCCESS'),'删除成功');
+			break;
+			case 2:
+				parent::callback(C('STATUS_SUCCESS'),'删除失败');
+			break;
+			case 3:
+				parent::callback(C('STATUS_SUCCESS'),'已审核通过，禁止删除');
+			break;
 		}
 	}
 

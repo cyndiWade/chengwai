@@ -69,21 +69,27 @@
 			$upload_dir = C('UPLOAD_DIR');
 			$dir = $upload_dir['web_dir'].$upload_dir['image'];
 			$where = array('users_id'=>$users_id,'id'=>$del_id);
-			D('IntentionWeiboAccount')->where($where)->delete();
-			$IntentionWeiboFiles = D('IntentionWeiboFiles');
-			$url = $IntentionWeiboFiles->where($where)->field('url')->select();
-			//删除文件
-			foreach($url as $value)
+			$status = $this->where($where)->field('status')->find();
+			if($status['status']==0)
 			{
-				@unlink($dir . $value['url']);
-			}
-			$IntentionWeiboFiles->where($where)->delete();
-			$bool = $this->where($where)->delete();
-			if($bool)
-			{
-				return true;
+				D('IntentionWeiboAccount')->where($where)->delete();
+				$IntentionWeiboFiles = D('IntentionWeiboFiles');
+				$url = $IntentionWeiboFiles->where($where)->field('url')->select();
+				//删除文件
+				foreach($url as $value)
+				{
+					@unlink($dir . $value['url']);
+				}
+				$IntentionWeiboFiles->where($where)->delete();
+				$bool = $this->where($where)->delete();
+				if($bool)
+				{
+					return '1';
+				}else{
+					return '2';
+				}
 			}else{
-				return false;
+				return '3';
 			}
 		}
 	}
