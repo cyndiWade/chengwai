@@ -71,6 +71,18 @@ class WeixinOrderAction extends AdvertBaseAction {
 	}
 	
 	
+
+	//意向单列表
+	public function intention_list() {
+		parent::data_to_view(array(
+				//二级导航属性
+				'sidebar_two'=>array(4=>'select'),//第一个加依次类推
+		));
+	
+		$this->display();
+	}
+	
+	
 	//添加意向单
 	public function add_intention () {
 		parent::data_to_view(array(

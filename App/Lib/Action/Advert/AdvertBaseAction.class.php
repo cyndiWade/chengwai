@@ -160,7 +160,8 @@ class AdvertBaseAction extends AppBaseAction {
 		//新闻媒体
 		$data[0] = array(
 			0 => U('/Advert/News/news_list'),
-			1 => U('/Advert/News/add_generalize'),		
+			1 => U('/Advert/News/add_generalize'),
+			2 => U('/Advert/News/generalize_activity'),
 		);
 		//微信
 		$data[1] = array(
@@ -168,7 +169,8 @@ class AdvertBaseAction extends AppBaseAction {
 			1 => U('/Advert/Weixin/weixin'),	
 			2 => U('/Advert/WeixinOrder/add_generalize'),					
 			3 => U('/Advert/WeixinOrder/generalize_activity'),
-			4 => U('/Advert/WeixinOrder/add_intention'),	
+			4 => U('/Advert/WeixinOrder/intention_list'),
+			//4 => U('/Advert/WeixinOrder/add_intention'),	
 		);
 		//微博
 		$data[2] = array(

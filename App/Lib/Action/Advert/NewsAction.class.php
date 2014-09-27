@@ -77,7 +77,15 @@ class NewsAction extends AdvertBaseAction {
 		));
 		$this->display();	
 	}
-
+	
+	//推广活动订单
+	public function generalize_activity() {
+		parent::data_to_view(array(
+				//二级导航属性
+			'sidebar_two'=>array(2=>'select'),//第一个加依次类推
+		));
+		$this->display();
+	}
 
 	//提供新闻接口
 	public function get_news_list()
