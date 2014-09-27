@@ -24,7 +24,9 @@ class WeixinOrderAction extends AdvertBaseAction {
 	protected  $db = array(
 			'GeneralizeWeixinOrder' => 'GeneralizeWeixinOrder',
 			'GeneralizeWeixinFiles' => 'GeneralizeWeixinFiles',
-			'GeneralizeWeixinAccount' => 'GeneralizeWeixinAccount'
+			'GeneralizeWeixinAccount' => 'GeneralizeWeixinAccount',
+			'IntentionWeixinOrder' => 'IntentionWeixinOrder',
+			'IntentionWeixinFiles' => 'IntentionWeixinFiles'
 	);
 	
 	//和构造方法
@@ -168,8 +170,19 @@ class WeixinOrderAction extends AdvertBaseAction {
     	}
     }
 
+    //区分开来以防变更 添加名人
+    public function add_yxtintes()
+    {
+    	$id = $this->db['IntentionWeixinOrder']->insertPost($_POST,$this->oUser->id);
+    	if($id!='')
+    	{
+    		$img_array = $this->upload_img($_FILES,$id);
+			$this->db['IntentionWeixinFiles']->insertImg($img_array);
+			$this->redirect('Advert/Weixin/celebrity_weixin',array('order_id'=>$id));
+    	}
+    }
 
-    //存储关联账号
+    //存储草根关联账号
     public function add_account()
     {
     	if($this->isPost())
@@ -184,6 +197,19 @@ class WeixinOrderAction extends AdvertBaseAction {
     }
 
 
+    //存储意向关联账号
+    public function add_yxaccount()
+    {
+    	if($this->isPost())
+    	{
+    		$status = $this->db['IntentionWeixinAccount']->insertAll($_POST,$this->oUser->id);
+			if ($status == true) {
+				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/intention_list')));
+			} else {
+				parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
+			}
+    	}
+    }
 
     	//上传图片 传入表单路径 和 订单ID 上传文件name contentTypeRetweet genuineFile
 	private function upload_img($save_file,$order_id,$bool=true)
