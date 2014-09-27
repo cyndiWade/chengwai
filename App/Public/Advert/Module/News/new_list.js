@@ -52,9 +52,7 @@ News.prototype.init = function () {
 //添加相关样式
 News.prototype.add_table_class = function () {
 	$('.tab01-News tr:even').addClass('even');
-	$('#batch').click(function(){
-		$('.batchbox').popOn();
-	})
+	
 	$('.top-search strong').click(function(){
 		$(this).siblings().removeClass('on')
 		$(this).addClass('on');

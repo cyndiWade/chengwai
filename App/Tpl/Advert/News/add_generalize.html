@@ -4,6 +4,7 @@
 	<include file="Public:top" />
     <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/page.css" type="text/css" />
+	<link href="{$global_tpl_view.Global_Resource_Path}Validform/css/style.css" type="text/css" rel="stylesheet" />
 	<title>新闻媒体_添加推广</title>
 </head>
 <body>
@@ -21,40 +22,57 @@
 		</div>
 		<div class="box02-intention fl">
 			<div class="int-tip l">注：<b class="red">*</b> 为必填项</div>
+			<form action="" method="post" class="generalize_form" enctype="multipart/form-data" >
 			<table class="tab01-inten l">
 			  
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>标题：</strong></span></td>
-				<td class="t2"><input type="text" class="text" /><p class="writetip">请不要超过50个字</p></td>
+				<td class="t2">
+					<input type="text" name="title" class="text" datatype="*1-50" errormsg="请正确填写范围是1-50个字符" nullmsg="请填写标题"  />
+					<p class="writetip">请不要超过50个字</p>
+				</td>
 			  </tr>
 			   <tr>
 				<td class="t1"><span><i>*</i><strong>发布时间：</strong></span></td>
-				<td class="t2"><div class="timestart"><input type="text" class="text text-time" /><span><select><option>23</option></select>时</span><span><select><option>23</option></select>分</span></div><p>请提前2小时</p></td>
+				<td class="t2">
+					<div class="timestart">
+						<input type="text" name="start_time" class="text text-time start_time timeSubject"  datatype="*1-100" errormsg="请正确选择填写"  nullmsg="请选择开始时间" />
+					</div>
+					<p>请提前2小时</p>
+				</td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>原文链接：</strong></span></td>
-				<td class="t2"><input  type="text" class="text" placeholder="http://"></td>
+				<td class="t2">
+					<input type="text" name="web_url" class="text web_url" datatype="url" errormsg="请正确填写链接" datatype="url" placeholder="http://"/>					
+				</td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><strong>备注：</strong></span></td>
-				<td class="t2"><div class="forward"><textarea class="textarea"></textarea><p>请填写备注信息，请不要超过300个汉字！</p></div></td>
+				<td class="t2">
+					<div class="forward">
+						<textarea class="textarea bz_info" name="bz_info" ignore="ignore" datatype="*10-300" errormsg="请正确填写范围是10-300个字符"  nullmsg="请输入"></textarea>
+						<p>请填写备注信息，请不要超过300个汉字！</p>
+					</div>
+				</td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>正文：</strong></span></td>
 				<td class="t2"><div class="forward">
-					<img src="{$global_tpl_view.Group_Resource_Path}images/text_temp.gif" />
+					<textarea name="zf_info" id="TextArea1" class="ckeditor"  datatype="*10-1000"  nullmsg="请输入内容" errormsg="字符范围10-1000个" ></textarea>
 				</div></td>
 			  </tr>
 			 
 			  <tr>
 				<td class="t1"></td>
-				<td class="t2"><div class="agreebox f12"><input type="checkbox" class="check fl" name=""/><strong class="fl">同意<a class="blue" href="#">服务协议</a></strong></div></td>
+				<td class="t2"><div class="agreebox f12"><input type="checkbox" class="check fl" name="is_ht_ok" datatype="*" errormsg="请同意服务协议"  nullmsg="请同意服务协议" /><strong class="fl">同意<a class="blue" href="#">服务协议</a></strong></div></td>
 			  </tr>
 			  <tr>
 				<td class="t1"></td>
 				<td class="t2"><input type="submit" class="btn brownbtn" value="下一步" /></td>
 			  </tr>
 			</table>
+			</form>
 		</div>
 	</div>
 </div>
@@ -63,26 +81,16 @@
 <include file="Public:member_footer" />
 
 
-<!-- 批量添加弹窗 -->
-<div class="batchbox none tl">
-	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选微信主</b></div>
-	<div class="mid-batch l">
-		<div class="part01-batch fl">
-			已选择<b>3</b>位微信主，计费<b>1164.00</b>元
-		</div>
-		<ul class="part02-batch fl">
-			<li><span class="del fr"></span><strong>陈晓明</strong></li>
-			<li><span class="del fr"></span><strong>猪大肠</strong></li>
-			<li><span class="del fr"></span><strong>冷笑话</strong></li>
-		</ul>
-		<a href="#" class="btn bluebtn">立即派单</a>
-	</div>
-</div>
-
-
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+
+<script src="{$global_tpl_view.Global_Resource_Path}Validform/js/Validform_v5.3.2.js"></script>
+
+<script src="{$global_tpl_view.Global_Resource_Path}ckeditor/ckeditor.js"></script>
+
+<script src="{$global_tpl_view.Module_Resource_Path}add_generalize.js"></script>
+
 </body>
 </html>

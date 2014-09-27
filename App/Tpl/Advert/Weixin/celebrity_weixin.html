@@ -276,6 +276,8 @@ var public_post_fn = function (obj_data) {
 		
 		Weixin.create_details_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
 		
+		Weixin.page_init_fn();	//加载页面初始化
+		
 		//更新page
 		page_now_list(result.data.count,result.data.p,system_info.page_limit);
 	} 
