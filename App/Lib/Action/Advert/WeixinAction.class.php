@@ -89,7 +89,9 @@ class WeixinAction extends AdvertBaseAction {
 			//二级导航加样式
 			'sidebar_two'=>array(
 				1=>'select',//第一个加
-			)
+			),
+				
+			'order_id'=>$order_id
 		));
 		$this->display();
 		

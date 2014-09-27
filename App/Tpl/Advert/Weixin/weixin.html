@@ -163,7 +163,7 @@
 
 			</div>
 			<div class="controlbox fl">
-				<span>全选</span><span id="batch">批量添加账号</span><span>批量导出报价单</span>
+				<span class="all_selected">全选</span><span id="batch" class="add_selected_box">批量添加账号</span><span>批量导出报价单</span>
 			</div>
 		</div>
 	</div>
@@ -174,20 +174,21 @@
 <include file="Public:member_footer" />
 
 <!-- 批量添加弹窗 -->
-<div class="batchbox none tl">
-	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选微信主</b></div>
-	<div class="mid-batch l">
+<div class="batchbox none tl order_vessel">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选择账号</b></div>
+	<div class="mid-batch l" >
 		<div class="part01-batch fl">
-			已选择<b>3</b>位微信主，计费<b>1164.00</b>元
+			已选择<b class="account_num"></b>个账号，计费<b class="account_money"></b>元
 		</div>
-		<ul class="part02-batch fl">
-			<li><span class="del fr"></span><strong>陈晓明</strong></li>
-			<li><span class="del fr"></span><strong>猪大肠</strong></li>
-			<li><span class="del fr"></span><strong>冷笑话</strong></li>
+		<ul class="part02-batch fl account_selected" >
+
 		</ul>
-		<a href="#" class="btn bluebtn">立即派单</a>
+		<a href="javascript:;" class="btn bluebtn confirm_order">立即派单</a>
 	</div>
 </div>
+
+<input type="text" id="pt_type" value="{$view_data.pt_type}"/>
+<input type="text" id="order_id" value="{$view_data.order_id}"/>
 
 
 <!-- JS底部文件 -->
@@ -199,6 +200,7 @@
 var system_info = {
 	is_celebrity : 0,	//是否是名人1是、0不是
 	page_limit : 10,	//每页条数
+	post_order_url : '{:U('Advert/WeixinOrder/add_account')}',
 }
 var list_content = $('#list_content');
 </script>
@@ -242,6 +244,7 @@ var public_post_fn = function (obj_data) {
 	//AJAX获取数据
 	var result = System.ajax_post_setup('{:U('/Advert/Weixin/get_weixin_list')}',post_data,'JSON');
 	
+	//console.log(result)
 	if (result.status == 1) {
 		list_content.empty();
 		for (var key in result.data.list) {
@@ -255,6 +258,8 @@ var public_post_fn = function (obj_data) {
 		
 		Weixin.create_details_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
 		
+		Weixin.page_init_fn();	//加载页面初始化
+		
 		//更新page
 		page_now_list(result.data.count,result.data.p,system_info.page_limit);
 	} 
@@ -264,11 +269,11 @@ var public_post_fn = function (obj_data) {
 var create_now_html = function ($data) {
 	
 	var html = '';
-	html += '<tr>';
-	html += '<td class="t1"><div class="weibopart"><input type="checkbox" class="check" /><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>'+$data.account_name+'</b><span class="heart"></span><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：quiadaa</span><i class="i-rz"></i><i class="i-sp"></i></div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>';
+	html += '<tr class="accounts_'+$data.id+'" data-order_id="'+$data.id+'" data-order_num="'+$data.week_order_num+'"  data-fans_num="'+$data.fans_num+'">';
+	html += '<td class="t1"><div class="weibopart"><input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.id+'"/><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l account_name" data-account_name="'+$data.account_name+'"><b>'+$data.account_name+'</b><span class="heart"></span><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：quiadaa</span><i class="i-rz"></i><i class="i-sp"></i></div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>';
 	html += '<td class="t2"><b class="red">娱乐圈</b></td>';
 	html += '<td class="t3"><div class="fsbox"><p>93000</p><img width="44" src="{$global_tpl_view.Group_Resource_Path}images/wx_img01.gif" /></div></td>';
-	html += '<td class="t4"><div class="pricebox"><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p><p>单个图文价格：<em>￥100</em></p></div></td>';
+	html += '<td class="t4"><div class="pricebox"><p>单图文价格：<em class="now_money" data-money="'+$data.dtb_money+'">'+$data.dtb_money+'￥</em></p><p>多图文第一条：<em data-money="'+$data.dtwdyt_money+'">￥'+$data.dtwdyt_money+'</em></p><p>多图文第二条：<em data-money="'+$data.dtwdet_money+'">￥'+$data.dtwdet_money+'</em></p><p>多图文第3-N条：<em data-money="'+$data.dtwqtwz_money+'">￥'+$data.dtwqtwz_money+'</em></p></div></td>';
 	html += '<td class="t5"><p>男：占20%</p></td>';
 	html += '<td class="t6"><p>图文打开率：占20%</p><p>周平均阅读数：占20%</p></td>';
 	html += '<td class="t7">8000</td>';
