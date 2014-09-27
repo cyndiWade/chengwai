@@ -23,7 +23,7 @@
 			$now_val['zfnr_type'] = $new_post['zfnr_type'];
 			$now_val['wasfbalj'] = $new_post['wasfbalj'];
 			$now_val['start_time'] = strtotime($new_post['start_time']);
-			$now_val['sfyq'] = $new_post['sfyq'];
+			$now_val['sfyq'] = $new_post['sfyq']=='' ? 0 : 1;
 			$now_val['bz_info'] = $new_post['bz_info'];
 			$now_val['create_time'] = time();
 			return $this->add($now_val);

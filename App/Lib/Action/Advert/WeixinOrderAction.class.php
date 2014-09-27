@@ -22,7 +22,8 @@ class WeixinOrderAction extends AdvertBaseAction {
 	
 	//初始化数据库连接
 	protected  $db = array(
-			
+			'GeneralizeWeixinOrder' => 'GeneralizeWeixinOrder',
+			'GeneralizeWeixinFiles' => 'GeneralizeWeixinFiles'
 	);
 	
 	//和构造方法
@@ -79,6 +80,62 @@ class WeixinOrderAction extends AdvertBaseAction {
 	}
 
     
+    //添加推广
+    public function add_extension()
+    {
+    	$id = $this->db['GeneralizeWeixinOrder']->insertPost($_POST,$this->oUser->id);
+    	if($id!='')
+    	{
+    		$img_array = $this->upload_img($_FILES,$id);
+			$this->db['GeneralizeWeixinFiles']->insertImg($img_array);
+			$this->redirect('Advert/Weixin/weixin',array('order_id'=>$id));
+    	}
+    }
+
+
+
+    	//上传图片 传入表单路径 和 订单ID 上传文件name contentTypeRetweet genuineFile
+	private function upload_img($save_file,$order_id,$bool=true)
+	{
+		$img_where = array();
+		$contentTypeRetweet = $save_file['contentTypeRetweet'];
+		if($contentTypeRetweet!='')
+		{
+			$upload_dir = C('UPLOAD_DIR');
+			$dir = $upload_dir['web_dir'].$upload_dir['image'];
+			$status_content = parent::upload_file($contentTypeRetweet,$dir,5120000);
+			if($status_content['status']==true)
+			{
+				$img_where['contentTypeRetweet']['users_id'] = $this->oUser->id;
+				if($bool==true)
+				{
+					$img_where['contentTypeRetweet']['generalize_order_id'] = $order_id;
+				}else{
+					$img_where['contentTypeRetweet']['intention_order_id'] = $order_id;
+				}
+				$img_where['contentTypeRetweet']['type'] = 1;
+				$img_where['contentTypeRetweet']['url'] = $status_content['info'][0]['savename'];
+			}
+		}
+		$genuineFile = $save_file['genuineFile'];
+		if($genuineFile!='')
+		{
+			$status_genuineFile = parent::upload_file($genuineFile,$dir,5120000);
+			if($status_genuineFile['status']==true)
+			{
+				$img_where['genuineFile']['users_id'] = $this->oUser->id;
+				if($bool==true)
+				{
+					$img_where['genuineFile']['generalize_order_id'] = $order_id;
+				}else{
+					$img_where['genuineFile']['intention_order_id'] = $order_id;
+				}
+				$img_where['genuineFile']['type'] = 2;
+				$img_where['genuineFile']['url'] = $status_genuineFile['info'][0]['savename'];
+			}
+		}
+		return $img_where;
+	}
 }
 
 ?>

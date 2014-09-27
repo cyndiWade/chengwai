@@ -72,6 +72,16 @@ class WeixinAction extends AdvertBaseAction {
 	
 	//微信
 	public function weixin() {
+
+		//验证
+		$order_id = $this->_get('order_id') ;
+		if (!empty($order_id)) {
+			$order_info = $this->db['GeneralizeWeixinOrder']->get_OrderInfo_By_Id($order_id,$this->oUser->id);
+			if ($order_info == false) {
+				$this->redirect('Advert/WeixinOrder/add_generalize');
+			}
+		}
+
 		$this->show_caogen_category_tags();
 		parent::data_to_view(array(
 			
