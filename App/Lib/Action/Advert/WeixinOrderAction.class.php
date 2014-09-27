@@ -23,7 +23,8 @@ class WeixinOrderAction extends AdvertBaseAction {
 	//初始化数据库连接
 	protected  $db = array(
 			'GeneralizeWeixinOrder' => 'GeneralizeWeixinOrder',
-			'GeneralizeWeixinFiles' => 'GeneralizeWeixinFiles'
+			'GeneralizeWeixinFiles' => 'GeneralizeWeixinFiles',
+			'GeneralizeWeixinAccount' => 'GeneralizeWeixinAccount'
 	);
 	
 	//和构造方法
@@ -89,6 +90,21 @@ class WeixinOrderAction extends AdvertBaseAction {
     		$img_array = $this->upload_img($_FILES,$id);
 			$this->db['GeneralizeWeixinFiles']->insertImg($img_array);
 			$this->redirect('Advert/Weixin/weixin',array('order_id'=>$id));
+    	}
+    }
+
+
+    //存储关联账号
+    public function add_account()
+    {
+    	if($this->isPost())
+    	{
+    		$status = $this->db['GeneralizeWeixinAccount']->insertAll($_POST,$this->oUser->id);
+			if ($status == true) {
+				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/generalize_activity')));
+			} else {
+				parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
+			}
     	}
     }
 

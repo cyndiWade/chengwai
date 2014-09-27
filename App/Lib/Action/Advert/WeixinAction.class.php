@@ -30,7 +30,8 @@ class WeixinAction extends AdvertBaseAction {
 			'Users' => 'Users',
 			'CeleprityindexWeixin' => 'CeleprityindexWeixin',
 			'GrassrootsWeixin' => 'GrassrootsWeixin',
-			'BlackorcollectionWeixin' => 'BlackorcollectionWeixin'
+			'BlackorcollectionWeixin' => 'BlackorcollectionWeixin',
+			'GeneralizeWeixinOrder' => 'GeneralizeWeixinOrder'
 	);
 	
 	//和构造方法
