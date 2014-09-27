@@ -14,9 +14,7 @@
 			//用户ID
 			$arr['users_id'] = $id;
 			//活动订单ID
-			$arr['intention_id'] = $new_array['order_id'];
-			//平台类型
-			$arr['account_type'] = $new_array['pt_type'];
+			$arr['generalize_id'] = $new_array['order_id'];
 			//微博账号
 			$account_id = explode(',', $new_array['account_ids']);
 			foreach($account_id as $value)
