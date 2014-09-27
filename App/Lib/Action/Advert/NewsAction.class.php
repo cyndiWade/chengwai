@@ -29,7 +29,9 @@ class NewsAction extends AdvertBaseAction {
 			'Users' => 'Users',
 			'AccountWeibo' => 'AccountWeibo',
 			'FastindexWeibo' => 'FastindexWeibo',
-			'IndexNews' => 'IndexNews'
+			'IndexNews' => 'IndexNews',
+			'GeneralizeNewsOrder' => 'GeneralizeNewsOrder',
+			'GeneralizeNewsAccount' => 'GeneralizeNewsAccount'
 	);
 	
 	//和构造方法
@@ -115,6 +117,35 @@ class NewsAction extends AdvertBaseAction {
 		$data['dljzk'] = $this->now_classify_data[$tags_ids['dljzk']];		
 	
 		parent::data_to_view($data);
+	}
+
+	//添加推广活动
+	public function add_extension()
+	{
+		if($this->isPost())
+		{
+			$id = $this->db['GeneralizeNewsOrder']->insertPost($_POST,$this->oUser->id);
+			if($id!='')
+			{
+				$this->redirect('Advert/News/news_list',array('order_id'=>$id));
+			}
+		}
+	}
+
+	//为推广单加上账号
+	public function add_people()
+	{
+
+		if($this->isPost())
+		{
+			$status = $this->db['GeneralizeNewsAccount']->insertAll($_POST,$this->oUser->id);
+			if ($status == true) {
+				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/News/generalize_activity')));
+			} else {
+				parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
+			}
+			
+		}
 	}
 	
 }	
