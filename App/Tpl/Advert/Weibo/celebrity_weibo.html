@@ -157,7 +157,16 @@
 	</div>
 		<div class="orderbox l">
 			<b class="total fr">共<span id="all_data_num"></span>个</b><b class="total fr"><span id="all_page_num"></span>页</b>
-			<span class="orderspan orderspan-select fl">默认排序</span><span class="ordermt fl">粉丝度</span><span class="ordermt fl">配合度</span>
+		
+			<span class="orderspan orderspan-select fl" data-sort_type="order_id">默认排序</span>
+			<span class="orderspan fl" data-sort_type="fans_num">粉丝度</span>
+			<span class="orderspan fl" data-sort_type="">配合度</span>
+			
+			<!--  
+			<span class="orderspan orderspan-select fl">默认排序</span>
+			<span class="orderspan ordermt fl">粉丝度</span>
+			<span class="orderspan ordermt fl">配合度</span>
+			-->
 		</div>
 		<div class="col01-mr l" >
 		
@@ -255,7 +264,7 @@ var public_post_fn = function (obj_data) {
 	//AJAX获取数据
 	var result = System.ajax_post_setup('{:U('/Advert/Weibo/get_celeprity_list')}',post_data,'JSON');
 	
-	console.log(result);
+	//console.log(result);
 	
 	if (result.status == 1) {
 		//创建列表数据
@@ -268,6 +277,8 @@ var public_post_fn = function (obj_data) {
 		Weibo.dataNum_And_PageNum(result.data.count);
 		
 		Weibo.create_details_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+		
+		Weibo.page_init_fn();	//加载页面初始化
 		
 		//更新page
 		page_now_list(result.data.count,result.data.p,system_info.page_limit);
