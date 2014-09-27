@@ -28,9 +28,9 @@
 				<form method="POST" action="{:U('Advert/WeiboOrder/intention_list')}">
 					<strong class="fr">排序：<select class="first"><option>默认排序</option></select></strong>
 					<span class="span-start fl">创建时间：</span>
-					<div class="startime pr fl"><em class="pa"></em><input type="text" value="{$view_data.start_time}" name="start_time" class="timetext fl" /></div>
+					<div class="startime pr fl"><em class="pa"></em><input type="text" value="{$view_data.start_time}" name="start_time" class="timetext fl timeSubject" /></div>
 					<i class="fl">-</i>
-					<div class="startime pr fl"><em class="pa"></em><input type="text" value="{$view_data.end_time}" name="end_time" class="timetext fl" /></div>
+					<div class="startime pr fl"><em class="pa"></em><input type="text" value="{$view_data.end_time}" name="end_time" class="timetext fl timeSubject" /></div>
 					<div class="search fl"><input placeholder="输入关键字" type="text" value="{$view_data.search_name}"  name="search_name" class="seatext fl" /><input type="submit" class="btn seabtn fl" /></div>
 				</form>
 			</div>
@@ -71,10 +71,11 @@
 
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
+
+<script src="{$global_tpl_view.Module_Resource_Path}intention_list.js"></script>
+
 <script type="text/javascript">
-$(function(){
-	$('.tab01-addorder tr:even').addClass('even');
-})
+
 </script>
 </body>
 </html>
