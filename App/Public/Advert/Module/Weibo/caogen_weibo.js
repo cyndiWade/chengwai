@@ -35,7 +35,7 @@ Weibo.prototype.init = function () {
 	this.search = $('#search');				//search按钮
 	this.search_account = $('.search_account');		//搜索的值
 	
-	this.lahei_and_shoucang = $('.lahei_and_shoucang');
+	this.lahei_and_shoucang = $('.lahei_and_shoucang');	//拉黑收藏按钮
 	
 	this.all_data_num = $('#all_data_num');	//所有数据
 	this.all_page_num = $('#all_page_num');	//所有分页数
@@ -59,7 +59,7 @@ Weibo.prototype.init = function () {
 	this.delet_account = $('.delet_account');	//删除账号
 	this.confirm_order = $('.confirm_order');	//确认订单
 	this.tbody = $('.tbody');	//微博账号容器
-	this.orderspan = $('.orderspan');
+	this.orderspan = $('.orderspan');	//排序按钮
 }
 
 
@@ -832,7 +832,7 @@ Weibo.prototype.run = function () {
 	
 	_father_this.orderspan_fn();
 	
-	_father_this.sort_table_fn('mr');
+	_father_this.sort_table_fn();
 }
 
 

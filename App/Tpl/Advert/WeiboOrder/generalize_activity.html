@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
+	<include file="Public:top" />
 	
-	<meta name="keywords" content="" />
-	<meta name="description" content="" />
     <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/page.css" type="text/css" />
 	
@@ -22,7 +20,7 @@
 	<div class="area01-myorder l">
 			<div class="box01-addorder l">
 				<a href="#" class="help fr">帮助手册！</a>
-				<a href="#" class="btn bluebtn fl">添加活动</a>
+				<a href="{:U('/Advert/WeiboOrder/add_generalize')}" class="btn bluebtn fl">添加活动</a>
 				<div class="searnum fl">
 					<b>【{$view_data.status_0}】</b>个确认中，<b>【{$view_data.status_1}】</b>个已确认待执行
 				</div>
@@ -31,9 +29,9 @@
 				<form method="POST" method="{:U('Advert/WeiboOrder/generalize_activity')}">
 					<strong class="fr">排序：<select class="first"><option>默认排序</option></select></strong>
 					<span class="span-start fl">起止时间：</span>
-					<div class="startime pr fl"><em class="pa"></em><input type="text" name="start_time" value="{$view_data.start_time}" class="timetext fl" /></div>
+					<div class="startime pr fl"><em class="pa"></em><input type="text" name="start_time" value="{$view_data.start_time}" class="timetext fl timeSubject" /></div>
 					<i class="fl">-</i>
-					<div class="startime pr fl"><em class="pa"></em><input type="text" name="end_time" value="{$view_data.end_time}" class="timetext fl" /></div>
+					<div class="startime pr fl"><em class="pa"></em><input type="text" name="end_time" value="{$view_data.end_time}" class="timetext fl timeSubject" /></div>
 					<div class="search fl"><input placeholder="输入关键字" type="text" name="search_name" value="{$view_data.search_name}" class="seatext fl" /><input type="submit" class="btn seabtn fl" /></div>
 				</form>
 			</div>
@@ -78,10 +76,10 @@
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 
+<script src="{$global_tpl_view.Module_Resource_Path}generalize_activity.js"></script>
+
 <script type="text/javascript">
-$(function(){
-	$('.tab01-addorder tr:even').addClass('even');
-})
+
 </script>
 </body>
 </html>

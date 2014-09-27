@@ -73,6 +73,8 @@ class WeiboAction extends AdvertBaseAction {
 
 	//名人微博
 	public function celebrity_weibo () {
+		$order_id = $this->_get('order_id') ;
+		
 		
 		$this->show_celebrity_category_tags();
 		if ($this->pt_type == 1) {
@@ -83,6 +85,9 @@ class WeiboAction extends AdvertBaseAction {
 		parent::data_to_view(array(
 			//二级导航属性
 			'sidebar_two'=>array($show_num=>'select',),//第一个加依次类推
+			'pt_type' => $this->pt_type,
+			'order_id' => $order_id
+				
 		));
 		$this->display();
 	}

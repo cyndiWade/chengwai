@@ -176,7 +176,7 @@
 
 			</div>
 			<div class="controlbox fl">
-				<span>全选</span><span id="batch">批量添加账号</span><span>批量导出报价单</span>
+				<span class="all_selected">全选</span><span id="batch" class="add_selected_box">批量添加账号</span><span>批量导出报价单</span>
 			</div>
 		</div>
 	</div>
@@ -186,24 +186,23 @@
 
 <include file="Public:member_footer" />
 
-
-
-
 <!-- 批量添加弹窗 -->
-<div class="batchbox none tl">
-	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选微信主</b></div>
-	<div class="mid-batch l">
+<div class="batchbox none tl order_vessel">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选择账号</b></div>
+	<div class="mid-batch l" >
 		<div class="part01-batch fl">
-			已选择<b>3</b>位微信主，计费<b>1164.00</b>元
+			已选择<b class="account_num"></b>个账号，计费<b class="account_money"></b>元
 		</div>
-		<ul class="part02-batch fl">
-			<li><span class="del fr"></span><strong>陈晓明</strong></li>
-			<li><span class="del fr"></span><strong>猪大肠</strong></li>
-			<li><span class="del fr"></span><strong>冷笑话</strong></li>
+		<ul class="part02-batch fl account_selected" >
+
 		</ul>
-		<a href="#" class="btn bluebtn">立即派单</a>
+		<a href="javascript:;" class="btn bluebtn confirm_order">立即派单</a>
 	</div>
 </div>
+
+<input type="hidden" id="pt_type" value="{$view_data.pt_type}"/>
+<input type="hidden" id="order_id" value="{$view_data.order_id}"/>
+
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 

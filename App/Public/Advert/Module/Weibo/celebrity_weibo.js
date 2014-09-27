@@ -48,6 +48,24 @@ Weibo.prototype.init = function () {
 	this.list_content = $('#list_content');
 	this.mrdetail = $('.mrdetail');
 	this.batchboxdetail = $('.batchboxdetail');
+	
+	
+	this.all_selected = $('.all_selected');	//全选
+	this.now_selected = $('.now_selected');	//当前选中的值
+	this.add_selected_box = $('.add_selected_box');	//添加选中的数据
+	
+	this.pt_type = $('#pt_type');	//平台类型ID
+	this.order_id = $('#order_id');	//订单ID
+	
+	this.order_vessel = $('.order_vessel');	//订单容器
+	this.account_num = $('.account_num');//账号数
+	this.account_money = $('.account_money');	//价格
+	this.account_selected = $('.account_selected');	//已选择账号
+	this.delet_account = $('.delet_account');	//删除账号
+	this.confirm_order = $('.confirm_order');	//确认订单
+	this.tbody = $('.tbody');	//微博账号容器
+	this.orderspan = $('.orderspan');	//排序按钮
+	
 }
 
 
@@ -638,8 +656,8 @@ Weibo.prototype.create_now_html = function (result) {
 	for (var key in result) {
 		var $data = result[key];
 		var html = '';
-		html += '<div class="box01-cele fl">';
-		html += '<input type="checkbox" class="check fl" />';
+		html += '<div class="box01-cele fl accounts_'+$data.id+'" data-order_id="'+$data.id+'" data-order_num="'+$data.week_order_num+'"  data-fans_num="'+$data.fans_num+'">';
+		html += '<input type="checkbox" class="check fl now_selected" data-field="id" data-id="'+$data.id+'" />';
 		html += '<div class="part01-cele fl">';
 		html += '<img src="App/Public/Advert/images/cer_img01.gif" />';
 		html += '<div class="ctrl">';
@@ -648,13 +666,13 @@ Weibo.prototype.create_now_html = function (result) {
 		html += '</div>';
 		html += '<div class="part02-cele fl">';
 		html += '<div class="grp01-cele l">';
-		html += '<span class="mrdetail cur fr" data-weibo_id="'+$data.id+'">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl">'+$data.account_name+'</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>';
+		html += '<span class="mrdetail cur fr" data-weibo_id="'+$data.id+'">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl account_name" data-account_name="'+$data.account_name+'">'+$data.account_name+'</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>';
 		html += '</div>';
 		html += '<div class="grp02-cele l">';
 		html += '<ul class="arr01-cele l">';
 		html += '<li><span class="blue">职业：</span>歌手 <em>影视演员</em></li>';
 		html += '<li><span class="blue">粉丝量：</span><b class="red">'+$data.fans_num+'万</b></li>';
-		html += '<li><span class="blue">参考报价：</span><b class="red">'+$data.yg_zhuanfa+'万</b></li>';
+		html += '<li><span class="blue">参考报价：</span><b class="red now_money" data-money="'+$data.yg_zhuanfa+'">'+$data.yg_zhuanfa+'万</b></li>';
 		html += '<li><span class="blue">配合度：</span>'+$data.coordination+'</li>';
 		html += '</ul>';
 		html += '<div class="arr02-cele l">';
@@ -749,6 +767,196 @@ Weibo.prototype.create_details_fn = function ($url) {
 }
 
 
+//全选
+Weibo.prototype.all_selected_fn = function () {
+	var _father_this = this;
+
+	_father_this.all_selected.click(function () {
+		_father_this.init();
+		_father_this.now_selected.prop('checked',true);
+	});
+}
+
+//批量添加数据源
+Weibo.prototype.add_selected_box_fn = function () {
+	var _father_this = this;
+	var _account_ids;	//账号IDs
+	
+	//点击批量添加账号时
+	_father_this.add_selected_box.click(function () {
+		_father_this.init();
+		_account_ids = [];
+		_father_this.now_selected.each(function () {
+			var _this = $(this);
+			if (_this.prop('checked') == true) {
+				_account_ids.push(_this.data('id'))
+			}
+		});
+		if (_account_ids == '') {
+			alert('请选择账号！');
+			return false;
+		} else {
+			cache_select_account();
+		}
+	});
+	
+
+	//缓存选择后的账号的数据数据在HTML中
+	var cache_select_account = function () {
+		var _vessel_ids = get_order_vessel_ids();
+		//遍历已经选择的微博ID
+		$.each( _account_ids, function(i, n){
+			//对已经在容器的微博账号不再添加，避免重复
+			if (System.in_array(n,_vessel_ids) == false) {
+				var _now_account_x = $('.accounts_'+n);	//列表的行
+				var _name = _now_account_x.find('.account_name').data('account_name');
+				var _money = _now_account_x.find('.now_money').data('money');
+				_father_this.account_selected.append('<li data-select_account_id="'+n+'" data-money="'+_money+'"><span class="del fr delet_account"></span><strong>'+_name+'</strong></li>');
+			}
+		});
+		
+		set_order_data();	
+		
+		delet_account_fn();
+		
+		//弹窗插件
+		_father_this.order_vessel.popOn();
+	}
+	
+	
+	//在订单容器中，获取已经选择的数据
+	var get_order_vessel_ids = function () {
+		var have_ids = [];
+		
+		_father_this.account_selected.children().each(function (){
+			var id = $(this).data('select_account_id');
+			if (id != undefined) {
+				have_ids.push(id);
+			}
+		});
+		return have_ids;
+	} 
+	
+	
+	//计算当前的账号总数和价格总数
+	var set_order_data = function () {
+		
+		var money_sum = 0;
+		var account_sum = 0;
+		_father_this.account_selected.children().each(function (){
+			var _this = $(this);
+			
+			money_sum += Number(_this.data('money'));
+			account_sum += 1;
+		});
+		
+		_father_this.account_money.text(money_sum);
+		_father_this.account_num.text(account_sum);
+	}
+	
+	
+	//删除一个已经选择的订单
+	var delet_account_fn = function () {
+		_father_this.init();
+		
+		_father_this.delet_account.unbind();	//清除之前绑定的事件
+		_father_this.delet_account.click(function () {
+			$(this).parent().remove();
+			set_order_data();
+		});
+	}
+	
+	
+	//确认提交订单
+	_father_this.confirm_order_fn = function () {
+		_father_this.confirm_order.click(function () {
+			var selected_account_ids = [];	//已选中的ID
+			_father_this.account_selected.children().each(function (){
+				var _this = $(this);
+				selected_account_ids.push(_this.data('select_account_id'));
+			});
+			
+			if (selected_account_ids == '') {
+				alert('请重新选择后提交！')
+				return false;
+			} else {
+				var post_data = {};
+				post_data.account_ids = selected_account_ids.join(',');
+				post_data.pt_type = _father_this.pt_type.val();
+				post_data.order_id = _father_this.order_id.val();
+		
+				//提交操作
+				var result = System.ajax_post_setup(system_info.post_order_url,post_data,'JSON');
+				if (result.status == 0) {
+					alert('提交成功！');
+					window.location.href= result.data.go_to_url;	//跳转
+				} else {
+					alert('添加失败请稍后重新再试！');
+				}
+			}
+			
+		});
+	}();
+}
+
+Weibo.prototype.orderspan_fn = function () {
+	var _father_this = this; 
+	
+	_father_this.orderspan.click(function () {	//orderspan-select
+		var _this = $(this);
+		_father_this.orderspan.removeClass('orderspan-select');
+		_this.addClass('orderspan-select');
+		
+		//排序
+		var _sort_type = _this.data('sort_type');//排序类型
+		_father_this.sort_table_fn(_sort_type);	//执行排序
+	});
+}
+
+//排序表单
+Weibo.prototype.sort_table_fn = function ($sort_type) {
+	
+	var _father_this = this;
+	var tr = _father_this.tbody.children();
+	var tr_arr = [];
+	
+	//把tr放入数组中，用作排序
+	tr.each (function () {
+		tr_arr.push(this);
+	});
+	
+	tr_arr.sort(function (v1,v2) {
+		var obj1 = $(v1);
+		var obj2 = $(v2);
+		if ( Number(obj1.data($sort_type)) > Number(obj2.data($sort_type)) ) {
+			return -1;
+		} else if (Number(obj1.data($sort_type)) < Number(obj2.data($sort_type))) {
+			return 1;
+		} else {
+			return 0;
+		}
+	});
+	
+	//重新插入到table中
+	for (var i=0;i<tr_arr.length;i++) {
+		_father_this.tbody.append(tr_arr[i]);
+	}
+}
+
+
+//页面记载完毕后执行的方法
+Weibo.prototype.page_init_fn = function () {
+	var _father_this = this;
+	
+	//对没有订单的情况进行隐藏
+	if (_father_this.pt_type.val() =='' || _father_this.order_id.val() == '') {
+		_father_this.all_selected.css({'display':'none'});
+		_father_this.add_selected_box.css({'display':'none'});
+		_father_this.now_selected.remove();
+	}
+}
+
+
 
 //执行
 Weibo.prototype.run = function () {
@@ -767,6 +975,17 @@ Weibo.prototype.run = function () {
 	_father_this.clear_tags_fn();	//清空已选择标签
 	
 	_father_this.search_fn();
+	
+
+	_father_this.page_init_fn();	//加载页面初始化
+	
+	_father_this.all_selected_fn();	//全选
+	
+	_father_this.add_selected_box_fn();	//添加
+	
+	_father_this.orderspan_fn();
+	
+	_father_this.sort_table_fn();
 }
 
 
