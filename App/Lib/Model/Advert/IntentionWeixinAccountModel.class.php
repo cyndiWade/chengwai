@@ -34,13 +34,13 @@
 		{
 			if($array!='')
 			{
-				$where['intention_id'] = array('IN',$array);
+				$where['generalize_id'] = array('IN',$array);
 				$where['users_id'] = $users_id;
-				$val_list = $this->where($where)->group('intention_id')->field('count(id) as number,intention_id')->select();
+				$val_list = $this->where($where)->group('generalize_id')->field('count(id) as number,generalize_id')->select();
 				$last_array = array();
 				foreach($val_list as $value)
 				{
-					$last_array[$value['intention_id']] = $value['number'];
+					$last_array[$value['generalize_id']] = $value['number'];
 				}
 				foreach($array as $val)
 				{
