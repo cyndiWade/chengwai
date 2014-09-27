@@ -252,7 +252,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 	}
 
 	//填写意向单
-	public function add_inten()
+	public function add_intenYx()
 	{
 		//新增数据
 		if($this->isPost())
@@ -307,10 +307,10 @@ class WeiboOrderAction extends AdvertBaseAction {
 	{
 		$img_where = array();
 		$contentTypeRetweet = $save_file['contentTypeRetweet'];
+		$upload_dir = C('UPLOAD_DIR');
+		$dir = $upload_dir['web_dir'].$upload_dir['image'];
 		if($contentTypeRetweet!='')
 		{
-			$upload_dir = C('UPLOAD_DIR');
-			$dir = $upload_dir['web_dir'].$upload_dir['image'];
 			$status_content = parent::upload_file($contentTypeRetweet,$dir,5120000);
 			if($status_content['status']==true)
 			{
