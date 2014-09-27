@@ -882,7 +882,6 @@ Weibo.prototype.add_selected_box_fn = function () {
 			} else {
 				var post_data = {};
 				post_data.account_ids = selected_account_ids.join(',');
-				post_data.pt_type = _father_this.pt_type.val();
 				post_data.order_id = _father_this.order_id.val();
 		
 				//提交操作
@@ -892,6 +891,7 @@ Weibo.prototype.add_selected_box_fn = function () {
 					window.location.href= result.data.go_to_url;	//跳转
 				} else {
 					alert('添加失败请稍后重新再试！');
+					return false;
 				}
 			}
 			
@@ -949,7 +949,7 @@ Weibo.prototype.page_init_fn = function () {
 	var _father_this = this;
 	
 	//对没有订单的情况进行隐藏
-	if (_father_this.pt_type.val() =='' || _father_this.order_id.val() == '') {
+	if (_father_this.order_id.val() == '') {
 		_father_this.all_selected.css({'display':'none'});
 		_father_this.add_selected_box.css({'display':'none'});
 		_father_this.now_selected.remove();

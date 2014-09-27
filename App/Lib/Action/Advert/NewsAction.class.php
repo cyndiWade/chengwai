@@ -60,7 +60,6 @@ class NewsAction extends AdvertBaseAction {
 
 	//新闻媒体列表
 	public function news_list () {
-
 		//验证
 		$order_id = $this->_get('order_id') ;
 		if (!empty($order_id)) {
@@ -70,10 +69,13 @@ class NewsAction extends AdvertBaseAction {
 			}
 		}
 
+		
 		$this->show_news_category_tags();
+		
 		parent::data_to_view(array(
 			//二级导航属性
 			'sidebar_two'=>array(0=>'select',),//第一个加依次类推
+			'order_id' =>$order_id
 		));
 		$this->display();
 	}

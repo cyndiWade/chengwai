@@ -904,7 +904,7 @@ Weixin.prototype.orderspan_fn = function () {
 Weixin.prototype.sort_table_fn = function ($sort_type) {
 	
 	var _father_this = this;
-	var tr = _father_this.tbody.children();
+	var tr = _father_this.list_content.children();
 	var tr_arr = [];
 	
 	//把tr放入数组中，用作排序
@@ -926,7 +926,7 @@ Weixin.prototype.sort_table_fn = function ($sort_type) {
 	
 	//重新插入到table中
 	for (var i=0;i<tr_arr.length;i++) {
-		_father_this.tbody.append(tr_arr[i]);
+		_father_this.list_content.append(tr_arr[i]);
 	}
 }
 

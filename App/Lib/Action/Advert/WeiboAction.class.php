@@ -54,6 +54,7 @@ class WeiboAction extends AdvertBaseAction {
 		
 		$this->pt_type = $this->_get('pt_type');	//平台类型
 		
+		
 		$this->pt_page_data = array(
 			1 => array(
 				'pt_type'=>1,
@@ -64,6 +65,8 @@ class WeiboAction extends AdvertBaseAction {
 				'pt_name'=> '腾讯'
 			),
 		);
+		
+		
 		parent::data_to_view(array(
 			'pt_info'=>$this->pt_page_data[$this->pt_type]
 		));
@@ -71,10 +74,26 @@ class WeiboAction extends AdvertBaseAction {
 		
 	}
 	
+	private function check_url () {
+		$check_type = false;
+		foreach ($this->pt_page_data as $key=>$val) {
+			if($val['pt_type'] == $this->pt_type) {
+				$check_type = true;
+				break;
+			}
+		}
+		
+		if ($check_type == false) {
+			$this->success('非法操作！',U('/Advert/Weibo/celebrity_weibo',array('pt_type'=>1)));
+			exit;
+		}
+	}
+	
 
 	//名人微博
 	public function celebrity_weibo () {
-
+		$this->check_url();
+		
 		//验证
 		$order_id = $this->_get('order_id') ;
 		if (!empty($order_id)) {
@@ -103,6 +122,7 @@ class WeiboAction extends AdvertBaseAction {
 	
 	//草根微博
 	public function caogen_weibo() {
+		$this->check_url();
 		
 		//验证
 		$order_id = $this->_get('order_id') ;
