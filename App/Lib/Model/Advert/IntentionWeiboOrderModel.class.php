@@ -22,7 +22,7 @@
 			$add['wa_url_status'] = $new_array['wa_url_status'];
 			$add['start_time'] = strtotime($new_array['start_time']);
 			$add['over_time'] = strtotime($new_array['over_time']);
-			$add['sfyq'] = $new_array['sfyq'];
+			$add['sfyq'] = $new_array['sfyq'] =='' ? 0 : 1;
 			$add['dx_status'] = $new_array['dx_status'];
 			$add['dx_phone'] = $new_array['dx_phone'];
 			$add['bz_info'] = $new_array['bz_info'];
