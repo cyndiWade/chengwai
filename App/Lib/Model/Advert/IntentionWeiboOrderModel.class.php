@@ -28,5 +28,20 @@
 			$add['bz_info'] = $new_array['bz_info'];
 			$add['create_time'] = time();
 			return $this->add($add);
-		}	
+		}
+
+		//获得推广订单数据
+		public function get_OrderInfo_list($id)
+		{
+			$where['users_id'] = $id;
+			return parent::get_spe_data($where);
+		}
+
+
+		//获取一条本人订单信息
+		public function get_OrderInfo_By_Id ($order_Id,$users_id) {
+			$where['id'] = $order_Id;
+			$where['users_id'] = $users_id;
+			return parent::get_one_data($where);
+		}
 	}

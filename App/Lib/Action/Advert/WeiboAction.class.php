@@ -30,7 +30,8 @@ class WeiboAction extends AdvertBaseAction {
 			'GrassrootsWeibo' => 'GrassrootsWeibo',
 			'CeleprityindexWeibo' => 'CeleprityindexWeibo',
 			'BlackorcollectionWeibo' => 'BlackorcollectionWeibo',
-			'GeneralizeOrder'=>'GeneralizeOrder'
+			'GeneralizeOrder'=>'GeneralizeOrder',
+			'IntentionWeiboOrder' => 'IntentionWeiboOrder'
 	);
 	
 	//和构造方法
@@ -76,6 +77,15 @@ class WeiboAction extends AdvertBaseAction {
 		$order_id = $this->_get('order_id') ;
 		
 		
+		//验证
+		$order_id = $this->_get('order_id') ;
+		if (!empty($order_id)) {
+			$order_info = $this->db['IntentionWeiboOrder']->get_OrderInfo_By_Id($order_id,$this->oUser->id);
+			if ($order_info == false) {
+				$this->redirect('/Advert/WeiboOrder/add_intention');
+			}
+		}
+
 		$this->show_celebrity_category_tags();
 		if ($this->pt_type == 1) {
 			$show_num = 0;

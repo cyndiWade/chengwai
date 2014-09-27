@@ -157,7 +157,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 		{
 			$status = $this->db['IntentionWeiboAccount']->insertAll($_POST,$this->oUser->id);
 			if ($status == true) {
-				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('/Advert/WeiboOrder/generalize_activity')));
+				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('/Advert/WeiboOrder/intention_list')));
 			} else {
 				parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
 			}
