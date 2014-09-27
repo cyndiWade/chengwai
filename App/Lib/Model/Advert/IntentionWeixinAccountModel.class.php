@@ -29,5 +29,28 @@
 			return $status;
 		}
 
+		//获得账号数量
+		public function getListNum($array,$users_id)
+		{
+			if($array!='')
+			{
+				$where['intention_id'] = array('IN',$array);
+				$where['users_id'] = $users_id;
+				$val_list = $this->where($where)->group('intention_id')->field('count(id) as number,intention_id')->select();
+				$last_array = array();
+				foreach($val_list as $value)
+				{
+					$last_array[$value['intention_id']] = $value['number'];
+				}
+				foreach($array as $val)
+				{
+					if(!in_array($val,array_keys($last_array)))
+					{
+						$last_array[$val] = '0';
+					}
+				}
+				return $last_array;
+			}
+		}
 
 	}

@@ -26,7 +26,8 @@ class WeixinOrderAction extends AdvertBaseAction {
 			'GeneralizeWeixinFiles' => 'GeneralizeWeixinFiles',
 			'GeneralizeWeixinAccount' => 'GeneralizeWeixinAccount',
 			'IntentionWeixinOrder' => 'IntentionWeixinOrder',
-			'IntentionWeixinFiles' => 'IntentionWeixinFiles'
+			'IntentionWeixinFiles' => 'IntentionWeixinFiles',
+			'IntentionWeixinAccount'=> 'IntentionWeixinAccount'
 	);
 	
 	//和构造方法
@@ -135,6 +136,27 @@ class WeixinOrderAction extends AdvertBaseAction {
 	}
 
 
+	//删除微信意向单
+	public function del_weixinYx()
+	{
+		$id = intval($_POST['id']);
+		if($id!='')
+		{
+			$bool = D('IntentionWeixinOrder')->del_info($id,$this->oUser->id);
+			switch($bool)
+			{
+				case 1:
+					parent::callback(C('STATUS_SUCCESS'),'删除成功');
+				break;
+				case 2:
+					parent::callback(C('STATUS_SUCCESS'),'删除失败');
+				break;
+				case 3:
+					parent::callback(C('STATUS_SUCCESS'),'已审核通过，禁止删除');
+				break;
+			}
+		}
+	}
 
 
 	//意向单列表
@@ -143,7 +165,52 @@ class WeixinOrderAction extends AdvertBaseAction {
 				//二级导航属性
 				'sidebar_two'=>array(4=>'select'),//第一个加依次类推
 		));
-	
+		$number = $this->db['IntentionWeixinOrder']->get_OrderInfo_num($this->oUser->id);
+		$new_array = addsltrim($_REQUEST);
+		$start_time = strtotime($new_array['start_time']);
+		$end_time = strtotime($new_array['end_time']);
+		//时间范围
+		if($new_array['start_time']!='' && $new_array['end_time']=='')
+		{
+			$where['start_time'] = array('EGT',$start_time);
+		}
+		if($new_array['start_time']=='' && $new_array['end_time']!='')
+		{
+			$where['start_time'] = array('ELT',$end_time);
+		}
+		if($new_array['start_time']!='' && $new_array['end_time']!='')
+		{
+			$where['start_time'] = array('between',array($start_time,$end_time));
+		}
+		//活动名字
+		if($new_array['search_name']!='')
+		{
+			$where['yxd_name'] = array('like','%'.$new_array['search_name'].'%');
+		}
+		import('ORG.Util.Page');
+		$IntentionWeixinOrder = D('IntentionWeixinOrder');
+		$where['users_id'] =  $this->oUser->id;
+		$count      = $IntentionWeixinOrder->where($where)->count();
+		$Page       = new Page($count,10);
+		$show       = $Page->show();
+		$list = $IntentionWeixinOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
+		->order('id desc')->field('id,tfpt_type,fslx_type,ggw_type,yxd_name,start_time,over_time,status')->select();
+		$new_list_id = array();
+		foreach($list as $value)
+		{
+			$new_list_id[] =$value['id'];
+		}
+		$intention_id_num = $this->db['IntentionWeixinAccount']->getListNum($new_list_id,$this->oUser->id);
+		parent::data_to_view(array(
+				'page' => $show ,
+				'list' => $list,
+				'search_name' => $new_array['search_name'],
+				'start_time' => $new_array['start_time'],
+				'end_time' => $new_array['end_time'],
+				'status_0' => $number[0],
+				'status_1' => $number[1],
+				'intention_id_num' => $intention_id_num
+		));
 		$this->display();
 	}
 	
