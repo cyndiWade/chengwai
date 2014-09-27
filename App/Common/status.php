@@ -1,5 +1,25 @@
 <?php
 	
+	//广告位
+	function adGet($id)
+	{
+		switch($id)
+		{
+			case 1:
+				return '单图文';
+			break;
+			case 2:
+				return '多图文第一条';
+			break;
+			case 3:
+				return '多图文第二条';
+			break;
+			case 4:
+				return '多图文第3-N条';
+			break;
+		}
+	}
+
 	//平台类型
 	function getPt($id)
 	{
@@ -10,6 +30,9 @@
 			break;
 			case 2:
 				return '腾讯';
+			break;
+			case 3:
+				return '微信';
 			break;
 		}
 	}

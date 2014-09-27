@@ -67,10 +67,73 @@ class WeixinOrderAction extends AdvertBaseAction {
 				//二级导航属性
 				'sidebar_two'=>array(3=>'select'),//第一个加依次类推
 		));
+		$number = $this->db['GeneralizeWeixinOrder']->get_OrderInfo_num($this->oUser->id);
+		$new_array = addsltrim($_REQUEST);
+		$start_time = strtotime($new_array['start_time']);
+		$end_time = strtotime($new_array['end_time']);
+		//时间范围
+		if($new_array['start_time']!='' && $new_array['end_time']=='')
+		{
+			$where['start_time'] = array('EGT',$start_time);
+		}
+		if($new_array['start_time']=='' && $new_array['end_time']!='')
+		{
+			$where['start_time'] = array('ELT',$end_time);
+		}
+		if($new_array['start_time']!='' && $new_array['end_time']!='')
+		{
+			$where['start_time'] = array('between',array($start_time,$end_time));
+		}
+		//活动名字
+		if($new_array['search_name']!='')
+		{
+			$where['yxd_name'] = array('like','%'.$new_array['search_name'].'%');
+		}
+		import('ORG.Util.Page');
+		$GeneralizeWeixinOrder = D('GeneralizeWeixinOrder');
+		$where['users_id'] =  $this->oUser->id;
+		$count      = $GeneralizeWeixinOrder->where($where)->count();
+		$Page       = new Page($count,10);
+		$show       = $Page->show();
+		$list = $GeneralizeWeixinOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
+		->order('id desc')->field('id,tfpt_type,fslx_type,ggw_type,yxd_name,start_time,over_time,status')->select();
+		parent::data_to_view(array(
+				'page' => $show ,
+				'list' => $list,
+				'search_name' => $new_array['search_name'],
+				'start_time' => $new_array['start_time'],
+				'end_time' => $new_array['end_time'],
+				'status_0' => $number[0],
+				'status_1' => $number[1]
+		));
 		$this->display();
 	}
 	
-	
+		
+	//删除微信
+	public function del_weixinCao()
+	{
+		$id = intval($_POST['id']);
+		if($id!='')
+		{
+			$bool = D('GeneralizeWeixinOrder')->del_info($id,$this->oUser->id);
+			switch($bool)
+			{
+				case 1:
+					parent::callback(C('STATUS_SUCCESS'),'删除成功');
+				break;
+				case 2:
+					parent::callback(C('STATUS_SUCCESS'),'删除失败');
+				break;
+				case 3:
+					parent::callback(C('STATUS_SUCCESS'),'已审核通过，禁止删除');
+				break;
+			}
+		}
+	}
+
+
+
 
 	//意向单列表
 	public function intention_list() {
