@@ -113,7 +113,34 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$this->display();
 	}
 
-	
+	//删除草根微博
+	public function del_caogen()
+	{
+		$del_id = intval($_POST['id']);
+		$GeneralizeOrder = D('GeneralizeOrder');
+		$bool = $GeneralizeOrder->del_info($del_id,$this->oUser->id);
+		if($bool==true)
+		{
+			parent::callback(C('STATUS_UPDATE_DATA'),'删除成功');
+		}else{
+			parent::callback(C('STATUS_UPDATE_DATA'),'删除失败');
+		}
+	}
+
+	//删除名人微博
+	public function del_mingren()
+	{
+		$del_id = intval($_POST['id']);
+		$IntentionWeiboOrder = D('IntentionWeiboOrder');
+		$bool = $IntentionWeiboOrder->del_info($del_id,$this->oUser->id);
+		if($bool==true)
+		{
+			parent::callback(C('STATUS_UPDATE_DATA'),'删除成功');
+		}else{
+			parent::callback(C('STATUS_UPDATE_DATA'),'删除失败');
+		}
+	}
+
 	//添加意向单
 	public function add_intention () {
 		parent::data_to_view(array(

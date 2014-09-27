@@ -61,4 +61,29 @@
 			$where['users_id'] = $users_id;
 			return parent::get_one_data($where);
 		}
+
+
+		//删除书数据
+		public function del_info($del_id,$users_id)
+		{
+			$upload_dir = C('UPLOAD_DIR');
+			$dir = $upload_dir['web_dir'].$upload_dir['image'];
+			$where = array('users_id'=>$users_id,'id'=>$del_id);
+			D('IntentionWeiboAccount')->where($where)->delete();
+			$IntentionWeiboFiles = D('IntentionWeiboFiles');
+			$url = $IntentionWeiboFiles->where($where)->field('url')->select();
+			//删除文件
+			foreach($url as $value)
+			{
+				@unlink($dir . $value['url']);
+			}
+			$IntentionWeiboFiles->where($where)->delete();
+			$bool = $this->where($where)->delete();
+			if($bool)
+			{
+				return true;
+			}else{
+				return false;
+			}
+		}
 	}
