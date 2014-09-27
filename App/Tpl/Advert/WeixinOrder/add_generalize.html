@@ -2,9 +2,14 @@
 <html>
 <head>
 	<include file="Public:top" />
+	<title>创建微信推广</title>
     <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/page.css" type="text/css" />
-	<title>添加推广</title>
+	
+	<!-- 插件级的样式 -->
+	<link href="{$global_tpl_view.Global_Resource_Path}Validform/css/style.css" type="text/css" rel="stylesheet" />
+	
+
 </head>
 <body>
 
@@ -22,26 +27,44 @@
 		</div>
 		<div class="box02-intention l">
 			<div class="int-tip l">注：<b class="red">*</b> 为必填项</div>
+			
+			<form action="" method="post" class="generalize_form" enctype="multipart/form-data" >
 			<table class="tab01-inten l">
 			  <tr>
 				<td class="t1"><i>*</i><strong>投放平台：</strong></td>
-				<td class="t2">微信</td>
+				<td class="t2">
+					微信		
+					<input type="hidden" name="tfpt_type" value="3" />
+				</td>
 			  </tr>
 			  <tr>
 				<td class="t1"><i>*</i><strong>发送类型：</strong></td>
-				<td class="t2">直发</td>
+				<td class="t2">
+					直发
+					<input type="hidden" name="fslx_type" value="1" />
+				</td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>广告位：</strong></span></td>
-				<td class="t2"><span class="soft fl"><input type="radio" name="extension" checked="checked" class="radio" /><strong>单图文</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span><span class="soft fl"><input type="radio" name="extension" class="radio" /><strong>多图文第一条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span><span class="soft fl"><input type="radio" name="extension" class="radio" /><strong>多图文第二条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span><span class="soft fl"><input type="radio" name="extension" class="radio" /><strong>多图文第3-N条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span></td>
+				<td class="t2">
+					<span class="soft fl"><input type="radio" name="ggw_type" checked="checked" class="radio" value="1"/><strong>单图文</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
+					<span class="soft fl"><input type="radio" name="ggw_type" class="radio" value="2"/><strong>多图文第一条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
+					<span class="soft fl"><input type="radio" name="ggw_type" class="radio" value="3"/><strong>多图文第二条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
+					<span class="soft fl"><input type="radio" name="ggw_type" class="radio" value="4"/><strong>多图文第3-N条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
+				</td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>意向单名称：</strong></span></td>
-				<td class="t2"><input type="text" class="text text-error" /><div class="errortip">名称不能为空</div></td>
+				<td class="t2">
+					<input type="text" name="yxd_name" class="text" datatype="*1-50" errormsg="请正确填写范围是1-50个字符" nullmsg="请填写意向单名称" />
+					<p class="writetip">请不要超过50个字</p>
+				</td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>标题：</strong></span></td>
-				<td class="t2"><input type="text" placeholder="请不要超过50个字" class="text" /><p class="writetip">请不要超过50个字</p></td>
+				<td class="t2"><input type="text" name="title" class="text" datatype="*1-50" errormsg="请正确填写范围是1-50个字符" nullmsg="请填写标题名称" />
+				<p class="writetip">请不要超过50个字</p>
+				</td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>封面：</strong></span></td>
@@ -49,51 +72,87 @@
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>封面是否显示在正文中：</strong></span></td>
-				<td class="t2"><select class="coverselect"><option>请选择</option></select><span class="blue f12">查看封面在正文中是否显示的区别</span></td>
+				<td class="t2">
+				<select class="coverselect" name="fmzw_status" datatype="*1-2"  errormsg="请选择" nullmsg="请选择" >
+					<option>请选择</option>
+					<option value="1">是</option>
+					<option value="0">否</option>
+				</select>
+				<span class="blue f12">查看封面在正文中是否显示的区别</span></td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>正文：</strong></span></td>
 				<td class="t2"><div class="forward">
-					<img src="{$global_tpl_view.Group_Resource_Path}images/text_temp.gif" />
+					<textarea name="zw_info" id="TextArea1" class="ckeditor"  datatype="*10-1000"  nullmsg="请输入内容" errormsg="字符最多1000个" ></textarea>
 				</div></td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><strong>来源：</strong></span></td>
-				<td class="t2"><input type="text" class="text" /><p class="writetip">请输入手机版的原文链接（如：宝贝购买链接），请确保该链接不被微信查封</p></td>
+				<td class="t2">
+					<input type="text" name="ly_url" class="text ly_url" ignore="ignore" datatype="url" errormsg="请正确填写链接" datatype="url" />					
+					<p class="writetip">请输入手机版的原文链接（如：宝贝购买链接），请确保该链接不被微信查封</p>
+				</td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>预计执行时间：</strong></span></td>
-				<td class="t2"><div class="timestart"><input type="text" class="text text-time" /><span><select><option>23</option></select>时</span><span><select><option>23</option></select>分</span><span><input type="checkbox" class="check" />延期</span></div><p>请选择当前时间60分钟后，14天之内的时间</p></td>
+				<td class="t2">
+					<!--  
+					<div class="timestart">
+					<input type="text" class="text text-time" /><span><select><option>23</option></select>时</span><span><select><option>23</option></select>分</span><span><input type="checkbox" class="check" />延期</span></div><p>请选择当前时间60分钟后，14天之内的时间</p>
+					-->
+					<div class="timestart">
+					<input type="text" name="start_time" class="text text-time start_time timeSubject"  datatype="*18-20" errormsg="请正确选择填写"  nullmsg="请选择时间" />
+					<span><input type="checkbox" name="sfyq" class="check sfyq" value="1">延期</span>
+					<!-- <span><select><option>23</option></select>时</span><span><select><option>23</option></select>分</span>-->
+					</div><p>请选择当前时间60分钟后，14天之内的时间</p>
+				</td>
+				</td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>反馈截止时间：</strong></span></td>
-				<td class="t2"><div class="timestart"><input type="text" class="text text-time" /><span><select><option>23</option></select>时</span><span><select><option>23</option></select>分</span></div><p>博主会在该时间之前反馈，请选择当前时间30分钟后，14天之内的时间</p></td>
+				<td class="t2">
+					<!-- 
+					<div class="timestart"><input type="text" class="text text-time" /><span><select><option>23</option></select>时</span><span><select><option>23</option></select>分</span></div><p>博主会在该时间之前反馈，请选择当前时间30分钟后，14天之内的时间</p>
+					-->
+					<div class="timestart">
+					<input type="text" name="over_time" class="text text-time over_time timeSubject"  datatype="*18-20" errormsg="请正确选择填写"  nullmsg="请选择时间" />
+					
+					</div><p>博主会在该时间之前反馈，请选择当前时间30分钟后，14天之内的时间</p>
+				</td>
+				</td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><strong>短信通知反馈结果：</strong></span></td>
-				<td class="t2"><span class="soft fl"><input type="radio" class="radio" /><strong>需要</strong></span><span class="soft fl"><input type="radio" class="radio" /><strong>需要</strong></span></td>
+				<td class="t2">
+					<span class="soft fl"><input type="radio" name="dx_status" value="1" checked="checked" class="radio" /><strong>需要</strong></span>
+					<span class="soft fl"><input type="radio" name="dx_status" value="0" class="radio" /><strong>不需要</strong></span>
+				</td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><strong>手机号：</strong></span></td>
-				<td class="t2"><input type="text" class="text" /><p class="writetip">请准确填写您的手机号码，以便及时短信告知您确认结果</p></td>
+				<td class="t2"><input type="text" class="text" name="dx_phone" ignore="ignore" datatype="m" errormsg="请正确选择填写"  nullmsg="请填写手机号码" /><p class="writetip">请准确填写您的手机号码，以便及时短信告知您确认结果</p></td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><strong>备注：</strong></span></td>
-				<td class="t2"><div class="forward"><textarea class="textarea"></textarea><p>请填写备注信息，请不要超过300个汉字！</p></div></td>
+				<td class="t2"><div class="forward"><textarea class="textarea bz_info" name="bz_info" ignore="ignore" datatype="*10-300" errormsg="请正确填写范围是10-300个字符"  nullmsg="请输入"></textarea><p>请填写备注信息，请不要超过300个汉字！</p></div></td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>上传正品证明：</strong></span></td>
-				<td class="t2"><div class="provebox l"><input type="file" class="file fl" /><span class="btn brownbtn fl">使用历史证明</span></div><p class="l">仅支持jpg、gif、png图片文件，文件小于5M，且允许上传5张</p><p class="red l"><span class="red">若您推广的单品属于知名品牌，请务必上传该商品的正品证明</span></p></td>
+				<td class="t2">
+					<div class="provebox l"><input type="file" class="file fl" />
+					<!--  <span class="btn brownbtn fl">使用历史证明</span> -->
+					</div><p class="l">仅支持jpg、gif、png图片文件，文件小于5M，且允许上传5张</p><p class="red l"><span class="red">若您推广的单品属于知名品牌，请务必上传该商品的正品证明</span></p></td>
 			  </tr>
 			  <tr>
 				<td class="t1"></td>
-				<td class="t2"><div class="agreebox f12"><input type="checkbox" class="check fl" /><strong class="fl">同意<a class="blue" href="#">服务协议</a></strong></div></td>
+				<td class="t2"><div class="agreebox f12"><input type="checkbox" value="1" name="is_ht_ok" class="check fl is_ht"  datatype="*" errormsg="请同意服务协议"  nullmsg="请同意服务协议" /><strong class="fl">同意<a class="blue" href="#">服务协议</a></strong></div></td>
 			  </tr>
 			  <tr>
 				<td class="t1"></td>
 				<td class="t2"><span class="phone cur fl" id="phoneview"><img src="{$global_tpl_view.Group_Resource_Path}images/phone.gif" /></span><input type="submit" class="btn brownbtn" value="提交" /></td>
 			  </tr>
 			</table>
+			</form>
 		</div>
 	</div>
 </div>
@@ -110,12 +169,15 @@
 </div>
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
+
+<script src="{$global_tpl_view.Global_Resource_Path}Validform/js/Validform_v5.3.2.js"></script>
+
+<script src="{$global_tpl_view.Global_Resource_Path}ckeditor/ckeditor.js"></script>
+
+<script src="{$global_tpl_view.Module_Resource_Path}add_generalize.js"></script>
+
 <script type="text/javascript">
-$(function(){
-	$('#phoneview').click(function(){
-		$('.phonebox').popOn();
-	})
-})
+
 </script>
 </body>
 </html>
