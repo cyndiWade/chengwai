@@ -74,9 +74,7 @@ class WeiboAction extends AdvertBaseAction {
 
 	//名人微博
 	public function celebrity_weibo () {
-		$order_id = $this->_get('order_id') ;
-		
-		
+
 		//验证
 		$order_id = $this->_get('order_id') ;
 		if (!empty($order_id)) {

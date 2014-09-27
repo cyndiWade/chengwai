@@ -184,7 +184,7 @@
 
 			</div>
 			<div class="controlbox fl">
-				<span>全选</span><span id="batch">批量添加账号</span><span>批量导出报价单</span>
+				<span class="all_selected">全选</span><span id="batch" class="add_selected_box">批量添加账号</span><span>批量导出报价单</span>
 			</div>
 		</div>
 	</div>
@@ -195,20 +195,22 @@
 <include file="Public:member_footer" />
 
 <!-- 批量添加弹窗 -->
-<div class="batchbox none tl">
-	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选微信主</b></div>
-	<div class="mid-batch l">
+<div class="batchbox none tl order_vessel">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选择账号</b></div>
+	<div class="mid-batch l" >
 		<div class="part01-batch fl">
-			已选择<b>3</b>位微信主，计费<b>1164.00</b>元
+			已选择<b class="account_num"></b>个账号，计费<b class="account_money"></b>元
 		</div>
-		<ul class="part02-batch fl">
-			<li><span class="del fr"></span><strong>陈晓明</strong></li>
-			<li><span class="del fr"></span><strong>猪大肠</strong></li>
-			<li><span class="del fr"></span><strong>冷笑话</strong></li>
+		<ul class="part02-batch fl account_selected" >
+
 		</ul>
-		<a href="#" class="btn bluebtn">立即派单</a>
+		<a href="javascript:;" class="btn bluebtn confirm_order">立即派单</a>
 	</div>
 </div>
+
+
+<input type="hidden" id="order_id" value="{$view_data.order_id}"/>
+
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 
@@ -216,6 +218,7 @@
 var system_info = {
 	is_celebrity : 1,	//是否是名人1是、0不是
 	page_limit : 10,	//每页条数
+	post_order_url : '{:U('Advert/WeixinOrder/add_yxaccount')}',
 }
 var list_content = $('#list_content');
 </script>
@@ -283,23 +286,23 @@ var public_post_fn = function (obj_data) {
 var create_now_html = function ($data) {
 	
 	var html = '';
-	html += '<div class="box01-cele fl">';
-	html += '<input type="checkbox" class="check fl" />';
+	html += '<div class="box01-cele fl accounts_'+$data.id+'" data-order_id="'+$data.id+'" data-order_num="'+$data.week_order_num+'"  data-fans_num="'+$data.fans_num+'">';
+	html += '<input type="checkbox" class="check fl now_selected" data-field="id" data-id="'+$data.id+'" />';
 	html += '<div class="part01-cele fl">';
-	html += '<img src="images/cer_img01.gif" />';
+	html += '<img src="App/Public/Advert/images/cer_img01.gif" />';
 	html += '<div class="ctrl">';
 	html += '<span class="lahei_and_shoucang" data-or_type="1" data-weixin_id="'+$data.id+'">收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weixin_id="'+$data.id+'">拉黑</span>';
 	html += '</div>';
 	html += '</div>';
 	html += '<div class="part02-cele fl">';
 	html += '<div class="grp01-cele l">';
-	html += '<span class="mrdetail cur fr">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl">'+$data.account_name+'</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>';
+	html += '<span class="mrdetail cur fr">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl account_name" data-account_name="'+$data.account_name+'">'+$data.account_name+'</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>';
 	html += '</div>';
 	html += '<div class="grp02-cele l">';
 	html += '<ul class="arr01-cele l">';
 	html += '<li><span class="blue">职业：</span>歌手 <em>影视演员</em></li>';
-	html += '<li><span class="blue">粉丝量：</span><b class="red">4,239万</b></li>';
-	html += '<li><span class="blue">参考报价：</span><b class="red">41万</b></li>';
+	html += '<li><span class="blue">粉丝量：</span><b class="red">'+($data.fans_num / 10000)+'万</b></li>';
+	html += '<li><span class="blue">参考报价：</span><b class="red now_money" data-money="'+($data.dtb_money)+'">'+($data.dtb_money / 10000)+'万</b></li>';
 	html += '<li><span class="blue">配合度：</span>高</li>';
 	html += '</ul>';
 	html += '<div class="arr02-cele l">';
@@ -321,7 +324,6 @@ var create_now_html = function ($data) {
 var Region = new Region('{:U('/Advert/Tool/get_Region_Data')}');
 Region.init();
 Region.run();	
-
 
 
 </script>

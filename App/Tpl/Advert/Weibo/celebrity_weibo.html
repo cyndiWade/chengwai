@@ -255,6 +255,7 @@ var public_post_fn = function (obj_data) {
 	//AJAX获取数据
 	var result = System.ajax_post_setup('{:U('/Advert/Weibo/get_celeprity_list')}',post_data,'JSON');
 	
+	console.log(result);
 	
 	if (result.status == 1) {
 		//创建列表数据

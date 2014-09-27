@@ -671,8 +671,8 @@ Weibo.prototype.create_now_html = function (result) {
 		html += '<div class="grp02-cele l">';
 		html += '<ul class="arr01-cele l">';
 		html += '<li><span class="blue">职业：</span>歌手 <em>影视演员</em></li>';
-		html += '<li><span class="blue">粉丝量：</span><b class="red">'+$data.fans_num+'万</b></li>';
-		html += '<li><span class="blue">参考报价：</span><b class="red now_money" data-money="'+$data.yg_zhuanfa+'">'+$data.yg_zhuanfa+'万</b></li>';
+		html += '<li><span class="blue">粉丝量：</span><b class="red">'+($data.fans_num / 10000)+'万</b></li>';
+		html += '<li><span class="blue">参考报价：</span><b class="red now_money" data-money="'+($data.yg_zhuanfa)+'">'+($data.yg_zhuanfa / 10000)+'万</b></li>';
 		html += '<li><span class="blue">配合度：</span>'+$data.coordination+'</li>';
 		html += '</ul>';
 		html += '<div class="arr02-cele l">';

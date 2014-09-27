@@ -59,13 +59,16 @@ class WeixinAction extends AdvertBaseAction {
 	
 	//微信名人列表页
 	public function celebrity_weixin () {
+		$order_id = $this->_get('order_id') ;
+		
 		$this->show_celebrity_category_tags();
 		parent::data_to_view(array(
 					
 			//二级导航加样式
 			'sidebar_two'=>array(
 				0=>'select',//第一个加
-			)
+			),
+			'order_id'=>$order_id
 		));
 		$this->display();
 	}
