@@ -89,12 +89,13 @@ class MoneyAction extends AdvertBaseAction {
 
     public function verifyReturn($array)
     {
-		dump($array);
 		if(empty($array)) {
 			//判断GET来的数组是否为空
 			return false;
 		}else{
 			//生成签名结果
+
+			dump($array);
 			echo $isSign = $this->getSignVeryfy($array, $array["sign"]);
 			exit;
 			$responseTxt = 'true';
