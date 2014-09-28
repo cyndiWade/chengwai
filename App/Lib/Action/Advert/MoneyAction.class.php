@@ -60,14 +60,16 @@ class MoneyAction extends AdvertBaseAction {
 	{
 		//插入流水
 		$value = $this->db['Fund']->instertFund($_GET,$this->oUser->id,1);
+		var_dump($value);
 		//修改用户信息表
 		$bool = $this->db['UserAdvertisement']->update_user($_GET,$this->oUser->id);
-		if($bool)
-		{
-			$this->redirect('Advert/Money/index');
-		}else{
-			parent::callback(C('STATUS_UPDATE_DATA'),'充值失败，请与管理员联系!');
-		}
+		var_dump($bool);
+		// if($bool)
+		// {
+		// 	$this->redirect('Advert/Money/index');
+		// }else{
+		// 	parent::callback(C('STATUS_UPDATE_DATA'),'充值失败，请与管理员联系!');
+		// }
 	}
 
 }
