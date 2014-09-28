@@ -92,7 +92,8 @@ class MoneyAction extends AdvertBaseAction {
 			return false;
 		}else{
 			//生成签名结果
-			$isSign = $this->getSignVeryfy($array, $array["sign"]);
+			echo $isSign = $this->getSignVeryfy($array, $array["sign"]);
+			exit;
 			$responseTxt = 'true';
 			if (! empty($array["notify_id"])) {
 				$responseTxt = $this->getResponse($array["notify_id"]);
