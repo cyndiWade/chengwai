@@ -43,8 +43,11 @@ class MoneyAction extends AdvertBaseAction {
 	public function index () {
 		//充值订单 充值+UNIX前5位+用户ID+后五位
 		$spnumber = 'CZ'.time();
+		$money = $this->db['UserAdvertisement']->getMoney($this->oUser->id);
 		parent::data_to_view(array(
 				'spnumber'=>$spnumber,
+				'spye' => $money['money'],
+				'spdjzj' => $money['freeze_funds'],
 				'spshow' => base64_encode('http://'.$_SERVER['HTTP_HOST'].'/index.php?s=/Advert/Money/index.html')
 		));
 		$this->display();

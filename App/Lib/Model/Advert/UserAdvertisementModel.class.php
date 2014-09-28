@@ -53,4 +53,11 @@ class UserAdvertisementModel extends AdvertBaseModel
 		return $bool;
 	}
 
+	//获得用户余额
+	public function getMoney($id)
+	{
+		$where = array('users_id'=>$id);
+		$value = $this->where($where)->Field('money,freeze_funds')->find();
+		return array('money'=>$value['money'],'freeze_funds'=>$value['freeze_funds']);
+	}
 }
