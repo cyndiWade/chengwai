@@ -5,7 +5,7 @@
 	{
 
 		//流水表插数据
-		public function instrtFund($array,$users_id,$type)
+		public function instertFund($array,$users_id,$type)
 		{
 			$add['users_id'] = $id;
 			$add['money']  = $array['total_fee'];
@@ -16,6 +16,7 @@
 			$add['admin_info'] = $array['subject'];
 			$add['time'] = strtotime($array['notify_time']);
 			$add['status'] = 1;
+			return $add;
 			$this->add($add);
 		}
 	}
