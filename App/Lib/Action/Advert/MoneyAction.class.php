@@ -97,6 +97,7 @@ class MoneyAction extends AdvertBaseAction {
 
 			dump($array);
 			echo $isSign = $this->getSignVeryfy($array, $array["sign"]);
+			echo 1;
 			exit;
 			$responseTxt = 'true';
 			if (! empty($array["notify_id"])) {
