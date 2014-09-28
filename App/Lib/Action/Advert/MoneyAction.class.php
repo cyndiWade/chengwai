@@ -67,7 +67,6 @@ class MoneyAction extends AdvertBaseAction {
 
 	public function okAlpay()
 	{
-		dump($_GET);
 		if($this->verifyReturn($_GET))
 		{
 			if($_GET['trade_status'] == 'TRADE_FINISHED' || $_GET['trade_status'] == 'TRADE_SUCCESS') {
@@ -90,6 +89,7 @@ class MoneyAction extends AdvertBaseAction {
 
     public function verifyReturn($array)
     {
+		dump($array);
 		if(empty($array)) {
 			//判断GET来的数组是否为空
 			return false;
