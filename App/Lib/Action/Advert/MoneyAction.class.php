@@ -81,6 +81,8 @@ class MoneyAction extends AdvertBaseAction {
 					parent::callback(C('STATUS_UPDATE_DATA'),'充值失败，请与管理员联系!');
 				}
 	    	}
+    	}else{
+    		parent::callback(C('STATUS_UPDATE_DATA'),'充值失败，请与管理员联系!');
     	}
 	}
     
