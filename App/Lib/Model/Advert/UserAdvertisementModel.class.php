@@ -48,7 +48,7 @@ class UserAdvertisementModel extends AdvertBaseModel
 	{
 		$where = array('users_id'=>$id);
 		$value = $this->where($where)->Field('money')->find();
-		$update['money'] = $value + $array['total_fee'];
+		$update['money'] = (float)$value['money'] + (float)$array['total_fee'];
 		$bool = $this->where($where)->save($update);
 		return $bool;
 	}
