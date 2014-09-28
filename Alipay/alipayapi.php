@@ -30,11 +30,11 @@ require_once("lib/alipay_submit.class.php");
         $payment_type = "1";
         //必填，不能修改
         //服务器异步通知页面路径
-        $notify_url = "http://zhuchencong.jsonlin.cn/Alipay/notify_url.php";
+        $notify_url = 'http://'.$_SERVER['HTTP_HOST'].'/Alipay/notify_url.php';
         //需http://格式的完整路径，不能加?id=123这类自定义参数
 
         //页面跳转同步通知页面路径
-        $return_url = "http://zhuchencong.jsonlin.cn/Alipay/return_url.php";
+        $return_url = 'http://'.$_SERVER['HTTP_HOST'].'/Alipay/return_url.php';
         //需http://格式的完整路径，不能加?id=123这类自定义参数，不能写成http://localhost/
 
         //卖家支付宝帐户
@@ -42,22 +42,22 @@ require_once("lib/alipay_submit.class.php");
         //必填
 
         //商户订单号
-        $out_trade_no = $_POST['spnumber'];
+        $out_trade_no = $_GET['spnumber'];
         //商户网站订单系统中唯一订单号，必填
 
         //订单名称
-        $subject = $_POST['spname'];
+        $subject = $_GET['spname'];
         //必填
 
         //付款金额
-        $total_fee = $_POST['spprice'];
+        $total_fee = $_GET['spprice'];
         //必填
 
         //订单描述
 
-        $body = $_POST['spinfo'];
+        $body = $_GET['spinfo'];
         //商品展示地址
-        $show_url = base64_decode($_POST['spshow']);
+        $show_url = base64_decode($_GET['spshow']);
         //需以http://开头的完整路径，例如：http://www.xxx.com/myorder.html
 
         //防钓鱼时间戳

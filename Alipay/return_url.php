@@ -23,7 +23,7 @@ require_once("lib/alipay_notify.class.php");
 		    	$trade_no 		= $_GET['trade_no'];
 		    	$subject 		= $_GET['subject'];
 		    	$notify_time 	= $_GET['notify_time'];
-		    	header('Location:http://zhuchencong.jsonlin.cn?s=/Advert/Money/okAlpay/out_trade_no/'.$out_trade_no.'/total_fee/'.$total_fee.'/trade_no/'.$trade_no.'/subject/'.$subject.'/notify_time/'.$notify_time);
+		    	header('Location:http://'.$_SERVER['HTTP_HOST'].'?s=/Advert/Money/okAlpay/out_trade_no/'.$out_trade_no.'/total_fee/'.$total_fee.'/trade_no/'.$trade_no.'/subject/'.$subject.'/notify_time/'.$notify_time);
 		    	exit;
 		    }else{
 		     	 echo "trade_status=".$_GET['trade_status'];

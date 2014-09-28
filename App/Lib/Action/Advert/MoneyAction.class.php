@@ -41,11 +41,11 @@ class MoneyAction extends AdvertBaseAction {
 	
 	//充值首页
 	public function index () {
-	// 	充值订单 充值+UNIX前5位+用户ID+后五位
-		$spnumber = 'CZ'.substr(time(),0,5).'U'.$this->oUser->id.'U'.substr(time(),5);
+		//充值订单 充值+UNIX前5位+用户ID+后五位
+		$spnumber = 'CZ'.time();
 		parent::data_to_view(array(
 				'spnumber'=>$spnumber,
-				'spshow' => base64_encode(U('Advert/Money/index'))
+				'spshow' => base64_encode('http://'.$_SERVER['HTTP_HOST'].'/index.php?s=/Advert/Money/index.html')
 		));
 		$this->display();
 	}
@@ -56,20 +56,49 @@ class MoneyAction extends AdvertBaseAction {
 		$this->display();
 	}
 
+	public function goAlipay()
+	{
+		$new_array = array();
+		foreach($_POST as $key=>$value)
+		{
+			$new_array[$key] = addslashes($value);
+		}
+		//写入未完成订单到数据库
+		$bool = $this->db['Fund']->insertNoArr($new_array,$this->oUser->id,1);
+		if($bool)
+		{	
+			$url = 'http://'.$_SERVER['HTTP_HOST'].'/Alipay/alipayapi.php?spnumber='.$new_array['spnumber'].'&spname='.$new_array['spname'].'&spinfo='.$new_array['spinfo'].'&spprice='.$new_array['spprice'].'&spshow='.$new_array['spshow'];
+			header('Location:'.$url);exit;
+		}else{
+			parent::callback(C('STATUS_NOT_DATA'),'写入数据失败，请稍后重试!');exit;
+		}
+	}
+
 	public function okAlpay()
 	{
-		var_dump($this->oUser->id);
-		//插入流水
-		$value = $this->db['Fund']->instertFund($_GET,$this->oUser->id,1);
-		//修改用户信息表
-		$bool = $this->db['UserAdvertisement']->update_user($_GET,$this->oUser->id);
-		var_dump($bool);
-		// if($bool)
-		// {
-		// 	$this->redirect('Advert/Money/index');
-		// }else{
-		// 	parent::callback(C('STATUS_UPDATE_DATA'),'充值失败，请与管理员联系!');
-		// }
+		$user_id = $this->db['Fund']->getUserId($_GET);
+		if($user_id!='')
+		{
+			$tmp_arr = array(
+						'id' =>$user_id['id'],
+						'account' => $user_id['account'],
+						'nickname' => $user_id['nickname'],
+						'type'=> $user_id['type'],
+					);
+			parent::set_session(array('user_info'=>$tmp_arr));
+			//修改流水
+			$value = $this->db['Fund']->instertFund($_GET,1);
+			//修改用户信息表
+			$bool = $this->db['UserAdvertisement']->update_user($_GET,$user_id['id']);
+			if($bool)
+			{
+				$this->redirect('Advert/Money/index');
+			}else{
+				parent::callback(C('STATUS_UPDATE_DATA'),'充值失败，请与管理员联系!');
+			}
+		}else{
+			parent::callback(C('STATUS_NOT_DATA'),'非法操作，请稍后重试!');exit;
+		}
 	}
 
 }
