@@ -34,18 +34,24 @@
 			</table>
 		</div>
 		<div class="box03-recharge l">
-			<div class="top-pay l"><b>1.选择充值方式：</b></div>
-			<div class="mid-pay l">
-				<div class="part01-pay l">
-					<input type="radio" class="radio fl" /><img class="zfb fl" src="{$global_tpl_view.Group_Resource_Path}images/zfb.png" />
+			<form method="POST" action="__ROOT__/Alipay/alipayapi.php">
+				<div class="top-pay l"><b>1.选择充值方式：</b></div>
+				<div class="mid-pay l">
+					<div class="part01-pay l">
+						<input type="radio" checked class="radio fl" /><img class="zfb fl" src="{$global_tpl_view.Group_Resource_Path}images/zfb.png" />
+					</div>
+					<input type="hidden" name="spnumber" value="{$view_data.spnumber}">
+					<input type="hidden" name="spname" value="用户充值">
+					<input type="hidden" name="spinfo" value="用户充值">
+					<input type="hidden" name="spshow" value="{$view_data.spshow}">
+					<div class="part02-pay l">
+						<b class="fl">2.请输入充值金额：</b><input type="text" class="text" name="spprice" /><span>元</span>
+					</div>
+					<div class="part03-pay tc l">
+						<input type="submit" class="btn greenbtn" value="去付款">
+					</div>
 				</div>
-				<div class="part02-pay l">
-					<b class="fl">2.请输入充值金额：</b><input type="text" class="text" /><span>元</span>
-				</div>
-				<div class="part03-pay tc l">
-					<a href="#" class="btn greenbtn">去付款</a>
-				</div>
-			</div>
+			</form>
 		</div>
 		<div class="box04-recharge l">
 			<div class="grp01-bank l">若您没有支付宝或者网银，可以使用如下方式进行充值：</div>

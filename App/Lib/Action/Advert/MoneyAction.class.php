@@ -40,7 +40,12 @@ class MoneyAction extends AdvertBaseAction {
 	
 	//充值首页
 	public function index () {
-// 		
+	// 	充值订单 充值+UNIX前5位+用户ID+后五位
+		$spnumber = 'CZ'.substr(time(),0,5).'U'.$this->oUser->id.'U'.substr(time(),5);
+		parent::data_to_view(array(
+				'spnumber'=>$spnumber,
+				'spshow' => base64_encode(U('Advert/Money/index'))
+		));
 		$this->display();
 	}
 	
@@ -50,6 +55,10 @@ class MoneyAction extends AdvertBaseAction {
 		$this->display();
 	}
 
+	public function okAlpay()
+	{
+		var_dump($_POST);
+	}
     
 }
 
