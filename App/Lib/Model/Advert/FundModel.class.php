@@ -16,7 +16,6 @@
 			$add['admin_info'] = $array['subject'];
 			$add['time'] = strtotime($array['notify_time']);
 			$add['status'] = 1;
-			return $add;
 			$this->add($add);
 		}
 	}
