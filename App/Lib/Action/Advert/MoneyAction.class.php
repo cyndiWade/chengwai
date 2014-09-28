@@ -121,13 +121,16 @@ class MoneyAction extends AdvertBaseAction {
 	private function getSignVeryfy($para_temp, $sign) {
 		//除去待签名参数数组中的空值和签名参数
 		$para_filter = paraFilter($para_temp);
-		
+		echo 2;
+		var_dump($para_filter);
 		//对待签名参数数组排序
 		$para_sort = argSort($para_filter);
-		
+		echo 3;
+		var_dump($para_sort);
 		//把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
 		$prestr = createLinkstring($para_sort);
-		
+		echo 4;
+		var_dump($prestr);
 		$isSgin = false;
 		switch (strtoupper(trim(strtoupper($this->sign_type)))) {
 			case "MD5" :
