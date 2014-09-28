@@ -58,7 +58,6 @@ class MoneyAction extends AdvertBaseAction {
 
 	public function okAlpay()
 	{
-		dump($_GET);exit;
 		//插入流水
 		$value = $this->db['Fund']->instertFund($_GET,$this->oUser->id,1);
 		//修改用户信息表

@@ -47,8 +47,8 @@ class UserAdvertisementModel extends AdvertBaseModel
 	public function update_user($array,$id)
 	{
 		$where = array('users_id'=>$id);
-		$value = $this->where($where)->field('money')->find();
-		$update['money'] = $value['money'] + $array['total_fee'];
+		$value = $this->where($where)->Field('money')->find();
+		$update['money'] = $value + $array['total_fee'];
 		$bool = $this->where($where)->save($update);
 		return $bool;
 	}
