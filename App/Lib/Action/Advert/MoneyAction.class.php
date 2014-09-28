@@ -67,6 +67,7 @@ class MoneyAction extends AdvertBaseAction {
 
 	public function okAlpay()
 	{
+		dump($_GET);
 		if($this->verifyReturn($_GET))
 		{
 			if($_GET['trade_status'] == 'TRADE_FINISHED' || $_GET['trade_status'] == 'TRADE_SUCCESS') {
