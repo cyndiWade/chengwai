@@ -60,7 +60,6 @@ class MoneyAction extends AdvertBaseAction {
 	{
 		//插入流水
 		$value = $this->db['Fund']->instertFund($_GET,$this->oUser->id,1);
-		var_dump($value);
 		//修改用户信息表
 		$bool = $this->db['UserAdvertisement']->update_user($_GET,$this->oUser->id);
 		var_dump($bool);
