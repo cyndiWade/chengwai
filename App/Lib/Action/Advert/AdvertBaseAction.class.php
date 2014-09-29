@@ -57,7 +57,8 @@ class AdvertBaseAction extends AppBaseAction {
 				'Module_Resource_Path'=>APP_PATH.'Public/'.GROUP_NAME.'/Module/'.MODULE_NAME.'/',
 		
 				'user_info' => array(
-					'account' => $this->oUser->account
+					'account' => $this->oUser->account,
+					'money' => D('UserAdvertisement')->getMoney($this->oUser->id)['money']
 				),
 			));
 
@@ -188,8 +189,6 @@ class AdvertBaseAction extends AppBaseAction {
 			'sidebar_two_url'=> $data[$big_type],//URL		
 		));
 	}
-	
-	
 	
 }
 
