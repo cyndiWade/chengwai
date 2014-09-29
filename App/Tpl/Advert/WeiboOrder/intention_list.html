@@ -46,7 +46,7 @@
 					<th class="last">操作</th>
 				</tr>
 				<volist name="view_data.list" id="vo">
-					<tr>
+					<tr class="now_tr_{$vo['id']}">
 						<td class="t1">{$vo['yxd_name']}</td>
 						<td class="t2">{$vo['id']}</td>
 						<td class="t3">{$vo['fslx_type']|getFsT}</td>
@@ -54,7 +54,7 @@
 						<td class="t5">{$vo['tfpt_type']|getPt}</td>
 						<td class="t6">{$vo['start_time']|date="Y-m-d H:i:s",###}</td>
 						<td class="t7">{$vo['over_time']|date="Y-m-d H:i:s",###}</td>
-						<td class="last"><div class="ctrl"><span>删除</span></div></td>
+						<td class="last"><div class="ctrl"><span class="delete_order" data-id="{$vo['id']}">删除</span></div></td>
 					</tr>
 				</volist>
 			</table>
@@ -75,6 +75,28 @@
 <script src="{$global_tpl_view.Module_Resource_Path}intention_list.js"></script>
 
 <script type="text/javascript">
+
+
+(function () {
+	$('.delete_order').click(function () {
+		var _this = $(this);
+		var check_status = confirm('确定要删除吗？');
+		if (check_status == true) {
+			var post_data ={};
+			post_data.id = _this.data('id');
+			var result = System.ajax_post_setup('{:U('Advert/WeiboOrder/del_mingren')}',post_data);
+			if (result.status == 0) {
+				alert(result.msg);
+				$('.now_tr_'+_this.data('id')).remove();
+				$('.tab01-addorder tr').removeClass('even');
+				$('.tab01-addorder tr:even').addClass('even');
+			} else {
+				alert(result.msg);
+				return false;
+			}
+		}
+	});
+})();
 
 </script>
 </body>

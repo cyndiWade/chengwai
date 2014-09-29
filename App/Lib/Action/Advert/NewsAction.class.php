@@ -217,10 +217,10 @@ class NewsAction extends AdvertBaseAction {
 				parent::callback(C('STATUS_SUCCESS'),'删除成功');
 			break;
 			case 2:
-				parent::callback(C('STATUS_SUCCESS'),'删除失败');
+				parent::callback(C('STATUS_UPDATE_DATA'),'删除失败');
 			break;
 			case 3:
-				parent::callback(C('STATUS_SUCCESS'),'已审核通过，禁止删除');
+				parent::callback(C('STATUS_UPDATE_DATA'),'已审核通过，禁止删除');
 			break;
 		}
 	}

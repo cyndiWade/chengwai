@@ -68,7 +68,7 @@
 			$upload_dir = C('UPLOAD_DIR');
 			$dir = $upload_dir['web_dir'].$upload_dir['image'];
 			$where = array('users_id'=>$users_id,'id'=>$del_id);
-			$status = $this->where($where)->filed('status')->find();
+			$status = $this->where($where)->field('status')->find();
 			if($status['status']==0)
 			{
 				D('GeneralizeWeixinAccount')->where($where)->delete();
