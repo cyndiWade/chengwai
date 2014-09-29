@@ -373,7 +373,7 @@ class AppBaseAction extends GlobalParameterAction {
 					$GrassrootsWeixin = D('GrassrootsWeixin');
 					$where = array('weixin_id'=>$id);
 					$GrassrootsWeixinBool = $GrassrootsWeixin->where($where)->field('id')->find();
-					if($GrassrootsWeixinoBool!='')
+					if($GrassrootsWeixinBool!='')
 					{
 						//不为空就update
 						$GrassrootsWeixin->where($where)->save($grass_info);
