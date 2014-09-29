@@ -296,7 +296,166 @@ class AppBaseAction extends GlobalParameterAction {
 		}
 	}
 	
-	
+	/**
+	 * 微博同步这块数据处理 请在表数据增加好之后调用此方法
+	 * 传入该微博自增ID
+	 */
+
+	protected function weiboDataprocess($id)
+	{
+		//取得数据
+		$AccountWeiboInfo = D('AccountWeibo')->where(array('id'=>$id))->find();
+		if($AccountWeiboInfo!='')
+		{
+			$new_info[] = $AccountWeiboInfo[''];
+			$new_info[] = $AccountWeiboInfo[''];
+			$new_info[] = $AccountWeiboInfo[''];
+			$new_info[] = $AccountWeiboInfo[''];
+			$new_info[] = $AccountWeiboInfo[''];
+			$new_info[] = $AccountWeiboInfo[''];
+			$new_info[] = $AccountWeiboInfo[''];
+			$new_info[] = $AccountWeiboInfo[''];
+			$new_info[] = $AccountWeiboInfo[''];
+			$new_info[] = $AccountWeiboInfo[''];
+			$new_info[] = $AccountWeiboInfo[''];
+			switch($AccountWeiboInfo['is_celebrity'])
+			{
+				//草根
+				case 0:
+					//判断索引表数据是否已经存在
+					$GrassrootsWeibo = D('GrassrootsWeibo');
+					$where = array('weibo_id'=>$id);
+					$GrassrootsWeiboBool = $GrassrootsWeibo->where($where)->field('id')->find();
+					if($GrassrootsWeiboBool!='')
+					{
+						//为空就update
+						$GrassrootsWeibo->where($where)->save($new_info);
+					}else{
+						//否则就是新增
+						$new_info['weibo_id'] = $id;
+						$GrassrootsWeibo->add($new_info);
+					}
+				break;
+				//名人
+				case 1:
+					$CeleprityindexWeibo = D('CeleprityindexWeibo');
+					$where = array('weibo_id'=>$id);
+					$CeleprityindexWeiboBool = $CeleprityindexWeibo->where($where)->field('id')->find();
+					if($CeleprityindexWeiboBool!='')
+					{
+						//为空就update
+						$CeleprityindexWeibo->where($where)->save($new_info);
+					}else{
+						//否则就是新增
+						$new_info['weibo_id'] = $id;
+						$CeleprityindexWeibo->add($new_info);
+					}
+				break;
+			}
+		}
+	}
+
+
+
+	/**
+	 * 微信同步这块数据处理	请在表数据增加好之后调用此方法
+	 * 传入该微信自增ID
+	 */
+
+	protected function weixinDataprocess($id)
+	{
+		//取得数据
+		$AccountWeixinInfo = D('AccountWeixin')->where(array('id'=>$id))->find();
+		if($AccountWeixinInfo!='')
+		{
+			$new_info[] = $AccountWeixinInfo[''];
+			$new_info[] = $AccountWeixinInfo[''];
+			$new_info[] = $AccountWeixinInfo[''];
+			$new_info[] = $AccountWeixinInfo[''];
+			$new_info[] = $AccountWeixinInfo[''];
+			$new_info[] = $AccountWeixinInfo[''];
+			$new_info[] = $AccountWeixinInfo[''];
+			$new_info[] = $AccountWeixinInfo[''];
+			$new_info[] = $AccountWeixinInfo[''];
+			$new_info[] = $AccountWeixinInfo[''];
+			$new_info[] = $AccountWeixinInfo[''];
+			switch($AccountWeixinInfo['is_celebrity'])
+			{
+				//草根
+				case 0:
+					//判断索引表数据是否已经存在
+					$GrassrootsWeixin = D('GrassrootsWeixin');
+					$where = array('weixin_id'=>$id);
+					$GrassrootsWeixinBool = $GrassrootsWeixin->where($where)->field('id')->find();
+					if($GrassrootsWeixinoBool!='')
+					{
+						//为空就update
+						$GrassrootsWeixin->where($where)->save($new_info);
+					}else{
+						//否则就是新增
+						$new_info['weixin_id'] = $id;
+						$GrassrootsWeixin->add($new_info);
+					}
+				break;
+				//名人
+				case 1:
+					$CeleprityindexWeixin = D('CeleprityindexWeixin');
+					$where = array('weixin_id'=>$id);
+					$CeleprityindexWeixinBool = $CeleprityindexWeixin->where($where)->field('id')->find();
+					if($CeleprityindexWeixinBool!='')
+					{
+						//为空就update
+						$CeleprityindexWeixin->where($where)->save($new_info);
+					}else{
+						//否则就是新增
+						$new_info['weixin_id'] = $id;
+						$CeleprityindexWeixin->add($new_info);
+					}
+				break;
+			}
+		}
+	}
+
+
+
+	/**
+	 * 新闻同步这块数据处理	请在表数据增加好之后调用此方法
+	 * 传入该新闻自增ID
+	 */
+
+	protected function newsDataprocess($id)
+	{
+		//取得数据
+		$AccountNewsInfo = D('AccountNews')->where(array('id'=>$id))->find();
+		if($AccountNewsInfo!='')
+		{
+			$new_info[] = $AccountNewsInfo[''];
+			$new_info[] = $AccountNewsInfo[''];
+			$new_info[] = $AccountNewsInfo[''];
+			$new_info[] = $AccountNewsInfo[''];
+			$new_info[] = $AccountNewsInfo[''];
+			$new_info[] = $AccountNewsInfo[''];
+			$new_info[] = $AccountNewsInfo[''];
+			$new_info[] = $AccountNewsInfo[''];
+			$new_info[] = $AccountNewsInfo[''];
+			$new_info[] = $AccountNewsInfo[''];
+			$new_info[] = $AccountNewsInfo[''];
+			//判断索引表数据是否已经存在
+			$IndexNews = D('IndexNews');
+			$where = array('news_id'=>$id);
+			$IndexNewsBool = $IndexNews->where($where)->field('id')->find();
+			if($IndexNewsBool!='')
+			{
+				//为空就update
+				$IndexNews->where($where)->save($new_info);
+			}else{
+				//否则就是新增
+				$new_info['news_id'] = $id;
+				$IndexNews->add($new_info);
+			}
+		}
+	}
+
 }
 
 
