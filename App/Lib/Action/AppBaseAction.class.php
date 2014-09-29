@@ -297,7 +297,7 @@ class AppBaseAction extends GlobalParameterAction {
 	}
 	
 	/**
-	 * 微博同步这块数据处理 请在表数据增加好之后调用此方法
+	 * 微博同步这块数据处理 请在表数据增加好之后调用此方法 
 	 * 传入该微博自增ID
 	 */
 
@@ -307,17 +307,12 @@ class AppBaseAction extends GlobalParameterAction {
 		$AccountWeiboInfo = D('AccountWeibo')->where(array('id'=>$id))->find();
 		if($AccountWeiboInfo!='')
 		{
-			$new_info[] = $AccountWeiboInfo[''];
-			$new_info[] = $AccountWeiboInfo[''];
-			$new_info[] = $AccountWeiboInfo[''];
-			$new_info[] = $AccountWeiboInfo[''];
-			$new_info[] = $AccountWeiboInfo[''];
-			$new_info[] = $AccountWeiboInfo[''];
-			$new_info[] = $AccountWeiboInfo[''];
-			$new_info[] = $AccountWeiboInfo[''];
-			$new_info[] = $AccountWeiboInfo[''];
-			$new_info[] = $AccountWeiboInfo[''];
-			$new_info[] = $AccountWeiboInfo[''];
+			//需要同步的数据
+			$int_info['fansnumber'] = $grass_info['fans_num'] = $AccountWeiboInfo['fans_num'];
+			$grass_info['yg_zhuanfa'] = $AccountWeiboInfo['yg_zhuanfa'];
+			$grass_info['yg_zhifa'] = $AccountWeiboInfo['yg_zhifa'];
+			$grass_info['rg_zhuanfa'] = $AccountWeiboInfo['rg_zhuanfa'];
+			$grass_info['rg_zhifa'] = $AccountWeiboInfo['rg_zhifa'];
 			switch($AccountWeiboInfo['is_celebrity'])
 			{
 				//草根
@@ -328,12 +323,12 @@ class AppBaseAction extends GlobalParameterAction {
 					$GrassrootsWeiboBool = $GrassrootsWeibo->where($where)->field('id')->find();
 					if($GrassrootsWeiboBool!='')
 					{
-						//为空就update
-						$GrassrootsWeibo->where($where)->save($new_info);
+						//不为空就update
+						$GrassrootsWeibo->where($where)->save($grass_info);
 					}else{
 						//否则就是新增
-						$new_info['weibo_id'] = $id;
-						$GrassrootsWeibo->add($new_info);
+						$grass_info['weibo_id'] = $id;
+						$GrassrootsWeibo->add($grass_info);
 					}
 				break;
 				//名人
@@ -343,12 +338,12 @@ class AppBaseAction extends GlobalParameterAction {
 					$CeleprityindexWeiboBool = $CeleprityindexWeibo->where($where)->field('id')->find();
 					if($CeleprityindexWeiboBool!='')
 					{
-						//为空就update
-						$CeleprityindexWeibo->where($where)->save($new_info);
+						//不为空就update
+						$CeleprityindexWeibo->where($where)->save($int_info);
 					}else{
 						//否则就是新增
-						$new_info['weibo_id'] = $id;
-						$CeleprityindexWeibo->add($new_info);
+						$int_info['weibo_id'] = $id;
+						$CeleprityindexWeibo->add($int_info);
 					}
 				break;
 			}
@@ -368,17 +363,8 @@ class AppBaseAction extends GlobalParameterAction {
 		$AccountWeixinInfo = D('AccountWeixin')->where(array('id'=>$id))->find();
 		if($AccountWeixinInfo!='')
 		{
-			$new_info[] = $AccountWeixinInfo[''];
-			$new_info[] = $AccountWeixinInfo[''];
-			$new_info[] = $AccountWeixinInfo[''];
-			$new_info[] = $AccountWeixinInfo[''];
-			$new_info[] = $AccountWeixinInfo[''];
-			$new_info[] = $AccountWeixinInfo[''];
-			$new_info[] = $AccountWeixinInfo[''];
-			$new_info[] = $AccountWeixinInfo[''];
-			$new_info[] = $AccountWeixinInfo[''];
-			$new_info[] = $AccountWeixinInfo[''];
-			$new_info[] = $AccountWeixinInfo[''];
+			//需要同步的数据
+			$cele_info['fansnumber'] = $grass_info['fans_number'] = $AccountWeixinInfo['fans_num'];
 			switch($AccountWeixinInfo['is_celebrity'])
 			{
 				//草根
@@ -389,12 +375,12 @@ class AppBaseAction extends GlobalParameterAction {
 					$GrassrootsWeixinBool = $GrassrootsWeixin->where($where)->field('id')->find();
 					if($GrassrootsWeixinoBool!='')
 					{
-						//为空就update
-						$GrassrootsWeixin->where($where)->save($new_info);
+						//不为空就update
+						$GrassrootsWeixin->where($where)->save($grass_info);
 					}else{
 						//否则就是新增
-						$new_info['weixin_id'] = $id;
-						$GrassrootsWeixin->add($new_info);
+						$grass_info['weixin_id'] = $id;
+						$GrassrootsWeixin->add($grass_info);
 					}
 				break;
 				//名人
@@ -405,11 +391,11 @@ class AppBaseAction extends GlobalParameterAction {
 					if($CeleprityindexWeixinBool!='')
 					{
 						//为空就update
-						$CeleprityindexWeixin->where($where)->save($new_info);
+						$CeleprityindexWeixin->where($where)->save($cele_info);
 					}else{
 						//否则就是新增
-						$new_info['weixin_id'] = $id;
-						$CeleprityindexWeixin->add($new_info);
+						$cele_info['weixin_id'] = $id;
+						$CeleprityindexWeixin->add($cele_info);
 					}
 				break;
 			}
@@ -429,17 +415,7 @@ class AppBaseAction extends GlobalParameterAction {
 		$AccountNewsInfo = D('AccountNews')->where(array('id'=>$id))->find();
 		if($AccountNewsInfo!='')
 		{
-			$new_info[] = $AccountNewsInfo[''];
-			$new_info[] = $AccountNewsInfo[''];
-			$new_info[] = $AccountNewsInfo[''];
-			$new_info[] = $AccountNewsInfo[''];
-			$new_info[] = $AccountNewsInfo[''];
-			$new_info[] = $AccountNewsInfo[''];
-			$new_info[] = $AccountNewsInfo[''];
-			$new_info[] = $AccountNewsInfo[''];
-			$new_info[] = $AccountNewsInfo[''];
-			$new_info[] = $AccountNewsInfo[''];
-			$new_info[] = $AccountNewsInfo[''];
+			$new_info['price'] = $AccountNewsInfo['money'];
 			//判断索引表数据是否已经存在
 			$IndexNews = D('IndexNews');
 			$where = array('news_id'=>$id);
