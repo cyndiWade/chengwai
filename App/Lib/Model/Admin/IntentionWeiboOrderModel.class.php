@@ -1,7 +1,7 @@
 <?php
-	//新闻媒体推广单表
+	//微博意向单
 
-	class GeneralizeNewsOrderModel extends AdminBaseModel
+	class IntentionWeiboOrderModel extends AdminBaseModel
 	{
 		public function get_order_list ($where) {
 			$result = parent::get_spe_data($where);

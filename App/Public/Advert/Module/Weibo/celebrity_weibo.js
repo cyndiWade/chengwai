@@ -882,6 +882,7 @@ Weibo.prototype.add_selected_box_fn = function () {
 			} else {
 				var post_data = {};
 				post_data.account_ids = selected_account_ids.join(',');
+				post_data.pt_type = _father_this.pt_type.val();
 				post_data.order_id = _father_this.order_id.val();
 		
 				//提交操作

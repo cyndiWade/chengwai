@@ -1,7 +1,7 @@
 <?php
-	//新闻媒体推广单表
+	//微信推广单表
 
-	class GeneralizeNewsOrderModel extends AdminBaseModel
+	class GeneralizeWeixinOrderModel extends AdminBaseModel
 	{
 		public function get_order_list ($where) {
 			$result = parent::get_spe_data($where);

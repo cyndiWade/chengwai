@@ -12,10 +12,23 @@ class OrderAction extends AdminBaseAction {
 		//新闻媒体订单
 		'GeneralizeNewsOrder'=>'GeneralizeNewsOrder',	
 		'GeneralizeNewsAccount'=>'GeneralizeNewsAccount',
-		
+
+		//微博推广单	
+		'GeneralizeOrder'=>'GeneralizeOrder',
+		//微博意向单
+		'IntentionWeiboOrder'=>'IntentionWeiboOrder',
+			
+		//微信推广单
+		'GeneralizeWeixinOrder'=>'GeneralizeWeixinOrder',
+		//微信意向单表
+		'IntentionWeixinOrder'=>'IntentionWeixinOrder',
+			
+		//订单日志表	
+		'OrderLog'=>'OrderLog',
+
 	);
-	
-	private $parent_id;
+
+	private $OrderLog;	
 
 	/**
 	 * 构造方法
@@ -25,7 +38,13 @@ class OrderAction extends AdminBaseAction {
 		parent::__construct();
 	
 		parent::global_tpl_view(array('module_name'=>$this->module_name));
-
+		
+		$this->_init_data();
+	}
+	
+	
+	private function _init_data () {
+		$this->OrderLog = $this->db['OrderLog'];
 	}
 	
 	
@@ -49,11 +68,30 @@ class OrderAction extends AdminBaseAction {
 	}
 	
 	public function news_generalize_edit() {
-		$id = $this->_get('id');
+		
+		$order_id = $this->_get('id');
+		$type = 1;
 		$act = $this->_get('act');						//操作类型
+		
+		
 		if ($act == 'update') {
+			if ($this->isPost()) {
+					
+				//修改订单状态
+				$this->db['GeneralizeNewsOrder']->create();
+				$this->db['GeneralizeNewsOrder']->where(array('id'=>$order_id))->save();
 				
+				//创建日志
+				$this->OrderLog->create();
+				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
+			}
+			$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
+			
 		}
+		
+		$data['order_log_list'] = $order_log_list;
+		parent::data_to_view($data);
+		$this->display();
 	}
 	
 	
@@ -62,9 +100,9 @@ class OrderAction extends AdminBaseAction {
 	//微博推广单列表
 	public function weibo_generalize () {
 	
-		$GeneralizeNewsOrder = $this->db['GeneralizeNewsOrder'];
+		$GeneralizeOrder = $this->db['GeneralizeOrder'];
 		$where['status'] = 1;
-		$list = $GeneralizeNewsOrder->get_order_list($where);
+		$list = $GeneralizeOrder->get_order_list($where);
 	
 		$data['list'] = $list;
 		parent::global_tpl_view( array(
@@ -79,11 +117,28 @@ class OrderAction extends AdminBaseAction {
 	
 	//微博推广单编辑
 	public function weibo_generalize_edit() {
-		$id = $this->_get('id');
+		$order_id = $this->_get('id');
+		$type = 2;
 		$act = $this->_get('act');						//操作类型
+		
 		if ($act == 'update') {
-	
+			if ($this->isPost()) {
+					
+				//修改订单状态
+				$this->db['GeneralizeOrder']->create();
+				$this->db['GeneralizeOrder']->where(array('id'=>$order_id))->save();
+				
+				//创建日志
+				$this->OrderLog->create();
+				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
+			}
+			$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
+			
 		}
+		
+		$data['order_log_list'] = $order_log_list;
+		parent::data_to_view($data);
+		$this->display();
 	}
 	
 	
@@ -92,9 +147,9 @@ class OrderAction extends AdminBaseAction {
 	//微博意向单列表
 	public function weibo_intention () {
 	
-		$GeneralizeNewsOrder = $this->db['GeneralizeNewsOrder'];
+		$IntentionWeiboOrder = $this->db['IntentionWeiboOrder'];
 		$where['status'] = 1;
-		$list = $GeneralizeNewsOrder->get_order_list($where);
+		$list = $IntentionWeiboOrder->get_order_list($where);
 	
 		$data['list'] = $list;
 		parent::global_tpl_view( array(
@@ -109,11 +164,28 @@ class OrderAction extends AdminBaseAction {
 	
 	//微博推广单编辑
 	public function weibo_intention_edit() {
-		$id = $this->_get('id');
+		$order_id = $this->_get('id');
+		$type = 3;
 		$act = $this->_get('act');						//操作类型
+		
 		if ($act == 'update') {
-	
+			if ($this->isPost()) {
+					
+				//修改订单状态
+				$this->db['IntentionWeiboOrder']->create();
+				$this->db['IntentionWeiboOrder']->where(array('id'=>$order_id))->save();
+				
+				//创建日志
+				$this->OrderLog->create();
+				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
+			}
+			$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
+			
 		}
+		
+		$data['order_log_list'] = $order_log_list;
+		parent::data_to_view($data);
+		$this->display();
 	}
 	
 	
@@ -122,9 +194,9 @@ class OrderAction extends AdminBaseAction {
 	//微信推广单列表
 	public function weixin_generalize () {
 	
-		$GeneralizeNewsOrder = $this->db['GeneralizeNewsOrder'];
+		$GeneralizeWeixinOrder = $this->db['GeneralizeWeixinOrder'];
 		$where['status'] = 1;
-		$list = $GeneralizeNewsOrder->get_order_list($where);
+		$list = $GeneralizeWeixinOrder->get_order_list($where);
 	
 		$data['list'] = $list;
 		parent::global_tpl_view( array(
@@ -138,20 +210,37 @@ class OrderAction extends AdminBaseAction {
 	}
 	//微信推广单编辑
 	public function weixin_generalize_edit() {
-		$id = $this->_get('id');
+		$order_id = $this->_get('id');
+		$type = 4;
 		$act = $this->_get('act');						//操作类型
+		
 		if ($act == 'update') {
-	
+			if ($this->isPost()) {
+					
+				//修改订单状态
+				$this->db['GeneralizeWeixinOrder']->create();
+				$this->db['GeneralizeWeixinOrder']->where(array('id'=>$order_id))->save();
+				
+				//创建日志
+				$this->OrderLog->create();
+				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
+			}
+			$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
+			
 		}
+		
+		$data['order_log_list'] = $order_log_list;
+		parent::data_to_view($data);
+		$this->display();
 	}
 	
 	
 	
 	//微信意向单
 	public function weixin_intention () {
-		$GeneralizeNewsOrder = $this->db['GeneralizeNewsOrder'];
+		$IntentionWeixinOrder = $this->db['IntentionWeixinOrder'];
 		$where['status'] = 1;
-		$list = $GeneralizeNewsOrder->get_order_list($where);
+		$list = $IntentionWeixinOrder->get_order_list($where);
 		
 		$data['list'] = $list;
 		parent::global_tpl_view( array(
@@ -165,103 +254,36 @@ class OrderAction extends AdminBaseAction {
 	}
 	//微信推广单编辑
 	public function weixin_intention_edit() {
-		$id = $this->_get('id');
+		$order_id = $this->_get('id');
+		$type = 5;
 		$act = $this->_get('act');						//操作类型
+		
 		if ($act == 'update') {
-	
-		}
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public function edit () {
-		$act = $this->_get('act');						//操作类型
-		$id = $this->_get('id');						//上一页地址
-		$show_status = $this->_get('show_status');		//显示状态
-		$prve_url = $this->_post('prev_url');			//上一页地址
-		$CategoryTags= $this->db['CategoryTags'];		//标签类型表
-		
-		
-		
-		if ($act == 'add') {
 			if ($this->isPost()) {
-				$CategoryTags->create();
-				$CategoryTags->parent_id = $this->parent_id;
-				$CategoryTags->add() ? $this->success('保存成功！',$prve_url) : $this->error('保存失败请稍后重新尝试！');
-				exit;
+					
+				//修改订单状态
+				$this->db['IntentionWeixinOrder']->create();
+				$this->db['IntentionWeixinOrder']->where(array('id'=>$order_id))->save();
+				
+				//创建日志
+				$this->OrderLog->create();
+				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
 			}
-			$title_name = '添加标签';
-		} elseif ($act == 'update') {
-			if ($this->isPost()) {
-				$CategoryTags->create();
-				$CategoryTags->save_one_data(array('id'=>$id)) ? $this->success('修改成功！',$prve_url) : $this->error('修改失败请稍后重新尝试！');
-				exit;
-			}
-			$data = $CategoryTags->get_one_data(array('id'=>$id,'is_del'=>0));
-			$title_name = $data['title'].'---编辑';
-			parent::data_to_view($data);
+			$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 			
-		} elseif ($act == 'delete') {
-			$CategoryTags->delete_data(array('id'=>$id)) ? $this->success('删除成功') : $this->error('删除错误');
-			exit;
-		} elseif ($act == 'init_data') {
-			
-			//$data = '不限,男女,泛';
-	
-			$title_array = explode(',', $data);
-			foreach ($title_array as $key=>$val) {
-				$CategoryTags->parent_id = $this->parent_id;
-				$CategoryTags->title = $val;
-				//$CategoryTags->add();
-			}
-			$this->success('成功');
-			exit;
-		} elseif ($act == 'cp_data') {
-			//$mubiao_id = 666;
-			
-			//获取当前父级下的数据
-			$list = $CategoryTags->get_spe_data(array('parent_id'=>$this->parent_id,'is_del'=>0));
-			
-			foreach ($list as $key=>$val) {
-				$CategoryTags->parent_id = $mubiao_id;
-				$CategoryTags->title = $val['title'];
-				$CategoryTags->val = $val['val'];
-				$CategoryTags->field = $val['field'];
-				//$CategoryTags->add();
-			}
-			$this->success('成功');
-			exit;
-		//是否显示	
-		}elseif($act == 'is_show') {
-			$CategoryTags->show_status = $show_status;
-			$is_up = $CategoryTags->save_one_data(array('id'=>$id));
-			$is_up ? $this->success('修改成功！') : $this->error('修改失败！');
-			exit;
-		} else {
-			$this->error('非法操作');
-			exit;
 		}
-			
-		parent::global_tpl_view( array(
-				'action_name'=>'编辑',
-				'title_name' => $title_name
-		));
 		
-		
+		$data['order_log_list'] = $order_log_list;
+		parent::data_to_view($data);
 		$this->display();
 	}
 	
 	
+	
+	
+	
+	
+
 	
     
 }

@@ -190,7 +190,12 @@ class NewsAction extends AdvertBaseAction {
 		if($this->isPost())
 		{
 			$status = $this->db['GeneralizeNewsAccount']->insertAll($_POST,$this->oUser->id);
+			
 			if ($status == true) {
+				
+				//修改订单状态为1，平台审核的类型
+				$this->db['GeneralizeNewsOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
+				
 				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/News/generalize_activity')));
 			} else {
 				parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');

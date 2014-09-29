@@ -54,6 +54,7 @@ class AdminBaseAction extends AppBaseAction {
 	 * 全局系统用到的数据
 	 */
 	private function global_system () {
+	
 		//初始化局模板变量
 		parent::global_tpl_view(array(
 				'user_info' => array(

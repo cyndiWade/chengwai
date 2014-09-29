@@ -1,5 +1,5 @@
 <?php
-	//微信草根表
+	//微信推广单表
 	
 	class GeneralizeWeixinOrderModel extends AdvertBaseModel
 	{
