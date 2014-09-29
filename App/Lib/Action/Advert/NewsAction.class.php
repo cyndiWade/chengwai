@@ -29,7 +29,7 @@ class NewsAction extends AdvertBaseAction {
 			'Users' => 'Users',
 			'AccountWeibo' => 'AccountWeibo',
 			'FastindexWeibo' => 'FastindexWeibo',
-			'IndexNews' => 'IndexNews',
+			'AccountNews' => 'AccountNews',
 			'GeneralizeNewsOrder' => 'GeneralizeNewsOrder',
 			'GeneralizeNewsAccount' => 'GeneralizeNewsAccount'
 	);
@@ -144,7 +144,7 @@ class NewsAction extends AdvertBaseAction {
 	public function get_news_list()
 	{
 		//判断是名人还是草根
-		$list_new = $this->db['IndexNews']->getPostArray($_POST,$this->oUser->id);
+		$list_new = $this->db['AccountNews']->getPostArray($_POST,$this->oUser->id);
 		parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
 	}
 	

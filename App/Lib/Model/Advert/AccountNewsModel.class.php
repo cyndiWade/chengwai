@@ -1,7 +1,7 @@
 <?php
 	//新闻信息表
 
-	class IndexNewsModel extends AdvertBaseModel
+	class AccountNewsModel extends AdvertBaseModel
 	{
 
 		//接受参数 返回新闻信息数据
@@ -48,7 +48,7 @@
 				//去除黑名单的weibo_id
 				if(!empty($newsId_array))
 				{
-					$where['w.news_id'] = array('IN',$newsId_array);
+					$where['w.id'] = array('IN',$newsId_array);
 				}else{
 					return false;
 				}
@@ -58,7 +58,7 @@
 				//去除黑名单的weibo_id
 				if(!empty($weixinId_array))
 				{
-					$where['w.news_id'] = array('IN',$newsId_array);
+					$where['w.id'] = array('IN',$newsId_array);
 				}else{
 					return false;
 				}
@@ -67,17 +67,18 @@
 				//去除黑名单的weibo_id
 				if(!empty($weixinId_array))
 				{
-					$where['w.news_id'] = array('NOT IN',$newsId_array);
+					$where['w.id'] = array('NOT IN',$newsId_array);
 				}
 			}
+			$where['w.is_del'] = 0;
 			$count = $this->where($where)
-			->table('app_index_news as w')
-			->join('app_account_news as b on b.id = w.news_id')
+			->table('app_account_news as w')
+			->join('app_index_news as b on w.id = b.news_id')
 			->count();
 			//差集统计长度
 			$list = $this->where($where)
-			->table('app_index_news as w')
-			->join('app_account_news as b on b.id = w.news_id')
+			->table('app_account_news as w')
+			->join('app_index_news as b on w.id = b.news_id')
 			->limit($now_page,$limit)->field('*')->select();
 			return array('list'=>$list,'count'=>$count);
 		}
@@ -89,58 +90,58 @@
 			//行业分类
 			if($addslArray['hyfl']!='')
 			{
-				$wheres['w.classification'] = $addslArray['hyfl'];
+				$wheres['b.classification'] = $addslArray['hyfl'];
 			}
 			//地区筛选
 			if($addslArray['dqsx']!='')
 			{
-				$wheres['w.area'] = $addslArray['dqsx'];
+				$wheres['b.area'] = $addslArray['dqsx'];
 			}
 			//优惠专区
 			if($addslArray['yhzq']!='')
 			{
-				$wheres['w.discount'] = $addslArray['yhzq'];
+				$wheres['b.discount'] = $addslArray['yhzq'];
 			}
 			//价格
 			if($addslArray['jg']!='')
 			{
-				$wheres['w.price'] = $this->getLeftRightstr($addslArray['jg'],'-');
+				$wheres['b.price'] = $this->getLeftRightstr($addslArray['jg'],'-');
 			}
 			//是否新闻源
 			if($addslArray['sfxwy']!='')
 			{
-				$wheres['w.is_news'] = $addslArray['sfxwy'];
+				$wheres['b.is_news'] = $addslArray['sfxwy'];
 			}
 			//门户类型
 			if($addslArray['mh_type']!='')
 			{
-				$wheres['w.type_of_portal'] = $addslArray['mh_type'];
+				$wheres['b.type_of_portal'] = $addslArray['mh_type'];
 			}
 			//带链接情况
 			if($addslArray['dljzk']!='')
 			{
-				$wheres['w.links'] = $addslArray['dljzk'];
+				$wheres['b.links'] = $addslArray['dljzk'];
 			}
 			//推荐情况
 			if($addslArray['tj']!='')
 			{
-				$wheres['w.recommend'] = $addslArray['tj'];
+				$wheres['b.recommend'] = $addslArray['tj'];
 			}
 			//热门微博
 			if($addslArray['rmwx']!='')
 			{
-				$wheres['w.is_hot'] = $addslArray['rmwx'];
+				$wheres['b.is_hot'] = $addslArray['rmwx'];
 			}
 			//折扣
 			if($addslArray['xstj']!='')
 			{
-				$wheres['w.specialoffer'] = 1;
+				$wheres['b.specialoffer'] = 1;
 			}
 			//搜索框的账号名
 			$account_name = trim($addslArray['account']);
 			if($account_name!='')
 			{
-				$wheres['b.account_name'] = array('like','%'.$account_name.'%');
+				$wheres['w.account_name'] = array('like','%'.$account_name.'%');
 			}
 			return $wheres;
 		}

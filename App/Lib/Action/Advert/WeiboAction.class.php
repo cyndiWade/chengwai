@@ -27,8 +27,6 @@ class WeiboAction extends AdvertBaseAction {
 			'CategoryTags'=>'CategoryTags',
 			'Users' => 'Users',
 			'AccountWeibo' => 'AccountWeibo',
-			'GrassrootsWeibo' => 'GrassrootsWeibo',
-			'CeleprityindexWeibo' => 'CeleprityindexWeibo',
 			'BlackorcollectionWeibo' => 'BlackorcollectionWeibo',
 			'GeneralizeOrder'=>'GeneralizeOrder',
 			'IntentionWeiboOrder' => 'IntentionWeiboOrder'
@@ -155,11 +153,11 @@ class WeiboAction extends AdvertBaseAction {
 	//获得草根 新浪,腾讯微博 列表数据 0
 	public function get_grassroots_list()
 	{
-		//草根 新浪 1 或者 腾讯 2
+		//草根 新浪 1 或者 腾讯 2 AccountWeibo
 		$pt_type = intval($_POST['pt_type']);
 		if(!empty($pt_type))
 		{
-			$list_new = $this->db['GrassrootsWeibo']->getPostArray($_POST,$pt_type,$this->oUser->id);
+			$list_new = $this->db['AccountWeibo']->getPostcgArray($_POST,$pt_type,$this->oUser->id);
 			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
 		}
 	}
@@ -172,7 +170,7 @@ class WeiboAction extends AdvertBaseAction {
 		$pt_type = intval($_POST['pt_type']);
 		if(!empty($pt_type))
 		{
-			$list_new = $this->db['CeleprityindexWeibo']->getPostArray($_POST,$pt_type,$this->oUser->id);
+			$list_new = $this->db['AccountWeibo']->getPostmrArray($_POST,$pt_type,$this->oUser->id);
 			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
 		}
 	}
