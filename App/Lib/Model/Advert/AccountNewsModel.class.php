@@ -79,7 +79,7 @@
 			$list = $this->where($where)
 			->table('app_account_news as w')
 			->join('app_index_news as b on w.id = b.news_id')
-			->limit($now_page,$limit)->field('*')->select();
+			->limit($now_page,$limit)->field('w.*')->select();
 			return array('list'=>$list,'count'=>$count);
 		}
 		
