@@ -37,7 +37,6 @@ class AdvertBaseAction extends AppBaseAction {
 		}
 		
 		$path = preg_replace("/[\\\+]/", "/",dirname($_SERVER['SCRIPT_NAME']));
-		$money = D('UserAdvertisement')->getMoney($this->oUser->id);
 		//全局模板变量
 		parent::global_tpl_view(array(
 				'button'=>array(
@@ -59,7 +58,7 @@ class AdvertBaseAction extends AppBaseAction {
 		
 				'user_info' => array(
 					'account' => $this->oUser->account,
-					'money' => $money['money']
+					'money' => $this->oUser->money
 				),
 			));
 

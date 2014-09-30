@@ -76,12 +76,14 @@ class AccountAction extends AdvertBaseAction {
 			$id = $Users->add_account($account,$password);
 			if($id!='')
 			{
+				$moneyget = $UserAdvertisement->getMoney($id);
 				//这里自定义设置session
 				$db_data= array(
 					'id'=>$id,
 					'account'=>$account,
 					'nickname' => '',
-					'type' => 2
+					'type' => 2,
+					'money' => $moneyget['money']
 				);
 				$advert = array('users_id'=>$id,'contact_phone'=>$iphone);
 				$UserAdvertisement->add_account_list($advert);
@@ -134,11 +136,13 @@ class AccountAction extends AdvertBaseAction {
 				if (md5($password) != $user_info['password']) {
 					 $this->error('密码错误！'); 
 				} else {
+					$moneyget = $this->db['UserAdvertisement']->getMoney($user_info['id']);
 					$tmp_arr = array(
 						'id' =>$user_info['id'],
 						'account' => $user_info['account'],
 						'nickname' => $user_info['nickname'],
 						'type'=>$user_info['type'],
+						'money' => $moneyget['money']
 					);
 				}
 				//写入SESSION
