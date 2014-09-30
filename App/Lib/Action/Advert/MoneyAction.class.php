@@ -89,13 +89,13 @@ class MoneyAction extends AdvertBaseAction {
 			// 			'type'=> $user_id['type'],
 			// 		);
 			// parent::set_session(array('user_info'=>$tmp_arr));
-			parent::updateMoney($user_id['id']);
 			//修改流水
 			$value = $this->db['Fund']->instertFund($_GET,1);
 			//修改用户信息表
 			$bool = $this->db['UserAdvertisement']->update_user($_GET,$user_id['id']);
 			if($bool)
 			{
+				parent::updateMoney($user_id['id']);
 				$this->redirect('Advert/Money/index');
 			}else{
 				parent::callback(C('STATUS_UPDATE_DATA'),'充值失败，请与管理员联系!');
