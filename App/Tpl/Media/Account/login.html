@@ -1,17 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-
-<!-- 全局样式 -->
-<include file="Public:top" />
-
+	<include file="Public:top" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
+	<title>媒体主_账号登陆</title>
 </head>
 <body>
-<form action="{:U('Media/Account/check_login')}" method="POST">
-<p>会员名:<input type="text" name="account" /></p>
-<p>登入密码:<input type="text" name="password" /></p>
-<p><input type="submit" value="登入" id="submit"/></p>
-</form>
+
+<!-- 头部 -->
+<include file="Public:header" />
+
+<div class="wrap l">
+    <div class="pbd">
+        <div class="area01-mediahelp l">
+            <form action="{:U('Media/Account/check_login')}" method="POST">
+            <p>会员名:<input type="text" name="account" /></p>
+            <p>登入密码:<input type="text" name="password" /></p>
+            <p><input type="submit" value="登入" id="submit"/></p>
+            </form>
+        </div>
+    </div>
+</div>
 <include file="Public:bottom" />
 <script type="text/javascript">
 </script>

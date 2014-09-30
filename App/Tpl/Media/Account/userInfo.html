@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
+	<title>媒体主_账号管理</title>
+</head>
+<body>
+
+<!-- 头部 -->
+<include file="Public:header" />
+
+<div class="wrap l">
+    <div class="pbd">
+        <include file="Public:breadcrumbs" />
+        <div class="area01-mediahelp l">
+            <div class="box01-allorder l">
+                <b class="yel">{$global_tpl_view.oUser.account}</b>的用户信息
+            </div>
+            <div class="phone-reg l">
+                <form id="accountForm" action="" method="post">
+                <table class="tab01-edit fl">
+                  <tr>
+                    <td class="t1"><span><em>*</em>登录名：</span></td>
+                    <td class="t2">
+                        <input name="username" type="text" value="{$view_data.account}" disabled="disabled" class="text" /><p>登录名用于登录，不能修改</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="t1"><span>真实姓名：</span></td>
+                    <td class="t2">
+                        <input name="truename" value="{$view_data.name}" type="text" class="text" />
+                        <div></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="t1"><span><em>*</em>公司名称：</span></td>
+                    <td class="t2">
+                        <input name="campany" value="{$view_data.company_name}" type="text" class="text" />
+                        <div></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="t1"><span><em>*</em>手机号码：</span></td>
+                    <td class="t2">
+                        <input name="phone" value="{$view_data.iphone}" maxlength="11" type="text" class="text" />
+                        <div></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="t1"><span>联系电话：</span></td>
+                    <td class="t2">
+                        <input name="tel" value="{$view_data.tel_phone}" type="text" class="text" />
+                        <div></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="t1"><span>E-mail：</span></td>
+                    <td class="t2">
+                        <input name="email" value="{$view_data.email}" type="text" class="text" />
+                        <div></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="t1"><span><em>*</em>QQ：</span></td>
+                    <td class="t2">
+                        <input name="qq" value="{$view_data.qq}" type="text" class="text" />
+                        <div></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="t1"><span>MSN：</span></td>
+                    <td class="t2">
+                        <input name="msn" value="{$view_data.msn}" type="text" class="text" />
+                        <div></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="t1"></td>
+                    <td class="t2 tdbtn"><input type="button" class="btn bluebtn" value="确 定" /></td>
+                  </tr>
+                </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+<link rel="stylesheet" type="text/css" href="{$global_tpl_view.Group_Resource_Path}css/cmp_all.css" />
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/sea.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/seajs-config.js"></script>
+<script>
+var W;
+seajs.use('weiboyi', function (W) {
+    $(function(){
+        $('#accountForm input[type=button]').click(function(){
+            var arr = $("#accountForm").serializeArray();
+            var ww = {};
+            $.each(arr, function(idx, item){
+                ww[item.name] = item.value;
+            });
+            var errTips = {};
+            // 公司名称
+            if ('' == ww.campany) {
+                errTips['campany'] = '公司名称不能为空！';
+            } else if (!isReg(ww.campany)) {
+                errTips['campany'] = '名称由3-30位中文字符或数字组成';
+            } else {
+                errTips['campany'] = '';
+            }
+            // 手机号码
+            if ('' == ww.phone) {
+                errTips['phone'] = '手机号码不能为空！';
+            } else if (!checkPhone(ww.phone)) {
+                errTips['phone'] = '手机号码格式错误';
+            } else {
+                errTips['phone'] = '';
+            }
+            // QQ
+            if ('' == ww.qq) {
+                errTips['qq'] = 'QQ不能为空！';
+            } else if (!checkQQ(ww.qq)) {
+                errTips['qq'] = 'QQ格式错误';
+            } else {
+                errTips['qq'] = '';
+            }
+            if (errTips) {
+                $.each(errTips, function(idx, item) {
+                    var Obj = $('input[name=' + idx + ']') || '';
+                    if (Obj) {
+                        if ('' == item) {
+                            Obj.next().attr('class', 'ok').html('');
+                            delete errTips[idx];
+                        } else {
+                            Obj.next().attr('class', 'errortip').html(item);
+                        }
+                    }
+                });
+            }
+            if ($.isEmptyObject(errTips)) {
+                $(this).attr('disable', true);
+                $.ajax({
+                    url : '/Media/Account/userInfo',
+                    type: 'post',
+                    data: ww,
+                    success : function(data){
+                        W.alert(data.msg);
+                        $(this).attr('disable', false);
+                    },
+                    error: function(err){
+                        W.alert(e.message);
+                        $(this).attr('disable', false);
+                    }
+                });
+            } else {
+                return false;
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>

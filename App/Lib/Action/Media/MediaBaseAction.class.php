@@ -42,10 +42,10 @@ class MediaBaseAction extends AppBaseAction {
 				'action_name'=>ACTION_NAME,
 				
 				//网站当前分组资源路径
-				'Group_Resource_Path'=>APP_PATH.'Public/'.GROUP_NAME.'/',
+				'Group_Resource_Path'=> '/'. APP_PATH.'Public/'.GROUP_NAME.'/',
 				
 				//模块级页面路径
-				'Module_Resource_Path'=>APP_PATH.'Public/'.GROUP_NAME.'/Module/'.MODULE_NAME.'/',
+				'Module_Resource_Path'=> '/'. APP_PATH.'Public/'.GROUP_NAME.'/Module/'.MODULE_NAME.'/',
 		));
 	
 	
@@ -54,6 +54,9 @@ class MediaBaseAction extends AppBaseAction {
 		
 		if (!empty($session_userinfo)) {
 			$this->is_login = true;
+            parent::global_tpl_view(array(
+                'oUser' => $session_userinfo
+            ));
 			$this->oUser = (object) $session_userinfo;					//转换成对象
 		}
 	}

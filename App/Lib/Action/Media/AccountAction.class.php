@@ -11,7 +11,7 @@ class AccountAction extends MediaBaseAction {
 	protected  $not_check_fn = array('register','check_login','login','logout');	//无需登录和验证rbac的方法名
 	
 	//控制器说明
-	private $module_explain = '媒体主';
+	private $module_explain = '用户中心';
 
 
 	//初始化数据库连接
@@ -19,7 +19,7 @@ class AccountAction extends MediaBaseAction {
 			'CategoryTags'=>'CategoryTags',
 			'Users' => 'Users',
 			'Verify'=>'Verify',
-			'User_media' => 'User_media'
+			'User_media' => 'UserMedia'
 	);
 	
 	//和构造方法
@@ -52,7 +52,10 @@ class AccountAction extends MediaBaseAction {
 	
 	//账号注册	
 	public function register () {
-		$this->display();	
+        parent::data_to_view(array(
+            'secondPosition' => '媒体主注册',
+        ));
+        $this->display();	
 	}
 	
 	public function register_accout() {
@@ -145,7 +148,8 @@ class AccountAction extends MediaBaseAction {
 				parent::set_session(array('user_info'=>$tmp_arr));
 				//更新用户信息
 				$Users->up_login_info($user_info['id']);
-				$this->redirect('/Media/Account/user_system');
+				// $this->redirect('/Media/Account/user_system');
+				$this->redirect('/Media/EventOrder/index');
 			}
 		} else {
 			$this->redirect('/Media/Account/login');
@@ -157,14 +161,123 @@ class AccountAction extends MediaBaseAction {
     public function logout () {
     	if (session_start()) {
     		parent::del_session('user_info');
-    		//$this->success('退出成功',U(GROUP_NAME.'/Login/login'));
+    		$this->success('退出成功',U(GROUP_NAME.'/Account/login'));
     	} 
     }
+    
+    /**
+     * 用户信息
+     * 
+     * @author lurongchang
+     * @date   2014-09-30
+     * @return void
+     */
+    public function userInfo()
+    {
+        $userInfos = parent::get_session('user_info');
+        if ($this->isPost()) {
+            $truename   = I('post.truename', '', 'addslashes');
+            $campany    = I('post.campany', '', 'addslashes');
+            $iphone     = I('post.phone', '', 'addslashes');
+            $tel        = I('post.tel', '', 'addslashes');
+            $email      = I('post.email', '', 'addslashes');
+            $qq         = I('post.qq', 0, 'intval');
+            $msn        = I('post.msn', '', 'addslashes');
+            
+            import("@.Tool.Validate");
+            if (!Validate::checkPhone($iphone)) {
+                parent::callback(C('STATUS_OTHER'), '手机号码格式错误');
+            }
+            if (!Validate::checkQQ($qq)) {
+                parent::callback(C('STATUS_OTHER'), 'QQ号码错误');
+            }
+            if ($email && !Validate::checkemail($email)) {
+                parent::callback(C('STATUS_OTHER'), 'Email格式错误');
+            }
+            $datas = array(
+                'name'          => $truename,
+                'company_name'  => $campany,
+                'iphone'        => $iphone,
+                'tel_phone'     => $tel,
+                'email'         => $email,
+                'qq'            => $qq,
+                'msn'           => $msn,
+                'email'         => $email,
+            );
+            $where['users_id'] = $userInfos['id'];
+            $userMediaModel = $this->db['User_media'];
+            $isHave = $userMediaModel->account_is_have($userInfos['id']);
+            if ($isHave) {
+                $status = $userMediaModel->saveAccount($where, $datas);
+            } else {
+                $datas['users_id'] = $userInfos['id'];
+                $status = $userMediaModel->addAccount($datas);
+            }
+            if ($status) {
+                parent::callback(1, 'success');
+            } else {
+                parent::callback(0, '数据保存错误, 请重新提交', array($status));
+            }
+        } else {
+            if ($userInfos) {
+                $userMediaModel = $this->db['User_media'];
+                $userMediaInfo = $userMediaModel->getInfoByIds(array($userInfos['id']));
+                if ($userMediaInfo) {
+                    $userInfos = array_merge($userInfos, reset($userMediaInfo));
+                }
+            }
+            parent::data_to_view(array_merge($userInfos, array(
+                //二级导航
+                'secondSiderbar' => array(
+                    '用户信息' => array('select' => true, 'url' => U('/Media/Account/userInfo')),
+                    '修改密码' => array('select' => false, 'url' => U('/Media/Account/changepw')),
+                    '支付信息' => array('select' => false, 'url' => U('/Media/Account/payinfo')),
+                ),
+                'secondPosition' => '用户信息',
+            )));
+            $this->display();
+        }
+    }
+    
+    /**
+     * 修改密码
+     * 
+     * @author lurongchang
+     * @date   2014-09-30
+     * @return void
+     */
+    function changepw()
+    {
+        parent::data_to_view(array(
+            //二级导航
+            'secondSiderbar' => array(
+                '用户信息' => array('select' => false, 'url' => U('/Media/Account/userInfo')),
+                '修改密码' => array('select' => true, 'url' => U('/Media/Account/changepw')),
+                '支付信息' => array('select' => false, 'url' => U('/Media/Account/payinfo')),
+            ),
+            'secondPosition' => '修改密码',
+        ));
+        $this->display();
+    }
+    
+    /**
+     * 支付信息
+     * 
+     * @author lurongchang
+     * @date   2014-09-30
+     * @return void
+     */
+    function payinfo()
+    {
+        parent::data_to_view(array(
+            //二级导航
+            'secondSiderbar' => array(
+                '用户信息' => array('select' => false, 'url' => U('/Media/Account/userInfo')),
+                '修改密码' => array('select' => false, 'url' => U('/Media/Account/changepw')),
+                '支付信息' => array('select' => true, 'url' => U('/Media/Account/payinfo')),
+            ),
+            'secondPosition' => '支付信息',
+        ));
+        $this->display();
+    }
 }
-	
-
-
-
-	
-
-?>

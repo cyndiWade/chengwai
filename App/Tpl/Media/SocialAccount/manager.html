@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
+	<title>媒体主_账号管理</title>
+</head>
+<body>
+
+<!-- 头部 -->
+<include file="Public:header" classname="phd-member-media" />
+
+<div class="wrap l">
+    <div class="pbd">
+        <include file="Public:breadcrumbs" />
+        <div class="area01-mediahelp l">
+            <div class="box01-allorder l">
+                <strong class="fl"><b class="yel">{$global_tpl_view.oUser.account}</b>的账号管理</strong>
+                <input type="hidden" id="isCreated" name="isCreated" value="1" />
+                <span class="addbtn fl" id="addcount">添加账号</span>
+                <span class="addbtn fl" id="addBatch">批量导入账号</span>
+            </div>
+            <div class="top-account-admin l">
+                <select class="fr" name="weiboTypeTabMore">
+                    <option>查看更多平台</option>
+                    <volist name="view_data.accountType" id="item" offset="7" length="-1">
+                    <option value="{:U('/Media/SocialAccount/manager', array('type' => $item['id']))}">{$item.name}</option>
+                    </volist>
+                </select>
+                <ul class="fl">
+                    <volist name="view_data.accountType" id="item" offset="0" length="6">
+                    <li <eq name="view_data.type" value="$item.id">class="select"</eq>><a href="{:U('/Media/SocialAccount/manager', array('type' => $item['id']))}">{$item.name} ({$view_data['accountType'][$item['id']].nums|default='0'}) </a></li>
+                    </volist>
+                </ul>
+            </div>
+            <div class="mid-account-admin l">
+                <form id="newaccount_form">
+                    <div class="box01-account-admin l">
+                        <div class="part01-time fl">
+                            <span class="span-start fl">账号：</span>
+                            <div class="startime pr fl"><input name="account" type="text" class="timetext fl" /></div>
+                        </div>
+                        <div class="part01-time fl">
+                            <span class="span-start fl">粉丝数：</span>
+                            <div class="startime pr fl"><input name="minfansnum" id="follower_start_check" type="text" class="timetext fl" /></div>
+                            <i class="yel fl">-</i>
+                            <div class="startime pr fl"><input name="maxfansnum" id="follower_end_check" type="text" class="timetext fl" /></div>
+                        </div>
+                        <div class="part01-time fl">
+                            <span class="span-start fl">周单量：</span>
+                            <div class="startime pr fl"><input name="minweekennum" id="weekly_start_check" type="text" class="timetext fl" /></div>
+                            <i class="yel fl">-</i>
+                            <div class="startime pr fl"><input name="maxweekennum" id="weekly_end_check" type="text" class="timetext fl" /></div>
+                        </div>
+                        <div class="part01-time fl">
+                            <span class="span-start fl">月单量：</span>
+                            <div class="startime pr fl"><input name="maxmonthnum" id="monthly_start_check" type="text" class="timetext fl" /></div>
+                            <i class="yel fl">-</i>
+                            <div class="startime pr fl"><input name="maxmonthnum" id="monthly_end_check" type="text" class="timetext fl" /></div>
+                        </div>
+                    </div>
+                    <div class="box01-account-admin mb10 l">
+                        <div class="part01-time fl">
+                            <span class="span-start fl">价格：</span>
+                            <div class="startime pr fl">
+                                <select name="pricetype">
+                                    <eq name="view_data.type" value="3">
+                                    <option value="0">单图文软广</option>
+                                    <option value="1">多图文软广第一条</option>
+                                    <option value="2">多图文软广第二条</option>
+                                    <option value="3">多图文软广其他位置</option>
+                                    <option value="4">单图文硬广</option>
+                                    <option value="5">多图文硬广第一条</option>
+                                    <option value="6">多图文硬广第二条</option>
+                                    <option value="7">多图文硬广其他位置</option>
+                                    <else />
+                                    <option value="0">硬广转发价</option>
+                                    <option value="1">硬广直发价</option>
+                                    <option value="2">带号价</option>
+                                    <option value="3">软广转发价</option>
+                                    <option value="4">软广直发价</option>
+                                    </eq>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="part01-time fl">
+                            <div class="startime pr fl"><input name="minprice" id="price_start_check" type="text" class="timetext fl" /></div>
+                            <i class="yel fl">-</i>
+                            <div class="startime pr fl"><input name="maxprice" id="price_end_check" type="text" class="timetext fl" /></div>
+                            <em class="yuan fl">元</em>
+                        </div>
+                        <div class="part01-time fl">
+                            <neq name="view_data.type" value="3">
+                            <span class="span-start fl">是否支持预约：</span>
+                            <select class="fl" name="isfamous">
+                                <option value="">请选择</option>
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                            </neq>
+                            <input name="type" type="hidden" value="{$view_data.type}" />
+                            <span id="submin_btn" class="btn yelbtn fl">查 询</span>
+                        </div>
+                    </div>
+                </form>
+                <div class="box02-account-admin mb10 l">
+                    <span class="span-first fl">找到相关账号：<b class="red" id="totalNum">1</b>个</span>
+                    <span class="span-jj fl">仅能降价</span>
+                    <span class="span-ok fl">涨价和降价均可</span>
+                    <span class="span-no fl">暂时不可操作</span>
+                    <span class="order fl"><em>排序</em><select><option>周订单量从高到低</option></select></span>
+                    <select class="fl"><option>周订单量</option></select>
+                    <select class="fl"><option>月订单量</option></select>
+                    <select class="fl"><option>粉丝数</option></select>
+                    <select class="fl"><option>硬广转发价</option></select>
+                </div>
+                <!-- <div class="box03-account-admin l">
+                    <table class="tab01-account-admin l">
+                    <thead>
+                        <tr>
+                            <th class="t1">账号名</th>
+                            <th class="t2">粉丝数</th>
+                            <th class="t3"><div class="pr"><em class="emqa"></em>硬广<br/>转发报价</div></th>
+                            <th class="t4"><div class="pr"><em class="emqa"></em>硬广<br/>直发报价</div></th>
+                            <th class="t5"><div class="pr"><em class="emqa"></em>软广<br/>转发报价</div></th>
+                            <th class="t6"><div class="pr"><em class="emqa"></em>软广<br/>直发报价</div></th>
+                            <th class="t7">周订单</th>
+                            <th class="t8">月订单</th>
+                            <th class="t9">审核<br/>通过</th>
+                            <th class="t10">接单<br/>状态</th>
+                            <th class="t11"><div class="pr"><em class="emqa"></em>是否<br/>上架</div></th>
+                            <th class="t11"><div class="pr"><em class="emqa"></em>暂不<br/>接单</div></th>
+                            <th class="t11"><div class="pr"><em class="emqa"></em>是否<br/>接硬广</div></th>
+                            <th class="t11"><div class="pr"><em class="emqa"></em>接单<br/>上限</div></th>
+                            <th class="t12"><div class="pr"><em class="emqa"></em>订单是否<br/>可带链接</div></th>
+                            <th class="t11"><div class="pr"><em class="emqa"></em>订单<br/>托管</div></th>
+                            <th class="last">详情</th>
+                        </tr>
+                    </thead>
+                    <tbody id="accountList"></tbody>
+                    </table>
+                </div> -->
+                <div id="list"></div>
+            </div>
+            <div class="mid-account-admin none l">
+                腾讯微博
+            </div>
+            <div class="mid-account-admin none l">
+                微信公众账号
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加账号弹窗 -->
+<div class="batchbox tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>添加 “微信公众号” 账号</b></div>
+	<div class="mid-batch pr l">
+		<div class="ewm pa"><img src="{$global_tpl_view.Group_Resource_Path}images/ewmimg.png" /></div>
+		<table class="tab01-inten l">
+		  <tr>
+			<td class="t1"><span><i>*</i><strong>账号名：</strong></span></td>
+			<td class="t2"><input type="text" class="text text-error" /><span class="oktip"></span></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><span><i>*</i><strong> 微信号：</strong></span></td>
+			<td class="t2"><input type="text" placeholder="请不要超过50个字" class="text" /><p>请输入正确的微信号！</p></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><span><i>*</i><strong>粉丝数：</strong></span></td>
+			<td class="t2"><input type="text" class="text" /><p class="errortip">此处为必填项！</p></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><span><i>*</i><strong>周平均阅读数：</strong></span></td>
+			<td class="t2"><input type="text"  class="text" /><p>请输入周平均阅读数！</p></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><span>性别分布：</span></td>
+			<td class="t2"><div class="sexbox fl"><em>男</em><input type="text"  class="text" /><i>%</i><strong class="fl">/</strong><em>女</em><input type="text"  class="text" /><i>%</i></div><p class="righttip"><a href="#">如何查看微信公众账号的“性别分布”？</a></p></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><span><i>*</i><strong>单图文价格：</strong></span></td>
+			<td class="t2"><input type="text"  class="text" /><p>请输入正确的价格！</p></td>
+		  </tr>
+		  <tr class="trtxt">
+			<td class="t1">多图文第一条价格：</td>
+			<td class="t2">元（可在“账号管理”页面修改） </td>
+		  </tr>
+		  <tr class="trtxt">
+			<td class="t1">多图文第二条价格：</td>
+			<td class="t2">元（可在“账号管理”页面修改） </td>
+		  </tr>
+		  <tr class="trtxt">
+			<td class="t1">多图文其他位置价格：</td>
+			<td class="t2">元（可在“账号管理”页面修改） </td>
+		  </tr>
+		  <tr>
+			<td class="t1"><span><i>*</i><strong>头像：</strong></span></td>
+			<td class="t2"><input type="file" class="file fl" /><div class="errortip-pic fl">请上传头像截图！</div></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><span><i>*</i><strong>二维码：</strong></span></td>
+			<td class="t2"><input type="file" class="file fl" /><div class="errortip-pic fl">请上传头像截图！</div></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><span><i>*</i><strong>粉丝截图：</strong></span></td>
+			<td class="t2"><input type="file" class="file fl" /><div class="errortip-pic fl">请上传头像截图！</div></td>
+		  </tr>
+		  <tr>
+			<td class="t1"></td>
+			<td class="t2"><span class="btn graybtn">提&nbsp;&nbsp;&nbsp;&nbsp;交</span><span class="btn graybtn">重选平台</span></td>
+		  </tr>
+		</table>
+	</div>
+</div>
+
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+
+<script type="text/template" id="tmplIsEnableMicroTaskColumns">
+    {{
+        var text = {
+        '1': '是',
+        '2': '否',
+        '3': '特殊活动'
+        } [it.is_enable_micro_task] || '无';
+    }}
+    {{? it.is_verify==2 && it.weibo_type==1}}
+    <a class='link_setting_icon' href='javascript:void(0)' title='设置'><em class="yes">{{=text}}</em></a>
+    {{?? it.weibo_type!=1}}
+    <a href='javascript:void(0)' title='平台不支持此操作'><em class="no">{{=text}}</em></a>
+    {{??}}
+    <a href='javascript:void(0)' title='不可设置'><em class="no">{{=text}}</em></a>
+    {{? }}
+</script>
+<script type="text/html" id="add_dialog_manager_contact_template">
+    <span class="cBox_fansWaring" data-bind="visible: weibo_alert_notice(), html: weibo_alert_notice"></span>
+    <span data-bind="click: submit, css: errors().length>0 ? 'cBox_btn02' : 'cBox_btnSumbit'" href="javascript:;" class="btn graybtn">提&nbsp;&nbsp;&nbsp;&nbsp;交</span>
+    <span data-bind="click: reset" href="javascript:;" class="btn graybtn">重选平台</span>
+</script>
+<script type="text/template" id="tmplColWeiboName">
+    <div class="bloggersName">
+        <div class="platformAll fl">
+            <img src="{{!it.face_url}}" class="allPic01">
+            <img src="{{!it.weibo_type_logo}}" class="allPic">
+        </div>
+        <a target="_blank" tag="js_tip" weibo_id="{{!it.weibo_id}}" href="{{!it.url}}" id="{{!it.account_id}}" title="{{!it.weibo_name}}" class="account_name">
+            {{!it.weibo_name_forshort}}
+        </a>
+        {{ if (it.vipCls) { }}
+        <span class="{{!it.vipCls}}"></span>
+        {{ } }}
+        <span title="累计积分: {{!it.rating_score}}" class ="js_rating_score rating_score_{{!it.rate}}"></span>
+    </div>
+</script>
+<script type="text/template" id="tmplColWeiboName">
+    <div class="bloggersName">
+        <div class="platformAll fl">
+            <img src="{{!it.face_url}}" class="allPic01">
+            <img src="{{!it.weibo_type_logo}}" class="allPic">
+        </div>
+        <a target="_blank" tag="js_tip" weibo_id="{{!it.weibo_id}}" href="{{!it.url}}" id="{{!it.account_id}}" title="{{!it.weibo_name}}" class="account_name">
+            {{!it.weibo_name_forshort}}
+        </a>
+        {{ if (it.vipCls) { }}
+        <span class="{{!it.vipCls}}"></span>
+        {{ } }}
+        <span title="累计积分: {{!it.rating_score}}" class ="js_rating_score rating_score_{{!it.rate}}"></span>
+    </div>
+</script>
+<script type="text/html" id="account_create_success_template">
+    <h3><em>恭喜，提交成功！</em></h3><p>我们会在<em>3个工作日内</em>完成审核，请耐心等待！</p>
+</script>
+<script type="text/template" id="tmplColWeiboName">
+    <div class="bloggersName">
+        <div class="platformAll fl">
+            <img src="{{!it.face_url}}" class="allPic01">
+            <img src="{{!it.weibo_type_logo}}" class="allPic">
+        </div>
+        <a target="_blank" tag="js_tip" weibo_id="{{!it.weibo_id}}" href="{{!it.url}}" id="{{!it.account_id}}" title="{{!it.weibo_name}}" class="account_name">
+            {{!it.weibo_name_forshort}}
+        </a>
+        {{ if (it.vipCls) { }}
+        <span class="{{!it.vipCls}}"></span>
+        {{ } }}
+        <span title="累计积分: {{!it.rating_score}}" class ="js_rating_score rating_score_{{!it.rate}}"></span>
+    </div>
+</script>
+<link rel="stylesheet" type="text/css" href="{$global_tpl_view.Group_Resource_Path}css/cmp_all.css" />
+<link rel="stylesheet" type="text/css" href="{$global_tpl_view.Group_Resource_Path}css/accountlist.css" />
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/sea.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/seajs-config.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/fancybox/jquery.fancybox.js"></script>
+<link href="{$global_tpl_view.Group_Resource_Path}js/fancybox/jquery.fancybox.css" rel="stylesheet" />
+
+
+<script type="text/javascript">
+/**
+ * 使用tmplColWeiboName模板前对数据进行预处理
+ * @param row
+ * @returns {*}
+ */
+function tmplColWeiboNamePreprocessor(row) {
+    return tmplColWeiboNameFromAccount(row.cells);
+}
+
+function tmplColWeiboNamePreprocessorForOrder(row) {
+    return tmplColWeiboNameFromAccount(row.cells.account);
+}
+
+function tmplColWeiboNameFromAccount(account){
+    var substr = function substr(str, length) {
+        if (str && str.length > length) {
+            return str.substring(0, length) + "...";
+        }
+        return str;
+    };
+
+    var url = account.url;
+    //如果是微信，则超链接不可点击
+    if(account.weibo_type == 9 || account.weibo_type == 23) {
+        url = 'javascript:void(0);';
+    }
+
+    var vipCls;
+    if (account.is_bluevip == 1) {
+        vipCls = 'plusV_blue';
+    } else if (account.is_vip == 1) {
+        vipCls = 'plusV_orange';
+    } else if (account.is_daren == 1) {
+        vipCls = 'plusV_start';
+    }
+
+    account.url = url;
+    account.vipCls = vipCls;
+    account.face_url = account.face_url || '/resources/images/error_face.gif';
+    if(account.weibo_type == 9){
+        account.weibo_name_forshort = substr(account.weibo_name, 9);
+    }else{
+        account.weibo_name_forshort = substr(account.weibo_name, 5);
+    }
+    return account;
+}
+
+var doT, Weiboyi, W;
+
+
+seajs.on('exec', function(data) {
+    if (data.uri === seajs.resolve('weiboyi')) {
+        Weiboyi = W = data.exports;
+    } else if (data.uri === seajs.resolve('doT')) {
+        doT = data.exports;
+    } else if (data.uri===seajs.resolve('plupload')) {
+        $.pluploadOpts.url = '{:U('/Media/Public/uploadImg')}';
+        $.pluploadOpts.viewBasePath = '{$Think.config.PUBLIC_VISIT.domain}{$Think.config.PUBLIC_VISIT.dir}';
+    }
+});
+
+seajs.config({
+    preload: ['seajsText', 'seajsCss', 'doT', 'rest', 'form', 'weiboyi', 'plupload']
+});
+seajs.use(['seajsText', 'seajsCss', 'rest']);
+
+seajs.use(['weiboyi', 'order_group.js', 'accountlist.js'], function (W, orderGroup, information) {
+    $(function(){
+        $('.tab01-allorder tr:even').addClass('even');
+        /*
+        $('#addcount').click(function(){
+            $('.batchbox').popOn();
+        });
+        */
+        $('#addBatch').click(function(){
+            window.location.href='{:U('/Media/SocialAccount/batchGuidesAccount')}';
+        });
+        $('select[name=weiboTypeTabMore]').change(function (){
+            if ($(this).val() == '') return ;
+            window.location = $(this).val();
+        });
+        
+        information.init();
+        information.initGrid(W.util.deserializeQueryString(location.search), 1);
+        
+        /*
+        submitAccount();
+        $('#submin_btn').click(function(){
+            submitAccount();
+        });
+        */
+    });
+    
+    new W.Button({
+        btnEl: "#submin_btn",
+        type : '',
+        handler: submitAccount
+    });
+
+    /**
+     * 获取列表数据
+     */
+    function submitAccount() {
+        $(".timetext").removeClass('validateError');
+        if ((check('follower_start_check', 'follower_end_check')) &&
+            (check('monthly_start_check', 'monthly_end_check')) &&
+            (check('weekly_start_check', 'weekly_end_check')) &&
+            (check('price_start_check', 'price_end_check'))) {
+            
+            var arr = $("#newaccount_form").serializeArray();
+            var ww = {};
+            $.each(arr, function (i, e) {
+                ww[e.name] = $.trim(e.value);
+                $('input[name=' + e.name + ']').val($.trim(e.value));
+            });
+            return information.getGrid().search(function () {
+                //当条件输入为空时，将默认的存在的条件清空。
+                var arr = $("#newaccount_form").serializeArray();
+                var ww = {};
+                $.each(arr, function (i, e) {
+                    ww[e.name] = $.trim(e.value);
+                    $('input[name=' + e.name + ']').val($.trim(e.value));
+                })
+                ww['empty'] == 'empty' ? ww['empty'] = '' : '';
+                ww['weibo_type'] == '0' ? ww['weibo_type'] = '' : '';
+                return ww;
+            });
+            
+            /*
+            $.ajax({
+                url  : '{:U('/Media/SocialAccount/getAccountList')}',
+                type : 'post',
+                data : ww,
+                success : function(data){
+                    if (data.status) {
+                        var html = liHtmlList(data.data.list);
+                        $('#totalNum').html(data.data.list.length);
+                        $('#accountList').html(html);
+                    }
+                }
+            });
+            */
+        } else {
+            return false;
+        }
+        return false;
+
+    }
+});
+seajs.use('add_account.js', function(addAccount) {
+    var isCreated = $('#isCreated').val();
+    if(isCreated == 2){
+        addAccount.showAccountWin({title: '选择平台（只有成功添加一个账号之后，才会关闭当前窗口）', tbar:[]});
+        $.each($('.nav').children(), function(i, v){
+            if(i == 0){
+                $(v).children(0).removeClass('icon_left_current');
+            }
+            $(v).children(0).removeClass('icon_left_current0'+(i+1));
+            if(i == 2){
+                $(v).children(0).addClass('icon_left_current03');
+            }
+        });
+    }
+
+    $('#addcount').click(function(){
+        addAccount.showAccountWin();
+    });
+});
+
+
+/**
+ * 帐号列表样式
+ */
+function liHtmlList(datas)
+{
+    var html = '<tr><td colspan="17"><div class="ordertip"><p>暂时没有数据哦！</p></div></td></tr>';
+    if (datas) {
+        html = '';
+        $.each(datas, function(idx, item){
+            html += '<tr>' +
+                '<td class="t1">' +
+                    '<div class="acountpart">' +
+                        '<img src="' + item.avatar + '" />' +
+                        '<div class="grp"><h6 class="l"><strong class="fl">' + item.account_name + '</strong><em class="v fl"></em></h6><p class="l"><em class="heart" title="累积积分: ' + item.integral + '"></em></p></div>' +
+                    '</div>' +
+                '</td>' +
+                '<td class="t2">' + item.fans_num + '</td>' +
+                '<td class="t3"><span class="span-ok">' + item.yg_zhuanfa + '元</span></td>' +
+                '<td class="t4"><span class="span-ok">' + item.yg_zhuanfa + '元</span></td>' +
+                '<td class="t5"><span class="span-ok">' + item.yg_zhifa + '元</span></td>' +
+                '<td class="t6"><span class="span-ok">' + item.rg_zhifa + '元</span></td>' +
+                '<td class="t7">' + item.week_order_num + '</td>' +
+                '<td class="t8">' + item.month_order_nub + '</td>' +
+                '<td class="t9">' + (item.audit_status ? '是' : '否') + '</td>' +
+                '<td class="t10">' + (item.receiving_status ? '是' : '否<a href="javascript:void(0);" class="blue">详情</a>') + '</td>' +
+                '<td class="t11">' + (item.putaway_status ? '是' : '否') + '</td>' +
+                '<td class="t11">' + (item.tmp_receiving_status ? '<em class="yes">是</em>' : '<em class="no">否</em>') + '</td>' +
+                '<td class="t11">' + (item.is_yg_status ? '<em class="yes">是</em>' : '<em class="no">否</em>') + '</td>' +
+                '<td class="t11">' + (item.receiving_num_status ? '<em class="yes">' + item.receiving_num + '</em>' : '<em class="no">无</em>') + '</td>' +
+                '<td class="t12">' + (item.url_status ? '<em class="yes">是</em>' : '<em class="no">否</em>') + '</td>' +
+                '<td class="t11">' + (item.trusteeship_status ? '<em class="yes">是</em>' : '<em class="no">否</em>') + '</td>' +
+                '<td class="last"><a href="#" class="yel">查看</a></td>' +
+            '</tr>';
+        });
+    }
+    return html;
+}
+
+
+/**
+ * 不能接单详情
+ */
+function getReceiveDetail(accountId, accountType)
+{
+    if (!accountId || !accountType) {
+        return false;
+    }
+    $.ajax({
+        url : '{:U('/Media/SocialAccount/getReceiveDetial')}',
+        type: 'post',
+        data: {id: accountId, type: accountType},
+        success: function(data){
+            // 弹出提示
+        }
+    });
+}
+
+function check(pam1, pam2) {
+    var num1 = $("#" + pam1).val();
+    var num2 = $("#" + pam2).val();
+    if (!$.isNumeric(num1) && num1 != '') {
+        $("#" + pam1).addClass('validateError');
+    }
+    if (!$.isNumeric(num2) && num2 != '') {
+        $("#" + pam2).addClass('validateError');
+    }
+    if (!$.isNumeric(num1) && num1 != '' || !$.isNumeric(num2) && num2 != '') {
+        return false;
+    }
+    if (num1 * 1 > num2 * 1 && num2 != '' && num1 != '') {
+        $("#" + pam1).addClass('validateError');
+        $("#" + pam2).addClass('validateError');
+        return false;
+    }
+    return true;
+}
+</script>
+</body>
+</html>

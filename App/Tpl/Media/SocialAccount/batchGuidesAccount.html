@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
+	<title>媒体主_账号管理</title>
+</head>
+<body>
+
+<!-- 头部 -->
+<include file="Public:header" classname="phd-member-media" />
+
+<div class="wrap l">
+    <div class="pbd">
+        <include file="Public:breadcrumbs" />
+        <div class="area01-account fl">
+            <div class="box01-account tc l">
+                <img src="{$global_tpl_view.Group_Resource_Path}images/acc_img01.gif" />
+            </div>
+            <div class="box02-account fl">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <table class="tab01-account l">
+                      <tr>
+                        <td class="t1">账号类型：</td>
+                        <td class="t2">
+                        <span><input name="account" checked="checked" type="radio" class="radio" value="1" /><em>新闻媒体</em></span>
+                        <span><input name="account" type="radio" class="radio" value="2" /><em>新浪、腾讯微博</em></span>
+                        <span><input name="account" type="radio" class="radio" value="3" /><em>微信公众号</em></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="t1" valign="top"><span class="fr"><em>*</em>上传批量CSV文件：</span></td>
+                        <td class="t2"><input name="batchfile" type="file" accept=".csv" class="file" /><p>csv文件最好不要超过500K</p></td>
+                      </tr>
+                      <tr>
+                        <td class="t1"></td>
+                        <td class="t2"><a class="downcsv" href="11111" id="changeExampleFile" target="_blank" data-type0="11111" data-type1="2222" data-type2="3333333">下载批量CSV文件（简体中文）</a></td>
+                      </tr>
+                      <tr>
+                            <td></td>
+                            <td class="tdbtn"><input type="submit" class="btn bluebtn" value="提 交" /></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.tab01-allorder tr:even').addClass('even');
+    
+    $('.t2 span').click(function(){
+        var index = $(this).index();
+        var Obj = $('#changeExampleFile');
+        var val = Obj.attr('href', Obj.data('type' + index));
+    });
+})
+</script>
+</body>
+</html>

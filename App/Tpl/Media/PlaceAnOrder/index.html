@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
+	<title>媒体主_预约订单</title>
+</head>
+<body>
+
+<!-- 头部 -->
+<include file="Public:header" />
+
+<div class="wrap l">
+    <div class="pbd">
+        <include file="Public:breadcrumbs" />
+        <div class="area01-mediahelp l">
+            <div class="box01-allorder l">
+                <b class="yel">Admin</b>的全部预约订单
+            </div>
+            <div class="box02-allorder l">
+                <form method="post" id="searchOrderForm">
+                    <div class="box01-time l">
+                        <div class="part01-time fl">
+                            <span class="span-start fl">预约过期时间：</span>
+                            <div class="startime pr fl"><em class="pa"></em><input name="expiredStartTime" id="expiredStartTime" readonly type="text" class="timetext fl" /></div>
+                            <i class="yel fl">-</i>
+                            <div class="startime pr fl"><em class="pa"></em><input name="expiredEndTime" id="expiredEndTime" readonly type="text" class="timetext fl" /></div>
+                        </div>
+                        <div class="part01-time fl">
+                            <span class="span-start fl">执行开始时间：</span>
+                            <div class="startime pr fl"><em class="pa"></em><input name='executionStartTime' id='executionStartTime' readonly type="text" class="timetext fl" /></div>
+                            <i class="yel fl">-</i>
+                            <div class="startime pr fl"><em class="pa"></em><input name="executionEndTime" id="executionEndTime" readonly type="text" class="timetext fl" /></div>
+                        </div>
+                    </div>
+                    <div class="box02-time l">
+                        <span class="spantime spantime-first fl"><i>预约订单ID </i><input name="order_id" id="order_id" type="text" class="text" /></span>
+                        <span class="spantime fl"><i>账号名</i><input name="account_name" id="account_name" type="text" class="text text-long" /></span>
+                        <span class="spantime fl"><i>预约需求名称</i><input name="requirement_name" id="requirement_name" type="text" class="text text-long" /></span>
+                        <span class="spantime fl"><i>预约订单状态</i><select name="requirement_status" class="status-select"><option>请选择</option>
+                        </select></span>
+                        <span class="btn yelbtn fl" id="btn_submit">查 询</span>
+                    </div>
+                </form>
+            </div>
+            <div class="box06-allorder l">
+                <select><option>按预约过期时间</option></select><select><option>按执行开始时间</option></select>
+            </div>
+            <div class="box04-allorder l">
+                <table class="tab01-allorder tab01-allorder-prev l">
+                <thead>
+                <tr>
+                    <th class="t1">预约订单ID</th>
+                    <th class="t2">账号名</th>
+                    <th class="t3">价格（元）</th>
+                    <th class="t4">预约需求名称</th>
+                    <th class="t5">预约过期时间</th>
+                    <th class="t6">执行时间</th>
+                    <th class="t7">预约订单状态</th>
+                    <th class="last">操作</th>
+                </tr>
+                </thead>
+                <tbody id="orderList"></tbody></table>
+            </div>
+            <div class="box05-allorder l">
+                <span>总订单：<b class="yel">0</b></span><span>总价格：<b class="yel">0</b>元</span>
+            </div>
+            <div class="page-wb fr">
+                <a href="#" class="prev"><</a><a href="#" class="num on">1</a><a href="#" class="num">2</a><a href="#" class="num">3</a><a href="#" class="num">4</a><em>...</em><a href="#" class="num">25</a><a href="#" class="next">></a><b class="total fl">共25页</b><div class="count fl"><i class="fl">到第</i><input type="text" class="text fl" /><i class="fl">页</i><span class="aok fl">前往</span><strong class="show fl">显示<select><option>10</option></select>条</strong></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+<link href="{$global_tpl_view.Group_Resource_Path}plugins/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<link href="{$global_tpl_view.Group_Resource_Path}plugins/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}plugins/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}plugins/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script>
+$(function(){
+    $('#expiredStartTime, #expiredEndTime, #executionStartTime, #executionEndTime')
+    .datetimepicker({
+        format: 'yyyy-mm-dd',
+        language:"zh-CN",
+	    minView:2,
+	    autoclose:true
+    });
+    
+    searchOrder();
+    $('#btn_submit').click(function(){
+        searchOrder();
+    });
+});
+
+/**
+ * 获取列表数据
+ */
+function searchOrder()
+{
+    var arr = $("#searchOrderForm").serializeArray();
+    var ww = {};
+    $.each(arr, function (i, e) {
+        ww[e.name] = $.trim(e.value);
+        $('input[name=' + e.name + ']').val($.trim(e.value));
+    });
+    $.ajax({
+        url  : '{:U('/Media/PlaceAnOrder/searchList')}',
+        type : 'post',
+        data : ww,
+        success : function(data){
+            if (data.status) {
+                var html = liHtmlList(data.data.list);
+                $('#orderList').html(html);
+            }
+        }
+    });
+}
+
+/**
+ * 帐号列表样式
+ */
+function liHtmlList(datas)
+{
+    var html = '<tr><td colspan="17"><div class="ordertip"><p>暂时没有数据哦！</p></div></td></tr>';
+    if (datas) {
+        html = '';
+        $.each(datas, function(idx, item){
+            html += '<tr>' +
+                    '<td class="t1">K20140912001</td>' +
+                    '<td class="t2">bumtime</td>' +
+                    '<td class="t3">6000</td>' +
+                    '<td class="t4">微信直接</td>' +
+                    '<td class="t5">2014/9/12 </td>' +
+                    '<td class="t6">2014/9/12</td>' +
+                    '<td class="t7"> 预约中</td>' +
+                    '<td class="last"><div class="ctrl"><span>拒绝</span> | <span>接受订单</span> | <span>需要修改</span></div></td>' +
+                '</tr>' +
+            '</tr>';
+        });
+    }
+    return html;
+}
+</script>
+</body>
+</html>

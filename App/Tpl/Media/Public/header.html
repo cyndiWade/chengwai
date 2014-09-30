@@ -1,0 +1,49 @@
+<php>$classname = strripos('[classname]', 'classname') ? '' : '[classname]';</php>
+<div class="phd <empty name="classname">phd-member<else />{$classname}</empty> l">
+	<div class="box-hd">
+		<div class="box01-hd l">
+			<!-- 登录前 -->
+            <empty name="global_tpl_view.oUser.id">
+			<div class="logbefore l">
+				<div class="tel fr"><b>4006 - 876 - 308</b></div>
+				<div class="part01-hd fr">
+					<a href="{:U('/Media/Account/register')}">免费注册</a> | <a href="{:U('/Media/Account/login')}">立即登陆</a> | <a href="#">港澳专区</a> | <a href="#">推广讲坛</a> | <a href="#">帮助中心</a> | <a href="{:U('/Media/Help/index')}">联系我们</a>			
+				</div>
+			</div>
+            <else />
+			<!-- 登录后 -->
+			<div class="logafter l">
+				<div class="userctrl pr fr">
+                <span class="fl">昨日订单数：<em class="red">3920</em></span>
+                <span class="fl">昨日投放客户数：<em class="red">1334</em></span>
+                <span class="fl">自媒体数量：<em class="red">466691</em></span>
+                <span class="fl">平台数：<em class="red">6</em></span>
+                <span class="part01-wel fl">您好：<a href="{:U('/Media/Account/userInfo')}" class="blue">{$global_tpl_view.oUser.account}</a></span>
+                <a href="#" class="red">消息</a>
+                <a href="{:U('/Media/Account/logout')}" class="red">退出</a>
+                </div>
+			</div>
+            </empty>
+		</div>
+		<div class="box02-hd l">
+			<a href="#" class="logo fl"><img src="{$global_tpl_view.Group_Resource_Path}images/logo_media.gif" alt="自媒体接单平台" /></a>		
+		</div>
+		<div class="box03-hd l">
+			<ul class="nav-media fl">
+                <li <eq name="global_tpl_view.module_name" value="EventOrder">class="select"</eq>><a class="hddd" href="{:U('/Media/EventOrder/index')}">活动订单</a></li>
+				<li <eq name="global_tpl_view.module_name" value="PlaceAnOrder">class="select"</eq>><a class="yydd" href="{:U('/Media/PlaceAnOrder/index')}">预约订单</a></li>
+				<li <eq name="global_tpl_view.module_name" value="SocialAccount">class="select"</eq>><a class="zhgl" href="{:U('/Media/SocialAccount/manager')}">账号管理</a></li>
+				<li <if condition="$global_tpl_view['module_name'] eq 'EventOrder' AND $global_tpl_view['module_name'] eq 'check'">class="select"</if>><a class="zdcx" href="#">账单查询</a></li>
+				<li <eq name="global_tpl_view.module_name" value="Account">class="select"</eq>><a class="yhzx" href="{:U('/Media/Account/userInfo')}">用户中心</a></li>
+				<li <eq name="global_tpl_view.module_name" value="Help">class="select"</eq>><a class="bzzx" href="{:U('/Media/Help/index')}">帮助中心</a></li>
+			</ul>
+		</div>
+        <notempty name="view_data.secondSiderbar">
+		<div class="box04-hd tl l">
+			<volist name="view_data.secondSiderbar" id="item">
+                <a href="{$item.url}" <notempty name="item.select">class="select"</notempty>>{$key}</a>
+            </volist>
+		</div>
+        </notempty>
+	</div>
+</div>

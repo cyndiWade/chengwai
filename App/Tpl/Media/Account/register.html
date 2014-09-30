@@ -2,20 +2,16 @@
 <html>
 <head>
 	<include file="Public:top" />
-
-	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/reg.css" type="text/css" />
-	
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
 	<title>注册媒体主</title>
 </head>
 <body>
 
-<include file="Web:Public:header" />
+<include file="Public:header" classname="phd-member-media" />
 
 <div class="wrap l">
 <div class="pbd">
-<div class="location l">
-	当前位置：<a href="#">首页</a>  >  <span class="blue">会员注册</span>
-</div>
+<include file="Public:breadcrumbs" />
 <div class="adbox l">
 	<img src="{$global_tpl_view.Group_Resource_Path}images/ad_img02.gif" />
 </div>
@@ -27,27 +23,48 @@
 			<table class="tab01-reg l">
 			  <tr>
 				<td class="t1"><span><em>*</em>会员名：</span></td>
-				<td class="t2"><input type="text" class="text" name="account"/><div class="oktip"></div><div class="errortip">会员名不能为空</div></td>
+				<td class="t2">
+                    <input type="text" class="text" name="account"/><div class="oktip"></div>
+                    <div class="errortip">会员名不能为空</div>
+                </td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><em>*</em>登录密码：</span></td>
-				<td class="t2"><input type="password" class="text" name="password"/><div class="oktip"></div><div class="errortip">登入密码不能为空</div></td>
+				<td class="t2">
+                    <input type="password" class="text" name="password"/><div class="oktip"></div>
+                    <div class="errortip">登入密码不能为空</div>
+                </td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><em>*</em>重复输入密码：</span></td>
-				<td class="t2"><input type="password" class="text" name="password_check"/><div class="oktip"></div><div class="errortip">两次密码不一致</div></td>
+				<td class="t2">
+                    <input type="password" class="text" name="password_check"/><div class="oktip"></div>
+                    <div class="errortip">两次密码不一致</div>
+                </td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><em>*</em>手机号码：</span></td>
-				<td class="t2"><input type="text" class="text" name="iphone"/><div class="oktip"></div><div class="errortip">手机号不能为空</div></td>
+				<td class="t2">
+                    <input type="text" class="text" name="iphone"/><div class="oktip"></div>
+                    <div class="errortip">手机号不能为空</div>
+                </td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><em>*</em>输入手机验证码：</span></td>
-				<td class="t2"><input type="text" class="text" name="phone_verify"/><div class="oktip"></div><div class="errortip">手机验证码不能为空</div></td>
+				<td class="t2">
+                    <input type="text" class="text" name="phone_verify"/>
+                    <div class="oktip"></div>
+                    <div class="errortip">手机验证码不能为空</div>
+                </td>
 			  </tr>
 			  <tr>
 				<td class="t1"></td>
-				<td class="t2"><div class="agreebox"><input type="checkbox" class="check fl" checked="checked" /><em class="fl">同意<a href="#">服务协议</a></em></div></td>
+				<td class="t2">
+                    <div class="agreebox">
+                        <input type="checkbox" class="check fl" checked="checked" />
+                        <em class="fl">同意<a href="#">服务协议</a></em>
+                    </div>
+                </td>
 			  </tr>
 			  <tr>
 				<td class="t1"></td>
@@ -71,9 +88,6 @@
 </div>
 </div>
 </div>
-
-<include file="Web:Public:footer" />
-
 
 <!-- JS底部文件 -->
 <include file="Public:bottom" />

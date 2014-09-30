@@ -8,7 +8,7 @@ class PublicAction extends MediaBaseAction {
 	protected  $not_check_fn = array();		//无需登录和验证rbac的方法名
 	
 	//控制器说明
-	private $module_name = '我是说明';
+	private $module_name = '公用场所';
 	
 	//和构造方法
 	public function __construct() {
@@ -22,6 +22,33 @@ class PublicAction extends MediaBaseAction {
 		import('@.ORG.Util.Image');
 		Image::buildImageVerify();
 	}
+    
+    /**
+     * 上传图片
+     * 
+     * @author lurongchang
+     * @date   2014-09-30
+     * @return url
+     */
+    public function uploadImg()
+    {
+        $url = '';
+        $uploadDir = C('UPLOAD_DIR');
+        $files = $_FILES['qqfile'];
+        $dir = $uploadDir['web_dir'] . $uploadDir['image'];
+        $info = parent::upload_file($files, $dir, 5120000);
+        if ($info['status']) {
+            $url = $info['info'][0]['savename'];
+            echo json_encode(array(
+                'filename' => $url,
+                'success'  => true
+            ));
+        } else {
+            echo json_encode(array(
+                'msg' => $info['info'],
+                'success'  => false
+            ));
+        }
+        exit;
+    }
 }
-
-?>
