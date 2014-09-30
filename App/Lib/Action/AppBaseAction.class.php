@@ -432,6 +432,27 @@ class AppBaseAction extends GlobalParameterAction {
 		}
 	}
 	
+
+	//更新SESSION的MONEY
+	protected function updateMoney($id)
+	{
+		if($id)
+		{
+			$money = D('UserAdvertisement')->getMoney($id);
+			$Users = D('Users')->where(array('id'=>array('eq',$id)))->field('account,nickname,type')->find();
+			$db_data= array(
+				'user_info'=>array(
+					'id'=>$id,
+					'account'=>$Users['account'],
+					'nickname' => $Users['nickname'],
+					'type' => $Users['type'],
+					'money' => $money['money']
+				)
+			);
+			$_SESSION[C('SESSION_DOMAIN')][GROUP_NAME] = $db_data;
+		}
+	}
+
 }
 
 

@@ -82,13 +82,14 @@ class MoneyAction extends AdvertBaseAction {
 		$user_id = $this->db['Fund']->getUserId($_GET);
 		if($user_id!='')
 		{
-			$tmp_arr = array(
-						'id' =>$user_id['id'],
-						'account' => $user_id['account'],
-						'nickname' => $user_id['nickname'],
-						'type'=> $user_id['type'],
-					);
-			parent::set_session(array('user_info'=>$tmp_arr));
+			// $tmp_arr = array(
+			// 			'id' =>$user_id['id'],
+			// 			'account' => $user_id['account'],
+			// 			'nickname' => $user_id['nickname'],
+			// 			'type'=> $user_id['type'],
+			// 		);
+			// parent::set_session(array('user_info'=>$tmp_arr));
+			parent::updateMoney($user_id['id']);
 			//修改流水
 			$value = $this->db['Fund']->instertFund($_GET,1);
 			//修改用户信息表
