@@ -365,6 +365,9 @@ class AppBaseAction extends GlobalParameterAction {
 		{
 			//需要同步的数据
 			$cele_info['fansnumber'] = $grass_info['fans_number'] = $AccountWeixinInfo['fans_num'];
+			$grass_info['read_number'] = $AccountWeixinInfo['weekly_read_avg'];
+			$grass_info['audience_man'] = $AccountWeixinInfo['male_precent'];
+			$grass_info['audience_women'] = $AccountWeixinInfo['female_precent'];
 			switch($AccountWeixinInfo['is_celebrity'])
 			{
 				//草根
