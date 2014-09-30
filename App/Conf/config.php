@@ -41,10 +41,10 @@ $system  = array(
 		'OUTPUT_ENCODE'         =>  false, 			// 页面压缩输出
 
 		//项目分组
-		'APP_GROUP_LIST'        => 'Home,Admin,Api,Main,Media,Advert',  	// 项目分组设定,多个组之间用逗号分隔,例如'Home,Admin'
-		'DEFAULT_GROUP'         => 'Advert',  					// 默认分组
-		'DEFAULT_MODULE' 		=> 'Account',
-		'DEFAULT_ACTION'        => 'login', 					// 默认操作名称
+		'APP_GROUP_LIST'        => 'Home,Admin,Api,Main,Media,Advert,Index',  	// 项目分组设定,多个组之间用逗号分隔,例如'Home,Admin'
+		'DEFAULT_GROUP'         => 'Index',  					// 默认分组
+		'DEFAULT_MODULE' 		=> 'Index',
+		'DEFAULT_ACTION'        => 'index', 					// 默认操作名称
 		'APP_GROUP_MODE'        =>  0, 							 // 分组模式 0 普通分组 1 独立分组
 		
 		'APP_SUB_DOMAIN_DEPLOY' => false,  			 // 是否开启子域名部署
