@@ -76,6 +76,8 @@ class AccountAction extends AdvertBaseAction {
 			$id = $Users->add_account($account,$password);
 			if($id!='')
 			{
+				$advert = array('users_id'=>$id,'contact_phone'=>$iphone);
+				$UserAdvertisement->add_account_list($advert);
 				$moneyget = $UserAdvertisement->getMoney($id);
 				//这里自定义设置session
 				$db_data= array(
@@ -85,8 +87,6 @@ class AccountAction extends AdvertBaseAction {
 					'type' => 2,
 					'money' => $moneyget['money']
 				);
-				$advert = array('users_id'=>$id,'contact_phone'=>$iphone);
-				$UserAdvertisement->add_account_list($advert);
 				parent::set_session(array('user_info'=>$db_data));
 				parent::callback(C('STATUS_OTHER'),'ok');
 			}else{
