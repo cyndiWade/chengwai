@@ -81,7 +81,7 @@
 			$list = $this->where($where)
 			->table('app_account_weixin as w')
 			->join('app_grassroots_weixin as b on w.id = b.weixin_id')
-			->limit($now_page,$limit)->field('w.*')->select();
+			->limit($now_page,$limit)->field('w.*,b.common,b.more_ying_price,b.more_ruang_price,b.one_yingg_price,b.one_ruangg_price,b.more_twoy_price,b.more_twor_price,b.more_ny_price,b.more_nr_price,b.fans_number,b.audience_man,b.audience_women,b.fans_c_time,b.read_number')->select();
 			return array('list'=>$list,'count'=>$count);
 		}
 		
@@ -288,7 +288,7 @@
 			$list = $this->where($where)
 			->table('app_account_weixin as w')
 			->join('app_celeprityindex_weixin as b on w.id = b.weixin_id')
-			->limit($now_page,$limit)->field('w.*')->select();
+			->limit($now_page,$limit)->field('w.*,b.occupation,b.ck_price,b.yc_price,b.interest,b.coordination,b. 	fansnumber')->select();
 			return array('list'=>$list,'count'=>$count);
 		}
 		

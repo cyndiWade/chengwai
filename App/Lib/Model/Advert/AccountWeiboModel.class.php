@@ -86,7 +86,7 @@
 			$list = $this->where($where)
 			->table('app_account_weibo as w')
 			->join('app_grassroots_weibo as b on w.id = b.weibo_id')
-			->limit($now_page,$limit)->field('w.*')->select();
+			->limit($now_page,$limit)->field('w.*,b.common,b.sex')->select();
 			return array('list'=>$list,'count'=>$count);
 		}
 		
@@ -256,7 +256,7 @@
 			$list = $this->where($where)
 			->table('app_account_weibo as w')
 			->join('app_celeprityindex_weibo as b on w.id = b.weibo_id')
-			->limit($now_page,$limit)->field('w.*')->select();
+			->limit($now_page,$limit)->field('w.*,b.occupation,b.ck_price,b.yc_price,b.field,b.coordination,b.fansnumber,b.strategic_c,b.originality')->select();
 			return array('list'=>$list,'count'=>$count);
 		}
 		
