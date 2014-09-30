@@ -130,11 +130,11 @@ define(function (require) {
                 return {
                     required: {message: '账号名不能为空！'},
                     pattern: {
-                        message: '格式不正确^[a-zA-Z]{1,}[a-zA-Z_0-9-]{1,}$',
-                        params: '^[a-zA-Z]{1,}[a-zA-Z_0-9-]{1,}$'
+                        message: '4-30个字符，支持中英文、数字、“_”和减号',
+                        params: '^[\u4E00-\u9FA5a-zA-Z0-9_\-]+$'
                     },
-                    minCharLength: {params: 6, message: '6-20个字符'},
-                    maxCharLength: {params: 20, message: '6-20个字符'}
+                    minCharLength: {params: 4, message: '4-30个字符，支持中英文、数字、“_”和减号'},
+                    maxCharLength: {params: 30, message: '4-30个字符，支持中英文、数字、“_”和减号'}
                 };
             }else{
                 //其他
@@ -155,6 +155,8 @@ define(function (require) {
                 return "4-30个字符，支持中英文、数字、“_”和减号";
             } else if (weibo_type == 2) {
                 return '4-22个字符，支持中英文、数字、“_”和减号';
+            } else if (weibo_type == 4) {
+                return '4-30个字符，支持中英文、数字、“_”和减号';
             } else if (weibo_type == 19) {
                 return '请填写空间的qq号码,如右侧图示.'
             } else if (weibo_type == 17) {
@@ -171,6 +173,8 @@ define(function (require) {
                 return "4-30个字符，支持中英文、数字、“_”和减号";
             } else if (weibo_type == 2) {
                 return '4-22个字符，支持中英文、数字、“_”和减号';
+            } else if (weibo_type == 4) {
+                return '4-30个字符，支持中英文、数字、“_”和减号';
             } else if (weibo_type == 19) {
                 return '请填写空间的qq号码,如右侧图示.'
             } else if (weibo_type == 17) {
@@ -358,7 +362,7 @@ define(function (require) {
             var weibo_type = self.weibo_type();
             if(weibo_type == 1 || weibo_type == 2){
                 return "硬广直发价等同于硬广转发价";
-            }elseif (weibo_type == 4) {
+            } else if (weibo_type == 4) {
                 return "发布该新闻媒体所需价格";
             } else {
                 return "硬广转发价是指转发一条指定链接内容的价格";
@@ -368,7 +372,7 @@ define(function (require) {
             var weibo_type = self.weibo_type();
             if(weibo_type == 1 || weibo_type == 2){
                 return "硬广转发价：是指博主的微博账号成功转发一条指定微博链接后所赚取的金额！</br>如何定硬广转发价：博主自己可根据微博账号的粉丝数量、微博内容质量等因素酌情定价，低价格有利于吸引更多客户选择您的账号。"
-            }elseif (weibo_type == 4) {
+            } else if (weibo_type == 4) {
                 return "请填写正确的价格!";
             }else{
                 return "硬广转发价是指转发一条指定链接内容的价格";
@@ -377,8 +381,7 @@ define(function (require) {
 
         self.tweet_price = self.tweet_price.extend(function () {
             var weibo_type = self.weibo_type();
-            //QZone个人，新浪，腾讯，微信不要只发价
-            if (weibo_type != 19 && weibo_type != 1 && weibo_type != 2 && weibo_type != 3) {
+            if (weibo_type != 19 && weibo_type != 1 && weibo_type != 2 && weibo_type != 3 && weibo_type != 4) {
                 return {
                     required: {message: '硬广直发价格不能为空！'},
                     digit: {message: '请输入正整数！'},
@@ -407,8 +410,6 @@ define(function (require) {
                 return "指您在朋友圈发送一次信息得到的收入！";
             }else if(weibo_type == 3){
                 return "微信硬广直发价指从微信公众平台成功发送一次<br/>内容/消息的价格！"
-            }else if (weibo_type == 4){
-                return "该新闻媒体成功发送一次<br/>内容/消息的价格！"
             }else{
                 return '硬广直发价是指自己发布一条指定内容的价格';
             }
@@ -734,10 +735,10 @@ define(function (require) {
                     maxCharLength: {params: 32, message: '长度1-50个字符，请输入正确的长度！'}
                 };
             }());
-            self.channel_name.init_prompt = function () {
+            self.account_title.init_prompt = function () {
                 return '请输入正确的标题！';
             }();
-            self.channel_name.focus_prompt = function () {
+            self.account_title.focus_prompt = function () {
                 return '请输入正确的标题！';
             }();
             // 入口
@@ -748,40 +749,40 @@ define(function (require) {
                     maxCharLength: {params: 32, message: '长度1-50个字符，请输入正确的长度！'}
                 };
             }());
-            self.channel_name.init_prompt = function () {
+            self.account_entry.init_prompt = function () {
                 return '请输入正确的入口！';
             }();
-            self.channel_name.focus_prompt = function () {
+            self.account_entry.focus_prompt = function () {
                 return '请输入正确的入口！';
             }();
             // 是否新闻源
             self.is_news_source = self.is_news_source.extend(function () {
                 return {
-                    required: {message: '此项为必填项！'}
+                    required: {message: '是否新闻源'}
                 };
             }());
             // 是否网址收录
             self.is_web_site_included = self.is_web_site_included.extend(function () {
                 return {
-                    required: {message: '此项为必填项！'}
+                    required: {message: '是否网址收录'}
                 };
             }());
             // 是否需要来源
             self.is_need_source = self.is_need_source.extend(function () {
                 return {
-                    required: {message: '此项为必填项！'}
+                    required: {message: '是否需要来源'}
                 };
             }());
             // 周末能否发稿
             self.is_press_weekly = self.is_press_weekly.extend(function () {
                 return {
-                    required: {message: '此项为必填项！'}
+                    required: {message: '周末能否发稿'}
                 };
             }());
-            // 周末能否发稿
+            // 能否带文本链接
             self.is_text_link = self.is_text_link.extend(function () {
                 return {
-                    required: {message: '此项为必填项！'}
+                    required: {message: '能否带文本链接'}
                 };
             }());
             // 媒体截图

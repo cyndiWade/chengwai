@@ -55,9 +55,9 @@ class AccountWeiboModel extends MediaBaseModel
      * @date   2014-09-22
      * @return void
      */
-    public function getLists($where, $page = 1, $pageSize = 20)
+    public function getLists($where, $order = 'id DESC', $page = 1, $pageSize = 20)
     {
-        $list = $this->field(true)->where($where)->page($page, $pageSize)->select();
+        $list = $this->field(true)->where($where)->order($order)->page($page, $pageSize)->select();
         if ($list) {
             $userIds = array();
             foreach ($list AS $info) {

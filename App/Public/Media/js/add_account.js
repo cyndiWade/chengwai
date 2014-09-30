@@ -177,12 +177,6 @@ define(function (require) {
             // var defer = $.restPost('/information/account/create', submitValues);
             var defer = $.restPost('/Media/SocialAccount/create', submitValues);
             
-            
-            console.log('defer: ');
-            console.log(defer);
-            console.log('submitValues: ');
-            console.log(submitValues);
-            
             defer.done(function () {
                 var msg = $('#account_create_success_template').html();
                 W.baseMessageBox(msg, "success", {
@@ -204,6 +198,7 @@ define(function (require) {
 
             defer.fail(function (error) {
                 validation.weibo_alert_notice('');
+                console.log(error);
                 W.alert(error);
             });
         };

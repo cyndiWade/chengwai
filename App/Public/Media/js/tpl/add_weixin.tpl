@@ -14,7 +14,7 @@
       <tr>
         <td class="t1"><span><i>*</i><strong>微信号：</strong></span></td>
         <td class="t2">
-            <input name="weibo_id" data-bind="noticeImg: platform_id_img, validThreeState: weibo_id, value: weibo_id" type="text" placeholder="请输入正确的微信号！" class="text" />
+            <input name="weibo_id" data-bind="noticeImg: platform_id_img, validThreeState: weibo_id, value: weibo_id" type="text" placeholder="请输入正确的微信号！" class="text text-error" />
             <p data-bind="html: weibo_id.notice_text, css: weibo_id.notice_css" class="cBox_tip" id="weiboId_error"></p>
         </td>
       </tr>
@@ -28,7 +28,7 @@
       <tr>
         <td class="t1"><span><i>*</i><strong>周平均阅读数：</strong></span></td>
         <td class="t2">
-            <inputt name="weekly_read_avg" data-bind="validThreeState: weekly_read_avg, value: weekly_read_avg" name="weekly_read_avg" placeholder="请输入正整数" type="text"  class="text" />
+            <input name="weekly_read_avg" data-bind="validThreeState: weekly_read_avg, value: weekly_read_avg" placeholder="请输入正整数" type="text"  class="text text-error" />
             <p data-bind="html: weekly_read_avg.notice_text, css: weekly_read_avg.notice_css" class="cBox_tip"></p>
         </td>
       </tr>
@@ -55,7 +55,7 @@
       </tr>
       <tr class="trtxt">
         <td class="t1">多图文第一条价格：</td>
-        <td class="t2">
+        <td class="t2 fl">
             <span data-bind="text: multi_graphic_top_price" style="color: red"></span> 元（可在“账号管理”页面修改）
             <input type="hidden"  name="multi_graphic_top_price" data-bind="value:multi_graphic_top_price"/>
             <input type="hidden"  name="multi_graphic_hard_top_price" data-bind="value:multi_graphic_top_price"/>
@@ -63,7 +63,7 @@
       </tr>
       <tr class="trtxt">
         <td class="t1">多图文第二条价格：</td>
-        <td class="t2">
+        <td class="t2 fl">
             <span data-bind="text: multi_graphic_second_price" style="color: red"></span> 元（可在“账号管理”页面修改）
             <input type="hidden"  name="multi_graphic_second_price" data-bind="value:multi_graphic_second_price"/>
             <input type="hidden"  name="multi_graphic_hard_second_price" data-bind="value:multi_graphic_second_price"/>
@@ -71,7 +71,7 @@
       </tr>
       <tr class="trtxt">
         <td class="t1">多图文其他位置价格：</td>
-        <td class="t2">
+        <td class="t2 fl">
             <span data-bind="text: multi_graphic_other_price" style="color: red"></span> 元（可在“账号管理”页面修改）
             <input type="hidden"  name="multi_graphic_other_price" data-bind="value:multi_graphic_other_price"/>
             <input type="hidden"  name="multi_graphic_hard_other_price" data-bind="value:multi_graphic_other_price"/>

@@ -320,7 +320,7 @@ function tmplColWeiboNameFromAccount(account){
 
     var url = account.url;
     //如果是微信，则超链接不可点击
-    if(account.weibo_type == 9 || account.weibo_type == 23) {
+    if(account.weibo_type == 3 || account.weibo_type == 23) {
         url = 'javascript:void(0);';
     }
 
@@ -336,11 +336,7 @@ function tmplColWeiboNameFromAccount(account){
     account.url = url;
     account.vipCls = vipCls;
     account.face_url = account.face_url || '/resources/images/error_face.gif';
-    if(account.weibo_type == 9){
-        account.weibo_name_forshort = substr(account.weibo_name, 9);
-    }else{
-        account.weibo_name_forshort = substr(account.weibo_name, 5);
-    }
+    account.weibo_name_forshort = substr(account.weibo_name, 3);
     return account;
 }
 
@@ -380,7 +376,7 @@ seajs.use(['weiboyi', 'order_group.js', 'accountlist.js'], function (W, orderGro
         });
         
         information.init();
-        information.initGrid(W.util.deserializeQueryString(location.search), 1);
+        information.initGrid(W.util.deserializeQueryString(location.search), {$view_data.type});
         
         /*
         submitAccount();

@@ -113,7 +113,7 @@ $custom= array (
 		'PUBLIC_VISIT' => array(
  				'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
  				//'domain' =>	'http://images.jsonlin.cn/',
-				'dir' => 'files/chengwai/',							//项目文件目录
+				'dir' => 'files/chengwai/images/',							//项目文件目录
 		),
 
 		//短信平台账号

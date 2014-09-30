@@ -1289,11 +1289,11 @@ define(function(require, exports) {
                         if (data == "1") {
                             // var div = $("<div></div>");
                             // return div.append(imgTip).append('&nbsp;是').append(authTip);
-                            return $(imgTip).append('<em class="yes">是</em>').append(authTip);
+                            return $(imgTip).append('<em class="yes">是</em>');
                         } else {
                             // var div = $("<div></div>");
                             // return div.append(imgTip).append('&nbsp;否').append(authTip);
-                            return $(imgTip).append('<em class="no">否</em>').append(authTip);
+                            return $(imgTip).append('<em class="no">否</em>');
                         }
                     }
                 },
@@ -1313,7 +1313,7 @@ define(function(require, exports) {
             },
             renderTo: "#list",
             // url: "/information/accountmanage/account?filters%5Bweibo_type%5D="+weiboType,
-            url: '/Media/SocialAccount/getAccountList/type/' + weiboType,
+            url: '/Media/SocialAccount/getAccountList/?filters%5Btype%5D=' + weiboType,
             filters: filters,
             columns: columns,
             listeners: {

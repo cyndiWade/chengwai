@@ -92,32 +92,32 @@ define(function(require) {
         //通用的是否选择框
         self.yes_no_options = ko.observableArray([
             {id: 1, name:'是'},
-            {id: 2, name:'否'}
+            {id: 0, name:'否'}
         ]);
         //通用的是否未知选择框
         self.yes_no_three_options = ko.observableArray([
             {id: 1, name:'是'},
-            {id: 2, name:'否'},
+            {id: 0, name:'否'},
             {id: 3, name:'未知'}
         ]);
         //通用的是否数据不足选择框，采集类
         self.yes_no_lack_data_options = ko.observableArray([
             {id: -1, name:'数据不足'},
             {id: 1, name:'是'},
-            {id: 2, name:'否'}
+            {id: 0, name:'否'}
         ]);
 
         //粉丝认证情况
         self.follower_options =  ko.observableArray([
             {id: 1, name:'是'},
-            {id: 2, name:'否'},
+            {id: 0, name:'否'},
             {id: 10, name:'拒绝认证'}
         ]);
 
         //地域认证情况
         self.area_options =  ko.observableArray([
             {id: 1, name:'是'},
-            {id: 2, name:'否'},
+            {id: 0, name:'否'},
             {id: 10, name:'拒绝认证'}
         ]);
 
@@ -236,7 +236,7 @@ define(function(require) {
         self.weibo_id = ko.observable(data.weibo_id || '');
         self.weibo_id_name = ko.computed(function(){
             switch (self.weibo_type()){
-                case 9:
+                case 3:
                     return '微博ID（微信号）';
                 default :
                     return '微博ID';
@@ -515,7 +515,7 @@ define(function(require) {
         self.is_enable_micro_task = ko.observable(data.is_enable_micro_task || 1);
         self.is_enable_micro_task_options = ko.observable([
             {id:1, name:'是'},
-            {id:2, name:'否'},
+            {id:0, name:'否'},
             {id:3, name:'屏蔽可申报'}
         ]);
 

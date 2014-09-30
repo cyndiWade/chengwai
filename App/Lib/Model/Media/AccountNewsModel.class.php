@@ -42,4 +42,51 @@ class AccountNewsModel extends MediaBaseModel
         }
         return $insertData ? $this->addAll($insertData) : false;
     }
+    
+    /**
+     * 获取某帐号信息
+     * 
+     * @param array  $where 条件
+     * @param string $field 字段 默认ture为获取所有字段
+     * 
+     * @author lurongchang
+     * @date   2014-09-30
+     * @return void
+     */
+    public function getAccountInfo($where, $field = true)
+    {
+        return $this->where($where)->field($field)->find();
+    }
+    
+    /**
+     * 增加帐号
+     * 
+     * @param array  $data 数据
+     * 
+     * @author lurongchang
+     * @date   2014-09-30
+     * @return void
+     */
+    public function addAccount($datas)
+    {
+        if (empty($datas['users_id']) || empty($datas['account_name'])) {
+            return false;
+        }
+        $insertId = $this->add($datas);
+        return $insertId;
+    }
+    
+    /**
+     * 获取帐号列表
+     * 
+     * @author lurongchang
+     * @date   2014-09-22
+     * @return void
+     */
+    public function getLists($where, $order = 'id DESC', $page = 1, $pageSize = 20)
+    {
+        $list = $this->field(true)->where($where)->order($order)->page($page, $pageSize)->select();
+        $count = $this->where($where)->count();
+        return array('list' => $list, 'count' => $count);
+    }
 }

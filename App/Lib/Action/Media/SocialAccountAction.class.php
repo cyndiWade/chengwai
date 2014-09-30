@@ -40,7 +40,11 @@ class SocialAccountAction extends MediaBaseAction {
      */
 	public function manager()
     {
-        $type = I('type', 1, 'intval');
+        $type = I('type', 0, 'intval');
+        
+        if (empty($type)) {
+            $this->redirect(U('/Media/SocialAccount/', array('type' => 1)));
+        }
         
         $userInfos = parent::get_session('user_info');
         $where['users_id'] = &$userInfos['id'];
@@ -59,8 +63,10 @@ class SocialAccountAction extends MediaBaseAction {
             }
         }
         // 微信
-        $where['pt_type'] = 1;
-        $weixinNums = $this->db['AccountWeixin']->where($where)->count();
+        $weixinNums = $this->db['AccountWeixin']
+            ->where(array_merge($where, array('pt_type' => 1)))->count();
+        // 新闻媒体
+        $newsNums = $this->db['AccountNews']->where($where)->count();
         
         $accountTypeList = C('MEDIA_ACCOUNT_TYPE');
         if ($accountTypeList) {
@@ -71,6 +77,8 @@ class SocialAccountAction extends MediaBaseAction {
                     $accountTypeList[$key]['nums'] = $tencentWeiboNums;
                 } elseif ($key == 3) {
                     $accountTypeList[$key]['nums'] = $weixinNums;
+                } elseif ($key == 4) {
+                    $accountTypeList[$key]['nums'] = $newsNums;
                 }
             }
         }
@@ -96,7 +104,7 @@ class SocialAccountAction extends MediaBaseAction {
         
         $filters        = I('filters', array());
         extract($filters);
-        $type           = $type ? intval($type) : 1;
+        $type           = $type ? intval($type) : 0;
         $account        = $account ? setString($account) : '';
         $minfansnum     = $minfansnum ? intval($minfansnum) : '';
         $maxfansnum     = $maxfansnum ? intval($maxfansnum) : '';
@@ -131,15 +139,17 @@ class SocialAccountAction extends MediaBaseAction {
         if ($type == 3) {
             // 微信公众号
             $where['pt_type'] = 1;
-            $list = $this->db['AccountWeixin']->getLists($where, $page, $pageSize);
+            $list = $this->db['AccountWeixin']->getLists($where, 'id DESC', $page, $pageSize);
         } elseif ($type == 2) {
             // 腾讯微博
             $where['pt_type'] = 2;
-            $list = $this->db['AccountWeibo']->getLists($where, $page, $pageSize);
-        } else {
+            $list = $this->db['AccountWeibo']->getLists($where, 'id DESC', $page, $pageSize);
+        } elseif ($type == 1) {
             // 新浪微博
             $where['pt_type'] = 1;
-            $list = $this->db['AccountWeibo']->getLists($where, $page, $pageSize);
+            $list = $this->db['AccountWeibo']->getLists($where, 'id DESC', $page, $pageSize);
+        } elseif ($type == 4) {
+            $list = $this->db['AccountNews']->getLists($where, 'id DESC', $page, $pageSize);
         }
         
         // parent::callback(1, '成功获取数据', array(
@@ -185,8 +195,8 @@ class SocialAccountAction extends MediaBaseAction {
                     "account_id" => $val['id'],
                     "user_id" => 105153,
                     "face_url" => "http://tp4.sinaimg.cn/1032732203/50/40044194886/1",
-                    "url" => "http =>//weibo.com/u/1032732203",
-                    "weibo_type" => 1,
+                    "url" => "http://weibo.com/u/1032732203",
+                    "weibo_type" => $val['pt_type'],
                     "weibo_id" => "1032732203",
                     "weibo_name" => $val['account_name'],
                     "cell_phone" => null,
@@ -197,25 +207,29 @@ class SocialAccountAction extends MediaBaseAction {
                     "is_bluevip" => 2,
                     "is_vip" => 1,
                     "is_daren" => 2,
-                    "followers_count" => 1969,
-                    "tweet_price" => "1000.00",
-                    "retweet_price" => "1000.00",
-                    "content_price" => "450.00",
-                    "soft_tweet_price" => "700.00",
-                    "soft_retweet_price" => "700.00",
+                    "followers_count" => $val['fans_num'],
+                    "tweet_price" => $val['yg_zhifa'],
+                    "retweet_price" => $val['yg_zhuanfa'],
+                    "content_price" => $val['yg_zhifa'],
+                    "soft_tweet_price" => $val['rg_zhifa'],
+                    "soft_retweet_price" => $val['rg_zhuanfa'],
                     "is_private_message_enabled" => 2,
                     "is_activated" => 0,
                     "is_shield" => 2,
                     "is_sensitive" => 2,
-                    "is_extend" => 1,
+                    // 是否接硬广
+                    "is_extend" => $val['is_yg_status'],
                     "self_register" => 1,
-                    "is_verify" => 2,
+                    // 是否审核
+                    "is_verify" => $val['audit_status'],
                     "is_auth" => 2,
                     "is_auth_ds" => 2,
                     "is_auto_send" => 2,
-                    "is_online" => 2,
+                    // 是否上架
+                    "is_online" => $val['putaway_status'],
                     "is_price_open" => 0,
-                    "is_allow_order" => 2,
+                    // 是否接单
+                    "is_allow_order" => $val['receiving_status'],
                     "is_flowunit" => 2,
                     "company_black_num" => 0,
                     "orders_monthly" => 0,
@@ -269,9 +283,11 @@ class SocialAccountAction extends MediaBaseAction {
                     "soft_retweet_price_u" => 1,
                     "admin_name" => $val['name'],
                     "admin_qq" => "800003455,1007",
-                    "leave" => false,
-                    "periodMax" => true,
-                    "orderMax" => "",
+                    // 是否接单
+                    "leave" => $val['tmp_receiving_status'] ? true : false,
+                    // 接单上限
+                    "periodMax" => $val['receiving_num_status'] ? true : false,
+                    "orderMax" => $val['receiving_num_status'] ? $val['receiving_num'] : '',
                     "weibo_type_logo" => "http://img.weiboyi.com/img/uploadimg/platform_img/sina.jpg",
                     "rate" => 1
                 )
@@ -420,22 +436,176 @@ class SocialAccountAction extends MediaBaseAction {
     public function create()
     {
         if ($this->isPost()) {
-            $weiboType      = I('post.weibo_type', 0, 'intval');
-            $weiboId        = I('post.weibo_id', '', 'setString');
-            $retweetPrice   = I('post.retweet_price', 0, 'floatval');
+            $weiboType  = I('post.weibo_type', 0, 'intval');
+            $weiboId    = I('post.weibo_id', '', 'setString');
             
-            if (empty($weiboType) || empty($weiboId) || empty($retweetPrice)) {
+            if (empty($weiboType) || empty($weiboId)) {
                 parent::callback(0, '提交数据错误,请检查填写数据是否正确');
             }
             
-            $datas['source'] = $weiboId;
-            $datas['screen_name'] = $weiboId;
-            import("@.ORG.Util.CurlRequest");
-            $url = 'http://api.weibo.com/2/users/show.json?' . http_build_query($datas);
-            // $url = 'http://www.baidu.com/?' . http_build_query($datas);
-            $ch = new CurlRequest($url);
-            $ret = $ch->get();
-            var_dump($ret);
+            $viewPath = C('PUBLIC_VISIT');
+            
+            if (in_array($weiboType, array(1, 2))) {
+                // 新浪微博
+                $retweetPrice       = I('retweet_price', 0, 'floatval');
+                if (empty($retweetPrice)) {
+                    parent::callback(0, '价格错误');
+                }
+                
+                $datas['source'] = $weiboId;
+                $datas['screen_name'] = $weiboId;
+                import("@.ORG.Util.CurlRequest");
+                $sinaUrl = 'http://api.weibo.com/2/users/show.json?' . http_build_query($datas);
+                $tencentUrl = 'http://api.weibo.com/2/users/show.json?' . http_build_query($datas);
+                $url = ($weiboType == 1) ? $sinaUrl : $tencentUrl;
+                $ch = new CurlRequest($url);
+                $apiInfos = $ch->get();
+                if ($apiInfos['followers_count'] <= 499) {
+                    parent::callback(0, '粉丝数至少为500!', array(), array(
+                        'code'  => 900
+                    ));
+                }
+                
+                $userInfos = parent::get_session('user_info');
+                $datas = array(
+                    'users_id'      => $userInfos['id'],
+                    'is_celebrity'  => $apiInfos['verified'],
+                    'pt_type'       => ($weiboType == 1) ? 1: 2,
+                    'account_name'  => $weiboId,
+                    'fans_num'      => $apiInfos['followers_count'],
+                    'yg_zhuanfa'    => $retweetPrice,
+                    'yg_zhifa'      => $retweetPrice,
+                    'rg_zhuanfa'    => $retweetPrice * 0.7,
+                    'rg_zhifa'      => $retweetPrice * 0.7,
+                    'create_time'   => $_SERVER['REQUEST_TIME'],
+                );
+                
+                $weiboModel = $this->db['AccountWeibo'];
+                $insertId = $weiboModel->add($datas);
+                if ($insertId) {
+                    parent::weiboDataprocess($insertId);
+                    parent::callback(1, '增加帐号成功!', array(), array(
+                        'code'  => 1000
+                    ));
+                } else {
+                    parent::callback(0, '增加帐号失败!');
+                }
+            } elseif ($weiboType == 3) {
+                // 微信
+                $weiboName          = I('weibo_name', '', 'setString');
+                $followersCount     = I('followers_count', 0, 'intval');
+                $weeklyReadAvg      = I('weekly_read_avg', 0, 'intval');
+                $malePrecent        = I('gender_distribution_male', 0, 'floatval');
+                $femalePrecent      = I('gender_distribution_female', 0, 'floatval');
+                $price              = I('single_graphic_price', 0, 'floatval');
+                $hardPrice          = I('single_graphic_hard_price', '', 'floatval');
+                $topPrice           = I('multi_graphic_top_price', '', 'floatval');
+                $hardTopPrice       = I('multi_graphic_hard_top_price', '', 'floatval');
+                $secondPrice        = I('multi_graphic_second_price', '', 'floatval');
+                $hardSecondPrice    = I('multi_graphic_hard_second_price', '', 'floatval');
+                $otherPrice         = I('multi_graphic_other_price', '', 'floatval');
+                $hardOtherPrice     = I('multi_graphic_hard_other_price', '', 'floatval');
+                $contentPrice       = I('content_price', '', 'floatval');
+                $uploadImgAvatar    = I('uploadImgAvatar', '', 'setString');
+                $uploadImgQrCode    = I('uploadImgQrCode', '', 'setString');
+                $uploadImgFollowers = I('uploadImgFollowers', '', 'setString');
+                
+                $userInfos = parent::get_session('user_info');
+                $datas = array(
+                    'users_id'          => $userInfos['id'],
+                    'pt_type'           => 1,
+                    'account_name'      => $weiboName,
+                    'fans_num'          => $followersCount,
+                    'dtb_money'         => $price,
+                    'dtwdyt_money'      => $topPrice,
+                    'dtwdet_money'      => $secondPrice,
+                    'dtwqtwz_money'     => $otherPrice,
+                    'weekly_read_avg'   => $weeklyReadAvg,
+                    'male_precent'      => $malePrecent,
+                    'female_precent'    => $femalePrecent,
+                    'account_avatar'    => $viewPath['domain'] . $viewPath['dir'] . $uploadImgAvatar,
+                    'qr_code'           => $viewPath['domain'] . $viewPath['dir'] . $uploadImgQrCode,
+                    'follower_shot'     => $viewPath['domain'] . $viewPath['dir'] . $uploadImgFollowers,
+                    'create_time'       => $_SERVER['REQUEST_TIME'],
+                );
+                
+                $weixinModel = $this->db['AccountWeixin'];
+                $insertId = $weixinModel->add($datas);
+                if ($insertId) {
+                    parent::weixinDataprocess($insertId);
+                    parent::callback(1, '增加帐号成功!', array(), array(
+                        'code'  => 1000
+                    ));
+                } else {
+                    parent::callback(0, '增加帐号失败!');
+                }
+            } elseif ($weiboType == 4) {
+                // 新闻媒体
+                $retweetPrice       = I('retweet_price', 0, 'floatval');
+                $channelName        = I('channel_name', '', 'setString');
+                $title              = I('account_title', '', 'setString');
+                $areaId             = I('area_id', '', 'setString');
+                $entry              = I('account_entry', '', 'setString');
+                $isNewsSource       = I('is_news_source', 0, 'intval');
+                $isWebSiteIncluded  = I('is_web_site_included', 0, 'intval');
+                $isNeedSource       = I('is_need_source', 0, 'intval');
+                $url                = I('url', '', 'setString');
+                $isPressWeekly      = I('is_press_weekly', 0, 'intval');
+                $isTextLink         = I('is_text_link', 0, 'intval');
+                $imgPath            = I('uploadImgMedia', '', 'setString');
+                
+                if (empty($retweetPrice)) {
+                    parent::callback(0, '价格错误');
+                }
+                if (empty($isNewsSource)) {
+                    parent::callback(0, '是否新闻源?');
+                }
+                if (empty($isWebSiteIncluded)) {
+                    parent::callback(0, '是否网址收录?');
+                }
+                if (empty($isNeedSource)) {
+                    parent::callback(0, '是否需要来源?');
+                }
+                if (empty($isPressWeekly)) {
+                    parent::callback(0, '周末能否发稿?');
+                }
+                if (empty($isTextLink)) {
+                    parent::callback(0, '能否带文本链接?');
+                }
+                
+                $userInfos = parent::get_session('user_info');
+                $where = array(
+                    'users_id'      => $userInfos['id'],
+                    'account_name'  => $weiboId
+                );
+                $accountNewsModel = $this->db['AccountNews'];
+                $accountInfo = $accountNewsModel->getAccountInfo($where);
+                if ($accountInfo) {
+                    parent::callback(0, '该帐号已存在!');
+                } else {
+                    $datas = array(
+                        'users_id'      => $userInfos['id'],
+                        'big_type'      => 1,
+                        'pt_type'       => 1,
+                        'account_name'  => $weiboId,
+                        'web_type'      => $isWebSiteIncluded,
+                        'money'         => $retweetPrice,
+                        'url_type'      => $isNewsSource,
+                        'url_status'    => $isTextLink,
+                        'media_shot'    => $viewPath['domain'] . $viewPath['dir'] . $imgPath,
+                        'create_time'   => $_SERVER['REQUEST_TIME'],
+                    );
+                    $insertId = $accountNewsModel->add($datas);
+                    if ($insertId) {
+                        parent::newsDataprocess($insertId);
+                        parent::callback(1, '增加帐号成功!', array(), array(
+                            'code'  => 1000
+                        ));
+                    } else {
+                        parent::callback(0, '增加帐号失败!');
+                    }
+                }
+            }
         } else {
             parent::callback(0, 'error');
         }

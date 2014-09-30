@@ -1,5 +1,5 @@
 <div class="cBox mid-batch pr l" style="width:100%;">
-    <form method="post" action="/Media/SocialAccount/submitaccount" name="accountRegistor" id="accountRegistor">
+    <form method="post" name="accountRegistor" id="accountRegistor">
         <table class="tab01-inten l table-xwmt">
             <tr>
                 <td class="t1"><span><i>*</i><strong>账号名：</strong></span></td>
@@ -18,8 +18,8 @@
             <tr>
                 <td class="t1"><span><i>*</i><strong>价格：</strong></span></td>
                 <td class="t2">
-                    <input data-bind="placeholder: '请输入正整数', validThreeState: tweet_price, value: tweet_price" type="text" class="text text-error" name="tweet_price" maxlength="10"/>
-                    <p data-bind="html: tweet_price.notice_text, css: tweet_price.notice_css" class="cBox_tip"></p>
+                    <input name="retweet_price" data-bind="placeholder: '请输入正整数', validThreeState: retweet_price, value: retweet_price" type="text" class="text text-error" maxlength="10"/>
+                    <p data-bind="html: retweet_price.notice_text, css: retweet_price.notice_css" class="cBox_tip"></p>
                 </td>
             </tr>
             <tr>
