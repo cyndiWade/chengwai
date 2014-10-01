@@ -57,7 +57,12 @@
 						<td class="t6"></td>
 						<td class="t7"></td>
 						<td class="t8"><strong class="wpd">{$vo['status']|getHdT}</strong></td>
-						<td class="last"><div class="ctrl"><span class="delete_order" data-id="{$vo['id']}">删除</span></div></td>
+						<td class="last">
+						
+							<div class="ctrl">
+							<span><a href="{:U('Advert/News/generalize_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
+							<span class="delete_order" data-id="{$vo['id']}">删除</span></div>
+						</td>
 					</tr>
 			   	</volist>
 			</table>

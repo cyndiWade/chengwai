@@ -225,6 +225,16 @@ class NewsAction extends AdvertBaseAction {
 		}
 	}
 	
+	
+	//订单详情
+	public function generalize_detail () {
+		parent::data_to_view(array(
+				//二级导航属性
+			'sidebar_two'=>array(2=>'select',),//第一个加依次类推
+		));
+		$this->display();
+	}
+	
 }	
 
 ?>

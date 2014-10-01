@@ -54,7 +54,12 @@
 						<td class="t5">{$vo['tfpt_type']|getPt}</td>
 						<td class="t6">{$vo['start_time']|date="Y-m-d H:i:s",###}</td>
 						<td class="t7">{$vo['over_time']|date="Y-m-d H:i:s",###}</td>
-						<td class="last"><div class="ctrl"><span class="delete_order" data-id="{$vo['id']}">删除</span></div></td>
+						<td class="last">
+							<div class="ctrl">
+								<span><a href="{:U('Advert/WeiboOrder/intention_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
+								<span class="delete_order" data-id="{$vo['id']}">删除</span>
+							</div>
+						</td>
 					</tr>
 				</volist>
 			</table>

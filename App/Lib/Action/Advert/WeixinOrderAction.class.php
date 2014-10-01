@@ -327,6 +327,25 @@ class WeixinOrderAction extends AdvertBaseAction {
 		}
 		return $img_where;
 	}
+	
+	
+	//订单详情
+	public function generalize_detail () {
+		parent::data_to_view(array(
+				//二级导航属性
+				'sidebar_two'=>array(3=>'select',),//第一个加依次类推
+		));
+		$this->display();
+	}	
+	
+	//意向单详情页
+	public function intention_detail () {
+		parent::data_to_view(array(
+				//二级导航属性
+				'sidebar_two'=>array(4=>'select',),//第一个加依次类推
+		));
+		$this->display();
+	}
 }
 
 ?>

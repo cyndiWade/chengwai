@@ -57,7 +57,12 @@
 						<td class="t6"><span class="red">1000.00</span>元</td>
 						<td class="t7"><strong class="wpd">{$vo['status']|getHdT}</strong></td>
 						<td class="t8"><b class="red">{$vo['ggw_type']|adGet}</b></td>
-						<td class="last"><div class="ctrl"><span class="delete_order" data-id="{$vo['id']}">删除</span></div></td>
+						<td class="last">
+							<div class="ctrl">
+								<span><a href="{:U('Advert/WeixinOrder/generalize_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
+								<span class="delete_order" data-id="{$vo['id']}">删除</span>
+							</div>
+						</td>
 					</tr>
 			   	</volist>
 			</table>
