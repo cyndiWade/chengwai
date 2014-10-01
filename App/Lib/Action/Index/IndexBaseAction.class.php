@@ -93,8 +93,11 @@ class IndexBaseAction extends AppBaseAction {
 				5 => U('/Index/Index/kh_case'),
 				//6 => U('/Index/Index/vip'),
 				7 => U('/Index/Index/about_us'),
+				8 => U('/Media/Account/login'),		//媒体主登录
+				9 => U('/Advert/Account/login'),	//广告主登录
 		);
 		
+		//关于我们导航
 		$data[2] = array(
 			0 => U('/Index/Index/about_us'),
 			//1 => U('/Index/Index/news'),
