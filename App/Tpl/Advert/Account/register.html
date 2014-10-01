@@ -38,10 +38,15 @@
 				<td class="t1"><span><em>*</em>手机号码：</span></td>
 				<td class="t2"><input type="text" class="text" name="iphone"/><div class="oktip"></div><div class="errortip">手机号不能为空</div></td>
 			  </tr>
+			   <tr>
+			  	<td class="t1"></td>
+			  	<td class="t2"><div class="phoneclick">发送短信验证码</div></td>
+			  </tr>
 			  <tr>
 				<td class="t1"><span><em>*</em>输入手机验证码：</span></td>
 				<td class="t2"><input type="text" class="text" name="phone_verify"/><div class="oktip"></div><div class="errortip">手机验证码不能为空</div></td>
 			  </tr>
+			 
 			  <tr>
 				<td class="t1"></td>
 				<td class="t2"><div class="agreebox"><input type="checkbox" class="check fl" checked="checked" /><em class="fl">同意<a href="#">服务协议</a></em></div></td>
@@ -105,24 +110,43 @@
 			});
 		}
 	});
-	$('input[name="iphone"]').focusout(function(){
-		var _this = $(this);
+	function settime(){
+		var _this = $('.phoneclick');
+		var thist = parseInt(_this.html().substr(4,2));
+		var nextt = thist - 1 ;
+		if(nextt==0)
+		{
+			_this.html('发送短信验证码');
+			clearTimeout(t);
+		}else{
+			_this.html('倒计时 '+nextt +' 秒');
+			var t = setTimeout(settime,1000);
+		}
+	}
+	$('.phoneclick').click(function(){
+		var phone_this = $(this);
+		var _this = $('input[name="iphone"]');
 		if(phone(_this.val())===true)
 		{
-			_this.attr('class','text');
-			_this.next().next().html('发送手机验证码中...').show();
-			$.ajax({
-				url : "{:U('Api/SendMsg/advert_register_send')}",
-				type : "POST",
-				async : false,
-				cache :　false,
-				data : {telephone:_this.val()},
-				success : function(value)
-				{
-					_this.next().show();
-					_this.next().next().hide();
-				}
-			});
+			if(phone_this.html()=='发送短信验证码')
+			{
+				_this.attr('class','text');
+				_this.next().next().html('发送手机验证码中...').show();
+				phone_this.html('倒计时 '+ '30' +' 秒');
+				settime();
+				$.ajax({
+					url : "{:U('Api/SendMsg/advert_register_send')}",
+					type : "POST",
+					async : false,
+					cache :　false,
+					data : {telephone:_this.val()},
+					success : function(value)
+					{
+						_this.next().show();
+						_this.next().next().hide();
+					}
+				});
+			}
 		}else{
 			if(_this.val()!='')
 			{

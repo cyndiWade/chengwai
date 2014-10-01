@@ -30,3 +30,5 @@
 .area01-reg-media .title-reg b{ color:#ea6060;}
 .area01-reg-media .agreebox a{ text-decoration:underline; color:#ea6060;}
 .area01-reg-media .part01-regtxt a{ color:#ea6060;}
+.phoneclick{display: block;width:95px;height:30px;background: #ea6060;line-height: 30px;text-align: center; color: #fff;}
+.phoneclick:hover{background: red;cursor: pointer;}
