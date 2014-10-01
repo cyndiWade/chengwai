@@ -63,6 +63,7 @@ Weixin.prototype.init = function () {
 	this.order_id = $('#order_id');	//订单ID
 	
 	this.order_vessel = $('.order_vessel');	//订单容器
+	this.close_order_vessel = $('.close_order_vessel');	//关闭订单容器
 	this.account_num = $('.account_num');//账号数
 	this.account_money = $('.account_money');	//价格
 	this.account_selected = $('.account_selected');	//已选择账号
@@ -77,9 +78,6 @@ Weixin.prototype.init = function () {
 Weixin.prototype.add_old_class = function () {
 	$('.tab01-Weixin tr:even').addClass('even');
 	
-	$('#batch').click(function(){
-		$('.batchbox').popOn();
-	})
 	$('.top-search strong').click(function(){
 		$(this).siblings().removeClass('on')
 		$(this).addClass('on');
@@ -803,7 +801,7 @@ Weixin.prototype.add_selected_box_fn = function () {
 		delet_account_fn();
 		
 		//弹窗插件
-		_father_this.order_vessel.popOn();
+		_father_this.order_vessel.show();
 	}
 	
 	
@@ -877,6 +875,14 @@ Weixin.prototype.add_selected_box_fn = function () {
 				}
 			}
 			
+		});
+	}();
+	
+	//关闭窗口
+	var close_order_vessel_fn = function () {
+		_father_this.close_order_vessel.click(function () {
+			//弹窗插件
+			_father_this.order_vessel.hide();
 		});
 	}();
 }
