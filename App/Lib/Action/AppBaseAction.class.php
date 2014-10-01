@@ -419,6 +419,8 @@ class AppBaseAction extends GlobalParameterAction {
 		if($AccountNewsInfo!='')
 		{
 			$new_info['price'] = $AccountNewsInfo['money'];
+			$new_info['is_news'] = $AccountNewsInfo['url_type'];
+			$new_info['links'] = $AccountNewsInfo['url_status'];
 			//判断索引表数据是否已经存在
 			$IndexNews = D('IndexNews');
 			$where = array('news_id'=>$id);
