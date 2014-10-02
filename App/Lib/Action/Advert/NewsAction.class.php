@@ -14,8 +14,6 @@ class NewsAction extends AdvertBaseAction {
 	//控制器说明
 	private $module_explain = '新闻媒体账号';
 	
-	private $top_tags_parentId = 293;
-	
 	private $weibo_search_classify_data = array();
 
 	private $pt_type;	//平台类型
