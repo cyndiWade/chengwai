@@ -377,8 +377,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 	public function zhifu()
 	{
 		$zhifu_id = intval($_POST['id']);
-		$GeneralizeNewsOrder = D('GeneralizeAccount')->siteMoney($zhifu_id,$this->oUser->id);
-		if($GeneralizeNewsOrder==true)
+		$GeneralizeAccount = D('GeneralizeAccount')->siteMoney($zhifu_id,$this->oUser->id);
+		if($GeneralizeAccount==true)
 		{
 			parent::callback(C('STATUS_SUCCESS'),'支付成功!');
 		}else{

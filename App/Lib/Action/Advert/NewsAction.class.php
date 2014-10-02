@@ -238,8 +238,8 @@ class NewsAction extends AdvertBaseAction {
 	public function zhifu()
 	{
 		$zhifu_id = intval($_POST['id']);
-		$GeneralizeNewsOrder = D('GeneralizeNewsAccount')->siteMoney($zhifu_id,$this->oUser->id);
-		if($GeneralizeNewsOrder==true)
+		$GeneralizeNewsAccount = D('GeneralizeNewsAccount')->siteMoney($zhifu_id,$this->oUser->id);
+		if($GeneralizeNewsAccount==true)
 		{
 			parent::callback(C('STATUS_SUCCESS'),'支付成功!');
 		}else{
