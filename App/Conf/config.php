@@ -146,7 +146,7 @@ $custom= array (
 				),
 		),
 		
-		
+		//主订单状态
 		'Order_Status' => array(
 			0=>array(
 				'status'=>0,
@@ -174,6 +174,29 @@ $custom= array (
 			),
 		),
 		
+		
+		//关系表订单状态
+		'Account_Order_Status' => array(
+			0=>array(
+				'status'=>0,
+				'explain'=>'新订单',
+			),
+			1=>array(
+				'status'=>1,
+				'explain'=>'审核通过'
+			),
+			2=>array(
+				'status'=>2,
+				'explain'=>'支付成功'
+			),
+			3=>array(
+				'status'=>3,
+				'explain'=>'执行完成'
+			),
+	
+					
+		),
+	
 		//大导航分类ID集合
 		'Big_Nav_Class_Ids' => array(
 			//新浪、腾讯名人分类ID集合

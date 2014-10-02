@@ -60,38 +60,38 @@
 			<div class="searnum fl">
 				账号总数：<b class="blue">【0】</b>, 粉丝数：<b class="blue">【0】</b>个，总消费额：<b class="blue">￥0.00</b>， 已派单：<b class="blue">【0】</b>个， 已收链接：<b class="blue">【0】</b>个， 流单：<b class="blue">【0】</b>个， 拒单：<b class="blue">【0】</b>个， 系统流单：<b class="blue">【0】</b>个， 已取消：<b class="blue">【0】</b>个 
 			</div>
+			<!--  
 			<div class="box01-status l">
 				<select class="first"><option>默认排序</option></select><select><option>全部订单状态</option></select><span>质检处理状态：<select><option>请选择</option></select></span><span>质检状态：<select><option>请选择</option></select></span>
 			</div>
+			-->
 			<table class="tab01-order l">
 			  <tr>
 				<th class="t1">订单ID</th>
-				<th class="t2">红人姓名</th>
-				<th class="t3">账号名称</th>
-				<th class="t4">好友数</th>
-				<th class="t5">消费额</th>
-				<th class="t6">订单状态</th>
-				<th class="t7">执行截图</th>
-				<th class="t8">评价</th>
-				<th class="t9">质检状态</th>
-				<th class="t10">质检处理状态</th>
-				<th class="t11">质检退款</th>
+				<th class="t2">名称</th>
+				<th class="t10">账号名称</th>
+
+				<th class="t10">消费额</th>
+				<th class="t10">订单状态</th>
+				<th class="t12">执行截图</th>
 				<th class="last">操作</th>
+
 			  </tr>
 			<volist name="view_data['account_order_list']" id="vo">
 			  <tr>
-				<td class="t1">{$vo.id}</td>
-				<td class="t2"><div class="weibopart"><img src="images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：quiadaa</span></div></div></div></td>
-				<td class="t3">hgjggjk</td>
-				<td class="t4"><p>93万</p><span class="norz">未认证</span></td>
-				<td class="t5">100.00元</td>
-				<td class="t6"><strong class="finish">执行完成</strong></td>
-				<td class="t7"><a href="#" class="blue">查看执行截图</a></td>
-				<td class="t8">评价</td>
-				<td class="t9"></td>
-				<td class="t10"></td>
-				<td class="t11"></td>
-				<td class="last"><div class="ctrl"><span>收藏</span><span>拉黑</span></div></td>
+				<td class="">{$vo.g_id}</td>
+				<td class=""><div class="weibopart"><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl">
+					<h5 class="l"><b></b><span class="heart"></span></h5>
+					<div class="weixininfo l"><span class="weixinhao fl">{$vo.account_name}</span></div></div></div></td>
+				<td class="">{$vo.account_name}</td>
+
+				<td class="">100.00元</td>
+				<td class=""><strong class="finish">执行完成</strong></td>
+				<td class=""><a href="#" class="blue">查看执行截图</a></td>
+	
+				<td class="">
+					<a href="javascript:;" class="blue">确认完成</a>	
+				</td>
 			  </tr>
 			</volist>
 			</table>
