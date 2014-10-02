@@ -13,7 +13,7 @@
 <div class="wrap l">
 <div class="pbd">
 	<div class="location l">
-		当前位置：<a href="#">首页</a>  >  <a href="#">微信推广</a> > <span class="blue">推广单详情页</span>
+		当前位置：<a href="#">首页</a>  >  <a href="#">微信推广</a> > <span class="blue">订单详情页</span>
 	</div>
 	<div class="area01-myorder l">
 		<div class="box01-myorder fl">
@@ -21,123 +21,94 @@
 			<table class="tab01-myorder l">
 			  <tr>
 				<th class="t1">活动名称：</th>
-				<td class="t2">大胃王挑战</td>
+				<td class="t2">{$view_data.order_info.title}</td>
 				<th class="t1">活动ID：</th>
-				<td class="t3">764521</td>
+				<td class="t3">{$view_data.order_info.id}</td>
 				<th class="t1">投放平台：</th>
-				<td class="t2">微信</td>
+				<td class="t2">{$view_data.order_info.tfpt_type|getPt}</td>
 			  </tr>
 			  <tr>
 				<th class="t1">活动类型：</th>
 				<td class="t2">直发</td>
 				<th class="t1">开始时间：</th>
-				<td class="t3">2014-09-02 14:30</td>
-				<th class="t1">执行时间段：</th>
-				<td class="t2">2014-09-02 14:30-2014-09-02 20:30 </td>
+				<td class="t3">{$view_data.order_info.start_time|date="Y-m-d H:i:s",###}</td>
+				<th class="t1">反馈时间：</th>
+				<td class="t2">{$view_data.order_info.over_time|date="Y-m-d H:i:s",###}</td>
 			  </tr>
 			  <tr>
 				<th class="t1">活动状态：</th>
-				<td class="t2">草稿</td>
+				<td class="t2">{$view_data.order_info.status_explain}</td>
 				<th class="t1">直发内容类型：</th>
 				<td class="t3">指定直发内容</td>
 				<th class="t1">正品证明：</th>
-				<td class="t2">微信</td>
+				<td class="t2">无</td>
 			  </tr>
 			  <tr>
 				<th class="t1">直发内容：</th>
-				<td colspan="3">草稿直发内容类型：指定直发内容</td>
+				<td colspan="3">指定直发内容</td>
 				<th class="t1">配图：</th>
-				<td class="t2">微信</td>
+				<td class="t2">无</td>
 			  </tr>
 			  <tr>
 				<th class="t1">活动备注：</th>
-				<td colspan="5">大胃王挑战直发内容类型：指定直发内容配图：微信</td>
+				<td colspan="5">{$view_data.order_info.bz_info}</td>
 			  </tr>
 			</table>
 		</div>
 		<div class="box02-myorder l">
 			<div class="top-myorder l"><b>以下账号正在为您服务</b></div>
 			<div class="searnum fl">
-				账号总数：<b class="blue">【0】</b>, 粉丝数：<b class="blue">【0】</b>个，总消费额：<b class="blue">￥0.00</b>， 已派单：<b class="blue">【0】</b>个， 已收链接：<b class="blue">【0】</b>个， 流单：<b class="blue">【0】</b>个， 拒单：<b class="blue">【0】</b>个， 系统流单：<b class="blue">【0】</b>个， 已取消：<b class="blue">【0】</b>个 
+				账号总数：<b class="blue">【{$view_data.extend_order_info.order_num}】</b>，总消费额：<b class="blue">￥{$view_data.extend_order_info.sum_money}</b>， 拒单：<b class="blue">【{$view_data.extend_order_info.jy_order_sum}】</b>个
 			</div>
+			<!--  
 			<div class="box01-status l">
 				<select class="first"><option>默认排序</option></select><select><option>全部订单状态</option></select><span>质检处理状态：<select><option>请选择</option></select></span><span>质检状态：<select><option>请选择</option></select></span>
 			</div>
+			-->
 			<table class="tab01-order l">
 			  <tr>
 				<th class="t1">订单ID</th>
-				<th class="t2">红人姓名</th>
-				<th class="t3">账号名称</th>
-				<th class="t4">好友数</th>
-				<th class="t5">消费额</th>
-				<th class="t6">订单状态</th>
-				<th class="t7">执行截图</th>
-				<th class="t8">评价</th>
-				<th class="t9">质检状态</th>
-				<th class="t10">质检处理状态</th>
-				<th class="t11">质检退款</th>
+				<th class="t2">名称</th>
+				<th class="t10">账号名称</th>
+
+				<th class="t10">消费额</th>
+				<th class="t10">订单状态</th>
+				<th class="t12">执行截图</th>
 				<th class="last">操作</th>
+
 			  </tr>
+			<volist name="view_data['account_order_list']" id="vo">
 			  <tr>
-				<td class="t1">15472144</td>
-				<td class="t2"><div class="weibopart"><img src="images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：quiadaa</span></div></div></div></td>
-				<td class="t3">hgjggjk</td>
-				<td class="t4"><p>93万</p><span class="norz">未认证</span></td>
-				<td class="t5">100.00元</td>
-				<td class="t6"><strong class="finish">执行完成</strong></td>
-				<td class="t7"><a href="#" class="blue">查看执行截图</a></td>
-				<td class="t8">评价</td>
-				<td class="t9"></td>
-				<td class="t10"></td>
-				<td class="t11"></td>
-				<td class="last"><div class="ctrl"><span>收藏</span><span>拉黑</span></div></td>
+				<td class="t1">{$vo.g_id}</td>
+				<td class=""><div class="weibopart"><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl">
+					<h5 class="l"><b></b><span class="heart"></span></h5>
+					<div class="weixininfo l"><span class="weixinhao fl">{$vo.account_name}</span></div></div></div></td>
+				<td class="">{$vo.account_name}</td>
+
+				<td class="">{$vo.g_price}元</td>
+				<td class=""><strong class="finish">{$vo.g_status_explain}</strong></td>
+				<td class=""><a href="javascript:;" class="blue" data-order_id="{$vo.g_id}">查看执行截图</a></td>
+	
+				<td class="">
+					<if condition="($vo['is_show_affirm_btn'] eq true)">
+					<a href="javascript:;" class="blue affirm_order" data-order_id="{$vo.g_id}">确认完成</a>	
+					<else />
+					暂无
+					</if>
+				</td>
 			  </tr>
-			  <tr>
-				<td class="t1">15472144</td>
-				<td class="t2"><div class="weibopart"><img src="images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：quiadaa</span></div></div></div></td>
-				<td class="t3">hgjggjk</td>
-				<td class="t4"><p>93万</p><span class="norz">未认证</span></td>
-				<td class="t5">100.00元</td>
-				<td class="t6"><strong class="finish">执行完成</strong></td>
-				<td class="t7"><a href="#" class="blue">查看执行截图</a></td>
-				<td class="t8">评价</td>
-				<td class="t9"></td>
-				<td class="t10"></td>
-				<td class="t11"></td>
-				<td class="last"><div class="ctrl"><span>收藏</span><span>拉黑</span></div></td>
-			  </tr>
-			  <tr>
-				<td class="t1">15472144</td>
-				<td class="t2"><div class="weibopart"><img src="images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：quiadaa</span></div></div></div></td>
-				<td class="t3">hgjggjk</td>
-				<td class="t4"><p>93万</p><span class="norz">未认证</span></td>
-				<td class="t5">100.00元</td>
-				<td class="t6"><strong class="finish">执行完成</strong></td>
-				<td class="t7"><a href="#" class="blue">查看执行截图</a></td>
-				<td class="t8">评价</td>
-				<td class="t9"></td>
-				<td class="t10"></td>
-				<td class="t11"></td>
-				<td class="last"><div class="ctrl"><span>收藏</span><span>拉黑</span></div></td>
-			  </tr>
-			  <tr>
-				<td class="t1">15472144</td>
-				<td class="t2"><div class="weibopart"><img src="images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l"><b>全球头条新闻</b><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：quiadaa</span></div></div></div></td>
-				<td class="t3">hgjggjk</td>
-				<td class="t4"><p>93万</p><span class="norz">未认证</span></td>
-				<td class="t5">100.00元</td>
-				<td class="t6"><strong class="finish">执行完成</strong></td>
-				<td class="t7"><a href="#" class="blue">查看执行截图</a></td>
-				<td class="t8">评价</td>
-				<td class="t9"></td>
-				<td class="t10"></td>
-				<td class="t11"></td>
-				<td class="last"><div class="ctrl"><span>收藏</span><span>拉黑</span></div></td>
-			  </tr>
+			</volist>
 			</table>
-		</div>
+		</div>	
 	</div>
+	
+	<!--  订单支付按钮 -->
+	<if condition="($view_data.is_show_order_btn eq true)">
+	<p style="float:right;"><button type="button" id="btn_zf" data-order_id="{$view_data.order_id}">立即支付</button> </p>
+	</if>
+	
 </div>
+	
 </div>
 
 <include file="Public:member_footer" />
@@ -148,7 +119,49 @@
 <script type="text/javascript">
 $(function(){
 	$('.tab01-order tr:even').addClass('even');
-})
+});
+
+(function () {
+	
+	//确认订单
+	var affirm_order = $('.affirm_order');
+	affirm_order.click(function () {
+		if (confirm('确认完成？') == false) return false; 
+		
+		var _this = $(this);
+		var order_id = _this.data('order_id');
+		var post_data = {};
+		post_data.id = order_id;
+		var result = System.ajax_post_setup('{:U('Advert/WeixinOrder/set_account_status')}',post_data);
+		if (result.status == 0) {
+			alert(result.msg);
+			window.location.reload(); 
+		} else {
+			alert(result.msg)
+		}
+		
+	});
+	
+	
+	//支付接口
+	var btn_zf = $('#btn_zf');
+	btn_zf.click(function () {
+		
+		if (confirm('确定要支付吗？') == false) return false; 
+		
+		var order_id = $(this).data('order_id');
+		var post_data = {};
+		post_data.id = order_id;
+		var result = System.ajax_post_setup('{:U('Advert/WeixinOrder/zhifu')}',post_data);
+		if (result.status == 0) {
+			alert(result.msg);
+			window.location.reload(); 
+		} else {
+			alert(result.msg)
+		}
+	});
+})();
+
 </script>
 </body>
 </html>

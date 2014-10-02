@@ -58,13 +58,34 @@
 					if($bool)
 					{
 						$save = array('status'=>4);
-						D('GeneralizeWeixinOrder')->where(array('id'=>$zhifu_id))->save($save);
-						return true;
+						$WeixinOrderStatus =  D('GeneralizeWeixinOrder')->where(array('id'=>$zhifu_id))->save($save);
+						
+						//修改关联表的状态为已支付状态
+						$Account_Order_Status = C('Account_Order_Status');
+						if ($WeixinOrderStatus == true) {
+							return $this->where(array('generalize_id'=>$zhifu_id))->save(array('audit_status'=>$Account_Order_Status[3]['status']));
+						}
+						
+						//return true;
 					}else{
 						return false;
 					}
 				}
 				
 			}
+		}
+		
+		
+		public function get_account_order ($generalize_id) {
+			$where['g.generalize_id'] = $generalize_id;
+			$field = 'g.id AS g_id,g.price AS g_price,g.audit_status AS g_audit_status,a.*';
+				
+			$data = $this->field($field)
+			->table($this->prefix.'generalize_weixin_account AS g')
+			->join($this->prefix.'account_weixin AS a ON g.account_id = a.id')
+			->where($where)
+			->select();
+				
+			return $data;
 		}
 	}

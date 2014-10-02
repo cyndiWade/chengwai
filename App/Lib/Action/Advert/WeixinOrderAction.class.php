@@ -100,6 +100,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 		$show       = $Page->show();
 		$list = $GeneralizeWeixinOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
 		->order('id desc')->field('id,tfpt_type,fslx_type,ggw_type,yxd_name,start_time,all_price,over_time,status')->select();
+		
 		parent::data_to_view(array(
 				'page' => $show ,
 				'list' => $list,
@@ -331,12 +332,90 @@ class WeixinOrderAction extends AdvertBaseAction {
 	
 	//订单详情
 	public function generalize_detail () {
+		$order_id = $this->_get('order_id');
+		if (empty($order_id)) $this->error('非法操作！');
+		
+		//获取订单数据
+		$GeneralizeWeixinOrder = $this->db['GeneralizeWeixinOrder'];
+		$order_info = $GeneralizeWeixinOrder->get_OrderInfo_By_Id($order_id,$this->oUser->id);
+	
+		
+		if (empty($order_info)) $this->error('订单不存在');
+		
+		//获取订单下的账号列表
+		$GeneralizeNewsAccount = $this->db['GeneralizeWeixinAccount'];
+		$account_order_list = $GeneralizeNewsAccount->get_account_order($order_id);	
+				
+		//订单状态
+		$ORDER_STATUS = C('Order_Status');
+		$order_info['status_explain'] = $ORDER_STATUS[$order_info['status']]['explain'];
+
+		//关联边订单状态
+		$Account_Order_Status = C('Account_Order_Status');
+		if ($account_order_list == true) {
+			
+			$extend_order_info['sum_money'] = 0;	//订单总价格
+			$extend_order_info['jy_order_sum'] = 0;	//据单数
+			
+			foreach ($account_order_list as $key=>$val) {
+				//关联表订单状态
+				$account_order_list[$key]['g_status_explain'] = $Account_Order_Status[$val['g_audit_status']]['explain'];
+				
+				//是否显示确认按钮
+				if ($val['g_audit_status'] == $Account_Order_Status[6]['status']) {
+					$account_order_list[$key]['is_show_affirm_btn'] = true;
+				}
+				
+				//统计订单总金额
+				$extend_order_info['sum_money'] += $val['g_price'];
+				
+				//统计据单数
+				if ($val['g_audit_status'] == $Account_Order_Status[4]['status']) {
+					$extend_order_info['jy_order_sum'] += 1;
+				}
+			}
+			
+			//关联订单账号总数
+			$extend_order_info['order_num'] = count($account_order_list);
+			
+			
+			//根据订单状态决定是否显示订单支付按钮
+			$is_show_order_btn = false;	
+			if ($order_info['status'] == $ORDER_STATUS[2]['status']) {
+				$is_show_order_btn = true;
+			}
+		}
+		
+
+		//获取订单下的关联账号列表
 		parent::data_to_view(array(
-				//二级导航属性
-				'sidebar_two'=>array(3=>'select',),//第一个加依次类推
+			'sidebar_two'=>array(3=>'select',),//第一个加依次类推，//二级导航属性
+			'order_info'=>$order_info,
+			'account_order_list'=>$account_order_list,
+			'extend_order_info'=>$extend_order_info,
+			'is_show_order_btn' => $is_show_order_btn,	
+			'order_id'=>$order_id
 		));
 		$this->display();
 	}	
+	
+	
+
+	//确认订单状态
+	public function set_account_status () {
+		$id = $this->_post('id');
+		//关联边订单状态
+		$Account_Order_Status = C('Account_Order_Status');
+		$data['audit_status'] = $Account_Order_Status[7]['status'];
+		$is_ok = $this->db['GeneralizeWeixinAccount']->where(array('id'=>$id))->save($data);
+	
+		if ($is_ok == true) {
+			parent::callback(C('STATUS_SUCCESS'),'操作成功');
+		} else {
+			parent::callback(C('STATUS_UPDATE_DATA'),'操作失败');
+		}
+	}
+	
 	
 	//意向单详情页
 	public function intention_detail () {

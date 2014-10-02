@@ -55,6 +55,7 @@
 		//支付开始
 		public function siteMoney($zhifu_id,$account_id)
 		{
+		
 			if($zhifu_id!='')
 			{
 				$UserAdvertisement = D('UserAdvertisement');
@@ -71,9 +72,16 @@
 					$bool = $UserAdvertisement->where(array('users_id'=>$account_id))->save($update);
 					if($bool)
 					{
-						$save = array('status'=>4);
-						D('GeneralizeNewsOrder')->where(array('id'=>$zhifu_id))->save($save);
-						return true;
+						$save = array('status'=>4);	//已支付待执行状态
+						$NewsOrderStatus = D('GeneralizeNewsOrder')->where(array('id'=>$zhifu_id))->save($save);
+						
+						$Account_Order_Status = C('Account_Order_Status');
+						
+						if ($NewsOrderStatus == true) {
+							return $this->where(array('generalize_id'=>$zhifu_id))->save(array('audit_status'=>$Account_Order_Status[3]['status']));
+						}
+						
+						//return true;
 					}else{
 						return false;
 					}

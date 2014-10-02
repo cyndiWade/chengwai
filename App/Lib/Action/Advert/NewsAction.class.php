@@ -277,8 +277,6 @@ class NewsAction extends AdvertBaseAction {
 			if ($order_info['status'] == $ORDER_STATUS[2]['status']) {
 				$is_show_order_btn = true;
 			}
-			
-		
 		}
 		
 

@@ -155,6 +155,7 @@ $(function(){
 		var result = System.ajax_post_setup('{:U('Advert/News/zhifu')}',post_data);
 		if (result.status == 0) {
 			alert(result.msg);
+			window.location.reload(); 
 		} else {
 			alert(result.msg)
 		}
