@@ -147,6 +147,33 @@ $custom= array (
 		),
 		
 		
+		'Order_Status' => array(
+			0=>array(
+				'status'=>0,
+				'explain'=>'待派单'
+			),	
+			1=>array(
+				'status'=>1,
+				'explain'=>'待审核'
+			),
+			2=>array(
+				'status'=>2,
+				'explain'=>'审核通过'
+			),
+			3=>array(
+				'status'=>3,
+				'explain'=>'审核失败，重新提交'
+			),
+			4=>array(
+				'status'=>4,
+				'explain'=>'已支付，待执行'
+			),
+			5=>array(
+				'status'=>5,
+				'explain'=>'执行完成'
+			),
+		),
+		
 		//大导航分类ID集合
 		'Big_Nav_Class_Ids' => array(
 			//新浪、腾讯名人分类ID集合

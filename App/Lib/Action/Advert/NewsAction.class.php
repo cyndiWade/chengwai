@@ -226,9 +226,30 @@ class NewsAction extends AdvertBaseAction {
 	
 	//订单详情
 	public function generalize_detail () {
+		$order_id = $this->_get('order_id');
+		if (empty($order_id)) $this->error('非法操作！');
+		
+		//获取订单数据
+		$GeneralizeNewsOrder = $this->db['GeneralizeNewsOrder'];
+		$order_info = $GeneralizeNewsOrder->get_OrderInfo_By_Id($order_id,$this->oUser->id);
+		
+		if (empty($order_info)) $this->error('订单不存在');
+		
+		//获取订单下的账号列表
+		$GeneralizeNewsAccount = $this->db['GeneralizeNewsAccount'];
+		$account_order_list = $GeneralizeNewsAccount->get_account_order($order_id);	
+		
+		//dump($account_order_list);
+		//exit;		
+		//订单状态
+		$ORDER_STATUS = C('Order_Status');
+		$order_info['status_explain'] = $ORDER_STATUS[$order_info['status']]['explain'];
+				
+		//获取订单下的关联账号列表
 		parent::data_to_view(array(
-				//二级导航属性
-			'sidebar_two'=>array(2=>'select',),//第一个加依次类推
+			'sidebar_two'=>array(2=>'select',),//第一个加依次类推，//二级导航属性
+			'order_info'=>$order_info,
+			'account_order_list'=>$account_order_list	
 		));
 		$this->display();
 	}
