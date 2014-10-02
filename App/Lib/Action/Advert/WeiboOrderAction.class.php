@@ -423,6 +423,22 @@ class WeiboOrderAction extends AdvertBaseAction {
 	}
 	
 	
+	//确认订单状态
+	public function set_account_status () {
+		$id = $this->_post('id');
+		//关联边订单状态
+		$Account_Order_Status = C('Account_Order_Status');
+		$data['audit_status'] = $Account_Order_Status[7]['status'];
+		$is_ok = $this->db['GeneralizeAccount']->where(array('id'=>$id))->save($data);
+	
+		if ($is_ok == true) {
+			parent::callback(C('STATUS_SUCCESS'),'操作成功');
+		} else {
+			parent::callback(C('STATUS_UPDATE_DATA'),'操作失败');
+		}
+	}
+	
+	
 	//意向单订单详情
 	public function intention_detail () {
 		parent::data_to_view(array(
