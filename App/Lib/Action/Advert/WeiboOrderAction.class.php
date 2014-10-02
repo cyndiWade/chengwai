@@ -100,7 +100,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$Page       = new Page($count,10);
 		$show       = $Page->show();
 		$list = $GeneralizeOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
-		->order('id desc')->field('id,hd_name,tfpt_type,fslx_type,ryg_type,start_time,status')->select();
+		->order('id desc')->field('id,hd_name,tfpt_type,fslx_type,ryg_type,start_time,all_price,status')->select();
 		parent::data_to_view(array(
 				'page' => $show ,
 				'list' => $list,
@@ -371,6 +371,19 @@ class WeiboOrderAction extends AdvertBaseAction {
 				'sidebar_two'=>array(6=>'select',),//第一个加依次类推
 		));
 		$this->display();
+	}
+
+	//支付
+	public function zhifu()
+	{
+		$zhifu_id = intval($_POST['id']);
+		$GeneralizeNewsOrder = D('GeneralizeAccount')->siteMoney($zhifu_id,$this->oUser->id);
+		if($GeneralizeNewsOrder==true)
+		{
+			parent::callback(C('STATUS_SUCCESS'),'支付成功!');
+		}else{
+			parent::callback(C('STATUS_UPDATE_DATA'),'支付失败,请检查余额!');
+		}
 	}
 }
 

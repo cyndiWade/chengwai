@@ -68,6 +68,15 @@
 			case 1:
 				return '已确认待执行';
 			break;
+			case 2:
+				return '待支付';
+			break;
+			case 3:
+				return '拒绝';
+			break;
+			case 4:
+				return '已支付待执行';
+			break;
 		}
 	}
 

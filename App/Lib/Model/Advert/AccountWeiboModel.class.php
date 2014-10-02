@@ -330,5 +330,36 @@
 			return $wheres;
 		}
 
-
+		//获得直发转发 硬广软广价格
+		public function getRYMoney($zz,$yr,$account_id)
+		{
+			if($account_id!='')
+			{
+				//硬广为1 软广为2
+				switch ($yr) {
+					case 1:
+						//发送类型 1是直发 2是转发
+						if($zz==1)
+						{
+							$value = $this->where(array('id'=>$account_id))->field('yg_zhifa')->find();
+							return $value['yg_zhifa'];
+						}else{
+							$value = $this->where(array('id'=>$account_id))->field('yg_zhuanfa')->find();
+							return $value['yg_zhuanfa'];
+						}
+					break;
+					case 2:
+						//发送类型 1是直发 2是转发
+						if($zz==1)
+						{
+							$value = $this->where(array('id'=>$account_id))->field('rg_zhifa')->find();
+							return $value['rg_zhifa'];
+						}else{
+							$value = $this->where(array('id'=>$account_id))->field('rg_zhuanfa')->find();
+							return $value['rg_zhuanfa'];
+						}
+					break;
+				}
+			}
+		}
 	}

@@ -368,4 +368,32 @@
 		}
 
 
+
+		//获得广告位类型
+		public function getWeiType($type,$account_id)
+		{
+			if($account_id!='')
+			{
+				switch($type)
+				{
+					//1为单图文 2多图文第一条 3多图文第二条 4多图文第3-N条
+					case 1:
+						$value = $this->where(array('id'=>$account_id))->field('dtb_money')->find();
+						return $value['dtb_money'];
+					break;
+					case 2:
+						$value = $this->where(array('id'=>$account_id))->field('dtwdyt_money')->find();
+						return $value['dtwdyt_money'];
+					break;
+					case 3:
+						$value = $this->where(array('id'=>$account_id))->field('dtwdet_money')->find();
+						return $value['dtwdet_money'];
+					break;
+					case 4:
+						$value = $this->where(array('id'=>$account_id))->field('dtyqtwz_money')->find();
+						return $value['dtyqtwz_money'];
+					break;
+				}
+			}
+		}
 	}

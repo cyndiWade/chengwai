@@ -125,7 +125,7 @@ class NewsAction extends AdvertBaseAction {
 		$Page       = new Page($count,10);
 		$show       = $Page->show();
 		$list = $GeneralizeNewsOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
-		->order('id desc')->field('id,title,start_time,web_url,status')->select();
+		->order('id desc')->field('id,title,start_time,web_url,all_price,status')->select();
 		parent::data_to_view(array(
 				'page' => $show ,
 				'list' => $list,
@@ -231,6 +231,20 @@ class NewsAction extends AdvertBaseAction {
 			'sidebar_two'=>array(2=>'select',),//第一个加依次类推
 		));
 		$this->display();
+	}
+
+
+	//支付
+	public function zhifu()
+	{
+		$zhifu_id = intval($_POST['id']);
+		$GeneralizeNewsOrder = D('GeneralizeNewsAccount')->siteMoney($zhifu_id,$this->oUser->id);
+		if($GeneralizeNewsOrder==true)
+		{
+			parent::callback(C('STATUS_SUCCESS'),'支付成功!');
+		}else{
+			parent::callback(C('STATUS_UPDATE_DATA'),'支付失败,请检查余额!');
+		}
 	}
 	
 }	

@@ -99,7 +99,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 		$Page       = new Page($count,10);
 		$show       = $Page->show();
 		$list = $GeneralizeWeixinOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
-		->order('id desc')->field('id,tfpt_type,fslx_type,ggw_type,yxd_name,start_time,over_time,status')->select();
+		->order('id desc')->field('id,tfpt_type,fslx_type,ggw_type,yxd_name,start_time,all_price,over_time,status')->select();
 		parent::data_to_view(array(
 				'page' => $show ,
 				'list' => $list,
@@ -346,6 +346,49 @@ class WeixinOrderAction extends AdvertBaseAction {
 		));
 		$this->display();
 	}
+
+	//支付
+	public function zhifu()
+	{
+		$zhifu_id = intval($_POST['id']);
+		$GeneralizeNewsOrder = D('GeneralizeWeixinAccount')->siteMoney($zhifu_id,$this->oUser->id);
+		if($GeneralizeNewsOrder==true)
+		{
+			parent::callback(C('STATUS_SUCCESS'),'支付成功!');
+		}else{
+			parent::callback(C('STATUS_UPDATE_DATA'),'支付失败,请检查余额!');
+		}
+	}
+
+
+	//支付开始
+		public function siteMoney($zhifu_id,$account_id)
+		{
+			if($zhifu_id!='')
+			{
+				$UserAdvertisement = D('UserAdvertisement');
+				//审核通过的价格
+				$price = $this->where(array('generalize_id'=>$zhifu_id,'audit_status'=>1))->sum('price');
+				$account_money = $UserAdvertisement->where(array('users_id'=>$account_id))->field('money')->find();
+				if($account_money['money'] < $price)
+				{
+					return false;
+				}else{
+					$money = $account_money['money'] - $price;
+					$update = array('money'=>$money,'freeze_funds'=>$price);
+					$bool = $UserAdvertisement->where(array('users_id'=>$account_id))->save($update);
+					if($bool)
+					{
+						$save = array('status'=>4);
+						D('GeneralizeNewsOrder')->where(array('id'=>$zhifu_id))->save($save);
+						return true;
+					}else{
+						return false;
+					}
+				}
+				
+			}
+		}
 }
 
 ?>

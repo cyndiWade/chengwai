@@ -166,4 +166,15 @@
 			return $str_array;
 		}
 
+
+		//获得该新闻的价格
+		public function getNewsmoney($account_id)
+		{
+			if($account_id!='')
+			{
+				$money = $this->where(array('id'=>$account_id))->field('money')->find();
+				return $money['money'];
+			}
+		}
+
 	}

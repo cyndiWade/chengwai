@@ -54,7 +54,7 @@
 						<td class="t3">{$vo['tfpt_type']|getPt}</td>
 						<td class="t4">{$vo['fslx_type']|getFsT}</td>
 						<td class="t5">{$vo['start_time']|date="Y-m-d H:i:s",###}</td>
-						<td class="t6"><span class="red">1000.00</span>元</td>
+						<td class="t6"><span class="red">{$vo['all_price']}</span>元</td>
 						<td class="t7"><strong class="wpd">{$vo['status']|getHdT}</strong></td>
 						<td class="t8"><b class="red">{$vo['ryg_type']|getRyG}</b></td>
 						<td class="last">
@@ -62,6 +62,9 @@
 								<!-- <span>复制</span> |  -->
 								<span><a href="{:U('Advert/WeiboOrder/generalize_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
 								<span class="delete_order" data-id="{$vo['id']}">删除</span>
+								<if condition="$vo['status'] eq 2">
+									<span class="zhifu_order" data-id="{$vo['id']}">支付</span>
+								</if>
 							</div>
 						</td>
 					</tr>
@@ -101,6 +104,23 @@
 				$('.tab01-addorder tr').removeClass('even');
 				$('.tab01-addorder tr:even').addClass('even');
 			} else {
+				alert(result.msg);
+				return false;
+			}
+		}
+	});
+	$('.zhifu_order').click(function(){
+		var _this = $(this);
+		var check_status = confirm('确定要支付吗？');
+		if(check_status==true){
+			var post_data ={};
+			post_data.id = _this.data('id');
+			var result = System.ajax_post_setup('{:U('Advert/WeiboOrder/zhifu')}',post_data);
+			if(result.status==0)
+			{
+				alert(result.msg);
+				window.location.reload();
+			}else{
 				alert(result.msg);
 				return false;
 			}
