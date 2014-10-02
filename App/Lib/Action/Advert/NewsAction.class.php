@@ -315,6 +315,7 @@ class NewsAction extends AdvertBaseAction {
 		$GeneralizeNewsAccount = D('GeneralizeNewsAccount')->siteMoney($zhifu_id,$this->oUser->id);
 		if($GeneralizeNewsAccount==true)
 		{
+			parent::updateMoney($this->oUser->id);
 			parent::callback(C('STATUS_SUCCESS'),'支付成功!');
 		}else{
 			parent::callback(C('STATUS_UPDATE_DATA'),'支付失败,请检查余额!');
