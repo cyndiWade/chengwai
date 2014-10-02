@@ -43,7 +43,7 @@ class SocialAccountAction extends MediaBaseAction {
         $type = I('type', 0, 'intval');
         
         if (empty($type)) {
-            $this->redirect(U('/Media/SocialAccount/', array('type' => 1)));
+            redirect(U('/Media/SocialAccount/manager', array('type' => 1)));
         }
         
         $userInfos = parent::get_session('user_info');
@@ -112,6 +112,7 @@ class SocialAccountAction extends MediaBaseAction {
         $maxweekennum   = $maxweekennum ? intval($maxweekennum) : '';
         $minmonthnum    = $minmonthnum ? intval($minmonthnum) : '';
         $maxmonthnum    = $maxmonthnum ? intval($maxmonthnum) : '';
+        $pricetype      = $pricetype ? intval($pricetype) : 0;
         $minprice       = $minprice ? floatval($minprice) : '';
         $maxprice       = $maxprice ? floatval($maxprice) : '';
         $isfamous       = $isfamous ? intval($isfamous) : '';
@@ -127,9 +128,12 @@ class SocialAccountAction extends MediaBaseAction {
         $maxweekennum ? $where['week_order_num'] = array('elt', $maxweekennum) : '';
         $minmonthnum ? $where['month_order_nub'] = array('egt', $minmonthnum) : '';
         $maxmonthnum ? $where['month_order_nub'] = array('elt', $maxmonthnum) : '';
-        $priceTypeColums = array('yg_zhuanfa, yg_zhifa, dj_money, rg_zhuanfa, rg_zhifa');
-        $minprice ? $where[$priceTypeColums[$pricetype]] = array('egt', $minprice) : '';
-        $maxprice ? $where[$priceTypeColums[$pricetype]] = array('elt', $maxprice) : '';
+        
+        $priceTypeColums = array('yg_zhuanfa', 'yg_zhifa', 'dj_money', 'rg_zhuanfa', 'rg_zhifa');
+        $minprice ? $priceLimit[] = array('egt', $minprice) : '';
+        $maxprice ? $priceLimit[] = array('elt', $maxprice) : '';
+        $priceLimit ? $where[$priceTypeColums[$pricetype]] = $priceLimit : '';
+        
         $isFamous ? $where['is_famous'] = $isFamous : '';
         
         $where['is_del']   = 0;
@@ -152,13 +156,7 @@ class SocialAccountAction extends MediaBaseAction {
             $list = $this->db['AccountNews']->getLists($where, 'id DESC', $page, $pageSize);
         }
         
-        // parent::callback(1, '成功获取数据', array(
-            // 'list'  => $list['list'],
-            // 'count' => $list['count'],
-            // 'p'     => $page
-        // ));
-        
-        ($list['count'] && $list['list']) ? $list['list'] = $this->bulidRowCell($list['list']) : '';
+        ($list['count'] && $list['list']) ? $list['list'] = $this->bulidRowCell($type, $list['list']) : '';
         parent::callback(1, '成功获取数据', array(
             'start' => floor($start/$pageSize) * $pageSize,
             'limit' => $pageSize,
@@ -168,6 +166,7 @@ class SocialAccountAction extends MediaBaseAction {
         ), array(
             'code' => 1000
         ));
+        exit;
     }
     
     /**
@@ -177,42 +176,63 @@ class SocialAccountAction extends MediaBaseAction {
      * @date   2014-09-20
      * @return void
      */
-    private function bulidRowCell($data)
+    private function bulidRowCell($type, $data)
     {
         if (empty($data) || !is_array($data)) {
             return $data;
         }
         $newData = array();
         
+        $accountTypeList = C('MEDIA_ACCOUNT_TYPE');
+        
+        $accountModel = '';
+        if (in_array($type, array(1, 2))) {
+            $accountModel = $this->db['AccountWeibo'];
+        } elseif ($type == 3) {
+            $accountModel = $this->db['AccountWeixin'];
+        }
         
         // echo '<pre>';
         // print_r($data);
         
         foreach ($data AS $key => $val) {
-            $newData[] = array(
+            if ($accountModel) {
+                $apiInfos = $accountModel->getInfosFromApi($val['account_name'], $type);
+                if ($type == 1) {
+                    $faceUrl = $apiInfos['profile_image_url'];
+                    $url = $apiInfos['url'];
+                } elseif ($type == 2) {
+                    $faceUrl = $apiInfos['profile_image_url'];
+                    $url = $apiInfos['url'];
+                } elseif ($type == 3) {
+                    $faceUrl = $apiInfos['profile_image_url'];
+                    $url = $apiInfos['url'];
+                } elseif (type == 4) {
+                    $faceUrl = $val['media_shot'];
+                    $url = $apiInfos['url'];
+                }
+            }
+            $temp = array(
                 "id"    => $val['id'],
+                "weibo_type" => $type,
                 "cells" => array(
                     "account_id" => $val['id'],
-                    "user_id" => 105153,
-                    "face_url" => "http://tp4.sinaimg.cn/1032732203/50/40044194886/1",
-                    "url" => "http://weibo.com/u/1032732203",
+                    "user_id" => $val['users_id'],
+                    "face_url" => $faceUrl,
+                    "url" => $url,
                     "weibo_type" => $val['pt_type'],
                     "weibo_id" => "1032732203",
                     "weibo_name" => $val['account_name'],
                     "cell_phone" => null,
                     "telephone" => null,
                     "qq" => null,
+                    // 账号类型 草根 红人  媒体
                     "account_type" => 2,
                     "verification_info" => $val['company_name'],
                     "is_bluevip" => 2,
                     "is_vip" => 1,
                     "is_daren" => 2,
                     "followers_count" => $val['fans_num'],
-                    "tweet_price" => $val['yg_zhifa'],
-                    "retweet_price" => $val['yg_zhuanfa'],
-                    "content_price" => $val['yg_zhifa'],
-                    "soft_tweet_price" => $val['rg_zhifa'],
-                    "soft_retweet_price" => $val['rg_zhuanfa'],
                     "is_private_message_enabled" => 2,
                     "is_activated" => 0,
                     "is_shield" => 2,
@@ -222,6 +242,7 @@ class SocialAccountAction extends MediaBaseAction {
                     "self_register" => 1,
                     // 是否审核
                     "is_verify" => $val['audit_status'],
+                    // 订单授权状态 1授权正常 2未授权 3即将过期  4授权过期
                     "is_auth" => 2,
                     "is_auth_ds" => 2,
                     "is_auto_send" => 2,
@@ -232,8 +253,10 @@ class SocialAccountAction extends MediaBaseAction {
                     "is_allow_order" => $val['receiving_status'],
                     "is_flowunit" => 2,
                     "company_black_num" => 0,
-                    "orders_monthly" => 0,
-                    "orders_weekly" => 0,
+                    // 月订单
+                    "orders_monthly" => $val['month_order_nub'],
+                    // 周订单
+                    "orders_weekly" => $val['week_order_num'],
                     "pass_order_monthly" => "0.00",
                     "deny_order_monthly" => "0.00",
                     "posts_avgretweet_count" => "-1.000",
@@ -259,13 +282,17 @@ class SocialAccountAction extends MediaBaseAction {
                     "tweet_price_change_count_for_week" => null,
                     "soft_tweet_price_change_count_for_week" => null,
                     "soft_retweet_price_change_count_for_week" => null,
+                    // 行提示
                     "is_tip" => null,
+                    // 行提示内容
                     "tip_content" => null,
+                    // 普通账号 = 1,重点账号 > 1
                     "level" => 1,
                     "profit_rate" => 0.3,
                     "attribute_id" => 1,
                     "tactics_flag" => 1,
-                    "is_enable_micro_task" => 1,
+                    // 订单是否可带链接
+                    "is_enable_micro_task" => $val['url_status'],
                     "follower_be_identified" => 2,
                     "follower_be_identified_time" => null,
                     "order_settings" => 0,
@@ -287,11 +314,54 @@ class SocialAccountAction extends MediaBaseAction {
                     "leave" => $val['tmp_receiving_status'] ? true : false,
                     // 接单上限
                     "periodMax" => $val['receiving_num_status'] ? true : false,
-                    "orderMax" => $val['receiving_num_status'] ? $val['receiving_num'] : '',
-                    "weibo_type_logo" => "http://img.weiboyi.com/img/uploadimg/platform_img/sina.jpg",
+                    // 接单上限
+                    "orderMax" => $val['receiving_num'],
+                    "weibo_type_logo" => $accountTypeList[$type]['icon'],
                     "rate" => 1
                 )
             );
+            if ($type == 3) {
+                // 微信
+                $diffPrice = array(
+                    // 单图文报价
+                    "single_graphic_price" => $val['dtb_money'],
+                    // 多图文第一条报价
+                    "multi_graphic_top_price" => $val['dtwdyt_money'],
+                    // 多图文第二条报价
+                    "multi_graphic_second_price" => $val['dtwdet_money'],
+                    // 多图文其他位置报价
+                    "multi_graphic_other_price" => $val['dtwqtwz_money'],
+                    // 带号价
+                    "content_price" => $val['dj_money'],
+                    // 两周内单图文报价调整次数
+                    'single_graphic_hard_price_raise_count_two_week' => 0,
+                    // 两周内多图文第一条报价调整次数
+                    'multi_graphic_hard_top_price_raise_count_two_week' => 0,
+                    // 两周内多图文第二条报价调整次数
+                    'multi_graphic_hard_second_price_raise_count_two_week' => 0,
+                    // 两周内多图文其他位置报价次数
+                    'multi_graphic_hard_other_price_raise_count_two_week' => 0,
+                );
+            } else {
+                // 微博等
+                $diffPrice = array(
+                    // 硬广直发价格
+                    "tweet_price" => $val['yg_zhifa'],
+                    // 硬广转发价格
+                    "retweet_price" => $val['yg_zhuanfa'],
+                    // 带号价
+                    "content_price" => $val['dj_money'],
+                    // 软广直发价格
+                    "soft_tweet_price" => $val['rg_zhifa'],
+                    // 软广转发价格
+                    "soft_retweet_price" => $val['rg_zhuanfa'],
+                );
+                if ($type == 4) {
+                    $diffPrice['weekly_read_avg'] = $val['weekly_read_avg'];
+                }
+            }
+            $temp['cells'] = array_merge($temp['cells'], $diffPrice);
+            $newData[] = $temp;
         }
         return $newData;
     }
@@ -314,29 +384,220 @@ class SocialAccountAction extends MediaBaseAction {
                 if (strtolower($fileInfo['extension']) == 'csv') {
                     $temp = file($batchFile['tmp_name']);
                     // 循环文件内容
-                    $len = count($temp);
-                    for ($i = 0; $i < $len; $i++) {
-                        //通过循环得到EXCEL文件中每行记录的值
-                        $insertData[] = explode(',', $temp[$i]);
-                    }
+                    $len = count($temp) - 1;
+                    
+                    import("@.Tool.Validate");
                     
                     // 根据帐号类型插入不同的表
                     switch($accountType) {
+                        // 腾讯微博
                         case 1:
-                            // 新闻媒体
-                            $status = $this->db['AccountNews']->addBatchAccount($insertData);
-                            break;
+                        // 新浪微博
                         case 2:
-                            // 新浪、腾讯微博
-                            $status = $this->db['AccountWeibo']->addBatchAccount($insertData);
+                            $weiboModel = $this->db['AccountWeibo'];
+                            for ($i = 1; $i <= $len; $i++) {
+                                //通过循环得到EXCEL文件中每行记录的值
+                                $temp = explode(',', iconv('GBK', 'UTF-8', $temp[$i]));
+                                $accountName    = setString($temp[0]);
+                                $price          = floatval($temp[1]);
+                                
+                                if (empty($accountName) || empty($price)) {
+                                    continue;
+                                }
+                                $where = array(
+                                    'account_name'  => $accountName,
+                                    'is_del'        => 0
+                                );
+                                $exists = $weiboModel->getAccountInfo($where, 'id');
+                                if ($exists) {
+                                    continue;
+                                }
+                                $userInfos = parent::get_session('user_info');
+                                $apiInfos = $weiboModel->getInfosFromApi($accountName, $accountType);
+                                $priceRatio = C('WEIBO_PRICE_RATIO');
+                                $insertData = array(
+                                    'users_id'      => $userInfos['id'],
+                                    'is_celebrity'  => intval($apiInfos['verified']),
+                                    'pt_type'       => $accountType,
+                                    'account_name'  => $accountName,
+                                    'fans_num'      => intval($apiInfos['followers_count']),
+                                    'yg_zhuanfa'    => $price * $priceRatio['retweetPrice'],
+                                    'yg_zhifa'      => $price * $priceRatio['tweetPrice'],
+                                    'rg_zhuanfa'    => $price * $priceRatio['softRetweetPrice'],
+                                    'rg_zhifa'      => $price * $priceRatio['softTweetPrice'],
+                                    'dj_money'      => $price * $priceRatio['contentPrice'],
+                                    'create_time'   => $_SERVER['REQUEST_TIME'],
+                                );
+                                $insertId = $weiboModel->add($insertData);
+                                if ($insertId) {
+                                    // 更新索引表
+                                    parent::weiboDataprocess($insertId);
+                                }
+                            }
                             break;
                         case 3:
                             // 微信公众号
-                            $status = $this->db['AccountWeixin']->addBatchAccount($insertData);
+                            // $insertId = $this->db['AccountWeixin']->addBatchAccount($insertData);
+                            $weixinModel = $this->db['AccountWeixin'];
+                            for ($i = 1; $i <= $len; $i++) {
+                                //通过循环得到EXCEL文件中每行记录的值
+                                $temp = explode(',', iconv('GBK', 'UTF-8', $temp[$i]));
+                                $accountName    = setString($temp[0]);
+                                $weixinCode     = setString($temp[1]);
+                                $fansNums       = intval($temp[2]);
+                                $weeklyReadAvg  = intval($temp[3]);
+                                $malePrecent    = floatval($temp[4]);
+                                $femalePrecent  = floatval($temp[5]);
+                                $price          = floatval($temp[6]);
+                                $faceUrl        = setString(trim($temp[7]));
+                                $qrCode         = setString(trim($temp[8]));
+                                $fansShot       = setString(trim($temp[9]));
+                                
+                                $malePrecent = ($malePrecent <= 0 ? 0 : ($malePrecent >= 101) ? 100 : $malePrecent);
+                                $lessPrecent = 100 - $malePrecent;
+                                $femalePrecent = $femalePrecent <= $lessPrecent ? $femalePrecent : $lessPrecent;
+                                
+                                if (empty($accountName) || empty($price)
+                                || !Validate::checkAccount($weixinCode)
+                                || !Validate::checkUrl($faceUrl)
+                                || !Validate::checkUrl($qrCode)
+                                || !Validate::checkUrl($fansShot)) {
+                                    continue;
+                                }
+                                $where = array(
+                                    'account_name'  => $accountName,
+                                    'is_del'        => 0
+                                );
+                                $exists = $weixinModel->getAccountInfo($where, 'id');
+                                if ($exists) {
+                                    continue;
+                                }
+                                $userInfos = parent::get_session('user_info');
+                                $apiInfos = $weixinModel->getInfosFromApi($accountName, $accountType);
+                                $priceRatio = C('WEIXIN_PRICE_RATIO');
+                                $fansNums = $apiInfos['followers_count'] ? $apiInfos['followers_count'] : $fansNums;
+                                $insertData = array(
+                                    'users_id'          => $userInfos['id'],
+                                    'is_celebrity'      => intval($apiInfos['verified']),
+                                    'pt_type'           => 1,
+                                    'weixinhao'         => $weixinCode,
+                                    'account_name'      => $accountName,
+                                    'fans_num'          => $fansNums,
+                                    'weekly_read_avg'   => $weeklyReadAvg,
+                                    'dtb_money'         => $price * $priceRatio['singleGraphicPrice'],
+                                    'dtwdyt_money'      => $price * $priceRatio['multiGraphicTopPrice'],
+                                    'dtwdet_money'      => $price * $priceRatio['multiGraphicSecondPrice'],
+                                    'dtwqtwz_money'     => $price * $priceRatio['multiGraphicOtherPrice'],
+                                    'dj_money'          => $price * $priceRatio['contentPrice'],
+                                    'account_avatar'    => $faceUrl,
+                                    'qr_code'           => $qrCode,
+                                    'follower_shot'     => $fansShot,
+                                    'male_precent'      => $malePrecent,
+                                    'female_precent'    => $femalePrecent,
+                                    'create_time'       => $_SERVER['REQUEST_TIME'],
+                                );
+                                $insertId = $weixinModel->add($insertData);
+                                if ($insertId) {
+                                    // 更新索引表
+                                    parent::weixinDataprocess($insertId);
+                                }
+                            }
+                            break;
+                        case 4:
+                            // 新闻媒体
+                            // $insertId = $this->db['AccountNews']->addBatchAccount($insertData);
+                            $mediaNewsModel = $this->db['AccountNews'];
+                            for ($i = 1; $i <= $len; $i++) {
+                                //通过循环得到EXCEL文件中每行记录的值
+                                $temp = explode(',', iconv('GBK', 'UTF-8', $temp[$i]));
+                                $accountName    = setString(trim($temp[0]));
+                                $channalName    = setString(trim($temp[1]));
+                                $price          = floatval($temp[2]);
+                                $title          = setString(trim($temp[3]));
+                                $province       = setString(trim($temp[4]));
+                                $city           = setString(trim($temp[5]));
+                                $area           = setString(trim($temp[6]));
+                                $entry          = setString(trim($temp[7]));
+                                $newsSource     = intval(trim($temp[8]));
+                                $included       = intval(trim($temp[9]));
+                                $needSource     = intval(trim($temp[10]));
+                                $exampleUrl     = setString(trim($temp[11]));
+                                $pressWeekly    = setString(trim($temp[12]));
+                                $link           = setString(trim($temp[13]));
+                                $typeOfPortal   = setString(trim($temp[14]));
+                                $mediaShot      = setString(trim($temp[15]));
+                                
+                                if (empty($accountName) || empty($channalName) || empty($price)
+                                || !Validate::checkUrl($exampleUrl) || !Validate::checkUrl($mediaShot)) {
+                                    continue;
+                                }
+                                
+                                $newsSource = in_array($newsSource, array(0, 1, 2, 3)) ? $newsSource : 0;
+                                $included = in_array($included, array(0, 1, 2, 3, 4, 5, 6, 7, 8)) ? $included : 0;
+                                $needSource = in_array($needSource, array(0, 1)) ? $needSource : 0;
+                                $pressWeekly = in_array($pressWeekly, array(0, 1)) ? $pressWeekly : 0;
+                                $typeOfPortal = in_array($typeOfPortal, array(0, 1, 2, 3, 4)) ? $typeOfPortal : 0;
+                                
+                                $where = array(
+                                    'account_name'  => $accountName,
+                                    'is_del'        => 0
+                                );
+                                $exists = $mediaNewsModel->getAccountInfo($where, 'id');
+                                if ($exists) {
+                                    continue;
+                                }
+                                
+                                $regionModel = $this->db['Region'];
+                                $whereForArea = array(
+                                    array(
+                                        'region_type' => 1,
+                                        'region_name' => array('LIKE', '%' . $province . '%')
+                                    ),
+                                    array(
+                                        'region_type' => 2,
+                                        'region_name' => array('LIKE', '%' . $city . '%')
+                                    ),
+                                    array(
+                                        'region_type' => 3,
+                                        'region_name' => array('LIKE', '%' . $area . '%')
+                                    ),
+                                    '_logic' => 'OR'
+                                );
+                                $areaId = $regionModel->where($whereForArea)
+                                    ->order('region_type DESC')->getField('region_id');
+                                
+                                $userInfos = parent::get_session('user_info');
+                                $insertData = array(
+                                    'users_id'          => $userInfos['id'],
+                                    'pt_type'           => $typeOfPortal,
+                                    // 默认待审核
+                                    'audit_status'      => 0,
+                                    'account_name'      => $accountName,
+                                    'web_type'          => $included,
+                                    'money'             => $price,
+                                    'weekly_read_avg'   => $weeklyReadAvg,
+                                    'url_type'          => $newsSource,
+                                    'url_status'        => $link,
+                                    'media_shot'        => $mediaShot,
+                                    'area_id'           => $areaId,
+                                    'channel_name'      => $channalName,
+                                    'entry'             => $entry,
+                                    'title'             => $title,
+                                    'press_weekly'      => $pressWeekly,
+                                    'url'               => $exampleUrl,
+                                    'is_need_source'    => $needSource,
+                                    'create_time'       => $_SERVER['REQUEST_TIME'],
+                                );
+                                $insertId = $mediaNewsModel->add($insertData);
+                                if ($insertId) {
+                                    // 更新索引表
+                                    parent::weixinDataprocess($insertId);
+                                }
+                            }
                             break;
                     }
                     
-                    $status ? $this->success('上传成功!') : $this->error('上传失败!');
+                    $insertId ? $this->success('上传成功!') : $this->error('上传失败, 请检查提交数据是否有问题!');
                 } else {
                     $this->error('只能上传后缀为CSV的文件!');
                 }
@@ -443,6 +704,7 @@ class SocialAccountAction extends MediaBaseAction {
                 parent::callback(0, '提交数据错误,请检查填写数据是否正确');
             }
             
+            import("@.Tool.Validate");
             $viewPath = C('PUBLIC_VISIT');
             
             if (in_array($weiboType, array(1, 2))) {
@@ -452,14 +714,9 @@ class SocialAccountAction extends MediaBaseAction {
                     parent::callback(0, '价格错误');
                 }
                 
-                $datas['source'] = $weiboId;
-                $datas['screen_name'] = $weiboId;
-                import("@.ORG.Util.CurlRequest");
-                $sinaUrl = 'http://api.weibo.com/2/users/show.json?' . http_build_query($datas);
-                $tencentUrl = 'http://api.weibo.com/2/users/show.json?' . http_build_query($datas);
-                $url = ($weiboType == 1) ? $sinaUrl : $tencentUrl;
-                $ch = new CurlRequest($url);
-                $apiInfos = $ch->get();
+                $weiboModel = $this->db['AccountWeibo'];
+                $apiInfos = $weiboModel->getInfosFromApi($weiboId, $weiboType);
+                
                 if ($apiInfos['followers_count'] <= 499) {
                     parent::callback(0, '粉丝数至少为500!', array(), array(
                         'code'  => 900
@@ -468,6 +725,8 @@ class SocialAccountAction extends MediaBaseAction {
                 
                 $userInfos = parent::get_session('user_info');
                 $datas = array(
+                    // 默认待审核
+                    'audit_status'  => 0,
                     'users_id'      => $userInfos['id'],
                     'is_celebrity'  => $apiInfos['verified'],
                     'pt_type'       => ($weiboType == 1) ? 1: 2,
@@ -480,7 +739,6 @@ class SocialAccountAction extends MediaBaseAction {
                     'create_time'   => $_SERVER['REQUEST_TIME'],
                 );
                 
-                $weiboModel = $this->db['AccountWeibo'];
                 $insertId = $weiboModel->add($datas);
                 if ($insertId) {
                     parent::weiboDataprocess($insertId);
@@ -514,12 +772,15 @@ class SocialAccountAction extends MediaBaseAction {
                 $datas = array(
                     'users_id'          => $userInfos['id'],
                     'pt_type'           => 1,
+                    // 默认待审核
+                    'audit_status'      => 0,
                     'account_name'      => $weiboName,
                     'fans_num'          => $followersCount,
                     'dtb_money'         => $price,
                     'dtwdyt_money'      => $topPrice,
                     'dtwdet_money'      => $secondPrice,
                     'dtwqtwz_money'     => $otherPrice,
+                    'dj_money'          => $contentPrice,
                     'weekly_read_avg'   => $weeklyReadAvg,
                     'male_precent'      => $malePrecent,
                     'female_precent'    => $femalePrecent,
@@ -546,31 +807,34 @@ class SocialAccountAction extends MediaBaseAction {
                 $title              = I('account_title', '', 'setString');
                 $areaId             = I('area_id', '', 'setString');
                 $entry              = I('account_entry', '', 'setString');
-                $isNewsSource       = I('is_news_source', 0, 'intval');
-                $isWebSiteIncluded  = I('is_web_site_included', 0, 'intval');
-                $isNeedSource       = I('is_need_source', 0, 'intval');
+                $isNewsSource       = I('is_news_source', '', 'intval');
+                $isWebSiteIncluded  = I('is_web_site_included', '', 'intval');
+                $isNeedSource       = I('is_need_source', '', 'intval');
                 $url                = I('url', '', 'setString');
-                $isPressWeekly      = I('is_press_weekly', 0, 'intval');
-                $isTextLink         = I('is_text_link', 0, 'intval');
+                $isPressWeekly      = I('is_press_weekly', '', 'intval');
+                $typeOfPortal       = I('type_of_portal', '', 'intval');
                 $imgPath            = I('uploadImgMedia', '', 'setString');
                 
-                if (empty($retweetPrice)) {
+                if (Validate::checkNull($retweetPrice)) {
                     parent::callback(0, '价格错误');
                 }
-                if (empty($isNewsSource)) {
-                    parent::callback(0, '是否新闻源?');
+                if (Validate::checkNull($isNewsSource)) {
+                    parent::callback(0, '请选择新闻源方式');
                 }
-                if (empty($isWebSiteIncluded)) {
-                    parent::callback(0, '是否网址收录?');
+                if (Validate::checkNull($isWebSiteIncluded)) {
+                    parent::callback(0, '请选择网址收录方式');
                 }
-                if (empty($isNeedSource)) {
+                if (Validate::checkNull($isNeedSource)) {
                     parent::callback(0, '是否需要来源?');
                 }
-                if (empty($isPressWeekly)) {
+                if (Validate::checkNull($isPressWeekly)) {
                     parent::callback(0, '周末能否发稿?');
                 }
-                if (empty($isTextLink)) {
-                    parent::callback(0, '能否带文本链接?');
+                if (Validate::checkNull($isTextLink)) {
+                    parent::callback(0, '请选择文本链接方式');
+                }
+                if (Validate::checkNull($typeOfPortal)) {
+                    parent::callback(0, '请选择门户类型');
                 }
                 
                 $userInfos = parent::get_session('user_info');
@@ -585,14 +849,23 @@ class SocialAccountAction extends MediaBaseAction {
                 } else {
                     $datas = array(
                         'users_id'      => $userInfos['id'],
-                        'big_type'      => 1,
-                        'pt_type'       => 1,
+                        // 'big_type'      => 1,
+                        'pt_type'       => $typeOfPortal,
+                        // 默认待审核
+                        'audit_status'  => 0,
                         'account_name'  => $weiboId,
                         'web_type'      => $isWebSiteIncluded,
                         'money'         => $retweetPrice,
                         'url_type'      => $isNewsSource,
                         'url_status'    => $isTextLink,
                         'media_shot'    => $viewPath['domain'] . $viewPath['dir'] . $imgPath,
+                        'area_id'       => $areaId,
+                        'channel_name'  => $channelName,
+                        'entry'         => $entry,
+                        'title'         => $title,
+                        'press_weekly'  => $isPressWeekly,
+                        'url'           => $url,
+                        'is_need_source'=> $isNeedSource,
                         'create_time'   => $_SERVER['REQUEST_TIME'],
                     );
                     $insertId = $accountNewsModel->add($datas);
@@ -607,7 +880,7 @@ class SocialAccountAction extends MediaBaseAction {
                 }
             }
         } else {
-            parent::callback(0, 'error');
+            parent::callback(C('STATUS_ACCESS'), 'error');
         }
     }
     
@@ -628,13 +901,36 @@ class SocialAccountAction extends MediaBaseAction {
                 parent::callback(0, 'error');
             }
             
-            
+            $accountDB = array(
+                1 => 'AccountWeibo',
+                2 => 'AccountWeibo',
+                3 => 'AccountWeixin',
+                4 => 'AccountNews',
+            );
+            $accountModel = $this->db[$accountDB[$weiboType]];
+            $where = array(
+                'account_name'  => $weiboId,
+                'is_del'        => 0
+            );
+            $hasId = $accountModel->where($where)->getField('id');
+
             // {"code":1000,"msg":"success","data":[false]}
-            parent::callback(1, 'success', array(false), array(
-                'code' => 1000
-            ));
+            if ($hasId) {
+                echo json_encode(array(
+                    'code'  => 1000,
+                    'msg'   => '帐号已存在',
+                    'data'  => array(false)
+                ));
+            } else {
+                echo json_encode(array(
+                    'code'  => 1000,
+                    'msg'   => '帐号不存在',
+                    'data'  => array(true)
+                ));
+            }
+            exit;
         } else {
-            parent::callback(0, 'error');
+            parent::callback(C('STATUS_ACCESS'), 'error');
         }
     }
     
@@ -663,7 +959,411 @@ class SocialAccountAction extends MediaBaseAction {
                 'code' => 1000
             ));
         } else {
-            parent::callback(0, 'error');
+            parent::callback(C('STATUS_ACCESS'), 'error');
+        }
+    }
+    
+    /**
+     * 查看审核状态
+     * 
+     * @author lurongchang
+     * @date   2014-10-01
+     * @return void
+     */
+    public function review()
+    {
+        if ($this->isGet()) {
+            $accountId      = I('get.account_id', 0, 'intval');
+            $accountType    = I('get.account_type', 0, 'intval');
+            
+            if (empty($accountId) || empty($accountType)) {
+                parent::callback(C('STATUS_DATA_LOST'), '提交数据错误,请检查填写数据是否正确');
+            }
+            
+            $accountDB = array(
+                1 => 'AccountWeibo',
+                2 => 'AccountWeibo',
+                3 => 'AccountWeixin',
+                4 => 'AccountNews',
+            );
+            $accountModel = $this->db[$accountDB[$accountType]];
+            $status = $accountModel->where(array('id' => $accountId))->getField('audit_status');
+            $statusName = array('待审核', '审核通过', '审核失败');
+            echo json_encode(array(
+                'error' => $statusName[$status]
+            ));
+            exit;
+        } else {
+            parent::callback(C('STATUS_ACCESS'), 'error');
+        }
+    }
+    
+    /**
+     * 是否暂离 获取HTML代码
+     * 
+     * @author lurongchang
+     * @date   2014-10-01
+     * @return void
+     */
+    public function leavedetails()
+    {
+        if ($this->isGet()) {
+            $accountId      = I('get.accountId', 0, 'intval');
+            $accountType    = I('get.accountType', 0, 'intval');
+            
+            if (empty($accountId) || empty($accountType)) {
+                die('提交数据错误,请检查填写数据是否正确');
+            }
+            // 根据帐号获取暂离时间
+            
+            $accountDB = array(
+                1 => 'AccountWeibo',
+                2 => 'AccountWeibo',
+                3 => 'AccountWeixin',
+                4 => 'AccountNews',
+            );
+            $accountModel = $this->db[$accountDB[$accountType]];
+            $leave = $accountModel->where(array('id' => $accountId))->getField('tmp_receiving_status');
+            
+            parent::data_to_view(array(
+                'leave'         => $leave,
+                'accountId'     => $accountId,
+                'accountType'   => $accountType,
+            ));
+            $this->display();
+            exit;
+        } else {
+            die('ERROR');
+        }
+    }
+    
+    /**
+     * 设置是否暂离
+     * 
+     * @author lurongchang
+     * @date   2014-10-01
+     * @return void
+     */
+    public function setleave()
+    {
+        if ($this->isPost()) {
+            $accountId      = I('post.account_id', 0, 'intval');
+            $accountType    = I('post.account_type', 0, 'intval');
+            $leave          = I('post.leave', 0, 'intval');
+            $processall     = I('post.processall', 0, 'intval');
+            
+            if (empty($accountId) || empty($accountType)) {
+                echo json_encode(array(
+                    'status' => false,
+                    'message' => '提交数据错误,请检查填写数据是否正确',
+                ));
+                exit;
+            }
+            // 根据帐号获取暂离时间
+            
+            $accountDB = array(
+                1 => 'AccountWeibo',
+                2 => 'AccountWeibo',
+                3 => 'AccountWeixin',
+                4 => 'AccountNews',
+            );
+            $accountModel = $this->db[$accountDB[$accountType]];
+            if ($processall) {
+                $userInfos = parent::get_session('user_info');
+                $where = array(
+                    'users_id'  => $userInfos['id'],
+                    'is_del'    => 0,
+                );
+            } else {
+                $where = array('id' => $accountId);
+            }
+            $status = $accountModel->where($where)->save(array('tmp_receiving_status' => $leave));
+            if ($status === false) {
+                echo json_encode(array(
+                    'status' => false,
+                    'message' => '设置失败！',
+                ));
+            } else {
+                echo json_encode(array(
+                    'status' => true,
+                    'message' => 'success',
+                ));
+            }
+            exit;
+        } else {
+            parent::callback(C('STATUS_ACCESS'), 'error');
+        }
+    }
+    
+    /**
+     * 是否接硬广
+     * 
+     * @author lurongchang
+     * @date   2014-10-01
+     * @return void
+     */
+    public function setextend()
+    {
+        if ($this->isPost()) {
+            $accountId      = I('post.accountId', 0, 'intval');
+            $accountType    = I('post.accountType', 0, 'intval');
+            $status         = I('post.isExtendRadio', 0, 'intval');
+            $processall     = I('post.selectAllCheckbox', 0, 'intval');
+            
+            if (empty($accountId) || empty($accountType)) {
+                echo json_encode(array(
+                    'status' => false,
+                    'message' => '提交数据错误,请检查填写数据是否正确',
+                ));
+                exit;
+            }
+            
+            if ($accountType == 3) {
+                echo json_encode(array(
+                    'status' => false,
+                    'message' => '微信不能设置是否接硬广',
+                ));
+                exit;
+            }
+            
+            $accountDB = array(
+                1 => 'AccountWeibo',
+                2 => 'AccountWeibo',
+                3 => 'AccountWeixin',
+                4 => 'AccountNews',
+            );
+            $accountModel = $this->db[$accountDB[$accountType]];
+            if ($processall) {
+                $userInfos = parent::get_session('user_info');
+                $where = array(
+                    'users_id'  => $userInfos['id'],
+                    'is_del'    => 0,
+                );
+            } else {
+                $where = array('id' => $accountId);
+            }
+            $status = $accountModel->where($where)->save(array('is_yg_status' => $status));
+            if ($status === false) {
+                echo json_encode(array(
+                    'status' => false,
+                    'message' => '设置失败！',
+                ));
+            } else {
+                echo json_encode(array(
+                    'status' => true,
+                    'message' => 'success',
+                ));
+            }
+            exit;
+        } else {
+            parent::callback(C('STATUS_ACCESS'), 'error');
+        }
+    }
+    
+    /**
+     * 接单上限
+     * 
+     * @author lurongchang
+     * @date   2014-10-01
+     * @return void
+     */
+    public function setperiod()
+    {
+        if ($this->isPost()) {
+            $accountId      = I('post.accountId', 0, 'intval');
+            $accountType    = I('post.accountType', 0, 'intval');
+            $toSet          = I('post.isOnlineRadio', 0, 'intval');
+            $processall     = I('post.selectAllCheckbox', 0, 'intval');
+            $maxOrder       = I('post.orderMaxInput', 0, 'intval');
+            
+            if (empty($accountId) || empty($accountType) || empty($maxOrder)) {
+                echo json_encode(array(
+                    'status' => false,
+                    'message' => '提交数据错误,请检查填写数据是否正确',
+                ));
+                exit;
+            }
+            
+            if ($accountType == 3) {
+                echo json_encode(array(
+                    'status' => false,
+                    'message' => '微信不能设置接单上限',
+                ));
+                exit;
+            }
+            
+            $accountDB = array(
+                1 => 'AccountWeibo',
+                2 => 'AccountWeibo',
+                3 => 'AccountWeixin',
+                4 => 'AccountNews',
+            );
+            $accountModel = $this->db[$accountDB[$accountType]];
+            
+            if ($processall) {
+                $userInfos = parent::get_session('user_info');
+                if ($toSet) {
+                    $where = array(
+                        'users_id'  => $userInfos['id'],
+                        'is_del'    => 0,
+                    );
+                    $data = array(
+                        'receiving_num_status' => 1,
+                        'receiving_num' => $maxOrder
+                    );
+                } else {
+                    $where = array('users_id'  => $userInfos['id']);
+                    $data = array('receiving_num_status' => 0);
+                }
+            } else {
+                if ($toSet) {
+                    $where = array('id' => $accountId);
+                    $data = array(
+                        'receiving_num_status' => 1,
+                        'receiving_num' => $maxOrder
+                    );
+                } else {
+                    $where = array('id' => $accountId);
+                    $data = array('receiving_num_status' => 0);
+                }
+            }
+            $status = $accountModel->where($where)->save($data);
+            if ($status === false) {
+                echo json_encode(array(
+                    'status' => false,
+                    'message' => '设置失败！',
+                ));
+            } else {
+                echo json_encode(array(
+                    'status' => true,
+                    'message' => 'success',
+                ));
+            }
+            exit;
+        } else {
+            parent::callback(C('STATUS_ACCESS'), 'error');
+        }
+    }
+    
+    /**
+     * 订单是否可带链接
+     * 
+     * @author lurongchang
+     * @date   2014-10-01
+     * @return void
+     */
+    public function setisenablemicrotask()
+    {
+        if ($this->isPost()) {
+            $accountId      = I('post.accountId', 0, 'intval');
+            $accountType    = I('post.accountType', 0, 'intval');
+            $urlStatus      = I('post.isEnableMicroTask', 0, 'intval');
+            $selectAll      = I('post.isSelectAll', 0, 'intval');
+            
+            if (empty($accountId) || empty($accountType)) {
+                echo json_encode(array(
+                    'status' => false,
+                    'message' => '提交数据错误,请检查填写数据是否正确',
+                ));
+                exit;
+            }
+            
+            if ($accountType == 3) {
+                echo json_encode(array(
+                    'status' => false,
+                    'message' => '微信不能设置订单是否可带链接',
+                ));
+                exit;
+            }
+            
+            $accountDB = array(
+                1 => 'AccountWeibo',
+                2 => 'AccountWeibo',
+                3 => 'AccountWeixin',
+                4 => 'AccountNews',
+            );
+            $accountModel = $this->db[$accountDB[$accountType]];
+            
+            if ($selectAll) {
+                $userInfos = parent::get_session('user_info');
+                $where = array(
+                    'users_id'  => $userInfos['id'],
+                    'is_del'    => 0,
+                );
+            } else {
+                $where = array('id' => $accountId);
+            }
+            $status = $accountModel->where($where)->save(array('url_status' => $urlStatus));
+            if ($status === false) {
+                echo json_encode(array(
+                    'status' => false,
+                    'message' => '设置失败！',
+                ));
+            } else {
+                echo json_encode(array(
+                    'status' => true,
+                    'message' => 'success',
+                ));
+            }
+            exit;
+        } else {
+            parent::callback(C('STATUS_ACCESS'), 'error');
+        }
+    }
+    
+    /**
+     * 修改价格
+     * 
+     * @author lurongchang
+     * @date   2014-10-01
+     * @return void
+     */
+    public function changeamount()
+    {
+        if ($this->isPost()) {
+            $accountId      = I('post.accountId', 0, 'intval');
+            $accountType    = I('post.accountType', 0, 'intval');
+            $accountPhone   = I('post.accountPhone', '', 'setString');
+            $newPrice       = I('post.newRetweetPrice', 0, 'floatval');
+            $priceType      = I('post.priceType', '', 'setString');
+            
+            $priceTypes = array(
+                'accountPhone',
+                'retweetprice'      => 'yg_zhuanfa', 
+                'tweetprice'        => 'yg_zhifa',
+                'softretweetprice'  => 'rg_zhuanfa',
+                'softtweetprice'    => 'rg_zhifa',
+                'contentprice'      => 'dj_money',
+                );
+            if (empty($accountId) || empty($accountType) || !array_key_exists($priceType, $priceTypes)) {
+                echo json_encode(array(false, '提交数据错误,请检查填写数据是否正确'));
+                exit;
+            }
+            
+            if (!in_array($accountType, array(1, 2))) {
+                echo json_encode(array(false, '此功能只支持微博'));
+                exit;
+            }
+            
+            if ($priceType == 'accountPhone') {
+                echo json_encode(array(false, '修改号码功能暂时暂停使用!'));
+                exit;
+            }
+            
+            $accountModel = $this->db['AccountWeibo'];
+            $where = array('id' => $accountId);
+            $datas[$priceTypes[$priceType]] = $newPrice;
+            $status = $accountModel->where($where)->save($datas);
+            if ($status === false) {
+                echo json_encode(array(false, '设置失败！'));
+            } else {
+                // 更新搜索表
+                parent::weiboDataprocess($accountId);
+                echo json_encode(array(true, '资料修改成功!'));
+            }
+            exit;
+        } else {
+            parent::callback(C('STATUS_ACCESS'), 'error');
         }
     }
 	

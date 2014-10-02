@@ -158,7 +158,6 @@ define(function (require) {
         }
 
         validation.submit = function () {
-            console.log('fuck fuck fuck fuck fuck fuck fuck fuck fuck ');
             if(validation.errors().length > 0){
                W.alert(validation.errors()[0]);
                 return;

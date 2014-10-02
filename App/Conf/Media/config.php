@@ -77,5 +77,33 @@ return array(
             'urlImg'            => '',
         ),
     ),
+    
+    // 微博报价比率
+    'WEIBO_PRICE_RATIO' => array(
+        // 硬广转发报价
+        'retweetPrice'      => 1,
+        // 硬广直发报价
+        'tweetPrice'        => 1,
+        // 软广转发报价
+        'softRetweetPrice'  => 0.7,
+        // 软广直发报价
+        'softTweetPrice'    => 0.7,
+        // 带号价
+        'contentPrice'      => 0.45,
+    ),
+    
+    // 微信图文价格比率
+    'WEIXIN_PRICE_RATIO' => array(
+        // 单图报价
+        'singleGraphicPrice'        => 1,
+        // 多图文第一条报价
+        'multiGraphicTopPrice'      => 0.7,
+        // 多图文第二条报价
+        'multiGraphicSecondPrice'   => 0.4,
+        // 多图文其他位置报价
+        'multiGraphicOtherPrice'    => 0.25,
+        // 带号价
+        'contentPrice'              => 0.25,
+    ),
 );
 ?>

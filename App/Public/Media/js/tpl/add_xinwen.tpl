@@ -52,16 +52,25 @@
             <tr>
                 <td class="t1"><span><i>*</i><strong>新闻源：</strong></span></td>
                 <td class="t2 t t15 tl">
+                    <input data-bind="checked: is_news_source" type="radio" value="0" name="is_news_source"/>不限
                     <input data-bind="checked: is_news_source" type="radio" value="1" name="is_news_source"/>是
                     <input data-bind="checked: is_news_source" type="radio" value="2" name="is_news_source"/>否
+                    <input data-bind="checked: is_news_source" type="radio" value="3" name="is_news_source"/>百度新闻源
                     <p data-bind="text: is_news_source.error(), css: is_news_source.error() ? 'error' : 'correct'" class="cBox_tip"></p>
                 </td>
             </tr>
             <tr>
                 <td class="t1"><span><i>*</i><strong>网址收录：</strong></span></td>
                 <td class="t2 t t15 tl">
-                    <input data-bind="checked: is_web_site_included" type="radio" value="1" name="is_web_site_included"/>是
-                    <input data-bind="checked: is_web_site_included" type="radio" value="2" name="is_web_site_included"/>否
+                    <input data-bind="checked: is_web_site_included" type="radio" value="0" name="is_web_site_included"/>不限
+                    <input data-bind="checked: is_web_site_included" type="radio" value="1" name="is_web_site_included"/>新闻收录
+                    <input data-bind="checked: is_web_site_included" type="radio" value="2" name="is_web_site_included"/>不保证网页收录
+                    <input data-bind="checked: is_web_site_included" type="radio" value="3" name="is_web_site_included"/>包网页收录
+                    <input data-bind="checked: is_web_site_included" type="radio" value="4" name="is_web_site_included"/>网页收录
+                    <input data-bind="checked: is_web_site_included" type="radio" value="5" name="is_web_site_included"/>不包新闻收录
+                    <input data-bind="checked: is_web_site_included" type="radio" value="6" name="is_web_site_included"/>不包网页收录
+                    <input data-bind="checked: is_web_site_included" type="radio" value="7" name="is_web_site_included"/>不保证新闻收录
+                    <input data-bind="checked: is_web_site_included" type="radio" value="8" name="is_web_site_included"/>包新闻收录
                     <p data-bind="text: is_web_site_included.error(), css: is_web_site_included.error() ? 'error' : 'correct'" class="cBox_tip"></p>
                 </td>
             </tr>
@@ -69,7 +78,7 @@
                 <td class="t1"><span><i>*</i><strong>是否需要来源：</strong></span></td>
                 <td class="t2 t t15 tl">
                     <input data-bind="checked: is_need_source" type="radio" value="1" name="is_need_source"/>是
-                    <input data-bind="checked: is_need_source" type="radio" value="2" name="is_need_source"/>否
+                    <input data-bind="checked: is_need_source" type="radio" value="0" name="is_need_source"/>否
                     <p data-bind="text: is_need_source.error(), css: is_need_source.error() ? 'error' : 'correct'" class="cBox_tip"></p>
                 </td>
             </tr>
@@ -89,11 +98,24 @@
                 </td>
             </tr>
             <tr>
-                <td class="t1"><span><i>*</i><strong>能否带文本链接：</strong></span></td>
+                <td class="t1"><span><i>*</i><strong>文本链接：</strong></span></td>
                 <td class="t2 t t15 tl">
-                    <input data-bind="checked: is_text_link" type="radio" value="1" name="is_text_link"/>是
-                    <input data-bind="checked: is_text_link" type="radio" value="2" name="is_text_link"/>否
+                    <input data-bind="checked: is_text_link" type="radio" value="0" name="is_text_link"/>不限
+                    <input data-bind="checked: is_text_link" type="radio" value="1" name="is_text_link"/>可带文本网址
+                    <input data-bind="checked: is_text_link" type="radio" value="2" name="is_text_link"/>可做超链
+                    <input data-bind="checked: is_text_link" type="radio" value="3" name="is_text_link"/>不能带网址
                     <p data-bind="text: is_text_link.error(), css: is_text_link.error() ? 'error' : 'correct'" class="cBox_tip"></p>
+                </td>
+            </tr>
+            <tr>
+                <td class="t1"><span><i>*</i><strong>门户类型：</strong></span></td>
+                <td class="t2 t t15 tl">
+                    <input data-bind="checked: type_of_portal" type="radio" value="0" name="type_of_portal"/>不限
+                    <input data-bind="checked: type_of_portal" type="radio" value="1" name="type_of_portal"/>中央门户
+                    <input data-bind="checked: type_of_portal" type="radio" value="2" name="type_of_portal"/>行业门户
+                    <input data-bind="checked: type_of_portal" type="radio" value="3" name="type_of_portal"/>地方门户
+                    <input data-bind="checked: type_of_portal" type="radio" value="4" name="type_of_portal"/>其它门户
+                    <p data-bind="text: type_of_portal.error(), css: type_of_portal.error() ? 'error' : 'correct'" class="cBox_tip"></p>
                 </td>
             </tr>
             <tr>

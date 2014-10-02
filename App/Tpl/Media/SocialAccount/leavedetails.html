@@ -1,0 +1,30 @@
+ <!--暂离开始-->
+  <div id="leaveContent" class="policy_modifications">
+  <form name="leaveform" id="leaveform">  
+  <table border="0" cellspacing="0" cellpadding="0" class="tipsContent">
+    <tr>
+      <td>
+	 	 	<label class="policy_modifications_yes">
+		   <input type="radio" name="leave" class="js_leave" value="1" <notempty name="view_data.leave">checked="checked"</notempty> />
+		   <span>是</span>
+		</label>
+		<label>
+		  <input type="radio" name="leave" class="js_leave" value="0" <empty name="view_data.leave">checked="checked"</empty> />
+		  <span>否</span>
+		</label>
+	       </td>
+    </tr>
+    <tr>
+      <td class="modifications_select_all">
+        <label>
+          <input type="checkbox" name="processall" value="1"/>
+          <span>本次操作应用于所有账号。</span>
+        </label>
+      </td>
+    </tr>
+  </table>
+  <input type="hidden" name="account_id" value="{$view_data.accountId}"/>
+  <input type="hidden" name="account_type" value="{$view_data.accountType}"/>
+  </form>  
+</div>
+  <!--暂离结束-->

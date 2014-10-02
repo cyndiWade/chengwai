@@ -241,8 +241,13 @@ define(function(require, exports) {
                         if (sure) {
                             $.ajax({
                                 type: "POST",
-                                url: "/information/accountmanage/changeamount",
-                                data: "accountPhone=" + value + "&accountId=" + row.cells.account_id + '&priceType=accountPhone',
+                                url: "/Media/SocialAccount/changeamount",
+                                data: {
+                                    'accountPhone': value,
+                                    'accountId' : row.cells.account_id,
+                                    'accountType' : row.weibo_type,
+                                    'priceType': 'accountPhone'
+                                },
                                 dataType: "json",
                                 success: function (msg) {
                                     var success = msg[0];
@@ -343,8 +348,13 @@ define(function(require, exports) {
                             if (sure) {
                                 $.ajax({
                                     type: "POST",
-                                    url: "/information/accountmanage/changeamount",
-                                    data: "newRetweetPrice=" + value + "&accountId=" + row.cells.account_id + '&priceType=retweetprice',
+                                    url: "/Media/SocialAccount/changeamount",
+                                    data: {
+                                        'newRetweetPrice': value,
+                                        'accountId' : row.cells.account_id,
+                                        'accountType' : row.weibo_type,
+                                        'priceType': 'retweetprice'
+                                    },
                                     dataType: "json",
                                     success: function (msg) {
                                         var success = msg[0];
@@ -466,8 +476,13 @@ define(function(require, exports) {
                             if (sure) {
                                 $.ajax({
                                     type: "POST",
-                                    url: "/information/accountmanage/changeamount",
-                                    data: "newRetweetPrice=" + value + "&accountId=" + row.cells.account_id + '&priceType=tweetprice',
+                                    url: "/Media/SocialAccount/changeamount",
+                                    data: {
+                                        'newRetweetPrice': value,
+                                        'accountId' : row.cells.account_id,
+                                        'accountType' : row.weibo_type,
+                                        'priceType': 'tweetprice'
+                                    },
                                     dataType: "json",
                                     success: function (msg) {
                                         var success = msg[0];
@@ -590,8 +605,13 @@ define(function(require, exports) {
                         if (sure) {
                             $.ajax({
                                 type: "POST",
-                                url: "/information/accountmanage/changeamount",
-                                data: "newRetweetPrice=" + value + "&accountId=" + row.cells.account_id + '&priceType=softretweetprice',
+                                url: "/Media/SocialAccount/changeamount",
+                                data: {
+                                    'newRetweetPrice': value,
+                                    'accountId' : row.cells.account_id,
+                                    'accountType' : row.weibo_type,
+                                    'priceType': 'softretweetprice'
+                                },
                                 dataType: "json",
                                 success: function (msg) {
                                     var success = msg[0];
@@ -689,8 +709,13 @@ define(function(require, exports) {
                         if (sure) {
                             $.ajax({
                                 type: "POST",
-                                url: "/information/accountmanage/changeamount",
-                                data: "newRetweetPrice=" + value + "&accountId=" + row.cells.account_id + '&priceType=softtweetprice',
+                                url: "/Media/SocialAccount/changeamount",
+                                data: {
+                                    'newRetweetPrice': value,
+                                    'accountId' : row.cells.account_id,
+                                    'accountType' : row.weibo_type,
+                                    'priceType': 'softtweetprice'
+                                },
                                 dataType: "json",
                                 success: function (msg) {
                                     var success = msg[0];
@@ -787,8 +812,13 @@ define(function(require, exports) {
                         if (sure) {
                             $.ajax({
                                 type: "POST",
-                                url: "/information/accountmanage/changeamount",
-                                data: "newRetweetPrice=" + value + "&accountId=" + row.cells.account_id + '&priceType=contentprice',
+                                url: "/Media/SocialAccount/changeamount",
+                                data: {
+                                    'newRetweetPrice': value,
+                                    'accountId' : row.cells.account_id,
+                                    'accountType' : row.weibo_type,
+                                    'priceType': 'contentprice'
+                                },
                                 dataType: "json",
                                 success: function (msg) {
                                     var success = msg[0];
@@ -818,11 +848,13 @@ define(function(require, exports) {
 
         function isPriceEditable(value, row,item_info) {
             if(row.cells.weibo_type == weibo_type_weitao || row.cells.weibo_type == weibo_type_weixin){
+                console.log(item_info.dataIndex);
                 if(item_info.dataIndex =="retweet_price" || item_info.dataIndex=='soft_retweet_price'){
                     return false;
                 }
             }
-            return row.cells.is_verify == 2;
+            // return row.cells.is_verify == 2;
+            return row.cells.is_verify == 1;
         }
 
         /**
@@ -974,7 +1006,7 @@ define(function(require, exports) {
 
                         var imgTip = "<a href='javascript:void(0)' title='不可设置'><img src='/resources/images/ico_set_disable.gif' class='set_disable_img' /></a>";
 
-                        if (row.cells.is_verify == 2) {
+                        if (row.cells.is_verify == 1) {
                             imgTip = "<a href='javascript:void(0)' title='设置'><img data_account_id = '" + row.cells.account_id + "'id='leaveDialogue' src='/resources/images/ico_set.gif' class='set_img' /></a>";
                         }
 
@@ -999,7 +1031,7 @@ define(function(require, exports) {
                         var imgTip = "<a href='javascript:void(0)' title='不可设置'><img src='/resources/images/ico_set_disable.gif' class='set_disable_img' /></a>";
 
                         if (!(row.cells.weibo_type == weibo_type_weixin)) {
-                            if (row.cells.is_verify == 2) {
+                            if (row.cells.is_verify == 1) {
                                 flag = row.cells.orderMax == '' ? false : true;
                                 imgTip = "<a href='javascript:void(0)' title='设置'><img data_account_id = '" + row.cells.account_id + "' data_orderMax='" + row.cells.orderMax + "' data_radio = '" + flag + "' class = 'js_onlineDialogue set_img' src='/resources/images/ico_set.gif' /></a>"
                             }
@@ -1118,9 +1150,10 @@ define(function(require, exports) {
                     dataIndex: "is_verify",
                     cls: "t9",
                     formatter: function (data, row) {
-                        if (data == "1" || data == '3') {
+                        if (data == "0" || data == '2') {
                             var div = $("<div></div>");
-                            var a = $("<a id='js_show_review' data-accountId = " + row.cells.account_id + " class='blue'></a>");
+                            var a = $("<a id='js_show_review' data-accountId = " + row.cells.account_id + 
+                                " data-accountType = " + weiboType + " class='blue'></a>");
                             a.attr({
                                 href: "javascript: void(0)"
                             }).text("详情");
@@ -1137,7 +1170,7 @@ define(function(require, exports) {
                     cls: "t10",
                     formatter: function (data, row) {
                         var div = $("<div></div>");
-                        if (row.cells.is_verify == '3' || row.cells.is_verify == '1') {
+                        if (row.cells.is_verify == '2' || row.cells.is_verify == '0') {
                             return '--';
                         } else if (data == "1") {
                             return "是";
@@ -1158,7 +1191,7 @@ define(function(require, exports) {
                     dataIndex: "is_online",
                     cls: "t11",
                     formatter: function (data, row) {
-                        if (row.cells.is_verify == '3' || row.cells.is_allow_order == '2') {
+                        if (row.cells.is_verify == '2' || row.cells.is_allow_order == '2') {
                             return '--';
                         } else if (data == "1") {
                             return "是";
@@ -1184,9 +1217,9 @@ define(function(require, exports) {
                         // var imgTip = "<a href='javascript:void(0)' title='不可设置'><img src='/resources/images/ico_set_disable.gif' class='set_disable_img' /></a>";
                         var imgTip = "<a href='javascript:void(0)' title='不可设置'></a>";
 
-                        if (row.cells.is_verify == 2) {
+                        if (row.cells.is_verify == 1) {
                             // imgTip = "<a href='javascript:void(0)' title='设置'><img data_account_id = '" + row.cells.account_id + "'id='leaveDialogue' src='/resources/images/ico_set.gif' class='set_img' /></a>";
-                            imgTip = "<a href='javascript:void(0)' title='设置' data_account_id = '" + row.cells.account_id + "'id='leaveDialogue'></a>";
+                            imgTip = "<a href='javascript:void(0)' title='设置' data_account_id = '" + row.cells.account_id + "' data_account_type = '" + weiboType + "' id='leaveDialogue'></a>";
                         }
 
                         // var div = $("<div></div>");
@@ -1210,12 +1243,11 @@ define(function(require, exports) {
                     dataIndex: "is_extend",
                     cls: "t11",
                     formatter: function (data, row) {
-
                         // var imgTip = "<a href='javascript:void(0)' title='不可设置'><img src='/resources/images/ico_set_disable.gif' class='set_disable_img' /></a>";
                         var imgTip = "<a href='javascript:void(0)' title='不可设置'></a>";
-                        if (row.cells.is_verify == 2) {
+                        if (row.cells.is_verify == 1) {
                             // imgTip = "<a href='javascript:void(0)' title='设置'><img data_account_id = '" + row.cells.account_id + "' data_radio = '" + data + "' class = 'js_isHardDialogue set_img' src='/resources/images/ico_set.gif'/></a>"
-                            imgTip = "<a href='javascript:void(0)' title='设置' data_account_id = '" + row.cells.account_id + "' data_radio = '" + data + "'></a>"
+                            imgTip = "<a href='javascript:void(0)' title='设置' data_account_id = '" + row.cells.account_id + "' data_account_type = '" + weiboType + "' class = 'js_isHardDialogue' data_radio = '" + data + "'></a>"
                         }
                         if (data == "1") {
                             // var div = $("<div></div>");
@@ -1224,7 +1256,7 @@ define(function(require, exports) {
                         } else {
                             // var div = $("<div></div>");
                             // return div.append(imgTip).append('&nbsp;否');
-                            return $(imgTip).append('<em class="no">是</em>');
+                            return $(imgTip).append('<em class="no">否</em>');
                         }
                     }
                 },
@@ -1239,14 +1271,16 @@ define(function(require, exports) {
                         var imgTip = "<a href='javascript:void(0)' title='不可设置'></a>";
 
                         if (!(row.cells.weibo_type == weibo_type_weixin)) {
-                            if (row.cells.is_verify == 2) {
-                                flag = row.cells.orderMax == '' ? false : true;
+                            if (row.cells.is_verify == 1) {
+                                // flag = row.cells.orderMax == '' ? false : true;
+                                flag = row.cells.periodMax ? true : false;
                                 // imgTip = "<a href='javascript:void(0)' title='设置'><img data_account_id = '" + row.cells.account_id + "' data_orderMax='" + row.cells.orderMax + "' data_radio = '" + flag + "' class = 'js_onlineDialogue set_img' src='/resources/images/ico_set.gif' /></a>"
-                                imgTip = "<a href='javascript:void(0)' title='设置' data_account_id = '" + row.cells.account_id + "' data_orderMax='" + row.cells.orderMax + "' data_radio = '" + flag + "'></a>"
+                                imgTip = "<a href='javascript:void(0)' title='设置' data_account_id = '" + row.cells.account_id + "' data_account_type = '" + weiboType + "' data_orderMax='" + row.cells.orderMax + "' class = 'js_onlineDialogue' data_radio = '" + flag + "'></a>"
                             }
                         }
 
-                        if (row.cells.orderMax == '') {
+                        // if (row.cells.orderMax == '') {
+                        if (!row.cells.periodMax) {
                             // return div.append(imgTip).append('&nbsp;无');
                             return $(imgTip).append('<em class="no">无</em>');
                         } else {
@@ -1267,7 +1301,7 @@ define(function(require, exports) {
                 {
                     align: "center",
                     // text: '<div id="autoSendTips"><span>订单</span><img id="order_auto_send" src="/resources/images/icon_tips.jpg" title="点击查看详情"><span><br>托管</span></div>',
-                    text: renderTitleMiddelImg("订单", "isEnableMicroTask", '<br/>托管'),
+                    text: renderTitleMiddelImg("订单", "order_auto_send", '<br/>托管'),
                     dataIndex: "is_auto_send",
                     cls: "t11",
                     id:"autoSendTips",
@@ -1277,10 +1311,10 @@ define(function(require, exports) {
                         var imgTip = "<a href='javascript:void(0)' title='不可设置'></a>";
                         if (row.cells.is_auth == 1 && (row.cells.weibo_type == 1 || row.cells.weibo_type == 2 )) {
                             // imgTip = "<a href='javascript:void(0)' title='设置'><img data_account_id = '" + row.cells.account_id + "' data_radio = '" + data + "' class = 'js_isAutoSendDialogue set_img' src='/resources/images/ico_set.gif'/></a>"
-                            imgTip = "<a href='javascript:void(0)' title='设置' data_account_id = '" + row.cells.account_id + "' data_radio = '" + data + "'></a>"
+                            imgTip = "<a href='javascript:void(0)' title='设置' data_account_id = '" + row.cells.account_id + "' data_account_type = '" + weiboType + "' data_radio = '" + data + "'></a>"
                         } else if( row.cells.weibo_type == 1 || row.cells.weibo_type == 2 ){
                             // authTip = "<a href='javascript:void(0)' title='不可设置' style='color: #f00;'><img data_account_id = '" + row.cells.account_id + "' data_radio = '" + data + "' data_auth='"+ row.cells.is_auth+"' class = 'js_isAuthDialogue set_img' src = '/resources/images/alert.gif'/></a>";
-                            authTip = "<a href='javascript:void(0)' title='不可设置' style='color: #f00;'><img data_account_id = '" + row.cells.account_id + "' data_radio = '" + data + "' data_auth='"+ row.cells.is_auth+"' class = 'js_isAuthDialogue set_img' src = '/App/Public/Media/images/myimg/alert.gif'/></a>";
+                            authTip = "<a href='javascript:void(0)' title='不可设置' style='color: #f00;'><img data_account_id = '" + row.cells.account_id + "' data_account_type = '" + weiboType + "' data_radio = '" + data + "' data_auth='"+ row.cells.is_auth+"' class = 'js_isAuthDialogue set_img' src = '/App/Public/Media/images/myimg/alert.gif'/></a>";
                         } else {
                             // imgTip = "<a href='javascript:void(0)' title='平台不支持此操作'><img src='/resources/images/ico_set_disable.gif' class='set_disable_img' /></a>";
                             imgTip = "<a href='javascript:void(0)' title='平台不支持此操作'></a>";
@@ -1378,6 +1412,7 @@ define(function(require, exports) {
                     text: "确定",
                     handler: function () {
                         var accountId = this.getCurrentTarget().attr('data_account_id');
+                        var accountType = this.getCurrentTarget().attr('data_account_type');
                         var isOpenRadio = this.el.find('input[name=openRadio]:checked').val();
                         var selectAllPolicyCheckbox_ = this.el.find('input[name=selectAllPolicyCheckbox]').attr('checked');
                         var selectAllPolicyCheckbox = selectAllPolicyCheckbox_ == 'checked' ? 'checked' : '';
@@ -1394,7 +1429,7 @@ define(function(require, exports) {
                                 return $.ajax({
                                     type: "POST",
                                     url: "/information/accountmanage/setopen",
-                                    data: "accountId=" + accountId + '&isOpen=' + isOpenRadio + '&selectAllCheckbox=' + selectAllPolicyCheckbox,
+                                    data: "accountId=" + accountId + '&accountType=' + accountType + '&isOpen=' + isOpenRadio + '&selectAllCheckbox=' + selectAllPolicyCheckbox,
                                     dataType: "json",
                                     success: function (msg) {
                                         message.close();
@@ -1532,8 +1567,13 @@ define(function(require, exports) {
                     handler: function () {
                         var isOnlineRadio = $('input[name=periodRadio]:checked').val();
                         var selectAllCheckbox = $('input[name=selectAllPeriodCheckbox]').attr('checked');
+                        if ('undefined' == typeof(selectAllCheckbox)) {
+                            selectAllCheckbox = $('input[name=selectAllPeriodCheckbox]').prop('checked');
+                            selectAllCheckbox = selectAllCheckbox ? 1 : 0;
+                        }
                         var orderMaxInput = $(".js_orderMaxInput").val();
                         var accountId = $(".js_periodAccountId").val();
+                        var accountType = $(".js_periodAccountId").data('weibo_type');
                         var self = this;
 
                         if (isOnlineRadio == 1) {
@@ -1542,45 +1582,15 @@ define(function(require, exports) {
                                 return false;
                             }
                         }
-
-                        if (selectAllCheckbox) {
-                            W.confirm("确认对全部账号进行接单上限的设置吗？", function (sure) {
-                                if (!sure) {
-                                    return false;
-                                } else {
-                                    var message = W.message("处理中", "loading", 1000);
-
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "/information/accountmanage/setperiod",
-                                        data: "isOnlineRadio=" + isOnlineRadio + "&selectAllCheckbox=" + selectAllCheckbox + "&orderMaxInput=" + orderMaxInput + "&accountId=" + accountId,
-                                        dataType: "json",
-                                        success: function (msg) {
-                                            message.close();
-                                            if (msg['status'] == false) {
-                                                W.alert(msg['message']);
-                                            } else {
-                                                var alert_msg=msg['message']?msg['message']:"操作成功！";
-                                                W.alert(alert_msg, "success");
-                                                self.close();
-                                                grid.reload();
-                                            }
-                                        }
-                                    });
-                                }
-
-                            });
-                        } else {
+                        var toSetPeriod = function() {
                             var message = W.message("处理中", "loading", 1000);
-
                             $.ajax({
                                 type: "POST",
-                                url: "/information/accountmanage/setperiod",
-                                data: "isOnlineRadio=" + isOnlineRadio + "&selectAllCheckbox=" + selectAllCheckbox + "&orderMaxInput=" + orderMaxInput + "&accountId=" + accountId,
+                                url: "/Media/SocialAccount/setperiod",
+                                data: "isOnlineRadio=" + isOnlineRadio + "&selectAllCheckbox=" + selectAllCheckbox + "&orderMaxInput=" + orderMaxInput + "&accountId=" + accountId + "&accountType=" + accountType,
                                 dataType: "json",
                                 success: function (msg) {
                                     message.close();
-
                                     if (msg['status'] == false) {
                                         W.alert(msg['message']);
                                     } else {
@@ -1591,6 +1601,16 @@ define(function(require, exports) {
                                     }
                                 }
                             });
+                        }
+                        
+                        if (selectAllCheckbox) {
+                            W.confirm("确认对全部账号进行接单上限的设置吗？", function (sure) {
+                                if (sure) {
+                                    toSetPeriod();
+                                }
+                            });
+                        } else {
+                            toSetPeriod();
                         }
 
                     }
@@ -1607,9 +1627,9 @@ define(function(require, exports) {
                 ontargetchanged: function () {
                     var data_radio = this.getCurrentTarget().attr("data_radio");
                     var data_account_id = this.getCurrentTarget().attr("data_account_id");
+                    var data_account_type = this.getCurrentTarget().attr("data_account_type");
                     var data_orderMax = this.getCurrentTarget().attr("data_orderMax");
-                    $(".js_periodAccountId").val(data_account_id);
-                    console.log(data_radio);
+                    $(".js_periodAccountId").val(data_account_id).data('weibo_type', data_account_type);
                     if (data_radio == 'false' || data_radio == '') {
                         $(".js_periodRadioFalse").prop('checked', true);
                         $(".js_orderMaxInput").val(null);
@@ -1649,43 +1669,20 @@ define(function(require, exports) {
                     handler: function () {
                         var isExtendRadio = $('input[name=isExtendRadio]:checked').val();
                         var selectAllCheckbox = $('input[name=selectAllExtendCheckbox]').attr('checked');
+                        if ('undefined' == typeof(selectAllCheckbox)) {
+                            selectAllCheckbox = $('input[name=selectAllExtendCheckbox]').prop('checked');
+                            selectAllCheckbox = selectAllCheckbox ? 1 : 0;
+                        }
                         var accountId = $(".js_extendAccountId").val();
+                        var accountType = $(".js_extendAccountId").data('weibo_type');
                         var self = this;
-                        if (selectAllCheckbox) {
-                            W.confirm("确认对全部账号进行是否接硬广的设置吗？", function (sure) {
-                                if (!sure) {
-                                    return false;
-                                } else {
-                                    var message = W.message("处理中", "loading", 1000);
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "/information/accountmanage/setextend",
-                                        data: "accountId=" + accountId + "&isExtendRadio=" + isExtendRadio + "&selectAllCheckbox=" + selectAllCheckbox,
-                                        dataType: "json",
-                                        success: function (msg) {
-                                            message.close();
-
-                                            if (msg['status'] == false) {
-                                                W.alert(msg['message']);
-                                            } else {
-                                                W.alert("操作成功！", "success");
-                                                self.close();
-                                                grid.reload();
-                                            }
-                                        },
-                                        error: function () {
-                                            W.alert("服务器有误，请联系管理员！");
-                                            return false;
-                                        }
-                                    })
-                                }
-                            });
-                        } else {
+                        var toSetExtend = function() {
                             var message = W.message("处理中", "loading", 1000);
                             $.ajax({
                                 type: "POST",
-                                url: "/information/accountmanage/setextend",
-                                data: "accountId=" + accountId + "&isExtendRadio=" + isExtendRadio + "&selectAllCheckbox=" + selectAllCheckbox,
+                                url: "/Media/SocialAccount/setextend",
+                                data: "accountId=" + accountId + "&accountType=" + accountType + "&isExtendRadio=" + isExtendRadio + "&selectAllCheckbox=" + selectAllCheckbox,
+                                dataType: "json",
                                 success: function (msg) {
                                     message.close();
                                     if (msg['status'] == false) {
@@ -1702,7 +1699,15 @@ define(function(require, exports) {
                                 }
                             })
                         }
-
+                        if (selectAllCheckbox) {
+                            W.confirm("确认对全部账号进行是否接硬广的设置吗？", function (sure) {
+                                if (sure) {
+                                    toSetExtend();
+                                }
+                            });
+                        } else {
+                            toSetExtend();
+                        }
                     }
 
                 },
@@ -1718,7 +1723,8 @@ define(function(require, exports) {
                 ontargetchanged: function () {
                     var data_radio = this.getCurrentTarget().attr("data_radio");
                     var data_account_id = this.getCurrentTarget().attr("data_account_id");
-                    $('.js_extendAccountId').val(data_account_id);
+                    var data_account_type = this.getCurrentTarget().attr("data_account_type");
+                    $('.js_extendAccountId').val(data_account_id).data('weibo_type', data_account_type);
                     if (data_radio == false || data_radio == 2) {
                         $(".js_extendRadioFalse").prop('checked', true);
 
@@ -1849,7 +1855,8 @@ define(function(require, exports) {
                 ontargetchanged: function () {
                     var data_radio = this.getCurrentTarget().attr("data_radio");
                     var data_account_id = this.getCurrentTarget().attr("data_account_id");
-                    $('.js_extendAccountId').val(data_account_id);
+                    var data_account_type = this.getCurrentTarget().attr("data_account_type");
+                    $('.js_extendAccountId').val(data_account_id).data('weibi_type', data_account_type);
                     if (data_radio == false || data_radio == 2) {
                         $(".js_extendRadioFalse").prop('checked', true);
                         this.el.find('.js_tips').hide();
@@ -1886,13 +1893,14 @@ define(function(require, exports) {
 
                     var data_auth = this.getCurrentTarget().attr("data_auth");
                     var data_account_id = this.getCurrentTarget().attr("data_account_id");
+                    var data_account_type = this.getCurrentTarget().attr("data_account_type");
                     var tips = '该账号授权已过期，';
                     if (data_auth == false || data_auth == 2) {
                         tips = '该账号尚未授权，';
                     }else if(data_auth == 3) {
                         tips = '该账号授权即将过期，';
                     }
-                    var authUrl = '/information/accountmanage/auth?account_id='+data_account_id;
+                    var authUrl = '/information/accountmanage/auth?account_id='+data_account_id + '&account_type=' + data_account_type;
                     $('#authtips').html(tips+'请点击 <a href="'+authUrl+'" target="_blank">这里</a>进入账号授权页面重新进行订单授权。');
                 }
             }
@@ -1915,123 +1923,99 @@ define(function(require, exports) {
                     handler: function () {
                         var self = this;
                         var $leave = $("input[name='leave']:checked").val();
-                        var $type = $("input[name='type']:checked").val();
-                        if ($leave == 1) {
-                            if (!$type) {
-                                W.alert("暂离类型不能为空，请选择");
-                                return false;
-                            }
-                            switch ($type) {
-                                case "every_day":
-                                    var $lefttimehours = $("#every_day_lefttimehours").val();
-                                    var $lefttimemin = $("#every_day_lefttimemin").val();
-                                    var $backtimehours = $("#every_day_backtimehours").val();
-                                    var $backtimemin = $("#every_day_backtimemin").val();
-                                    if ($lefttimehours == $backtimehours && $lefttimemin == $backtimemin) {
-                                        W.alert('离开日期不能与返回日期相同');
-                                        return false;
-                                    }
+                        // var $type = $("input[name='type']:checked").val();
+                        // if ($leave == 1) {
+                            // if (!$type) {
+                                // W.alert("暂离类型不能为空，请选择");
+                                // return false;
+                            // }
+                            // switch ($type) {
+                                // case "every_day":
+                                    // var $lefttimehours = $("#every_day_lefttimehours").val();
+                                    // var $lefttimemin = $("#every_day_lefttimemin").val();
+                                    // var $backtimehours = $("#every_day_backtimehours").val();
+                                    // var $backtimemin = $("#every_day_backtimemin").val();
+                                    // if ($lefttimehours == $backtimehours && $lefttimemin == $backtimemin) {
+                                        // W.alert('离开日期不能与返回日期相同');
+                                        // return false;
+                                    // }
 
-                                    if ($lefttimehours > $backtimehours) {
-                                        W.alert('返回日期不能早于离开日期');
-                                        return false;
-                                    }
+                                    // if ($lefttimehours > $backtimehours) {
+                                        // W.alert('返回日期不能早于离开日期');
+                                        // return false;
+                                    // }
 
-                                    if ($lefttimehours >= $backtimehours && $lefttimemin > $backtimemin) {
-                                        W.alert('返回日期不能早于离开日期');
-                                        return false;
-                                    }
-                                    break;
-                                case "every_week":
-                                    var $num = $("input[name='weeks[]']:checked").length;
-                                    if (!$num) {
-                                        W.alert("星期是必选项，不能为空！");
-                                        return false;
-                                    }
-                                    var $lefttimehours = $("#every_week_lefttimehours").val();
-                                    var $lefttimemin = $("#every_week_lefttimemin").val();
-                                    var $backtimehours = $("#every_week_backtimehours").val();
-                                    var $backtimemin = $("#every_week_backtimemin").val();
-                                    if ($lefttimehours == $backtimehours && $lefttimemin == $backtimemin) {
-                                        W.alert('离开日期不能与返回日期相同');
-                                        return false;
-                                    }
+                                    // if ($lefttimehours >= $backtimehours && $lefttimemin > $backtimemin) {
+                                        // W.alert('返回日期不能早于离开日期');
+                                        // return false;
+                                    // }
+                                    // break;
+                                // case "every_week":
+                                    // var $num = $("input[name='weeks[]']:checked").length;
+                                    // if (!$num) {
+                                        // W.alert("星期是必选项，不能为空！");
+                                        // return false;
+                                    // }
+                                    // var $lefttimehours = $("#every_week_lefttimehours").val();
+                                    // var $lefttimemin = $("#every_week_lefttimemin").val();
+                                    // var $backtimehours = $("#every_week_backtimehours").val();
+                                    // var $backtimemin = $("#every_week_backtimemin").val();
+                                    // if ($lefttimehours == $backtimehours && $lefttimemin == $backtimemin) {
+                                        // W.alert('离开日期不能与返回日期相同');
+                                        // return false;
+                                    // }
 
-                                    if ($lefttimehours > $backtimehours) {
-                                        W.alert('返回日期不能早于离开日期');
-                                        return false;
-                                    }
+                                    // if ($lefttimehours > $backtimehours) {
+                                        // W.alert('返回日期不能早于离开日期');
+                                        // return false;
+                                    // }
 
-                                    if ($lefttimehours >= $backtimehours && $lefttimemin > $backtimemin) {
-                                        W.alert('返回日期不能早于离开日期');
-                                        return false;
-                                    }
-                                    break;
-                                case "other":
-                                    var backTime = $.trim($('#backTime').val());
-                                    var leftTime = $.trim($('#leftTime').val());
-                                    if (backTime == '' || leftTime == '') {
-                                        W.alert('离开日期和返回日期不能为空');
-                                        return false;
-                                    }
-                                    if (backTime == leftTime) {
-                                        W.alert('离开日期不能与返回日期相同');
-                                        return false;
-                                    }
+                                    // if ($lefttimehours >= $backtimehours && $lefttimemin > $backtimemin) {
+                                        // W.alert('返回日期不能早于离开日期');
+                                        // return false;
+                                    // }
+                                    // break;
+                                // case "other":
+                                    // var backTime = $.trim($('#backTime').val());
+                                    // var leftTime = $.trim($('#leftTime').val());
+                                    // if (backTime == '' || leftTime == '') {
+                                        // W.alert('离开日期和返回日期不能为空');
+                                        // return false;
+                                    // }
+                                    // if (backTime == leftTime) {
+                                        // W.alert('离开日期不能与返回日期相同');
+                                        // return false;
+                                    // }
 
-                                    var bTime = W.util.parseDate(backTime);
-                                    var lTime = W.util.parseDate(leftTime);
-                                    if (bTime < lTime) {
-                                        W.alert('返回日期不能早于离开日期');
-                                        return false;
-                                    }
+                                    // var bTime = W.util.parseDate(backTime);
+                                    // var lTime = W.util.parseDate(leftTime);
+                                    // if (bTime < lTime) {
+                                        // W.alert('返回日期不能早于离开日期');
+                                        // return false;
+                                    // }
 
 
-                                    if ((bTime.getTime() - lTime.getTime()) > 180 * 24 * 3600 * 1000) {
-                                        W.alert('暂离时间最大为180天，请重新设置');
-                                        return false;
-                                    }
-                                    break;
-                                default:
-                                    W.alert("暂离类型有误，请重新选择！");
-                                    return false;
-                                    break;
-                            }
-                        }
+                                    // if ((bTime.getTime() - lTime.getTime()) > 180 * 24 * 3600 * 1000) {
+                                        // W.alert('暂离时间最大为180天，请重新设置');
+                                        // return false;
+                                    // }
+                                    // break;
+                                // default:
+                                    // W.alert("暂离类型有误，请重新选择！");
+                                    // return false;
+                                    // break;
+                            // }
+                        // }
 
                         var processall = $("input[name='processall']").attr("checked");
-                        if (processall) {
-                            W.confirm("确认对全部账号进行暂离的设置吗？", function (sure) {
-                                if (!sure) {
-                                    return false;
-                                } else {
-                                    var message = W.message("处理中", "loading", 1000);
-                                    return $.ajax({
-                                        url: "/information/accountmanage/setleave",
-                                        data: $("#leaveform").serializeArray(),
-                                        dataType: "json",
-                                        type: "post",
-                                        success: function (msg) {
-                                            message.close();
-                                            if (msg['status'] == false) {
-                                                W.alert(msg['message']);
-                                            } else {
-                                                W.alert("操作成功！", "success");
-                                                self.close();
-                                                grid.reload();
-                                            }
-                                        },
-                                        error: function () {
-                                            message.close();
-                                            W.alert("服务器有误，请联系管理员！");
-                                        }
-                                    });
-                                }
-                            });
-                        } else {
+                        if ('undefined' == typeof(processall)) {
+                            processall = $("input[name='processall']").prop("checked");
+                            processall = processall ? 1 : 0;
+                        }
+                        var toSetLeave = function (){
                             var message = W.message("处理中", "loading", 1000);
                             return $.ajax({
-                                url: "/information/accountmanage/setleave",
+                                url: "/Media/SocialAccount/setleave",
                                 data: $("#leaveform").serializeArray(),
                                 dataType: "json",
                                 type: "post",
@@ -2051,6 +2035,15 @@ define(function(require, exports) {
                                 }
                             });
                         }
+                        if (processall) {
+                            W.confirm("确认对全部账号进行暂离的设置吗？", function (sure) {
+                                if (sure) {
+                                    toSetLeave();
+                                }
+                            });
+                        } else {
+                            toSetLeave();
+                        }
                     }
                 },
                 {
@@ -2064,13 +2057,16 @@ define(function(require, exports) {
             listeners: {
                 ontargetchanged: function () {
                     var id = this.getCurrentTarget().attr("data_account_id");
+                    var type = this.getCurrentTarget().attr("data_account_type");
                     tips.setLoader({
-                        url: "/information/accountmanage/leavedetails",
+                        // url: "/information/accountmanage/leavedetails",
+                        url: "/Media/SocialAccount/leavedetails",
                         success: function (data) {
                             this.setHtml(data);
                         },
                         data: {
-                            accountId: id
+                            accountId: id,
+                            accountType: type
                         }
                     });
                 }
@@ -2164,11 +2160,13 @@ define(function(require, exports) {
             listeners: {
                 ontargetchanged: function () {
                     var id = this.getCurrentTarget().attr("data-accountId");
+                    var type = this.getCurrentTarget().attr("data-accountType");
                     tips.setLoader({
                         url: '/Media/SocialAccount/notallow',
                         dataType: "json",
                         data: {
-                            account_id: id
+                            account_id: id,
+                            account_type: type
                         },
                         success: function (r) {
                             var datas = (r && r.data) ? r.data : {};
@@ -2201,11 +2199,13 @@ define(function(require, exports) {
             listeners: {
                 ontargetchanged: function () {
                     var id = this.getCurrentTarget().attr("data-accountId");
+                    var type = this.getCurrentTarget().attr("data-accountType");
                     t.setLoader({
-                        url: '/information/accountmanage/review',
+                        url: '/Media/SocialAccount/review',
                         dataType: "json",
                         data: {
-                            account_id: id
+                            account_id: id,
+                            account_type: type
                         },
                         success: function (r) {
                             var html = "<ul>";
@@ -2364,7 +2364,7 @@ define(function(require, exports) {
             {
                 target: "#isEnableMicroTask",
                 title: "订单是否可带链接",
-                html: "用户可以给每个账号设置是否可以接带链接的订单，选项包括“是”、“否”和“特殊活动”。<br/>--&nbsp;选择“是”，则当前账号能接收到所有订单（包括带链接或不带链接）；<br/>--&nbsp;选择“否”，则当前账号仅能接收到不带链接的订单；<br/>--&nbsp;选择“特殊活动”，则表示当前账号不能发送带链接的订单，但用户自己可通过其他渠道成功执行。"
+                html: "用户可以给每个账号设置是否可以接带链接的订单，选项包括“是”、“否”和“特殊活动”。<br/>--&nbsp;选择“是”，则当前账号能接收到所有订单（包括带链接或不带链接）；<br/>--&nbsp;选择“否”，则当前账号仅能接收到不带链接的订单；"
             },
             {
                 target: "#d_zhuanpingzhi",
@@ -2432,6 +2432,7 @@ define(function(require, exports) {
                     text: "确定",
                     handler: function () {
                         var iAccountId = this.getCurrentTarget().closest('tr').attr('data-rowid');
+                        var iAccountType = this.getCurrentTarget().closest('tr').attr('data-rowtype');
                         var isEnableMicroTask = this.el.find('input[name=dataRadio]:checked').val();
                         var isSelectAll = (this.el.find('input[name=selectAllData]:checked').length === 1);
 
@@ -2442,9 +2443,10 @@ define(function(require, exports) {
                                 var message = W.message("处理中", "loading", 1000);
                                 return $.ajax({
                                     type: "POST",
-                                    url: "/information/accountmanage/setisenablemicrotask",
+                                    url: "/Media/SocialAccount/setisenablemicrotask",
                                     data: {
                                         accountId : iAccountId,
+                                        accountType : iAccountType,
                                         isEnableMicroTask : isEnableMicroTask,
                                         isSelectAll : isSelectAll
                                     },

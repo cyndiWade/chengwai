@@ -32,7 +32,7 @@
 			<ul class="nav-media fl">
                 <li <eq name="global_tpl_view.module_name" value="EventOrder">class="select"</eq>><a class="hddd" href="{:U('/Media/EventOrder/index')}">活动订单</a></li>
 				<li <eq name="global_tpl_view.module_name" value="PlaceAnOrder">class="select"</eq>><a class="yydd" href="{:U('/Media/PlaceAnOrder/index')}">预约订单</a></li>
-				<li <eq name="global_tpl_view.module_name" value="SocialAccount">class="select"</eq>><a class="zhgl" href="{:U('/Media/SocialAccount/manager')}">账号管理</a></li>
+				<li <eq name="global_tpl_view.module_name" value="SocialAccount">class="select"</eq>><a class="zhgl" href="{:U('/Media/SocialAccount/manager', array('type' => 1))}">账号管理</a></li>
 				<li <if condition="$global_tpl_view['module_name'] eq 'EventOrder' AND $global_tpl_view['module_name'] eq 'check'">class="select"</if>><a class="zdcx" href="#">账单查询</a></li>
 				<li <eq name="global_tpl_view.module_name" value="Account">class="select"</eq>><a class="yhzx" href="{:U('/Media/Account/userInfo')}">用户中心</a></li>
 				<li <eq name="global_tpl_view.module_name" value="Help">class="select"</eq>><a class="bzzx" href="{:U('/Media/Help/index')}">帮助中心</a></li>

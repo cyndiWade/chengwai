@@ -73,12 +73,70 @@ class AccountWeiboModel extends MediaBaseModel
             unset($userInfos);
             foreach ($list AS $key => $info) {
                 if (isset($newUserInfos[$info['users_id']])) {
-                    $list[$key] = array_merge($info, $newUserInfos[$info['users_id']]);
+                    $userMediaInfo = &$newUserInfos[$info['users_id']];
+                    $list[$key]['iphone']       = $userMediaInfo['iphone'];
+                    $list[$key]['tel_phone']    = $userMediaInfo['tel_phone'];
+                    $list[$key]['email']        = $userMediaInfo['email'];
+                    $list[$key]['qq']           = $userMediaInfo['qq'];
+                    $list[$key]['msn']          = $userMediaInfo['msn'];
+                    $list[$key]['name']         = $userMediaInfo['name'];
+                    $list[$key]['company_name'] = $userMediaInfo['company_name'];
+                    $list[$key]['website']      = $userMediaInfo['website'];
+                    $list[$key]['is_dls']       = $userMediaInfo['is_dls'];
                 }
             }
             unset($newUserInfos);
         }
         $count = $this->where($where)->count();
         return array('list' => $list, 'count' => $count);
+    }
+    
+    /**
+     * 获取某帐号数据
+     * 
+     * @param array  $where 条件
+     * @param string $field 字段 默认true为提取所有字段
+     * 
+     * @author lurongchang
+     * @date   2014-10-02
+     * @return void
+     */
+    public function getAccountInfo($where, $field = true)
+    {
+        $info = $this->where($where)->field($field)->find();
+        return $info;
+    }
+    
+    /**
+     * 通过接口获取用户数据
+     * 
+     * @param string $weiboId   微博昵称或ID
+     * @param int    $weiboType 1新浪微博 OR 2腾讯微博
+     * 
+     * @author lurongchang
+     * @date   2014-10-02
+     * @return void
+     */
+    public function getInfosFromApi($weiboId, $weiboType)
+    {
+        if (empty($weiboId) || empty($weiboType)) {
+            return array();
+        }
+        if ($weiboType == 1) {
+            $datas = array(
+                'source'        => 645773571,
+                'screen_name'   => $weiboId,
+            );
+            $url = 'http://api.weibo.com/2/users/show.json?' . urldecode(http_build_query($datas));
+        } else {
+            $datas = array(
+            );
+            $url = 'http://api.weibo.com/2/users/show.json?' . urldecode(http_build_query($datas));
+        }
+        
+        import("@.ORG.Util.CurlRequest");
+        $ch = new CurlRequest($url);
+        $apiInfos = json_decode($ch->get());
+        return $apiInfos;
     }
 }

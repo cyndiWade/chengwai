@@ -299,7 +299,7 @@ define(function(require) {
         //粉丝数认证展示
         self.follower_be_identified_display = function (){
             var follower_be_identified = self.follower_be_identified();
-            var options = {'1':'是','2':'否','10':'拒绝认证'}
+            var options = {'1':'是','0':'否','10':'拒绝认证'}
             return options[follower_be_identified];
         }();
 
@@ -317,14 +317,14 @@ define(function(require) {
         self.is_verify = ko.observable();
         self.is_verify_options = ko.observableArray(function(){
                 var res = [
-                    {id:1, name:'待审核'},
-                    {id:2, name:'审核通过'},
-                    {id:3, name:'审核失败'}
+                    {id:0, name:'待审核'},
+                    {id:1, name:'审核通过'},
+                    {id:2, name:'审核失败'}
                 ];
                 //审核失败不能修正成待审核，审核成功后将不能再修改成其他
-                if(self.is_verify()  == 3){
+                if(self.is_verify()  == 2){
                     res.shift();
-                }else if(self.is_verify() == 2){
+                }else if(self.is_verify() == 1){
                     res.shift();
                     res.pop();
                 }
@@ -1001,7 +1001,7 @@ define(function(require) {
         
         
         // 周平均阅读数
-        self.weekly_read_avg = data.collection_num || 0;
+        self.weekly_read_avg = ko.observable(data.weekly_read_avg);
         // 频道
         self.channel_name = ko.observable(data.channel_name);
         // 标题
@@ -1010,13 +1010,30 @@ define(function(require) {
         self.account_entry = ko.observable(data.account_entry);
         // 是否新闻源
         self.is_news_source = ko.observable(data.is_news_source);
+        self.is_news_source_options = ko.observableArray([
+            {id: 0, name: '不限'},
+            {id: 1, name: '是'},
+            {id: 2, name: '否'},
+            {id: 3, name: '百度新闻源'}
+        ]);
         self.is_news_source_name = function(){
-            return getOptionName(self.is_news_source(), self.yes_no_lack_data_options());
+            return getOptionName(self.is_news_source(), self.is_news_source_options());
         }();
-        // 是否网址收录
+        // 网址收录
         self.is_web_site_included = ko.observable(data.is_web_site_included);
+        self.is_web_site_included_options = ko.observableArray([
+            {id: 0, name: '不限'},
+            {id: 1, name: '新闻收录'},
+            {id: 2, name: '不保证网页收录'},
+            {id: 3, name: '包网页收录'},
+            {id: 4, name: '网页收录'},
+            {id: 5, name: '不包新闻收录'},
+            {id: 6, name: '不包网页收录'},
+            {id: 7, name: '不保证新闻收录'},
+            {id: 8, name: '包新闻收录'}
+        ]);
         self.is_web_site_included_name = function(){
-            return getOptionName(self.is_web_site_included(), self.yes_no_lack_data_options());
+            return getOptionName(self.is_web_site_included(), self.is_web_site_included_options());
         }();
         // 是否需要来源
         self.is_need_source = ko.observable(data.is_need_source);
@@ -1028,10 +1045,28 @@ define(function(require) {
         self.is_press_weekly_name = function(){
             return getOptionName(self.is_press_weekly(), self.yes_no_lack_data_options());
         }();
-        // 能否带文本链接
+        // 文本链接
         self.is_text_link = ko.observable(data.is_text_link);
+        self.is_text_link_options = ko.observableArray([
+            {id: 0, name: '不限'},
+            {id: 1, name: '可带文本网址'},
+            {id: 2, name: '可做超链'},
+            {id: 3, name: '不能带网址'}
+        ]);
         self.is_text_link_name = function(){
-            return getOptionName(self.is_text_link(), self.yes_no_lack_data_options());
+            return getOptionName(self.is_text_link(), self.is_text_link_options());
+        }();
+        // 门户类型
+        self.type_of_portal = ko.observable(data.is_text_link);
+        self.type_of_portal_options = ko.observableArray([
+            {id: 0, name: '不限'},
+            {id: 1, name: '中央门户'},
+            {id: 2, name: '行业门户'},
+            {id: 3, name: '地方门户'},
+            {id: 4, name: '其它门户'}
+        ]);
+        self.type_of_portal_name = function(){
+            return getOptionName(self.type_of_portal(), self.type_of_portal_options());
         }();
         // 媒体截图
         self.screen_shot_media = ko.observable(data.screen_shot_media).extend({weixin_image:''});

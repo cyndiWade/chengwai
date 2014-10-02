@@ -1961,7 +1961,9 @@ define('weiboyi', function (require) {
 					tr.className = i % 2 ? "even" : "odd";
 				}
 				row.el.attr("data-rowid", row.id);
-
+				row.el.attr("data-rowtype", row.weibo_type);
+                
+                
 				$.each(self.columns || [], function (i, col) {
 
 					var td = $("<td></td>");
@@ -2009,7 +2011,7 @@ define('weiboyi', function (require) {
 					} else {
 						editable = col.editable;
 					}
-
+                    
 					if (col.opts && col.opts instanceof Array) {
 						td.addClass("weiboyiGrid_optsCell");
 						row.opts = {};

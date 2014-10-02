@@ -712,6 +712,19 @@ define(function (require) {
         
         
         var weibo_type = self.weibo_type();
+        if (weibo_type == 3) {
+            // 周平均阅读数
+            self.weekly_read_avg = self.weekly_read_avg.extend(function () {
+                return {
+                    required: {message: '周平均阅读数不能为空！'},
+                    pattern: {
+                        message: '每周平均被浏览数量(0-99999999)',
+                        params: '^[0-9]{1,8}$'
+                    }
+                };
+            }());
+        }
+        
         if (weibo_type == 4) {
             // 频道
             self.channel_name = self.channel_name.extend(function () {
@@ -761,10 +774,10 @@ define(function (require) {
                     required: {message: '是否新闻源'}
                 };
             }());
-            // 是否网址收录
+            // 网址收录
             self.is_web_site_included = self.is_web_site_included.extend(function () {
                 return {
-                    required: {message: '是否网址收录'}
+                    required: {message: '请选择网址收录类型'}
                 };
             }());
             // 是否需要来源
@@ -779,10 +792,16 @@ define(function (require) {
                     required: {message: '周末能否发稿'}
                 };
             }());
-            // 能否带文本链接
+            // 文本链接
             self.is_text_link = self.is_text_link.extend(function () {
                 return {
-                    required: {message: '能否带文本链接'}
+                    required: {message: '请选择文本链接类型'}
+                };
+            }());
+            // 门户类型
+            self.type_of_portal = self.type_of_portal.extend(function () {
+                return {
+                    required: {message: '请选择门户类型'}
                 };
             }());
             // 媒体截图

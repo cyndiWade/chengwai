@@ -777,3 +777,94 @@ tr.tipsContent_borderSolid td,tr.tipsContent_borderSolid th{
 .ui-autocomplete {
     z-index: 4;
 }
+
+/*C端添加账号平台弹出框end*/
+/*策略修改弹出框内容*/
+.policy_modifications{
+	width: 264px;
+    text-align:left;
+	background-color: #fffff3;
+}
+.policy_modifications h6{
+	height: 22px;
+	line-height: 22px;
+	font-size: 12px;
+	color: #ff0000;
+	border-bottom: 1px solid #ccbcaf;
+}
+.policy_modifications input{
+	vertical-align:-3px;
+	margin:0;
+	margin-right:2px;
+}
+.policy_modifications select{
+	margin-right: 3px;
+	vertical-align: middle;
+}
+.policy_modifications label{
+	cursor: pointer;
+}
+.policy_modifications_yes{
+	margin-right: 56px;
+}
+.policy_modifications span{
+	display: inline-block;
+	line-height: 24px;
+	vertical-align: middle;
+}
+.policy_modifications span.modifications_errorTips{
+	display: inline-block;
+	display: none;
+	width: 114px;
+	height:18px;
+	line-height: 18px;
+	border:1px solid #ffcdcc;
+	background-color:#ffe5e6;
+	color:#ff0000;
+	text-align: center; 
+}
+.policy_modifications table{
+	width: 100%;
+}
+.policy_modifications table td{
+	padding: 3px 0;
+}
+.modifications_select{
+	display: none;
+	margin-top: 5px;
+	background-color:#f4f4f4;
+	padding:6px 0 0 14px; 	
+	color: #333;
+}
+
+.modifications_select_week{
+	overflow: hidden;
+
+}
+.modifications_select_week label{
+	display: block;
+	float: left;
+	display: inline;
+	margin:0 5px 5px 0;
+	*margin:0 0px 5px 0;
+}
+.modifications_select_week label input{
+	margin:0;
+	padding: 0;
+}
+.modifications_select_time{
+	clear: both;
+	padding-bottom: 6px;
+}
+.modifications_select_time em{
+	color:#ff0000;
+	padding: 0;
+	margin: 0;
+	vertical-align: middle;
+}
+.modifications_select_time span{
+	background-position:135px center;
+}
+.set_disable_img, .set_img{
+	vertical-align:-2px;
+}
