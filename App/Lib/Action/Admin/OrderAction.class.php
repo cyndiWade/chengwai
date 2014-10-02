@@ -11,17 +11,29 @@ class OrderAction extends AdminBaseAction {
 	protected  $db = array(
 		//新闻媒体订单
 		'GeneralizeNewsOrder'=>'GeneralizeNewsOrder',	
+
+		//新闻推广单关联表
 		'GeneralizeNewsAccount'=>'GeneralizeNewsAccount',
 
 		//微博推广单	
 		'GeneralizeOrder'=>'GeneralizeOrder',
+		//微博推广单，订单关联表
+		'GeneralizeAccount'=>'GeneralizeAccount',
+			
 		//微博意向单
 		'IntentionWeiboOrder'=>'IntentionWeiboOrder',
+		//微博意向单、订单关联边	
+		'IntentionWeiboAccount'=>'IntentionWeiboAccount',
 			
 		//微信推广单
 		'GeneralizeWeixinOrder'=>'GeneralizeWeixinOrder',
+		//微信推广单，订单关联表
+		'GeneralizeWeixinAccount'=>'GeneralizeWeixinAccount',	
+			
 		//微信意向单表
 		'IntentionWeixinOrder'=>'IntentionWeixinOrder',
+		//微信意向单，订单关联边
+		'IntentionWeixinAccount'=>'IntentionWeixinAccount',
 			
 		//订单日志表	
 		'OrderLog'=>'OrderLog',
@@ -29,6 +41,8 @@ class OrderAction extends AdminBaseAction {
 	);
 
 	private $OrderLog;	
+	
+	private $Account_Order_Status;
 
 	/**
 	 * 构造方法
@@ -45,6 +59,8 @@ class OrderAction extends AdminBaseAction {
 	
 	private function _init_data () {
 		$this->OrderLog = $this->db['OrderLog'];
+		
+		$this->Account_Order_Status = C('Account_Order_Status');
 	}
 	
 	
@@ -73,13 +89,22 @@ class OrderAction extends AdminBaseAction {
 		$type = 1;
 		$act = $this->_get('act');						//操作类型
 		
-		
 		if ($act == 'update') {
 			if ($this->isPost()) {
 					
 				//修改订单状态
 				$this->db['GeneralizeNewsOrder']->create();
-				$this->db['GeneralizeNewsOrder']->where(array('id'=>$order_id))->save();
+				$order_status = $this->db['GeneralizeNewsOrder']->where(array('id'=>$order_id))->save();
+				
+				//修改关联边订单状态
+				$status = $this->_post('status');
+				if ($status == 2) {
+					$audit_status = $this->Account_Order_Status[1]['status'];
+				} elseif ($status == 3) {
+					$audit_status = $this->Account_Order_Status[2]['status'];
+				}
+				$GeneralizeNewsAccount = $this->db['GeneralizeNewsAccount'];
+				$GeneralizeNewsAccount->where(array('generalize_id'=>$order_id))->save(array('audit_status'=>$audit_status));
 				
 				//创建日志
 				$this->OrderLog->create();
@@ -128,6 +153,16 @@ class OrderAction extends AdminBaseAction {
 				$this->db['GeneralizeOrder']->create();
 				$this->db['GeneralizeOrder']->where(array('id'=>$order_id))->save();
 				
+				//修改关联边订单状态
+				$status = $this->_post('status');
+				if ($status == 2) {
+					$audit_status = $this->Account_Order_Status[1]['status'];
+				} elseif ($status == 3) {
+					$audit_status = $this->Account_Order_Status[2]['status'];
+				}
+				$GeneralizeAccount = $this->db['GeneralizeAccount'];
+				$GeneralizeAccount->where(array('generalize_id'=>$order_id))->save(array('audit_status'=>$audit_status));
+				
 				//创建日志
 				$this->OrderLog->create();
 				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
@@ -162,7 +197,7 @@ class OrderAction extends AdminBaseAction {
 		$this->display();
 	}
 	
-	//微博推广单编辑
+	//微博意向单编辑
 	public function weibo_intention_edit() {
 		$order_id = $this->_get('id');
 		$type = 3;
@@ -174,6 +209,18 @@ class OrderAction extends AdminBaseAction {
 				//修改订单状态
 				$this->db['IntentionWeiboOrder']->create();
 				$this->db['IntentionWeiboOrder']->where(array('id'=>$order_id))->save();
+				
+				
+				//修改关联边订单状态
+				$status = $this->_post('status');
+				if ($status == 2) {
+					$audit_status = $this->Account_Order_Status[1]['status'];
+				} elseif ($status == 3) {
+					$audit_status = $this->Account_Order_Status[2]['status'];
+				}
+				$IntentionWeiboAccount= $this->db['IntentionWeiboAccount'];
+				$IntentionWeiboAccount->where(array('intention_id'=>$order_id))->save(array('audit_status'=>$audit_status));
+				
 				
 				//创建日志
 				$this->OrderLog->create();
@@ -221,6 +268,18 @@ class OrderAction extends AdminBaseAction {
 				$this->db['GeneralizeWeixinOrder']->create();
 				$this->db['GeneralizeWeixinOrder']->where(array('id'=>$order_id))->save();
 				
+				
+				//修改关联边订单状态
+				$status = $this->_post('status');
+				if ($status == 2) {
+					$audit_status = $this->Account_Order_Status[1]['status'];
+				} elseif ($status == 3) {
+					$audit_status = $this->Account_Order_Status[2]['status'];
+				}
+				$GeneralizeWeixinAccount = $this->db['GeneralizeWeixinAccount'];
+				$GeneralizeWeixinAccount->where(array('generalize_id'=>$order_id))->save(array('audit_status'=>$audit_status));
+				
+				
 				//创建日志
 				$this->OrderLog->create();
 				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
@@ -252,7 +311,7 @@ class OrderAction extends AdminBaseAction {
 		parent::data_to_view($data);
 		$this->display();
 	}
-	//微信推广单编辑
+	//微信意向单编辑
 	public function weixin_intention_edit() {
 		$order_id = $this->_get('id');
 		$type = 5;
@@ -264,6 +323,18 @@ class OrderAction extends AdminBaseAction {
 				//修改订单状态
 				$this->db['IntentionWeixinOrder']->create();
 				$this->db['IntentionWeixinOrder']->where(array('id'=>$order_id))->save();
+				
+				
+				//修改关联边订单状态
+				$status = $this->_post('status');
+				if ($status == 2) {
+					$audit_status = $this->Account_Order_Status[1]['status'];
+				} elseif ($status == 3) {
+					$audit_status = $this->Account_Order_Status[2]['status'];
+				}
+				$IntentionWeixinAccount = $this->db['IntentionWeixinAccount'];
+				$IntentionWeixinAccount->where(array('intention_id'=>$order_id))->save(array('audit_status'=>$audit_status));
+				
 				
 				//创建日志
 				$this->OrderLog->create();

@@ -58,7 +58,7 @@
 		<div class="box02-myorder l">
 			<div class="top-myorder l"><b>以下账号正在为您服务</b></div>
 			<div class="searnum fl">
-				账号总数：<b class="blue">【0】</b>, 粉丝数：<b class="blue">【0】</b>个，总消费额：<b class="blue">￥0.00</b>， 已派单：<b class="blue">【0】</b>个， 已收链接：<b class="blue">【0】</b>个， 流单：<b class="blue">【0】</b>个， 拒单：<b class="blue">【0】</b>个， 系统流单：<b class="blue">【0】</b>个， 已取消：<b class="blue">【0】</b>个 
+				账号总数：<b class="blue">【{$view_data.extend_order_info.order_num}】</b>，总消费额：<b class="blue">￥{$view_data.extend_order_info.sum_money}</b>， 拒单：<b class="blue">【{$view_data.extend_order_info.jy_order_sum}】</b>个
 			</div>
 			<!--  
 			<div class="box01-status l">
@@ -79,25 +79,36 @@
 			  </tr>
 			<volist name="view_data['account_order_list']" id="vo">
 			  <tr>
-				<td class="">{$vo.g_id}</td>
+				<td class="t1">{$vo.g_id}</td>
 				<td class=""><div class="weibopart"><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl">
 					<h5 class="l"><b></b><span class="heart"></span></h5>
 					<div class="weixininfo l"><span class="weixinhao fl">{$vo.account_name}</span></div></div></div></td>
 				<td class="">{$vo.account_name}</td>
 
-				<td class="">100.00元</td>
-				<td class=""><strong class="finish">执行完成</strong></td>
-				<td class=""><a href="#" class="blue">查看执行截图</a></td>
+				<td class="">{$vo.g_price}元</td>
+				<td class=""><strong class="finish">{$vo.g_status_explain}</strong></td>
+				<td class=""><a href="javascript:;" class="blue" data-order_id="{$vo.g_id}">查看执行截图</a></td>
 	
 				<td class="">
-					<a href="javascript:;" class="blue">确认完成</a>	
+					<if condition="($vo['is_show_affirm_btn'] eq true)">
+					<a href="javascript:;" class="blue affirm_order" data-order_id="{$vo.g_id}">确认完成</a>	
+					<else />
+					暂无
+					</if>
 				</td>
 			  </tr>
 			</volist>
 			</table>
-		</div>
+		</div>	
 	</div>
+	
+	<!--  订单支付按钮 -->
+	<if condition="($view_data.is_show_order_btn eq true)">
+	<p style="float:right;"><button type="button" id="btn_zf" data-order_id="{$view_data.order_id}">立即支付</button> </p>
+	</if>
+	
 </div>
+	
 </div>
 
 <include file="Public:member_footer" />
@@ -108,7 +119,48 @@
 <script type="text/javascript">
 $(function(){
 	$('.tab01-order tr:even').addClass('even');
-})
+});
+
+(function () {
+	
+	//确认订单
+	var affirm_order = $('.affirm_order');
+	affirm_order.click(function () {
+		if (confirm('确认完成？') == false) return false; 
+		
+		var _this = $(this);
+		var order_id = _this.data('order_id');
+		var post_data = {};
+		post_data.id = order_id;
+		var result = System.ajax_post_setup('{:U('Advert/News/set_account_status')}',post_data);
+		if (result.status == 0) {
+			alert(result.msg);
+			window.location.reload(); 
+		} else {
+			alert(result.msg)
+		}
+		
+	});
+	
+	
+	//支付接口
+	var btn_zf = $('#btn_zf');
+	btn_zf.click(function () {
+		
+		if (confirm('确定要支付吗？') == false) return false; 
+		
+		var order_id = $(this).data('order_id');
+		var post_data = {};
+		post_data.id = order_id;
+		var result = System.ajax_post_setup('{:U('Advert/News/zhifu')}',post_data);
+		if (result.status == 0) {
+			alert(result.msg);
+		} else {
+			alert(result.msg)
+		}
+	});
+})();
+
 </script>
 </body>
 </html>

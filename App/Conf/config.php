@@ -177,24 +177,39 @@ $custom= array (
 		
 		//关系表订单状态
 		'Account_Order_Status' => array(
+			//新建立的订单
 			0=>array(
 				'status'=>0,
 				'explain'=>'新订单',
 			),
-			1=>array(
-				'status'=>1,
+			1=>array(				
+				'status'=>1,			//城外圈审核通过即可支付
 				'explain'=>'审核通过'
 			),
 			2=>array(
-				'status'=>2,
-				'explain'=>'支付成功'
+				'status'=>2,			//城外圈审核失败
+				'explain'=>'审核失败'
 			),
 			3=>array(
-				'status'=>3,
+				'status'=>3,			//客户支付成功的状态
+				'explain'=>'支付成功'
+			),
+			4=>array(
+				'status'=>4,
+				'explain'=>'媒体主拒绝'	//这里拒绝后，要把钱从冻结资金中打回客户的资金池中
+			),
+			5=>array(
+				'status'=>5,			//媒体主确认后，订单的状态
+				'explain'=>'执行中'
+			),
+			6=>array(
+				'status'=>6,			//媒体主执行完成后的状态
 				'explain'=>'执行完成'
 			),
-	
-					
+			7=>array(
+				'status'=>7,			//确认完成后的状态
+				'explain'=>'确认完成'
+			),	
 		),
 	
 		//大导航分类ID集合
