@@ -220,7 +220,7 @@ class SocialAccountAction extends MediaBaseAction {
                     "user_id" => $val['users_id'],
                     "face_url" => $faceUrl,
                     "url" => $url,
-                    "weibo_type" => $val['pt_type'],
+                    "weibo_type" => $type,
                     "weibo_id" => "1032732203",
                     "weibo_name" => $val['account_name'],
                     "cell_phone" => null,
