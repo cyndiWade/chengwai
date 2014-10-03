@@ -77,5 +77,12 @@
 				return '3';
 			}
 		}
+		
+		//获取一条本人订单信息
+		public function get_OrderInfo_By_Id ($order_Id,$users_id) {
+			$where['id'] = $order_Id;
+			$where['users_id'] = $users_id;
+			return parent::get_one_data($where);
+		}
 
 	}

@@ -333,7 +333,7 @@ class OrderAction extends AdminBaseAction {
 					$audit_status = $this->Account_Order_Status[2]['status'];
 				}
 				$IntentionWeixinAccount = $this->db['IntentionWeixinAccount'];
-				$IntentionWeixinAccount->where(array('intention_id'=>$order_id))->save(array('audit_status'=>$audit_status));
+				$IntentionWeixinAccount->where(array('generalize_id'=>$order_id))->save(array('audit_status'=>$audit_status));
 				
 				
 				//创建日志
