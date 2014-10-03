@@ -1,6 +1,6 @@
 define(function(require, exports){
 
-    var is_extend_tpl = require('./tpl/is_extend.tpl');
+    var is_extend_tpl = require('./tpl/is_extend.tpl#');
 
     function initIsHardAdTips(grid) {
         new W.Tips({
@@ -19,7 +19,12 @@ define(function(require, exports){
                     handler: function () {
                         var isExtendRadio = $('input[name=isExtendRadio]:checked').val();
                         var selectAllCheckbox = $('input[name=selectAllExtendCheckbox]').attr('checked');
+                        if ('undefined' == typeof(selectAllCheckbox)) {
+                            selectAllCheckbox = $('input[name=selectAllExtendCheckbox]').prop('checked');
+                            selectAllCheckbox = selectAllCheckbox ? 1 : 0;
+                        }
                         var accountId = $(".js_extendAccountId").val();
+                        var accountType = $(".js_extendAccountId").data('weibo_type');
                         var self = this;
                         if (selectAllCheckbox) {
                             W.confirm("确认对全部账号进行是否接硬广的设置吗？", function (sure) {
@@ -29,8 +34,8 @@ define(function(require, exports){
                                     var message = W.message("处理中", "loading", 1000);
                                     $.ajax({
                                         type: "POST",
-                                        url: "/information/accountmanage/setextend",
-                                        data: "accountId=" + accountId + "&isExtendRadio=" + isExtendRadio + "&selectAllCheckbox=" + selectAllCheckbox,
+                                        url: "/Media/SocialAccount/setextend",
+                                        data: "accountId=" + accountId + "&accountType=" + accountType + "&isExtendRadio=" + isExtendRadio + "&selectAllCheckbox=" + selectAllCheckbox,
                                         dataType: "json",
                                         success: function (msg) {
                                             message.close();
@@ -88,7 +93,9 @@ define(function(require, exports){
                 ontargetchanged: function () {
                     var data_radio = this.getCurrentTarget().attr("data_radio");
                     var data_account_id = this.getCurrentTarget().attr("data_account_id");
+                    var data_account_type = this.getCurrentTarget().attr("data_account_type");
                     $('.js_extendAccountId').val(data_account_id);
+                    $('.js_extendAccountId').data('weibo_type', data_account_type);
                     if (data_radio == false || data_radio == 2) {
                         $(".js_extendRadioFalse").prop('checked', true);
                         $(".js_extendRadioFalse").parent().next(".extendNotice").show();

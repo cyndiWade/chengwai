@@ -1,14 +1,14 @@
 define(function (require) {
-    var sinaTpl = require('./tpl/add_sina.tpl'),
-        tencentTpl = require('./tpl/add_tengxun.tpl'),
-        weixinTpl = require('./tpl/add_weixin.tpl'),
-        xinwenTpl = require('./tpl/add_xinwen.tpl'),
+    var sinaTpl = require('./tpl/add_sina.tpl#'),
+        tencentTpl = require('./tpl/add_tengxun.tpl#'),
+        weixinTpl = require('./tpl/add_weixin.tpl#'),
+        xinwenTpl = require('./tpl/add_xinwen.tpl#'),
         // weitaoTpl = require('./tpl/add_weitao.tpl'),
         // pengyouquanTpl = require('./tpl/add_pengyouquan.tpl'),
         // QZoneUncertificatedTpl = require('./tpl/add_qzone_uncertificated.tpl'),
         // QzoneTpl = require('./tpl/add_qzone.tpl'),
         // sohuTpl = require('./tpl/add_sohu.tpl'),
-        othersTpl = require('./tpl/add_other.tpl');
+        othersTpl = require('./tpl/add_other.tpl#');
 
     var ko = require('knockout'),
         AccountModel = require('./account_model.js'),

@@ -229,8 +229,11 @@ class SocialAccountAction extends MediaBaseAction {
                     // 账号类型 草根 红人  媒体
                     "account_type" => 2,
                     "verification_info" => $val['company_name'],
+                    // 蓝V
                     "is_bluevip" => 2,
+                    // 黄V
                     "is_vip" => 1,
+                    // 初级V
                     "is_daren" => 2,
                     "followers_count" => $val['fans_num'],
                     "is_private_message_enabled" => 2,
@@ -252,19 +255,26 @@ class SocialAccountAction extends MediaBaseAction {
                     // 是否接单
                     "is_allow_order" => $val['receiving_status'],
                     "is_flowunit" => 2,
+                    // 被加黑名单数
                     "company_black_num" => 0,
                     // 月订单
                     "orders_monthly" => $val['month_order_nub'],
                     // 周订单
                     "orders_weekly" => $val['week_order_num'],
+                    // 月拒单率
                     "pass_order_monthly" => "0.00",
+                    // 月流单率
                     "deny_order_monthly" => "0.00",
                     "posts_avgretweet_count" => "-1.000",
+                    // 好评率
                     "good_rating_rate" => "暂无评价",
                     "rating_score" => 0,
+                    // 被收藏数
                     "collection_num" => 0,
                     "is_contacted" => 1,
+                    // 是否公开
                     "is_open" => 1,
+                    // 是否支持预约
                     "is_famous" => 2,
                     "day_time" => null,
                     "tweet_price_change_count_for_day" => null,
@@ -293,6 +303,7 @@ class SocialAccountAction extends MediaBaseAction {
                     "tactics_flag" => 1,
                     // 订单是否可带链接
                     "is_enable_micro_task" => $val['url_status'],
+                    // 是否粉丝认证
                     "follower_be_identified" => 2,
                     "follower_be_identified_time" => null,
                     "order_settings" => 0,
@@ -358,6 +369,7 @@ class SocialAccountAction extends MediaBaseAction {
                 );
                 if ($type == 4) {
                     $diffPrice['weekly_read_avg'] = $val['weekly_read_avg'];
+                    $diffPrice['money'] = $val['money'];
                 }
             }
             $temp['cells'] = array_merge($temp['cells'], $diffPrice);
@@ -591,7 +603,7 @@ class SocialAccountAction extends MediaBaseAction {
                                 $insertId = $mediaNewsModel->add($insertData);
                                 if ($insertId) {
                                     // 更新索引表
-                                    parent::weixinDataprocess($insertId);
+                                    parent::newsDataprocess($insertId);
                                 }
                             }
                             break;
@@ -622,7 +634,7 @@ class SocialAccountAction extends MediaBaseAction {
     public function notallow()
     {
         $accountId      = I('account_id', 0, 'intval');
-        $accountType    = I('type', 0, 'intval');
+        $accountType    = I('account_type', 0, 'intval');
         
         if (empty($accountId) || empty($accountType)) {
             $msg = '社交媒体帐号或类型错误,请联系网站客服人员!';
@@ -634,7 +646,7 @@ class SocialAccountAction extends MediaBaseAction {
         $fansNum = 0;
         $minFansNums = 2000;
         if ($fansNum < $minFansNums) {
-            $msg = '该账号的粉丝不足' . $minFansNums . '，<a href="/auth/powerful" target="_blank">找号带粉</a>';
+            $msg = '该账号的粉丝不足' . $minFansNums;
             parent::callback(1, '', array(
                 'followers_count' => $msg
             ));
@@ -1364,6 +1376,341 @@ class SocialAccountAction extends MediaBaseAction {
             exit;
         } else {
             parent::callback(C('STATUS_ACCESS'), 'error');
+        }
+    }
+    
+    /**
+     * 新闻媒体修改价格
+     * 
+     * @author lurongchang
+     * @date   2014-10-03
+     * @return void
+     */
+    public function updateprice()
+    {
+        if ($this->isGet()) {
+            $money          = I('get.price_type', '', 'setString');
+            $newPrice       = I('get.price_value', 0, 'floatval');
+            $rowFields      = I('get.row');
+            
+            $accountId      = intval($rowFields['account_id']);
+            $accountType    = intval($rowFields['weibo_type']);
+            $userId         = intval($rowFields['user_id']);
+            
+            $userInfos = parent::get_session('user_info');
+            
+            if (empty($accountId) || empty($accountType) || ($userId != $userInfos['id'])
+            || ('money' != $money)) {
+                echo json_encode(array(false, '提交数据错误,请检查填写数据是否正确'));
+                exit;
+            }
+            
+            $accountModel = $this->db['AccountNews'];
+            $where = array(
+                'id'        => $accountId,
+                'users_id'  => $userInfos['id']
+            );
+            $datas['money'] = $newPrice;
+            $status = $accountModel->where($where)->save($datas);
+            if ($status === false) {
+                echo json_encode(array(
+                    'result'    => false,
+                    'message' => '设置失败！'
+                ));
+            } else {
+                // 更新搜索表
+                parent::newsDataprocess($accountId);
+                echo json_encode(array(
+                    'result'  => true,
+                    'message' => '资料修改成功!'
+                ));
+            }
+            exit;
+        } else {
+            parent::callback(C('STATUS_ACCESS'), 'error');
+        }
+    }
+    
+    /**
+     * 详情
+     * 
+     * @author lurongchang
+     * @date   2014-10-03
+     * @return void
+     */
+    public function detail()
+    {
+        if ($this->isGet()) {
+            $accountId      = I('get.account_id', 0, 'intval');
+            $accountType    = I('get.account_type', 0, 'intval');
+            
+            $userInfos = parent::get_session('user_info');
+            
+            if (empty($accountId) || empty($accountType)) {
+                parent::callback(
+                    C('STATUS_ACCESS'),
+                    '提交数据错误,请检查填写数据是否正确', 
+                    array(),
+                    array('code' => 1000)
+                );
+            }
+            
+            $accountDB = array(
+                1 => 'AccountWeibo',
+                2 => 'AccountWeibo',
+                3 => 'AccountWeixin',
+                4 => 'AccountNews',
+            );
+            $accountModel = $this->db[$accountDB[$accountType]];
+            $where = array(
+                'id'        => $accountId,
+                'users_id'  => $userInfos['id']
+            );
+            $accountInfos = $accountModel->getAccountInfo($where);
+            
+            $returnExampleArray = array(
+                'account_advantage' => "",
+                'account_id' => $accountInfos['id'],
+                'account_type' => null,
+                // 转评值
+                'active_score' => "0.00",
+                'age' => 0,
+                'areaFont' => "",
+                'area_id' => isset($accountInfos['area_id']) ? $accountInfos['area_id'] : -1,
+                // 被加黑名单数
+                'company_black_num' => 0,
+                // 账号分类
+                'content_categories' => null,
+                // 月流单率
+                'deny_order_monthly' => "0.00",
+                'edu_degree' => null,
+                // 是否粉丝认证
+                'follower_be_identified' => 0,
+                'follower_be_identified_time' => null,
+                'followers_count' => $accountInfos['fans_num'],
+                'friend_desc' => "",
+                'gender' => 2,
+                'hand_tags' => "",
+                'isEditable' => true,
+                // 是否支持预约
+                'is_famous' => $accountInfos['is_famous'],
+                // 是否公开
+                'is_open' => null,
+                // 账号标签
+                'keywords' => null,
+                // 月合格率
+                'order_yield' => "0.00",
+                // 月拒单率
+                'pass_order_monthly' => "0.00",
+                'profession_type' => 0,
+                'true_name' => "",
+                'type' => 1,
+                'weibo_id' => "1670431414",
+                'weibo_link' => "",
+                'weibo_name' => $accountInfos['account_name'],
+                'weibo_type' => $accountType,
+            );
+            
+            if ($accountType == 3) {
+                $unknowPrecent = 100 - $accountInfos['male_precent'] - $accountInfos['female_precent'];
+                $weixinFields = array(
+                    // 是否粉丝认证
+                    'follower_be_identified'    => 0,
+                    // 性别分布: 男
+                    'gender_distribution_male'  => $accountInfos['male_precent'],
+                    // 性别分布: 女
+                    'gender_distribution_female'  => $accountInfos['female_precent'],
+                    // 性别分布: 未知
+                    'gender_distribution_unknown'  => $unknowPrecent,
+                    // 性别分布认证
+                    'gender_distribution_identified' => 0,
+                    // 性别分布认证 只有通过认证才有 认证时间
+                    'gender_distribution_identified_time' => array(
+                        'date' => null
+                    ),
+                    // 微信号
+                    'weibo_id'  => $accountInfos['weixinhao'],
+                    // 头像
+                    'screen_portrait' => $accountInfos['account_avatar'],
+                    // 二维码
+                    'screen_shot_qr_code' => $accountInfos['qr_code'],
+                    // 粉丝截图
+                    'screen_shot_followers' => $accountInfos['follower_shot'],
+                    // 趋势截图
+                    'screen_shot_info' => ''
+                );
+                $returnExampleArray = array_merge($returnExampleArray, $weixinFields);
+            }
+            
+            parent::callback(C('STATUS_ACCESS'), 'success', $returnExampleArray, array('code' => 1000));
+            
+            // echo json_encode(array(
+                // 'code' => 1000,
+                // 'data' => $returnExampleArray,
+                // 'msg' => "success"
+            // ));
+            // exit;
+        } else {
+            parent::callback(C('STATUS_ACCESS'), 'error');
+        }
+    }
+    
+    /**
+     * 上传图片并修改数据
+     * 
+     * @author lurongchang
+     * @date   2014-10-04
+     * @return url
+     */
+    public function modifyreview()
+    {
+        if ($this->isPost()) {
+            $accountId      = I('account_id', 0, 'intval');
+            $accountType    = I('account_type', 0, 'intval');
+            $keyField       = I('from', '', 'setString');
+            $fansNums       = I('followers_count', 0, 'intval');
+            
+            $keyProxy = array(
+                // 趋势截图
+                // 'info' => '',
+                // 二维码
+                'qr_code' => 'qr_code',
+                // 头像
+                'avatar' => 'account_avatar',
+                // 帐号头像
+                'accountAvatar' => 'account_avatar',
+                // 真人头像
+                'personAvatar' => 'account_avatar',
+            );
+            
+            
+            if (empty($accountId) || empty($accountType)) {
+                parent::callback(
+                    C('STATUS_ACCESS'),
+                    '提交数据错误,请检查填写数据是否正确', 
+                    array(),
+                    array(
+                        'url' => '',
+                        'success' => 0,
+                    )
+                );
+            }
+            
+            $url = '';
+            $uploadDir = C('UPLOAD_DIR');
+            $viewDir = C('PUBLIC_VISIT');
+            $files = $_FILES['qqfile'];
+            $dir = $uploadDir['web_dir'] . $uploadDir['image'];
+            $info = parent::upload_file($files, $dir, 5120000);
+            if ($info['status']) {
+                $url = $info['info'][0]['savename'];
+                
+                $userInfos = parent::get_session('user_info');
+                $accountModel = $this->db['AccountWeixin'];
+                $where = array(
+                    'id' => $accountId,
+                    'users_id' => $userInfos['id'],
+                );
+                $datas = array(
+                    $keyProxy[$keyField] => $url
+                );
+                $status = $accountModel->where($where)->save($datas);
+                $trueUrl = $viewDir['domain'] . $viewDir['dir'] . $url;
+                if ($status !== false) {
+                    echo json_encode(array(
+                        'url' => $trueUrl,
+                        'msg' => '图片上传成功',
+                        'success'  => true
+                    ));
+                } else {
+                    echo json_encode(array(
+                        'url' => $trueUrl,
+                        'msg' => '数据保存错误',
+                        'success'  => false
+                    ));
+                }
+            } else {
+                parent::callback(
+                    C('STATUS_ACCESS'),
+                    $info['info'], 
+                    array(),
+                    array(
+                        'url' => '',
+                        'success' => 0,
+                    )
+                );
+            }
+            exit;
+        } else {
+            parent::callback(C('STATUS_ACCESS'), 'error', array(), array(
+                'url' => '',
+                'success' => 0,
+            ));
+        }
+    }
+    /**
+     * 粉丝图
+     * 
+     * @author lurongchang
+     * @date   2014-10-04
+     * @return url
+     */
+    public function claimfollowers()
+    {
+        if ($this->isPost()) {
+            $accountId      = I('account_id', 0, 'intval');
+            $accountType    = I('account_type', 0, 'intval');
+            $isUpload       = I('js_followersUploaded', 0, 'intval');
+            $uploadUrl      = I('uploadimg', '', 'setString');
+            $fansNums       = I('followers_count', 0, 'intval');
+            
+            import("@.Tool.Validate");
+            $msg = '';
+            if (empty($accountId) || empty($accountType) || empty($fansNums)) {
+                $msg = '提交数据错误,请检查填写数据是否正确';
+            } elseif (empty($isUpload) || !Validate::checkUrl($uploadUrl)) {
+                $msg = '图片地址错误';
+            }
+            if ($msg) {
+                parent::callback(
+                    C('STATUS_ACCESS'), $msg, array(), array(
+                        'url' => '',
+                        'success' => 0,
+                    )
+                );
+                exit;
+            }
+            
+            $userInfos = parent::get_session('user_info');
+            $accountModel = $this->db['AccountWeixin'];
+            $where = array(
+                'id' => $accountId,
+                'users_id' => $userInfos['id'],
+            );
+            $datas = array(
+                'follower_shot' => $uploadUrl,
+                'fans_num'      => $fansNums
+            );
+            $status = $accountModel->where($where)->save($datas);
+            if ($status !== false) {
+                echo json_encode(array(
+                    'url' => $uploadUrl,
+                    'msg' => '图片上传成功',
+                    'success'  => true
+                ));
+            } else {
+                echo json_encode(array(
+                    'url' => $uploadUrl,
+                    'msg' => '数据保存错误',
+                    'success'  => false
+                ));
+            }
+            exit;
+        } else {
+            parent::callback(C('STATUS_ACCESS'), 'error', array(), array(
+                'url' => '',
+                'success' => 0,
+            ));
         }
     }
 	

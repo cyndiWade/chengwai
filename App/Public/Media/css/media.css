@@ -275,10 +275,22 @@
 .addpp li .a4 em { display:block; clear:both; color:#999;}
 
 .tubiao01 { width:700px; margin:0 auto; color:#666;}
-.tubiao01 ul.zhgl { float:left; border:solid #ddd; border-width:0 1px 1px 0;}
+.tubiao01 ul.zhgl { float:left; border:solid #ddd; border-width:0 1px 1px 0;margin-top:20px;}
 .zhgl li { float:left; width:338px; line-height:26px; border:solid #ddd; border-width:1px 0 0 1px; padding-left:10px;}
 .zhgl li.one00 { width:686px;}
+.zhgl li em.qicon {background:url(../images/qa_red.png) no-repeat left center; width:16px; height:16px;margin:5px 5px 0 0;float: left;}
 
 .table-xwmt td { height:42px;}
 .table-xwmt td.t15 { line-height:38px;}
 
+.platformImgsDiv{
+	padding:10px 0 0 30px;
+}
+.platform_imgs_follower_ul{
+	width:150px;
+}
+
+.platform_imgs_follower_li{
+	line-height:20px;
+	margin-top: 6px;
+}

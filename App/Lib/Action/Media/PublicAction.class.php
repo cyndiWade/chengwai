@@ -40,11 +40,14 @@ class PublicAction extends MediaBaseAction {
         if ($info['status']) {
             $url = $info['info'][0]['savename'];
             echo json_encode(array(
+                'url' => $url,
                 'filename' => $url,
                 'success'  => true
             ));
         } else {
             echo json_encode(array(
+                'url' => '',
+                'filename' => '',
                 'msg' => $info['info'],
                 'success'  => false
             ));

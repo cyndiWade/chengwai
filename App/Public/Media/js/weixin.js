@@ -1,9 +1,9 @@
 define(function(require, exports) {
     require('./update_price.js');
-    var initIsHardAdTips = require("./is_extend.js");
+    // var initIsHardAdTips = require("./is_extend.js");
 
     var detail = require('./detail.js');
-    var priceTpl = require('./tpl/weixin_price.tpl');
+    var priceTpl = require('./tpl/weixin_price.tpl#');
 
     var weibo_type = 3;
 
@@ -166,33 +166,33 @@ define(function(require, exports) {
                 },
                 {
                     align: "left",
-                    text: renderTitleMiddelImg("单图", "singleGraphicPrice", '<br/>文报价'),
+                    text: renderTitleMiddelImg("单图文报", "singleGraphicPrice", '<br/>价'),
                     dataIndex: "single_graphic_price",
                     tmplPreprocessor: PreParseData,
-                    cls: "t3",
+                    cls: "t8",
                     tmpl: priceTpl
                 },
                 {
                     align: "left",
-                    text: renderTitleMiddelImg('多图', "multiGraphicTopPrice", "<br/>文第一<br/>条报价"),
+                    text: renderTitleMiddelImg('多图文第', "multiGraphicTopPrice", "<br/>一条报价"),
                     dataIndex: "multi_graphic_top_price",
                     tmplPreprocessor: PreParseData,
-                    cls: "t4",
+                    cls: "t8",
                     tmpl: priceTpl
                 },
                 {
                     align: "left",
-                    text: renderTitleMiddelImg("多图", "multiGraphicSecondPrice", '<br/>文第二<br/>条报价'),
+                    text: renderTitleMiddelImg("多图文第", "multiGraphicSecondPrice", '<br/>二条报价'),
                     dataIndex: "multi_graphic_second_price",
                     tmplPreprocessor: PreParseData,
-                    cls: "t5",
+                    cls: "t8",
                     tmpl: priceTpl
                 },
                 {
                     align: "left",
-                    text: renderTitleMiddelImg("多图", "multiGraphicOtherPrice", '<br/>文其他<br/>位置报价'),
+                    text: renderTitleMiddelImg("多图文其他", "multiGraphicOtherPrice", '<br/>位置报价'),
                     dataIndex: "multi_graphic_other_price",
-                    cls: "t6",
+                    cls: "t8",
                     tmplPreprocessor: PreParseData,
                     tmpl: priceTpl
                 },
@@ -209,14 +209,14 @@ define(function(require, exports) {
                 {
                     align: "left",
                     text: "周订单",
-                    cls: "t8",
+                    cls: "t5",
                     dataIndex: "orders_weekly"
 
                 },
                 {
                     align: "left",
                     text: "月订单",
-                    cls: "t9",
+                    cls: "t6",
                     dataIndex: "orders_monthly"
                 },
                 {
@@ -227,7 +227,7 @@ define(function(require, exports) {
                     formatter: function (data, row) {
                         if (data == "0" || data == '2') {
                             var div = $("<div></div>");
-                            var a = $("<a id='js_show_review' data-accountId = " + row.cells.account_id + " data-accountType = " + row.cells.weibo_type + "></a>");
+                            var a = $("<a id='js_show_review' class='blue' data-accountId = " + row.cells.account_id + " data-accountType = " + row.cells.weibo_type + "></a>");
                             a.attr({
                                 href: "javascript: void(0)"
                             }).text("详情");
@@ -249,7 +249,7 @@ define(function(require, exports) {
                         } else if (data == "1") {
                             return "是";
                         } else {
-                            var a = $("<a id='js_show_allow_order' data-accountId = " + row.cells.account_id + " data-accountType = " + row.cells.weibo_type + "></a>");
+                            var a = $("<a id='js_show_allow_order' class='blue' data-accountId = " + row.cells.account_id + " data-accountType = " + row.cells.weibo_type + "></a>");
 
                             a.attr({
                                 href: "javascript: void(0)"
@@ -271,7 +271,7 @@ define(function(require, exports) {
                             return "是";
                         } else {
                             var div = $("<div></div>");
-                            var a = $("<a id='js_show_online' data-accountId = " + row.cells.account_id + " data-accountType = " + row.cells.weibo_type + "></a>");
+                            var a = $("<a id='js_show_online' class='blue' data-accountId = " + row.cells.account_id + " data-accountType = " + row.cells.weibo_type + "></a>");
                             a.attr({
                                 href: "javascript: void(0)"
                             }).text("详情");
@@ -281,7 +281,7 @@ define(function(require, exports) {
                         }
                     }
                 },
-                {
+                /* {
                     align: "center",
                     text: renderTitleMiddelImg("是否", "shifouyingguang", '<br/>接硬广'),
                     dataIndex: "is_extend",
@@ -292,7 +292,7 @@ define(function(require, exports) {
                         var imgTip = "<a href='javascript:void(0)' title='不可设置'></a>";
                         if (row.cells.is_verify == 1) {
                             // imgTip = "<a href='javascript:void(0)' title='设置'><img data_account_id = '" + row.cells.account_id + "' data_radio = '" + data + "' class = 'js_isHardDialogue set_img' src='/resources/images/ico_set.gif'/></a>"
-                            imgTip = "<a href='javascript:void(0)' title='设置' data_account_id = '" + row.cells.account_id + "' data_account_type = '" + weiboType + " class = 'js_isHardDialogue' data_radio = '" + data + "'></a>";
+                            imgTip = "<a href='javascript:void(0)' title='设置' data_account_id = '" + row.cells.account_id + "' data_account_type = '" + weiboType + "' class = 'js_isHardDialogue' data_radio = '" + data + "'></a>";
                         }
                         if (data == "1") {
                             // var div = $("<div></div>");
@@ -304,7 +304,7 @@ define(function(require, exports) {
                             return $(imgTip).append('<em class="no">否</em>');
                         }
                     }
-                },
+                }, */
                 {
                     align: "center",
                     cls: "t11",
@@ -315,7 +315,7 @@ define(function(require, exports) {
                         // var imgTip = "<a href='javascript:void(0)' title='不可设置'><img src='/resources/images/ico_set_disable.gif' class='set_disable_img' /></a>";
                         var imgTip = "<a href='javascript:void(0)' title='不可设置'></a>";
 
-                        if (row.cells.is_verify == 2) {
+                        if (row.cells.is_verify == 1) {
                             // imgTip = "<a href='javascript:void(0)' title='设置'><img data_account_id = '" + row.cells.account_id + "'id='leaveDialogue' src='/resources/images/ico_set.gif' class='set_img' /></a>";
                             imgTip = "<a href='javascript:void(0)' title='设置' data_account_id = '" + row.cells.account_id + "'id='leaveDialogue'></a>";
                         }
@@ -429,6 +429,10 @@ define(function(require, exports) {
                         var accountId = this.getCurrentTarget().attr('data_account_id');
                         var isOpenRadio = this.el.find('input[name=openRadio]:checked').val();
                         var selectAllPolicyCheckbox_ = this.el.find('input[name=selectAllPolicyCheckbox]').attr('checked');
+                        if ('undefined' == typeof(selectAllPolicyCheckbox_)) {
+                            selectAllPolicyCheckbox_ = this.el.find('input[name=selectAllPolicyCheckbox]').prop('checked');
+                            selectAllPolicyCheckbox_ = selectAllPolicyCheckbox_ ? 'checked' : '';
+                        }
                         var selectAllPolicyCheckbox = selectAllPolicyCheckbox_ == 'checked' ? 'checked' : '';
                         var confirmText;
                         if (selectAllPolicyCheckbox) {
@@ -502,6 +506,10 @@ define(function(require, exports) {
                         var accountId = this.getCurrentTarget().attr('data-account_id');
                         var isOpenRadio = this.el.find('input[name=openRadio]:checked').val();
                         var selectAllPolicyCheckbox_ = this.el.find('input[name=selectAllPolicyCheckbox]').attr('checked');
+                        if ('undefined' == typeof(selectAllPolicyCheckbox_)) {
+                            selectAllPolicyCheckbox_ = this.el.find('input[name=selectAllPolicyCheckbox]').prop('checked');
+                            selectAllPolicyCheckbox_ = selectAllPolicyCheckbox_ ? 'checked' : '';
+                        }
                         var selectAllPolicyCheckbox = selectAllPolicyCheckbox_ == 'checked' ? 'checked' : '';
                         var confirmText;
                         if (selectAllPolicyCheckbox) {
@@ -1433,7 +1441,7 @@ define(function(require, exports) {
             initIsOpenTips();
             initWeixinIsAllowDantuwenTips();
             initCeilingTips();
-            initIsHardAdTips(grid);
+            // initIsHardAdTips(grid);
             initIsAutoSendTips();
             initIsLeaveTips();
             initFavorableTips();

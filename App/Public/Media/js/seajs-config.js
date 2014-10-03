@@ -3,6 +3,8 @@ seajs.config({
     base: '/App/Public/Media/js/',
     charset: 'utf-8',
     alias: {
+        cookie: 'jquery_cookie_cmd.js',
+        jquery: 'jquery.js',
         weiboyi: 'weiboyi_all_cmd.js',
         form: 'jquery_form_cmd.js',
         rest: 'rest_cmd.js',
