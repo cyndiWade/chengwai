@@ -1,0 +1,1 @@
+ALTER TABLE `app_generalize_files` CHANGE `type` `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '上传文件类型 1是直发配图 2是上传证明 3是执行完成的截图上传';

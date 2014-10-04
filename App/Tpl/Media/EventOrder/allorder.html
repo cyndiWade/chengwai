@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
+	<title>所有订单_媒体主_个人主页</title>
+</head>
+<body>
+<body>
+<!-- 头部 -->
+<include file="Public:header" />
+<div class="wrap l">
+<div class="pbd">
+	<div class="location l">
+		当前位置：<a href="#">个人中心</a>  >  <span class="blue">全部订单</span>
+	</div>
+	<div class="area01-mediahelp l">
+		<div class="box01-allorder l">
+        	<b class="yel">{$global_tpl_view.user_info.account}</b>的全部订单
+		</div>
+		
+			<form method="POST" method="{:U('Media/EventOrder/allorder')}" id="frm">	
+        	<div class="box01-time l">
+				<span class="span-start fl">时间范围：</span>
+				<div class="startime pr fl"><em class="pa"></em><input type="text" class="timetext fl" name="start_time" value="{$view_data.start_time}" /></div>
+				<i class="yel fl">-</i>
+				<div class="startime pr fl"><em class="pa"></em><input type="text" class="timetext fl" name="end_time" value="{$view_data.end_time}"  /></div>
+			</div>
+			<div class="box02-time l">
+				<span class="spantime spantime-first fl"><i>订单号</i><input type="text" class="text" name="order_id" value="{$view_data.search_order_id}"/></span>
+				<span class="spantime fl"><i>活动</i><input type="text" class="text text-long" name="search_name" value="{$view_data.search_name}"/></span>
+				<span class="spantime fl"><i>账号</i><input type="text" class="text text-long" name="search_account" value="{$view_data.search_account}"/></span>
+				<span class="btn yelbtn fl" onclick="javascript:$('#frm').submit();" >查 询</span>
+			</div>
+			</form>
+		</div>
+		<div class="box03-allorder l">
+			<em class="fl">显示类型：</em>
+			<a href="{:U('Media/EventOrder/allorder')}"><span class="ordernav <eq name='view_data.status' value=''>select</eq> fl ">所有订单</span></a>
+			<a href="{:U('Media/EventOrder/allorder?status=7')}"><span class="ordernav <eq name='view_data.status' value='7'>select</eq> fl">已完成的订单</span></a>
+			<a href="{:U('Media/EventOrder/allorder?status=4')}"><span class="ordernav <eq name='view_data.status' value='4'>select</eq> fl">拒单</span></a>
+			<a href="{:U('Media/EventOrder/allorder?status=8')}"><span class="ordernav <eq name='view_data.status' value='8'>select</eq> fl">流单</span></a>
+			<a href="{:U('Media/EventOrder/allorder?status=9')}"><span class="ordernav <eq name='view_data.status' value='9'>select</eq> fl">已取消</span></a>
+			<a href="{:U('Media/EventOrder/allorder?status=10')}"><span class="ordernav <eq name='view_data.status' value='10'>select</eq> fl">不合格</span></a>
+		</div>
+		<div class="box04-allorder l">
+			<table class="tab01-allorder l">
+			  <tr>
+				<th class="t1">订单ID</th>
+				<th class="t3">账号名</th>
+				<th class="t3">活动</th>
+				<th class="t4">价格</th>
+				<th class="t5">开始时间</th>
+				<th class="t12">状态</th>
+				<th class="last">操作</th>
+			  </tr>
+			  <volist name="view_data.list" id="vo">
+			  <tr>
+				<td class="t1">{$vo.order_id}</td>
+				<td class="t6">{$vo.account_name}</td> 
+				<td class="t6">{$vo.hd_name}</td>
+				<td class="t6">{$vo.price} 元 </td>
+				<td class="t6">{$vo.start_time|date="Y-m-d H:i:s",###}</td>
+				<td class="t6">{$vo.status_name}</td>
+				<td class="last"><div class="ctrl"><span><a href="{:U('Media/EventOrder/show?id='.$vo[generalize_id])}">查看</a></span>
+				<if condition='$vo.audit_status eq 3'>
+				 | <span class="judan">拒单</span> 
+				 | <span calss="excute">去执行</span> 
+				 <elseif condition='$vo.audit_status eq 5'/> 
+				 | <span class="excute_end">执行完成</span>
+				 </if>
+				 </div></td>
+			  </tr>
+			  </volist>
+			  <tr>
+
+			 </table>
+		</div>
+		<div class="box05-allorder l">
+			<span>总订单：<b class="yel">{$view_data.count}</b></span><span>总价格：<b class="yel">{$view_data.sum}</b>元</span>
+		</div>
+		<div class="page-wb fr">
+			{$view_data.page}
+		</div>
+	</div>
+</div>
+</div>
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+
+<script type="text/javascript" src="app/Public/Global/jquery/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.tab01-allorder tr:even').addClass('even');
+})
+</script>
+</body>
+</html>
