@@ -173,7 +173,7 @@ class AccountWeiboModel extends MediaBaseModel
      */
     public function checkAccountByUserId($account_id, $user_id)
     {
-    	$users_id_new = $this->where(array("id"=>$account_id))->getField("users_id")->find();
+    	$users_id_new = $this->where(array("id"=>$account_id))->getField("users_id");
     	return $users_id_new == $user_id ? true : false;
     }
 }

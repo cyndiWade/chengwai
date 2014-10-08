@@ -4,7 +4,7 @@
  * 活动订单下子媒体类
  * 
  */
-class GeneralizeAccountModel extends MediaBaseModel
+class GeneralizeNewsAccountModel extends MediaBaseModel
 {
 	/**
 	 *  更新媒体订单状态

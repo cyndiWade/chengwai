@@ -1,0 +1,34 @@
+﻿@charset "utf-8";
+/* CSS Document */
+.adbox{ margin-bottom:15px;}
+.adbox img{ width:100%;}
+.area01-reg{ width:998px; border:1px solid #e9ece6; padding:56px 0;}
+.title-reg{ width:898px; padding-bottom:14px; letter-spacing:1px; color:#238cc8; font-size:16px; margin-left:65px; border-bottom:1px solid #e9ece6; margin-bottom:20px;}
+.regtip{ padding-left:156px; width:800px; padding-bottom:13px;}
+.regtip em{ padding-right:4px;}
+.left-regbox{ width:575px;}
+.tab01-reg{ font-size:14px;}
+.tab01-reg .t1{ width:147px; vertical-align:top; text-align:right; padding-right:8px;}
+.tab01-reg .t1 em{ color:#ea6060; padding-right:5px;}
+.tab01-reg .t1 span{ float:right; padding-top:5px;}
+.tab01-reg td{ padding-bottom:28px;}
+.tab01-reg .text{ padding-left:6px; width:360px; height:26px; float:left; line-height:26px; border:1px solid #d1d6d4;}
+.errortip{background:url(../images/error_icon.png) no-repeat 0 4px;color:#ea6060; font-size:12px; padding:6px 0 0 20px; clear:both;}
+.oktip{ display:block; background:url(../images/right_icon.png) no-repeat; width:16px; height:16px; float:left; margin-left:5px; margin-top:7px;}
+.tab01-reg .text-phone{ width:284px;}
+.validcode{ margin-left:16px; margin-top:-5px;}
+.tab01-reg .text-error{ border:1px solid #ea6060;}
+.agreebox{ font-size:12px; color:#929292;}
+.agreebox input{ margin-right:16px;}
+.agreebox a{ text-decoration:underline; color:#238cc8;}
+.right-regbox{ width:386px; border:1px solid #e9ece6; padding:24px 0;}
+.part01-regtxt{ margin-left:31px; width:325px;}
+.part01-regtxt p{ padding-bottom:23px;}
+.part01-regtxt a{ font-weight:bold; color:#238cc8; margin-left:3px; text-decoration:underline;}
+.part02-regtxt{margin-left:31px; width:325px; line-height:36px;}
+.part02-regtxt span{ display:inline-block; cursor:pointer;}
+.area01-reg-media .title-reg b{ color:#ea6060;}
+.area01-reg-media .agreebox a{ text-decoration:underline; color:#ea6060;}
+.area01-reg-media .part01-regtxt a{ color:#ea6060;}
+.phoneclick{display: block;width:95px;height:30px;background: #ea6060;line-height: 30px;text-align: center; color: #fff;}
+.phoneclick:hover{background: red;cursor: pointer;}

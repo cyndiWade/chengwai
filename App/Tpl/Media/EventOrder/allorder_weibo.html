@@ -12,7 +12,7 @@
 <div class="wrap l">
 <div class="pbd">
 	<div class="location l">
-		当前位置：<a href="#">个人中心</a>  >  <span class="blue">全部订单</span>
+		当前位置：<a href="#">个人中心</a>  >  <span class="blue">微博订单</span>
 	</div>
 	<div class="area01-mediahelp l">
 		<div class="box01-allorder l">
@@ -61,13 +61,13 @@
 				<td class="t6">{$vo.hd_name}</td>
 				<td class="t6">{$vo.price} 元 </td>
 				<td class="t6">{$vo.start_time|date="Y-m-d H:i:s",###}</td>
-				<td class="t6">{$vo.status_name}</td>
+				<td class="t6">{$vo.audit_status|getAccountStatus}</td>
 				<td class="last"><div class="ctrl"><span><a href="{:U('Media/EventOrder/show?id='.$vo[generalize_id])}">查看</a></span>
 				<if condition='$vo.audit_status eq 3'>
-				 | <span class="judan">拒单</span> 
-				 | <span calss="excute">去执行</span> 
+				 | <a href="javascript:;" class="action" data-order_id="{$vo.id}" type="4"><span>拒单</span></a> 
+				 | <a href="javascript:;" class="action" data-order_id="{$vo.id}" type="5"><span>去执行</span></a>  
 				 <elseif condition='$vo.audit_status eq 5'/> 
-				 | <span class="excute_end">执行完成</span>
+				 | <a href="javascript:;" class="action" data-order_id="{$vo.id}" type="6"><span>执行完成</span></a> 
 				 </if>
 				 </div></td>
 			  </tr>
@@ -85,14 +85,102 @@
 	</div>
 </div>
 </div>
+
+
+<!-- 添加账号弹窗 -->
+<div class="batchbox tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>拒绝执行</b></div>
+	<div class="mid-batch pr l">
+	<form  action="{:U('Media/EventOrder/setAujectStatus')}" method="POST" enctype="multipart/form-data" id="frm1" >
+		<table class="tab01-inten l table-xwmt">  
+		  <tr>
+			<td class="t1"><span><i>*</i><strong>原因：</strong></span></td>
+			<td class="t2"><textarea name="reason"  cols="60" rows="3"></textarea></td>
+		  </tr>
+		  <tr>
+			<td class="t1"></td>
+			<td class="t2">
+			<input type="hidden" name="status" value="4" />
+			<input type="hidden" name="a_id"  value="" />
+			<input type="hidden" name="type" value="weibo" />
+			<input type="hidden" name="order_id" id="order_id" value="{$view_data.order_info.id}" />
+			<span class="btn graybtn" onclick="javascript:$('#frm1').submit();">提&nbsp;&nbsp;&nbsp;&nbsp;交</span><span class="btn graybtn close">取消</span></td>
+		  </tr>
+		</table>
+	</form>
+	</div>
+</div>
+
+<div class="batchbox2 tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>执行完成</b></div>
+	<div class="mid-batch pr l">
+	<form  action="{:U('Media/EventOrder/setFinishiedStatus')}" method="POST" enctype="multipart/form-data"  id="frm2">
+		<table class="tab01-inten l table-xwmt">  
+		  <tr>
+			<td class="t1"><span><i>*</i><strong>上传媒体截图：</strong></span></td>
+			<td class="t2"><input class="file fl" type="file" name="upload_info"></td>
+		  </tr>
+		  <tr>
+			<td class="t1"></td>
+			<td class="t2">
+			<input type="hidden" name="status" value="6" />
+			<input type="hidden" name="a_id"  value="" />
+			<input type="hidden" name="type" value="weibo" />
+			<input type="hidden" name="order_id"  value="{$view_data.order_info.id}" />
+			<span class="btn graybtn" onclick="javascript:$('#frm2').submit();">提&nbsp;&nbsp;&nbsp;&nbsp;交</span><span class="btn graybtn close">取消</span></td>
+		  </tr>
+		</table>
+	</form>
+	</div>
+</div>
+
+<div class="batchbox3 tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>开始执行</b></div>
+	<div class="mid-batch pr l">
+	<form  action="{:U('Media/EventOrder/setAujectStatus')}" method="POST" enctype="multipart/form-data"  id="frm3">
+		<table class="tab01-inten l table-xwmt">  
+		  <tr>
+			<td class="t1"></td>
+			<td class="t2">
+			<input type="hidden" name="status" value="5" />
+			<input type="hidden" name="a_id" value="" />
+			<input type="hidden" name="type" value="weibo" />
+			<input type="hidden" name="order_id" value="{$view_data.order_info.id}" />
+			<span class="btn graybtn" onclick="javascript:$('#frm3').submit();">提&nbsp;&nbsp;&nbsp;&nbsp;交</span><span class="btn graybtn close">取消</span></td>
+		  </tr>
+		</table>
+	</form>
+	</div>
+</div>
+
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 
 <script type="text/javascript" src="app/Public/Global/jquery/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.pop.js"></script>
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
 <script type="text/javascript">
 $(function(){
 	$('.tab01-allorder tr:even').addClass('even');
+	$("a[class='action']").click(function(){
+		
+		id		= $(this).attr('data-order_id');
+		status	= $(this).attr('type');
+		$("input[name='a_id']").val(id); 
+ 
+		if(status == 4)
+		{
+			$('.batchbox').popOn();	
+		}
+		else if(status == 6)
+		{
+			$('.batchbox2').popOn();
+		}
+		else if(status == 5)
+		{
+			$('.batchbox3').popOn();	
+		}
+	})
 })
 </script>
 </body>

@@ -1,9 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<include file="Public:top" />
-	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
-	<title>媒体主_账号管理</title>
+<title>媒体主_账号管理</title>
+<include file="Public:top" />
+<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/sea.js" id="seajsnode"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/seajs-config.js"></script>
+<script>
+var doT, Weiboyi, W;
+seajs.on('exec', function(data) {
+    if (data.uri === seajs.resolve('weiboyi')) {
+        Weiboyi = W = data.exports;
+    } else if (data.uri === seajs.resolve('doT')) {
+        doT = data.exports;
+    } else if (data.uri===seajs.resolve('plupload')) {
+        $.pluploadOpts.url = '{:U('/Media/Public/uploadImg')}';
+        $.pluploadOpts.viewBasePath = '{$Think.config.PUBLIC_VISIT.domain}{$Think.config.PUBLIC_VISIT.dir}';
+    }
+});
+
+seajs.config({
+    preload: ['seajsText', 'seajsCss', 'doT', 'cookie', 'rest', 'form', 'weiboyi', 'plupload']
+});
+seajs.use(['seajsText', 'seajsCss', 'doT', 'cookie', 'rest', 'form']);
+seajs.use(['weiboyi'], function (W){});
+</script>
 </head>
 <body>
 
@@ -204,12 +227,12 @@
 </script>
 <link rel="stylesheet" type="text/css" href="{$global_tpl_view.Group_Resource_Path}css/cmp_all.css" />
 <link rel="stylesheet" type="text/css" href="{$global_tpl_view.Group_Resource_Path}css/accountlist.css" />
-<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
-<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.js"></script>
-<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/sea.js" id="seajsnode"></script>
-<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/seajs-config.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.form.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.validate.js"></script>
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/fancybox/jquery.fancybox.js"></script>
 <link href="{$global_tpl_view.Group_Resource_Path}js/fancybox/jquery.fancybox.css" rel="stylesheet" />
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}plugins/uploadify/jquery.uploadify-3.1-cn.js"></script>
+<link href="{$global_tpl_view.Group_Resource_Path}plugins/uploadify/uploadify.css" rel="stylesheet" />
 
 
 <script type="text/javascript">
@@ -256,48 +279,22 @@ function tmplColWeiboNameFromAccount(account){
     return account;
 }
 
-var doT, Weiboyi, W;
-seajs.on('exec', function(data) {
-    if (data.uri === seajs.resolve('weiboyi')) {
-        Weiboyi = W = data.exports;
-    } else if (data.uri === seajs.resolve('doT')) {
-        doT = data.exports;
-    } else if (data.uri===seajs.resolve('plupload')) {
-        $.pluploadOpts.url = '{:U('/Media/Public/uploadImg')}';
-        $.pluploadOpts.viewBasePath = '{$Think.config.PUBLIC_VISIT.domain}{$Think.config.PUBLIC_VISIT.dir}';
-    }
-});
 
-seajs.config({
-    preload: ['seajsText', 'seajsCss', 'doT', 'rest', 'form', 'weiboyi', 'plupload']
-});
-seajs.use(['seajsText', 'seajsCss', 'rest']);
+<php>
+if ($view_data['type'] == 3){
+    $needJS = array('information' => 'weixin.js', 'update' => 'update_price.js');
+    echo 'var weixin_min_followers = 500;';
+} elseif ($view_data['type'] == 4) {
+    $needJS = array('information' => 'media_news.js');
+} else {
+    $needJS = array('information' => 'accountlist.js');
+}
+</php>
 
-seajs.use(['weiboyi', 'order_group.js', <eq name="view_data.type" value="3">'weixin.js', 'update_price.js'<else />'accountlist.js'</eq>], 
-function (W, orderGroup, information<eq name="view_data.type" value="3">, update</eq>) {
-    $(function(){
-        $('.tab01-allorder tr:even').addClass('even');
-        /*
-        $('#addcount').click(function(){
-            $('.batchbox').popOn();
-        });
-        */
-        $('#addBatch').click(function(){
-            window.location.href='{:U('/Media/SocialAccount/batchGuidesAccount')}';
-        });
-        $('select[name=weiboTypeTabMore]').change(function (){
-            if ($(this).val() == '') return ;
-            window.location = $(this).val();
-        });
-        
-        information.init();
-        information.initGrid(W.util.deserializeQueryString(location.search), {$view_data.type});
-    });
+seajs.use(['detail.js', 'order_group.js', '{:implode("','", $needJS)}'], 
+function (detail, orderGroup, {:implode(',', array_keys($needJS))}) {
     
-    <eq name="view_data.type" value="3">
-    //初始化微信的价格变动
-    update.initBind(information.getGrid());
-    </eq>
+    detail.setDisplayableTabs($.parseJSON('\x7B\x22accountOpen\x22\x3A1\x7D'));
     
     new W.Button({
         btnEl: "#submin_btn",
@@ -310,6 +307,11 @@ function (W, orderGroup, information<eq name="view_data.type" value="3">, update
      */
     function submitAccount() {
         $(".timetext").removeClass('validateError');
+        check('follower_start_check', 'follower_end_check');
+        check('weekly_start_check', 'weekly_end_check');
+        check('monthly_start_check', 'monthly_end_check');
+        check('price_start_check', 'price_end_check');
+        
         if ((check('follower_start_check', 'follower_end_check')) &&
             (check('monthly_start_check', 'monthly_end_check')) &&
             (check('weekly_start_check', 'weekly_end_check')) &&
@@ -339,6 +341,25 @@ function (W, orderGroup, information<eq name="view_data.type" value="3">, update
         return false;
 
     }
+    
+    $(function(){
+        information.init();
+        information.initGrid(W.util.deserializeQueryString(location.search), {$view_data.type});
+        $('.tab01-allorder tr:even').addClass('even');
+        $('#addBatch').click(function(){
+            window.location.href='{:U('/Media/SocialAccount/batchGuidesAccount')}';
+        });
+        $('select[name=weiboTypeTabMore]').change(function (){
+            if ($(this).val() == '') return ;
+            window.location = $(this).val();
+        });
+    });
+    
+    <eq name="view_data.type" value="3">
+    //初始化微信的价格变动
+    update.initBind(information.getGrid());
+    </eq>
+    
 });
 seajs.use('add_account.js', function(addAccount) {
     var isCreated = $('#isCreated').val();

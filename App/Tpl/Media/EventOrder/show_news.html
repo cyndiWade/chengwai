@@ -11,51 +11,33 @@
 <div class="wrap l">
 	<div class="pbd">
 		<div class="location l">
-			当前位置：<a href="#">个人中心</a>  >  <span class="blue">全部订单</span>
+			当前位置：<a href="#">个人中心</a>  >  <span class="blue">新闻媒体订单</span>
 		</div>
-		<div class="area01-myorder l">
+		<div class="area01-myorder l"> 
 			<div class="box01-myorder fl">
-				<div class="top-myorder l"><b>“{$view_data.order_info.hd_name}”的详细信息</b></div>
+				<div class="top-myorder l"><b>“{$view_data.order_info.title}”的详细信息</b></div>
 				<table class="tab01-myorder l">
 				  <tr>
 					<th class="t1">活动名称：</th>
-					<td class="t2">{$view_data.order_info.hd_name}</td>
+					<td class="t2">{$view_data.order_info.title}</td>
 					<th class="t1">活动ID：</th>
 					<td class="t3">{$view_data.order_info.id}</td>
 					<th class="t1">投放平台：</th>
-					<td class="t2">{$view_data.order_info.tfpt_type|getPt}</td>
+					<td class="t2">新闻媒体</td>
 				  </tr>
 				  <tr>
-					<th class="t1">活动类型：</th>
-					<td class="t2">{$view_data.order_info.ryg_type|getRyG}{$view_data.order_info.fslx_type|getFsT}</td>
-					<th class="t1">开始时间：</th>
+					<th class="t1">原文链接：</th>
+					<td class="t2">{$view_data.order_info.web_url}</td>
+					<th class="t1">预计执行时间：</th>
 					<td class="t3">{$view_data.order_info.start_time|date="Y-m-d H:i:s",###}</td>
-					<th class="t1">执行时间：</th>
-					<td class="t2">{$view_data.order_info.start_time|date="Y-m-d H:i:s",###}</td>
-				  </tr>
-				  <tr>
 					<th class="t1">活动状态：</th>
 					<td class="t2">{$view_data.order_info.status|getHdT}</td>
-					<if condition="$view_data['order_info']['fslx_type'] eq 1">
-					<th class="t1">直发内容类型：</th>
-					<td class="t3">{$view_data.order_info.zfnr_type|getZfnrType}</td>
-					<elseif condition="$view_data['order_info']['fslx_type'] eq 2" />
-					<th class="t1">转发内容类型：</th>
-					<td class="t3">{$view_data.order_info.zfy_type|getZfyType}</td>
-					</if>
-					<th class="t1">正品证明：</th>
-					<td class="t2"><if condition="$view_data['order_info']['order_file']  neq ''"><img src="{$view_data.order_info.order_file}" /> <else /> 无 </if></td>
-					<!--<th class="t1">配图：</th>
-					<td class="t2">无</td>-->
 				  </tr>
+				  
 				  <tr>
-				  <if condition="$view_data['order_info']['fslx_type'] eq 1">
-					<th class="t1">直发内容：</th>
-					<td colspan="5">{$view_data.order_info.zw_info}</td>
-				 <elseif condition="$view_data['order_info']['fslx_type'] eq 2" />	
-					<th class="t1">转发内容：</th>
-					<td colspan="5">{$view_data.order_info.zw_info}</td>
-				</if>
+					<th class="t1">内容：</th>
+					<td colspan="5">{$view_data.order_info.zf_info}</td>
+				 
 				  </tr>
 				  <tr>
 					<th class="t1">活动备注：</th>
@@ -70,7 +52,7 @@
 				</div>
 				<table class="tab01-order l">
 				  <tr>
-					<th class="t1">订单ID</th>
+					<th class="t1">ID</th>
 					<th class="t2">名称</th>
 					<th class="t2">账号名称</th>
 	
@@ -123,8 +105,8 @@
 			<td class="t2">
 			<input type="hidden" name="status" value="4" />
 			<input type="hidden" name="a_id"  value="" />
-			<input type="hidden" name="type" value="weibo" />
 			<input type="hidden" name="order_id" id="order_id" value="{$view_data.order_info.id}" />
+			<input type="hidden" name="type" value="news" />
 			<span class="btn graybtn" onclick="javascript:$('#frm1').submit();">提&nbsp;&nbsp;&nbsp;&nbsp;交</span><span class="btn graybtn close">取消</span></td>
 		  </tr>
 		</table>
@@ -146,8 +128,8 @@
 			<td class="t2">
 			<input type="hidden" name="status" value="6" />
 			<input type="hidden" name="a_id"  value="" />
-			<input type="hidden" name="type" value="weibo" />
 			<input type="hidden" name="order_id"  value="{$view_data.order_info.id}" />
+			<input type="hidden" name="type" value="news" />
 			<span class="btn graybtn" onclick="javascript:$('#frm2').submit();">提&nbsp;&nbsp;&nbsp;&nbsp;交</span><span class="btn graybtn close">取消</span></td>
 		  </tr>
 		</table>
@@ -165,8 +147,8 @@
 			<td class="t2">
 			<input type="hidden" name="status" value="5" />
 			<input type="hidden" name="a_id" value="" />
-			<input type="hidden" name="type" value="weibo" />
 			<input type="hidden" name="order_id" value="{$view_data.order_info.id}" />
+			<input type="hidden" name="type" value="news" />
 			<span class="btn graybtn" onclick="javascript:$('#frm3').submit();">提&nbsp;&nbsp;&nbsp;&nbsp;交</span><span class="btn graybtn close">取消</span></td>
 		  </tr>
 		</table>
