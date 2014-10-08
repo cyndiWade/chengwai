@@ -40,8 +40,9 @@ class PlaceAnOrderAction extends MediaBaseAction {
 		parent::data_to_view(array(
 			//二级导航
 			'secondSiderbar' => array(
-				'待执行订单' => array('select' => true, 'url' => U('/Media/PlaceAnOrder/index')),
-				'全部订单'   => array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorder')),
+				'待执行订单'		=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/index')),
+				'微博预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorder')),
+				'微信预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
 			),
             'secondPosition' => '待执行订单',
 		));
@@ -49,7 +50,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
 	}
     
     /**
-     * 全部订单
+     * 全部微博订单
      * 
      * @author lurongchang
      * @date   2014-09-19
@@ -58,36 +59,368 @@ class PlaceAnOrderAction extends MediaBaseAction {
 	public function allorder()
     {
 		parent::data_to_view(array(
-            'secondPosition' => '全部订单',
+            //二级导航
+			'secondSiderbar' => array(
+				'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
+				'微博预约订单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorder')),
+				'微信预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
+			),
+            'secondPosition' => '微博预约订单',
 		));
-		$this->display();
+		
+		$new_array = addsltrim($_REQUEST);
+		
+		$data = $this->searchWeiboList();
+		
+		parent::data_to_view(array(
+				'page' => $data['page'] ,
+				'list' => $data['list'],
+				'search_name' => $new_array['search_name'],
+				'start_time' => $new_array['start_time'],
+				'end_time' => $new_array['end_time'],
+				'status' => $new_array['status'],
+				'search_order_id' => $new_array['order_id'],
+				'search_account' => $new_array['search_account'], 
+				'count' =>  $data['count'] ? $data['count'] : 0,
+				'sum' => $data['sum'] ? $data['sum'] : 0
+		));
+		
+		$this->display('allorder_weibo');
 	}
-    
+	
+	
+	 /**
+     * 微博预约订单详情
+     * 
+     * @author bumtime
+     * @date   2014-10-08
+     * @return void
+     */
+	public function showWeibo()
+    {
+		parent::data_to_view(array(
+            //二级导航
+			'secondSiderbar' => array(
+				'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
+				'微博预约订单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorder')),
+				'微信预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
+			),
+            'secondPosition' => '微博预约订单',
+		));
+
+		//过滤去空格 防SQL
+		$new_array = addsltrim($_REQUEST);
+		$order_id  = intval($new_array['id']);
+		$GeneralizeOrder 	= D('IntentionWeiboOrder');
+		$GeneralizeAccount	= D('IntentionWeiboAccount');
+		
+		//媒体帐户ID
+		$media_list = D("AccountWeibo")->getListsByUserID($this->oUser->id);
+		$where["account_id"]	= array("IN", array_keys($media_list));
+		$where['intention_id'] = $order_id;
+		
+		//订单详情
+		$order_info = $GeneralizeOrder->getOrderInfo($order_id);
+		 
+		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_weibo wb on ga.account_id = wb.id")->where($where)
+					->order('ga.id desc')->field('ga.id,  ga.`audit_status`,`account_name`')->select();
+				
+					 
+		//统计
+		$count      	= $GeneralizeAccount->where($where)->count();
+		$sum			= $GeneralizeAccount->where($where)->sum('price');
+		//配图
+		$file_where = array("intention_order_id"=>$order_id, "type"=>2);
+		$order_file = D('IntentionWeiboFiles')->field('url')->where($file_where)->find();
+		$order_info["order_file"] = $order_file ? $order_file : "";
+		
+		parent::data_to_view(array(
+				'order_info'		=> $order_info,
+				'account_list'	=> $account_list,
+				'count' =>  $count ? $count : 0,
+				'sum' => $sum ? $sum : 0,
+		));
+		
+		$this->display('show_weibo');
+	}
+	
+	
     /**
-     * 搜索订单列表
+     * 全部微信订单
+     * 
+     * @author lurongchang
+     * @date   2014-09-19
+     * @return void
+     */
+	public function allorderWeixin()
+    {
+		parent::data_to_view(array(
+            //二级导航
+			'secondSiderbar' => array(
+				'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
+				'微博预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorder')),
+				'微信预约订单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
+			),
+            'secondPosition' => '微信预约订单',
+		));
+		
+		$new_array = addsltrim($_REQUEST);
+		
+		$data = $this->searchWeixinList();
+		
+		parent::data_to_view(array(
+				'page' => $data['page'] ,
+				'list' => $data['list'],
+				'search_name' => $new_array['search_name'],
+				'start_time' => $new_array['start_time'],
+				'end_time' => $new_array['end_time'],
+				'status' => $new_array['status'],
+				'search_order_id' => $new_array['order_id'],
+				'search_account' => $new_array['search_account'], 
+				'count' =>  $data['count'] ? $data['count'] : 0,
+				'sum' => $data['sum'] ? $data['sum'] : 0
+		));
+		
+		$this->display('allorder_weixin');
+	}	  
+	
+	 /**
+     * 微信预约订单详情
+     * 
+     * @author bumtime
+     * @date   2014-10-08
+     * @return void
+     */
+	public function showWeixin()
+    {
+		parent::data_to_view(array(
+            //二级导航
+			'secondSiderbar' => array(
+				'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
+				'微博预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorder')),
+				'微信预约订单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
+			),
+            'secondPosition' => '微信预约订单',
+		));
+
+		//过滤去空格 防SQL
+		$new_array = addsltrim($_REQUEST);
+		$order_id  = intval($new_array['id']);
+		$GeneralizeOrder 	= D('IntentionWeixinOrder');
+		$GeneralizeAccount	= D('IntentionWeixinAccount');
+		
+		//媒体帐户ID
+		$media_list = D("AccountWeixin")->getListsByUserID($this->oUser->id);
+		$where["account_id"]	= array("IN", array_keys($media_list));
+		$where['generalize_id'] = $order_id;
+		
+		//订单详情
+		$order_info = $GeneralizeOrder->getOrderInfo($order_id);
+		 
+		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_weixin wb on ga.account_id = wb.id")->where($where)
+					->order('ga.id desc')->field('ga.id,  ga.`audit_status`,`account_name`')->select();
+				
+					 
+		//统计
+		$count      	= $GeneralizeAccount->where($where)->count();
+		$sum			= $GeneralizeAccount->where($where)->sum('price');
+		//配图
+		$file_where = array("intention_order_id"=>$order_id, "type"=>2);
+		$order_file = D('IntentionWeiwinFiles')->field('url')->where($file_where)->find();
+		$order_info["order_file"] = $order_file ? $order_file : "";
+		
+		parent::data_to_view(array(
+				'order_info'		=> $order_info,
+				'account_list'	=> $account_list,
+				'count' =>  $count ? $count : 0,
+				'sum' => $sum ? $sum : 0,
+		));
+		
+		$this->display('show_weixin');
+	}
+	
+	
+	
+    /**
+     * 搜索微博意向订单列表
      * 
      * @author lurongchang
      * @date   2014-09-22
      * @return void
      */
-	public function searchList()
+	private  function searchWeiboList()
     {
-		if ($this->isPost()){
-            $expiredStartTime   = I('expiredStartTime', 0, 'strtotime');
-            $expiredEndTime     = I('expiredEndTime', 0, 'strtotime');
-            $executionStartTime = I('executionStartTime', 0, 'strtotime');
-            $executionEndTime   = I('executionEndTime', 0, 'strtotime');
-            $accountName        = I('account_name', '', 'setString');
-            $requirementName    = I('requirement_name', '', 'setString');
-            $requirementStatus  = I('requirement_status', 0, 'intval');
-            
-            $userInfos = parent::get_session('user_info');
-            $where['users_id'] = &$userInfos['id'];
-            
-            // $where['']
-        } else {
-            parent::callback(0, '访问方式错误');
-        }
+        $expiredStartTime   = I('expiredStartTime', 0, 'strtotime');
+        $expiredEndTime     = I('expiredEndTime', 0, 'strtotime');
+        $executionStartTime = I('executionStartTime', 0, 'strtotime');
+        $executionEndTime   = I('executionEndTime', 0, 'strtotime');
+        $accountName        = I('account_name', '', 'setString');
+        $requirementName    = I('requirement_name', '', 'setString');
+        $requirementStatus  = I('requirement_status', 0, 'intval');
+        
+        $where = array();
+        
+        //时间范围
+		if($new_array['start_time']!='' && $new_array['end_time']=='')
+		{
+			$where['start_time'] = array('EGT',$start_time);
+		}
+		if($new_array['start_time']=='' && $new_array['end_time']!='')
+		{
+			$where['start_time'] = array('ELT',$end_time);
+		}
+		if($new_array['start_time']!='' && $new_array['end_time']!='')
+		{
+			$where['start_time'] = array('between',array($start_time,$end_time));
+		}
+		//活动名字
+		if($new_array['search_name']!='')
+		{
+		$where['yxd_name'] = array('like','%'.$new_array['search_name'].'%');
+		}
+		//状态
+		if($new_array['order_status']!='')
+		{
+			$where['audit_status'] = intval($new_array['order_status']);
+		}
+		//账号
+		if($new_array['search_account']!='')
+		{
+			$media_where['account_name'] = array('like', '%'.$new_array['search_account'].'%');
+		}
+		//订单号
+		if($new_array['order_id']!='')
+		{
+			$where['ga.id'] = intval($new_array['order_id']);
+		}		
+				
+		import('ORG.Util.Page');
+		$GeneralizeOrder 	= D('IntentionWeiboOrder');
+		$GeneralizeAccount	= D('IntentionWeiboAccount');
+		//媒体帐户ID
+		$media_list = D("AccountWeibo")->getListsByUserID($this->oUser->id, "all", $media_where);
+		
+		$show = "";
+		$list = array();
+		$count = $sum = 0;
+		if($media_list)
+		{
+			$where["account_id"] = array("IN", array_keys($media_list));
+			$count      = $GeneralizeAccount->alias('ga')->where($where)->count();
+			
+			$sum		= $GeneralizeAccount->alias('ga')->where($where)->sum('price');
+			
+			$Page       = new Page($count,10);
+			$show       = $Page->show();
+ 
+			$list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."intention_weibo_order go on ga.intention_id = go.id")->where($where)->limit($Page->firstRow.','.$Page->listRows)
+					->order('ga.id desc')->field('`intention_id`, `account_type`, `account_id`, `audit_status`,  go.`id` as order_id, 
+						ga.`id`,`tfpt_type`, `fslx_type`, `ryg_type`, `yxd_name`, `start_time`, `over_time`, `create_time`, `status`')->select();
+			
+			if($list)
+			{
+				$stutas_list = C('Account_Order_Status');
+				$Order_Status_list = C('Order_Status');
+				foreach ($list as $key=>$value)
+				{
+					$list[$key]['status_name']			= $Order_Status_list[$value['status']]['explain_yxd'];
+					$list[$key]['account_name']			= $media_list[$value['account_id']];
+				}
+			}
+		}
+		return array("sum"=>$sum, "count"=>$count, "page"=>$show, "list"=>$list);
+	            
+	}
+	
+	 /**
+     * 搜索微讯意向订单列表
+     * 
+     * @author bumtime
+     * @date   2014-10-08
+     * @return void
+     */
+	private function searchWeixinList()
+    {
+        $expiredStartTime   = I('expiredStartTime', 0, 'strtotime');
+        $expiredEndTime     = I('expiredEndTime', 0, 'strtotime');
+        $executionStartTime = I('executionStartTime', 0, 'strtotime');
+        $executionEndTime   = I('executionEndTime', 0, 'strtotime');
+        $accountName        = I('account_name', '', 'setString');
+        $requirementName    = I('requirement_name', '', 'setString');
+        $requirementStatus  = I('requirement_status', 0, 'intval');
+        
+        $where = array();
+        
+        //时间范围
+		if($new_array['start_time']!='' && $new_array['end_time']=='')
+		{
+			$where['start_time'] = array('EGT',$start_time);
+		}
+		if($new_array['start_time']=='' && $new_array['end_time']!='')
+		{
+			$where['start_time'] = array('ELT',$end_time);
+		}
+		if($new_array['start_time']!='' && $new_array['end_time']!='')
+		{
+			$where['start_time'] = array('between',array($start_time,$end_time));
+		}
+		//活动名字
+		if($new_array['search_name']!='')
+		{
+		$where['yxd_name'] = array('like','%'.$new_array['search_name'].'%');
+		}
+		//状态
+		if($new_array['order_status']!='')
+		{
+			$where['audit_status'] = intval($new_array['order_status']);
+		}
+		//账号
+		if($new_array['search_account']!='')
+		{
+			$media_where['account_name'] = array('like', '%'.$new_array['search_account'].'%');
+		}
+		//订单号
+		if($new_array['order_id']!='')
+		{
+			$where['ga.id'] = intval($new_array['order_id']);
+		}		
+				
+		import('ORG.Util.Page');
+		$GeneralizeOrder 	= D('IntentionWeixinOrder');
+		$GeneralizeAccount	= D('IntentionWeixinAccount');
+		//媒体帐户ID
+		$media_list = D("AccountWeixin")->getListsByUserID($this->oUser->id, $media_where);
+
+		$show = "";
+		$list = array();
+		$count = $sum = 0;
+		if($media_list)
+		{
+			$where["account_id"] = array("IN", array_keys($media_list));
+			$count      = $GeneralizeAccount->alias('ga')->where($where)->count();
+			
+			$sum		= $GeneralizeAccount->alias('ga')->where($where)->sum('price');
+			
+			$Page       = new Page($count,10);
+			$show       = $Page->show();
+ 
+			$list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."intention_weixin_order go on ga.generalize_id = go.id")->where($where)->limit($Page->firstRow.','.$Page->listRows)
+					->order('ga.id desc')->field('`generalize_id`, `account_id`, `audit_status`,  go.`id` as order_id, 
+						ga.`id`,`ggw_type`, `yxd_name`, `title`, `start_time`, `over_time`, `create_time`, `status`')->select();
+			
+			if($list)
+			{
+				$stutas_list = C('Account_Order_Status');
+				$Order_Status_list = C('Order_Status');
+				foreach ($list as $key=>$value)
+				{
+					$list[$key]['status_name']			= $Order_Status_list[$value['status']]['explain_yxd'];
+					$list[$key]['account_name']			= $media_list[$value['account_id']];
+				}
+			}
+		}
+		return array("sum"=>$sum, "count"=>$count, "page"=>$show, "list"=>$list);
+	            
 	}
 	
 }

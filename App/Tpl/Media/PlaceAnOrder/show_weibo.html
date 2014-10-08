@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
+	<title>订单详情_媒体主_个人主页</title>
+</head>
+<body>
+<!-- 头部 -->
+<include file="Public:header" />
+<div class="wrap l">
+	<div class="pbd">
+		  <include file="Public:breadcrumbs" />
+		<div class="area01-myorder l">
+			<div class="box01-myorder fl">
+				<div class="top-myorder l"><b>“{$view_data.order_info.hd_name}”的详细信息</b></div>
+				<table class="tab01-myorder l">
+				  <tr>
+					<th class="t1">活动名称：</th>
+					<td class="t2">{$view_data.order_info.yxd_name}</td>
+					<th class="t1">活动ID：</th>
+					<td class="t3">{$view_data.order_info.id}</td>
+					<th class="t1">投放平台：</th>
+					<td class="t2">{$view_data.order_info.tfpt_type|getPt}</td>
+				  </tr>
+				  <tr>
+					<th class="t1">活动类型：</th>
+					<td class="t2">{$view_data.order_info.ryg_type|getRyG}{$view_data.order_info.fslx_type|getFsT}</td>
+					<th class="t1">开始时间：</th>
+					<td class="t3">{$view_data.order_info.start_time|date="Y-m-d H:i:s",###}</td>
+					<th class="t1">执行时间：</th>
+					<td class="t2">{$view_data.order_info.start_time|date="Y-m-d H:i:s",###}</td>
+				  </tr>
+				  <tr>
+					<th class="t1">活动状态：</th>
+					<td class="t2">{$view_data.order_info.status|getHdT}</td>
+					<if condition="$view_data['order_info']['fslx_type'] eq 1">
+					<th class="t1">直发内容类型：</th>
+					<td class="t3">{$view_data.order_info.zfnr_type|getZfnrType}</td>
+					<elseif condition="$view_data['order_info']['fslx_type'] eq 2" />
+					<th class="t1">转发内容类型：</th>
+					<td class="t3">{$view_data.order_info.zfy_type|getZfyType}</td>
+					</if>
+					<th class="t1">正品证明：</th>
+					<td class="t2"><if condition="$view_data['order_info']['order_file']  neq ''"><img src="{$view_data.order_info.order_file}" /> <else /> 无 </if></td>
+					<!--<th class="t1">配图：</th>
+					<td class="t2">无</td>-->
+				  </tr>
+				  <tr>
+				  <if condition="$view_data['order_info']['fslx_type'] eq 1">
+					<th class="t1">直发内容：</th>
+					<td colspan="5">{$view_data.order_info.zw_info}</td>
+				 <elseif condition="$view_data['order_info']['fslx_type'] eq 2" />	
+					<th class="t1">转发内容：</th>
+					<td colspan="5">{$view_data.order_info.zw_info}</td>
+				</if>
+				  </tr>
+				  <tr>
+					<th class="t1">活动备注：</th>
+					<td colspan="5">{$view_data.order_info.bz_info}</td>
+				  </tr>
+				</table>
+			</div>
+			<div class="box02-myorder l">
+				<div class="top-myorder l"><b>您的相关账号如下</b></div>
+				<div class="searnum fl">
+					账号总数：<b class="yel">【{$view_data.count}】</b>，总消费额：<b class="yel">￥{$view_data.sum}</b>
+				</div>
+				<table class="tab01-order l">
+				  <tr>
+					<th class="t1">订单ID</th>
+					<th class="t2">名称</th>
+					<th class="t2">账号名称</th>
+	
+					<th class="t10">消费额</th>
+					<th class="t10">订单状态</th>
+					<th class="last">操作</th>
+	
+				  </tr>
+				<volist name="view_data.account_list" id="vo">
+				  <tr>
+					<td class="t1">{$vo.id}</td>
+					<td class=""><div class="weibopart"><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl">
+						<h5 class="l"><b></b><span class="heart"></span></h5>
+						<div class="weixininfo l"><span class="weixinhao fl">{$vo.account_name}</span></div></div></div></td>
+					<td class="">{$vo.account_name}</td>
+	
+					<td class="yel">{$vo.price}元</td>
+					<td class=""><strong class="finish">{$vo.audit_status|getAccountStatus}</strong></td>
+					<td class="">
+						<if condition="$vo['audit_status'] eq 0">
+						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="4">拒绝</a>	&nbsp;&nbsp;
+						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="5">接受</a>	&nbsp;&nbsp;
+						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="6">需要修改</a>	
+						<else />
+						暂无
+						</if>
+					</td>
+				  </tr>
+				</volist>
+				</table>
+			</div>	
+		 
+		</div>
+	</div>
+</div>
+
+<!-- 添加账号弹窗 -->
+<div class="batchbox tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>拒绝执行</b></div>
+	<div class="mid-batch pr l">
+	<form  action="{:U('Media/PlaceAnOrder/setAujectStatus')}" method="POST" enctype="multipart/form-data" id="frm1" >
+		<table class="tab01-inten l table-xwmt">  
+		  <tr>
+			<td class="t1"><span><i>*</i><strong>原因：</strong></span></td>
+			<td class="t2"><textarea name="reason"  cols="60" rows="3"></textarea></td>
+		  </tr>
+		  <tr>
+			<td class="t1"></td>
+			<td class="t2">
+			<input type="hidden" name="status" value="4" />
+			<input type="hidden" name="a_id"  value="" />
+			<input type="hidden" name="type" value="weibo" />
+			<input type="hidden" name="order_id" id="order_id" value="{$view_data.order_info.id}" />
+			<span class="btn graybtn" onclick="javascript:$('#frm1').submit();">提&nbsp;&nbsp;&nbsp;&nbsp;交</span><span class="btn graybtn close">取消</span></td>
+		  </tr>
+		</table>
+	</form>
+	</div>
+</div>
+
+<div class="batchbox2 tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>接受</b></div>
+	<div class="mid-batch pr l">
+	<form  action="{:U('Media/PlaceAnOrder/setFinishiedStatus')}" method="POST" enctype="multipart/form-data"  id="frm2">
+		<table class="tab01-inten l table-xwmt">   
+		  <tr>
+			<td class="t1"></td>
+			<td class="t2">
+			<input type="hidden" name="status" value="6" />
+			<input type="hidden" name="a_id"  value="" />
+			<input type="hidden" name="type" value="weibo" />
+			<input type="hidden" name="order_id"  value="{$view_data.order_info.id}" />
+			<span class="btn graybtn" onclick="javascript:$('#frm2').submit();">提&nbsp;&nbsp;&nbsp;&nbsp;交</span><span class="btn graybtn close">取消</span></td>
+		  </tr>
+		</table>
+	</form>
+	</div>
+</div>
+
+<div class="batchbox3 tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>需要修改</b></div>
+	<div class="mid-batch pr l">
+	<form  action="{:U('Media/PlaceAnOrder/setAujectStatus')}" method="POST" enctype="multipart/form-data"  id="frm3">
+		<table class="tab01-inten l table-xwmt">  
+		  <tr>
+			<td class="t1"><span><i>*</i><strong>修改部分：</strong></span></td>
+			<td class="t2"><textarea name="reason"  cols="60" rows="3"></textarea></td>
+		  </tr>
+		  <tr>
+			<td class="t1"></td>
+			<td class="t2">
+			<input type="hidden" name="status" value="5" />
+			<input type="hidden" name="a_id" value="" />
+			<input type="hidden" name="type" value="weibo" />
+			<input type="hidden" name="order_id" value="{$view_data.order_info.id}" />
+			<span class="btn graybtn" onclick="javascript:$('#frm3').submit();">提&nbsp;&nbsp;&nbsp;&nbsp;交</span><span class="btn graybtn close">取消</span></td>
+		  </tr>
+		</table>
+	</form>
+	</div>
+</div>
+
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+
+<script type="text/javascript" src="/App/Public/Global/jquery/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.pop.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.tab01-allorder tr:even').addClass('even');
+
+	$("a[class='yel affirm_order']").click(function(){
+		
+		id		= $(this).attr('data-order_id');
+		status	= $(this).attr('type');
+		$("input[name='a_id']").val(id); 
+ 
+		if(status == 4)
+		{
+			$('.batchbox').popOn();	
+		}
+		else if(status == 6)
+		{
+			$('.batchbox2').popOn();
+		}
+		else if(status == 5)
+		{
+			$('.batchbox3').popOn();	
+		}
+	})
+})
+</script>
+</body>
+</html>

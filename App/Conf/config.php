@@ -181,18 +181,22 @@ $custom= array (
 			0=>array(
 				'status'=>0,
 				'explain'=>'新订单',
+				'explain_yxd'=>'预约中'
 			),
 			1=>array(				
 				'status'=>1,			//城外圈审核通过即可支付
-				'explain'=>'审核通过'
+				'explain'=>'审核通过',
+				'explain_yxd'=>'已接受'
 			),
 			2=>array(
 				'status'=>2,			//城外圈审核失败
-				'explain'=>'审核失败'
+				'explain'=>'审核失败',
+				'explain_yxd'=>'已拒绝'
 			),
 			3=>array(
 				'status'=>3,			//客户支付成功的状态
-				'explain'=>'支付成功'
+				'explain'=>'支付成功',
+				'explain_yxd'=>'需要修改'
 			),
 			4=>array(
 				'status'=>4,

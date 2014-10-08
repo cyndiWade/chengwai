@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
+	<title>媒体主_预约订单</title>
+</head>
+<body>
+
+<!-- 头部 -->
+<include file="Public:header" />
+
+<div class="wrap l">
+    <div class="pbd">
+        <include file="Public:breadcrumbs" />
+        <div class="area01-mediahelp l">
+            <div class="box01-allorder l">
+                <b class="yel"></b>的全部预约订单
+            </div>
+            <div class="box02-allorder l">
+                <form method="post" id="searchOrderForm">
+                    <div class="box01-time l">
+                        <div class="part01-time fl">
+                            <span class="span-start fl">预约过期时间：</span>
+                            <div class="startime pr fl"><em class="pa"></em><input name="expiredStartTime" id="expiredStartTime" readonly type="text" class="timetext fl" /></div>
+                            <i class="yel fl">-</i>
+                            <div class="startime pr fl"><em class="pa"></em><input name="expiredEndTime" id="expiredEndTime" readonly type="text" class="timetext fl" /></div>
+                        </div>
+                        <div class="part01-time fl">
+                            <span class="span-start fl">执行开始时间：</span>
+                            <div class="startime pr fl"><em class="pa"></em><input name='executionStartTime' id='executionStartTime' readonly type="text" class="timetext fl" /></div>
+                            <i class="yel fl">-</i>
+                            <div class="startime pr fl"><em class="pa"></em><input name="executionEndTime" id="executionEndTime" readonly type="text" class="timetext fl" /></div>
+                        </div>
+                       <div class="part01-time fl">
+                            <span class="span-start fl">预约订单ID：</span>
+                            <div class="startime pr fl"><input name="order_id" id="order_id" type="text" class="text" /></span></div>
+                       </div>
+                    </div>
+                    <div class="box02-time l">
+                        <span class="spantime spantime-first fl"><i>账号名</i><input name="account_name" id="account_name" type="text" class="text text-long" /></span>
+                        <span class="spantime fl"><i>预约需求名称</i><input name="requirement_name" id="requirement_name" type="text" class="text text-long" /></span>
+                        <span class="spantime fl"><i>预约订单状态</i><select name="requirement_status" class="status-select"><option>请选择</option>
+                        </select></span>
+                        <span class="btn yelbtn fl" id="btn_submit">查 询</span>
+                    </div>
+                </form>
+            </div>
+          
+            <div class="box04-allorder l">
+                <table class="tab01-allorder tab01-allorder-prev l">
+                <thead>
+                <tr>
+                    <th class="t2">预约订单ID</th>
+                    <th class="t2">账号名</th>
+                    <th class="t3">预约需求名称</th>
+                    <th class="t2">价格（元）</th>
+                    <th class="t5">预约过期时间</th>
+                    <th class="t6">执行时间</th>
+                    <th class="t1">预约订单状态</th>
+                    <th class="last">操作</th>
+                </tr>
+                </thead>
+                <tbody id="orderList">
+                 <volist name="view_data.list" id="vo">
+				  <tr>
+					<td class="t2">{$vo.order_id}</td>
+					<td class="t2">{$vo.account_name}</td> 
+					<td class="t6">{$vo.yxd_name}</td>
+					<td class="t2">{$vo.price} 元 </td>
+					<td class="t6">{$vo.start_time|date="Y-m-d H:i:s",###}</td>
+					<td class="t6">{$vo.over_time|date="Y-m-d H:i:s",###}</td>
+					<td class="t1">{$vo.audit_status|getAccountStatus}</td>
+					<td class="last"><div class="ctrl"><span><a href="{:U('Media/PlaceAnOrder/showWeixin?id='.$vo[generalize_id])}">查看</a></span>
+					 
+					<!-- | <a href="javascript:;" class="action" data-order_id="{$vo.id}" type="4"><span>拒单</span></a> 
+					 | <a href="javascript:;" class="action" data-order_id="{$vo.id}" type="5"><span>接受</span></a>  
+					 | <a href="javascript:;" class="action" data-order_id="{$vo.id}" type="6"><span>需要修改</span></a> -->
+					  
+					 </div></td>
+				  </tr>
+				  </volist>
+				  <tr>
+                </tbody>
+                </table>
+            </div>
+            <div class="box05-allorder l">
+                <span>总订单：<b class="yel 1">0</b></span><span>总价格：<b class="yel 2">0</b>元</span>
+            </div>
+            <div class="page-wb fr">
+              {$view_data.page}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+<link href="{$global_tpl_view.Group_Resource_Path}plugins/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<link href="{$global_tpl_view.Group_Resource_Path}plugins/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}plugins/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}plugins/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script>
+$(function(){
+    $('#expiredStartTime, #expiredEndTime, #executionStartTime, #executionEndTime')
+    .datetimepicker({
+        format: 'yyyy-mm-dd',
+        language:"zh-CN",
+	    minView:2,
+	    autoclose:true
+    }); 
+});
+</script>
+</body>
+</html>

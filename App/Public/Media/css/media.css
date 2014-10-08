@@ -194,7 +194,7 @@
 .top-account-admin ul li{ float:left; width:110px; text-align:center; cursor:pointer; height:48px; line-height:48px; font-weight:bold;}
 .top-account-admin ul li.select{ background:#eb6b4c; color:#fff;}
 .box01-account-admin{ padding-top:10px; height:40px; border-bottom:1px solid #fff;}
-.part01-time .timetext{ padding-left:5px; width:55px;}
+.part01-time .timetext{ padding-left:5px; width:100px;}
 .part01-time i{ margin-right:5px; margin-top:7px;}
 .part01-time select{ width:162px; height:28px; line-height:28px; margin-right:10px;}
 .part01-time .yuan{ padding:5px 0 0 5px;}
@@ -322,3 +322,4 @@
 .tab01-order .t9{ width:72px;}
 .tab01-order .t10{ width:109px;}
 .tab01-order .t11{ width:73px;}
+ 
