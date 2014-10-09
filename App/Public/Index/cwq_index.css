@@ -10,7 +10,24 @@ a.cwq_register:hover{background: #CB1B02;color:#fff;}
 .tool-container {width: 100%;height: 38px;background: #f6f6f6;line-height: 38px;}
 .tool-container .tool {width: 980px;margin: 0 auto;color:#333;}
 .tool-container .tool a {color:#333;text-decoration: none;}
-.focus_left{ width:220px; z-index:5; padding:10px 30px; height:300px; position:absolute; right:0px; top:35px;overflow:hidden; z-index:2;background:url(news_cwq/login_index.png) no-repeat -280px 0px;border-radius: 3px;/* background:url(news_cwq/login_bg.png) no-repeat*/}
+.focus_left{ 
+	width:220px; z-index:5; padding:10px 30px; height:300px; position:absolute; right:0px; top:35px;overflow:hidden; z-index:2;
+	border:2px solid #ccc;
+	/*background:url(news_cwq/login_index.png) no-repeat -280px 0px;border-radius: 3px;*/ /*background:url(news_cwq/login_index.png) no-repeat*/
+}
+.login_account {
+	width:108px !important;
+	float:left;
+	text-align:center;
+	cursor:pointer;
+}
+.login_account_select {
+	border:1px solid #ccc;
+	background:#e0f0ff;
+}
+.verify_code {
+	width:130px;
+}
 .focus_right,.focus_right .focusdiv,.focus_right .focus_list li,.focus_right .focus_list li img{width:980px; height:400px;}
 .focus_right{position:relative; overflow:hidden;z-index:1; float:left;}
 .focus_right .focusdiv{  position:relative; overflow:hidden;}

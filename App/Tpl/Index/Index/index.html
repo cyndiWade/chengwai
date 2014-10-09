@@ -15,28 +15,105 @@
 <div id="banner" class="banner0">
   <div class="w980 mto posi">
   <div class="focus_left png">
-    <div class="mlowr"><div class="tdtab">会员登录</div></div>
-<div class="mlowr">
-<form method="post" action="http://www.cwq.com/member/login.php"  onsubmit="return Dcheck();">
+    <div class="mlowr">  
+   		 <!--<div class="tdtab">按时打算打打</div>-->
+		<div class="login_account login_account_select" data-type="advert">广告主</div>
+		<div class="login_account" data-type="media">媒体主</div>
+    </div>
+  
+<!-- 表单内容广告主 -->    
+<div class="mlowr form_div">
+	<form method="post" action="{:U('Advert/Account/check_login')}"  onsubmit="return Dcheck();">
     <input name="forward" type="hidden" id="forward" value="http://www.cwq.com/member/">
     <div class="blank20"></div>
     <div class="panel-email">
       <span class="prepend"><i class="icon-user"></i></span>
-      <input name="username" placeholder="账户" type="text" id="username" value="admint" class="inpt">
+      <input name="account" placeholder="账户" type="text" id="username" value="" class="inpt" placeholder="请输入账号">
     </div>
     <div class="panel-password">
         <span class="prepend"><i class="icon-key"></i></span>
-        <input name="password" type="password" placeholder="密码" class="inpt" id="password" value="">
+        <input name="password" type="password" placeholder="密码" class="inpt" id="password" value="" placeholder="请输入密码">
     </div>
+     <div class="panel-password">
+        <input name="verify" type="text" placeholder="验证码" class="verify_code" id="" value="">
+   		<img src="{:U('Advert/Account/verify')}" id="resetVerifyCode"/>
+    </div>
+    <!-- 
     <div style="text-align:center;"><span title="选中后 一月内不用再次登录 网吧或公共计算机请勿选"><input type="checkbox" name="cookietime" value="1" id="cookietime" checked=""><label for="cookietime">记住我</label></span>
       <span style="display:none;" title="选中后 将直接进入商务室 不返回登录前的页面">&nbsp;&nbsp;<input type="checkbox" name="goto" value="1" id="goto" checked=""><label for="goto">进入商务室</label></span>
       <span>&nbsp;&nbsp;<a href="http://www.cwq.com/member/invite.php?user=cwqpapertop&goto=register">立即注册</a></span>
-      <span>&nbsp;&nbsp;<a href="http://www.cwq.com/member/send.php">忘记了密码？</a></span></div>
+      <span>&nbsp;&nbsp;<a href="http://www.cwq.com/member/send.php">忘记了密码？</a></span>
+     </div>
+       -->
       <div class="panel-submit"><input type="submit" name="submit" class="subbtn" value=" 登 录 "></div>
     </form>
 </div>
+
+<!-- 表单内容--媒体主 -->    
+<div class="mlowr form_div" style="display:none;">
+	<form method="post" action="{:U('Media/Account/check_login')}"  onsubmit="return Dcheck();">
+    <input name="forward" type="hidden" id="forward" value="http://www.cwq.com/member/">
+    <div class="blank20"></div>
+    <div class="panel-email">
+      <span class="prepend"><i class="icon-user"></i></span>
+      <input name="account" placeholder="账户" type="text" id="username" value="" class="inpt" placeholder="请输入账号">
+    </div>
+    <div class="panel-password">
+        <span class="prepend"><i class="icon-key"></i></span>
+        <input name="password" type="password" placeholder="密码" class="inpt" id="password" value="" placeholder="请输入密码">
+    </div>
+     <div class="panel-password">
+        <input name="verify" type="text" placeholder="验证码" class="verify_code" id="" value="">
+   		<img src="{:U('Media/Account/verify')}" id="MediaResetVerifyCode"/>
+    </div>
+    <!-- 
+    <div style="text-align:center;"><span title="选中后 一月内不用再次登录 网吧或公共计算机请勿选"><input type="checkbox" name="cookietime" value="1" id="cookietime" checked=""><label for="cookietime">记住我</label></span>
+      <span style="display:none;" title="选中后 将直接进入商务室 不返回登录前的页面">&nbsp;&nbsp;<input type="checkbox" name="goto" value="1" id="goto" checked=""><label for="goto">进入商务室</label></span>
+      <span>&nbsp;&nbsp;<a href="http://www.cwq.com/member/invite.php?user=cwqpapertop&goto=register">立即注册</a></span>
+      <span>&nbsp;&nbsp;<a href="http://www.cwq.com/member/send.php">忘记了密码？</a></span>
+     </div>
+       -->
+      <div class="panel-submit"><input type="submit" name="submit" class="subbtn" value=" 登 录 "></div>
+    </form>
+</div>
+
 <div class="lophone">热线：<script src="{$global_tpl_view.Group_Resource_Path}js/phone.js"></script></div>
 <script type="text/javascript">
+
+var login_system = function () {
+	
+	var login_account = $('.login_account');	//选项
+	var form_div = $('.form_div');
+	login_account.click(function () {
+		var _this = $(this);
+		var _index = _this.index();
+		
+		login_account.removeClass('login_account_select');
+		_this.addClass('login_account_select');
+		
+		form_div.css({display:'none'});
+		form_div.eq(_index).css({display:'block'});
+	});
+	
+}();
+
+
+$('#resetVerifyCode').click(function(){
+	var timenow = new Date().getTime();
+	var _this = $(this);
+	var href = "{:U('Advert/Account/verify')}"+'#'+timenow;
+	_this.attr('src',href);
+});
+
+$('#MediaResetVerifyCode').click(function(){
+	var timenow = new Date().getTime();
+	var _this = $(this);
+	var href = "{:U('Media/Account/verify')}"+'#'+timenow;
+	_this.attr('src',href);
+});
+
+
+
 function check() {
 	var l;
 	var f;
@@ -56,6 +133,8 @@ function check() {
 
 
   </div>
+
+
   <div class="focus_right">
     <div class="focusdiv fr" id="focus_right"><ul class="focus_list"><li><a href="http://www.cwq.com/lucky/" title="" target="_blank"><img class="png" src="{$global_tpl_view.Group_Resource_Path}news_cwq/index_banner4.png"></a></li>
 <li><a href="/Spokesperson/" title="" target="_blank"><img class="png" src="{$global_tpl_view.Group_Resource_Path}news_cwq/index_banner1.png"></a></li>

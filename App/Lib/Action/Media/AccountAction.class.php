@@ -33,6 +33,12 @@ class AccountAction extends MediaBaseAction {
 		echo '1';
 	}
 	
+	//输出验证码
+	public function verify()
+	{
+		import('ORG.Util.Image');
+		Image::buildImageVerify();
+	}
 	
 	//验证注册的短信的模拟方法
 	public function check_phone ($phone) {
@@ -111,11 +117,12 @@ class AccountAction extends MediaBaseAction {
 			 
 			$account = $_POST['account'];					//用户账号
 			$password = $_POST['password'];					//用户密码
-			 
+			$verify = $this->_post('verify');
 			//数据过滤
 			if (Validate::checkNull($account)){echo '账号不能为空!';exit;};
 			if (Validate::checkNull($password)){echo '密码不能为空!';exit;};
 			if (!Validate::check_string_num($account)){echo '账号密码只能输入英文或数字';exit;};
+			if (md5($verify)!=$_SESSION['verify']){ $this->error('验证码错误!'); }
 			 
 			$user_type = C('ACCOUNT_TYPE.Media');
 			//读取用户数据
@@ -159,6 +166,7 @@ class AccountAction extends MediaBaseAction {
     public function logout () {
     	if (session_start()) {
     		parent::del_session('user_info');
+    		$this->success('退出成功',U(GROUP_NAME.'/Account/login'));
     		//$this->success('退出成功',U(GROUP_NAME.'/Login/login'));
     	} 
     }
