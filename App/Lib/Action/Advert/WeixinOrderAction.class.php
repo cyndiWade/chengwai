@@ -93,7 +93,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 			$where['yxd_name'] = array('like','%'.$new_array['search_name'].'%');
 		}
 		import('ORG.Util.Page');
-		$GeneralizeWeixinOrder = D('GeneralizeWeixinOrder');
+		$GeneralizeWeixinOrder = $this->db['GeneralizeWeixinOrder'];
 		$where['users_id'] =  $this->oUser->id;
 		$count      = $GeneralizeWeixinOrder->where($where)->count();
 		$Page       = new Page($count,10);
@@ -120,7 +120,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 		$id = intval($_POST['id']);
 		if($id!='')
 		{
-			$bool = D('GeneralizeWeixinOrder')->del_info($id,$this->oUser->id);
+			$bool = $this->db['GeneralizeWeixinOrder']->del_info($id,$this->oUser->id);
 			switch($bool)
 			{
 				case 1:
@@ -143,7 +143,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 		$id = intval($_POST['id']);
 		if($id!='')
 		{
-			$bool = D('IntentionWeixinOrder')->del_info($id,$this->oUser->id);
+			$bool = $this->db['IntentionWeixinOrder']->del_info($id,$this->oUser->id);
 			switch($bool)
 			{
 				case 1:
@@ -189,7 +189,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 			$where['yxd_name'] = array('like','%'.$new_array['search_name'].'%');
 		}
 		import('ORG.Util.Page');
-		$IntentionWeixinOrder = D('IntentionWeixinOrder');
+		$IntentionWeixinOrder = $this->db['IntentionWeixinOrder'];
 		$where['users_id'] =  $this->oUser->id;
 		$count      = $IntentionWeixinOrder->where($where)->count();
 		$Page       = new Page($count,10);
@@ -490,7 +490,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 	public function zhifu()
 	{
 		$zhifu_id = intval($_POST['id']);
-		$GeneralizeWeixinAccount = D('GeneralizeWeixinAccount')->siteMoney($zhifu_id,$this->oUser->id);
+		$GeneralizeWeixinAccount = $this->db['GeneralizeWeixinAccount']->siteMoney($zhifu_id,$this->oUser->id);
 		if($GeneralizeWeixinAccount==true)
 		{
 			parent::updateMoney($this->oUser->id);
@@ -500,7 +500,25 @@ class WeixinOrderAction extends AdvertBaseAction {
 		}
 	}
 
-
+	//意向单转换推广单
+	public function YxZhuanTg()
+	{
+		if($this->_post)
+		{
+			//获得微信的订单数据
+			$intentval = $this->db['IntentionWeixinOrder']->get_OrderInfo_By_Id(intval($_POST['intention_order_id']),$this->oUser->id);
+			//把微信的订单输入塞入推广表
+			$ien_id = $this->db['GeneralizeWeixinOrder']->insertGeneralize($intentval);
+			//获得ID 存入数据
+			$bool = $this->db['GeneralizeWeixinAccount']->insertNewAccount($ien_id,$_POST['account_ids']);
+			if(bool==true)
+			{
+				parent::callback(C('STATUS_SUCCESS'),'发布成功!');
+			}else{
+				parent::callback(C('STATUS_UPDATE_DATA'),'发布失败!');
+			}
+		}
+	}
 	
 }
 
