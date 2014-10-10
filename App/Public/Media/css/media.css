@@ -47,8 +47,8 @@
 .spantime{ padding-right:33px;}
 .spantime i{ font-style:normal; padding-top:7px; float:left; padding-right:5px;}
 .spantime select{ width:120px; height:30px;}
-.spantime .text{ width:55px; padding-left:5px; height:26px; line-height:26px; background:#fff; border:1px solid #c1bfba;}
-.spantime .text-long{ width:85px; padding-left:5px;}
+.spantime .text{ width:120px; padding-left:5px; height:26px; line-height:26px; background:#fff; border:1px solid #c1bfba;}
+.spantime .text-long{  padding-left:5px;}
 .box03-allorder{ margin-bottom:10px; padding:10px 0;background:#f9f9f6;}
 .box03-allorder em{ padding:10px 5px 0 19px;}
 .box03-allorder .ordernav{ display:block; float:left; height:28px; line-height:28px; border:1px solid #c1bfba; margin-left:-1px; cursor:pointer; width:88px; text-align:center;}
@@ -58,10 +58,10 @@
 .tab01-allorder td{ height:50px; height:50px;}
 .tab01-allorder .even td{ background:#f9f9f6;}
 .tab01-allorder .t1{ padding-left:10px; width:60px;}
-.tab01-allorder .t2{ width:47px;}
-.tab01-allorder .t3{ width:83px;}
+.tab01-allorder .t2{ width:100px;}
+.tab01-allorder .t3{ width:200px;}
 .tab01-allorder .t4{ width:81px;}
-.tab01-allorder .t5{ width:84px;}
+.tab01-allorder .t5{ width:150px;}
 .tab01-allorder .t6{ width:91px;}
 .tab01-allorder .t7{ width:66px;}
 .tab01-allorder .t8{ width:60px;}
@@ -194,7 +194,7 @@
 .top-account-admin ul li{ float:left; width:110px; text-align:center; cursor:pointer; height:48px; line-height:48px; font-weight:bold;}
 .top-account-admin ul li.select{ background:#eb6b4c; color:#fff;}
 .box01-account-admin{ padding-top:10px; height:40px; border-bottom:1px solid #fff;}
-.part01-time .timetext{ padding-left:5px; width:55px;}
+.part01-time .timetext{ padding-left:5px; width:100px;}
 .part01-time i{ margin-right:5px; margin-top:7px;}
 .part01-time select{ width:162px; height:28px; line-height:28px; margin-right:10px;}
 .part01-time .yuan{ padding:5px 0 0 5px;}
@@ -231,6 +231,8 @@
 .tab01-account-admin .last a{ text-decoration:underline;}
 /*添加账号*/
 .batchbox{ width:921px; border:5px solid #636362; display:none; position:absolute; background:#fff; border-radius:3px;}
+.batchbox2{ width:921px; border:5px solid #636362; display:none; position:absolute; background:#fff; border-radius:3px;}
+.batchbox3{ width:921px; border:5px solid #636362; display:none; position:absolute; background:#fff; border-radius:3px;}
 .top-batch{ height:38px; line-height:38px; background:#eb6b4c; width:100%;}
 .top-batch b{ margin-left:15px; font-size:14px; color:#fff}
 .top-batch .close{ top:7px; right:7px;}
@@ -259,7 +261,7 @@
 .righttip{ background:url(../images/right_icon.png) no-repeat; padding:3px 0 3px 20px;}
 .righttip a{ text-decoration:underline; color:#4662b1;}
 .tab01-inten .errortip-pic{ width:100px; float:left;}
-.tab01-inten .file{ width:120px; float:left;}
+.tab01-inten .file{  float:left;}
 .tab01-inten .graybtn{ margin-right:20px;}
 .tab01-inten .trtxt td{ height:25px;}
 .tab01-inten .file{ margin-top:3px;}
@@ -294,3 +296,30 @@
 	line-height:20px;
 	margin-top: 6px;
 }
+/*订单详情*/
+.box01-myorder{ margin-bottom:15px;}
+.box02-myorder .top-myorder{ width:100%; border:none;}
+.top-myorder{height:48px; border:1px solid #e9ece6; background:#eff3f4; line-height:48px; border-bottom:1px solid #eb6b4c; width:998px;}
+.top-myorder b{ padding-left:18px; }
+.tab01-myorder td,.tab01-myorder th{ border:1px solid #e9ece6; height:48px; line-height:48px;}
+.tab01-myorder td{ padding-left:10px;}
+.tab01-myorder th{ width:118px; padding-right:6px; text-align:right; color:#929292;}
+.tab01-myorder .t2{ width:220px;}
+.tab01-myorder .t3{ width:170px;}
+.box01-myorder{ margin-bottom:15px;}
+.box02-myorder .top-myorder{ width:100%; border:none;}
+.searnum{ padding:20px; border-bottom:1px solid #e9ece6; margin-bottom:10px;}
+.searnum b{ font-weight:normal;}
+.tab01-order th{ height:50px; line-height:50px; background:#eff3f4; border-top:1px solid #eb6b4c; }
+.tab01-order .t1{ padding-left:18px; width:65px;}
+.tab01-order .t2{ width:204px;}
+.tab01-order .t3{ width:65px;}
+.tab01-order .t4{ width:56px;}
+.tab01-order .t5{ width:70px;}
+.tab01-order .t6{ width:72px;}
+.tab01-order .t7{ width:83px;}
+.tab01-order .t8{ width:59px;}
+.tab01-order .t9{ width:72px;}
+.tab01-order .t10{ width:109px;}
+.tab01-order .t11{ width:73px;}
+ 

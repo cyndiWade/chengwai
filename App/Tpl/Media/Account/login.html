@@ -1,28 +1,68 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-	<include file="Public:top" />
-	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
-	<title>媒体主_账号登陆</title>
-</head>
+<include file="Public:top" />
+<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/reg.css" type="text/css" />
 <body>
-
-<!-- 头部 -->
-<include file="Public:header" />
-
+<include file="Web:Public:header" />
 <div class="wrap l">
-    <div class="pbd">
-        <div class="area01-mediahelp l">
-            <form action="{:U('Media/Account/check_login')}" method="POST">
-            <p>会员名:<input type="text" name="account" /></p>
-            <p>登入密码:<input type="text" name="password" /></p>
-            <p><input type="submit" value="登入" id="submit"/></p>
-            </form>
-        </div>
-    </div>
+<div class="pbd">
+<div class="location l">
+	当前位置：<a href="index.php">首页</a>  >  <span class="blue">会员登入</span>
 </div>
+<div class="adbox l">
+	<img src="{$global_tpl_view.Group_Resource_Path}images/ad_img02.gif" />
+</div>
+<div class="area01-reg area01-reg-media fl">
+	<div class="title-reg fl"><b>登陆账号</b></div>
+	<div class="regbox l">
+		<div class="left-regbox fl">
+			<form action="{:U('Media/Account/check_login')}" method="POST">
+				<table class="tab01-reg l">
+				  <tr>
+					<td class="t1"><span>会员名：</span></td>
+					<td class="t2"><input type="text" class="text" name="account"/></td>
+				  </tr>
+				  <tr>
+					<td class="t1"><span>登录密码：</span></td>
+					<td class="t2"><input type="password" class="text" name="password"/></td>
+				  </tr>
+				  <tr>
+					<td class="t1"><span>验证码：</span></td>
+					<td class="t2"><input type="text" class="text text-phone" name="verify"/><div style="margin-top:7px;" class="validcode fl"><img src="{:U('Advert/Account/verify')}" id="resetVerifyCode"/></div></td>
+				  </tr>
+				  <tr>
+					<td class="t1"></td>
+					<td class="t2"><input type="submit" class="btn redbtn" value="立即登陆" /></td>
+				  </tr>
+				</table>
+			</form>
+		</div>
+		<div class="right-regbox fl">
+			<div class="part01-regtxt fl">
+				<p>» 忘记了密码？请点击<a href="{:U('Media/Account/changePassword')}">找回密码</a></p>
+			</div>
+			<div class="part02-regtxt fl">
+				请认真、仔细地填写以下信息，严肃的商业信息有助于您获得别人的信任，结交潜在的商业伙伴，获取商业机会！*为必填项
+			</div>
+			<div class="part02-regtxt fl">
+				遇到问题或不明白的地方，请联系客服QQ：<span><img src="{$global_tpl_view.Group_Resource_Path}images/qq.gif" /></span>或拨打电话：020-66695188
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+<include file="Web:Public:footer" />
+<!-- JS底部文件 -->
 <include file="Public:bottom" />
+<!-- 自动引入当前的js文件 -->
 <script type="text/javascript">
+	$('#resetVerifyCode').click(function(){
+		var timenow = new Date().getTime();
+		var _this = $(this);
+		var href = "{:U('Media/Account/verify')}"+'#'+timenow;
+		_this.attr('src',href);
+	});
 </script>
 </body>
 </html>

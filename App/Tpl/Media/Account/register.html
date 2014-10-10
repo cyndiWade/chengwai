@@ -2,16 +2,20 @@
 <html>
 <head>
 	<include file="Public:top" />
-	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
+
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/reg.css" type="text/css" />
+	
 	<title>注册媒体主</title>
 </head>
 <body>
 
-<include file="Public:header" classname="phd-member-media" />
+<include file="Web:Public:header" />
 
 <div class="wrap l">
 <div class="pbd">
-<include file="Public:breadcrumbs" />
+<div class="location l">
+	当前位置：<a href="index.php">首页</a>  >  <span class="blue">会员注册</span>
+</div>
 <div class="adbox l">
 	<img src="{$global_tpl_view.Group_Resource_Path}images/ad_img02.gif" />
 </div>
@@ -23,48 +27,31 @@
 			<table class="tab01-reg l">
 			  <tr>
 				<td class="t1"><span><em>*</em>会员名：</span></td>
-				<td class="t2">
-                    <input type="text" class="text" name="account"/><div class="oktip"></div>
-                    <div class="errortip">会员名不能为空</div>
-                </td>
+				<td class="t2"><input type="text" class="text" name="account" /><div class="oktip"></div><div class="errortip">会员名不能为空</div></td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><em>*</em>登录密码：</span></td>
-				<td class="t2">
-                    <input type="password" class="text" name="password"/><div class="oktip"></div>
-                    <div class="errortip">登入密码不能为空</div>
-                </td>
+				<td class="t2"><input type="password" class="text" name="password"/><div class="oktip"></div><div class="errortip">登入密码不能为空</div></td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><em>*</em>重复输入密码：</span></td>
-				<td class="t2">
-                    <input type="password" class="text" name="password_check"/><div class="oktip"></div>
-                    <div class="errortip">两次密码不一致</div>
-                </td>
+				<td class="t2"><input type="password" class="text" name="password_check"/><div class="oktip"></div><div class="errortip">两次密码不一致</div></td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><em>*</em>手机号码：</span></td>
-				<td class="t2">
-                    <input type="text" class="text" name="iphone"/><div class="oktip"></div>
-                    <div class="errortip">手机号不能为空</div>
-                </td>
+				<td class="t2"><input type="text" class="text" name="iphone" style="width:200px;"/><div class="oktip"></div><div class="errortip">手机号不能为空</div></td>
+			  </tr>
+			   <tr>
+			  	<td class="t1"></td>
+			  	<td class="t2"><div class="phoneclick">发送短信验证码</div></td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><em>*</em>输入手机验证码：</span></td>
-				<td class="t2">
-                    <input type="text" class="text" name="phone_verify"/>
-                    <div class="oktip"></div>
-                    <div class="errortip">手机验证码不能为空</div>
-                </td>
+				<td class="t2"><input type="text" class="text" name="phone_verify"/><div class="oktip"></div><div class="errortip">手机验证码不能为空</div></td>
 			  </tr>
 			  <tr>
 				<td class="t1"></td>
-				<td class="t2">
-                    <div class="agreebox">
-                        <input type="checkbox" class="check fl" checked="checked" />
-                        <em class="fl">同意<a href="#">服务协议</a></em>
-                    </div>
-                </td>
+				<td class="t2"><div class="agreebox"><input type="checkbox" class="check fl" checked="checked" /><em class="fl">同意<a href="#">服务协议</a></em></div></td>
 			  </tr>
 			  <tr>
 				<td class="t1"></td>
@@ -74,8 +61,8 @@
 		</div>
 		<div class="right-regbox fl">
 			<div class="part01-regtxt fl">
-				<p>» 已经是会员？请点击<a href="#">会员登录</a></p>
-				<p>» 忘记了密码？请点击<a href="#">找回密码</a></p>
+				<p>» 已经是会员？请点击<a href="{:U('Media/Account/login')}">会员登录</a></p>
+				<p>» 忘记了密码？请点击<a href="{:U('Media/Account/changePassword')}">找回密码</a></p>
 			</div>
 			<div class="part02-regtxt fl">
 				请认真、仔细地填写以下信息，严肃的商业信息有助于您获得别人的信任，结交潜在的商业伙伴，获取商业机会！*为必填项
@@ -89,14 +76,41 @@
 </div>
 </div>
 
+<include file="Web:Public:footer" />
+
+
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 
 <!-- 自动引入当前的js文件 -->
-<script type="text/javascript" src="{$global_tpl_view.Module_Resource_Path}register.js"></script>
+<script src="App/Public/Global/jquery/jquery-1.9.1.js" type="text/javascript"></script>
+<script type="text/javascript" src="App/Public/Advert/js/check_zhuce.js"></script>
 
-<script type="text/javascript" src="{$global_tpl_view.Global_Resource_Path}jquery/check_zhuce.js"></script>
 <script type="text/javascript">
+	$('input[name="account"]').blur(function()
+	{
+		var account =  $('input[name="account"]').val();
+		if(account != "") 
+		{
+			$.ajax({
+				url : "{:U('Media/Account/checkUserName')}",
+				type : "POST",
+				async : false,
+				cache :　false,
+				data : {account:account},
+				success : function(val){
+					if(val.status=='0')
+					{
+						_this = $('input[name="account"]');
+						_this.attr('class','text text-error');
+						_this.next().hide();
+						_this.next().next().html(val.msg).show();
+					}
+				}
+			});
+		}
+	});
+	
 	$('.btn').click(function()
 	{
 		if(all_submit()===true)
@@ -113,9 +127,9 @@
 				cache :　false,
 				data : {account:account,password:password,password_check:password_check,iphone:iphone,phone_verify:phone_verify},
 				success : function(val){
-					if(val=='ok')
+					if(val.status =='1')
 					{
-						alert('通过');
+						location.href="{:U('Media/EventOrder/index')}";
 					}else{
 						alert(val['msg']);
 					}
@@ -123,24 +137,111 @@
 			});
 		}
 	});
-	$('input[name="iphone"]').focusout(function(){
+/*	$('.phoneclick').click(function()
+	{
 		var _this = $(this);
+		var isPhoneReg = false;
+		if(phone(_this.prev().prev().val())===true)
+		{
+			
+			//发送验证码
+			if(isPhoneReg)
+			{
+				$.ajax({
+					url : "{:U('Api/SendMsg/media_register_send')}",
+					type : "POST",
+					async : false,
+					cache :　false,
+					data : {telephone:_this.prev().prev().val()},
+					success : function(value)
+					{
+						_this.prev().show();
+						_this.next().hide();
+					}
+				});
+			}
+			else
+			{
+				_this.prev().hide();
+				_this.next().html('该手机已被使用').show();
+			}
+		}
+		else
+		{			 
+			if(_this.prev().prev().val()!='')
+			{
+				_this.prev().prev().attr('class','text text-error');
+				_this.prev().hide();
+				_this.next().html('手机号格式不正确！').show();
+			}else{
+				_this.next().html('手机号不能为空！').show();
+			}
+		}
+	});*/
+	
+	function settime(){
+		var _this = $('.phoneclick');
+		var thist = parseInt(_this.html().substr(4,2));
+		var nextt = thist - 1 ;
+		if(nextt==0)
+		{
+			_this.html('发送短信验证码');
+			clearTimeout(t);
+		}else{
+			_this.html('倒计时 '+nextt +' 秒');
+			var t = setTimeout(settime,1000);
+		}
+	}
+	
+	$('.phoneclick').click(function(){
+		var isPhoneReg = false;
+		var phone_this = $(this);
+		var _this = $('input[name="iphone"]');
 		if(phone(_this.val())===true)
 		{
-			_this.attr('class','text');
-			_this.next().next().html('发送手机验证码中...').show();
+			//电话是否可以注册
 			$.ajax({
-				url : "{:U('Api/SendMsg/media_register_send')}",
+				url : "{:U('Media/Account/checkPhone')}",
 				type : "POST",
 				async : false,
 				cache :　false,
 				data : {telephone:_this.val()},
-				success : function(value)
+				success : function(val)
 				{
-					_this.next().show();
-					_this.next().next().hide();
+					if(val.status=='1')
+					{
+						isPhoneReg = true;
+					}
 				}
 			});
+		if(isPhoneReg)	
+		{
+			if(phone_this.html()=='发送短信验证码')
+			{
+				_this.attr('class','text');
+				_this.next().next().html('发送手机验证码中...').show();
+				phone_this.html('倒计时 '+ '30' +' 秒');
+				settime();
+				$.ajax({
+					url : "{:U('Api/SendMsg/advert_register_send')}",
+					type : "POST",
+					async : false,
+					cache :　false,
+					data : {telephone:_this.val()},
+					success : function(value)
+					{
+						_this.next().show();
+						_this.next().next().hide();
+					}
+				});
+			}
+		}
+		else
+		{
+			_this.next().hide();
+			_this.next().next().html('该手机已被使用').show();
+		}
+			
 		}else{
 			if(_this.val()!='')
 			{
