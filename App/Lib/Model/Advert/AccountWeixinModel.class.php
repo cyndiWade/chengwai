@@ -399,19 +399,12 @@
 
 
 		//获得微信的价格
-		public function getWXMoney($type,$account_id)
+		public function getWXMoney($account_id)
 		{
 			if($account_id!='')
 			{
-				//硬广为1 软广为2
-				switch ($type) {
-					case 1:
-
-					break;
-					case 2:
-
-					break;
-				}
+				$value = $this->where(array('id'=>$account_id))->field('ck_money')->find();
+				return $value['ck_money'];
 			}
 		}
 

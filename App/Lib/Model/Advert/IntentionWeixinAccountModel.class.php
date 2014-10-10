@@ -15,19 +15,25 @@
 			$arr['users_id'] = $id;
 			//活动订单ID
 			$arr['generalize_id'] = $new_array['order_id'];
-			//D('IntentionWeixinOrder')->where(array('id'=>$new_array['order_id']))->field('')
 			//微博账号
 			$account_id = explode(',', $new_array['account_ids']);
 			foreach($account_id as $value)
 			{
 				$arr['account_id'] = $value;
 				if (parent::get_one_data($arr) == false) {
+					//取得参考价格
+					$arr['price'] = D('AccountWeixin')->getWXMoney($value);
 					$status = $this->add($arr);
 				}
-				
 			}
-
-			return $status;
+			$update['all_price'] = $this->where(array('generalize_id'=>$new_array['order_id']))->sum('price');
+			$bool = D('IntentionWeixinOrder')->where(array('id'=>$new_array['order_id']))->save($update);
+			if($bool)
+			{
+				return true;
+			}else{
+				return false;
+			}
 		}
 
 		//获得账号数量
