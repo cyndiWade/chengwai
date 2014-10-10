@@ -89,40 +89,4 @@ class AccountNewsModel extends MediaBaseModel
         $count = $this->where($where)->count();
         return array('list' => $list, 'count' => $count);
     }
-
-
-    /**
-     * 根据会员Id获取帐号列表
-     * 
-     * @param  int 		$user_id 会员ID
-     * @param  array 	$where 其他条件
-     * 
-     * @author bumtime
-     * @date   2014-10-07
-
-     * @return array	
-     */
-    public function getListsByUserID($user_id,  $where = array())
-    {
-    	$where["users_id"] = $user_id ;
-    	$list = $this->where($where)->getField("id, account_name");
-    	return $list;
-    }
-    
-    /**
-     * 检查账号是否属于该会员
-     * 
-     * @param  int 	$account_id 媒体账号ID
-     * @param  int 	$user_id 	会员ID
-     * 
-     * @author bumtime
-     * @date   2014-10-07
-
-     * @return bool	
-     */
-    public function checkAccountByUserId($account_id, $user_id)
-    {
-    	$users_id_new = $this->where(array("id"=>$account_id))->getField("users_id");
-    	return $users_id_new == $user_id ? true : false;
-    }
 }

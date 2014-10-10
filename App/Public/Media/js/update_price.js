@@ -8,7 +8,7 @@ define(function(require, exports){
 
 
     function initBind(grid){
-        $('.priceBox:not(.notReduceOrRaise)').live('click',function(e){
+        $('.priceBox:not(.notReduceOrRaise)').on('click',function(e){
             var priceEl = $(this);
             var priceEditEl = priceEl.next('textarea');
             var priceValue = string2float(priceEl.text());
@@ -19,7 +19,7 @@ define(function(require, exports){
             priceEditEl.css({'display':'inline-block','height':'18px','verticalAlign':'middle'}).focus();
         })
 
-        $('.pirceEditBox').live('blur',function(e){
+        $('.pirceEditBox').on('blur',function(e){
 
             var priceEditEl = $(this);
             var priceEl = priceEditEl.prev('.priceBox');

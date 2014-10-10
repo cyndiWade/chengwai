@@ -1,5 +1,5 @@
 define(function(require, exports) {
-    // var detail = require('./detail.js');
+    var detail = require('./detail.js');
 
     // var weibo_type_weixin = 9;
     var weibo_type_weixin = 3;
@@ -1175,7 +1175,7 @@ define(function(require, exports) {
                         } else if (data == "1") {
                             return "是";
                         } else {
-                            var a = $("<a id='js_show_allow_order' data-accountId = " + row.cells.account_id + " class='blue'></a>");
+                            var a = $("<a id='js_show_allow_order' class='blue' data-accountId = " + row.cells.account_id + " class='blue'></a>");
 
                             a.attr({
                                 href: "javascript: void(0)"
@@ -1197,7 +1197,7 @@ define(function(require, exports) {
                             return "是";
                         } else {
                             var div = $("<div></div>");
-                            var a = $("<a id='js_show_online' data-accountId = " + row.cells.account_id + "></a>");
+                            var a = $("<a id='js_show_online' class='blue' data-accountId = " + row.cells.account_id + "></a>");
                             a.attr({
                                 href: "javascript: void(0)"
                             }).text("详情");
