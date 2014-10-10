@@ -11,13 +11,13 @@ seajs.config({
         doT: 'doT_cmd.js',
         seajsText: 'seajs-text.js',
         seajsCss: 'seajs-css.js',
-        knockout: 'knockout_cmd.js',
-        plupload: 'plupload_cmd.js',
-        knockout_plupload: 'knockout/knockout_plupload.js',
-        knockout_placeholder: 'knockout/knockout_placeholder.js',
-        knockout_mapping: 'knockout/mapping_debug.js',
-        knockout_validation: 'knockout/knockout.validation.js',
+        knockout: 'knockout/knockout_cmd.js',
+        'knockout_plupload': 'knockout/knockout_plupload.js',
+        'knockout_placeholder': 'knockout/knockout_placeholder.js',
+        'knockout_mapping': 'knockout/mapping_debug.js',
+        'knockout_validation': 'knockout/knockout.validation.js',
         plupload_full: 'plupload.full.js',
+        plupload: 'plupload_cmd.js',
     }
 });
 /**
