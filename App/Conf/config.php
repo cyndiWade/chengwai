@@ -200,11 +200,13 @@ $custom= array (
 			),
 			4=>array(
 				'status'=>4,
-				'explain'=>'媒体主拒绝'	//这里拒绝后，要把钱从冻结资金中打回客户的资金池中
+				'explain'=>'媒体主拒绝',		//这里拒绝后，要把钱从冻结资金中打回客户的资金池中
+				'explain_yxd'=>'媒体主拒绝'	
 			),
 			5=>array(
 				'status'=>5,			//媒体主确认后，订单的状态
-				'explain'=>'执行中'
+				'explain'=>'执行中',
+				'explain_yxd'=>'媒体主确认',
 			),
 			6=>array(
 				'status'=>6,			//媒体主执行完成后的状态
@@ -214,6 +216,10 @@ $custom= array (
 				'status'=>7,			//确认完成后的状态
 				'explain'=>'确认完成'
 			),	
+			8=>array(
+				'status'=>8,
+				'explain_yxd'=>'已创建推广单'	//意向单不可再次点击
+			),
 		),
 	
 		//大导航分类ID集合
