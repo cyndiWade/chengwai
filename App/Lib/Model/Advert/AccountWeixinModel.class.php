@@ -396,4 +396,24 @@
 				}
 			}
 		}
+
+
+		//获得微信的价格
+		public function getWXMoney($type,$account_id)
+		{
+			if($account_id!='')
+			{
+				//硬广为1 软广为2
+				switch ($type) {
+					case 1:
+
+					break;
+					case 2:
+
+					break;
+				}
+			}
+		}
+
+
 	}

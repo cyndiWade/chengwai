@@ -15,6 +15,7 @@
 			$arr['users_id'] = $id;
 			//活动订单ID
 			$arr['generalize_id'] = $new_array['order_id'];
+			//D('IntentionWeixinOrder')->where(array('id'=>$new_array['order_id']))->field('')
 			//微博账号
 			$account_id = explode(',', $new_array['account_ids']);
 			foreach($account_id as $value)
