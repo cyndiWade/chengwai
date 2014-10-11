@@ -119,9 +119,9 @@ class AccountAction extends MediaBaseAction {
 			$password = $_POST['password'];					//用户密码
 			$verify = $this->_post('verify');
 			//数据过滤
-			if (Validate::checkNull($account)){echo '账号不能为空!';exit;};
-			if (Validate::checkNull($password)){echo '密码不能为空!';exit;};
-			if (!Validate::check_string_num($account)){echo '账号密码只能输入英文或数字';exit;};
+			if (Validate::checkNull($account)){ $this->error("账号不能为空");};
+			if (Validate::checkNull($password)){$this->error("密码不能为空");};
+			if (!Validate::check_string_num($account)){$this->error("账号密码只能输入英文或数字");};
 			if (md5($verify)!=$_SESSION['verify']){ $this->error('验证码错误!'); }
 			 
 			$user_type = C('ACCOUNT_TYPE.Media');

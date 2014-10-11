@@ -450,36 +450,41 @@ class SocialAccountAction extends MediaBaseAction {
                         case 3:
                             // 微信公众号
                             // $insertId = $this->db['AccountWeixin']->addBatchAccount($insertData);
+                           
                             $weixinModel = $this->db['AccountWeixin'];
+                           
                             for ($i = 1; $i <= $len; $i++) {
                                 //通过循环得到EXCEL文件中每行记录的值
-                                $temp = explode(',', iconv('GBK', 'UTF-8', $temp[$i]));
-                                $accountName    = setString($temp[0]);
-                                $weixinCode     = setString($temp[1]);
-                                $fansNums       = intval($temp[2]);
-                                $weeklyReadAvg  = intval($temp[3]);
-                                $malePrecent    = floatval($temp[4]);
-                                $femalePrecent  = floatval($temp[5]);
-                                $price          = floatval($temp[6]);
-                                $faceUrl        = setString(trim($temp[7]));
-                                $qrCode         = setString(trim($temp[8]));
-                                $fansShot       = setString(trim($temp[9]));
+                                $temp_info = explode(',', iconv('GBK', 'UTF-8', $temp[$i]));
+                               
+                                $accountName    = setString($temp_info[0]);
+                                $weixinCode     = setString($temp_info[1]);
+                                $fansNums       = intval($temp_info[2]);
+                                $weeklyReadAvg  = intval($temp_info[3]);
+                                $malePrecent    = floatval($temp_info[4]);
+                                $femalePrecent  = floatval($temp_info[5]);
+                                $price          = floatval($temp_info[6]);
+                                $faceUrl        = setString(trim($temp_info[7]));
+                                $qrCode         = setString(trim($temp_info[8]));
+                                $fansShot       = setString(trim($temp_info[9]));
                                 
                                 $malePrecent = ($malePrecent <= 0 ? 0 : ($malePrecent >= 101) ? 100 : $malePrecent);
                                 $lessPrecent = 100 - $malePrecent;
                                 $femalePrecent = $femalePrecent <= $lessPrecent ? $femalePrecent : $lessPrecent;
-                                
+                               
                                 if (empty($accountName) || empty($price)
                                 || !Validate::checkAccount($weixinCode)
-                                || !Validate::checkUrl($faceUrl)
-                                || !Validate::checkUrl($qrCode)
-                                || !Validate::checkUrl($fansShot)) {
+                                || (!empty($qrCode) && !Validate::checkUrl($faceUrl))
+                                || (!empty($qrCode) && !Validate::checkUrl($qrCode))
+                                || (!empty($qrCode) &&!Validate::checkUrl($fansShot)))
+                                {
                                     continue;
                                 }
                                 $where = array(
                                     'account_name'  => $accountName,
                                     'is_del'        => 0
                                 );
+                                
                                 $exists = $weixinModel->getAccountInfo($where, 'id');
                                 if ($exists) {
                                     continue;

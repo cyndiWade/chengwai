@@ -15,7 +15,7 @@ class GeneralizeFilesModel extends MediaBaseModel
 
      * @return bool	
      */
-    public function addFinishImg($arryInfo)
+    public function addFinish($arryInfo)
     {
     	$users_id_new = $this->add($arryInfo);
     	return $users_id_new;

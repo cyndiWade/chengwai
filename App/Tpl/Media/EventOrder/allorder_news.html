@@ -64,10 +64,10 @@
 				<td class="t6">{$vo.audit_status|getAccountStatus}</td>
 				<td class="last"><div class="ctrl"><span><a href="{:U('Media/EventOrder/showNews?id='.$vo[generalize_id])}">查看</a></span>
 				<if condition='$vo.audit_status eq 3'>
-				 | <a href="javascript:;" class="action" data-order_id="{$vo.id}" type="4"><span>拒单</span></a> 
-				 | <a href="javascript:;" class="action" data-order_id="{$vo.id}" type="5"><span>去执行</span></a>  
+				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="4"><span>拒单</span></a> 
+				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="5"><span>去执行</span></a>  
 				 <elseif condition='$vo.audit_status eq 5'/> 
-				 | <a href="javascript:;" class="action" data-order_id="{$vo.id}" type="6"><span>执行完成</span></a> 
+				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="6"><span>执行完成</span></a> 
 				 </if>
 				 </div></td>
 			  </tr>
@@ -117,8 +117,8 @@
 	<form  action="{:U('Media/EventOrder/setFinishiedStatus')}" method="POST" enctype="multipart/form-data"  id="frm2">
 		<table class="tab01-inten l table-xwmt">  
 		  <tr>
-			<td class="t1"><span><i>*</i><strong>上传媒体截图：</strong></span></td>
-			<td class="t2"><input class="file fl" type="file" name="upload_info"></td>
+			<td class="t1"><span><i>*</i><strong>执行后反馈链接：</strong></span></td>
+			<td class="t2"><input class="text" type="text" name="link_url"></td>
 		  </tr>
 		  <tr>
 			<td class="t1"></td>
@@ -163,11 +163,12 @@
 $(function(){
 	$('.tab01-allorder tr:even').addClass('even');
 	$("a[class='action']").click(function(){
-		
-		id		= $(this).attr('data-order_id');
+		id			= $(this).attr('data-account_id');
+		order_id	= $(this).attr('order_id');
 		 
 		status	= $(this).attr('type');
 		$("input[name='a_id']").val(id); 
+		$("input[name='order_id']").val(order_id); 
  
 		if(status == 4)
 		{

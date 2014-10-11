@@ -120,7 +120,7 @@ class Validate { //表单验证
  	 * 验证URL
 	 * @return boolean						
 	 */
-	public function checkUrl($url)
+	static public function checkUrl($url) 
     {
         if (function_exists('filter_var')) {
             $m = filter_var($url, FILTER_VALIDATE_URL);

@@ -325,14 +325,14 @@ class EventOrderAction extends MediaBaseAction {
      * @date   2014-10-03
      * @return void
      */
-	public function showWeixing()
+	public function showWeixin()
     {
     	 parent::data_to_view(array(
 			//二级导航
 			'secondSiderbar' => array(
 				'待执行订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/index')),
 				'微博订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorder')),
-				'微信订单'		=> array('select' => true, 'url' => U('/Media/EventOrder/allorderWeixing')),
+				'微信订单'		=> array('select' => true, 'url' => U('/Media/EventOrder/allorderWeixin')),
 				'新闻媒体订单'	=> array('select' => false, 'url' => U('/Media/EventOrder/allorderNews'))
 			)
 		)); 
@@ -537,7 +537,7 @@ class EventOrderAction extends MediaBaseAction {
     
     
     /**
-     * 订单状态---拒绝订单 执行订单
+     * 订单状态---拒绝订单（status==4） 执行订单（status==5）
      * 
      * @author bumtime
      * @date   2014-10-04
@@ -545,25 +545,29 @@ class EventOrderAction extends MediaBaseAction {
      */
 	public function setAujectStatus()
     {
-    	$id 		= $this->_post("a_id", "intval");
-    	$order_id 	= $this->_post("order_id", "intval");
-    	$status 	= $this->_post("status", "intval");
-    	$type		= $this->_post('type');
-   		$reason 	= $this->_post("reason");
+    	$id 		= I("a_id", 0,"intval");
+    	$order_id 	= I("order_id", 0, "intval");
+    	$status 	= I("status", 0, "intval");
+    	$type		= I('type');
+   		$reason 	= I("reason");
+   		$typeTip	= "";
    		
    		switch ($type)
    		{
    			case 'weibo':
    				$GeneralizeAccount	= D('GeneralizeAccount');
     			$mediaObject		= D('AccountWeibo');
+    			$typeTip			= 2;
     			break;
    			case 'weixin':
    				$GeneralizeAccount	= D('GeneralizeWeixinAccount');
     			$mediaObject		= D('AccountWeixin');
+    			$typeTip			= 4;
     			break; 
    			case 'news':
    				$GeneralizeAccount	= D('GeneralizeNewsAccount');
     			$mediaObject		= D('AccountNews');
+    			$typeTip			= 1;
     			break;    			   			
    		}
 
@@ -579,6 +583,19 @@ class EventOrderAction extends MediaBaseAction {
 		//改变状态	
     	if($id)
     	{
+    		//拒绝订单
+    		if(4 == $status)
+    		{
+	    		$arryOrderLog = array();
+	    		$arryOrderLog['user_id'] 		= $this->oUser->id;
+	    		$arryOrderLog['order_id']		= $order_id;
+	    		$arryOrderLog['account_id']		= $id;
+	    		$arryOrderLog['type']			= $typeTip;
+	    		$arryOrderLog['content']		= $reason;
+	    		$arryOrderLog['create_time']	= time();
+	    		D('OrderLog')->orderLogAdd($arryOrderLog);
+    		}
+    		    		
     		$GeneralizeAccount->setAccountStatus($id, $status);
 			$this->success('处理成功');
     	}
@@ -597,41 +614,85 @@ class EventOrderAction extends MediaBaseAction {
      */
 	public function setFinishiedStatus()
     {
-    	$id 		= $this->_post("a_id", "intval");
-    	$order_id 	= $this->_post("order_id", "intval");
-    	$status 	= $this->_post("status", "intval");
+    	$id 		= I("a_id", 0, "intval");
+    	$order_id 	= I("order_id", 0, "intval");
+    	$status 	= I("status", 0, "intval");
+    	$type		= I('type');
+    	$link_url	= I('link_url');
+    	$flat		= "";
+
+    	switch ($type)
+   		{
+   			case 'weibo':
+   				$GeneralizeAccount	= D('GeneralizeAccount');
+    			$mediaObject		= D('AccountWeibo');
+    			$fileObject			= M('GeneralizeFiles');
+    			$flat				= "show";
+    			break;
+   			case 'weixin':
+   				$GeneralizeAccount	= D('GeneralizeWeixinAccount');
+    			$mediaObject		= D('AccountWeixin');
+    			$fileObject			= M('GeneralizeWeixinFiles');
+    			$flat				= "showWeixin";
+    			break; 
+   			case 'news':
+   				$GeneralizeAccount	= D('GeneralizeNewsAccount');
+    			$mediaObject		= D('AccountNews');
+    			$fileObject			= M('GeneralizeNewsFiles');
+    			$flat				= "showNews";
+    			break;    			   			
+   		}
    		
+   		import("@.Tool.Validate");
+   		if( !Validate::checkUrl($link_url))
+   		{
+   			$this->error('链接格式不对！');
+   		}
    		
-    	$GeneralizeAccount	= D('GeneralizeAccount');
     	$media_Info = $GeneralizeAccount->getInfoById($id, "account_id");
     	//检查是否是本人
-    	if(!D('AccountWeibo')->checkAccountByUserId($media_Info['account_id'], $this->oUser->id))
+    	if(!$mediaObject ->checkAccountByUserId($media_Info['account_id'], $this->oUser->id))
     	{
-    		$this->error('操作非法，该账号不属于您旗下！', U('Media/EventOrder/show?id='.$order_id));
+    		$this->error('操作非法，该账号不属于您旗下！');
     	}
-    	
-    	$upload_dir = C('UPLOAD_DIR');
-		$dir = $upload_dir['web_dir'].$upload_dir['image']."screenshot/";
-		$status_content = parent::upload_file($_FILES['upload_info'], $dir, 2048000);
-		if($status_content['status']==true)
+    	//微信需要上传截图
+    	if('weixin' ==  $type )
+    	{
+	    	$upload_dir = C('UPLOAD_DIR');
+			$dir = $upload_dir['web_dir'].$upload_dir['image']."screenshot/";
+			$status_content = parent::upload_file($_FILES['upload_info'], $dir, 2048000);
+			if($status_content['status'] == true)
+			{
+				$pic_url = $status_content['info'][0]['savename'];
+				
+				$data['users_id']				= $this->oUser->id;
+				$data['generalize_order_id']	= $order_id;
+				$data['account_id']				= $id;
+				$data['type']					= 3;
+				$data['url']					= $pic_url;
+				$data['link_url']				= $link_url;
+				$fileObject->add($data);
+			}
+		}
+		//新闻、微博不需要截图
+		else 
 		{
-			$pic_url = $status_content['info'][0]['savename'];
-			
-			$data['users_id']				= $this->oUser->id;
-			$data['generalize_order_id']	= $order_id;
-			$data['type']					= 3;
-			$data['url']					= $pic_url;
-			D('GeneralizeFiles')->addFinishImg($data);
+				$data['users_id']				= $this->oUser->id;
+				$data['generalize_order_id']	= $order_id;
+				$data['account_id']				= $id;
+				$data['type']					= 3;
+				$data['link_url']				= $link_url;
+				$fileObject->add($data);
 		}
 		
     	if($id)
     	{
     		$GeneralizeAccount->setAccountStatus($id, $status);
-			$this->success('处理成功', U('Media/EventOrder/show?id='.$order_id));
+			$this->success('处理成功', U('Media/EventOrder/'.$flat.'?id='.$order_id));
     	}
     	else 
     	{
-    		$this->error('处理失败', U('Media/EventOrder/show?id='.$order_id));
+    		$this->error('处理失败');
     	} 
     }
 }

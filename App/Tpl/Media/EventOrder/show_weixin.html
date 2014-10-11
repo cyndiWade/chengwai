@@ -132,7 +132,11 @@
 	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>执行完成</b></div>
 	<div class="mid-batch pr l">
 	<form  action="{:U('Media/EventOrder/setFinishiedStatus')}" method="POST" enctype="multipart/form-data"  id="frm2">
-		<table class="tab01-inten l table-xwmt">  
+		<table class="tab01-inten l table-xwmt">
+		  <tr>
+			<td class="t1"><span><i>*</i><strong>执行后反馈链接：</strong></span></td>
+			<td class="t2"><input class="text" type="text" name="link_url"></td>
+		  </tr>  
 		  <tr>
 			<td class="t1"><span><i>*</i><strong>上传媒体截图：</strong></span></td>
 			<td class="t2"><input class="file fl" type="file" name="upload_info"></td>
