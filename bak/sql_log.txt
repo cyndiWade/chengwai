@@ -1,1 +1,20 @@
-ALTER TABLE `app_generalize_files` CHANGE `type` `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '�ϴ��ļ����� 1��ֱ����ͼ 2���ϴ�֤�� 3��ִ����ɵĽ�ͼ�ϴ�';
+ALTER TABLE `app_generalize_files` CHANGE `type` `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '�ϴ��ļ����� 1��ֱ����ͼ 2���ϴ�֤�� 3��ִ����ɵĽ�ͼ�ϴ�';
+
+
+2014/10/11  18:15  张炜林——SQL修改记录
+
+	ALTER TABLE  `app_generalize_files` ADD  `link_url` VARCHAR( 255 ) NOT NULL DEFAULT  '' COMMENT  '推广后的链接地址' AFTER  `url`
+	
+	ALTER TABLE  `app_generalize_weixin_files` ADD  `link_url` VARCHAR( 255 ) NOT NULL DEFAULT  '' COMMENT  '推广后的链接地址' AFTER  `url`
+	
+	CREATE TABLE  `chengwai`.`app_generalize_news_files` (
+	`id` INT( 10 ) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT  '主键',
+	 `users_id` INT( 10 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '所属用户',
+	 `generalize_order_id` INT( 10 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '订单ID',
+	 `account_id` INT( 10 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '媒体账号ID',
+	 `type` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '上传文件类型 1是直发配图 2是上传证明 3执行完成截图（执行完成截图的，要填写account_id）',
+	 `url` VARCHAR( 255 ) NOT NULL DEFAULT  '' COMMENT  'URL地址',
+	 `link_url` VARCHAR( 255 ) NOT NULL DEFAULT  '' COMMENT  '推广后的链接地址',
+	 `is_del` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '是否删除：0否，1是',
+	PRIMARY KEY (  `id` )
+	) ENGINE = MYISAM DEFAULT CHARSET = utf8 COMMENT =  ''新闻附件文件表';
