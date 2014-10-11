@@ -19,8 +19,9 @@ System.prototype.validateImageFn = function () {
 /**
  * 同步模式AJAX提交
  */
-System.prototype.ajax_post_setup = function ($url,$data,$type = 'JSON') {
-	$.ajaxSetup({
+System.prototype.ajax_post_setup = function ($url,$data,$type) {
+	$type = $type || 'JSON';
+    $.ajaxSetup({
 		async: false,//async:false 同步请求  true为异步请求
 	});
 	var result = false;

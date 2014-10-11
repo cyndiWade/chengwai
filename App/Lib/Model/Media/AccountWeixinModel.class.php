@@ -103,6 +103,7 @@ class AccountWeixinModel extends MediaBaseModel
         import("@.ORG.Util.CurlRequest");
         $ch = new CurlRequest($url);
         $apiInfos = json_decode($ch->get());
+        $apiInfos = $apiInfos ? objectToArray($apiInfos) : array();
         return $apiInfos;
     }
 

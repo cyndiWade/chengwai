@@ -553,5 +553,26 @@ function is_phone($phone_num){
   	}
   	return $new;
   }
+  
+
+    
+/**
+ * 对象转成数组
+ * @param Object $obj
+ * @return Array
+ */
+ function objectToArray($obj){
+    $arrObj = is_object($obj) ? get_object_vars($obj) : $obj;
+    $arr = array();
+
+    if(!empty($arrObj))
+    {
+        foreach ($arrObj as $key => $val){
+            $val = (is_array($val) || is_object($val)) ? objectToArray($val) : $val;
+            $arr[$key] = $val;
+        }
+    }
+    return $arr;
+}
 
 ?>
