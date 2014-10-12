@@ -56,6 +56,18 @@ class MoneyAction extends AdvertBaseAction {
 	
 	//流水订单
 	public function record () {
+		import('ORG.Util.Page');
+		$fund = $this->db['Fund'];
+		$where['users_id'] =  $this->oUser->id;
+		$count      = $fund->where($where)->count();
+		$Page       = new Page($count,10);
+		$show       = $Page->show();
+		$list = $fund->where($where)->limit($Page->firstRow.','.$Page->listRows)->order('id desc')
+		->field('shop_number,money,time,member_info')->select();
+		parent::data_to_view(array(
+			'page' => $show ,
+			'list' => $list
+		));
 		$this->display();
 	}
 

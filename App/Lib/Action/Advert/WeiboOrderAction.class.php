@@ -94,7 +94,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 			$where['hd_name'] = array('like','%'.$new_array['search_name'].'%');
 		}
 		import('ORG.Util.Page');
-		$GeneralizeOrder = D('GeneralizeOrder');
+		$GeneralizeOrder = $this->db['GeneralizeOrder'];
 		$where['users_id'] =  $this->oUser->id;
 		$count      = $GeneralizeOrder->where($where)->count();
 		$Page       = new Page($count,10);
@@ -124,7 +124,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 	public function del_caogen()
 	{
 		$del_id = intval($_POST['id']);
-		$GeneralizeOrder = D('GeneralizeOrder');
+		$GeneralizeOrder = $this->db['GeneralizeOrder'];
 		$bool = $GeneralizeOrder->del_info($del_id,$this->oUser->id);
 		switch($bool)
 		{
@@ -144,7 +144,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 	public function del_mingren()
 	{
 		$del_id = intval($_POST['id']);
-		$IntentionWeiboOrder = D('IntentionWeiboOrder');
+		$IntentionWeiboOrder = $this->db['IntentionWeiboOrder'];
 		$bool = $IntentionWeiboOrder->del_info($del_id,$this->oUser->id);
 		switch($bool)
 		{
@@ -200,7 +200,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 			$where['yxd_name'] = array('like','%'.$new_array['search_name'].'%');
 		}
 		import('ORG.Util.Page');
-		$IntentionWeiboOrder = D('IntentionWeiboOrder');
+		$IntentionWeiboOrder = $this->db['IntentionWeiboOrder'];
 		$where['users_id'] =  $this->oUser->id;
 		$count      = $IntentionWeiboOrder->where($where)->count();
 		$Page       = new Page($count,5);
