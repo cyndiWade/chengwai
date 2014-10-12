@@ -23,8 +23,11 @@
 			$now_val['zfnr_type'] = $new_post['zfnr_type'];
 			$now_val['wa_url_status'] = $new_post['wa_url_status'];
 			$now_val['start_time'] = strtotime($new_post['start_time']);
+			$now_val['over_time'] = strtotime($new_post['over_time']);
 			$now_val['sfyq'] = $new_post['sfyq']=='' ? 0 : 1;
 			$now_val['bz_info'] = $new_post['bz_info'];
+			$now_val['dx_status'] = $new_post['dx_status'];
+			$now_val['dx_phone'] = $new_post['dx_phone'];
 			$now_val['create_time'] = time();
 			return $this->add($now_val);
 		}
