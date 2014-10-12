@@ -468,7 +468,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 			
 			foreach ($account_order_list as $key=>$val) {
 				//关联表订单状态
-				$account_order_list[$key]['g_status_explain'] = $Account_Order_Status[$val['g_audit_status']]['explain'];
+				$account_order_list[$key]['g_status_explain'] = $Account_Order_Status[$val['g_audit_status']]['explain_yxd'];
 				
 				//是否显示确认按钮
 				if ($val['g_audit_status'] == $Account_Order_Status[6]['status']) {
@@ -478,9 +478,14 @@ class WeiboOrderAction extends AdvertBaseAction {
 				//统计订单总金额
 				$extend_order_info['sum_money'] += $val['g_price'];
 				
-				//统计据单数
+				//统计拒绝单数
 				if ($val['g_audit_status'] == $Account_Order_Status[4]['status']) {
 					$extend_order_info['jy_order_sum'] += 1;
+				}
+				
+				//显示创建活动按钮
+				if ($val['g_audit_status'] == $Account_Order_Status[5]['status']) {
+					$account_order_list[$key]['create_order_status'] = true;
 				}
 			}
 			

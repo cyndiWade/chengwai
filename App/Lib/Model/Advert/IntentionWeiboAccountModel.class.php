@@ -65,7 +65,7 @@
 		public function get_account_order ($intention_id) {
 			$where['g.intention_id'] = $intention_id;
 			//$field = 'g.id AS g_id,g.price AS g_price,g.audit_status AS g_audit_status,a.*';
-			$field ='g.id AS g_id,g.audit_status AS g_audit_status,a.*';
+			$field ='g.id AS g_id,g.audit_status AS g_audit_status,g.price as g_price,a.*';
 			$data = $this->field($field)
 			->table($this->prefix.'intention_weibo_account AS g')
 			->join($this->prefix.'account_weibo AS a ON g.account_id = a.id')

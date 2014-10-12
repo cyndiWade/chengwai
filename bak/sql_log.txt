@@ -22,4 +22,5 @@ ALTER TABLE `app_generalize_files` CHANGE `type` `type` TINYINT(1) UNSIGNED NOT 
 
 2014/10/12  13:24 张炜林修改数据表
 ALTER TABLE  `app_generalize_order` ADD  `wa_url_status` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '文案是否含链接:1包含、0不包含' AFTER  `zw_info`
-	
+
+ALTER TABLE  `app_account_weibo` ADD  `ck_money` DECIMAL( 9, 2 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '名人参考价格' AFTER  `dj_money`
