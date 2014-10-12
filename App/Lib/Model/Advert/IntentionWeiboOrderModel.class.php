@@ -20,7 +20,7 @@
 			$add['zfy_type'] = $new_array['zfy_type'];
 			$add['zw_info'] = $new_array['zw_info'];
 			$add['zfnr_type'] = $new_array['zfnr_type'];
-			$add['wasfbalj'] = $new_array['wasfbalj'];
+			//$add['wasfbalj'] = $new_array['wasfbalj'];
 			$add['wa_url_status'] = $new_array['wa_url_status'];
 			$add['start_time'] = strtotime($new_array['start_time']);
 			$add['over_time'] = strtotime($new_array['over_time']);

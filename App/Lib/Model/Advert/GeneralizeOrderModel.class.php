@@ -21,7 +21,7 @@
 			$now_val['zfy_type'] = $new_post['zfy_type'];
 			$now_val['zw_info'] = $new_post['zw_info'];
 			$now_val['zfnr_type'] = $new_post['zfnr_type'];
-			$now_val['wasfbalj'] = $new_post['wasfbalj'];
+			//$now_val['wasfbalj'] = $new_post['wasfbalj'];
 			$now_val['start_time'] = strtotime($new_post['start_time']);
 			$now_val['sfyq'] = $new_post['sfyq']=='' ? 0 : 1;
 			$now_val['bz_info'] = $new_post['bz_info'];
@@ -107,7 +107,7 @@
 				$add['zw_info'] = $arr['zw_info'];
 				$add['wa_url_status'] = $arr['wa_url_status'];
 				$add['zfnr_type'] = $arr['zfnr_type'];
-				$add['wasfbalj'] = $arr['wasfbalj'];
+				//$add['wasfbalj'] = $arr['wasfbalj'];
 				$add['start_time'] = $arr['start_time'];
 				$add['over_time'] = $arr['over_time'];
 				$add['sfyq'] = $arr['sfyq'];
