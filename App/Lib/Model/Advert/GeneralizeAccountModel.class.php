@@ -90,4 +90,45 @@
 				
 			}
 		}
+
+
+				//新增数据
+		public function insertNewAccount($ien_id,$explode_arr)
+		{
+			if($ien_id!='')
+			{
+				$exp_arr = explode(',', $explode_arr);
+				if(is_array($exp_arr))
+				{
+					$IntentionWeiboAccount = D('IntentionWeiboAccount');
+					$wxAcc = $IntentionWeiboAccount->where(array('id'=>array('in',$exp_arr)))->select();
+					//订单下生成新账号
+					foreach ($wxAcc as $value) {
+						$add['users_id'] = $value['users_id'];
+						$add['generalize_id'] = $ien_id;
+						$add['account_id'] = $value['account_id'];
+						$add['account_type'] = $value['account_type'];
+						$add['price'] = $value['price'];
+						$add['audit_status'] = 0;
+						$this->add($add);
+					}
+					//修改
+					$upadte['audit_status'] = 8;
+					$IntentionWeiboAccount->where(array('id'=>array('in',$exp_arr)))->save($upadte);
+
+					//计算总价
+					$update_all['all_price'] = $this->where(array('generalize_id'=>$ien_id))->sum('price');
+					$bool = D('GeneralizeOrder')->where(array('id'=>$ien_id))->save($update_all);
+					if($bool)
+					{
+						return true;
+					}else{
+						return false;
+					}
+				}
+
+			}
+
+		}
+
 	}

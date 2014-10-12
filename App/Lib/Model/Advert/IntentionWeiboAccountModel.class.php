@@ -23,12 +23,19 @@
 			{
 				$arr['account_id'] = $value;
 				if (parent::get_one_data($arr) == false) {
+					$arr['price'] = D('AccountWeibo')->getCkMoney($value);
 					$status = $this->add($arr);
 				}
 				
 			}
-
-			return $status;
+			$update['all_price'] = $this->where(array('intention_id'=>$new_array['order_id']))->sum('price');
+			$bool = D('IntentionWeiboOrder')->where(array('id'=>$new_array['order_id']))->save($update);
+			if($bool)
+			{
+				return true;
+			}else{
+				return false;
+			}
 		}
 
 		public function getListNum($array,$users_id)

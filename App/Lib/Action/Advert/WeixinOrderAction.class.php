@@ -513,9 +513,11 @@ class WeixinOrderAction extends AdvertBaseAction {
 			$Account_Order_Status = C('Account_Order_Status');
 			//获得微信的订单数据
 			$intentval = $this->db['IntentionWeixinOrder']->get_OrderInfo_By_Id(intval($_POST['intention_order_id']),$this->oUser->id);
+			$img = $this->db['IntentionWeixinFiles']->getImg(intval($_POST['intention_order_id']));
 			//把微信的订单输入塞入推广表
 			$ien_id = $this->db['GeneralizeWeixinOrder']->insertGeneralize($intentval);
 			//获得ID 存入数据
+			$this->db['GeneralizeWeixinFiles']->insertImgs($ien_id,$img);
 			$bool = $this->db['GeneralizeWeixinAccount']->insertNewAccount($ien_id,$_POST['account_ids']);
 			if(bool==true)
 			{

@@ -521,6 +521,32 @@ class WeiboOrderAction extends AdvertBaseAction {
 			parent::callback(C('STATUS_UPDATE_DATA'),'支付失败,请检查余额!');
 		}
 	}
+
+
+	//微博推广
+	public function YxZhuanTg()
+	{
+		if($this->isPost())
+		{
+			$Account_Order_Status = C('Account_Order_Status');
+			//获得微信的订单数据
+			$intentval = $this->db['IntentionWeiboOrder']->get_OrderInfo_By_Id(intval($_POST['intention_order_id']),$this->oUser->id);
+			$img = $this->db['IntentionWeiboFiles']->getImg(intval($_POST['intention_order_id']));
+			//把微信的订单输入塞入推广表
+			$ien_id = $this->db['GeneralizeOrder']->insertGeneralize($intentval);
+			//获得ID 存入数据
+			$this->db['GeneralizeFiles']->insertImgs($ien_id,$img);	
+			$bool = $this->db['GeneralizeAccount']->insertNewAccount($ien_id,$_POST['account_ids']);
+			if(bool==true)
+			{
+				parent::callback(C('STATUS_SUCCESS'),'成功!');
+			}else{
+				parent::callback(C('STATUS_UPDATE_DATA'),'错误请稍后再试!');
+			}
+		}
+	}
+
+
 }
 
 ?>

@@ -362,4 +362,14 @@
 				}
 			}
 		}
+
+		//获取参考价格
+		public function getCkMoney($account_id)
+		{
+			if($account_id!='')
+			{
+				$money  = $this->where(array('id'=>$account_id))->field('ck_money')->find();
+				return $money['ck_money'];
+			}
+		}
 	}

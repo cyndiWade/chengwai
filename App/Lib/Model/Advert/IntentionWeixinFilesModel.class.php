@@ -10,4 +10,14 @@
 				$this->add($value);
 			}
 		}
+
+		//获得图片数据
+		public function getImg($id)
+		{
+			if($id!='')
+			{
+				$value = $this->where(array('generalize_order_id'=>$id))->select();
+				return $value;
+			}
+		}
 	}
