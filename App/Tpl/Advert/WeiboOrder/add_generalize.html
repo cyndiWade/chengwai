@@ -67,8 +67,13 @@
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>转发语：</strong></span></td>
 				<td class="t2"><div class="forward"><textarea name="zw_info" class="textarea zw_info" datatype="*10-500" errormsg="请正确填写范围是10-500个字符" ></textarea><p>此内容会直接发出，请不要填写与转发语无关的信息。请不要超过140字，您还可以输入140个字</p></div></td>
-			  </tr>			  
-			   <!--直发-->
+			  </tr>
+			  <tr>
+				<td class="t1"><span><strong>文案是否含链接：</strong></span></td>
+				<td class="t2"><div class="linkbox l">
+					<span class="soft fl"><input type="radio" class="radio" name="wa_url_status" valua="1" /><strong>包含</strong></span>
+					<span class="soft fl"><input type="radio" class="radio" name="wa_url_status" valua="0" checked="checked"/><strong>不包含</strong></span></div><p class="l">请您如实选择，以免影响后续创建的活动类型</p></td>
+			  </tr>	  
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>直发内容类型：</strong></span></td>
 				<td class="t2"> <input type="radio" name="zfnr_type" class="zfnr_type" id="content_type_1" value="1" datatype="*" errormsg="请正确选择"  nullmsg="请选择直发内容类型" /> 指定直发内容
@@ -79,15 +84,6 @@
 				<td class="t1"><span><i>*</i><strong>直发配图：</strong></span></td>
 				<td class="t2"> <input type="file" name="contentTypeRetweet" > 
 				</td>
-			  </tr>
-			  <!--根据发送类型变化end-->
-			  <tr>
-				<td class="t1"><span><strong>文案是否含链接：</strong></span></td>
-				<td class="t2">
-					<div class="linkbox l">
-						<span class="soft fl"><input type="radio" name="wasfbalj" class="radio wasfbalj" value="1"  datatype="*" errormsg="请正确选择"  nullmsg="请选择文案是否含链接" /><strong>包含</strong></span>
-						<span class="soft fl"><input type="radio" name="wasfbalj" class="radio wasfbalj" value="0" datatype="*" errormsg="请正确选择"  nullmsg="请选择文案是否含链接" /><strong>不包含</strong></span>
-					</div><p class="l">请您如实选择，以免影响后续创建的活动类型</p></td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>开始时间：</strong></span></td>
@@ -100,7 +96,23 @@
 					</div><p>请选择当前时间60分钟后，14天之内的时间</p>
 				</td>
 			  </tr>
-			 
+			  <tr>
+				<td class="t1"><span><i>*</i><strong>反馈截止时间：</strong></span></td>
+				<td class="t2"><div class="timestart">
+					<input type="text" name="over_time" class="text text-time over_time timeSubject"  datatype="*1-50" errormsg="请正确选择填写"  nullmsg="请选择结束时间" />
+					</div><p>博主会在该时间之前反馈，请选择当前时间30分钟后，14天之内的时间</p></td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><strong>短信通知反馈结果：</strong></span></td>
+				<td class="t2">
+				<span class="soft fl"><input type="radio" name="dx_status" value="1" checked="checked" class="radio" /><strong>需要</strong></span>
+				<span class="soft fl"><input type="radio" name="dx_status" value="0" class="radio" /><strong>不需要</strong></span></td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><strong>手机号：</strong></span></td>
+				<td class="t2"><input type="text" class="text" name="dx_phone" ignore="ignore" datatype="m" errormsg="请正确选择填写"  nullmsg="请填写手机号码" /><p class="writetip">请准确填写您的手机号码，以便及时短信告知您确认结果</p></td>
+			  </tr>
+			  <tr>
 			  <tr>
 				<td class="t1"><span><strong>备注：</strong></span></td>
 				<td class="t2"><div class="forward"><textarea class="textarea bz_info" name="bz_info" ignore="ignore" datatype="*10-300" errormsg="请正确填写范围是10-300个字符"  nullmsg="请输入"></textarea><p>请填写备注信息，请不要超过300个汉字！</p></div></td>

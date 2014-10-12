@@ -18,3 +18,8 @@ ALTER TABLE `app_generalize_files` CHANGE `type` `type` TINYINT(1) UNSIGNED NOT 
 	 `is_del` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '是否删除：0否，1是',
 	PRIMARY KEY (  `id` )
 	) ENGINE = MYISAM DEFAULT CHARSET = utf8 COMMENT =  ''新闻附件文件表';
+	
+
+2014/10/12  13:24 张炜林修改数据表
+ALTER TABLE  `app_generalize_order` ADD  `wa_url_status` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '文案是否含链接:1包含、0不包含' AFTER  `zw_info`
+	
