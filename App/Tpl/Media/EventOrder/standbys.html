@@ -19,14 +19,14 @@
                     <div class="part01-user fl">
                         <img class="userimg fl" src="{$global_tpl_view.Group_Resource_Path}images/cer_img01.gif" />
                         <div class="grp fl">
-                            <h5>zhangcanwen </h5>
-                            <p>余 额：<b class="yel">￥0.00</b>元</p>
+                            <h5>{$global_tpl_view.oUser.account}</h5>
+                            <p>余 额：<b class="yel">￥{$view_data.userMediaInfo.money|default='0.00'}</b>元</p>
                         </div>
                     </div>
                     <ul class="part02-user l">
                         <li>总好评率：<span class="yel">暂无评价</span></li>
-                        <li>被收藏总数：<span class="yel">0</span></li>
-                        <li>被加黑名单总数：<span class="yel">0</span></li>
+                        <li>被收藏总数：<span class="yel">{$view_data.markNums}</span></li>
+                        <li>被加黑名单总数：<span class="yel">{$view_data.blackNums}</span></li>
                     </ul>
                 </div>
                 <div class="box01-user l">
@@ -44,21 +44,21 @@
                         <b>账号统计</b>
                     </div>
                     <ul class="totallist l">
-                        <li>账号总数：<b>1</b></li>
-                        <li>粉丝总数：<b>199</b></li>
-                        <li>总平台数：<b>1</b></li>
-                        <li class="fl">不可接单：<b class="yel">1</b></li>
-                        <li class="fl">审核失败：<b class="yel">1</b></li>
-                        <li class="fl">暂不接单：<b class="yel">1</b></li>
-                        <li class="fl">无带号价：<b class="yel">1</b></li>
-                        <li class="fl">下架账号：<b class="yel">1</b></li>
-                        <li class="fl">不接硬广：<b class="yel">1</b></li>
-                        <li class="fl">等待审核：<b class="yel">1</b></li>
-                        <li class="fl">暂不公开：<b class="yel">1</b></li>
-                        <li>无硬广转发价：<b>1</b></li>
-                        <li>无硬广直发价：<b>199</b></li>
-                        <li>无软广转发价：<b>1</b></li>
-                        <li>无软广直发价：<b>1</b></li>
+                        <li>账号总数：<b>{$view_data.accountNums}</b></li>
+                        <li>粉丝总数：<b>{$view_data.fansNums}</b></li>
+                        <li>总平台数：<b>{$view_data.typeNums}</b></li>
+                        <li class="fl">不可接单：<b class="yel">{$view_data.notallowNums}</b></li>
+                        <li class="fl">审核失败：<b class="yel">{$view_data.auditFailNums}</b></li>
+                        <li class="fl">暂不接单：<b class="yel">{$view_data.leaveNums}</b></li>
+                        <!-- <li class="fl">无带号价：<b class="yel">1</b></li> -->
+                        <li class="fl">下架账号：<b class="yel">{$view_data.putawayNums}</b></li>
+                        <li class="fl">不接硬广：<b class="yel">{$view_data.disabledYGNums}</b></li>
+                        <li class="fl">等待审核：<b class="yel">{$view_data.auditWaitNums}</b></li>
+                        <!-- <li class="fl">暂不公开：<b class="yel">1</b></li> -->
+                        <li>无硬广转发价：<b>{$view_data.noRetweetNums}</b></li>
+                        <li>无硬广直发价：<b>{$view_data.noTweetNums}</b></li>
+                        <li>无软广转发价：<b>{$view_data.noSoftRetweetNums}</b></li>
+                        <li>无软广直发价：<b>{$view_data.noSoftTweetNums}</b></li>
                     </ul>
                 </div>
                 <div class="box01-user l">
@@ -177,7 +177,7 @@
             <div class="content-user fr">
                 <ul class="box01-userorder l">
                     <li class="select">我的订单</li>
-                    <li>我的意向订单<em class="numcount">0</em></li>
+                    <!-- <li>我的意向订单<em class="numcount">0</em></li> -->
                 </ul>
                 <div class="box02-userorder fl">
                     <span class="totalspan fl">今日订单量统计</span>
@@ -187,19 +187,20 @@
                 </div>
                 <div class="box04-userorder l">
                     <div class="box03-userorder l">
-                        <ul class="dateorder fl">
+                        <ul class="dateorder fl" data-item="0">
                             <li class="select">今日可执行订单</li>
-                            <li>今日待上传数据截图订单<em class="numcount">1</em></li>
+                            <li>今日待上传数据截图订单<em class="numcount">{$view_data.todayShotNums}</em></li>
                         </ul>
-                        <div class="fr">
+                        <!-- <div class="fr">
                             <span class="spantime fl"><i>订单号</i><input type="text" class="text" /></span>
                             <span class="spantime fl"><i>活动</i><input type="text" class="text text-long" /></span>
                             <span class="spantime fl"><i>账号</i><input type="text" class="text text-long" /></span>
                             <span class="btn yelbtn fl">查 询</span>
-                        </div>
+                        </div> -->
                     </div>
                     <table class="tab01-allorder l">
-                      <tr>
+                    <thead>
+                    <tr>
                         <th class="t1">订单号</th>
                         <th class="t2">账号名</th>
                         <th class="t3">活动</th>
@@ -208,102 +209,29 @@
                         <th class="t6">订单状态</th>
                         <th class="t7">拒单</th>
                         <th class="t8">执行</th>
-                        <th class="t9">定时小鸟</th>
                         <th class="last">用户备忘</th>
-                      </tr>
-                      <tr>
-                        <td colspan="10" class="none">
-                            <div class="ordertip">
-                                <p>亲，今天暂无订单哦！<br/>继续努力哈！</p>
-                            </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="t1">2121444</td>
-                        <td class="t2">zhangcanwen</td>
-                        <td class="t3">大胃王</td>
-                        <td class="t4">500</td>
-                        <td class="t5">2014/09/12</td>
-                        <td class="t6">待执行</td>
-                        <td class="t7"></td>
-                        <td class="t8"></td>
-                        <td class="t9"></td>
-                        <td class="last"></td>
-                      </tr>
-                      <tr>
-                        <td class="t1">2121444</td>
-                        <td class="t2">zhangcanwen</td>
-                        <td class="t3">大胃王</td>
-                        <td class="t4">500</td>
-                        <td class="t5">2014/09/12</td>
-                        <td class="t6">待执行</td>
-                        <td class="t7"></td>
-                        <td class="t8"></td>
-                        <td class="t9"></td>
-                        <td class="last"></td>
-                      </tr>
-                      <tr>
-                        <td class="t1">2121444</td>
-                        <td class="t2">zhangcanwen</td>
-                        <td class="t3">大胃王</td>
-                        <td class="t4">500</td>
-                        <td class="t5">2014/09/12</td>
-                        <td class="t6">待执行</td>
-                        <td class="t7"></td>
-                        <td class="t8"></td>
-                        <td class="t9"></td>
-                        <td class="last"></td>
-                      </tr>
-                      <tr>
-                        <td class="t1">2121444</td>
-                        <td class="t2">zhangcanwen</td>
-                        <td class="t3">大胃王</td>
-                        <td class="t4">500</td>
-                        <td class="t5">2014/09/12</td>
-                        <td class="t6">待执行</td>
-                        <td class="t7"></td>
-                        <td class="t8"></td>
-                        <td class="t9"></td>
-                        <td class="last"></td>
-                      </tr>
-                      </table>
-                      <table class="tab01-allorder none l">
-                      <tr>
-                        <th class="t1">订单号3</th>
-                        <th class="t2">账号名</th>
-                        <th class="t3">活动</th>
-                        <th class="t4">价格(元)</th>
-                        <th class="t5">开始时间</th>
-                        <th class="t6">订单状态</th>
-                        <th class="t7">拒单</th>
-                        <th class="t8">执行</th>
-                        <th class="t9">定时小鸟</th>
-                        <th class="last">用户备忘</th>
-                      </tr>
-                      <tr>
-                        <td colspan="10" class="noorder">
-                            <div class="ordertip">
-                                <p>亲，今天暂无订单哦！<br/>继续努力哈！</p>
-                            </div>
-                        </td>
-                      </tr>
-                      </table>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    </table>
                 </div>
                 <div class="box04-userorder l">
                     <div class="box03-userorder l">
-                        <ul class="dateorder fl">
+                        <ul class="dateorder fl" data-item="2">
                             <li class="select">非今日可执行订单</li>
-                            <li>非今日待上传数据截图订单<em class="numcount">11</em></li>
+                            <li>非今日待上传数据截图订单<em class="numcount">{$view_data.noTodayShotNums}</em></li>
                         </ul>
-                        <div class="fr">
+                        <!-- <div class="fr">
                             <span class="spantime fl"><i>订单号</i><input type="text" class="text" /></span>
                             <span class="spantime fl"><i>活动</i><input type="text" class="text text-long" /></span>
                             <span class="spantime fl"><i>账号</i><input type="text" class="text text-long" /></span>
                             <span class="btn yelbtn fl">查 询</span>
-                        </div>
+                        </div> -->
                     </div>
                     <table class="tab01-allorder l">
-                      <tr>
+                    <thead>
+                    <tr>
                         <th class="t1">订单号</th>
                         <th class="t2">账号名</th>
                         <th class="t3">活动</th>
@@ -312,86 +240,12 @@
                         <th class="t6">订单状态</th>
                         <th class="t7">拒单</th>
                         <th class="t8">执行</th>
-                        <th class="t9">定时小鸟</th>
                         <th class="last">用户备忘</th>
                       </tr>
-                      <tr>
-                        <td colspan="10" class="noorder">
-                            <div class="ordertip">
-                                <p>亲，目前还没有可执行<br/>订单哦！继续加油吧！</p>
-                            </div>
-                        </td>
-                      </tr>
-                      </table>
-                      <table class="tab01-allorder none l">
-                      <tr>
-                        <th class="t1">订单号2</th>
-                        <th class="t2">账号名</th>
-                        <th class="t3">活动</th>
-                        <th class="t4">价格(元)</th>
-                        <th class="t5">开始时间</th>
-                        <th class="t6">订单状态</th>
-                        <th class="t7">拒单</th>
-                        <th class="t8">执行</th>
-                        <th class="t9">定时小鸟</th>
-                        <th class="last">用户备忘</th>
-                      </tr>
-                      <tr>
-                        <td colspan="10" class="noorder none">
-                            <div class="ordertip">
-                                <p>亲，今天暂无订单哦！<br/>继续努力哈！</p>
-                            </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="t1">2121444</td>
-                        <td class="t2">zhangcanwen</td>
-                        <td class="t3">大胃王</td>
-                        <td class="t4">500</td>
-                        <td class="t5">2014/09/12</td>
-                        <td class="t6">待执行</td>
-                        <td class="t7"></td>
-                        <td class="t8"></td>
-                        <td class="t9"></td>
-                        <td class="last"></td>
-                      </tr>
-                      <tr>
-                        <td class="t1">2121444</td>
-                        <td class="t2">zhangcanwen</td>
-                        <td class="t3">大胃王</td>
-                        <td class="t4">500</td>
-                        <td class="t5">2014/09/12</td>
-                        <td class="t6">待执行</td>
-                        <td class="t7"></td>
-                        <td class="t8"></td>
-                        <td class="t9"></td>
-                        <td class="last"></td>
-                      </tr>
-                      <tr>
-                        <td class="t1">2121444</td>
-                        <td class="t2">zhangcanwen</td>
-                        <td class="t3">大胃王</td>
-                        <td class="t4">500</td>
-                        <td class="t5">2014/09/12</td>
-                        <td class="t6">待执行</td>
-                        <td class="t7"></td>
-                        <td class="t8"></td>
-                        <td class="t9"></td>
-                        <td class="last"></td>
-                      </tr>
-                      <tr>
-                        <td class="t1">2121444</td>
-                        <td class="t2">zhangcanwen</td>
-                        <td class="t3">大胃王</td>
-                        <td class="t4">500</td>
-                        <td class="t5">2014/09/12</td>
-                        <td class="t6">待执行</td>
-                        <td class="t7"></td>
-                        <td class="t8"></td>
-                        <td class="t9"></td>
-                        <td class="last"></td>
-                      </tr>
-                      </table>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    </table>
                 </div>
             </div>
             
@@ -403,6 +257,70 @@
 
 
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
-
+<script type="text/javascript">
+$(function(){
+	$('.tab01-allorder tr:even').addClass('even');
+	$('.datenav li').click(function(){
+		var i=$(this).index();
+		$(this).siblings().removeClass('select');
+		$(this).addClass('select');
+		$('.datebox').hide();
+		$('.datebox').eq(i).show();
+	})
+	$('.dateorder li').click(function(){
+		var i=$(this).index();
+		$(this).siblings().removeClass('select');
+		$(this).addClass('select');
+		// $(this).parents('.box04-userorder').find('.tab01-allorder').hide();
+		// $(this).parents('.box04-userorder').find('.tab01-allorder').eq(i).show();
+        
+        // 调用列表数据
+        var item = $(this).parent().data('item') || 0;
+        var index = parseInt(item) + (i >=0 ? i : 0);
+        var toHtml = getOrderList(index);
+        $(this).parents('.box04-userorder').find('.tab01-allorder tbody').html(toHtml);
+	});
+    $('.dateorder li:eq(0)').click();
+    $('.dateorder li:eq(2)').click();
+});
+function getOrderList(type) {
+    var html = '';
+    $.ajax({
+        url : '{:U('/Media/EventOrder/todoOrderList')}',
+        type: 'post',
+        data: {type : type},
+        async: false,
+        success : function(data){
+            if (data.status) {
+                $.each(data.data, function(idx, item){
+                    html += '<tr>' +
+                        '<td class="t1">' + item.order_id + '</td>' +
+                        '<td class="t2">' + item.account_name + '</td>' +
+                        '<td class="t3">' + item.title + '</td>' +
+                        '<td class="t4">' + item.price + '</td>' +
+                        '<td class="t5">' + item.start_time + '</td>' +
+                        '<td class="t6">' + item.order_status + '</td>' +
+                        '<td class="t7">' + item.order_id + '</td>' +
+                        '<td class="t8">' + item.order_id + '</td>' +
+                        '<td class="last">' + item.order_id + '</td>' +
+                    '</tr>';
+                });
+            }
+        },
+        error: function(error){
+        }
+    });
+    if ('' == html) {
+        html = '<tr>' +
+            '<td colspan="9" class="noorder">' +
+                '<div class="ordertip">' +
+                    '<p>亲，今天暂无订单哦！<br/>继续努力哈！</p>' +
+                '</div>' +
+            '</td>' +
+        '</tr>';
+    }
+    return html;
+}
+</script>
 </body>
 </html>

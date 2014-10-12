@@ -16,10 +16,14 @@ class EventOrderAction extends MediaBaseAction {
 
 	//初始化数据库连接
 	protected  $db = array(
-			// 'CategoryTags'=>'CategoryTags',
-			// 'Users' => 'Users',
-			// 'Verify'=>'Verify',
-			// 'User_media' => 'User_media'
+			'AccountNews'   => 'AccountNews',
+            'AccountWeibo'  => 'AccountWeibo',
+            'AccountWeixin' => 'AccountWeixin',
+			'UserMedia'     => 'UserMedia',
+			'Users'         => 'Users',
+			'GeneralizeOrder'       => 'GeneralizeOrder',
+			'GeneralizeNewsOrder'   => 'GeneralizeNewsOrder',
+			'GeneralizeWeixinOrder' => 'GeneralizeWeixinOrder',
 	);
 	
 	//和构造方法
@@ -37,15 +41,243 @@ class EventOrderAction extends MediaBaseAction {
      */
 	public function index()
     {
-		 parent::data_to_view(array(
+		$userInfos = parent::get_session('user_info');
+        $userMediaModel = $this->db['UserMedia'];
+        $userMediaInfo = $userMediaModel->getInfoByIds($userInfos['id']);
+        
+        // 收藏或者黑名单数量
+        $newsDatas = M('BlackorcollectionNews')->where(array('user_id' => $userInfos['id']))->getField('or_type', true);
+        $weiboDatas = M('BlackorcollectionWeibo')->where(array('user_id' => $userInfos['id']))->getField('or_type', true);
+        $weixinDatas = M('BlackorcollectionWeixin')->where(array('user_id' => $userInfos['id']))->getField('or_type', true);
+        $newsDatas = $newsDatas ? array_count_values($newsDatas) : array(0, 0);
+        $weiboDatas = $weiboDatas ? array_count_values($weiboDatas) : array(0, 0);
+        $weixinDatas = $weixinDatas ? array_count_values($weixinDatas) : array(0, 0);
+        $blackNums = $newsDatas[0] + $weiboDatas[0] + $weixinDatas[0];
+        $markNums = $newsDatas[1] + $weiboDatas[1] + $weixinDatas[1];
+        
+        // 帐号、粉丝数量
+        $newsModel      = $this->db['AccountNews'];
+        $weiboModel     = $this->db['AccountWeibo'];
+        $weixinModel    = $this->db['AccountWeixin'];
+        $newsInfo = $newsModel->getAccountList(array('users_id' => $userInfos['id']));
+        $weiboInfo = $weiboModel->getAccountList(array('users_id' => $userInfos['id']));
+        $weixinInfo = $weixinModel->getAccountList(array('users_id' => $userInfos['id']));
+        // 帐号数量
+        $accountNums = 0;
+        // 粉丝数量
+        $fansNums = 0;
+        // 平台数量
+        $typeNums = 0;
+        // 不可接单
+        $notallowNums = 0;
+        // 审核失败
+        $auditFailNums = 0;
+        // 等待审核
+        $auditWaitNums = 0;
+        // 暂不接单
+        $leaveNums = 0;
+        // 下架账号
+        $putawayNums = 0;
+        // 不接硬广
+        $disabledYGNums = 0;
+        // 无硬广转发价
+        $noRetweetNums = 0;
+        // 无硬广直发价
+        $noTweetNums = 0;
+        // 无软广转发价
+        $noSoftRetweetNums = 0;
+        // 无软广直发价
+        $noSoftTweetNums = 0;
+        
+        if ($newsInfo) {
+            $typeNums += 1;
+            $accountNums += count($newsInfo);
+            foreach ($newsInfo AS $info) {
+                $notallowNums += $info['receiving_status'] ? 0 : 1;
+                if ($info['audit_status'] == 2) {
+                    $auditFailNums += 1;
+                } elseif ($info['audit_status'] == 0) {
+                    $auditWaitNums += 1;
+                }
+                $leaveNums += $info['tmp_receiving_status'] ? 1 : 0;
+                $putawayNums += $info['putaway_status'] ? 0 : 1;
+                $disabledYGNums += $info['is_yg_status'] ? 0 : 1;
+            }
+        }
+        if ($weiboInfo) {
+            $typeNums += 1;
+            $accountNums += count($weiboInfo);
+            foreach ($weiboInfo AS $info) {
+                $fansNums += $info['fans_num'];
+                $notallowNums += $info['receiving_status'] ? 0 : 1;
+                if ($info['audit_status'] == 2) {
+                    $auditFailNums += 1;
+                } elseif ($info['audit_status'] == 0) {
+                    $auditWaitNums += 1;
+                }
+                $leaveNums += $info['tmp_receiving_status'] ? 1 : 0;
+                $putawayNums += $info['putaway_status'] ? 0 : 1;
+                $disabledYGNums += $info['is_yg_status'] ? 0 : 1;
+                $noRetweetNums += $info['yg_zhuanfa'] ? 0 : 1;
+                $noTweetNums += $info['yg_zhifa'] ? 0 : 1;
+                $noSoftRetweetNums += $info['rg_zhuanfa'] ? 0 : 1;
+                $noSoftTweetNums += $info['rg_zhifa'] ? 0 : 1;
+            }
+        }
+        if ($weixinInfo) {
+            $typeNums += 1;
+            $accountNums += count($weixinInfo);
+            foreach ($weixinInfo AS $info) {
+                $fansNums += $info['fans_num'];
+                $notallowNums += $info['receiving_status'] ? 0 : 1;
+                if ($info['audit_status'] == 2) {
+                    $auditFailNums += 1;
+                } elseif ($info['audit_status'] == 0) {
+                    $auditWaitNums += 1;
+                }
+                $leaveNums += $info['tmp_receiving_status'] ? 1 : 0;
+                $putawayNums += $info['putaway_status'] ? 0 : 1;
+                $disabledYGNums += $info['is_yg_status'] ? 0 : 1;
+                $noRetweetNums += $info['yg_zhuanfa'] ? 0 : 1;
+                $noTweetNums += $info['yg_zhifa'] ? 0 : 1;
+                $noSoftRetweetNums += $info['rg_zhuanfa'] ? 0 : 1;
+                $noSoftTweetNums += $info['rg_zhifa'] ? 0 : 1;
+            }
+        }
+        
+        $newsOrderModel = $this->db['GeneralizeNewsOrder'];
+        $weiboOrderModel = $this->db['GeneralizeOrder'];
+        $weixinOrderModel = $this->db['GeneralizeWeixinOrder'];
+        // 今日待上传数据截图订单 数量
+        $todayShotNums = 0;
+        // 非今日待上传数据截图订单 数量
+        $noTodayShotNums = 0;
+        $where = array(
+            'users_id'  => $userInfos['id'],
+            'status'    => 5
+        );
+        $todayStartTime = strtotime(date('Y-m-d', $_SERVER['REQUEST_TIME']));
+        $todayEndTime = $todayStartTime + 86399;
+        // 新闻媒体
+        $newsShotOrder = $newsOrderModel->where($where)->select();
+        if ($newsShotOrder) {
+            foreach ($newsShotOrder AS $info) {
+                if ($info['start_time'] >= $todayEndTime && $info['start_time'] <= $todayEndTime) {
+                    $todayShotNums += 1;
+                } else {
+                    $noTodayShotNums += 1;
+                }
+            }
+        }
+        // 微博
+        $weiboShotOrder = $weiboOrderModel->where($where)->select();
+        if ($weiboShotOrder) {
+            foreach ($weiboShotOrder AS $info) {
+                if ($info['start_time'] >= $todayEndTime && $info['start_time'] <= $todayEndTime) {
+                    $todayShotNums += 1;
+                } else {
+                    $noTodayShotNums += 1;
+                }
+            }
+        }
+        // 微信
+        $weixinShotOrder = $weiboOrderModel->where($where)->select();
+        if ($weixinShotOrder) {
+            foreach ($weixinShotOrder AS $info) {
+                if ($info['start_time'] >= $todayEndTime && $info['start_time'] <= $todayEndTime) {
+                    $todayShotNums += 1;
+                } else {
+                    $noTodayShotNums += 1;
+                }
+            }
+        }
+        
+        parent::data_to_view(array(
 			//二级导航
 			'secondSiderbar' => array(
 				'待执行订单' => array('select' => true, 'url' => U('/Media/EventOrder/index')),
 				'全部订单'   => array('select' => false, 'url' => U('/Media/EventOrder/allorder')),
-			)
+			),
+            'userMediaInfo' => $userMediaInfo,
+            'markNums' => $markNums,
+            'blackNums' => $blackNums,
+            'accountNums' => $accountNums,
+            'notallowNums' => $notallowNums,
+            'typeNums' => $typeNums,
+            'fansNums' => $fansNums,
+            'leaveNums' => $leaveNums,
+            'auditFailNums' => $auditFailNums,
+            'auditWaitNums' => $auditWaitNums,
+            'putawayNums' => $putawayNums,
+            'disabledYGNums' => $disabledYGNums,
+            'noRetweetNums' => $noRetweetNums,
+            'noTweetNums' => $noTweetNums,
+            'noSoftRetweetNums' => $noSoftRetweetNums,
+            'noSoftTweetNums' => $noSoftTweetNums,
+            'todayShotNums' => $todayShotNums,
+            'noTodayShotNums' => $noTodayShotNums,
 		)); 
 		$this->display('standbys');
 	}
+    
+    /**
+     * 可执行订单 待上传数据截图订单
+     * 
+     * @author lurongchang
+     * @date   2014-10-11
+     * @return void
+     */
+    public function todoOrderList()
+    {
+        if ($this->isPost()) {
+            $type = I('type', 0, 'intval');
+            
+            // 今日可执行订单
+            $newsOrderModel = $this->db['GeneralizeNewsOrder'];
+            $weiboOrderModel = $this->db['GeneralizeOrder'];
+            $weixinOrderModel = $this->db['GeneralizeWeixinOrder'];
+            
+            $userInfos = parent::get_session('user_info');
+            $todayStartTime = strtotime(date('Y-m-d', $_SERVER['REQUEST_TIME']));
+            $todayEndTime = $todayStartTime + 86399;
+            if ($type == 3) {
+                $where = array(
+                    'users_id' => $userInfos['id'],
+                    'status' => 5,
+                    'start_time' => array('NOT BETWEEN', array($todayStartTime, $todayEndTime))
+                );
+            } elseif ($type == 2) {
+                $where = array(
+                    'users_id' => $userInfos['id'],
+                    'status' => 3,
+                    'start_time' => array('NOT BETWEEN', array($todayStartTime, $todayEndTime))
+                );
+            } elseif ($type == 1) {
+                $where = array(
+                    'users_id' => $userInfos['id'],
+                    'status' => 5,
+                    'start_time' => array('BETWEEN', array($todayStartTime, $todayEndTime))
+                );
+            } else {
+                $where = array(
+                    'users_id' => $userInfos['id'],
+                    'status' => 3,
+                    'start_time' => array('BETWEEN', array($todayStartTime, $todayEndTime))
+                );
+            }
+            
+            // 获取帐号信息
+            $datas = array();
+            $newsOrder = $newsOrderModel->getOrderList($userInfos['id'], $where);
+            $weiboOrder = $weiboOrderModel->getOrderList($userInfos['id'], $where);
+            $weixinOrder = $weixinOrderModel->getOrderList($userInfos['id'], $where);
+            $datas = array_merge($datas, $newsOrder, $weiboOrder, $weixinOrder);
+            
+            parent::callback(1, '成功获取数据', $datas);
+        } else {
+            parent::callback(C('STATUS_ACCESS'), '访问方式错误');
+        }
+    }
     
     /**
      * 所有订单(微博)

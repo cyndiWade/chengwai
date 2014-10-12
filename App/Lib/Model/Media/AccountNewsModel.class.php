@@ -125,4 +125,20 @@ class AccountNewsModel extends MediaBaseModel
     	$users_id_new = $this->where(array("id"=>$account_id))->getField("users_id");
     	return $users_id_new == $user_id ? true : false;
     }
+    
+    /**
+     * 批量获取某帐号数据
+     * 
+     * @param array  $where 条件
+     * @param string $field 字段 默认true为提取所有字段
+     * 
+     * @author lurongchang
+     * @date   2014-10-11
+     * @return void
+     */
+    public function getAccountList($where, $field = true)
+    {
+        $datas = $this->where($where)->field($field)->select();
+        return $datas;
+    }
 }
