@@ -101,6 +101,12 @@ class WeixinOrderAction extends AdvertBaseAction {
 		$list = $GeneralizeWeixinOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
 		->order('id desc')->field('id,tfpt_type,fslx_type,ggw_type,yxd_name,start_time,all_price,over_time,status')->select();
 		
+		$Order_Status = C('Order_Status');
+		if ($list == true) {
+			foreach ($list as $key=>$val) {
+				$list[$key]['status_explain'] = $Order_Status[$val['status']]['explain'];
+			}
+		}
 		parent::data_to_view(array(
 				'page' => $show ,
 				'list' => $list,
@@ -531,6 +537,21 @@ class WeixinOrderAction extends AdvertBaseAction {
 		}
 	}
 	
+	
+	//查看订单执行图
+	public function look_perform_pic () {
+		$order_id = $this->_get('order_id');
+		$account_id = $this->_get('account_id');
+		//public_file_dir
+		$type = 3;
+		$where['generalize_order_id'] = $order_id;
+		$where['account_id'] = $account_id;
+		$where['type'] = $type;
+		$result = $this->db['GeneralizeWeixinFiles']->get_fiels_list($where);	
+		parent::public_file_dir($result,array('url'),'images/');
+		
+		dump($result);
+	}
 }
 
 ?>

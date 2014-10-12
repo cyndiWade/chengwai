@@ -20,4 +20,9 @@
 				return $value;
 			}
 		}
+		
+		
+		public function get_fiels_list (Array $where) {
+			return $this->where($where)->select();
+		}
 	}

@@ -126,6 +126,13 @@ class NewsAction extends AdvertBaseAction {
 		$show       = $Page->show();
 		$list = $GeneralizeNewsOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
 		->order('id desc')->field('id,title,start_time,web_url,all_price,status')->select();
+		
+		$Order_Status = C('Order_Status');
+		if ($list == true) {
+			foreach ($list as $key=>$val) {
+				$list[$key]['status_explain'] = $Order_Status[$val['status']]['explain'];
+			}
+		}
 		parent::data_to_view(array(
 				'page' => $show ,
 				'list' => $list,
