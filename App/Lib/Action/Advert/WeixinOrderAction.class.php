@@ -520,7 +520,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 			if(bool==true)
 			{
 				//修改订单状态
-				$this->db['IntentionWeixinAccount']->update_account_status($_POST['account_ids'],$_POST['intention_order_id'],8,$this->oUser->id);
+				//$this->db['IntentionWeixinAccount']->update_account_status($_POST['account_ids'],$_POST['intention_order_id'],8,$this->oUser->id);
 				
 				parent::callback(C('STATUS_SUCCESS'),'成功!');
 			}else{

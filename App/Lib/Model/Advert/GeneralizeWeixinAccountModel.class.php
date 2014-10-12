@@ -97,8 +97,8 @@
 				$exp_arr = explode(',', $explode_arr);
 				if(is_array($exp_arr))
 				{
-					$IntentionWeiboAccount = D('IntentionWeiboAccount');
-					$wxAcc = $IntentionWeiboAccount->where(array('id'=>array('in',$exp_arr)))->select();
+					$IntentionWeixinAccount = D('IntentionWeixinAccount');
+					$wxAcc = $IntentionWeixinAccount->where(array('id'=>array('in',$exp_arr)))->select();
 					//订单下生成新账号
 					foreach ($wxAcc as $value) {
 						$add['users_id'] = $value['users_id'];
@@ -110,7 +110,7 @@
 					}
 					//修改
 					$upadte['audit_status'] = 8;
-					$IntentionWeiboAccount->where(array('id'=>array('in',$exp_arr)))->save($upadte);
+					$IntentionWeixinAccount->where(array('id'=>array('in',$exp_arr)))->save($upadte);
 
 					//计算总价
 					$update_all['all_price'] = $this->where(array('generalize_id'=>$ien_id))->sum('price');
