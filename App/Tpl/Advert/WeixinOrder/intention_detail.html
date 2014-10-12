@@ -5,6 +5,18 @@
     <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/page.css" type="text/css" />
 	<title>订单详情</title>
+	
+	<style type="text/css">
+		.create_order {
+			color:blue;
+			cursor:pointer;
+		}
+		.btn_class {
+			margin-left:auto;
+			margin-right:auto;
+			width:200px;
+		}
+	</style>
 </head>
 <body>
 <!-- 头部 -->
@@ -67,6 +79,8 @@
 			-->
 			<table class="tab01-order l">
 			  <tr>
+			  
+			  <th class="t1"><input type="checkbox" class="select_all"/></th>
 				<th class="t1">订单ID</th>
 				<th class="t2">名称</th>
 				<th class="t10">账号名称</th>
@@ -79,6 +93,11 @@
 			  </tr>
 			<volist name="view_data['account_order_list']" id="vo">
 			  <tr>
+			  	<td class="t1">
+			  		<if condition="($vo['create_order_status'] eq true)">
+			  		<input type="checkbox" class="order_account" value="{$vo.g_id}"/>
+			  		</if>
+			  	</td>
 				<td class="t1">{$vo.g_id}</td>
 				<td class=""><div class="weibopart"><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl">
 					<h5 class="l"><b></b><span class="heart"></span></h5>
@@ -86,20 +105,32 @@
 				<td class="">{$vo.account_name}</td>
 
 				<td class="">{$vo.g_price}元</td>
-				<td class=""><strong class="finish">{$vo.g_status_explain}</strong></td>
-	
-	
 				<td class="">
+				<strong class="finish">{$vo.g_status_explain}</strong></td>
+	
+
+				<td class="">
+					<if condition="($vo['create_order_status'] eq true)">
+						<span class="create_order" data-account_id="{$vo.g_id}">创建活动</span>
+					<elseif condition="$name eq 2"/>
+					<else />
 					暂无
+					</if>
+				
 				</td>
 			  </tr>
 			</volist>
 			</table>
 		</div>
+	
+		
 	</div>
 	
-
+		<div class="btn_class">
+			<input type="submit" class="btn brownbtn" id="create_all_order" value="创建活动">
+		</div>
 	
+
 </div>
 	
 </div>
@@ -114,10 +145,77 @@ $(function(){
 	$('.tab01-order tr:even').addClass('even');
 });
 
+
 (function () {
+	var create_order = $('.create_order');
+	var intention_order_id = {$view_data.order_id};
+	var select_all = $('.select_all');
+	var order_account = $('.order_account');
+	var create_all_order = $('#create_all_order');
 	
 	
+	//单个创建
+	create_order.click(function () {
+		if (confirm('确认操作？') == false) return false;
+		var _this = $(this);
+		var retsult = create__order_fn(_this.data('account_id'));
+		if (retsult.status == 0) {
+			alert(retsult.msg);
+			window.location.reload();
+		} else {
+			alert(retsult.msg);
+		}
+	});
+	
+	//批量创建订单
+	create_all_order.click(function () {
+		if (confirm('确认操作？') == false) return false;
+		var selected_ids = [];
+		order_account.each(function () {
+			var _this_account = $(this);
+			if (_this_account.prop('checked')) {
+				selected_ids.push(_this_account.val());
+			}
+		});
+		
+		if (selected_ids == '') {
+			alert('没有选中可操作订单');
+		} else {
+			var result = create__order_fn(selected_ids.join(','));
+			if (result.status == 0) {
+				alert(result.msg);
+				window.location.reload();
+			} else {
+				alert(result.msg);
+			}
+		}		
+	});
+	
+	
+	//全选，全取消
+	select_all.click(function () {
+		var _this = $(this);
+		var check_status = _this.prop('checked');
+		if (check_status == true) {
+			order_account.prop('checked',true);
+		} else {
+			order_account.prop('checked',false);
+		}
+	});
+	
+	
+	//执行创建函数
+	var create__order_fn = function ($account_ids) {
+		var post_data = {};
+		post_data.account_ids = $account_ids;
+		post_data.intention_order_id = intention_order_id;
+		var result = System.ajax_post_setup('{:U('Advert/WeixinOrder/YxZhuanTg')}',post_data,'JSON');
+		//console.log(result);
+		return result;
+	}
 })();
+
+
 
 </script>
 </body>

@@ -288,7 +288,7 @@
 			$list = $this->where($where)
 			->table('app_account_weixin as w')
 			->join('app_celeprityindex_weixin as b on w.id = b.weixin_id')
-			->limit($now_page,$limit)->field('w.*,b.occupation,b.ck_price,b.yc_price,b.interest,b.coordination,b. 	fansnumber')->select();
+			->limit($now_page,$limit)->field('w.*,b.occupation,b.ck_price,b.yc_price,b.interest,b.coordination,b.fansnumber')->select();
 			return array('list'=>$list,'count'=>$count);
 		}
 		

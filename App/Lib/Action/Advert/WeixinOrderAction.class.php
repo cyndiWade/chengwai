@@ -12,7 +12,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 	protected  $not_check_fn = array();	//无需登录和验证rbac的方法名
 	
 	//控制器说明
-	private $module_explain = '微博订单';
+	private $module_explain = '微信订单';
 		
 	private $pt_type;	//平台类型
 	
@@ -446,7 +446,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 			
 			foreach ($account_order_list as $key=>$val) {
 				//关联表订单状态
-				$account_order_list[$key]['g_status_explain'] = $Account_Order_Status[$val['g_audit_status']]['explain'];
+				$account_order_list[$key]['g_status_explain'] = $Account_Order_Status[$val['g_audit_status']]['explain_yxd'];
 				
 				//是否显示确认按钮
 				if ($val['g_audit_status'] == $Account_Order_Status[6]['status']) {
@@ -456,9 +456,14 @@ class WeixinOrderAction extends AdvertBaseAction {
 				//统计订单总金额
 				$extend_order_info['sum_money'] += $val['g_price'];
 				
-				//统计据单数
+				//统计拒单数
 				if ($val['g_audit_status'] == $Account_Order_Status[4]['status']) {
 					$extend_order_info['jy_order_sum'] += 1;
+				}
+				
+				//显示创建活动按钮
+				if ($val['g_audit_status'] == $Account_Order_Status[5]['status']) {
+					$account_order_list[$key]['create_order_status'] = true;
 				}
 			}
 			
@@ -503,8 +508,9 @@ class WeixinOrderAction extends AdvertBaseAction {
 	//意向单转换推广单
 	public function YxZhuanTg()
 	{
-		if($this->_post)
+		if($this->isPost())
 		{
+			$Account_Order_Status = C('Account_Order_Status');
 			//获得微信的订单数据
 			$intentval = $this->db['IntentionWeixinOrder']->get_OrderInfo_By_Id(intval($_POST['intention_order_id']),$this->oUser->id);
 			//把微信的订单输入塞入推广表
@@ -513,9 +519,12 @@ class WeixinOrderAction extends AdvertBaseAction {
 			$bool = $this->db['GeneralizeWeixinAccount']->insertNewAccount($ien_id,$_POST['account_ids']);
 			if(bool==true)
 			{
-				parent::callback(C('STATUS_SUCCESS'),'发布成功!');
+				//修改订单状态
+				$this->db['IntentionWeixinAccount']->update_account_status($_POST['account_ids'],$_POST['intention_order_id'],8,$this->oUser->id);
+				
+				parent::callback(C('STATUS_SUCCESS'),'成功!');
 			}else{
-				parent::callback(C('STATUS_UPDATE_DATA'),'发布失败!');
+				parent::callback(C('STATUS_UPDATE_DATA'),'错误请稍后再试!');
 			}
 		}
 	}

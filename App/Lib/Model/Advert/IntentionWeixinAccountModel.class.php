@@ -65,7 +65,7 @@
 		public function get_account_order ($generalize_id) {
 			$where['g.generalize_id'] = $generalize_id;
 			//$field = 'g.id AS g_id,g.price AS g_price,g.audit_status AS g_audit_status,a.*';
-			$field ='g.id AS g_id,g.audit_status AS g_audit_status,a.*';
+			$field ='g.id AS g_id,g.audit_status AS g_audit_status,g.price as g_price,a.*';
 			$data = $this->field($field)
 			->table($this->prefix.'intention_weixin_account AS g')
 			->join($this->prefix.'account_weixin AS a ON g.account_id = a.id')
@@ -73,6 +73,12 @@
 			->select();
 
 			return $data;
+		}
+		
+		
+		//批量修改订单账号状态
+		public function update_account_status ($ids,$order_id,$status,$user_id) {
+			return $this->where(array('id'=>$ids,'generalize_id'=>$order_id,'user_id'=>$user_id))->save(array('audit_status'=>$status));
 		}
 
 	}
