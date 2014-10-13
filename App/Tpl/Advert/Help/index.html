@@ -21,35 +21,20 @@
 	<div class="area01-memwb l">
 		<div class="side-help fl">
 			<ul class="helpnav l">
-				<li class="on"><a href="#"><em>1</em><strong>常见问题</strong></a></li>
-				<li><a href="#"><em>2</em><strong>草根活动相关</strong></a></li>
-				<li><a href="#"><em>3</em><strong>朋友圈红人活动相关</strong></a></li>
-				<li><a href="#"><em>4</em><strong>名人/媒体预约相关</strong></a></li>
-				<li><a href="#"><em>5</em><strong>CPC任务相关</strong></a></li>
-				<li><a href="#"><em>6</em><strong>报价单相关</strong></a></li>
-				<li><a href="#"><em>7</em><strong>意向单相关</strong></a></li>
-				<li><a href="#"><em>8</em><strong>数据报告</strong></a></li>
-				<li><a href="#"><em>9</em><strong>账单查询</strong></a></li>
-				<li><a href="#"><em>10</em><strong>账号评价</strong></a></li>
-				<li><a href="#"><em>11</em><strong>用户中心</strong></a></li>
-				<li><a href="#"><em>12</em><strong>名词解释</strong></a></li>
+				<volist name="view_data['sidebar_list']" id="vo" key="i">
+				<li class="on"><a href="{:U('Advert/Help/index',array('parent_id'=>$vo['id']))}"><em>{$i}</em><strong>{$vo.title}</strong></a></li>
+				</volist>
 			</ul>
 		</div>
 		<div class="content-help fr">
-			<div class="top-user l"><strong class="gray">常见问题</strong></div>
+			<div class="top-user l"><strong class="gray">问题解答</strong></div>
 			<div class="mid-help l">
+				<volist name="view_data['content_list']" id="vo" key="i">
 				<div class="part01-help l">
-					<div class="title">微播易平台是干什么的？是否免费？是否可以试用？</div>
-					<p>微播易是精准的自媒体广告平台，这里有海量跨平台的草根自媒体账号和优质名人名煤账号帮广告主进行宣传；</p>
+					<div class="title">{$vo.val}</div>
+					<p>{$vo.title}</p>
 				</div>
-				<div class="part01-help l">
-					<div class="title">微播易平台是干什么的？是否免费？是否可以试用？</div>
-					<p>微播易是精准的自媒体广告平台，这里有海量跨平台的草根自媒体账号和优质名人名煤账号帮广告主进行宣传；</p>
-				</div>
-				<div class="part01-help l">
-					<div class="title">微播易平台是干什么的？是否免费？是否可以试用？</div>
-					<p>微播易是精准的自媒体广告平台，这里有海量跨平台的草根自媒体账号和优质名人名煤账号帮广告主进行宣传；</p>
-				</div>
+				</volist>
 			</div>
 		</div>
 	</div>
