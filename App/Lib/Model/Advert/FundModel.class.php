@@ -36,4 +36,19 @@
 			$add['status'] = 0;
 			return $this->add($add);
 		}
+
+		//冻结资金流水
+		public function djFund($account_id,$price)
+		{
+			$insertArr = array(
+				'users_id'	=>	$account_id,
+				'shop_number'	=>	'DJ'.time(),
+				'money'	=>	$price,
+				'type'	=>	4,
+				'member_info'	=>	'冻结资金',
+				'admin_info'	=>	'冻结资金',
+				'time'	=>	time()
+			);
+			$this->add($insertArr);
+		}
 	}

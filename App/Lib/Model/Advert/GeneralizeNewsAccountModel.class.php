@@ -75,6 +75,8 @@
 						$save = array('status'=>4);	//已支付待执行状态
 						$NewsOrderStatus = D('GeneralizeNewsOrder')->where(array('id'=>$zhifu_id))->save($save);
 						
+						D('Fund')->djFund($account_id,$price);
+
 						$Account_Order_Status = C('Account_Order_Status');
 						
 						if ($NewsOrderStatus == true) {

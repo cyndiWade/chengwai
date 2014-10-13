@@ -60,6 +60,8 @@
 						$save = array('status'=>4);
 						$WeixinOrderStatus =  D('GeneralizeWeixinOrder')->where(array('id'=>$zhifu_id))->save($save);
 						
+						D('Fund')->djFund($account_id,$price);
+
 						//修改关联表的状态为已支付状态
 						$Account_Order_Status = C('Account_Order_Status');
 						if ($WeixinOrderStatus == true) {
