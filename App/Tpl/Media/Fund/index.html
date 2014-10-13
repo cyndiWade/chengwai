@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
+	<title>媒体主_流水表</title>
+</head>
+<body>
+
+<!-- 头部 -->
+<include file="Public:header" classname="phd-member-media" />
+
+<div class="wrap l">
+    <div class="pbd">
+        <include file="Public:breadcrumbs" />
+        <div class="area01-mediahelp l">
+            <table class="tab01-allorder tab01-allorder-water l">
+              <tr>
+                <th class="t1">流水号</th>
+                <th class="t2">日期</th>
+                <th class="t3">记录</th>
+                <!-- <th class="last">余额</th> -->
+              </tr>
+              <empty name="view_data.list">
+              <tr>
+                <td colspan="3" align="center">暂无数据</td>
+              </tr>
+              <else />
+              <php> $moneyType = array('', '充值', '退款', '消费');</php>
+              <volist name="view_data.list" id="item">
+              <tr>
+                <td class="t1">{$item.id}</td>
+                <td class="t2">{$item.time|date='Y-m-d', ###}</td>
+                <td class="t3">{$moneyType[$item['type']]}<span class="yel">{$item.money}</span>元</td>
+                <!-- <td class="last"><span class="yel">10.00</span>元</td> -->
+              </tr>
+              </volist>
+              </empty>
+            </table>
+        </div>
+        <div class="page-wb fr">
+            {$view_data.page}
+        </div>
+    </div>
+</div>
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+</body>
+</html>
