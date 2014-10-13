@@ -152,7 +152,7 @@ class AccountAction extends AdvertBaseAction {
 				$this->redirect('Advert/Member/datum_edit');
 			}
 		} else {
-			$this->redirect('/Advert/Account/login');
+			$this->redirect('Advert/Account/login');
 		}
 	}
 	
@@ -161,7 +161,7 @@ class AccountAction extends AdvertBaseAction {
     public function logout () {
     	if (session_start()) {
     		parent::del_session('user_info');
-    		$this->success('退出成功',U(GROUP_NAME.'/Account/login'));
+    		$this->success('退出成功',U('Advert/Account/login'));
     	} 
     }
 }

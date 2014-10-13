@@ -56,6 +56,33 @@ class UsersModel extends AdvertBaseModel {
 		return $data;
 	}
 	
+
+	//检测用户密码是否正确
+	public function checkUserNew($array,$users_id)
+	{
+		if($users_id!='')
+		{
+			if($array['new_pass']==$array['new_passes'])
+			{
+				$oldPass = $this->where(array('id'=>$users_id))->field('password')->find();
+				if($oldPass['password']==md5($array['old_pass']))
+				{
+					$update = array('password'=>md5($array['new_pass']));
+					$bool = $this->where(array('id'=>$users_id))->save($update);
+					if($bool)
+					{
+						return '1';
+					}else{
+						return '2';
+					}
+				}else{
+					return '3';
+				}
+			}else{
+				return '4';
+			}
+		}
+	}
 }
 
 ?>

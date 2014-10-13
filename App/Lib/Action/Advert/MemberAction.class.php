@@ -59,6 +59,24 @@ class MemberAction extends AdvertBaseAction {
     public function pass_save() {
     	//选中样式
     	$this->data_to_view(array('member_sidebar_passSave_class'=>'class="on"'));
+    	if($this->isPost())
+    	{
+    		$bool = $this->db['Users']->checkUserNew($_POST,$this->oUser->id);
+    		switch ($bool) {
+    			case '1':
+    				parent::callback(C('STATUS_SUCCESS'),'','',array('info'=>'密码修改成功!'));
+    			break;
+    			case '2':
+    				parent::callback(C('STATUS_UPDATE_DATA'),'','',array('info'=>'密码修改失败!'));
+    			break;
+    			case '3':
+    				parent::callback(C('STATUS_UPDATE_DATA'),'','',array('info'=>'原始密码错误!'));
+    			break;
+    			case '4':
+    				parent::callback(C('STATUS_UPDATE_DATA'),'','',array('info'=>'新密码不一致'));
+    			break;
+    		}
+    	}
     	$this->display();
     }
    

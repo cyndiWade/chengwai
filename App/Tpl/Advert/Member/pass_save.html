@@ -20,17 +20,33 @@
 		<div class="content-user fr">
 			<div class="top-user l"><strong>修改密码</strong></div>
 			<div class="mid-user l">
-				<div class="part01-user fl">
-					<p>系统提示：为了您的账号安全，修改密码前请输入注册手机号进行验证！</p>
-					<div class="phone-reg l">
-						<div class="grp01 fl">注册手机号：</div>
-						<div class="grp02 fl">
-							<input type="text" class="phonetext" value=""/>
-							<p class="red">如果您忘记注册手机号，请联系销售经理！</p>
-							<input type="submit" class="btn brownbtn" value="下一步" />
+					<!-- <form action="{:U('Advert/Member/pass_save')}" method="POST"> -->
+						<div class="part01-user fl">
+							<p>系统提示：请确认您的原始密码是否正确！</p>
+							<div class="phone-reg l">
+								<div class="grp01 fl">原始密码：</div>
+								<div class="grp02 fl">
+									<input type="password" class="phonetext" name="old_pass"/>
+									<p class="red">请输入旧密码！</p>
+								</div>
+							</div>
+							<div class="phone-reg l">
+								<div class="grp01 fl">新密码：</div>
+								<div class="grp02 fl">
+									<input type="password" class="phonetext" name="new_pass"/>
+									<p class="red">请输入新密码！</p>
+								</div>
+							</div>
+							<div class="phone-reg l">
+								<div class="grp01 fl">请再次输入：</div>
+								<div class="grp02 fl">
+									<input type="password" class="phonetext" name="new_passes"/>
+									<p class="red">请再次输入新密码！</p>
+								</div>
+							</div>
+							<input type="submit" class="btn brownbtn" value="确认修改" />
 						</div>
-					</div>
-				</div>
+					<!-- </form> -->
 			</div>
 		</div>
 	
@@ -38,20 +54,32 @@
 </div>
 </div>
 <include file="Public:member_footer" />
-<!-- JS底部文件 -->
-<include file="Public:bottom" />
-
-<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/check_zhuce.js"></script>
-<script>
-	$('.brownbtn').click(function(){
-		var iphone = $('.phonetext').val();
-		if(phone(iphone)==true)
-		{
-
-		}else{
-			alert('手机号错误!');
-		}
+<script src="{$global_tpl_view.Global_Resource_Path}jquery/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+	var init = function(){
+		old_pass = $('input[name="old_pass"]');
+		new_pass = $('input[name="new_pass"]');
+		new_passes = $('input[name="new_passes"]');
+		brownbtn = $('.brownbtn');
+	}
+	init();
+	brownbtn.click(function(){
+		$.ajax({
+			url : "{:U('Advert/Member/pass_save')}",
+			type: "POST",
+			data: {
+				'old_pass' : old_pass.val(),
+				'new_pass' : new_pass.val(),
+				'new_passes' :　new_passes.val()
+			},
+			dataType: "json",
+			success : function(value){
+				alert(value.info);
+			}
+		});
 	});
 </script>
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
 </body>
 </html>
