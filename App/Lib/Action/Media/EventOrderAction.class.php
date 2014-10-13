@@ -240,37 +240,20 @@ class EventOrderAction extends MediaBaseAction {
             $userInfos = parent::get_session('user_info');
             $todayStartTime = strtotime(date('Y-m-d', $_SERVER['REQUEST_TIME']));
             $todayEndTime = $todayStartTime + 86399;
-            if ($type == 3) {
-                $where = array(
-                    'users_id' => $userInfos['id'],
-                    'status' => 5,
-                    'start_time' => array('NOT BETWEEN', array($todayStartTime, $todayEndTime))
-                );
-            } elseif ($type == 2) {
-                $where = array(
-                    'users_id' => $userInfos['id'],
-                    'status' => 3,
-                    'start_time' => array('NOT BETWEEN', array($todayStartTime, $todayEndTime))
-                );
-            } elseif ($type == 1) {
-                $where = array(
-                    'users_id' => $userInfos['id'],
-                    'status' => 5,
-                    'start_time' => array('BETWEEN', array($todayStartTime, $todayEndTime))
-                );
-            } else {
-                $where = array(
-                    'users_id' => $userInfos['id'],
-                    'status' => 3,
-                    'start_time' => array('BETWEEN', array($todayStartTime, $todayEndTime))
-                );
-            }
+            $betweenOrNot = in_array($type, array(0, 1)) ? 'BETWEEN' : 'NOT BETWEEN';
+            // 订单帐号状态
+            $status = $type % 2 ? 5 : 3;
+            $where = array(
+                'status' => 4,
+                'start_time' => array($betweenOrNot, array($todayStartTime, $todayEndTime))
+            );
+            
             
             // 获取帐号信息
             $datas = array();
-            $newsOrder = $newsOrderModel->getOrderList($userInfos['id'], $where);
-            $weiboOrder = $weiboOrderModel->getOrderList($userInfos['id'], $where);
-            $weixinOrder = $weixinOrderModel->getOrderList($userInfos['id'], $where);
+            $newsOrder = $newsOrderModel->getOrderList($userInfos['id'], $status, $where);
+            $weiboOrder = $weiboOrderModel->getOrderList($userInfos['id'], $status, $where);
+            $weixinOrder = $weixinOrderModel->getOrderList($userInfos['id'], $status, $where);
             $datas = array_merge($datas, $newsOrder, $weiboOrder, $weixinOrder);
             
             parent::callback(1, '成功获取数据', $datas);

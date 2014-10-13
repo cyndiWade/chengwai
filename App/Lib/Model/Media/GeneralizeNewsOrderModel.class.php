@@ -43,13 +43,14 @@ class GeneralizeNewsOrderModel extends MediaBaseModel
      * 获取订单列表
      * 
      * @param int   $userid 用户ID
+     * @param int   $status 订单帐号状态
      * @param array $where  条件
 
      * @author lurongchang
      * @date   2014-10-12
      * @return array
      */
-    public function getOrderList($userid, $where)
+    public function getOrderList($userid, $status, $where)
     {
         // 获取订单
         $order = $this->field(true)->where($where)->select();
@@ -57,16 +58,19 @@ class GeneralizeNewsOrderModel extends MediaBaseModel
         $orderids = array();
         $datas = array();
         if ($order) {
+            $newOrderList = array();
             foreach ($order AS $val) {
                 $orderids[] = $val['id'];
+                $newOrderList[$val['id']] = $val;
             }
+            unset($order);
             $where = array(
-                'users_id' => $userid,
+                'audit_status' => $status,
                 'generalize_id' => array('IN', $orderids),
             );
-            // 获取订单子表对应的帐号ID
+            // 获取订单子表对应的帐号ID [一个订单对应多个帐号]
             $orderAccountList = M('GeneralizeNewsAccount')->where($where)
-                ->getField('generalize_id, price, account_id');
+                ->field('id, generalize_id, price, account_id, audit_status')->select();
             
             $accountIds = array();
             if ($orderAccountList) {
@@ -85,20 +89,27 @@ class GeneralizeNewsOrderModel extends MediaBaseModel
                         $accountInfo[$val['id']] = $val['account_name'];
                     }
                 }
-            }
-            foreach ($order AS $val) {
-                $accountName = $accountInfo[$orderAccountList[$val['id']]['account_id']];
-                $temp = array(
-                    'order_id'      => $val['id'],
-                    'account_name'  => $accountName,
-                    'account_type'  => 4,
-                    'title'         => $val['title'],
-                    'price'         => $orderAccountList[$val['id']]['price'],
-                    'start_time'    => date('Y-m-d', $val['start_time']),
-                    'order_status'  => $val['status'],
-                    'mark'          => $val['bz_info'],
-                );
-                $datas[] = $temp;
+                foreach ($orderAccountList AS $info) {
+                    if (isset($accountInfo[$info['account_id']])) {
+                        $accountName = $accountInfo[$info['account_id']];
+                    } else {
+                        continue;
+                    }
+                    $orderInfo = $newOrderList[$info['generalize_id']];
+                    $temp = array(
+                        'child_order_id'=> $info['id'],
+                        'order_id'      => $info['generalize_id'],
+                        'account_name'  => $accountName,
+                        'account_type'  => $orderInfo['tfpt_type'],
+                        'type_info'     => 'news',
+                        'title'         => $orderInfo['title'],
+                        'price'         => $info['price'],
+                        'start_time'    => date('Y-m-d', $orderInfo['start_time']),
+                        'order_status'  => $info['audit_status'],
+                        'mark'          => $orderInfo['bz_info'],
+                    );
+                    $datas[] = $temp;
+                }
             }
         }
         

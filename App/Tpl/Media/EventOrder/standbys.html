@@ -237,9 +237,7 @@
                         <th class="t3">活动</th>
                         <th class="t4">价格(元)</th>
                         <th class="t5">开始时间</th>
-                        <th class="t6">订单状态</th>
-                        <th class="t7">拒单</th>
-                        <th class="t8">执行</th>
+                        <th class="last">订单状态</th>
                         <th class="last">用户备忘</th>
                       </tr>
                     </thead>
@@ -252,6 +250,73 @@
         </div>
     </div>
 </div>
+
+<!-- 添加账号弹窗 -->
+<div class="batchbox tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>拒绝执行</b></div>
+	<div class="mid-batch pr l">
+	<form  action="{:U('Media/EventOrder/setAujectStatus')}" method="POST" enctype="multipart/form-data" id="frm1" >
+		<table class="tab01-inten l table-xwmt">  
+		  <tr>
+			<td class="t1"><span><i>*</i><strong>原因：</strong></span></td>
+			<td class="t2"><textarea name="reason"  cols="60" rows="3"></textarea></td>
+		  </tr>
+		  <tr>
+			<td class="t1"></td>
+			<td class="t2">
+			<input type="hidden" name="status" value="4" />
+			<input type="hidden" name="a_id"  value="" />
+			<input type="hidden" name="type" value="weibo" />
+			<input type="hidden" name="order_id" id="order_id" value="" />
+			<span class="btn graybtn" onclick="javascript:$('#frm1').submit();">提&nbsp;&nbsp;&nbsp;&nbsp;交</span><span class="btn graybtn close">取消</span></td>
+		  </tr>
+		</table>
+	</form>
+	</div>
+</div>
+
+<div class="batchbox2 tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>执行完成</b></div>
+	<div class="mid-batch pr l">
+	<form  action="{:U('Media/EventOrder/setFinishiedStatus')}" method="POST" enctype="multipart/form-data"  id="frm2">
+		<table class="tab01-inten l table-xwmt">  
+		   <tr>
+			<td class="t1"><span><i>*</i><strong>执行后反馈链接：</strong></span></td>
+			<td class="t2"><input class="text" type="text" name="link_url">http://</td>
+		  </tr>
+		  <tr>
+			<td class="t1"></td>
+			<td class="t2">
+			<input type="hidden" name="status" value="6" />
+			<input type="hidden" name="a_id"  value="" />
+			<input type="hidden" name="type" value="weibo" />
+			<input type="hidden" name="order_id"  value="" />
+			<span class="btn graybtn" onclick="javascript:$('#frm2').submit();">提&nbsp;&nbsp;&nbsp;&nbsp;交</span><span class="btn graybtn close">取消</span></td>
+		  </tr>
+		</table>
+	</form>
+	</div>
+</div>
+
+<div class="batchbox3 tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>开始执行</b></div>
+	<div class="mid-batch pr l">
+	<form  action="{:U('Media/EventOrder/setAujectStatus')}" method="POST" enctype="multipart/form-data"  id="frm3">
+		<table class="tab01-inten l table-xwmt">  
+		  <tr>
+			<td class="t1"></td>
+			<td class="t2">
+			<input type="hidden" name="status" value="5" />
+			<input type="hidden" name="a_id" value="" />
+			<input type="hidden" name="type" value="weibo" />
+			<input type="hidden" name="order_id" value="" />
+			<span class="btn graybtn" onclick="javascript:$('#frm3').submit();">提&nbsp;&nbsp;&nbsp;&nbsp;交</span><span class="btn graybtn close">取消</span></td>
+		  </tr>
+		</table>
+	</form>
+	</div>
+</div>
+
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 
@@ -282,6 +347,7 @@ $(function(){
 	});
     $('.dateorder li:eq(0)').click();
     $('.dateorder li:eq(2)').click();
+    
 });
 function getOrderList(type) {
     var html = '';
@@ -293,15 +359,21 @@ function getOrderList(type) {
         success : function(data){
             if (data.status) {
                 $.each(data.data, function(idx, item){
+                    var statusHtml = (item.order_status == 3) ? 
+                        ('<a href="javascript:;" onclick="toOperation(this);" class="yel affirm_order" data-order_id="' + item.order_id + '" data-child_order_id="' + item.child_order_id + '" data-account_type="' + item.type_info + '" type="4">拒绝</a> | ' + 
+						'<a href="javascript:;" onclick="toOperation(this);" class="yel affirm_order" data-order_id="' + item.order_id + '" data-child_order_id="' + item.child_order_id + '" data-account_type="' + item.type_info + '" type="5">执行</a>')
+                    : (
+                        (item.order_status == 5)
+                        ? ('<a href="javascript:;" onclick="toOperation(this);" class="yel affirm_order" data-order_id="' + item.order_id + '" data-child_order_id="' + item.child_order_id + '" data-account_type="' + item.type_info + '" type="6">执行完成</a>')
+                        : '暂无'
+                    );
                     html += '<tr>' +
                         '<td class="t1">' + item.order_id + '</td>' +
                         '<td class="t2">' + item.account_name + '</td>' +
                         '<td class="t3">' + item.title + '</td>' +
                         '<td class="t4">' + item.price + '</td>' +
                         '<td class="t5">' + item.start_time + '</td>' +
-                        '<td class="t6">' + item.order_status + '</td>' +
-                        '<td class="t7">' + item.order_id + '</td>' +
-                        '<td class="t8">' + item.order_id + '</td>' +
+                        '<td class="t6">' + statusHtml + '</td>' +
                         '<td class="last">' + item.order_id + '</td>' +
                     '</tr>';
                 });
@@ -320,6 +392,30 @@ function getOrderList(type) {
         '</tr>';
     }
     return html;
+}
+
+function toOperation(obj)
+{
+    orderid         = $(obj).data('order_id');
+    childorderid    = $(obj).data('child_order_id');
+    accounttype     = $(obj).data('account_type');
+    status	        = $(obj).attr('type');
+    $("input[name='a_id']").val(childorderid); 
+    $("input[name='order_id']").val(orderid);
+    $("input[name='type']").val(accounttype);
+    
+    if(status == 4)
+    {
+        $('.batchbox').popOn();	
+    }
+    else if(status == 6)
+    {
+        $('.batchbox2').popOn();
+    }
+    else if(status == 5)
+    {
+        $('.batchbox3').popOn();
+    }
 }
 </script>
 </body>
