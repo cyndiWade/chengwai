@@ -29,7 +29,8 @@ class NewsAction extends AdvertBaseAction {
 			'FastindexWeibo' => 'FastindexWeibo',
 			'AccountNews' => 'AccountNews',
 			'GeneralizeNewsOrder' => 'GeneralizeNewsOrder',
-			'GeneralizeNewsAccount' => 'GeneralizeNewsAccount'
+			'GeneralizeNewsAccount' => 'GeneralizeNewsAccount',
+			'GeneralizeNewsFiles'=>'GeneralizeNewsFiles'
 	);
 	
 	//和构造方法
@@ -327,6 +328,28 @@ class NewsAction extends AdvertBaseAction {
 		}else{
 			parent::callback(C('STATUS_UPDATE_DATA'),'支付失败,请检查余额!');
 		}
+	}
+	
+	
+	//查看订单执行图
+	public function look_perform_pic () {
+		$order_id = $this->_get('order_id');
+		$account_id = $this->_get('account_id');
+	
+		$type = 3;
+		$where['generalize_order_id'] = $order_id;
+		$where['account_id'] = $account_id;
+		$where['type'] = $type;
+		$result = $this->db['GeneralizeNewsFiles']->get_fiels_list($where);
+		parent::public_file_dir($result,array('url'),'images/');
+	
+	
+		parent::data_to_view(array(
+				'sidebar_two'=>array(2=>'select',),//第一个加依次类推，//二级导航属性
+				'list'=>$result
+		));
+	
+		$this->display();
 	}
 	
 }	

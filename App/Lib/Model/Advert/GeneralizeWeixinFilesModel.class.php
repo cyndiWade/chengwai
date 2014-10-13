@@ -30,6 +30,6 @@
 		
 		public function get_fiels_list (Array $where) {
 			$where['is_del'] = 0;
-			return $this->where($where)->select();
+			return $this->where($where)->order('id DESC')->select();
 		}
 	}

@@ -44,7 +44,7 @@
 		//获取账号下的订单列表
 		public function get_account_order ($generalize_id) {
 			$where['g.generalize_id'] = $generalize_id;
-			$field = 'g.id AS g_id,g.price AS g_price,g.audit_status AS g_audit_status,a.*';
+			$field = 'g.id AS g_id,g.price AS g_price,g.audit_status AS g_audit_status,g.account_id AS g_account_id,a.*';
 				
 			$data = $this->field($field)
 			->table($this->prefix.'generalize_account AS g')

@@ -349,8 +349,8 @@ class WeixinOrderAction extends AdvertBaseAction {
 		if (empty($order_info)) $this->error('订单不存在');
 		
 		//获取订单下的账号列表
-		$GeneralizeNewsAccount = $this->db['GeneralizeWeixinAccount'];
-		$account_order_list = $GeneralizeNewsAccount->get_account_order($order_id);	
+		$GeneralizeWeixinAccount = $this->db['GeneralizeWeixinAccount'];
+		$account_order_list = $GeneralizeWeixinAccount->get_account_order($order_id);	
 				
 		//订单状态
 		$ORDER_STATUS = C('Order_Status');
@@ -542,7 +542,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 	public function look_perform_pic () {
 		$order_id = $this->_get('order_id');
 		$account_id = $this->_get('account_id');
-		//public_file_dir
+	
 		$type = 3;
 		$where['generalize_order_id'] = $order_id;
 		$where['account_id'] = $account_id;
@@ -550,7 +550,13 @@ class WeixinOrderAction extends AdvertBaseAction {
 		$result = $this->db['GeneralizeWeixinFiles']->get_fiels_list($where);	
 		parent::public_file_dir($result,array('url'),'images/');
 		
-		dump($result);
+
+		parent::data_to_view(array(
+			'sidebar_two'=>array(3=>'select',),//第一个加依次类推，//二级导航属性
+			'list'=>$result
+		));
+		
+		$this->display();
 	}
 }
 

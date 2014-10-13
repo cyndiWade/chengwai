@@ -111,9 +111,9 @@ $custom= array (
 		
 		//外部文件访问地址(用来填写专用的文件服务器)
 		'PUBLIC_VISIT' => array(
- 				'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
- 				//'domain' =>	'http://images.jsonlin.cn/',
-				'dir' => 'files/chengwai/images/',							//项目文件目录
+ 				//'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
+ 				'domain' =>	'http://121.199.1.100/',
+				'dir' => 'files/chengwai/',							//项目文件目录
 		),
 
 		//短信平台账号

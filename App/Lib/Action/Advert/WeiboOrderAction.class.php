@@ -557,6 +557,28 @@ class WeiboOrderAction extends AdvertBaseAction {
 			}
 		}
 	}
+	
+	
+	//查看订单执行图
+	public function look_perform_pic () {
+		$order_id = $this->_get('order_id');
+		$account_id = $this->_get('account_id');
+	
+		$type = 3;
+		$where['generalize_order_id'] = $order_id;
+		$where['account_id'] = $account_id;
+		$where['type'] = $type;
+		$result = $this->db['GeneralizeFiles']->get_fiels_list($where);
+		parent::public_file_dir($result,array('url'),'images/');
+	
+	
+		parent::data_to_view(array(
+				'sidebar_two'=>array(5=>'select',),//第一个加依次类推，//二级导航属性
+				'list'=>$result
+		));
+	
+		$this->display();
+	}
 
 
 }
