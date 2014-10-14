@@ -263,10 +263,10 @@ class NewsAction extends AdvertBaseAction {
 				$account_order_list[$key]['g_status_explain'] = $Account_Order_Status[$val['g_audit_status']]['explain'];
 				
 				//是否显示确认按钮
-				if ($val['g_audit_status'] == $Account_Order_Status[6]['status']) {
-					$account_order_list[$key]['is_show_affirm_btn'] = true;
-				}
-				
+				// if ($val['g_audit_status'] == $Account_Order_Status[6]['status']) {
+				// 	$account_order_list[$key]['is_show_affirm_btn'] = true;
+				// }
+				$account_order_list[$key]['is_show_affirm_btn'] = $val['g_audit_status'];
 				//统计订单总金额
 				$extend_order_info['sum_money'] += $val['g_price'];
 				
@@ -301,19 +301,19 @@ class NewsAction extends AdvertBaseAction {
 	}
 
 	//确认订单状态
-	public function set_account_status () {
-		$id = $this->_post('id');
-		//关联边订单状态
-		$Account_Order_Status = C('Account_Order_Status');
-		$data['audit_status'] = $Account_Order_Status[7]['status'];
-		$is_ok = $this->db['GeneralizeNewsAccount']->where(array('id'=>$id))->save($data);
+	// public function set_account_status () {
+	// 	$id = $this->_post('id');
+	// 	//关联边订单状态
+	// 	$Account_Order_Status = C('Account_Order_Status');
+	// 	$data['audit_status'] = $Account_Order_Status[7]['status'];
+	// 	$is_ok = $this->db['GeneralizeNewsAccount']->where(array('id'=>$id))->save($data);
 		
-		if ($is_ok == true) {
-			parent::callback(C('STATUS_SUCCESS'),'操作成功');
-		} else {
-			parent::callback(C('STATUS_UPDATE_DATA'),'操作失败');
-		}
-	}
+	// 	if ($is_ok == true) {
+	// 		parent::callback(C('STATUS_SUCCESS'),'操作成功');
+	// 	} else {
+	// 		parent::callback(C('STATUS_UPDATE_DATA'),'操作失败');
+	// 	}
+	// }
 	
 
 	//支付
@@ -354,11 +354,12 @@ class NewsAction extends AdvertBaseAction {
 	
 
 	//确认支付
-	public function insertPrice($order_id)
+	public function insertPrice()
 	{
-		if($order_id!='')
+		$small_order_id = $this->_post('id');
+		if($small_order_id!='')
 		{
-			$bool = $this->db['GeneralizeNewsAccount']->getAllUserPr($order_id,$this->oUser->id);
+			$bool = $this->db['GeneralizeNewsAccount']->getUserPr($small_order_id,$this->oUser->id);
 			if($bool)
 			{
 				parent::callback(C('STATUS_SUCCESS'),'支付成功!');

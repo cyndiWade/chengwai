@@ -90,10 +90,12 @@
 				<td class=""><a href="{:U('Advert/WeiboOrder/look_perform_pic',array('order_id'=>$view_data['order_id'],'account_id'=>$vo['g_account_id']))}" target="_blank" class="blue" data-order_id="{$vo.g_id}">查看执行截图</a></td>
 	
 				<td class="">
-					<if condition="($vo['is_show_affirm_btn'] eq true)">
-					<a href="javascript:;" class="blue affirm_order" data-order_id="{$vo.g_id}">确认完成</a>	
+					<if condition="($vo['is_show_affirm_btn'] eq 6)">
+					<a href="javascript:;" class="blue affirm_order" data-order_id="{$vo.g_id}">确认完成</a>
+					<elseif condition="($vo['is_show_affirm_btn'] eq 7)"/>
+					<a href="javascript:;" class="blue" data-order_id="{$vo.g_id}">评论</a>
 					<else />
-					暂无
+					<a href="javascript:;" class="blue" data-order_id="{$vo.g_id}">暂无</a>
 					</if>
 				</td>
 			  </tr>
@@ -132,7 +134,7 @@ $(function(){
 		var order_id = _this.data('order_id');
 		var post_data = {};
 		post_data.id = order_id;
-		var result = System.ajax_post_setup('{:U('Advert/WeiboOrder/set_account_status')}',post_data);
+		var result = System.ajax_post_setup('{:U('Advert/WeiboOrder/insertPrice')}',post_data);
 		if (result.status == 0) {
 			alert(result.msg);
 			window.location.reload(); 

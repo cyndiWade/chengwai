@@ -136,24 +136,19 @@
 		}
 
 		//获取所有确认过的账户价格
-		public function getAllUserPr($order_id,$users_id)
+		public function getUserPr($small_order_id,$users_id)
 		{
-			if($order_id!='' && $users_id!='')
+			if($small_order_id!='' && $users_id!='')
 			{
 				$Account_Order_Status = C('Account_Order_Status');
-				$where = array('generalize_id'=>$order_id,'audit_status'=>$Account_Order_Status[3]['status']);
-				$all_array = $this->where($where)->field('users_id,price')->select();
-				//总价
-				$all_price = 0;
+				$all_array = $this->where(array('id'=>$small_order_id))->field('users_id,price')->find();
 				$UserMedia = D('UserMedia');
-				foreach($all_array as $value)
-				{
-					$UserMedia->insertPirce($value['users_id'],$value['price']);
-					$all_price += $value['price'];
-				}
-				$bool = D('UserAdvertisement')->updateFreeze($users_id,$all_price);
+				$UserMedia->insertPirce($all_array['users_id'],$all_array['price']);
+				$bool = D('UserAdvertisement')->updateFreeze($users_id,$all_array['price']);
 				if($bool)
 				{
+					$update['audit_status'] = $Account_Order_Status[7]['status'];
+					$this->where(array('id'=>$small_order_id))->save($update);
 					return true;
 				}else{
 					return false;
