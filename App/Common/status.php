@@ -168,4 +168,26 @@
 		}
 	}
 	
+	//意向订单状态
+	function getIntentionAccountStatus($id)
+	{  
+		$status =  C('Account_Order_Status');
+		switch($id)
+		{
+			case 0:
+				return $status[0]['explain_yxd'];
+			break;
+			case 1:
+				return   $status[1]['explain_yxd'];
+			break;
+			case 2:
+				return   $status[2]['explain_yxd'];
+			break;
+			case 3:
+				return   $status[3]['explain_yxd'];
+			break;
+		}
+	}
+
+	
 ?>

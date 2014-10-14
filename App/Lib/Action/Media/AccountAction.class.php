@@ -6,9 +6,9 @@
 class AccountAction extends MediaBaseAction {
 	
 	//每个类都要重写此变量
-	protected  $is_check_rbac = false;		//是否需要RBAC登录验证
+	protected  $is_check_rbac = true;		//是否需要RBAC登录验证
 	
-	protected  $not_check_fn = array('register','check_login','login','logout');	//无需登录和验证rbac的方法名
+	protected  $not_check_fn = array('register', 'check_login', 'login', 'logout', 'register_accout', 'checkPhone', 'checkUserName');	//无需登录和验证rbac的方法名
 	
 	//控制器说明
 	private $module_explain = '媒体主';
@@ -47,9 +47,10 @@ class AccountAction extends MediaBaseAction {
 		$phone_vr = $phone['phone_vr'];	//手机上的验证码
 		//执行验证
 		$phone_check_info = parent::check_verify($phone_nub,$type,$phone_vr);
+		
 		//验证结果
 		//if ($phone_check_info['status'] == false) echo $phone_check_info['msg'];
-		if ($phone_check_info['status'] == false) return false;
+		return $phone_check_info['status'] ? true : false ;
 	}
 	
 	public function login () {
@@ -83,7 +84,9 @@ class AccountAction extends MediaBaseAction {
 			$User_media = $this->db['User_media'];
 			if ($User_media->iphone_is_have($iphone)!='') parent::callback(C('STATUS_OTHER'),'手机号已存在');
 			$phone = array('phone'=>$iphone,'type'=> 1 ,'phone_vr'=>$phone_verify);
-			if($this->check_phone($phone)==false) parent::callback(C('STATUS_OTHER'),'手机验证码错误');
+			 
+			if(!$this->check_phone($phone)) parent::callback(C('STATUS_OTHER'),'手机验证码错误');
+			
 			$id = $Users->add_account($account,$password);
 			if($id!='')
 			{
@@ -97,12 +100,13 @@ class AccountAction extends MediaBaseAction {
 					'type' => 1
 				);
 				parent::set_session(array('user_info'=>$db_data));
-				$this->redirect('/Media/EventOrder/index');
+				//$this->redirect('/Media/EventOrder/index');
+				parent::callback(1,'数据有误！');
 			}else{
 				parent::callback(C('STATUS_OTHER'),'数据有误！');
 			}
 		} else {
-			$this->error('非法访问！');
+			parent::callback(C('STATUS_OTHER'),'非法访问！');
 		}
 	}
 	

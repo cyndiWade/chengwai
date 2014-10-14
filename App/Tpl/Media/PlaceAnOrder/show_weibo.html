@@ -86,7 +86,7 @@
 					<td class="">{$vo.account_name}</td>
 	
 					<td class="yel">{$vo.price}元</td>
-					<td class=""><strong class="finish">{$vo.audit_status|getAccountStatus}</strong></td>
+					<td class=""><strong class="finish">{$vo.audit_status|getIntentionAccountStatus}</strong></td>
 					<td class="">
 						<if condition="$vo['audit_status'] eq 0">
 						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="4">拒绝</a>	&nbsp;&nbsp;
@@ -118,7 +118,7 @@
 		  <tr>
 			<td class="t1"></td>
 			<td class="t2">
-			<input type="hidden" name="status" value="4" />
+			<input type="hidden" name="status" value="2" />
 			<input type="hidden" name="a_id"  value="" />
 			<input type="hidden" name="type" value="weibo" />
 			<input type="hidden" name="order_id" id="order_id" value="{$view_data.order_info.id}" />
@@ -132,12 +132,12 @@
 <div class="batchbox2 tl">
 	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>接受</b></div>
 	<div class="mid-batch pr l">
-	<form  action="{:U('Media/PlaceAnOrder/setFinishiedStatus')}" method="POST" enctype="multipart/form-data"  id="frm2">
+	<form  action="{:U('Media/PlaceAnOrder/setAujectStatus')}" method="POST" enctype="multipart/form-data"  id="frm2">
 		<table class="tab01-inten l table-xwmt">   
 		  <tr>
 			<td class="t1"></td>
 			<td class="t2">
-			<input type="hidden" name="status" value="6" />
+			<input type="hidden" name="status" value="1" />
 			<input type="hidden" name="a_id"  value="" />
 			<input type="hidden" name="type" value="weibo" />
 			<input type="hidden" name="order_id"  value="{$view_data.order_info.id}" />
@@ -160,7 +160,7 @@
 		  <tr>
 			<td class="t1"></td>
 			<td class="t2">
-			<input type="hidden" name="status" value="5" />
+			<input type="hidden" name="status" value="3" />
 			<input type="hidden" name="a_id" value="" />
 			<input type="hidden" name="type" value="weibo" />
 			<input type="hidden" name="order_id" value="{$view_data.order_info.id}" />
@@ -191,11 +191,11 @@ $(function(){
 		{
 			$('.batchbox').popOn();	
 		}
-		else if(status == 6)
+		else if(status == 5)
 		{
 			$('.batchbox2').popOn();
 		}
-		else if(status == 5)
+		else if(status == 6)
 		{
 			$('.batchbox3').popOn();	
 		}

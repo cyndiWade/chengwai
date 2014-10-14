@@ -6,7 +6,7 @@
 class PlaceAnOrderAction extends MediaBaseAction {
 	
 	//每个类都要重写此变量
-	protected  $is_check_rbac = false;		//是否需要RBAC登录验证
+	protected  $is_check_rbac = true;		//是否需要RBAC登录验证
 	
 	protected  $not_check_fn = array();	//无需登录和验证rbac的方法名
 	
@@ -40,7 +40,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
 		parent::data_to_view(array(
 			//二级导航
 			'secondSiderbar' => array(
-				'待执行订单'		=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/index')),
+				//'待执行订单'		=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/index')),
 				'微博预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorder')),
 				'微信预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
 			),
@@ -61,7 +61,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
 		parent::data_to_view(array(
             //二级导航
 			'secondSiderbar' => array(
-				'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
+				//'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
 				'微博预约订单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorder')),
 				'微信预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
 			),
@@ -101,7 +101,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
 		parent::data_to_view(array(
             //二级导航
 			'secondSiderbar' => array(
-				'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
+				//'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
 				'微博预约订单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorder')),
 				'微信预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
 			),
@@ -157,7 +157,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
 		parent::data_to_view(array(
             //二级导航
 			'secondSiderbar' => array(
-				'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
+				//'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
 				'微博预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorder')),
 				'微信预约订单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
 			),
@@ -196,7 +196,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
 		parent::data_to_view(array(
             //二级导航
 			'secondSiderbar' => array(
-				'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
+				//'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
 				'微博预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorder')),
 				'微信预约订单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
 			),
@@ -239,7 +239,71 @@ class PlaceAnOrderAction extends MediaBaseAction {
 		$this->display('show_weixin');
 	}
 	
-	
+	 /**
+     * 意向订单状态---拒绝订单（status==2） 接受订单（status==1）
+     * 
+     * @author bumtime
+     * @date   2014-10-12
+     * @return void
+     */
+	public function setAujectStatus()
+    {
+    	$id 		= I("a_id", 0,"intval");
+    	$order_id 	= I("order_id", 0, "intval");
+    	$status 	= I("status", 0, "intval");
+    	$type		= I('type');
+   		$reason 	= I("reason");
+   		$typeTip	= "";
+   		
+   		switch ($type)
+   		{
+   			case 'weibo':
+   				$GeneralizeAccount	= D('IntentionWeiboAccount');
+    			$mediaObject		= D('AccountWeibo');
+    			$typeTip			= 3;
+    			break;
+   			case 'weixin':
+   				$GeneralizeAccount	= D('IntentionWeixinAccount');
+    			$mediaObject		= D('AccountWeixin');
+    			$typeTip			= 5;
+    			break; 
+   			    			   			
+   		}
+
+    	$media_Info = $GeneralizeAccount->getInfoById($id, "account_id");
+    	//检查是否是本人
+    	$test = $mediaObject->checkAccountByUserId($media_Info['account_id'], $this->oUser->id);
+    	if(!$test)
+    	{
+    		$this->error('操作非法，该账号不属于您旗下！');
+    	} 	
+    	
+		//改变状态	
+    	if($id)
+    	{
+    		//拒绝订单
+    		if(2 == $status || 3 == $status)
+    		{
+	    		$arryOrderLog = array();
+	    		$arryOrderLog['user_id'] 		= $this->oUser->id;
+	    		$arryOrderLog['order_id']		= $order_id;
+	    		$arryOrderLog['account_id']		= $id;
+	    		$arryOrderLog['type']			= $typeTip;
+	    		$arryOrderLog['content']		= $reason;
+	    		$arryOrderLog['create_time']	= time();
+	    		D('OrderLog')->orderLogAdd($arryOrderLog);
+    		}
+    		    		
+    		$GeneralizeAccount->setAccountStatus($id, $status);
+			$this->success('处理成功');
+    	}
+    	else 
+    	{
+    		$this->error('处理失败');
+    	} 
+    }
+    
+    
 	
     /**
      * 搜索微博意向订单列表
