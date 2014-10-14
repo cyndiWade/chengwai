@@ -409,9 +409,9 @@ class SocialAccountAction extends MediaBaseAction {
                             $weiboModel = $this->db['AccountWeibo'];
                             for ($i = 1; $i <= $len; $i++) {
                                 //通过循环得到EXCEL文件中每行记录的值
-                                $temp = explode(',', iconv('GBK', 'UTF-8', $temp[$i]));
-                                $accountName    = setString($temp[0]);
-                                $price          = floatval($temp[1]);
+                                $temp_info = explode(',', iconv('GBK', 'UTF-8', $temp[$i]));
+                                $accountName    = setString($temp_info[0]);
+                                $price          = floatval($temp_info[1]);
                                 
                                 if (empty($accountName) || empty($price)) {
                                     continue;
@@ -445,7 +445,9 @@ class SocialAccountAction extends MediaBaseAction {
                                     // 更新索引表
                                     parent::weiboDataprocess($insertId);
                                 }
+                               
                             }
+    
                             break;
                         case 3:
                             // 微信公众号
@@ -526,26 +528,26 @@ class SocialAccountAction extends MediaBaseAction {
                             $mediaNewsModel = $this->db['AccountNews'];
                             for ($i = 1; $i <= $len; $i++) {
                                 //通过循环得到EXCEL文件中每行记录的值
-                                $temp = explode(',', iconv('GBK', 'UTF-8', $temp[$i]));
-                                $accountName    = setString(trim($temp[0]));
-                                $channalName    = setString(trim($temp[1]));
-                                $price          = floatval($temp[2]);
-                                $title          = setString(trim($temp[3]));
-                                $province       = setString(trim($temp[4]));
-                                $city           = setString(trim($temp[5]));
-                                $area           = setString(trim($temp[6]));
-                                $entry          = setString(trim($temp[7]));
-                                $newsSource     = intval(trim($temp[8]));
-                                $included       = intval(trim($temp[9]));
-                                $needSource     = intval(trim($temp[10]));
-                                $exampleUrl     = setString(trim($temp[11]));
-                                $pressWeekly    = setString(trim($temp[12]));
-                                $link           = setString(trim($temp[13]));
-                                $typeOfPortal   = setString(trim($temp[14]));
-                                $mediaShot      = setString(trim($temp[15]));
+                                $temp_info = explode(',', iconv('GBK', 'UTF-8', $temp[$i]));
+                                $accountName    = setString(trim($temp_info[0]));
+                                $channalName    = setString(trim($temp_info[1]));
+                                $price          = floatval($temp_info[2]);
+                                $title          = setString(trim($temp_info[3]));
+                                $province       = setString(trim($temp_info[4]));
+                                $city           = setString(trim($temp_info[5]));
+                                $area           = setString(trim($temp_info[6]));
+                                $entry          = setString(trim($temp_info[7]));
+                                $newsSource     = intval(trim($temp_info[8]));
+                                $included       = intval(trim($temp_info[9]));
+                                $needSource     = intval(trim($temp_info[10]));
+                                $exampleUrl     = setString(trim($temp_info[11]));
+                                $pressWeekly    = setString(trim($temp_info[12]));
+                                $link           = setString(trim($temp_info[13]));
+                                $typeOfPortal   = setString(trim($temp_info[14]));
+                                $mediaShot      = setString(trim($temp_info[15]));
                                 
                                 if (empty($accountName) || empty($channalName) || empty($price)
-                                || !Validate::checkUrl($exampleUrl) || !Validate::checkUrl($mediaShot)) {
+                                || (!empty($exampleUrl) && !Validate::checkUrl($exampleUrl)) || (!empty($mediaShot) && !Validate::checkUrl($mediaShot))) {
                                     continue;
                                 }
                                 
