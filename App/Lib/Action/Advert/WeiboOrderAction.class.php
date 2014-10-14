@@ -524,7 +524,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 	public function zhifu()
 	{
 		$zhifu_id = intval($_POST['id']);
-		$GeneralizeAccount = D('GeneralizeAccount')->siteMoney($zhifu_id,$this->oUser->id);
+		$GeneralizeAccount = $this->db['GeneralizeAccount']->siteMoney($zhifu_id,$this->oUser->id);
 		if($GeneralizeAccount==true)
 		{
 			parent::updateMoney($this->oUser->id);
@@ -580,7 +580,21 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$this->display();
 	}
 
-
+	//确认支付
+	public function insertPrice($order_id)
+	{
+		if($order_id!='')
+		{
+			$bool = $this->db['GeneralizeAccount']->getAllUserPr($order_id,$this->oUser->id);
+			if($bool)
+			{
+				parent::callback(C('STATUS_SUCCESS'),'支付成功!');
+			}else{
+				parent::callback(C('STATUS_UPDATE_DATA'),'支付失败,请稍后尝试!');
+			}
+		}
+	}
+	
 }
 
 ?>

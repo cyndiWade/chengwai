@@ -320,7 +320,7 @@ class NewsAction extends AdvertBaseAction {
 	public function zhifu()
 	{
 		$zhifu_id = intval($_POST['id']);
-		$GeneralizeNewsAccount = D('GeneralizeNewsAccount')->siteMoney($zhifu_id,$this->oUser->id);
+		$GeneralizeNewsAccount = $this->db['GeneralizeNewsAccount']->siteMoney($zhifu_id,$this->oUser->id);
 		if($GeneralizeNewsAccount==true)
 		{
 			parent::updateMoney($this->oUser->id);
@@ -352,6 +352,23 @@ class NewsAction extends AdvertBaseAction {
 		$this->display();
 	}
 	
+
+	//确认支付
+	public function insertPrice($order_id)
+	{
+		if($order_id!='')
+		{
+			$bool = $this->db['GeneralizeNewsAccount']->getAllUserPr($order_id,$this->oUser->id);
+			if($bool)
+			{
+				parent::callback(C('STATUS_SUCCESS'),'支付成功!');
+			}else{
+				parent::callback(C('STATUS_UPDATE_DATA'),'支付失败,请稍后尝试!');
+			}
+		}
+	}
+
+
 }	
 
 ?>

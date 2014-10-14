@@ -135,4 +135,33 @@
 
 		}
 
+		//获取所有确认过的账户价格
+		public function getAllUserPr($order_id,$users_id)
+		{
+			if($order_id!='' && $users_id!='')
+			{
+				$Account_Order_Status = C('Account_Order_Status');
+				$where = array('generalize_id'=>$order_id,'audit_status'=>$Account_Order_Status[3]['status']);
+				$all_array = $this->where($where)->field('users_id,price')->select();
+				//总价
+				$all_price = 0;
+				$UserMedia = D('UserMedia');
+				foreach($all_array as $value)
+				{
+					$UserMedia->insertPirce($value['users_id'],$value['price']);
+					$all_price += $value['price'];
+				}
+				$bool = D('UserAdvertisement')->updateFreeze($users_id,$all_price);
+				if($bool)
+				{
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}
+
+		
 	}

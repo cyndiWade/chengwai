@@ -60,4 +60,21 @@ class UserAdvertisementModel extends AdvertBaseModel
 		$value = $this->where($where)->Field('money,freeze_funds')->find();
 		return array('money'=>$value['money'],'freeze_funds'=>$value['freeze_funds']);
 	}
+
+	//从冻结资金里扣除总金额
+	public function updateFreeze($user_id,$all_price)
+	{
+		$freeze_funds = $this->where(array('users_id'=>$user_id))->field('freeze_funds')->find();
+		$updateMoney['freeze_funds'] = $freeze_funds['freeze_funds'] - $all_price;
+		$bool = $this->where(array('users_id'=>$user_id))->save($updateMoney);
+		$add['users_id'] = $user_id;
+		$add['shop_number'] = 'XF'.time();
+		$add['money'] = $all_price;
+		$add['type'] = 3;
+		$add['member_info'] = '消费冻结资金';
+		$add['admin_info'] = '消费冻结资金';
+		$add['time'] = time();
+		D('Fund')->add($add);
+		return $bool;
+	}
 }
