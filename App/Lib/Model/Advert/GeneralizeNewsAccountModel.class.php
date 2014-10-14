@@ -73,7 +73,7 @@
 					$bool = $UserAdvertisement->where(array('users_id'=>$account_id))->save($update);
 					if($bool)
 					{
-						$save = array('status'=>4);	//已支付待执行状态
+						$save = array('status'=>4,'all_price'=>$price);	//已支付待执行状态
 						$NewsOrderStatus = D('GeneralizeNewsOrder')->where(array('id'=>$zhifu_id))->save($save);
 						
 						D('Fund')->djFund($account_id,$price);
