@@ -309,6 +309,7 @@ class AppBaseAction extends GlobalParameterAction {
 		{
 			//需要同步的数据
 			$int_info['fansnumber'] = $grass_info['fans_num'] = $AccountWeiboInfo['fans_num'];
+			$int_info['ck_price'] = $AccountWeiboInfo['ck_money'];
 			$grass_info['yg_zhuanfa'] = $AccountWeiboInfo['yg_zhuanfa'];
 			$grass_info['yg_zhifa'] = $AccountWeiboInfo['yg_zhifa'];
 			$grass_info['rg_zhuanfa'] = $AccountWeiboInfo['rg_zhuanfa'];
@@ -365,6 +366,7 @@ class AppBaseAction extends GlobalParameterAction {
 		{
 			//需要同步的数据
 			$cele_info['fansnumber'] = $grass_info['fans_number'] = $AccountWeixinInfo['fans_num'];
+			$cele_info['ck_price'] = $AccountWeixinInfo['ck_money'];
 			$grass_info['read_number'] = $AccountWeixinInfo['weekly_read_avg'];
 			$grass_info['audience_man'] = $AccountWeixinInfo['male_precent'];
 			$grass_info['audience_women'] = $AccountWeixinInfo['female_precent'];
