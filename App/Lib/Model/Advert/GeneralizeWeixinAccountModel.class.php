@@ -11,8 +11,7 @@
 			{
 				$new_array[$key] = addslashes($value);
 			}
-			//用户ID
-			$arr['users_id'] = $id;
+			
 			//活动订单ID
 			$arr['generalize_id'] = $new_array['order_id'];
 			//获得图文类型
@@ -24,7 +23,9 @@
 			{
 				$arr['account_id'] = $value;
 				if (parent::get_one_data($arr) == false) {
-					$arr['price'] = D('AccountWeixin')->getWeiType($ggw['ggw_type'],$value);
+					$AccountWeixin = D('AccountWeixin');
+					$arr['users_id'] = $AccountWeixin->getUserId($value);
+					$arr['price'] = $AccountWeixin->getWeiType($ggw['ggw_type'],$value);
 					$status = $this->add($arr);
 				}
 			}

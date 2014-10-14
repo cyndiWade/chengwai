@@ -11,8 +11,6 @@
 			{
 				$new_array[$key] = addslashes($value);
 			}
-			//用户ID
-			$arr['users_id'] = $id;
 			//活动订单ID
 			$arr['generalize_id'] = $new_array['order_id'];
 			//微博账号
@@ -21,7 +19,10 @@
 			{
 				$arr['account_id'] = $value;
 				if (parent::get_one_data($arr) == false) {
-					$arr['price'] = D('AccountNews')->getNewsmoney($value);
+					$AccountNews = D('AccountNews')->getMoneyoUser($value);
+					//用户ID
+					$arr['users_id'] = $AccountNews['users_id'];
+					$arr['price'] = $AccountNews['money'];
 					$status = $this->add($arr);
 				}
 				

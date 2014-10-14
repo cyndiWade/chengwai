@@ -11,8 +11,7 @@
 			{
 				$new_array[$key] = addslashes($value);
 			}
-			//用户ID
-			$arr['users_id'] = $id;
+			
 			//活动订单ID
 			$arr['generalize_id'] = $new_array['order_id'];
 			//获得该订单的发送类型和软硬广
@@ -26,7 +25,10 @@
 			{
 				$arr['account_id'] = $value;
 				if (parent::get_one_data($arr) == false) {
-					$arr['price'] = D('AccountWeibo')->getRYMoney($generalize['fslx_type'],$generalize['ryg_type'],$arr['account_id']);
+					$AccountWeibo = D('AccountWeibo');
+					//用户ID
+					$arr['users_id'] = $AccountWeibo->getUserId($value);
+					$arr['price'] = $AccountWeibo->getRYMoney($generalize['fslx_type'],$generalize['ryg_type'],$arr['account_id']);
 					$status = $this->add($arr);
 				}
 			}

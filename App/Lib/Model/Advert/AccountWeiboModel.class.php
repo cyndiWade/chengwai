@@ -372,4 +372,15 @@
 				return $money['ck_money'];
 			}
 		}
+
+
+		//获得微博号所属的媒体主
+		public function getUserId($account_id)
+		{
+			if($account_id!='')
+			{
+				$value = $this->where(array('id'=>$account_id))->field('users_id')->find();
+				return $value['users_id'];
+			}
+		}
 	}

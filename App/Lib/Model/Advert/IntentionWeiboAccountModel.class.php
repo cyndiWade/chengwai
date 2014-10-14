@@ -11,8 +11,6 @@
 			{
 				$new_array[$key] = addslashes($value);
 			}
-			//用户ID
-			$arr['users_id'] = $id;
 			//活动订单ID
 			$arr['intention_id'] = $new_array['order_id'];
 			//平台类型
@@ -23,7 +21,10 @@
 			{
 				$arr['account_id'] = $value;
 				if (parent::get_one_data($arr) == false) {
-					$arr['price'] = D('AccountWeibo')->getCkMoney($value);
+					$AccountWeibo = D('AccountWeibo');
+					//用户ID
+					$arr['users_id'] = $AccountWeibo->getUserId($value);
+					$arr['price'] = $AccountWeibo->getCkMoney($value);
 					$status = $this->add($arr);
 				}
 				

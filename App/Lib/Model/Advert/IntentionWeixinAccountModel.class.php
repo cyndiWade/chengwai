@@ -11,8 +11,6 @@
 			{
 				$new_array[$key] = addslashes($value);
 			}
-			//用户ID
-			$arr['users_id'] = $id;
 			//活动订单ID
 			$arr['generalize_id'] = $new_array['order_id'];
 			//微博账号
@@ -21,8 +19,11 @@
 			{
 				$arr['account_id'] = $value;
 				if (parent::get_one_data($arr) == false) {
+					$AccountWeixin = D('AccountWeixin');
+					//用户ID
+					$arr['users_id'] = $AccountWeixin->getUserId($value);
 					//取得参考价格
-					$arr['price'] = D('AccountWeixin')->getWXMoney($value);
+					$arr['price'] = $AccountWeixin->getWXMoney($value);
 					$status = $this->add($arr);
 				}
 			}

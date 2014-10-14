@@ -168,13 +168,12 @@
 
 
 		//获得该新闻的价格
-		public function getNewsmoney($account_id)
+		public function getMoneyoUser($account_id)
 		{
 			if($account_id!='')
 			{
-				$money = $this->where(array('id'=>$account_id))->field('money')->find();
-				return $money['money'];
+				$money = $this->where(array('id'=>$account_id))->field('money,users_id')->find();
+				return $money;
 			}
 		}
-
 	}
