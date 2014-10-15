@@ -138,8 +138,8 @@
 
 
 ul{ margin:0; padding:0; list-style: none;}
-.selectStar{width:109px; height:59px; float:left;  margin-top:12px; margin-left:10px;}
-.selectStar li { float:left; text-align:left; _display:inline; line-height:20px;}
+.selectStar{float:left;margin-top: 20px;margin-bottom: 10px;}
+.selectStar li { text-align:left; _display:inline; line-height:20px;}
 .selectStar li span.red { color:#d00; width:10px;}
 .selectStar li span.zi {}
 .selectStar li em { width:109px; height:16px; overflow:hidden; display:block; background:url(../images/ico.jpg) no-repeat left -88px;}
@@ -150,3 +150,7 @@ ul{ margin:0; padding:0; list-style: none;}
 .selectStar li em.selectS5 { background-position:left -71px;}
 .selectStar li em a { text-indent:-999em; overflow:hidden; display:block; float:left; width:21px;}
 .dpCont { color:#f60;display: none;}
+.sub{clear:both;text-align: center;}
+.controsub{border:1px solid red;}
+.fontc{float:left;width:50px;margin-left: 25px;margin-top:5px;font-size: 13px;margin-top: 25px;}
+.jumpTK{background:white;border:1px solid #eff3f4;width: 300px;height: 220px;position:absolute;top:100%;left:40%;line-height: 10px;display: none;}
