@@ -27,7 +27,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 		'GeneralizeFiles' => 'GeneralizeFiles',
 		'IntentionWeiboOrder' => 'IntentionWeiboOrder',
 		'IntentionWeiboFiles' => 'IntentionWeiboFiles',
-		'IntentionWeiboAccount' => 'IntentionWeiboAccount'
+		'IntentionWeiboAccount' => 'IntentionWeiboAccount',
+		'Discss'	=>	'Discss'
 	);
 	
 	//和构造方法
@@ -596,6 +597,32 @@ class WeiboOrderAction extends AdvertBaseAction {
 		}
 	}
 	
+	//评论数据
+	public function addPl()
+	{
+		$pinfen = $this->_post('pinfen');
+		$pinlun = $this->_post('pinlun');
+		$ddid = $this->_post('ddid');
+		$name = $this->db['GeneralizeAccount']->getNickname($ddid);
+		$discss = $this->db['Discss'];
+		$array = array('pinfen'=>$pinfen,'pinlun'=>$pinlun,'ddid'=>$ddid,'name'=>$name,'users_id'=>$this->oUser->id,'type'=>3,,'times'=>time());
+		$select = array('ddid'=>$ddid,'users_id'=>$this->oUser->id,'type'=>3);
+		$count = $discss->where($select)->count();
+		if($count==0)
+		{
+			$bool = $discss->add($array);
+			if($bool)
+			{
+				parent::callback(C('STATUS_SUCCESS'),'评论成功!');
+			}else{
+				parent::callback(C('STATUS_UPDATE_DATA'),'评论失败!');
+			}
+		}else{
+			parent::callback(C('STATUS_UPDATE_DATA'),'请勿重复评论!');
+		}
+		
+	}
+
 }
 
 ?>

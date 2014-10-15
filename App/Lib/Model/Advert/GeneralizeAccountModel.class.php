@@ -158,5 +158,14 @@
 			}
 		}
 
-		
+		//获得账户别名
+		public function getNickname($id)
+		{
+			if($id!='')
+			{
+				$name = $this->where(array('a.id'=>$id))->table('app_generalize_account as a')
+				->join('app_account_weibo as n on n.id = a.account_id')->field('n.account_name')->find();
+				return $name['account_name'];
+			}
+		}
 	}

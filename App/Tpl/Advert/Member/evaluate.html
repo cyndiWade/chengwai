@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
 	<include file="Public:top" />
@@ -20,57 +20,60 @@
 		
 		<div class="content-user fr">
 			<div class="top-user l">
-				<div class="comment-num fr"><span>总评价数<b class="red">【0】</b></span><span>好评<b class="red">【0】</b></span><span>中评<b class="red">【0】</b></span><span>差评<b class="red">【0】</b></span></div>
+				<div class="comment-num fr"><span>总评价数<b class="red">【{$view_data.all}】</b></span><span>好评<b class="red">【{$view_data.h_all}】</b></span><span>中评<b class="red">【{$view_data.z_all}】</b></span><span>差评<b class="red">【{$view_data.c_all}】</b></span></div>
 				<strong>评价管理</strong>
 			</div>
 			<div class="mid-comment l">
-				<div class="box01-comment-search l">
-					<div class="part02-comment-search fr">
-						<strong class="fl">账号名称：</strong><input type="text" class="counttext fl" /><input type="text" class="btn seabtn fl" />
+				<form action="" ="{:U('Advert/Member/evaluate')}" method="POST">
+					<div class="box01-comment-search l">
+						<div class="part02-comment-search fr">
+							<strong class="fl">账号名称：</strong>
+							<input type="text" class="counttext fl" name="searchname" value="{$view_data.searchname}"/>
+							<input type="submit" class="btn seabtn fl" />
+						</div>
+						<div class="part01-comment-search fl">
+							<div class="grp01 fl"><i>评分: </i><select name="pinfen">
+								<option value="">全部</option>
+								<option <if condition="($view_data.pinfen eq 5)">selected</if> value="5">5星</option>
+								<option <if condition="($view_data.pinfen eq 4)">selected</if> value="4">4星</option>
+								<option <if condition="($view_data.pinfen eq 3)">selected</if> value="3">3星</option>
+								<option <if condition="($view_data.pinfen eq 2)">selected</if> value="2">2星</option>
+								<option <if condition="($view_data.pinfen eq 1)">selected</if> value="1">1星</option>
+							</select></div>
+							<!-- <div class="grp01 fl"><i>评价：</i><select><option>全部</option></select></div>
+							<div class="grp01 fl"><i>申诉处理状态：</i><select><option>全部</option></select></div> -->
+						</div>
 					</div>
-					<div class="part01-comment-search fl">
-						<div class="grp01 fl"><i>评价来源：</i><select><option>全部</option></select></div>
-						<div class="grp01 fl"><i>评价：</i><select><option>全部</option></select></div>
-						<div class="grp01 fl"><i>申诉处理状态：</i><select><option>全部</option></select></div>
-					</div>
-				</div>
+				</form>
 				<div class="box02-comment-search l">
 					<table class="tab01-comment l">
 					  <tr>
-						<th class="t1">评价</th>
-						<th class="t2">评价内容</th>
+						<th class="t1">评分</th>
+						<th class="t5">评价内容</th>
 						<th class="t3">账号名称</th>
-						<th class="t4">订单号</th>
-						<th class="t5">账号申诉内容</th>
+						<th class="t3">订单号</th>
+						<th class="t2">日期</th>
+						<th class="t3">来源</th>
 						<th class="last">操作</th>
 					  </tr>
-					  <tr>
-						<td class="t1"><div class="starbox"><em class="star"></em><em class="star"></em><em class="star"></em><em class="star"></em><em class="star"></em><em class="star-gray"></em></div></td>
-						<td class="t2">非常满意，效果不错!</td>
-						<td class="t3">wdbhbg</td>
-						<td class="t4">145472134356</td>
-						<td class="t5"></td>
-						<td class="last"><div class="ctrl"><a href="#">查看</a> | <a href="#">删除</a> | <a href="#">申述</a></div></td>
-					  </tr>
-					  <tr>
-						<td class="t1"><div class="starbox"><em class="star"></em><em class="star"></em><em class="star"></em><em class="star"></em><em class="star"></em><em class="star-gray"></em></div></td>
-						<td class="t2">非常满意，效果不错!</td>
-						<td class="t3">wdbhbg</td>
-						<td class="t4">145472134356</td>
-						<td class="t5"></td>
-						<td class="last"><div class="ctrl"><a href="#">查看</a> | <a href="#">删除</a> | <a href="#">申述</a></div></td>
-					  </tr>
-					  <tr>
-						<td class="t1"><div class="starbox"><em class="star"></em><em class="star"></em><em class="star"></em><em class="star"></em><em class="star"></em><em class="star-gray"></em></div></td>
-						<td class="t2">非常满意，效果不错!</td>
-						<td class="t3">wdbhbg</td>
-						<td class="t4">145472134356</td>
-						<td class="t5"></td>
-						<td class="last"><div class="ctrl"><a href="#">查看</a> | <a href="#">删除</a> | <a href="#">申述</a></div></td>
-					  </tr>
+					  	<volist name="view_data.list" id="vo">
+						  <tr>
+							<td class="t1"><div class="starbox">
+							<for start="0" end="$vo['pinfen']">
+								<em class="star"></em>
+							</for>
+							<td class="t5">{$vo['pinlun']}</td>
+							<td class="t3">{$vo['name']}</td>
+							<td class="t3">{$vo['ddid']}</td>
+							<td class="t2">{$vo['times']|date="Y-m-d H:i:s",###}</td>
+							<td class="t3">{$vo['type']|getPltype}</td>
+							<td class="last"><div class="ctrl"><a data-source_id = "{$vo['id']}" href="javascript:;" class="delete">删除</a></div></td>
+						  </tr>
+						</volist>
 					</table>
 				</div>
 			</div>
+			{$view_data.page}
 		</div>
 	
 	</div>
@@ -85,7 +88,35 @@
 
 <script type="text/javascript" src={$global_tpl_view.Module_Resource_Path}evaluate.js></script>
 
-
+<script type="text/javascript">
+	$(function(){
+		var deleter = $('.delete');
+		deleter.click(function(){
+			var _this = $(this);
+			var id = _this.attr('data-source_id');
+			if(confirm("确认是否删除")==true)
+			{
+				$.ajax({
+					type: "POST",
+			        url: "{:U('Advert/Member/delpl')}",
+			        data: {
+			            'id': id
+			        },
+			        success : function(val)
+			        {
+			        	if(val.status == 0)
+			    		{
+			    			alert(val.msg);
+			    			window.location.reload();
+			    		}else{
+			    			alert(val.msg);
+			    		}
+			        }
+		    	});
+	    	}
+		});
+	})
+</script>>
 
 </body>
 </html>

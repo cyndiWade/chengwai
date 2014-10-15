@@ -93,7 +93,7 @@
 					<if condition="($vo['is_show_affirm_btn'] eq 6)">
 						<a href="javascript:;" class="blue affirm_order" data-order_id="{$vo.g_id}">确认完成</a>	
 					<elseif condition="($vo['is_show_affirm_btn'] eq 7)"/>
-						<a href="javascript:;" class="blue" data-order_id="{$vo.g_id}">评论</a>
+						<a href="javascript:;" class="blue jump" data-order_id="{$vo.g_id}">评论</a>
 					<else />
 						<a href="javascript:;" class="blue" data-order_id="{$vo.g_id}">暂无</a>
 					</if>
@@ -101,7 +101,19 @@
 			  </tr>
 			</volist>
 			</table>
-		</div>	
+		</div>
+		<div class="jumpTK">
+			评分：<select class="pinfen">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>	分<br/>
+			评论：<textarea class="pinlun"></textarea>
+			<input type="hidden" name="ddid" value="">
+			<input type="button" value="提交" class="submit"><input type="button" value="取消" class="hid">
+		</div>
 	</div>
 	
 	<!--  订单支付按钮 -->
@@ -161,6 +173,46 @@ $(function(){
 		} else {
 			alert(result.msg)
 		}
+	});
+
+
+	//弹框
+	var jump = $('.jump');
+	jump.click(function(){
+		var _this = $(this);
+		var id = _this.attr('data-order_id');
+		$('input[name="ddid"]').val(id);
+		$('.jumpTK').show();
+	});
+	var hid = $('.hid');
+	hid.click(function(){
+		$('.jumpTK').hide();
+	});
+	var submit = $('.submit');
+	submit.click(function(){
+		var pinfen = $('.pinfen').val();
+		var pinlun = $('.pinlun').val();
+		var ddid = $('input[name="ddid"]').val();
+		$.ajax({
+			type: "POST",
+	        url: "{:U('Advert/News/addPl')}",
+	        data: {
+	            'pinfen': pinfen,
+	            'pinlun' : pinlun,
+	            'ddid' : ddid
+	        },
+	        dataType: "json",
+	        success : function(val)
+	    	{
+	    		if(val.status == 0)
+	    		{
+	    			alert(val.msg);
+	    			window.location.reload();
+	    		}else{
+	    			alert(val.msg);
+	    		}
+	    	}
+		});
 	});
 })();
 

@@ -30,7 +30,8 @@ class MemberAction extends AdvertBaseAction {
 			'CategoryTags'=>'CategoryTags',
 			'Users' => 'Users',
 			'Verify'=>'Verify',
-			'UserAdvertisement' => 'UserAdvertisement'
+			'UserAdvertisement' => 'UserAdvertisement',
+			'Discss'	=>	'Discss'
 	);
 	
 	
@@ -88,9 +89,55 @@ class MemberAction extends AdvertBaseAction {
     	$this->data_to_view(array(
     			'member_sidebar_evaluate_class'=>'class="on"',
     	));
+    	$searchname = trim($_REQUEST['searchname']);
+    	$pinfen = intval($_REQUEST['pinfen']);
+    	$map['users_id'] = $this->oUser->id;
+    	if($searchname!='')
+    	{
+    		$map['name'] = array('like','%'.$searchname.'%');
+    	}
+    	if($pinfen!='')
+    	{
+    		$map['pinfen'] = array('eq',$pinfen);
+    	}
+    	$Discss = $this->db['Discss'];
+    	import('ORG.Util.Page');
+    	$all      = $Discss->where($map)->count();
+    	$c_all      = $Discss->where(array('users_id'=>$this->oUser->id,'pinfen'=>array('eq','1')))->count();
+    	$z_all      = $Discss->where(array('users_id'=>$this->oUser->id,'pinfen'=>array('between',array('2','3'))))->count();
+    	$h_all      = $Discss->where(array('users_id'=>$this->oUser->id,'pinfen'=>array('gt','3')))->count();
+    	$Page       = new Page($all,10);
+    	$show       = $Page->show();
+    	$list = $Discss->where($map)->limit($Page->firstRow.','.$Page->listRows)->order('id desc')->select();
+    	parent::data_to_view(array(
+				'page' => $show ,
+				'list' => $list,
+				'all'=> $all,
+				'c_all'=>$c_all,
+				'z_all'=>$z_all,
+				'h_all'=>$h_all,
+				'pinfen'=>$_REQUEST['pinfen'],
+				'searchname'=>$_REQUEST['searchname']
+		));
     	$this->display();
     }
     
+
+    //删除评论
+    public function delpl()
+    {
+    	$id = $this->_post('id');
+    	if($id!='')
+    	{
+    		$bool = $this->db['Discss']->where(array('id'=>$id))->delete();
+    		if($bool)
+			{
+				parent::callback(C('STATUS_SUCCESS'),'删除评论成功!');
+			}else{
+				parent::callback(C('STATUS_UPDATE_DATA'),'删除评论失败!');
+			}
+    	}
+    }
 }
 
 ?>

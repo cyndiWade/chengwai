@@ -189,5 +189,20 @@
 		}
 	}
 
-	
+	//评论来源
+	function  getPltype($id)
+	{
+		switch($id)
+		{
+			case 1:
+				return '新闻平台';
+			break;
+			case 2:
+				return '微信平台';
+			break;
+			case 3:
+				return '微博平台';
+			break;
+		}
+	}
 ?>

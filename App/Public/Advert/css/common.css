@@ -176,3 +176,4 @@ body{ background:#fefefe;}
 
 .popBox{position:absolute;left:0px; top:0px; z-index:10000;}
 .popBox .popMask {display:block;  background:#000\9; filter:alpha(opacity=50)\9; background:rgba(0,0,0,0.5);}
+.jumpTK{border:1px solid black;width: 250px;height: 120px;position:absolute;top:100%;left:40%;line-height: 10px;display: none;}
