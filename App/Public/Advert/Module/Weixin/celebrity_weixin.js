@@ -653,8 +653,10 @@ Weixin.prototype.lahei_and_shoucang_fn = function ($urL) {
 	var _father_this = this;
 	_father_this.init();
 	_father_this.lahei_and_shoucang.click(function () {
+		if (confirm('确认操作?') == false) return false; 
 		var _this = $(this);
 		var post_data = {
+			'action' : _this.data('action'),	
 			'is_celebrity' :system_info.is_celebrity,
 			'or_type' : _this.data('or_type'),
 			'weixin_id' : _this.data('weixin_id')

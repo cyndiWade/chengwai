@@ -617,8 +617,10 @@ Weibo.prototype.lahei_and_shoucang_fn = function ($urL) {
 	var _father_this = this;
 	_father_this.init();
 	_father_this.lahei_and_shoucang.click(function () {
+		if (confirm('确认操作?') == false) return false; 
 		var _this = $(this);
 		var post_data = {
+			'action' : _this.data('action'),
 			'pt_type' :system_info.pt_type,	
 			'is_celebrity' :system_info.is_celebrity,
 			'or_type' : _this.data('or_type'),
@@ -647,10 +649,10 @@ Weibo.prototype.dataNum_And_PageNum = function (data) {
 
 
 //创建列表HTML
-Weibo.prototype.create_now_html = function (result) {
+Weibo.prototype.create_now_html = function (result,$post_data) {
 	var _father_this = this;
 	_father_this.list_content.empty();
-	
+
 	for (var key in result) {
 		var $data = result[key];
 		var html = '';
@@ -659,7 +661,19 @@ Weibo.prototype.create_now_html = function (result) {
 		html += '<div class="part01-cele fl">';
 		html += '<img src="App/Public/Advert/images/cer_img01.gif" />';
 		html += '<div class="ctrl">';
-		html += '<span class="lahei_and_shoucang" data-or_type="1" data-weibo_id="'+$data.id+'">收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weibo_id="'+$data.id+'">拉黑</span>';
+
+		if ($post_data.cksc == undefined) {
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weibo_id="'+$data.id+'">收藏</span>';
+		}else if ($post_data.cksc == 1) {
+			html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weibo_id="'+$data.id+'">取消收藏</span>';
+		}
+		
+		if ($post_data.ckhmd == undefined) {
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weibo_id="'+$data.id+'">拉黑</span>';
+		}else if ($post_data.ckhmd == 1) {
+			html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weibo_id="'+$data.id+'">取消拉黑</span>';
+		}
+		
 		html += '</div>';
 		html += '</div>';
 		html += '<div class="part02-cele fl">';

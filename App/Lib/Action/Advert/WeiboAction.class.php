@@ -178,23 +178,36 @@ class WeiboAction extends AdvertBaseAction {
 	//拉黑
 	public function insert_blackorcollection()
 	{
-		$bool = $this->db['BlackorcollectionWeibo']->insertBlackorcollection($_POST,$this->oUser->id);
-		if($bool)
-		{
-			if($_POST['or_type']==0)
+		$act = $this->_post('action');
+		
+		if ($act == 'add') {
+			$bool = $this->db['BlackorcollectionWeibo']->insertBlackorcollection($_POST,$this->oUser->id);
+			if($bool)
 			{
-				parent::callback(1,'拉入黑名单成功!','ok');
+				if($_POST['or_type']==0)
+				{
+					parent::callback(1,'拉入黑名单成功!','ok');
+				}else{
+					parent::callback(1,'收藏成功!','ok');
+				}
 			}else{
-				parent::callback(1,'收藏成功!','ok');
+				if($_POST['or_type']==0)
+				{
+					parent::callback(0,'拉入黑名单失败,数据已存在!','no');
+				}else{
+					parent::callback(0,'收藏失败,数据已存在!','no');
+				}
 			}
-		}else{
-			if($_POST['or_type']==0)
+		} elseif ($act == 'del') {
+			$bool = $this->db['BlackorcollectionWeibo']->deleteBlackorcollection($_POST,$this->oUser->id);
+			if($bool)
 			{
-				parent::callback(0,'拉入黑名单失败,数据已存在!','no');
+				parent::callback(1,'操作成功!','ok');
 			}else{
-				parent::callback(0,'收藏失败,数据已存在!','no');
+				parent::callback(0,'操作成功','no');
 			}
 		}
+		
 		
 	}
 

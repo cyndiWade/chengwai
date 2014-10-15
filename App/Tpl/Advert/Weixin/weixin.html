@@ -34,7 +34,7 @@
 			 -->
 		</div>
 		<div class="mid-search l">
-			<input type="text" class="seatext search_account" data-field="account" data-ischeck="0" value="" placeholder="请输入微信账号的名称或微信号" /><input type="submit" class="btn seabtn" id="search" value="搜索" />
+			<input type="text" class="seatext search_account" data-field="account" data-ischeck="0" value="" placeholder="请输账号名或账号关键字" /><input type="submit" class="btn seabtn" id="search" value="搜索" />
 		</div>
 	</div>
 	<div class="catebox l">
@@ -250,7 +250,7 @@ var public_post_fn = function (obj_data) {
 	if (result.status == 1) {
 		list_content.empty();
 		for (var key in result.data.list) {
-			list_content.append(create_now_html(result.data.list[key]));
+			list_content.append(create_now_html(result.data.list[key],post_data));
 		}
 		
 		//拉黑和收藏功能
@@ -268,20 +268,35 @@ var public_post_fn = function (obj_data) {
 }
 
 
-var create_now_html = function ($data) {
+var create_now_html = function ($data,$post_data) {
 	
 	var html = '';
 	html += '<tr class="accounts_'+$data.id+'" data-order_id="'+$data.id+'" data-order_num="'+$data.week_order_num+'"  data-fans_num="'+$data.fans_num+'">';
-	html += '<td class="t1"><div class="weibopart"><input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.id+'"/><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l account_name" data-account_name="'+$data.account_name+'"><b>'+$data.account_name+'</b><span class="heart"></span><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：quiadaa</span><i class="i-rz"></i><i class="i-sp"></i></div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>';
+	html += '<td class="t1"><div class="weibopart"><input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.id+'"/><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l account_name" data-account_name="'+$data.account_name+'"><b>'+$data.account_name+'</b><span class="heart"></span><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：'+$data.weixinhao+'</span><i class="i-rz"></i><i class="i-sp"></i></div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>';
 	html += '<td class="t2"><b class="red">娱乐圈</b></td>';
-	html += '<td class="t3"><div class="fsbox"><p>93000</p><img width="44" src="{$global_tpl_view.Group_Resource_Path}images/wx_img01.gif" /></div></td>';
-	html += '<td class="t4"><div class="pricebox"><p>单图文价格：<em class="now_money" data-money="'+$data.dtb_money+'">'+$data.dtb_money+'￥</em></p><p>多图文第一条：<em data-money="'+$data.dtwdyt_money+'">￥'+$data.dtwdyt_money+'</em></p><p>多图文第二条：<em data-money="'+$data.dtwdet_money+'">￥'+$data.dtwdet_money+'</em></p><p>多图文第3-N条：<em data-money="'+$data.dtwqtwz_money+'">￥'+$data.dtwqtwz_money+'</em></p></div></td>';
+	html += '<td class="t3"><div class="fsbox"><p>'+$data.fans_num+'</p><img width="44" src="{$global_tpl_view.Group_Resource_Path}images/wx_img01.gif" /></div></td>';
+	html += '<td class="t4"><div class="pricebox">'
+	html += '<p>单图文价格：<em class="now_money" data-money="'+$data.dtb_money+'">￥'+$data.dtb_money+'</em></p><p>多图文第一条：<em data-money="'+$data.dtwdyt_money+'">￥'+$data.dtwdyt_money+'</em></p><p>多图文第二条：<em data-money="'+$data.dtwdet_money+'">￥'+$data.dtwdet_money+'</em></p><p>多图文第3-N条：<em data-money="'+$data.dtwqtwz_money+'">￥'+$data.dtwqtwz_money+'</em></p>';
+	html += '</div></td>';
 	html += '<td class="t5"><p>男：占20%</p></td>';
-	html += '<td class="t6"><p>图文打开率：占20%</p><p>周平均阅读数：占20%</p></td>';
-	html += '<td class="t7">8000</td>';
+	html += '<td class="t6"><p>图文打开率：占20</p><p>周平均阅读数：占20</p></td>';
+	html += '<td class="t7">'+$data.month_order_nub+'</td>';
 	html += '<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
 	html += '<td class="t9"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>';
-	html += '<td class="last"><div class="ctrl"><span class="wxdetail">详情</span><span class="lahei_and_shoucang" data-or_type="1" data-weixin_id="'+$data.id+'">收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weixin_id="'+$data.id+'">拉黑</span></div></td>';
+	html += '<td class="last"><div class="ctrl"><span class="wxdetail">详情</span>';
+	
+	if ($post_data.cksc == undefined) {
+		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weixin_id="' + $data.id + '">收藏</span>';
+	}else if ($post_data.cksc == 1) {
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weixin_id="' + $data.id + '">取消收藏</span>';
+	}
+
+	if ($post_data.ckhmd == undefined) {
+		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weixin_id="' + $data.id + '">拉黑</span></div></td>';
+	}else if ($post_data.ckhmd == 1) {
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weixin_id="' + $data.id + '">取消拉黑</span></div></td>';
+	}
+	
 	html += '</tr>';
   	return html;
 } 

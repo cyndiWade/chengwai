@@ -39,7 +39,7 @@
 	
 	<div class="searchbox searchbox-mr fl">
 		<div class="mid-search l">
-			<input type="text" class="seatext search_account" data-field="account" data-ischeck="0" value="" placeholder="请输名人/媒体名、账号名或关键字，若搜索多组关键字请用空格隔开例：李亚鹏或一号立井"/><input type="submit" class="btn seabtn" id="search" value="搜索" />
+			<input type="text" class="seatext search_account" data-field="account" data-ischeck="0" value="" placeholder="请输账号名或账号关键字"/><input type="submit" class="btn seabtn" id="search" value="搜索" />
 		</div>
 	</div>
 	<div class="catebox l">
@@ -270,7 +270,7 @@ var public_post_fn = function (obj_data) {
 	
 	if (result.status == 1) {
 		//创建列表数据
-		Weibo.create_now_html(result.data.list);
+		Weibo.create_now_html(result.data.list,post_data);
 		
 		//拉黑和收藏功能
 		Weibo.lahei_and_shoucang_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');

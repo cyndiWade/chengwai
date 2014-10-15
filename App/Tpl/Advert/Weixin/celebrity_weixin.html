@@ -39,7 +39,7 @@
 	
 	<div class="searchbox searchbox-mr fl">
 		<div class="mid-search l">
-			<input type="text" class="seatext search_account" data-field="account" data-ischeck="0" value="" placeholder="请输名人/媒体名、账号名或关键字，若搜索多组关键字请用空格隔开例：李亚鹏或一号立井"/><input type="submit" class="btn seabtn" id="search" value="搜索" />
+			<input type="text" class="seatext search_account" data-field="account" data-ischeck="0" value="" placeholder="请输账号名或账号关键字"/><input type="submit" class="btn seabtn" id="search" value="搜索" />
 		</div>
 	</div>
 	<div class="catebox l">
@@ -270,7 +270,7 @@ var public_post_fn = function (obj_data) {
 	if (result.status == 1) {
 		list_content.empty();
 		for (var key in result.data.list) {
-			list_content.append(create_now_html(result.data.list[key]));
+			list_content.append(create_now_html(result.data.list[key],post_data));
 		}
 		
 		//拉黑和收藏功能
@@ -289,15 +289,26 @@ var public_post_fn = function (obj_data) {
 
 
 
-var create_now_html = function ($data) {
-	
+var create_now_html = function ($data,$post_data) {
 	var html = '';
 	html += '<div class="box01-cele fl accounts_'+$data.id+'" data-order_id="'+$data.id+'" data-order_num="'+$data.week_order_num+'"  data-fans_num="'+$data.fans_num+'">';
 	html += '<input type="checkbox" class="check fl now_selected" data-field="id" data-id="'+$data.id+'" />';
 	html += '<div class="part01-cele fl">';
 	html += '<img src="App/Public/Advert/images/cer_img01.gif" />';
 	html += '<div class="ctrl">';
-	html += '<span class="lahei_and_shoucang" data-or_type="1" data-weixin_id="'+$data.id+'">收藏</span><span class="lahei_and_shoucang" data-or_type="0" data-weixin_id="'+$data.id+'">拉黑</span>';
+	
+	if ($post_data.cksc == undefined) {
+		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weixin_id="'+$data.id+'">收藏</span>';
+	} else if($post_data.cksc ==1) {
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weixin_id="'+$data.id+'">取消收藏</span>';
+	}
+	
+	if ($post_data.ckhmd == undefined) {
+		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weixin_id="'+$data.id+'">拉黑</span>';
+	}else if ($post_data.ckhmd == 1) {
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weixin_id="'+$data.id+'">取消拉黑</span>';
+	}		
+	
 	html += '</div>';
 	html += '</div>';
 	html += '<div class="part02-cele fl">';

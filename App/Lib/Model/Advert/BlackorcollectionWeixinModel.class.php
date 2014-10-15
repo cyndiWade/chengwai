@@ -36,5 +36,16 @@
 			}
 			
 		}
+		
+		//删除逻辑关系
+		public function deleteBlackorcollection($array,$user_id) {
+			$where = array(
+				'is_celebrity'=>$array['is_celebrity'],
+				'or_type'=>$array['or_type'],
+				'user_id'=>$user_id,
+				'weixin_id'=>$array['weixin_id']
+			);
+			return $this->where($where)->delete();
+		}
 
 	}
