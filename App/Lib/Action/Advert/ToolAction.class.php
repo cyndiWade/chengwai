@@ -32,6 +32,7 @@ class ToolAction extends AdvertBaseAction {
 
 	}
 	
+	//获取区域数据
 	public function get_Region_Data (){
 		$parent_id = $this->_post('parent_id');
 		$data = $this->db['Region']->get_parent_list($parent_id);
@@ -39,8 +40,7 @@ class ToolAction extends AdvertBaseAction {
 			parent::callback(C('STATUS_SUCCESS'),'获取成功',$data);
 		} else {
 			parent::callback(C('STATUS_NOT_DATA'),'获取失败',$data);
-		}
-		
+		}	
 	}
 	
 
