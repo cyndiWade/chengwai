@@ -37,12 +37,13 @@ class AdvertBaseAction extends AppBaseAction {
 		}
 		
 		$path = preg_replace("/[\\\+]/", "/",dirname($_SERVER['SCRIPT_NAME']));
+	
 		//全局模板变量
 		parent::global_tpl_view(array(
 				'button'=>array(
 						'prve'=>C('PREV_URL')
 				),
-				'path'=>'http://'.$_SERVER['SERVER_NAME'].$path.''.'/Public/'.GROUP_NAME.'/',
+				'path'=>'http://'.$_SERVER['SERVER_NAME'].$path.''.'Public/'.GROUP_NAME.'/',
 				
 				'group_name' =>GROUP_NAME,
 				
@@ -51,10 +52,10 @@ class AdvertBaseAction extends AppBaseAction {
 				'action_name'=>ACTION_NAME,
 				
 				//网站当前分组资源路径
-				'Group_Resource_Path'=>APP_PATH.'Public/'.GROUP_NAME.'/',
+				'Group_Resource_Path'=>'/'.APP_PATH.'Public/'.GROUP_NAME.'/',
 				
 				//模块级页面路径
-				'Module_Resource_Path'=>APP_PATH.'Public/'.GROUP_NAME.'/Module/'.MODULE_NAME.'/',
+				'Module_Resource_Path'=>'/'.APP_PATH.'Public/'.GROUP_NAME.'/Module/'.MODULE_NAME.'/',
 		
 				'user_info' => array(
 					'account' => $this->oUser->account,

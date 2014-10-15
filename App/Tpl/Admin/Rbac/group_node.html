@@ -6,7 +6,7 @@
 <head>
 	<!-- 全局样式 -->	<include file="Public:top" />
 	<!-- BEGIN PAGE LEVEL STYLES -->
-	<link rel="stylesheet" type="text/css" href="{$Think.const.APP_PATH}Public/Admin/css/jquery.nestable.css" />
+	<link rel="stylesheet" type="text/css" href="{$global_tpl_view.Group_Resource_Path}css/jquery.nestable.css" />
 	<!-- END PAGE LEVEL STYLES -->
 </head>
 <!-- END HEAD -->
@@ -94,10 +94,10 @@
 	<!-- 页脚 -->	<include file="Public:foot" />
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->	<!-- 核心插件 -->	<include file="Public:bottom" />
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
-	<script src="{$Think.const.APP_PATH}Public/Admin/js/jquery.nestable.js"></script>  
+	<script src="{$global_tpl_view.Group_Resource_Path}js/jquery.nestable.js"></script>  
 	<!-- END PAGE LEVEL SCRIPTS -->     
-	<script src="{$Think.const.APP_PATH}Public/Admin/js/ui-nestable.js"></script>    
-	<script src="{$Think.const.APP_PATH}Public/Admin/js/app.js"></script>
+	<script src="{$global_tpl_view.Group_Resource_Path}js/ui-nestable.js"></script>    
+	<script src="{$global_tpl_view.Group_Resource_Path}js/app.js"></script>
 	<script>
 		jQuery(document).ready(function() {       
 		   // initiate layout and plugins

@@ -23,7 +23,7 @@ $system  = array(
 		'SESSION_AUTO_START'    => true,		//常开
 
 		/* URL配置 */
-		'URL_MODEL'             => 3,
+		'URL_MODEL'             => 1,
 		'URL_ROUTER_ON'   => false, 	//开启路由
 		'URL_ROUTE_RULES' => array(
 				'join' => array('/Public/register'),    		 	 //注册

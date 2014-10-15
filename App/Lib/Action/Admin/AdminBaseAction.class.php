@@ -64,6 +64,21 @@ class AdminBaseAction extends AppBaseAction {
 						'prve' => C('PREV_URL')
 				),
 				'prve_url' => C('PREV_URL'),
+				
+				'path'=>'http://'.$_SERVER['SERVER_NAME'].$path.''.'Public/'.GROUP_NAME.'/',
+				
+				'group_name' =>GROUP_NAME,
+				
+				'module_name'=>MODULE_NAME,
+				
+				'action_name'=>ACTION_NAME,
+				
+				//网站当前分组资源路径
+				'Group_Resource_Path'=>'/'.APP_PATH.'Public/'.GROUP_NAME.'/',
+				
+				//模块级页面路径
+				'Module_Resource_Path'=>'/'.APP_PATH.'Public/'.GROUP_NAME.'/Module/'.MODULE_NAME.'/',
+				
 		));
 	}
 	
