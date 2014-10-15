@@ -4,6 +4,7 @@
 	<include file="Public:top" />
     <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/page.css" type="text/css" />
+	<script src="{$global_tpl_view.Group_Resource_Path}js/xingxing.js"></script>
 	<title>订单详情</title>
 </head>
 <body>
@@ -103,13 +104,21 @@
 			</table>
 		</div>
 		<div class="jumpTK">
-			评分：<select class="pinfen">
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-			</select>	分<br/>
+			评分:
+			<div class="selectStar marginTop">
+			        <ul class="clearfix">
+				        <li>
+				          	<em id="dpStar3" class="">
+				          	<a href="#" id="1">1</a>
+				          	<a href="#" id="2">2</a>
+				          	<a href="#" id="3">3</a>
+				          	<a href="#" id="4">4</a>
+				          	<a href="#" id="5">5</a>
+				          	</em>
+				          	<span id="dpCont1" class="dpCont"></span>
+				        </li>
+			        </ul>
+    			</div>
 			评论：<textarea class="pinlun"></textarea>
 			<input type="hidden" name="ddid" value="">
 			<input type="button" value="提交" class="submit"><input type="button" value="取消" class="hid">
@@ -129,7 +138,46 @@
 
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
-
+<script type="text/javascript">
+$(function(){
+	var className;
+	var classID;
+	var dpText="";
+	var dpTextC="";
+	
+	$(".selectStar em a").bind("click",function(){
+		className = "selectS" + $(this).attr("id");
+		classID = $(this).parent().attr("id");
+		$(this).parent().removeClass().addClass(className);
+		
+		if($(this).attr("id") == 1 ) {dpTextC = "1";}
+		if($(this).attr("id") == 2 ) {dpTextC = "2";}
+		if($(this).attr("id") == 3 ) {dpTextC = "3";}
+		if($(this).attr("id") == 4 ) {dpTextC = "4";}
+		if($(this).attr("id") == 5 ) {dpTextC = "5";}
+		$(this).parent().next(".dpCont").text(dpTextC);
+		
+		return false;
+	})	
+	.bind("mouseover",function(){
+		if($(this).attr("id") == 1 ) {dpText = "1";}
+		if($(this).attr("id") == 2 ) {dpText = "2";}
+		if($(this).attr("id") == 3 ) {dpText = "3";}
+		if($(this).attr("id") == 4 ) {dpText = "4";}
+		if($(this).attr("id") == 5 ) {dpText = "5";}
+		$(this).parent().removeClass().addClass("selectS" + $(this).attr("id"));
+		$(this).parent().next(".dpCont").text(dpText);
+	})	
+	.bind("mouseout",function(){
+		$(this).parent().removeClass("selectS" + $(this).attr("id"));
+		if($(this).parent().attr("id") == classID){
+			$(this).parent().addClass(className);
+		}
+		
+		$(this).parent().next(".dpCont").text(dpTextC);
+	});
+});
+</script>
 <script type="text/javascript">
 $(function(){
 	$('.tab01-order tr:even').addClass('even');
@@ -190,9 +238,14 @@ $(function(){
 	});
 	var submit = $('.submit');
 	submit.click(function(){
-		var pinfen = $('.pinfen').val();
+		var pinfen = $('.dpCont').text();
 		var pinlun = $('.pinlun').val();
 		var ddid = $('input[name="ddid"]').val();
+		if(pinfen=='')
+		{
+			alert('请选择分数!');
+			return;
+		}
 		$.ajax({
 			type: "POST",
 	        url: "{:U('Advert/News/addPl')}",
