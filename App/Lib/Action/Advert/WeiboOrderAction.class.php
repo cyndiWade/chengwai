@@ -605,7 +605,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$ddid = $this->_post('ddid');
 		$name = $this->db['GeneralizeAccount']->getNickname($ddid);
 		$discss = $this->db['Discss'];
-		$array = array('pinfen'=>$pinfen,'pinlun'=>$pinlun,'ddid'=>$ddid,'name'=>$name,'users_id'=>$this->oUser->id,'type'=>3,,'times'=>time());
+		$array = array('pinfen'=>$pinfen,'pinlun'=>$pinlun,'ddid'=>$ddid,'name'=>$name,'users_id'=>$this->oUser->id,'type'=>3,'times'=>time());
 		$select = array('ddid'=>$ddid,'users_id'=>$this->oUser->id,'type'=>3);
 		$count = $discss->where($select)->count();
 		if($count==0)
