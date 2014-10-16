@@ -693,8 +693,12 @@ Weixin.prototype.create_details_fn = function ($url) {
 		var weibo_id = _this.data('weibo_id');
 		var post_data = {};
 		post_data.weibo_id = weibo_id;
-		var result = System.ajax_post_setup($url,post_data,'JSON');
-		
+		//alert($url);
+		//return false;
+		//var result = System.ajax_post_setup($url,post_data,'JSON');
+		var result = {};
+		create_pop_html(result)	
+		return false;
 		if (result.status == 1) {
 			create_pop_html(result)	
 		}
@@ -718,7 +722,7 @@ Weixin.prototype.create_details_fn = function ($url) {
 		html += '<div class="box01-mrfx">';
 		html += '<div class="part01-mrfx fl">';
 		html += '<div class="grp01 fl">';
-		html += '<img src="App/Public/Advert/images/mr_img01.gif" />';
+		html += '<img src="/App/Public/Advert/images/mr_img01.gif" />';
 		html += '</div>';
 		html += '<div class="grp02 fl">';
 		html += '<h6><b>苏经</b>的详细信息</h6>';

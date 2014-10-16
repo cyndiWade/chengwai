@@ -8,7 +8,7 @@ class AccountAction extends MediaBaseAction {
 	//每个类都要重写此变量
 	protected  $is_check_rbac = true;		//是否需要RBAC登录验证
 	
-	protected  $not_check_fn = array('register', 'check_login', 'login', 'logout', 'register_accout', 'checkPhone', 'checkUserName');	//无需登录和验证rbac的方法名
+	protected  $not_check_fn = array('register', 'check_login', 'login', 'logout', 'register_accout', 'checkPhone', 'checkUserName','verify');	//无需登录和验证rbac的方法名
 	
 	//控制器说明
 	private $module_explain = '媒体主';

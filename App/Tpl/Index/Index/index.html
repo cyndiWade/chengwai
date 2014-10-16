@@ -209,6 +209,7 @@ function check() {
       </div>
     </div>
     <div class="blank10"></div>
+    <!--  
     <div class="mod_nav cwqmod_bg1">
     <div class="mod_title"><h3 id="tab_menu4"><span class="currot">优秀媒体主</span><span>最新订单</span></h3></div>
       <div class="mod_con pt10" id="tab_body4">
@@ -321,6 +322,7 @@ function check() {
       </div>
     </div>
     <div class="blank10"></div>
+   -->
     <div class="mod_nav cwqmod_bg3">
     <div class="mod_title"><h3>帮助中心</h3></div>
       <div class="mod_con">
@@ -343,7 +345,7 @@ function check() {
       <div class="mod_con pt10 pb10 clearfix" id="tab_body1">
       	<div>
       	<volist name="view_data['weixin_recommended_list']" id="vo">
-	  	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+	  	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view['Global_Resource_Path']}images/default_head.jpg" class="png"></dt>
         <dd><h3>{$vo.account_name}</h3>
           <p>粉丝数： <b>422385</b></p>
           <p>认证情况： <b>已认证</b></p>   
@@ -472,7 +474,7 @@ function check() {
       	<div>
       	
       	<volist name="view_data['weibo_recommended_list']" id="vo">
-      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view['Global_Resource_Path']}images/default_head.jpg" class="png"></dt>
         <dd><h3>{$vo.account_name}</h3>
           <p>粉丝数： <b>{$vo.fansnumber}</b></p>
           <p>认证情况： <b>已认证</b></p>   
@@ -604,7 +606,7 @@ function check() {
       	<div>
       	
       		<volist name="view_data['news_recommended_list']" id="vo">
-      		<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+      		<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view['Global_Resource_Path']}images/default_head.jpg" class="png"></dt>
 	        <dd><h3>{$vo.account_name}</h3>
 	          <p>新闻源： <b>百度新闻源</b></p>
 	          <p>门户类型： <b>{$vo.type_of_portal_explain}</b></p>   
