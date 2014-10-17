@@ -575,4 +575,26 @@ function is_phone($phone_num){
     return $arr;
 }
 
+/**
+ * 无限分类 树结构
+ * 
+ * @param array $items
+ * 
+ * @author lurongchang
+ * @date   2014-10-17
+ * @return array
+ */    
+function getTree($items) {
+    //格式化好的树
+    $tree = array();
+    foreach ($items as $item) {
+        if (isset($items[$item['parent_id']])) {
+            $items[$item['parent_id']]['son'][] = &$items[$item['id']];
+        } else {
+            $tree[] = &$items[$item['id']];
+        }
+    }
+    return $tree;
+}
+
 ?>

@@ -16,6 +16,7 @@ class HelpAction extends MediaBaseAction {
 
 	//初始化数据库连接
 	protected $db = array(
+        'Help' => 'Help'
 	);
 	
 	//和构造方法
@@ -36,11 +37,36 @@ class HelpAction extends MediaBaseAction {
      */
 	public function index()
     {
+        $currentid = I('id', 0, 'intval');
+        
+        $helpModel = $this->db['Help'];
+        $list = $helpModel->getList();
+        $helpList = array();
+        if ($list) {
+            foreach ($list AS $info) {
+                $helpList[$info['id']] = $info;
+            }
+        }
+        
+        $newHelpList = getTree($helpList);
+        
+        if (empty($currentid)) {
+            $currentInfo = &$newHelpList[0];
+            if ($currentInfo['son']) {
+                $currentInfo = &$newHelpList[0]['son'][0];
+            }
+            $currentid = $currentInfo['id'];
+        } else {
+            $currentInfo = &$helpList[$currentid];
+        }
         
         
 		parent::data_to_view(array(
 			'type'          => $type,
             'accountType'   => $accountTypeList,
+            'currentid'     => $currentid,
+            'currentInfo'   => $currentInfo,
+            'helpList'      => $newHelpList,
 		));
 		$this->display();
 	}
