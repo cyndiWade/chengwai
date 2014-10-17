@@ -461,48 +461,7 @@ class AppBaseAction extends GlobalParameterAction {
 	}
 
 	
-	/**
-	 * 获取表的所有字段
-	 * @param String $Model_Name
-	 * @return Array
-	 * @说明  调用parent::getTableColumns('AccountNews')
-	 */
-	protected function getTableColumns ($Model_Name) {
-	
-		$fields =  M($Model_Name)->query("
-			SELECT 
-				column_name AS fields 
-			FROM 
-				Information_schema.columns
-			WHERE
-				 table_Name =  '__TABLE__'");
-		if ($fields == true) {
-			return getArrayByField($fields,'fields');
-		} else {
-			return array();
-		}
-		
-	}
-	
-	/**
-	 * 为表追加表前缀
-	 * @param String $Model_Name
-	 * @param String $prefix
-	 * @return string|boolean
-	 * @说明 parent::field_add_prefix('AccountNews','bs_');
-	 */
-	protected function field_add_prefix($Model_Name,$prefix) {
-		$fields = self::getTableColumns($Model_Name);
-		$result_array = array();
-		if ($fields == true) {
-			foreach($fields as $fd) {
-				array_push($result_array,$fd.' AS '.$prefix.$fd);
-			}
-			return implode(',',$result_array);
-		} else {
-			return false;
-		}
-	}
+
 	
 	
 	
