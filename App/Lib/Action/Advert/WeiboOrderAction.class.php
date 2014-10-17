@@ -629,7 +629,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 	{
 		$account_id = $this->_post('account_id');
 		$is_type = $this->_post('is_type');
-		if($account_id!='' && $is_type!='')
+		if($account_id!='' && !is_null($is_type))
 		{
 			$list = $this->db['AccountWeibo']->getInfo($account_id,$is_type);
 			parent::callback(C('STATUS_SUCCESS'),$list);

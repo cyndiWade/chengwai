@@ -133,12 +133,12 @@ class AppBaseModel extends Model {
 	 * @return string|boolean
 	 * @说明 parent::field_add_prefix('AccountNews','bs_');
 	 */
-	protected function field_add_prefix($Model_Name,$prefix) {
+	protected function field_add_prefix($Model_Name,$prefix,$fount='') {
 		$fields = self::getTableColumns($Model_Name);
 		$result_array = array();
 		if ($fields == true) {
 			foreach($fields as $fd) {
-				array_push($result_array,$fd.' AS '.$prefix.$fd);
+				array_push($result_array,$fount . $fd.' AS '.$prefix.$fd);
 			}
 			return implode(',',$result_array);
 		} else {

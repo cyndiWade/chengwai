@@ -387,20 +387,20 @@
 		//获得微信数据
 		public function getInfo($account_id,$is_type)
 		{
-			$app_account_weixin = parent::field_add_prefix('app_account_weibo','bs_');
+			$app_account_weixin = parent::field_add_prefix('app_account_weibo','bs_','w.');
 			if($is_type==0)
 			{
-				$app_grassroots_weixin = parent::field_add_prefix('app_grassroots_weixin','sy_');
+				$app_grassroots_weixin = parent::field_add_prefix('app_grassroots_weixin','sy_','g.');
 				$field = $app_account_weixin . ',' . $app_grassroots_weixin;
-				$this->table('app_account_weibo as w')
-				->where(array('id'=>$account_id))
+				return $this->table('app_account_weibo as w')
+				->where(array('w.id'=>$account_id))
 				->join('app_grassroots_weibo as g on g.weibo_id = w.id')
 				->field($field)->find();
 			}else{
-				$app_grassroots_weixin = parent::field_add_prefix('app_celeprityindex_weixin','sy_');
+				$app_grassroots_weixin = parent::field_add_prefix('app_celeprityindex_weixin','sy_','c.');
 				$field = $app_account_weixin . ',' . $app_grassroots_weixin;
-				$this->table('app_account_weibo as w')
-				->where(array('id'=>$account_id))
+				return $this->table('app_account_weibo as w')
+				->where(array('w.id'=>$account_id))
 				->join('app_celeprityindex_weibo as c on c.weibo_id = w.id')
 				->field($field)->find();
 			}
