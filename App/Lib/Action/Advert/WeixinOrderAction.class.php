@@ -606,8 +606,8 @@ class WeixinOrderAction extends AdvertBaseAction {
 	//微信查看详情
 	public function getAccountInfo()
 	{
-		$account_id = $this->_post('account_id');
-		$is_type = $this->_post('is_type');
+		$account_id = 1;
+		$is_type = 0;
 		if($account_id!='' && $is_type!='')
 		{
 			$list = $this->db['AccountWeixin']->getInfo($account_id,$is_type);
