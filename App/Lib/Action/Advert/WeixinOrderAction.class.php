@@ -28,7 +28,8 @@ class WeixinOrderAction extends AdvertBaseAction {
 			'IntentionWeixinOrder' => 'IntentionWeixinOrder',
 			'IntentionWeixinFiles' => 'IntentionWeixinFiles',
 			'IntentionWeixinAccount'=> 'IntentionWeixinAccount',
-			'Discss' => 'Discss'
+			'Discss' => 'Discss',
+			'AccountWeixin' => 'AccountWeixin'
 	);
 	
 	//和构造方法
@@ -601,6 +602,17 @@ class WeixinOrderAction extends AdvertBaseAction {
 		}
 	}
 
+
+	//微信查看详情
+	public function getAccountInfo($id)
+	{
+		$account_id = $this->_post('account_id');
+		$is_type = $this->_post('is_type');
+		if($account_id!='' && $is_type!='')
+		{
+			$this->db['AccountWeixin']->getInfo($account_id,$is_type);
+		}
+	}
 }
 
 ?>

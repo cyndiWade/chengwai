@@ -417,4 +417,16 @@
 				return $value['users_id'];
 			}
 		}
+
+		//获得微信数据
+		public function getInfo($account_id,$is_type)
+		{
+			if($is_type==0)
+			{
+				$this->table('app_account_weixin as w')
+				->where(array('id'=>$account_id))
+				->join('app_grassroots_weixin as g on g.weixin_id = w.id')
+				->field('g.common as sy_common,g.more_ying_price as sy_more_ying_price,g.more_ruang_price as sy_more_ruang_price,g.one_yingg_price as sy_one_yingg_price,g.one_ruangg_price as sy_one_ruangg_price')->find();
+			}
+		}
 	}
