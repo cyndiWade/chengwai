@@ -598,6 +598,7 @@ News.prototype.add_selected_box_fn = function () {
 	
 	//点击批量添加账号时
 	_father_this.add_selected_box.click(function () {
+		if (confirm('确认选择？') == false) return false;
 		_father_this.init();
 		_account_ids = [];
 		_father_this.now_selected.each(function () {
