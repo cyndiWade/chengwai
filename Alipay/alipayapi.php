@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>支付宝即时到账交易接口接口</title>
+	<title>跳转中...</title>
 </head>
 <?php
 /* *
