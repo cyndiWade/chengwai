@@ -50,6 +50,9 @@ class IndexAction extends IndexBaseAction {
 	//首页
 	public function index() {
 
+// 		$fields = parent::field_add_prefix('AccountNews','bs_');
+		//$result = $this->db['AccountNews']->field($fields)->select();
+		//dump($result);
 		//新闻推荐数据
 		$news_recommended_list = $this->db['AccountNews']->get_news_account_list(array('a.recommended_status'=>1,'a.is_del'=>0));
 		if ($news_recommended_list == true) {
