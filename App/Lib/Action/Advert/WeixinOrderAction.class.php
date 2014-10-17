@@ -610,6 +610,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 		$is_type = $this->_post('is_type');
 		if($account_id!='' && $is_type!='')
 		{
+			if(if())
 			$this->db['AccountWeixin']->getInfo($account_id,$is_type);
 		}
 	}
