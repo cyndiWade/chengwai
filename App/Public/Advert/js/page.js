@@ -16,9 +16,9 @@ function page_now_list(number,start,limit)
 
 	//执行之间进行清空
 	$('.system_page').empty();
-	var page_now_number = number;
+	var page_now_number = parseInt(number);
 	//开始当前页
-	var page_now_start = start;
+	var page_now_start = parseInt(start);
 	//每页最多
 	var page_now_limit = limit;
 	if( page_now_number > page_now_limit )
@@ -32,128 +32,46 @@ function page_now_list(number,start,limit)
 		var str = '<a href="javascript:;" '+number_all+' class="click_index"> 首页 </a><a href="javascript:;" '+number_all+' class="click_prev"> < </a>';
 		if( page_now_start<=5)
 		{
-			if(page_now_number <= 50)
+			if(num_ceil <= 5)
 			{
-				switch(num_ceil)
+				for(var i=1;i<=num_ceil;i++)
 				{
-					case 1:
-						str += '<a href="javascript:;" '+number_all+' class="click_this on"> 1 </a>';
-					break;
-					case 2:
-						for(var i=1 ;i<= 2 ; i++ )
-						{
-							if(i == page_now_start)
-							{
-								str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-							}else{
-								str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-							}
-						}
-					break;
-					case 3:
-						for(var i=1 ;i<= 3 ; i++ )
-						{
-							if(i == page_now_start)
-							{
-								str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-							}else{
-								str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-							}
-						}
-					break;
-					case 4:
-						if(page_now_start<2)
-						{
-							for(var i=1 ;i<= 2 ; i++ )
-							{
-								if(i == page_now_start)
-								{
-									str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-								}else{
-									str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-								}
-							}
-							str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
-						}else{
-							for(var i=1 ;i<= 4 ; i++ )
-							{
-								if(i == page_now_start)
-								{
-									str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-								}else{
-									str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-								}
-							}
-						}
-					break;
-					case 5:
-						switch(page_now_start)
-						{
-							case 1:
-								for(var i=1 ;i<= 3 ; i++ )
-								{
-									if(i == page_now_start)
-									{
-										str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-									}else{
-										str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-									}
-								}
-								str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
-							break;
-							case 2:
-								for(var i=1 ;i<= 4 ; i++ )
-								{
-									if(i == page_now_start)
-									{
-										str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-									}else{
-										str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-									}
-								}
-								str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
-							break;
-							default:
-								for(var i=1 ;i<= 5 ; i++ )
-								{
-									if(i == page_now_start)
-									{
-										str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-									}else{
-										str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
-									}
-								}
-							break;
-						}
-					break;
+					if(i == page_now_start)
+	 				{
+	 					str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
+	 				}else{
+	 					str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
+	 				}
 				}
 			}else{
-				if(page_now_start >= 4 )
+				var new_num = num_ceil - 5;
+				switch(new_num)
 				{
-					str += '<a href="javascript:;" '+number_all+' class="click_this on"> 1 </a><em> ... </em>';
-					var num_ceil_j = num_ceil - 2;
-					for(var i=num_ceil_j ;i<= num_ceil ; i++ )
-					{
-						if(i == page_now_start)
+					case 1:
+						for(var i=1;i<=num_ceil;i++)
 						{
-							str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-						}else{
-							str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
+							if(i == page_now_start)
+			 				{
+			 					str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
+			 				}else{
+			 					str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
+			 				}
 						}
-					}
-				}else{
-					var page_now_j =  page_now_start+2;
-					for(var i=1 ;i<= page_now_j ; i++ )
-					{
-						if(i == page_now_start)
+					break;
+					default:
+						for(var i=1;i<=6;i++)
 						{
-							str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
-						}else{
-							str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
+							if(i == page_now_start)
+			 				{
+			 					str += '<a href="javascript:;" '+number_all+' class="click_this on"> '+i+' </a>';
+			 				}else{
+			 					str += '<a href="javascript:;" '+number_all+' class="click_this num"> '+i+' </a>';
+			 				}
 						}
-					}
-					str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
+						str += '<em> ... </em><a href="javascript:;" '+number_all+' class="click_this num">'+num_ceil+'</a>';
+					break;
 				}
+				
 			}
 		}else{
 			str += '<a href="javascript:;" '+number_all+' class="click_this num"> 1 </a><em> ... </em>';
