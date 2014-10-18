@@ -140,9 +140,9 @@ Weixin.prototype.select_tag_fn = function () {
 			'field' : _this.data('field'),
 			'repetition' : _this.data('repetition')
 		});
-		var ipt_val = _this.data('val').split("-");
-		_father_this.ipt_fansNum_start.val(ipt_val[0]);
-		_father_this.ipt_fansNum_over.val(ipt_val[1]);
+		//var ipt_val = _this.data('val').split("-");
+		//_father_this.ipt_fansNum_start.val(ipt_val[0]);
+		//_father_this.ipt_fansNum_over.val(ipt_val[1]);
 	});
 	
 	_father_this.btn_fansNum_yes.click(function () {
@@ -150,10 +150,10 @@ Weixin.prototype.select_tag_fn = function () {
 		var tag_class = _this.data('tag_class');
 		var obj = $('.'+tag_class).eq(1);
 		var start = _father_this.ipt_fansNum_start.val() ? _father_this.ipt_fansNum_start.val() : 0;
-		var over = _father_this.ipt_fansNum_over.val() ? _father_this.ipt_fansNum_over.val() : 10000000;
-		var val = start + '-' + over;
+		var over = _father_this.ipt_fansNum_over.val() ? _father_this.ipt_fansNum_over.val() : 1000;
+		var val = start * 10000 + '-' + over * 10000;
 		
-		_father_this.create_selete_tags(val+'个',val,{
+		_father_this.create_selete_tags(start+'-'+over+'万',val,{
 			'tag_class' : obj.data('tag_class'),
 			//'tag_id':obj.data('tag_id'),
 			'classify':obj.data('classify'),
@@ -481,7 +481,15 @@ Weixin.prototype.btn_click_create_tags = function () {
 		var over = _father_this.ipt_jiage_over.val() ? _father_this.ipt_jiage_over.val() : 10000000;
 		var val = start + '-' + over;
 		
-		_father_this.create_selete_tags(val+'元',val,{
+		var show_title;
+		if (_father_this.ipt_jiage_over.val() == '' || _father_this.ipt_jiage_over.val() > 10000000) {
+			show_title = start + ' > 10000'+ '元';
+		} else {
+			show_title = start +'-'+_father_this.ipt_jiage_over.val()+'元'
+		}
+		
+		//>10000 
+		_father_this.create_selete_tags(show_title,val,{
 			'tag_class' : obj.data('tag_class'),
 			//'tag_id':obj.data('tag_id'),
 			'classify':obj.data('classify'),

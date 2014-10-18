@@ -75,11 +75,53 @@
 			->table('app_account_news as w')
 			->join('app_index_news as b on w.id = b.news_id')
 			->count();
+			
+			//统计表字段，加上别名
+			$account_news_fields = parent::field_add_prefix('AccountNews','bs_','w.');
+			$index_news_fields = parent::field_add_prefix('IndexNews','sy_','b.');
+			
 			//差集统计长度
 			$list = $this->where($where)
 			->table('app_account_news as w')
 			->join('app_index_news as b on w.id = b.news_id')
-			->limit($now_page,$limit)->field('w.*,b.classification,b.area,b.is_news,b.links')->select();
+			->limit($now_page,$limit)->field($account_news_fields.','.$index_news_fields)->select();
+			
+			//新闻用到分类集合
+			$tags_ids = C('Big_Nav_Class_Ids.xinwen_tags_ids');
+			$CategoryTagsInfo  = D('CategoryTags')->get_classify_data($tags_ids['top_parent_id']);
+			
+			//新闻源处理
+			$data['sfxwy'] = $CategoryTagsInfo[$tags_ids['sfxwy']];
+			$data['sfxwy'] = regroupKey($data['sfxwy'],'val',true);
+			
+			//文本连接
+			$data['dljzk'] = $CategoryTagsInfo[$tags_ids['dljzk']];
+			$data['dljzk'] = regroupKey($data['dljzk'],'val',true);
+		
+			//门户类型
+			$data['mh_type'] = $CategoryTagsInfo[$tags_ids['mh_type']];
+			$data['mh_type'] = regroupKey($data['mh_type'],'val',true);
+			
+			$Region = D('Region');	//区域表
+			
+			
+			if ($list == true) {
+				foreach ($list as $key=>$val) {	
+					//区域
+					$region_info = $Region->get_regionInfo_by_id($val['sy_area']);
+					$list[$key]['pg_area_name'] = $region_info['region_name'] ? $region_info['region_name'] : '不限';
+					
+					//新闻源
+					$list[$key]['pg_news_explain'] = $data['sfxwy'][$val['sy_is_news']]['title'] ? $data['sfxwy'][$val['sy_is_news']]['title'] : '所有';
+
+					//文本连接
+					$list[$key]['pg_links_explain'] = $data['dljzk'][$val['sy_links']]['title'] ? $data['dljzk'][$val['sy_links']]['title'] : '所有';
+	
+					//门户类型
+					$list[$key]['pg_type_of_portal_explain'] = $data['mh_type'][$val['sy_type_of_portal']]['title'] ? $data['mh_type'][$val['sy_type_of_portal']]['title'] : '所有';
+				}
+			}
+			//exit;
 			return array('list'=>$list,'count'=>$count);
 		}
 		
