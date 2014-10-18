@@ -18,7 +18,7 @@
 	</div>
 	<div class="area01-myorder l">
 		<div class="box01-myorder fl">
-			<div class="top-myorder l"><b>“{$view_data.order_info.title}”的详细信息</b></div>
+			<div class="top-myorder l"><b>“{$view_data.order_info.title}”的详细信息</b> <b><a href="{:U('/Advert/Weixin/weixin/',array('order_id'=>$view_data['order_id']))}">继续添加媒体</a></b></div>
 			<table class="tab01-myorder l">
 			  <tr>
 				<th class="t1">活动名称：</th>
@@ -34,7 +34,7 @@
 				<th class="t1">开始时间：</th>
 				<td class="t3">{$view_data.order_info.start_time|date="Y-m-d H:i:s",###}</td>
 				<th class="t1">反馈时间：</th>
-				<td class="t2">{$view_data.order_info.over_time|date="Y-m-d H:i:s",###}</td>
+				<td class="t2"><!--  {$view_data.order_info.over_time|date="Y-m-d H:i:s",###}--></td>
 			  </tr>
 			  <tr>
 				<th class="t1">活动状态：</th>
