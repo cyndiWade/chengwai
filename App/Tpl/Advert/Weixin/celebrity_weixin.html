@@ -173,7 +173,9 @@
 			<b class="total fr">共<span id="all_data_num"></span>个</b><b class="total fr"><span id="all_page_num"></span>页</b>
 			<span class="orderspan orderspan-select fl" data-sort_type="order_id">默认排序</span>
 			<span class="orderspan fl" data-sort_type="fans_num">粉丝数</span>
+			<!-- 
 			<span class="orderspan fl" >配合度</span>
+			 -->
 		</div>
 		<div class="col01-mr l" >
 		
@@ -337,7 +339,7 @@ var create_now_html = function ($data,$post_data) {
 	//html += '<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员';
 	html += '</div>';
 	html += '<div class="tem02-cele fl">';
-	//html += '影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员';
+	html += $data.bs_introduction;
 	html += '</div>';
 	html += '</div>';
 	html += '</div>';

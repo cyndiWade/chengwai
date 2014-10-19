@@ -288,9 +288,14 @@ var create_now_html = function ($data,$post_data) {
 	html += '<input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.bs_id+'"/>';
 	html += '<img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" />';
 	html += '<div class="grp fl">';
-	html += '<h5 class="l account_name" data-account_name="'+$data.bs_account_name+'"><b>'+$data.bs_account_name+'</b><span class="heart"></span><span class="heart"></span></h5>';
-	html += '<div class="weixininfo l"><span class="weixinhao fl">微信号：'+$data.bs_weixinhao+'</span><i class="i-rz"></i><i class="i-sp"></i></div>';
-	//html += '<div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>';
+	html += '<h5 class="l account_name" data-account_name="'+$data.bs_account_name+'"><b>'+$data.bs_account_name+'</b>';
+	//html += '<span class="heart"></span><span class="heart"></span></h5>';
+	html += '<div class="weixininfo l">';
+		html += '<span class="weixinhao fl">微信号：'+$data.bs_weixinhao+'</span>';
+	//html += '<i class="i-rz"></i><i class="i-sp"></i>';
+	html += '</div>';
+	html += '<div class="desc l">简介：'+$data.bs_introduction+'</div>';
+	html += '</div></div></td>';
 	
 	html += '<td class="t7"><b class="red">'+$data.pg_cjfl_explain+'</b></td>';
 	html += '<td class="t7"><div class="fsbox"><p>'+$data.bs_fans_num / 10000+'万</p>';

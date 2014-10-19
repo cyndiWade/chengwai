@@ -47,6 +47,33 @@ var init_check_form = function () {
 init_check_form();
 
 (function () {	
+	
+	//验证日期
+	var check_date = function ($ojb) {
+		var _this = $($ojb);
+		
+		//获取当前时间
+		var date = new Date();		
+		var now_date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
+		//格式化当前时间
+		var now_date_format = System.fomat_date(now_date);	 
+
+		//获取选择的时间
+		var select_date = System.fomat_date(_this.val());
+					
+		//24小时*60分钟*60秒*1000毫秒
+		var sixteen_minutes = 16 * 60 * 1000;
+		var fourteen_day = 14 * 24 * 60 * 60 * 1000;
+		
+		if (select_date - now_date_format <  sixteen_minutes
+		|| 	
+		   select_date - now_date_format > fourteen_day
+		) {
+			_this.val('');
+			alert('请选择当前时间60分钟后，14天之内的时间');
+		}	
+	}
+	
 	//显示时间的选择
 	$(".timeSubject").ymdateplugin({
 		//attr 属性 ，更多格式参加书本
@@ -58,28 +85,12 @@ init_check_form();
 		showMonthAfterYear:true,	//互换位置
 		showTimePanel: true,
 		
-		onSelect : function () {			//选择日期执行函数
-			alert(this.value);
-		},
-		
 		onClose : function () {			//关闭窗口执行函数
 			var _this = $(this);
-			
-			//获取当前时间
-			var date = new Date();		
-			var now_date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
-			//格式化当前时间
-			var now_date_format = System.fomat_date(now_date);	 
-	
-			//获取选择的时间
-			var select_date = System.fomat_date(_this.val());
-						
-			//24小时*60分钟*60秒*1000毫秒
-			var sixteen_minutes = 16 * 60 * 1000;
-			var fourteen_day = 14 * 24 * 60 * 60 * 1000;
-			
-			
-		},
+			if (_this.data('check_type') == 'start') {
+				check_date(this); 
+			}	
+		}
 	});
 })();
 
