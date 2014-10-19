@@ -248,7 +248,7 @@ var public_post_fn = function (obj_data) {
 
 		Weibo.dataNum_And_PageNum(result.data.count);
 		
-		Weibo.create_details_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+		Weibo.create_details_fn('{:U('/Advert/WeiboOrder/getAccountInfo')}');
 		
 		Weibo.page_init_fn();	//加载页面初始化
 		
@@ -281,7 +281,7 @@ var create_now_html = function ($data,$post_data) {
 	html += '<td class="t8" data-week_order_num="'+$data.bs_week_order_num+'">'+$data.bs_week_order_num+'</td>';
 	//html += '<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>';
 	//html += '<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
-	html += '<td class="t4"><div class="ctrl"><span class="wbdetail">详情</span><br />';
+	html += '<td class="t4"><div class="ctrl"><span class="wbdetail" data-weibo_id="'+$data.bs_id+'">详情</span><br />';
 	
 	if ($post_data.cksc == undefined) {
 		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weibo_id="' + $data.bs_id + '">收藏</span><br />';

@@ -697,17 +697,14 @@ Weixin.prototype.create_details_fn = function ($url) {
 	
 	_father_this.mrdetail.click(function(){
 		var _this = $(this);
-		var weibo_id = _this.data('weibo_id');
+		var weixin_id = _this.data('weixin_id');
 		var post_data = {};
-		post_data.weibo_id = weibo_id;
-		//alert($url);
-		//return false;
-		//var result = System.ajax_post_setup($url,post_data,'JSON');
-		var result = {};
-		create_pop_html(result)	
-		return false;
-		if (result.status == 1) {
-			create_pop_html(result)	
+		post_data.account_id = weixin_id;
+		post_data.is_type = system_info.is_celebrity;	//名人类型
+
+		var result = System.ajax_post_setup($url,post_data,'JSON');
+		if (result.status == 0) {
+			create_pop_html(result.data)	
 		}
 	})
 	
@@ -720,7 +717,7 @@ Weixin.prototype.create_details_fn = function ($url) {
 		var html = '';
 		html += '<div class="batchboxdetail none tl">';
 		html += '<div class="top-batchdetail l pr">';
-		html += '<span class="close cur pa"><img src="App/Public/Advert/images/close.gif" /></span>';
+		html += '<span class="close cur pa"><img src="/App/Public/Advert/images/close.gif" /></span>';
 		html += '<ul class="mrnav fl">';
 		html += '<li class="select">名人基本信息</li>	';
 		html += '</ul>';
@@ -729,10 +726,15 @@ Weixin.prototype.create_details_fn = function ($url) {
 		html += '<div class="box01-mrfx">';
 		html += '<div class="part01-mrfx fl">';
 		html += '<div class="grp01 fl">';
-		html += '<img src="/App/Public/Advert/images/mr_img01.gif" />';
+		
+		if (data.bs_head_img == '') {
+			html += '<img src="'+system_info.Global_Resource_Path+'images/default_head.jpg" />';
+		} else {
+			html += '<img src="'+data.bs_head_img+'" />';
+		}
 		html += '</div>';
 		html += '<div class="grp02 fl">';
-		html += '<h6><b>苏经</b>的详细信息</h6>';
+		html += '<h6><b>'+data.bs_account_name+'</b>的详细信息</h6>';
 		html += '<table class="tab01-mr">';
 		html += '<tr>';
 		html += '<td class="t1">国籍:</td>';
@@ -747,11 +749,11 @@ Weixin.prototype.create_details_fn = function ($url) {
 		html += '</div>';
 		html += '<div class="part02-mrfx fl">';
 		html += '<h6><strong>履历介绍</strong></h6>';
-		html += '<p>苏芩，著名作家，历任媒体主编、国内多家电（视）台、平面媒体特邀顾问。</p>';
+		html += '<p>'+data.bs_introduction+'</p>';
 		html += '</div>';
 		html += '<div class="part02-mrfx fl">';
 		html += '<h6><strong>账号信息</strong></h6>';
-		html += '<div class="info"><span>平均转发数： <b class="red">1934.591</b></span><span>平均评论数： <b class="red">1934.591</b></span></div>';
+		html += '<div class="info"><span>周订单： <b class="red">'+data.bs_week_order_num+'</b></span><span>月订单： <b class="red">'+data.bs_month_order_nub+'</b></span></div>';
 		html += '</div>';
 		html += '</div>';		
 		html += '</div>';

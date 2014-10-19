@@ -288,7 +288,7 @@ var public_post_fn = function (obj_data) {
 
 		Weixin.dataNum_And_PageNum(result.data.count);
 		
-		Weixin.create_details_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+		Weixin.create_details_fn('{:U('Advert/WeixinOrder/getAccountInfo')}');
 		
 		Weixin.page_init_fn();	//加载页面初始化
 		
@@ -337,7 +337,7 @@ var create_now_html = function ($data,$post_data) {
 	html += '<td class="t4"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>';
 	html += '<td class="t4"><div class="ctrl">';
 	
-	html += '<span class="wxdetail">详情</span><br/>';
+	html += '<span class="wxdetail" data-weixin_id="'+$data.bs_id+'">详情</span><br/>';
 	if ($post_data.cksc == undefined) {
 		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weixin_id="' + $data.bs_id + '">收藏</span><br/>';
 	}else if ($post_data.cksc == 1) {

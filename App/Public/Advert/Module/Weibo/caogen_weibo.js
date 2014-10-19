@@ -558,12 +558,14 @@ Weibo.prototype.create_details_fn = function ($url) {
 	_father_this.wbdetail.click(function(){
 		var _this = $(this);
 		var weibo_id = _this.data('weibo_id');
+		
 		var post_data = {};
-		post_data.weibo_id = weibo_id;
+		post_data.account_id = weibo_id;
+		post_data.is_type = system_info.is_celebrity;
 		var result = System.ajax_post_setup($url,post_data,'JSON');
 		
-		if (result.status == 1) {
-			create_pop_html(result)	
+		if (result.status == 0) {
+			create_pop_html(result.data)	
 		}
 	})
 	
@@ -576,46 +578,49 @@ Weibo.prototype.create_details_fn = function ($url) {
 		var html = '';
 html += '<div class="batchboxdetail none tl">';
 html += '<div class="top-batchdetail l pr">';
-html += '<div class="title pa"><i></i><span>全球头条新闻事件</span></div>';
-html += '<span class="close cur pa"><img src="App/Public/Advert/images/close.gif" /></span>';
+html += '<div class="title pa">';
+//html += '<i></i><span>全球头条新闻事件</span>';
+html += '</div>';
+html += '<span class="close cur pa"><img src="/App/Public/Advert/images/close.gif" /></span>';
 html += '<ul class="fl">';
-html += '<li class="li_a select"><strong>账号详情</strong></li><li class="li_b"><strong>账号被占用时段</strong></li>';
+html += '<li class="li_a select"><strong>账号详情</strong></li>';
+//html += '<li class="li_b"><strong>账号被占用时段</strong></li>';
 html += '</ul>';
 html += '</div>';
 html += '<div class="mid-batchdetail l">';
 html += '<div class="box01-batchdetail fl">';
 html += '<table class="tab01-batchdetail">';
 html += '<tr>';
-html += '<td class="t1">月订单：<em>54646</em></td>';
-html += '<td class="t1">周订单：<em>54646</em></td>';
+html += '<td class="t1">月订单：<em>'+data.bs_month_order_nub+'</em></td>';
+html += '<td class="t1">周订单：<em>'+data.bs_week_order_num+'</em></td>';
 html += '</tr>';
 html += '<tr>';
-html += '<td class="t1">万粉丝硬广转发单价：<em>54646</em></td>';
-html += '<td class="t1">万粉丝软广转发单价：<em>54646</em></td>';
+html += '<td class="t1">硬广转发单价：<em>'+data.bs_yg_zhuanfa+'</em></td>';
+html += '<td class="t1">硬广直发单价：<em>'+data.bs_yg_zhifa+'</em></td>';
 html += '</tr>';
 html += '<tr>';
-html += '<td class="t1">万粉丝硬广直发单价：<em>54646</em></td>';
-html += '<td class="t1">万粉丝软广直发单价：<em>54646</em></td>';
+html += '<td class="t1">软广转发价格：<em>'+data.bs_rg_zhuanfa+'</em></td>';
+html += '<td class="t1">软广直发价格：<em>'+data.bs_rg_zhifa+'</em></td>';
 html += '</tr>';
+//html += '<tr>';
+//html += '<td class="t1">月流单率：<em>暂无报价</em></td>';
+//html += '<td class="t1">月拒单率：<em>5%</em></td>';
+//html += '</tr>';
+//html += '<tr>';
+//html += '<td class="t1">月合格率：<em>5%</em></td>';
+//html += '<td class="t1">是否接硬广：<em>是</em></td>';
+//html += '</tr>';
 html += '<tr>';
-html += '<td class="t1">月流单率：<em>暂无报价</em></td>';
-html += '<td class="t1">月拒单率：<em>5%</em></td>';
+html += '<td colspan="2">账号ID：<em>'+data.bs_id+'</em></td>';
 html += '</tr>';
-html += '<tr>';
-html += '<td class="t1">月合格率：<em>5%</em></td>';
-html += '<td class="t1">是否接硬广：<em>是</em></td>';
-html += '</tr>';
-html += '<tr>';
-html += '<td colspan="2">账号ID：<em>1903188000</em></td>';
-html += '</tr>';
-html += '<tr>';
-html += '<td colspan="2">账号分类：<em>资讯</em><em>时尚</em><em>服装箱包</em><em>服装</em></td>';
-html += '</tr>';
-html += '<tr>';
-html += '<td colspan="2">账号标签：<em>IT数码游戏</em><em>母婴资讯</em><em>留学教育</em><em>服装</em></td>';
-html += '</tr>';
+//html += '<tr>';
+//html += '<td colspan="2">账号分类：<em>资讯</em><em>时尚</em><em>服装箱包</em><em>服装</em></td>';
+//html += '</tr>';
+//html += '<tr>';
+//html += '<td colspan="2">账号标签：<em>IT数码游戏</em><em>母婴资讯</em><em>留学教育</em><em>服装</em></td>';
+//html += '</tr>';
 html += '</table>';
-html += '<a href="#" class="btn graybtn fr">? 疑问建议</a>';
+//html += '<a href="#" class="btn graybtn fr">? 疑问建议</a>';
 html += '</div>';
 html += '<div class="box01-batchdetail none fl">';
 html += '<div class="part01-data fl">';
