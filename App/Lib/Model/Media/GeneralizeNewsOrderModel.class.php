@@ -106,6 +106,7 @@ class GeneralizeNewsOrderModel extends MediaBaseModel
                         'price'         => $info['price'],
                         'start_time'    => date('Y-m-d', $orderInfo['start_time']),
                         'order_status'  => $info['audit_status'],
+                        'order_status_name'  => getAccountStatus($info['audit_status']),
                         'mark'          => $orderInfo['bz_info'],
                     );
                     $datas[] = $temp;

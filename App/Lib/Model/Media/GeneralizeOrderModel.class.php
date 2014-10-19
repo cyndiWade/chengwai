@@ -71,7 +71,7 @@ class GeneralizeOrderModel extends MediaBaseModel
             // 获取订单子表对应的帐号ID [一个订单对应多个帐号]
             $orderAccountList = M('GeneralizeAccount')->where($where)
                 ->field('id, generalize_id, price, account_id, account_type, audit_status')->select();
-            
+         
             $accountIds = array();
             if ($orderAccountList) {
                 foreach ($orderAccountList AS $info) {
@@ -107,6 +107,7 @@ class GeneralizeOrderModel extends MediaBaseModel
                         'price'         => $info['price'],
                         'start_time'    => date('Y-m-d', $orderInfo['start_time']),
                         'order_status'  => $info['audit_status'],
+                        'order_status_name'  => getAccountStatus($info['audit_status']),
                         'mark'          => $orderInfo['bz_info'],
                     );
                     $datas[] = $temp;

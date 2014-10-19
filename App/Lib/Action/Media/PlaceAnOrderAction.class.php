@@ -37,7 +37,8 @@ class PlaceAnOrderAction extends MediaBaseAction {
      */
 	public function index()
     {
-		parent::data_to_view(array(
+    	$this->redirect('/Media/PlaceAnOrder/allorder');
+		/*parent::data_to_view(array(
 			//二级导航
 			'secondSiderbar' => array(
 				//'待执行订单'		=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/index')),
@@ -46,7 +47,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
 			),
             'secondPosition' => '待执行订单',
 		));
-		$this->display();
+		$this->display();*/
 	}
     
     /**

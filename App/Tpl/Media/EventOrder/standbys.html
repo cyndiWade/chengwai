@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <ul class="part02-user l">
-                        <li>总好评率：<span class="yel">暂无评价</span></li>
+                        <li>总好评率：<span class="yel"><if condition="$view_data['orderEvaluate'] gt 0 ">{$view_data.orderEvaluate}%<else />暂无评价</if></span></li>
                         <li>被收藏总数：<span class="yel">{$view_data.markNums}</span></li>
                         <li>被加黑名单总数：<span class="yel">{$view_data.blackNums}</span></li>
                     </ul>
@@ -73,68 +73,34 @@
                     <div class="datebox fl">
                         <table class="tab01-date l">
                           <tr>
-                            <td class="t1">类别2</td>
+                            <td class="t1">类别</td>
                             <td class="t2">数量（个）</td>
                             <td class="last">金额（元）</td>
                           </tr>
                           <tr>
                             <td class="t1">订单数</td>
-                            <td class="t2"><b>0</b></td>
-                            <td class="last"><b>0</b></td>
+                            <td class="t2"><b>{$view_data.mediaTotal.day.0}</b></td>
+                            <td class="last"><b>{$view_data.mediaPrice.day.0}</b></td>
                           </tr>
                           <tr>
                             <td class="t1">已完成</td>
-                            <td class="t2"><b>0</b></td>
-                            <td class="last"><b>0</b></td>
+                            <td class="t2"><b>{$view_data.mediaTotal.day.1}</b></td>
+                            <td class="last"><b>{$view_data.mediaPrice.day.1}</b></td>
                           </tr>
                           <tr>
                             <td class="t1">不合格</td>
-                            <td class="t2"><b>0</b></td>
-                            <td class="last"><b>0</b></td>
+                            <td class="t2"><b>{$view_data.mediaTotal.day.2}</b></td>
+                            <td class="last"><b>{$view_data.mediaPrice.day.2}</b></td>
                           </tr>
                           <tr>
                             <td class="t1">流单数</td>
-                            <td class="t2"><b class="red">0</b></td>
-                            <td class="last"><b class="red">0</b></td>
+                            <td class="t2"><b class="red">{$view_data.mediaTotal.day.3}</b></td>
+                            <td class="last"><b class="red">{$view_data.mediaPrice.day.3}</b></td>
                           </tr>
                           <tr>
                             <td class="t1">拒单数</td>
-                            <td class="t2"><b class="red">0</b></td>
-                            <td class="last"><b class="red">0</b></td>
-                          </tr>
-                        </table>
-                    </div>
-                    <div class="datebox none fl">
-                        <table class="tab01-date l">
-                          <tr>
-                            <td class="t1">类别3</td>
-                            <td class="t2">数量（个）</td>
-                            <td class="last">金额（元）</td>
-                          </tr>
-                          <tr>
-                            <td class="t1">订单数</td>
-                            <td class="t2"><b>0</b></td>
-                            <td class="last"><b>0</b></td>
-                          </tr>
-                          <tr>
-                            <td class="t1">已完成</td>
-                            <td class="t2"><b>0</b></td>
-                            <td class="last"><b>0</b></td>
-                          </tr>
-                          <tr>
-                            <td class="t1">不合格</td>
-                            <td class="t2"><b>0</b></td>
-                            <td class="last"><b>0</b></td>
-                          </tr>
-                          <tr>
-                            <td class="t1">流单数</td>
-                            <td class="t2"><b class="red">0</b></td>
-                            <td class="last"><b class="red">0</b></td>
-                          </tr>
-                          <tr>
-                            <td class="t1">拒单数</td>
-                            <td class="t2"><b class="red">0</b></td>
-                            <td class="last"><b class="red">0</b></td>
+                            <td class="t2"><b class="red">{$view_data.mediaTotal.day.4}</b></td>
+                            <td class="last"><b class="red">{$view_data.mediaPrice.day.4}</b></td>
                           </tr>
                         </table>
                     </div>
@@ -147,28 +113,62 @@
                           </tr>
                           <tr>
                             <td class="t1">订单数</td>
-                            <td class="t2"><b>0</b></td>
-                            <td class="last"><b>0</b></td>
+                            <td class="t2"><b>{$view_data.mediaTotal.week.0}</b></td>
+                            <td class="last"><b>{$view_data.mediaPrice.week.0}</b></td>
                           </tr>
                           <tr>
                             <td class="t1">已完成</td>
-                            <td class="t2"><b>0</b></td>
-                            <td class="last"><b>0</b></td>
+                            <td class="t2"><b>{$view_data.mediaTotal.week.1}</b></td>
+                            <td class="last"><b>{$view_data.mediaPrice.week.1}</b></td>
                           </tr>
                           <tr>
                             <td class="t1">不合格</td>
-                            <td class="t2"><b>0</b></td>
-                            <td class="last"><b>0</b></td>
+                            <td class="t2"><b>{$view_data.mediaTotal.week.2}</b></td>
+                            <td class="last"><b>{$view_data.mediaPrice.week.2}</b></td>
                           </tr>
                           <tr>
                             <td class="t1">流单数</td>
-                            <td class="t2"><b class="red">0</b></td>
-                            <td class="last"><b class="red">0</b></td>
+                            <td class="t2"><b class="red">{$view_data.mediaTotal.week.3}</b></td>
+                            <td class="last"><b class="red">{$view_data.mediaPrice.week.3}</b></td>
                           </tr>
                           <tr>
                             <td class="t1">拒单数</td>
-                            <td class="t2"><b class="red">0</b></td>
-                            <td class="last"><b class="red">0</b></td>
+                            <td class="t2"><b class="red">{$view_data.mediaTotal.week.4}</b></td>
+                            <td class="last"><b class="red">{$view_data.mediaPrice.week.4}</b></td>
+                          </tr>
+                        </table>
+                    </div>
+                    <div class="datebox none fl">
+                        <table class="tab01-date l">
+                          <tr>
+                            <td class="t1">类别</td>
+                            <td class="t2">数量（个）</td>
+                            <td class="last">金额（元）</td>
+                          </tr>
+                          <tr>
+                            <td class="t1">订单数</td>
+                            <td class="t2"><b>{$view_data.mediaTotal.month.0}</b></td>
+                            <td class="last"><b>{$view_data.mediaPrice.month.0}</b></td>
+                          </tr>
+                          <tr>
+                            <td class="t1">已完成</td>
+                            <td class="t2"><b>{$view_data.mediaTotal.month.1}</b></td>
+                            <td class="last"><b>{$view_data.mediaPrice.month.1}</b></td>
+                          </tr>
+                          <tr>
+                            <td class="t1">不合格</td>
+                            <td class="t2"><b>{$view_data.mediaTotal.month.2}</b></td>
+                            <td class="last"><b>{$view_data.mediaPrice.month.2}</b></td>
+                          </tr>
+                          <tr>
+                            <td class="t1">流单数</td>
+                            <td class="t2"><b class="red">{$view_data.mediaTotal.month.3}</b></td>
+                            <td class="last"><b class="red">{$view_data.mediaPrice.month.3}</b></td>
+                          </tr>
+                          <tr>
+                            <td class="t1">拒单数</td>
+                            <td class="t2"><b class="red">{$view_data.mediaTotal.month.4}</b></td>
+                            <td class="last"><b class="red">{$view_data.mediaPrice.month.4}</b></td>
                           </tr>
                         </table>
                     </div>
@@ -189,7 +189,7 @@
                     <div class="box03-userorder l">
                         <ul class="dateorder fl" data-item="0">
                             <li class="select">今日可执行订单</li>
-                            <li>今日待上传数据截图订单<em class="numcount">{$view_data.todayShotNums}</em></li>
+                            <li>今日待上传数据截图订单<!--<em class="numcount">{$view_data.todayShotNums}</em>--></li>
                         </ul>
                         <!-- <div class="fr">
                             <span class="spantime fl"><i>订单号</i><input type="text" class="text" /></span>
@@ -207,9 +207,7 @@
                         <th class="t4">价格(元)</th>
                         <th class="t5">开始时间</th>
                         <th class="t6">订单状态</th>
-                        <th class="t7">拒单</th>
-                        <th class="t8">执行</th>
-                        <th class="last">用户备忘</th>
+                        <th class="last">操作</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -220,7 +218,7 @@
                     <div class="box03-userorder l">
                         <ul class="dateorder fl" data-item="2">
                             <li class="select">非今日可执行订单</li>
-                            <li>非今日待上传数据截图订单<em class="numcount">{$view_data.noTodayShotNums}</em></li>
+                            <li>非今日待上传数据截图订单<!--<em class="numcount">{$view_data.noTodayShotNums}</em>--></li>
                         </ul>
                         <!-- <div class="fr">
                             <span class="spantime fl"><i>订单号</i><input type="text" class="text" /></span>
@@ -238,7 +236,7 @@
                         <th class="t4">价格(元)</th>
                         <th class="t5">开始时间</th>
                         <th class="last">订单状态</th>
-                        <th class="last">用户备忘</th>
+                        <th class="last">操作</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -369,12 +367,12 @@ function getOrderList(type) {
                     );
                     html += '<tr>' +
                         '<td class="t1">' + item.order_id + '</td>' +
-                        '<td class="t2">' + item.account_name + '</td>' +
+                        '<td class="t3">' + item.account_name + '</td>' +
                         '<td class="t3">' + item.title + '</td>' +
                         '<td class="t4">' + item.price + '</td>' +
                         '<td class="t5">' + item.start_time + '</td>' +
-                        '<td class="t6">' + statusHtml + '</td>' +
-                        '<td class="last">' + item.order_id + '</td>' +
+                        '<td class="last">' + item.order_status_name + '</td>' +
+                        '<td class="last">' + statusHtml + '</td>' +
                     '</tr>';
                 });
             }

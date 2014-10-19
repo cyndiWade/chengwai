@@ -80,7 +80,7 @@
 		}
 	}
 	
-	//订单状态
+	//订单账号订单状态
 	function getAccountStatus($id)
 	{  
 		switch($id)

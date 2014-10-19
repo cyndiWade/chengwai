@@ -218,8 +218,19 @@ $custom= array (
 			),	
 			8=>array(
 				'status'=>8,
+				'explain'=>'已流单',
 				'explain_yxd'=>'已创建推广单'	//意向单不可再次点击
 			),
+			
+			9=>array(
+				'status'=>9,
+				'explain'=>'已取消'	//订单过期
+			),
+			10=>array(
+				'status'=>10,
+				'explain'=>'不合格'	//订单执行不合格
+			),			
+			
 		),
 	
 		//大导航分类ID集合

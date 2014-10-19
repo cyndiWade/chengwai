@@ -22,9 +22,9 @@
 			<form method="POST" method="{:U('Media/EventOrder/allorder')}" id="frm">	
         	<div class="box01-time l">
 				<span class="span-start fl">时间范围：</span>
-				<div class="startime pr fl"><em class="pa"></em><input type="text" class="timetext fl" name="start_time" value="{$view_data.start_time}" /></div>
+				<div class="startime pr fl"><em class="pa"></em><input type="text" class="timetext fl" name="start_time" id="start_time" value="{$view_data.start_time}" /></div>
 				<i class="yel fl">-</i>
-				<div class="startime pr fl"><em class="pa"></em><input type="text" class="timetext fl" name="end_time" value="{$view_data.end_time}"  /></div>
+				<div class="startime pr fl"><em class="pa"></em><input type="text" class="timetext fl" name="end_time" id="end_time" value="{$view_data.end_time}"  /></div>
 			</div>
 			<div class="box02-time l">
 				<span class="spantime spantime-first fl"><i>订单号</i><input type="text" class="text" name="order_id" value="{$view_data.search_order_id}"/></span>
@@ -155,10 +155,11 @@
 
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
-
-<script type="text/javascript" src="app/Public/Global/jquery/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.pop.js"></script>
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+<link href="{$global_tpl_view.Group_Resource_Path}plugins/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<link href="{$global_tpl_view.Group_Resource_Path}plugins/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}plugins/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}plugins/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script type="text/javascript">
 $(function(){
 	$('.tab01-allorder tr:even').addClass('even');
@@ -182,6 +183,14 @@ $(function(){
 			$('.batchbox3').popOn();	
 		}
 	})
+	$('#start_time, #end_time')
+    .datetimepicker({
+        format: 'yyyy-mm-dd',
+        language:"zh-CN",
+	    minView:2,
+	    autoclose:true
+    }); 
+   
 })
 </script>
 </body>
