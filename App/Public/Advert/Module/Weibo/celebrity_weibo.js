@@ -666,7 +666,13 @@ Weibo.prototype.create_now_html = function (result,$post_data) {
 		html += '<div class="box01-cele fl accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-fans_num="'+$data.bs_fans_num+'">';
 		html += '<input type="checkbox" class="check fl now_selected" data-field="id" data-id="'+$data.bs_id+'" />';
 		html += '<div class="part01-cele fl">';
-		html += '<img src="'+system_info.Global_Resource_Path+'images/default_head.jpg" />';
+		
+		if ($data.bs_head_img == '') {
+			html += '<img src="'+system_info.Global_Resource_Path+'images/default_head.jpg" />';
+		} else {
+			html += '<img src="'+$data.bs_head_img+'" class="mtimg" />';
+		}
+		
 		html += '<div class="ctrl">';
 
 		if ($post_data.cksc == undefined) {

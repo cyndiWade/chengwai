@@ -232,6 +232,7 @@ var system_info = {
 	is_celebrity : 0,	//是否是名人1是、0不是
 	page_limit : 10,	//每页条数
 	post_order_url : '{:U('Advert/WeixinOrder/add_account')}',
+	Global_Resource_Path : '{$global_tpl_view['Global_Resource_Path']}',
 }
 var list_content = $('#list_content');
 </script>
@@ -305,7 +306,13 @@ var create_now_html = function ($data,$post_data) {
 	html += '<td class="t1">';
 		html += '<div class="weibopart">';
 			html += '<input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.bs_id+'"/>';
-			html += '<img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" />';
+		
+			if ($data.bs_head_img == '') {
+				html += '<img src="'+system_info.Global_Resource_Path+'images/default_media.jpg" class="wbimg" />';
+			} else {
+				html += '<img src="'+$data.bs_head_img+'" class="mtimg" />';
+			}
+			
 			html += '<div class="grp fl">';
 				html += '<h5 class="l account_name" data-account_name="'+$data.bs_account_name+'"><b>'+$data.bs_account_name+'</b>';
 			//html += '<span class="heart"></span><span class="heart"></span>';

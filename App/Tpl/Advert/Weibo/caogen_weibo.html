@@ -264,7 +264,13 @@ var create_now_html = function ($data,$post_data) {
 	html += '<tr class="accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-fans_num="'+$data.bs_fans_num+'">';
 	html += '<td class="t1">';
 	html += '<div class="weibopart"><input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.bs_id+'"/>';
-	html += 	'<img src="'+system_info.Global_Resource_Path+'images/default_nothing.jpg" class="wbimg" />';
+
+	if ($data.bs_head_img == '') {
+		html += '<img src="'+system_info.Global_Resource_Path+'images/default_nothing.jpg" class="wbimg" />';
+	} else {
+		html += '<img src="'+$data.bs_head_img+'" class="mtimg" />';
+	}
+	
 	html += 		'<div class="grp fl">';
 	html += 		'<h5 class="l"><b class="account_name" data-account_name="'+$data.bs_account_name+'">'+$data.bs_account_name+'</b><span class="heart"></span><span class="heart"></span></h5>';
 	html += 		'<div class="address l">'+$data.bs_account_name+'</div>';
