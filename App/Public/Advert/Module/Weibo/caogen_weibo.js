@@ -12,6 +12,10 @@ Weibo.prototype.init = function () {
 	this.jg_tags = $('.jg_tags');			//价格分类标签
 	this.fans_num_tags = $('.fans_num_tags');	//粉丝数量标签
 	this.fans_sex_tags = $('.fans_sex_tags');	//粉丝性别标签
+	this.dfmr_mt_tags = $('.dfmr_mt_tags');	//地方名人/媒体：
+	
+	this.region_right = $('.region_right');//城市选择框
+	this.btn_confirm_dqmr = $('.btn_confirm_dqmr');	//区域选择确认按钮
 	
 	this.search_tag_data = $('.search_tag_data');	//已选标签
 	//history.pushState({a:1},'123','baidu');
@@ -113,8 +117,32 @@ Weibo.prototype.select_tag_fn = function () {
 			'repetition' : _this.data('repetition')
 		});
 		var ipt_val = _this.data('val').split("-");
-		_father_this.ipt_jiage_start.val(ipt_val[0]);
-		_father_this.ipt_jiage_over.val(ipt_val[1]);
+		//_father_this.ipt_jiage_start.val(ipt_val[0]);
+		//_father_this.ipt_jiage_over.val(ipt_val[1]);
+	});
+	
+	_father_this.dfmr_mt_tags.click(function (){
+		var _this = $(this);
+		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
+			'tag_class' : _this.data('tag_class'),
+			'tag_id':_this.data('tag_id'),
+			'classify':_this.data('classify'),
+			'field' : _this.data('field'),
+			'repetition' : _this.data('repetition')
+		});
+	});
+	
+	_father_this.btn_confirm_dqmr.click(function () {
+		var _this = $(this);
+		if (_father_this.region_right.val() == '') {
+			return false;
+		}
+		_father_this.create_selete_tags(_father_this.region_right.find("option:selected").text(),_father_this.region_right.val(),{
+			'tag_class' : _father_this.region_right.data('tag_class'),
+			'classify':_father_this.region_right.data('classify'),
+			'field' : _father_this.region_right.data('field'),
+			'repetition' : _father_this.region_right.data('repetition')
+		});
 	});
 	
 	_father_this.fans_num_tags.click(function (){
@@ -239,6 +267,25 @@ Weibo.prototype.init_tags_selected = function () {
 				now_this.data('val') == _this.data('val')
 			) {
 				jg_tags.removeClass("select");
+				if (_this.data('val') == '') {
+					_this.parent().remove();
+				}
+				now_this.addClass("select");
+				return false;
+			}
+		});
+		
+		
+		_father_this.dfmr_mt_tags.each(function () {
+			var now_this = $(this);
+			if (
+				now_this.data('classify') == _this.data('classify') &&
+				
+		 		now_this.data('title') == _this.data('title') && 
+				
+				now_this.data('val') == _this.data('val')
+			) {
+				_father_this.dfmr_mt_tags.removeClass("select");
 				if (_this.data('val') == '') {
 					_this.parent().remove();
 				}
@@ -635,6 +682,8 @@ Weibo.prototype.add_selected_box_fn = function () {
 	
 	//点击批量添加账号时
 	_father_this.add_selected_box.click(function () {
+		if (confirm('确认操作？') == false) return false;
+		
 		_father_this.init();
 		_account_ids = [];
 		_father_this.now_selected.each(function () {

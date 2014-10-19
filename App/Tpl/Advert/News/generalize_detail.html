@@ -18,7 +18,10 @@
 	</div>
 	<div class="area01-myorder l">
 		<div class="box01-myorder fl">
-			<div class="top-myorder l"><b>“{$view_data.order_info.title}”的详细信息</b></div>
+			<div class="top-myorder l">
+			<b>“{$view_data.order_info.title}”的详细信息</b>
+			<b><a href="{:U('Advert/News/news_list',array('order_id'=>$view_data['order_id']))}">继续添加媒体</a></b>
+			</div>
 			<table class="tab01-myorder l">
 			  <tr>
 				<th class="t1">活动名称：</th>

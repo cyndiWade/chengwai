@@ -5,9 +5,11 @@
     <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/member.css" type="text/css" />
 	<title>微信列表页</title>
-	<script type="text/javascript">
-	 
-	</script>
+	<style type="text/css">
+		.t6 {
+			width:200px !important;
+		}
+	</style>
 </head>
 <body>
 
@@ -75,6 +77,20 @@
 				</td>
 		  </tr>
 		  <tr>
+			<td class="t1">地区：</td>
+			<td class="t2">
+				<div class="part02-price fl">
+				<volist name="view_data['dfmr_mt']" id="vo">
+					<span class="dfmr_mt_tags" data-tag_class="dfmr_mt_tags" data-tag_id="{$vo.id}"  data-classify="地方名人/媒体" data-field="dfmr_mt" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>		
+				</div>
+				<div class="part01-citysel fl">
+					<select class="fl region_left"></select>
+					<select class="fl region_right" data-tag_class="dfmr_mt_tags" data-classify="地方名人/媒体" data-repetition="no"  data-field="dfmr_mt"></select>
+				</div><span class="btn okbtn fl btn_confirm_dqmr">确定</span>
+			</td>
+		  </tr>
+		  <tr>
 			<td class="t1">粉丝量：</td>
 			<td class="t2">
 				<div class="part02-price fl">
@@ -83,6 +99,7 @@
 				</volist>
 				</div><div class="part03-price fl"><input type="text" class="text ipt_fansNum_start" /><i>-</i><input type="text" class="text ipt_fansNum_over" /><i>万</i></div><span class="btn okbtn fl btn_fansNum_yes" data-tag_class="fans_num_tags">确定</span></td>
 		  </tr>
+		  
 		  <!--  
 		  <tr>
 			<td class="t1">视频认证  <img src="{$global_tpl_view.Group_Resource_Path}images/qa_icon.png" />：</td>
@@ -156,7 +173,7 @@
 			<th class="t1"><b>微信名称</b></th>
 			<th class="t7">行业分类</th>
 			<th class="t7">粉丝</th>
-			<th class="t1">价格</th>
+			<th class="t6">价格</th>
 			<!--  <th class="t5">性别比例</th>-->
 			<!--  <th class="t6">效果值</th>-->
 			<th class="t4">月订单量</th>
@@ -221,6 +238,7 @@ var list_content = $('#list_content');
 
 </scritp>
 
+<script src="{$global_tpl_view.Global_Resource_Path}Tool/Region.js"></script>
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/page.js"></script>
 <script src="{$global_tpl_view.Module_Resource_Path}weixin.js"></script>
 
@@ -284,24 +302,28 @@ var create_now_html = function ($data,$post_data) {
 	
 	var html = '';
 	html += '<tr class="accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-fans_num="'+$data.bs_fans_num+'">';
-	html += '<td class="t1"><div class="weibopart">';
-	html += '<input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.bs_id+'"/>';
-	html += '<img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" />';
-	html += '<div class="grp fl">';
-	html += '<h5 class="l account_name" data-account_name="'+$data.bs_account_name+'"><b>'+$data.bs_account_name+'</b>';
-	//html += '<span class="heart"></span><span class="heart"></span></h5>';
-	html += '<div class="weixininfo l">';
-		html += '<span class="weixinhao fl">微信号：'+$data.bs_weixinhao+'</span>';
-	//html += '<i class="i-rz"></i><i class="i-sp"></i>';
-	html += '</div>';
-	html += '<div class="desc l">简介：'+$data.bs_introduction+'</div>';
-	html += '</div></div></td>';
+	html += '<td class="t1">';
+		html += '<div class="weibopart">';
+			html += '<input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.bs_id+'"/>';
+			html += '<img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" />';
+			html += '<div class="grp fl">';
+				html += '<h5 class="l account_name" data-account_name="'+$data.bs_account_name+'"><b>'+$data.bs_account_name+'</b>';
+			//html += '<span class="heart"></span><span class="heart"></span>';
+				html += '</h5>';
+			html += '<div class="weixininfo l">';
+				html += '<span class="weixinhao fl">微信号：'+$data.bs_weixinhao+'</span>';
+			//html += '<i class="i-rz"></i><i class="i-sp"></i>';
+			html += '</div>';
+			html += '<div class="desc l">简介：'+$data.bs_introduction+'</div>';
+		html += '</div>';
+		html += '</div>';
+	html += '</td>'; 
 	
 	html += '<td class="t7"><b class="red">'+$data.pg_cjfl_explain+'</b></td>';
 	html += '<td class="t7"><div class="fsbox"><p>'+$data.bs_fans_num / 10000+'万</p>';
 	//html += '<img width="44" src="{$global_tpl_view.Group_Resource_Path}images/wx_img01.gif" />';
 	html += '</div></td>';
-	html += '<td class="t1"><div class="pricebox">'
+	html += '<td class="t6"><div class="pricebox">'
 	html += '<p>单图文价格：<em class="now_money" data-money="'+$data.bs_dtb_money+'">￥'+$data.bs_dtb_money+'</em></p>';
 	html += '<p>多图文第一条：<em data-money="'+$data.bs_dtwdyt_money+'">￥'+$data.bs_dtwdyt_money+'</em></p>';
 	html += '<p>多图文第二条：<em data-money="'+$data.bs_dtwdet_money+'">￥'+$data.bs_dtwdet_money+'</em></p>';
@@ -333,6 +355,11 @@ var create_now_html = function ($data,$post_data) {
   	return html;
 } 
 
+
+//地区菜单
+var Region = new Region('{:U('/Advert/Tool/get_Region_Data')}');
+Region.init();
+Region.run();	
 </script>
 </body>
 </html>

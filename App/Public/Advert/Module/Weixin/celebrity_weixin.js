@@ -534,7 +534,14 @@ Weixin.prototype.btn_click_create_tags = function () {
 		var over = _father_this.ipt_jiage_over.val() ? _father_this.ipt_jiage_over.val() : 10000000;
 		var val = start + '-' + over;
 		
-		_father_this.create_selete_tags(val+'元',val,{
+		var show_title;
+		if (_father_this.ipt_jiage_over.val() == '' || _father_this.ipt_jiage_over.val() > 10000000) {
+			show_title = start + ' - >10000'+ '元';
+		} else {
+			show_title = start +'-'+_father_this.ipt_jiage_over.val()+'元'
+		}
+		
+		_father_this.create_selete_tags(show_title,val,{
 			'tag_class' : obj.data('tag_class'),
 			//'tag_id':obj.data('tag_id'),
 			'classify':obj.data('classify'),
@@ -779,6 +786,8 @@ Weixin.prototype.add_selected_box_fn = function () {
 	
 	//点击批量添加账号时
 	_father_this.add_selected_box.click(function () {
+		if (confirm('确认操作？') == false) return false;
+		
 		_father_this.init();
 		_account_ids = [];
 		_father_this.now_selected.each(function () {

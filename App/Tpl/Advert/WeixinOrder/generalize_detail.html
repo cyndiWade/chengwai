@@ -18,7 +18,10 @@
 	</div>
 	<div class="area01-myorder l">
 		<div class="box01-myorder fl">
-			<div class="top-myorder l"><b>“{$view_data.order_info.title}”的详细信息</b> <b><a href="{:U('/Advert/Weixin/weixin/',array('order_id'=>$view_data['order_id']))}">继续添加媒体</a></b></div>
+			<div class="top-myorder l">
+				<b>“{$view_data.order_info.title}”的详细信息</b>
+				<b><a href="{:U('/Advert/Weixin/weixin/',array('order_id'=>$view_data['order_id']))}">继续添加媒体</a></b>
+			</div>
 			<table class="tab01-myorder l">
 			  <tr>
 				<th class="t1">活动名称：</th>
@@ -57,9 +60,9 @@
 			</table>
 		</div>
 		<div class="box02-myorder l">
-			<div class="top-myorder l"><b>以下账号正在为您服务</b></div>
+			<div class="top-myorder l"><b>以下媒体正在为您服务</b></div>
 			<div class="searnum fl">
-				账号总数：<b class="blue">【{$view_data.extend_order_info.order_num}】</b>，总消费额：<b class="blue">￥{$view_data.extend_order_info.sum_money}</b>， 拒单：<b class="blue">【{$view_data.extend_order_info.jy_order_sum}】</b>个
+				媒体总数：<b class="blue">【{$view_data.extend_order_info.order_num}】</b>，总消费额：<b class="blue">￥{$view_data.extend_order_info.sum_money}</b>， 拒单：<b class="blue">【{$view_data.extend_order_info.jy_order_sum}】</b>个
 			</div>
 			<!--  
 			<div class="box01-status l">
