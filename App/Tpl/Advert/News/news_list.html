@@ -19,10 +19,11 @@
 <div class="area01-memwb area01-memmt l">
 	<ul class="wbtab l">
 		<li class="select three_sidebar_type" data-field="all" data-val=""><a href="javascript:;" class="mtzh">全部媒体账号 </a></li>
+			<!-- 
 		<li class="three_sidebar_type" data-field="tj" data-val="1"><a href="javascript:;" class="wntj">为您推荐 </a></li>
 		<li class="three_sidebar_type" data-field="rmwx" data-val="1"><a href="javascript:;" class="hotzh">热门媒体账号 </a></li>
 		<li class="three_sidebar_type" data-field="xstj" data-val="1"><a href="javascript:;" class="xstj">限时特价</a></li>
-		<!-- 
+	
 		<li class="three_sidebar_type" data-field="cksc" data-val="1"><a href="javascript:;" class="cksc">查看收藏</a></li>
 		<li class="three_sidebar_type" data-field="ckhmd" data-val="1"><a href="javascript:;" class="hmd">查看黑名单</a></li>
 		 -->
@@ -58,7 +59,7 @@
 				<div class="part02-price fl">
 				<volist name="view_data['dqsx']" id="vo">
 					<span class="dqsx_tags" data-tag_class="dqsx_tags" data-tag_id="{$vo.id}"  data-classify="地区筛选" data-field="dqsx" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
-				</volist>		
+				</volist>
 				</div>
 				<div class="part01-citysel fl">
 					<select class="fl region_left"></select>
@@ -90,7 +91,7 @@
 				</div><span class="btn okbtn fl btn_jiage_yes" data-tag_class="jg_tags">确定</span>
 			</td>
 		  </tr>
-		  <!--  
+		  
 		  <tr>
 			<td class="t1">门户类型：</td>
 			<td class="t2">
@@ -101,7 +102,7 @@
 				</div>
 			</td>
 		  </tr>
-		   -->
+		   
 		  <tr>
 			<td class="t1">是否新闻源：</td>
 			<td class="t2">
@@ -133,7 +134,7 @@
 	</div>
 	<div class="orderbox l">
 		<b class="total fr">共<span id="all_data_num"></span>个</b><b class="total fr"><span id="all_page_num"></span>页</b>
-		<select class="fl"><option>选择排序方式</option></select>
+		<!-- <select class="fl"><option>选择排序方式</option></select> -->
 		
 		
 		<span class="orderspan orderspan-select fl" data-sort_type="order_id">默认排序</span>
@@ -144,15 +145,15 @@
 			<thead>
 			  <tr>
 				<th class="t1"><b>媒体名称</b></th>
-				<th class="t2">频道</th>
+				<th class="t2">门户类型</th>
 				<th class="t3">价格</th>
-				<th class="t4">入口</th>
+				<!--<th class="t4">入口</th>-->
 				<th class="t5">新闻源</th>
-				<th class="t6">网页收录</th>
-				<th class="t7">标题字数</th>
-				<th class="t8">是否需要来源</th>
+				<!--<th class="t6">网页收录</th> -->
+				<!--   <th class="t7">标题字数</th>-->
+				<!-- <th class="t8">是否需要来源</th>-->
 				<th class="t9">地区</th>
-				<th class="t10">周末能否发稿</th>
+				<!--  <th class="t10">周末能否发稿</th>-->
 				<th class="t11">能否带文本链接</th>
 				<!--
 				<th class="last">案例</th>
@@ -269,20 +270,29 @@ var public_post_fn = function (obj_data) {
 
 
 var create_now_html = function ($data) {
-	
+	//console.log($data.bs_area_name);
+	//return false;
 	var html = '';
-	html += '<tr class="accounts_'+$data.id+'" data-order_id="'+$data.id+'" data-order_num="'+$data.week_order_num+'"  data-money="'+$data.money+'">';
-	html += '<td class="t1"><div class="mediapart"><input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.id+'" /><img src="{$global_tpl_view.Group_Resource_Path}images/mt_img01.gif" class="mtimg" /><div class="grp fl"><h5 class="l"><b class="account_name" data-account_name="'+$data.account_name+'">'+$data.account_name+'</b></h5><div class="desc l">综合门户</div></div></div></td>';
-	html += '<td class="t2">新闻频道</td>';
-	html += '<td class="t3"><b class="red now_money" data-money="'+($data.money)+'">'+($data.money)+'元</b></td>';
-	html += '<td class="t4">是</td>';
-	html += '<td class="t5">是</td>';
-	html += '<td class="t6">收录否</td>';
-	html += '<td class="t7">20</td>';
-	html += '<td class="t8">是</td>';
-	html += '<td class="t9">广州</td>';
-	html += '<td class="t10">是</td>';
-	html += '<td class="t11">是</td>';
+	html += '<tr class="accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-money="'+$data.bs_money+'">';
+	html += '<td class="t1">';
+	html += '<div class="mediapart"><input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.bs_id+'" />';
+	//html += '<img src="{$global_tpl_view.Group_Resource_Path}images/mt_img01.gif" class="mtimg" />';
+	html += '<img src="{$global_tpl_view.Global_Resource_Path}images/default_head.jpg" class="mtimg" />';
+
+	html += '<div class="grp fl"><h5 class="l"><b class="account_name" data-account_name="'+$data.bs_account_name+'">'+$data.bs_account_name+'</b></h5>';
+	html += '<div class="desc l">'+$data.pg_type_of_portal_explain+'</div></div></div>';
+	html += '</td>';
+	
+	html += '<td class="t2">'+$data.pg_type_of_portal_explain+'</td>';
+	html += '<td class="t3"><b class="red now_money" data-money="'+($data.bs_money)+'">'+($data.bs_money)+'元</b></td>';
+	//html += '<td class="t4">是</td>';
+	html += '<td class="t5">'+$data.pg_news_explain+'</td>';
+	//html += '<td class="t6">收录否</td>';
+	//html += '<td class="t7">20</td>';
+	//html += '<td class="t8">是</td>';
+	html += '<td class="t9">'+$data.pg_area_name+'</td>';
+	//html += '<td class="t10">是</td>';
+	html += '<td class="t11">'+$data.pg_links_explain+'</td>';
 	//html += '<td class="last"><a class="blue" href="javascript:;">查看案例</a></td>';
 	html += '</tr>';
 	return html;

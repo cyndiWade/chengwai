@@ -9,6 +9,10 @@ class RegionModel extends AdvertBaseModel {
 		return parent::get_spe_data(array('parent_id'=>$parent_id));
 	}
 	
+	public function get_regionInfo_by_id ($region_id) {
+		return $this->where(array('region_id'=>$region_id))->find();
+	}
+	
 }
 
 ?>

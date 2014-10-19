@@ -11,6 +11,10 @@ Weixin.prototype.init = function () {
 	this.cjfl_tags = $('.cjfl_tags');		//常见分类
 	this.jg_tags = $('.jg_tags');			//价格标签
 	this.fans_num_tags = $('.fans_num_tags');	//粉丝数据量
+	this.dfmr_mt_tags = $('.dfmr_mt_tags');	//地方名人/媒体：
+	
+	this.region_right = $('.region_right');//城市选择框
+	this.btn_confirm_dqmr = $('.btn_confirm_dqmr');	//区域选择确认按钮
 	
 	this.sprz_rq = $('#sprz_rq');	//视频认证容器
 	this.sprz_ra_size = this.sprz_rq.children('span').size();
@@ -127,8 +131,32 @@ Weixin.prototype.select_tag_fn = function () {
 			'repetition' : _this.data('repetition')
 		});
 		var ipt_val = _this.data('val').split("-");
-		_father_this.ipt_jiage_start.val(ipt_val[0]);
-		_father_this.ipt_jiage_over.val(ipt_val[1]);
+		//_father_this.ipt_jiage_start.val(ipt_val[0]);
+		//_father_this.ipt_jiage_over.val(ipt_val[1]);
+	});
+	
+	_father_this.dfmr_mt_tags.click(function (){
+		var _this = $(this);
+		_father_this.create_selete_tags(_this.data('title'),_this.data('val'),{
+			'tag_class' : _this.data('tag_class'),
+			'tag_id':_this.data('tag_id'),
+			'classify':_this.data('classify'),
+			'field' : _this.data('field'),
+			'repetition' : _this.data('repetition')
+		});
+	});
+	
+	_father_this.btn_confirm_dqmr.click(function () {
+		var _this = $(this);
+		if (_father_this.region_right.val() == '') {
+			return false;
+		}
+		_father_this.create_selete_tags(_father_this.region_right.find("option:selected").text(),_father_this.region_right.val(),{
+			'tag_class' : _father_this.region_right.data('tag_class'),
+			'classify':_father_this.region_right.data('classify'),
+			'field' : _father_this.region_right.data('field'),
+			'repetition' : _father_this.region_right.data('repetition')
+		});
 	});
 		
 	_father_this.fans_num_tags.click(function (){
@@ -140,9 +168,9 @@ Weixin.prototype.select_tag_fn = function () {
 			'field' : _this.data('field'),
 			'repetition' : _this.data('repetition')
 		});
-		var ipt_val = _this.data('val').split("-");
-		_father_this.ipt_fansNum_start.val(ipt_val[0]);
-		_father_this.ipt_fansNum_over.val(ipt_val[1]);
+		//var ipt_val = _this.data('val').split("-");
+		//_father_this.ipt_fansNum_start.val(ipt_val[0]);
+		//_father_this.ipt_fansNum_over.val(ipt_val[1]);
 	});
 	
 	_father_this.btn_fansNum_yes.click(function () {
@@ -151,9 +179,16 @@ Weixin.prototype.select_tag_fn = function () {
 		var obj = $('.'+tag_class).eq(1);
 		var start = _father_this.ipt_fansNum_start.val() ? _father_this.ipt_fansNum_start.val() : 0;
 		var over = _father_this.ipt_fansNum_over.val() ? _father_this.ipt_fansNum_over.val() : 10000000;
-		var val = start + '-' + over;
+		var val = start * 10000 + '-' + over * 10000;
 		
-		_father_this.create_selete_tags(val+'个',val,{
+		var show_title;
+		if (_father_this.ipt_fansNum_over.val() == '' || _father_this.ipt_fansNum_over.val() > 10000000) {
+			show_title = start + ' - >10000'+ '万';
+		} else {
+			show_title = start +'-'+_father_this.ipt_fansNum_over.val()+'万'
+		}
+		
+		_father_this.create_selete_tags(show_title,val,{
 			'tag_class' : obj.data('tag_class'),
 			//'tag_id':obj.data('tag_id'),
 			'classify':obj.data('classify'),
@@ -329,6 +364,24 @@ Weixin.prototype.init_tags_selected = function () {
 		});
 		
 		
+		_father_this.dfmr_mt_tags.each(function () {
+			var now_this = $(this);
+			if (
+				now_this.data('classify') == _this.data('classify') &&
+				
+		 		now_this.data('title') == _this.data('title') && 
+				
+				now_this.data('val') == _this.data('val')
+			) {
+				_father_this.dfmr_mt_tags.removeClass("select");
+				if (_this.data('val') == '') {
+					_this.parent().remove();
+				}
+				now_this.addClass("select");
+				return false;
+			}
+		});
+		
 		//处理粉丝数量标签
 		_father_this.fans_num_tags.each(function () {
 			var now_this = $(this);
@@ -481,7 +534,15 @@ Weixin.prototype.btn_click_create_tags = function () {
 		var over = _father_this.ipt_jiage_over.val() ? _father_this.ipt_jiage_over.val() : 10000000;
 		var val = start + '-' + over;
 		
-		_father_this.create_selete_tags(val+'元',val,{
+		var show_title;
+		if (_father_this.ipt_jiage_over.val() == '' || _father_this.ipt_jiage_over.val() > 10000000) {
+			show_title = start + ' - >10000'+ '元';
+		} else {
+			show_title = start +'-'+_father_this.ipt_jiage_over.val()+'元'
+		}
+		
+		//>10000 
+		_father_this.create_selete_tags(show_title,val,{
 			'tag_class' : obj.data('tag_class'),
 			//'tag_id':obj.data('tag_id'),
 			'classify':obj.data('classify'),
@@ -639,13 +700,15 @@ Weixin.prototype.create_details_fn = function ($url) {
 	
 	_father_this.wxdetail.click(function(){
 		var _this = $(this);
-		var weibo_id = _this.data('weibo_id');
+		var weixin_id = _this.data('weixin_id');
 		var post_data = {};
-		post_data.weibo_id = weibo_id;
+		post_data.account_id = weixin_id;
+		post_data.is_type = system_info.is_celebrity;	//名人类型
+
 		var result = System.ajax_post_setup($url,post_data,'JSON');
 		
-		if (result.status == 1) {
-			create_pop_html(result)	
+		if (result.status == 0) {
+			create_pop_html(result.data)	
 		}
 	})
 	
@@ -659,46 +722,49 @@ Weixin.prototype.create_details_fn = function ($url) {
 	
 html += '<div class="batchboxdetail none tl">';
 html += '<div class="top-batchdetail l pr">';
-html += '<div class="title pa"><i></i><span>全球头条新闻事件</span></div>';
-html += '<span class="close cur pa"><img src="App/Public/Advert/images/close.gif" /></span>';
+html += '<div class="title pa">';
+//html += '<i></i><span>全球头条新闻事件</span>';
+html += '</div>';
+html += '<span class="close cur pa"><img src="/App/Public/Advert/images/close.gif" /></span>';
 html += '<ul class="fl">';
-html += '<li class="li_a select"><strong>账号详情</strong></li><li class="li_b"><strong>账号被占用时段</strong></li>';
+html += '<li class="li_a select"><strong>账号详情</strong></li>';
+//html += '<li class="li_b"><strong>账号被占用时段</strong></li>';
 html += '</ul>';
 html += '</div>';
 html += '<div class="mid-batchdetail l">';
 html += '<div class="box01-batchdetail fl">';
 html += '<table class="tab01-batchdetail">';
 html += '<tr>';
-html += '<td class="t1">月订单：<em>54646</em></td>';
-html += '<td class="t1">周订单：<em>54646</em></td>';
+html += '<td class="t1">月订单：<em>'+data.bs_month_order_nub+'</em></td>';
+html += '<td class="t1">周订单：<em>'+data.bs_week_order_num+'</em></td>';
 html += '</tr>';
 html += '<tr>';
-html += '<td class="t1">万粉丝硬广转发单价：<em>54646</em></td>';
-html += '<td class="t1">万粉丝软广转发单价：<em>54646</em></td>';
+html += '<td class="t1">单图文报价：<em>'+data.bs_dtb_money+'</em></td>';
+html += '<td class="t1">多图文第一条报价：<em>'+data.bs_dtwdyt_money+'</em></td>';
 html += '</tr>';
 html += '<tr>';
-html += '<td class="t1">万粉丝硬广直发单价：<em>54646</em></td>';
-html += '<td class="t1">万粉丝软广直发单价：<em>54646</em></td>';
+html += '<td class="t1">多图文第二条报价：<em>'+data.bs_dtwdet_money+'</em></td>';
+html += '<td class="t1">多图文第三条及N条报价：<em>'+data.bs_dtwqtwz_money+'</em></td>';
 html += '</tr>';
+//html += '<tr>';
+//html += '<td class="t1">月流单率：<em>暂无报价</em></td>';
+//html += '<td class="t1">月拒单率：<em>5%</em></td>';
+//html += '</tr>';
+//html += '<tr>';
+//html += '<td class="t1">月合格率：<em>5%</em></td>';
+//html += '<td class="t1">是否接硬广：<em>是</em></td>';
+//html += '</tr>';
 html += '<tr>';
-html += '<td class="t1">月流单率：<em>暂无报价</em></td>';
-html += '<td class="t1">月拒单率：<em>5%</em></td>';
+html += '<td colspan="2">账号ID：<em>'+data.bs_id+'</em></td>';
 html += '</tr>';
-html += '<tr>';
-html += '<td class="t1">月合格率：<em>5%</em></td>';
-html += '<td class="t1">是否接硬广：<em>是</em></td>';
-html += '</tr>';
-html += '<tr>';
-html += '<td colspan="2">账号ID：<em>1903188000</em></td>';
-html += '</tr>';
-html += '<tr>';
-html += '<td colspan="2">账号分类：<em>资讯</em><em>时尚</em><em>服装箱包</em><em>服装</em></td>';
-html += '</tr>';
-html += '<tr>';
-html += '<td colspan="2">账号标签：<em>IT数码游戏</em><em>母婴资讯</em><em>留学教育</em><em>服装</em></td>';
-html += '</tr>';
+//html += '<tr>';
+//html += '<td colspan="2">账号分类：<em>资讯</em><em>时尚</em><em>服装箱包</em><em>服装</em></td>';
+//html += '</tr>';
+//html += '<tr>';
+//html += '<td colspan="2">账号标签：<em>IT数码游戏</em><em>母婴资讯</em><em>留学教育</em><em>服装</em></td>';
+//html += '</tr>';
 html += '</table>';
-html += '<a href="#" class="btn graybtn fr">? 疑问建议</a>';
+//html += '<a href="#" class="btn graybtn fr">? 疑问建议</a>';
 html += '</div>';
 html += '<div class="box01-batchdetail none fl">';
 html += '<div class="part01-data fl">';
@@ -767,6 +833,8 @@ Weixin.prototype.add_selected_box_fn = function () {
 	
 	//点击批量添加账号时
 	_father_this.add_selected_box.click(function () {
+		if (confirm('确认添加？') == false) return false;
+		
 		_father_this.init();
 		_account_ids = [];
 		_father_this.now_selected.each(function () {

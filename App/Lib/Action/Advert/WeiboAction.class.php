@@ -224,6 +224,7 @@ class WeiboAction extends AdvertBaseAction {
 		
 		$data['cjfl'] = $this->now_classify_data[$tags_ids['cjfl']];
 		$data['jg'] = $this->now_classify_data[$tags_ids['jg']];
+		$data['dfmr_mt'] = $this->now_classify_data[$tags_ids['dfmr_mt']];	
 		$data['fans_num'] = $this->now_classify_data[$tags_ids['fans_num']];
 		$data['fans_sex'] = $this->now_classify_data[$tags_ids['fans_sex']];
 		$data['zfjg_type'] = $this->now_classify_data[$tags_ids['zfjg_type']];

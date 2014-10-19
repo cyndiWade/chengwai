@@ -36,15 +36,15 @@
 				<td class="t1"><span><i>*</i><strong>发布时间：</strong></span></td>
 				<td class="t2">
 					<div class="timestart">
-						<input type="text" name="start_time" class="text text-time start_time timeSubject"  datatype="*1-100" errormsg="请正确选择填写"  nullmsg="请选择开始时间" />
+						<input type="text" name="start_time" data-check_type="start" class="text text-time start_time timeSubject"  datatype="*1-100" errormsg="请正确选择填写"  nullmsg="请选择开始时间" />
 					</div>
 					<p>请提前2小时</p>
 				</td>
 			  </tr>
 			  <tr>
-				<td class="t1"><span><i>*</i><strong>原文链接：</strong></span></td>
+				<td class="t1"><span><strong>原文链接：</strong></span></td>
 				<td class="t2">
-					<input type="text" name="web_url" class="text web_url" datatype="url" errormsg="请正确填写链接" datatype="url" placeholder="http://"/>					
+					<input type="text" name="web_url" class="text web_url" ignore="ignore" datatype="url" errormsg="请正确填写链接" datatype="url" placeholder="http://"/>					
 				</td>
 			  </tr>
 			  <tr>
@@ -65,7 +65,7 @@
 			 
 			  <tr>
 				<td class="t1"></td>
-				<td class="t2"><div class="agreebox f12"><input type="checkbox" class="check fl" name="is_ht_ok" datatype="*" errormsg="请同意服务协议"  nullmsg="请同意服务协议" /><strong class="fl">同意<a class="blue" href="#">服务协议</a></strong></div></td>
+				<td class="t2"><div class="agreebox f12"><input type="checkbox" class="check fl" name="is_ht_ok" checked="checked" datatype="*" errormsg="请同意服务协议"  nullmsg="请同意服务协议" /><strong class="fl">同意<a class="blue" href="#">服务协议</a></strong></div></td>
 			  </tr>
 			  <tr>
 				<td class="t1"></td>

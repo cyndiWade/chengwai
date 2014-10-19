@@ -32,7 +32,9 @@
 	<!-- 微博名人三级导航 -->
 	<ul class="wbtab l">
 		<li class="select three_sidebar_type" data-field="all" data-val=""><a class="mbmr" href="javascript:;">全部名人/媒体 </a></li>
+		<!-- 
 		<li class="three_sidebar_type" data-field="zlhzmr_mt" data-val="1"><a class="hzr" href="javascript:;">战略合作名人/媒体</a></li>
+		 -->
 		<li class="three_sidebar_type" data-field="cksc" data-val="1"><a class="cksc" href="javascript:;">查看收藏</a></li>
 		<li class="three_sidebar_type" data-field="ckhmd" data-val="1"><a class="hmd" href="javascript:;">查看黑名单</a></li>
 	</ul>
@@ -91,6 +93,7 @@
 					<select class="fl region_right" data-tag_class="dfmr_mt_tags" data-classify="地方名人/媒体" data-repetition="no"  data-field="dfmr_mt"></select>
 				</div><span class="btn okbtn fl btn_confirm_dqmr">确定</span></td>
 		  </tr>
+		  <!-- 
 		  <tr>
 			<td class="t1">兴趣标签：</td>
 			<td class="t2">
@@ -100,6 +103,7 @@
 					</volist>
 				</div><div class="more fl" id="moreta">更多</div></td>
 		  </tr>
+		   -->
 		  <!--
 		  <tr>
 			<td class="t1">其它筛选：</td>
@@ -110,6 +114,7 @@
 		   <tr>
 			<td class="t1">其它筛选：</td>
 			<td class="t2">
+				<!-- 
 				<div class="box01-procsess l">
 					<strong class="blue fl">名人/媒体类别：</strong>
 					<div class="part01-cate fl">
@@ -118,6 +123,7 @@
 					</volist>
 					</div>
 				</div>
+				 -->
 				<div class="box01-procsess l">
 					<strong class="blue fl">配合度：</strong>
 					<div class="part01-cate fl">
@@ -160,8 +166,9 @@
 		
 			<span class="orderspan orderspan-select fl" data-sort_type="order_id">默认排序</span>
 			<span class="orderspan fl" data-sort_type="fans_num">粉丝度</span>
+			<!--  
 			<span class="orderspan fl" data-sort_type="">配合度</span>
-			
+			-->
 			<!--  
 			<span class="orderspan orderspan-select fl">默认排序</span>
 			<span class="orderspan ordermt fl">粉丝度</span>
@@ -223,6 +230,7 @@ var system_info = {
 	is_celebrity : 1,	//是否是名人1是、0不是
 	page_limit : 10,	//每页条数
 	post_order_url : '{:U('Advert/WeiboOrder/add_intens')}',
+	Global_Resource_Path : '{$global_tpl_view['Global_Resource_Path']}',
 }
 var list_content = $('#list_content');
 </script>
@@ -278,7 +286,7 @@ var public_post_fn = function (obj_data) {
 		//数据条数以及分页条数
 		Weibo.dataNum_And_PageNum(result.data.count);
 		
-		Weibo.create_details_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+		Weibo.create_details_fn('{:U('/Advert/WeiboOrder/getAccountInfo')}');
 		
 		Weibo.page_init_fn();	//加载页面初始化
 		

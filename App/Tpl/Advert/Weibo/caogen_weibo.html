@@ -22,9 +22,11 @@
 	<!-- 微博三级导航 -->
 	<ul class="wbtab l">
 		<li class="select three_sidebar_type" data-field="all" data-val=""><a href="javascript:;" class="wbzh">全部微博账号 </a></li>
+		<!--  
 		<li class="three_sidebar_type" data-field="tj" data-val="1"><a href="javascript:;" class="wntj">为您推荐 </a></li>
 		<li class="three_sidebar_type" data-field="rmwb" data-val="1"><a href="javascript:;" class="hotzh">热门{$view_data.pt_info.pt_name}微博账号 </a></li>
 		<li class="three_sidebar_type" data-field="xstj" data-val="1"><a href="javascript:;" class="xstj">限时特价</a></li>
+		-->
 		<li class="three_sidebar_type" data-field="cksc" data-val="1"><a href="javascript:;" class="cksc">查看收藏</a></li>
 		<li class="three_sidebar_type" data-field="ckhmd" data-val="1"><a href="javascript:;" class="hmd">查看黑名单</a></li>
 	</ul>
@@ -73,6 +75,19 @@
 				</div><span class="btn okbtn fl btn_jiage_yes" data-tag_class="jg_tags">确定</span></td>
 		  </tr>
 		  <tr>
+			<td class="t1">地区：</td>
+			<td class="t2">
+				<div class="part02-price fl">
+				<volist name="view_data['dfmr_mt']" id="vo">
+					<span class="dfmr_mt_tags" data-tag_class="dfmr_mt_tags" data-tag_id="{$vo.id}"  data-classify="地方名人/媒体" data-field="dfmr_mt" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>		
+				</div>
+				<div class="part01-citysel fl">
+					<select class="fl region_left"></select>
+					<select class="fl region_right" data-tag_class="dfmr_mt_tags" data-classify="地方名人/媒体" data-repetition="no"  data-field="dfmr_mt"></select>
+				</div><span class="btn okbtn fl btn_confirm_dqmr">确定</span></td>
+		  </tr>
+		  <tr>
 			<td class="t1">粉丝量：</td>
 			<td class="t2">
 				<div class="part02-price fl">
@@ -106,7 +121,10 @@
 	
 	<div class="orderbox l">
 		<b class="total fr">共<span id="all_data_num"></span>个</b><b class="total fr"><span id="all_page_num"></span>页</b>
-		<select class="fl"><option>选择排序方式</option></select><span class="orderspan fl orderspan-select" data-sort_type="order_id">默认排序</span><span class="orderspan" data-sort_type="fans_num" >粉丝量</span><span class="orderspan" data-sort_type="order_num">月订单</span>
+		<!-- <select class="fl"><option>选择排序方式</option></select> -->
+		<span class="orderspan fl orderspan-select" data-sort_type="order_id">默认排序</span>
+		<span class="orderspan" data-sort_type="fans_num" >粉丝量</span>
+		<span class="orderspan" data-sort_type="order_num">月订单</span>
 	</div>
 	<div class="col01-weibo l">
 		<table class="tab01-weibo l">
@@ -120,9 +138,9 @@
 				<th class="t6">硬广直发价</th>
 				<th class="t7">软广直发价</th>
 				<th class="t8">周订单</th>
-				<th class="t9">粉丝性别</th>
-				<th class="t10">可用广告位</th>
-				<th class="last">操作</th>
+				<!-- <th class="t9">粉丝性别</th>-->
+				<!--  <th class="t10">可用广告位</th>-->
+				<th class="t4">操作</th>
 			  </tr>
 		 	</thead> 
 		  	<tbody class="tbody">
@@ -174,10 +192,12 @@ var system_info = {
 	is_celebrity : 0,	//是否是名人1是、0不是
 	page_limit : 10,	//每页条数
 	post_order_url : '{:U('Advert/WeiboOrder/add_users')}',
+	Global_Resource_Path : '{$global_tpl_view['Global_Resource_Path']}',
 	
 }
 </script>
 
+<script src="{$global_tpl_view.Global_Resource_Path}Tool/Region.js"></script>
 <script src="{$global_tpl_view.Module_Resource_Path}caogen_weibo.js"></script>
 <script src="{$global_tpl_view.Group_Resource_Path}js/page.js"></script>
 
@@ -228,7 +248,7 @@ var public_post_fn = function (obj_data) {
 
 		Weibo.dataNum_And_PageNum(result.data.count);
 		
-		Weibo.create_details_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+		Weibo.create_details_fn('{:U('/Advert/WeiboOrder/getAccountInfo')}');
 		
 		Weibo.page_init_fn();	//加载页面初始化
 		
@@ -241,38 +261,38 @@ var public_post_fn = function (obj_data) {
 var create_now_html = function ($data,$post_data) {
 	
 	var html = '';
-	html += '<tr class="accounts_'+$data.id+'" data-order_id="'+$data.id+'" data-order_num="'+$data.week_order_num+'"  data-fans_num="'+$data.fans_num+'">';
+	html += '<tr class="accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-fans_num="'+$data.bs_fans_num+'">';
 	html += '<td class="t1">';
-	html += '<div class="weibopart"><input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.id+'"/>';
-	html += 	'<img src="App/Public/Advert/images/wb_img01.gif" class="wbimg" />';
+	html += '<div class="weibopart"><input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.bs_id+'"/>';
+	html += 	'<img src="'+system_info.Global_Resource_Path+'images/default_nothing.jpg" class="wbimg" />';
 	html += 		'<div class="grp fl">';
-	html += 		'<h5 class="l"><b class="account_name" data-account_name="'+$data.account_name+'">'+$data.account_name+'</b><span class="heart"></span><span class="heart"></span></h5>';
-	html += 		'<div class="address l">'+$data.account_name+'</div>';
-	html += 		'<div class="desc l">简介：全球头条新闻全球头条新闻</div>';
+	html += 		'<h5 class="l"><b class="account_name" data-account_name="'+$data.bs_account_name+'">'+$data.bs_account_name+'</b><span class="heart"></span><span class="heart"></span></h5>';
+	html += 		'<div class="address l">'+$data.bs_account_name+'</div>';
+	html += 		'<div class="desc l">简介：'+$data.bs_introduction+'</div>';
 	html += 		'</div>';
 	html += '</div>';
 	html += '</td>';
-	html += '<td class="t2"><b class="red">'+$data.fans_num+'万</b></td>';
+	html += '<td class="t2"><b class="red">'+($data.bs_fans_num / 10000)+'万</b></td>';
 	html += '<td class="t3">1.00</td>';
-	html += '<td class="t4 now_money" data-money="'+$data.yg_zhuanfa+'">'+$data.yg_zhuanfa+'元</td>';
-	html += '<td class="t5" data-money="'+$data.rg_zhuanfa+'">'+$data.rg_zhuanfa+'元</td>';
-	html += '<td class="t6" data-money="'+$data.yg_zhifa+'">'+$data.yg_zhifa+'元</td>';
-	html += '<td class="t7" data-money="'+$data.rg_zhuanfa+'">'+$data.rg_zhuanfa+'元</td>';
-	html += '<td class="t8" data-week_order_num="'+$data.week_order_num+'">'+$data.week_order_num+'</td>';
-	html += '<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>';
-	html += '<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
-	html += '<td class="last"><div class="ctrl"><span class="wbdetail">详情</span>';
+	html += '<td class="t4 now_money" data-money="'+$data.bs_yg_zhuanfa+'">'+$data.bs_yg_zhuanfa+'元</td>';
+	html += '<td class="t5" data-money="'+$data.bs_rg_zhuanfa+'">'+$data.bs_rg_zhuanfa+'元</td>';
+	html += '<td class="t6" data-money="'+$data.bs_yg_zhifa+'">'+$data.bs_yg_zhifa+'元</td>';
+	html += '<td class="t7" data-money="'+$data.bs_rg_zhuanfa+'">'+$data.bs_rg_zhuanfa+'元</td>';
+	html += '<td class="t8" data-week_order_num="'+$data.bs_week_order_num+'">'+$data.bs_week_order_num+'</td>';
+	//html += '<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>';
+	//html += '<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
+	html += '<td class="t4"><div class="ctrl"><span class="wbdetail" data-weibo_id="'+$data.bs_id+'">详情</span><br />';
 	
 	if ($post_data.cksc == undefined) {
-		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weibo_id="' + $data.id + '">收藏</span>';
+		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weibo_id="' + $data.bs_id + '">收藏</span><br />';
 	}else if ($post_data.cksc == 1) {
-		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weibo_id="' + $data.id + '">取消收藏</span>';
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weibo_id="' + $data.bs_id + '">取消收藏</span><br />';
 	}
 	
 	if ($post_data.ckhmd == undefined) {
-		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weibo_id="' + $data.id + '">拉黑</span>';
+		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weibo_id="' + $data.bs_id + '">拉黑</span><br />';
 	}else if ($post_data.ckhmd == 1) {
-		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weibo_id="' + $data.id + '">取消拉黑</span>';
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weibo_id="' + $data.bs_id + '">取消拉黑</span><br />';
 	}
 	
 	html += '</div></td>';
@@ -280,6 +300,10 @@ var create_now_html = function ($data,$post_data) {
   	return html;
 } 
 
+//地区菜单
+var Region = new Region('{:U('/Advert/Tool/get_Region_Data')}');
+Region.init();
+Region.run();	
 
 
 </script>

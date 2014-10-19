@@ -141,8 +141,8 @@ Weibo.prototype.select_tag_fn = function () {
 			'repetition' : _this.data('repetition')
 		});
 		var ipt_val = _this.data('val').split("-");
-		_father_this.ipt_jiage_start.val(ipt_val[0]);
-		_father_this.ipt_jiage_over.val(ipt_val[1]);
+		//_father_this.ipt_jiage_start.val(ipt_val[0]);
+		//_father_this.ipt_jiage_over.val(ipt_val[1]);
 	});
 	
 	
@@ -498,7 +498,14 @@ Weibo.prototype.btn_click_create_tags = function () {
 		var over = _father_this.ipt_jiage_over.val() ? _father_this.ipt_jiage_over.val() : 10000000;
 		var val = start + '-' + over;
 		
-		_father_this.create_selete_tags(val+'元',val,{
+		var show_title;
+		if (_father_this.ipt_jiage_over.val() == '' || _father_this.ipt_jiage_over.val() > 10000000) {
+			show_title = start + ' - >10000'+ '元';
+		} else {
+			show_title = start +'-'+_father_this.ipt_jiage_over.val()+'元'
+		}
+		
+		_father_this.create_selete_tags(show_title,val,{
 			'tag_class' : obj.data('tag_class'),
 			//'tag_id':obj.data('tag_id'),
 			'classify':obj.data('classify'),
@@ -656,43 +663,45 @@ Weibo.prototype.create_now_html = function (result,$post_data) {
 	for (var key in result) {
 		var $data = result[key];
 		var html = '';
-		html += '<div class="box01-cele fl accounts_'+$data.id+'" data-order_id="'+$data.id+'" data-order_num="'+$data.week_order_num+'"  data-fans_num="'+$data.fans_num+'">';
-		html += '<input type="checkbox" class="check fl now_selected" data-field="id" data-id="'+$data.id+'" />';
+		html += '<div class="box01-cele fl accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-fans_num="'+$data.bs_fans_num+'">';
+		html += '<input type="checkbox" class="check fl now_selected" data-field="id" data-id="'+$data.bs_id+'" />';
 		html += '<div class="part01-cele fl">';
-		html += '<img src="App/Public/Advert/images/cer_img01.gif" />';
+		html += '<img src="'+system_info.Global_Resource_Path+'images/default_head.jpg" />';
 		html += '<div class="ctrl">';
 
 		if ($post_data.cksc == undefined) {
-			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weibo_id="'+$data.id+'">收藏</span>';
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weibo_id="'+$data.bs_id+'">收藏</span>';
 		}else if ($post_data.cksc == 1) {
-			html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weibo_id="'+$data.id+'">取消收藏</span>';
+			html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weibo_id="'+$data.bs_id+'">取消收藏</span>';
 		}
 		
 		if ($post_data.ckhmd == undefined) {
-			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weibo_id="'+$data.id+'">拉黑</span>';
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weibo_id="'+$data.bs_id+'">拉黑</span>';
 		}else if ($post_data.ckhmd == 1) {
-			html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weibo_id="'+$data.id+'">取消拉黑</span>';
+			html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weibo_id="'+$data.bs_id+'">取消拉黑</span>';
 		}
 		
 		html += '</div>';
 		html += '</div>';
 		html += '<div class="part02-cele fl">';
 		html += '<div class="grp01-cele l">';
-		html += '<span class="mrdetail cur fr" data-weibo_id="'+$data.id+'">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl account_name" data-account_name="'+$data.account_name+'">'+$data.account_name+'</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>';
+		html += '<span class="mrdetail cur fr" data-weibo_id="'+$data.bs_id+'">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl account_name" data-account_name="'+$data.bs_account_name+'">'+$data.bs_account_name+'</span>';
+		html += '<span class="city fl">'+$data.pg_cirymedia_explain+'</span>';
+		//html += '<span class="yxl fl">影响力：1212</span>';
 		html += '</div>';
 		html += '<div class="grp02-cele l">';
 		html += '<ul class="arr01-cele l">';
-		html += '<li><span class="blue">职业：</span>歌手 <em>影视演员</em></li>';
-		html += '<li><span class="blue">粉丝量：</span><b class="red">'+($data.fans_num / 10000)+'万</b></li>';
-		html += '<li><span class="blue">参考报价：</span><b class="red now_money" data-money="'+($data.ck_money)+'">'+($data.ck_money / 10000)+'万</b></li>';
-		html += '<li><span class="blue">配合度：</span>'+$data.coordination+'</li>';
+		html += '<li><span class="blue">职业：</span>'+$data.pg_occupation_explain+' <span class="blue">领域：</span><em>'+$data.pg_field_explain+'</em></li>';
+		html += '<li><span class="blue">粉丝量：</span><b class="red">'+($data.bs_fans_num / 10000)+'万</b></li>';
+		html += '<li><span class="blue">参考报价：</span><b class="red now_money" data-money="'+($data.bs_ck_money)+'">'+($data.bs_ck_money / 10000)+'万</b></li>';
+		html += '<li><span class="blue">配合度：</span>'+$data.pg_phd_explain+'</li>';
 		html += '</ul>';
 		html += '<div class="arr02-cele l">';
 		html += '<div class="tem01-cele fr">';
-		html += '<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员';
+		//html += '<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员';
 		html += '</div>';
 		html += '<div class="tem02-cele fl">';
-		html += '影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员';
+		html += $data.bs_introduction;
 		html += '</div>';
 		html += '</div>';
 		html += '</div>';
@@ -713,17 +722,20 @@ Weibo.prototype.create_details_fn = function ($url) {
 	_father_this.mrdetail.click(function(){
 		var _this = $(this);
 		var weibo_id = _this.data('weibo_id');
+		
 		var post_data = {};
-		post_data.weibo_id = weibo_id;
+		post_data.account_id = weibo_id;
+		post_data.is_type = system_info.is_celebrity;
 		var result = System.ajax_post_setup($url,post_data,'JSON');
 		
-		if (result.status == 1) {
-			create_pop_html(result)	
+		if (result.status == 0) {
+			create_pop_html(result.data)	
 		}
 	})
 	
 	//创建HTML
 	var create_pop_html = function (data) {
+		//console.log(data)
 		_father_this.init();
 		
 		_father_this.batchboxdetail.remove();
@@ -731,7 +743,7 @@ Weibo.prototype.create_details_fn = function ($url) {
 		var html = '';
 		html += '<div class="batchboxdetail none tl">';
 		html += '<div class="top-batchdetail l pr">';
-		html += '<span class="close cur pa"><img src="App/Public/Advert/images/close.gif" /></span>';
+		html += '<span class="close cur pa"><img src="/App/Public/Advert/images/close.gif" /></span>';
 		html += '<ul class="mrnav fl">';
 		html += '<li class="select">名人基本信息</li>	';
 		html += '</ul>';
@@ -740,10 +752,16 @@ Weibo.prototype.create_details_fn = function ($url) {
 		html += '<div class="box01-mrfx">';
 		html += '<div class="part01-mrfx fl">';
 		html += '<div class="grp01 fl">';
-		html += '<img src="App/Public/Advert/images/mr_img01.gif" />';
+		//html += '<img src="App/Public/Advert/images/mr_img01.gif" />';
+		if (data.bs_head_img == '') {
+			html += '<img src="'+system_info.Global_Resource_Path+'images/default_head.jpg" />';
+		} else {
+			html += '<img src="'+data.bs_head_img+'" />';
+		}
+		
 		html += '</div>';
 		html += '<div class="grp02 fl">';
-		html += '<h6><b>苏经</b>的详细信息</h6>';
+		html += '<h6><b>'+data.bs_account_name+'</b>的详细信息</h6>';
 		html += '<table class="tab01-mr">';
 		html += '<tr>';
 		html += '<td class="t1">国籍:</td>';
@@ -758,11 +776,11 @@ Weibo.prototype.create_details_fn = function ($url) {
 		html += '</div>';
 		html += '<div class="part02-mrfx fl">';
 		html += '<h6><strong>履历介绍</strong></h6>';
-		html += '<p>苏芩，著名作家，历任媒体主编、国内多家电（视）台、平面媒体特邀顾问。</p>';
+		html += '<p>'+data.bs_introduction+'</p>';
 		html += '</div>';
 		html += '<div class="part02-mrfx fl">';
 		html += '<h6><strong>账号信息</strong></h6>';
-		html += '<div class="info"><span>平均转发数： <b class="red">1934.591</b></span><span>平均评论数： <b class="red">1934.591</b></span></div>';
+		html += '<div class="info"><span>周订单： <b class="red">'+data.bs_week_order_num+'</b></span><span>月订单： <b class="red">'+data.bs_month_order_nub+'</b></span></div>';
 		html += '</div>';
 		html += '</div>';		
 		html += '</div>';
@@ -796,6 +814,8 @@ Weibo.prototype.add_selected_box_fn = function () {
 	
 	//点击批量添加账号时
 	_father_this.add_selected_box.click(function () {
+		if (confirm('确认操作？') == false) return false;
+		
 		_father_this.init();
 		_account_ids = [];
 		_father_this.now_selected.each(function () {

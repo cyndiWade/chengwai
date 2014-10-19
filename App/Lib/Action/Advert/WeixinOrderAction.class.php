@@ -611,7 +611,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 		if($account_id!='' && !is_null($is_type))
 		{
 			$list = $this->db['AccountWeixin']->getInfo($account_id,$is_type);
-			parent::callback(C('STATUS_SUCCESS'),$list);
+			parent::callback(C('STATUS_SUCCESS'),'获取成功',$list);
 		}
 	}
 }

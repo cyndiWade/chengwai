@@ -83,10 +83,23 @@
 			->join('app_grassroots_weibo as b on w.id = b.weibo_id')
 			->count();
 			//差集统计长度
+			
+			//统计表字段，加上别名
+			$account_weibo_fields = parent::field_add_prefix('AccountWeibo','bs_','w.');
+			$grassroots_weibo_fields = parent::field_add_prefix('GrassrootsWeibo','sy_','b.');
+				
 			$list = $this->where($where)
 			->table('app_account_weibo as w')
 			->join('app_grassroots_weibo as b on w.id = b.weibo_id')
-			->limit($now_page,$limit)->field('w.*,b.common,b.sex')->select();
+			->limit($now_page,$limit)
+			->field($account_weibo_fields.','.$grassroots_weibo_fields)
+			//->field('w.*,b.common,b.sex')
+			->select();
+			
+			$tags_ids = C('Big_Nav_Class_Ids.caogen_tags_ids');
+			$CategoryTagsInfo = D('CategoryTags')->get_classify_data($tags_ids['top_parent_id']);
+			
+
 			return array('list'=>$list,'count'=>$count);
 		}
 		
@@ -122,10 +135,15 @@
 					break;
 				}
 			}
+			//地方名人/媒体
+			if($addslArray['dfmr_mt']!='')
+			{
+				$wheres['b.cirymedia'] = $addslArray['dfmr_mt'];
+			}
 			//性别区分
 			if($addslArray['fans_sex']!='')
 			{
-				$wheres['b.fans_sex'] = $addslArray['fans_sex'];
+				$wheres['b.sex'] = $addslArray['fans_sex'];
 			}
 			//为您推荐
 			if($addslArray['tj']!='')
@@ -253,10 +271,57 @@
 			->join('app_celeprityindex_weibo as b on w.id = b.weibo_id')
 			->count();
 			//差集统计长度
+			
+			//统计表字段，加上别名
+			$account_weibo_fields = parent::field_add_prefix('AccountWeibo','bs_','w.');
+			$celeprityindex_weibo_fields = parent::field_add_prefix('CeleprityindexWeibo','sy_','b.');
+			$Region = D('Region');	//区域表
+			
 			$list = $this->where($where)
 			->table('app_account_weibo as w')
 			->join('app_celeprityindex_weibo as b on w.id = b.weibo_id')
-			->limit($now_page,$limit)->field('w.*,b.occupation,b.ck_price,b.yc_price,b.field,b.coordination,b.fansnumber,b.strategic_c,b.originality')->select();
+			->limit($now_page,$limit)
+			->field($account_weibo_fields.','.$celeprityindex_weibo_fields)
+			//->field('w.*,b.occupation,b.ck_price,b.yc_price,b.field,b.coordination,b.fansnumber,b.strategic_c,b.originality')
+			->select();
+			
+			//微博名人导航分类
+			$tags_ids = C('Big_Nav_Class_Ids.celebrity_tags_ids');
+			$CategoryTagsInfo = D('CategoryTags')->get_classify_data($tags_ids['top_parent_id']);
+			$data['phd'] = $CategoryTagsInfo[$tags_ids['phd']];	//配合度
+			$data['mrzy'] = $CategoryTagsInfo[$tags_ids['mrzy']];	//名人职业
+			$data['mtly'] = $CategoryTagsInfo[$tags_ids['mtly']];	//名人领域
+			
+			//排序按照val排序数据
+			foreach ($data as $key=>$info) {
+				$data[$key] = regroupKey($info,'val',true);
+			}
+			
+			if($list == true) {
+				foreach ($list as $key=>$val) {
+					//配合度
+					$phd = $data['phd'][$val['sy_coordination']]['title'];
+					$list[$key]['pg_phd_explain'] = $phd ? $phd : '不限';
+						
+					//名人置业
+					$mrzy = $data['mrzy'][$val['sy_occupation']]['title'];
+					$list[$key]['pg_occupation_explain'] = $mrzy ? $mrzy : '不限';
+						
+					//名人领域
+					$mtly = $data['mtly'][$val['sy_field']]['title'];
+					$list[$key]['pg_field_explain'] = $mtly ? $mtly : '不限';
+						
+					//地方名人
+					$region_info = $Region->get_regionInfo_by_id($val['sy_cirymedia']);
+					$list[$key]['pg_cirymedia_explain'] = $region_info['region_name'] ? $region_info['region_name'] : '不限';
+			
+					//名人性别
+					//$mrxb = $data['mrxb'][$val['sy_sex']]['title'];
+					//$list[$key]['pg_mrxb_explain'] = $mrxb ? $mrxb : '不限';
+						
+				}
+			}
+			
 			return array('list'=>$list,'count'=>$count);
 		}
 		
@@ -387,18 +452,19 @@
 		//获得微信数据
 		public function getInfo($account_id,$is_type)
 		{
-			$app_account_weixin = parent::field_add_prefix('app_account_weibo','bs_','w.');
+			$app_account_weibo = parent::field_add_prefix('AccountWeibo','bs_','w.');
 			if($is_type==0)
 			{
-				$app_grassroots_weixin = parent::field_add_prefix('app_grassroots_weixin','sy_','g.');
-				$field = $app_account_weixin . ',' . $app_grassroots_weixin;
+				$app_grassroots_weibo = parent::field_add_prefix('GrassrootsWeibo','sy_','g.');
+				$field = $app_account_weibo . ',' . $app_grassroots_weibo;
 				return $this->table('app_account_weibo as w')
 				->where(array('w.id'=>$account_id))
 				->join('app_grassroots_weibo as g on g.weibo_id = w.id')
 				->field($field)->find();
 			}else{
-				$app_grassroots_weixin = parent::field_add_prefix('app_celeprityindex_weixin','sy_','c.');
-				$field = $app_account_weixin . ',' . $app_grassroots_weixin;
+				$app_celeprityindex_weibo = parent::field_add_prefix('CeleprityindexWeibo','sy_','c.');
+				
+				$field = $app_account_weibo . ',' . $app_celeprityindex_weibo;
 				return $this->table('app_account_weibo as w')
 				->where(array('w.id'=>$account_id))
 				->join('app_celeprityindex_weibo as c on c.weibo_id = w.id')

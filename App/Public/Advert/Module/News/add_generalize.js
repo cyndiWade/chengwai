@@ -44,6 +44,29 @@ $(".generalize_form").Validform({
 
 (function () {	
 	
+	
+	//验证日期
+	var check_date = function ($ojb) {
+		var _this = $($ojb);
+		
+		//获取当前时间
+		var date = new Date();		
+		var now_date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
+		//格式化当前时间
+		var now_date_format = System.fomat_date(now_date);	 
+
+		//获取选择的时间
+		var select_date = System.fomat_date(_this.val());
+					
+		//24小时*60分钟*60秒*1000毫秒
+		var two_hours = 2 * 60 * 60 * 1000;
+		
+		if (select_date - now_date_format <  two_hours) {
+			_this.val('');
+			alert('请提前2小时');
+		}	
+	}
+	
 	//显示时间的选择
 	$(".timeSubject").ymdateplugin({
 		//attr 属性 ，更多格式参加书本
@@ -53,7 +76,14 @@ $(".generalize_form").Validform({
 		changeYear:true,				//显示年份
 		changeMonth:true,				//显示月份
 		showMonthAfterYear:true,	//互换位置
-		showTimePanel: true
+		showTimePanel: true,
+		
+		onClose : function () {			//关闭窗口执行函数
+			var _this = $(this);
+			if (_this.data('check_type') == 'start') {
+				check_date(this); 
+			}	
+		}
 	});
 	
 })();

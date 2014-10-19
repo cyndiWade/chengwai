@@ -78,7 +78,7 @@
 					<option value="1">是</option>
 					<option value="0">否</option>
 				</select>
-				<span class="blue f12">查看封面在正文中是否显示的区别</span></td>
+				<!-- <span class="blue f12">查看封面在正文中是否显示的区别</span></td> -->
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>正文：</strong></span></td>
@@ -87,7 +87,7 @@
 				</div></td>
 			  </tr>
 			  <tr>
-				<td class="t1"><span><strong>来源：</strong></span></td>
+				<td class="t1"><span><strong>原文链接：</strong></span></td>
 				<td class="t2">
 					<input type="text" name="ly_url" class="text ly_url" ignore="ignore" datatype="url" errormsg="请正确填写链接" datatype="url" />					
 					<p class="writetip">请输入手机版的原文链接（如：宝贝购买链接），请确保该链接不被微信查封</p>
@@ -96,12 +96,8 @@
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>预计执行时间：</strong></span></td>
 				<td class="t2">
-					<!--  
 					<div class="timestart">
-					<input type="text" class="text text-time" /><span><select><option>23</option></select>时</span><span><select><option>23</option></select>分</span><span><input type="checkbox" class="check" />延期</span></div><p>请选择当前时间60分钟后，14天之内的时间</p>
-					-->
-					<div class="timestart">
-					<input type="text" name="start_time" class="text text-time start_time timeSubject"  datatype="*18-20" errormsg="请正确选择填写"  nullmsg="请选择时间" />
+					<input type="text" name="start_time" data-check_type="start" class="text text-time start_time timeSubject"  datatype="*18-20" errormsg="请正确选择填写"  nullmsg="请选择时间" />
 					<span><input type="checkbox" name="sfyq" class="check sfyq" value="1">延期</span>
 					<!-- <span><select><option>23</option></select>时</span><span><select><option>23</option></select>分</span>-->
 					</div><p>请选择当前时间60分钟后，14天之内的时间</p>
@@ -115,29 +111,30 @@
 					<div class="timestart"><input type="text" class="text text-time" /><span><select><option>23</option></select>时</span><span><select><option>23</option></select>分</span></div><p>博主会在该时间之前反馈，请选择当前时间30分钟后，14天之内的时间</p>
 					-->
 					<div class="timestart">
-					<input type="text" name="over_time" class="text text-time over_time timeSubject"  datatype="*18-20" errormsg="请正确选择填写"  nullmsg="请选择时间" />
+					<input type="text" name="over_time" data-check_type="start" class="text text-time over_time timeSubject"  datatype="*18-20" errormsg="请正确选择填写"  nullmsg="请选择时间" />
 					
-					</div><p>博主会在该时间之前反馈，请选择当前时间30分钟后，14天之内的时间</p>
+					</div><p>博主会在该时间之前反馈，请选择当前时间60分钟后，14天之内的时间</p>
 				</td>
 				</td>
 			  </tr>
+			  
 			  <tr>
 				<td class="t1"><span><strong>短信通知反馈结果：</strong></span></td>
 				<td class="t2">
-					<span class="soft fl"><input type="radio" name="dx_status" value="1" checked="checked" class="radio" /><strong>需要</strong></span>
-					<span class="soft fl"><input type="radio" name="dx_status" value="0" class="radio" /><strong>不需要</strong></span>
+					<span class="soft fl"><input type="radio" name="dx_status" value="1" checked="checked" class="radio dxfkjg" /><strong>需要</strong></span>
+					<span class="soft fl"><input type="radio" name="dx_status" value="0" class="radio dxfkjg" /><strong>不需要</strong></span>
 				</td>
 			  </tr>
-			  <tr>
-				<td class="t1"><span><strong>手机号：</strong></span></td>
-				<td class="t2"><input type="text" class="text" name="dx_phone" ignore="ignore" datatype="m" errormsg="请正确选择填写"  nullmsg="请填写手机号码" /><p class="writetip">请准确填写您的手机号码，以便及时短信告知您确认结果</p></td>
+			  <tr class="iphone" >
+				
 			  </tr>
+			  
 			  <tr>
 				<td class="t1"><span><strong>备注：</strong></span></td>
-				<td class="t2"><div class="forward"><textarea class="textarea bz_info" name="bz_info" ignore="ignore" datatype="*10-300" errormsg="请正确填写范围是10-300个字符"  nullmsg="请输入"></textarea><p>请填写备注信息，请不要超过300个汉字！</p></div></td>
+				<td class="t2"><div class="forward"><textarea class="textarea bz_info" name="bz_info" ></textarea><p>请填写备注信息，请不要超过300个汉字！</p></div></td>
 			  </tr>
 			  <tr>
-				<td class="t1"><span><i>*</i><strong>上传正品证明：</strong></span></td>
+				<td class="t1"><span><i>*</i><strong>传资质文件：</strong></span></td>
 				<td class="t2">
 					<div class="provebox l"><input type="file" class="file fl" name="genuineFile" />
 					<!--  <span class="btn brownbtn fl">使用历史证明</span> -->
@@ -145,7 +142,7 @@
 			  </tr>
 			  <tr>
 				<td class="t1"></td>
-				<td class="t2"><div class="agreebox f12"><input type="checkbox" value="1" name="is_ht_ok" class="check fl is_ht"  datatype="*" errormsg="请同意服务协议"  nullmsg="请同意服务协议" /><strong class="fl">同意<a class="blue" href="#">服务协议</a></strong></div></td>
+				<td class="t2"><div class="agreebox f12"><input type="checkbox" value="1" name="is_ht_ok" class="check fl is_ht" checked="checked" datatype="*" errormsg="请同意服务协议"  nullmsg="请同意服务协议" /><strong class="fl">同意<a class="blue" href="#">服务协议</a></strong></div></td>
 			  </tr>
 			  <tr>
 				<td class="t1"></td>

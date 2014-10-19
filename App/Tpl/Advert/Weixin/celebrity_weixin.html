@@ -32,7 +32,9 @@
 	<!-- 微博名人三级导航 -->
 	<ul class="wbtab l">
 		<li class="select three_sidebar_type" data-field="all" data-val=""><a class="mbmr" href="javascript:;">全部名人/媒体 </a></li>
+		<!--  
 		<li class="three_sidebar_type" data-field="zlhzmr_mt" data-val="1"><a class="hzr" href="javascript:;">战略合作名人/媒体</a></li>
+		-->
 		<li class="three_sidebar_type" data-field="cksc" data-val="1"><a class="cksc" href="javascript:;">查看收藏</a></li>
 		<li class="three_sidebar_type" data-field="ckhmd" data-val="1"><a class="hmd" href="javascript:;">查看黑名单</a></li>
 	</ul>
@@ -91,6 +93,7 @@
 					<select class="fl region_right" data-tag_class="dfmr_mt_tags" data-classify="地方名人/媒体" data-repetition="no"  data-field="dfmr_mt"></select>
 				</div><span class="btn okbtn fl btn_confirm_dqmr">确定</span></td>
 		  </tr>
+		  <!--  
 		  <tr>
 			<td class="t1">兴趣标签：</td>
 			<td class="t2">
@@ -100,6 +103,7 @@
 					</volist>
 				</div><div class="more fl" id="moreta">更多</div></td>
 		  </tr>
+		  -->
 		  <!--
 		  <tr>
 			<td class="t1">其它筛选：</td>
@@ -110,6 +114,7 @@
 		   <tr>
 			<td class="t1">其它筛选：</td>
 			<td class="t2">
+				<!-- 
 				<div class="box01-procsess l">
 					<strong class="blue fl">名人/媒体类别：</strong>
 					<div class="part01-cate fl">
@@ -118,6 +123,7 @@
 					</volist>
 					</div>
 				</div>
+				 -->
 				<div class="box01-procsess l">
 					<strong class="blue fl">配合度：</strong>
 					<div class="part01-cate fl">
@@ -166,8 +172,10 @@
 		<div class="orderbox l">
 			<b class="total fr">共<span id="all_data_num"></span>个</b><b class="total fr"><span id="all_page_num"></span>页</b>
 			<span class="orderspan orderspan-select fl" data-sort_type="order_id">默认排序</span>
-			<span class="orderspan fl" data-sort_type="fans_num">粉丝度</span>
+			<span class="orderspan fl" data-sort_type="fans_num">粉丝数</span>
+			<!-- 
 			<span class="orderspan fl" >配合度</span>
+			 -->
 		</div>
 		<div class="col01-mr l" >
 		
@@ -279,7 +287,7 @@ var public_post_fn = function (obj_data) {
 
 		Weixin.dataNum_And_PageNum(result.data.count);
 		
-		Weixin.create_details_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+		Weixin.create_details_fn('{:U('Advert/WeixinOrder/getAccountInfo')}');
 		
 		Weixin.page_init_fn();	//加载页面初始化
 		
@@ -292,43 +300,46 @@ var public_post_fn = function (obj_data) {
 
 var create_now_html = function ($data,$post_data) {
 	var html = '';
-	html += '<div class="box01-cele fl accounts_'+$data.id+'" data-order_id="'+$data.id+'" data-order_num="'+$data.week_order_num+'"  data-fans_num="'+$data.fans_num+'">';
-	html += '<input type="checkbox" class="check fl now_selected" data-field="id" data-id="'+$data.id+'" />';
+	html += '<div class="box01-cele fl accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-fans_num="'+$data.bs_fans_num+'">';
+	html += '<input type="checkbox" class="check fl now_selected" data-field="id" data-id="'+$data.bs_id+'" />';
 	html += '<div class="part01-cele fl">';
 	html += '<img src="'+system_info.Global_Resource_Path+'images/default_head.jpg" />';
 	html += '<div class="ctrl">';
 	
 	if ($post_data.cksc == undefined) {
-		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weixin_id="'+$data.id+'">收藏</span>';
+		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weixin_id="'+$data.bs_id+'">收藏</span>';
 	} else if($post_data.cksc ==1) {
-		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weixin_id="'+$data.id+'">取消收藏</span>';
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weixin_id="'+$data.bs_id+'">取消收藏</span>';
 	}
 	
 	if ($post_data.ckhmd == undefined) {
-		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weixin_id="'+$data.id+'">拉黑</span>';
+		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weixin_id="'+$data.bs_id+'">拉黑</span>';
 	}else if ($post_data.ckhmd == 1) {
-		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weixin_id="'+$data.id+'">取消拉黑</span>';
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weixin_id="'+$data.bs_id+'">取消拉黑</span>';
 	}		
 	
 	html += '</div>';
 	html += '</div>';
 	html += '<div class="part02-cele fl">';
 	html += '<div class="grp01-cele l">';
-	html += '<span class="mrdetail cur fr">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl account_name" data-account_name="'+$data.account_name+'">'+$data.account_name+'</span><span class="city fl">北京，朝阳区</span><span class="yxl fl">影响力：1212</span>';
+	html += '<span class="mrdetail cur fr" data-weixin_id="'+$data.bs_id+'">查看详情</span><i class="weibo fl"></i><i class="v fl"></i>';
+	html += '<span class="femail fl account_name" data-account_name="'+$data.bs_account_name+'">'+$data.bs_account_name+' '+$data.pg_mrxb_explain+'</span>';
+	html += '<span class="city fl">'+$data.pg_cirymedia_explain+'</span>';
+	//html += '<span class="yxl fl">影响力：1212</span>';
 	html += '</div>';
 	html += '<div class="grp02-cele l">';
 	html += '<ul class="arr01-cele l">';
-	html += '<li><span class="blue">职业：</span>歌手 <em>影视演员</em></li>';
-	html += '<li><span class="blue">粉丝量：</span><b class="red">'+($data.fans_num / 10000)+'万</b></li>';
-	html += '<li><span class="blue">参考报价：</span><b class="red now_money" data-money="'+($data.ck_money)+'">'+($data.ck_money / 10000)+'万</b></li>';
-	html += '<li><span class="blue">配合度：</span>高</li>';
+	html += '<li><span class="blue">职业：</span>'+$data.pg_occupation_explain+' <span class="blue">领域：</span><em>'+$data.pg_field_explain+'</em></li>';
+	html += '<li><span class="blue">粉丝量：</span><b class="red">'+($data.bs_fans_num / 10000)+'万</b></li>';
+	html += '<li><span class="blue">参考报价：</span><b class="red now_money" data-money="'+($data.bs_ck_money)+'">'+($data.bs_ck_money / 10000)+'万</b></li>';
+	html += '<li><span class="blue">配合度：</span>'+$data.pg_phd_explain+'</li>';
 	html += '</ul>';
 	html += '<div class="arr02-cele l">';
 	html += '<div class="tem01-cele fr">';
-	html += '<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员';
+	//html += '<span class="blue">预约小贴士：</span>影视演员影视演员影视演员影视演员影视演员影视演员';
 	html += '</div>';
 	html += '<div class="tem02-cele fl">';
-	html += '影视演员影视演员影视演员影视演员影视演员影视演员影视演员影视演员';
+	html += $data.bs_introduction;
 	html += '</div>';
 	html += '</div>';
 	html += '</div>';
