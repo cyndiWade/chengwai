@@ -1,4 +1,3 @@
-
 var init_check_form = function () {
 	$(".generalize_form").Validform({
 		btnSubmit:".btn_sub",
@@ -57,7 +56,30 @@ init_check_form();
 		changeYear:true,				//显示年份
 		changeMonth:true,				//显示月份
 		showMonthAfterYear:true,	//互换位置
-		showTimePanel: true
+		showTimePanel: true,
+		
+		onSelect : function () {			//选择日期执行函数
+			alert(this.value);
+		},
+		
+		onClose : function () {			//关闭窗口执行函数
+			var _this = $(this);
+			
+			//获取当前时间
+			var date = new Date();		
+			var now_date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
+			//格式化当前时间
+			var now_date_format = System.fomat_date(now_date);	 
+	
+			//获取选择的时间
+			var select_date = System.fomat_date(_this.val());
+						
+			//24小时*60分钟*60秒*1000毫秒
+			var sixteen_minutes = 16 * 60 * 1000;
+			var fourteen_day = 14 * 24 * 60 * 60 * 1000;
+			
+			
+		},
 	});
 })();
 

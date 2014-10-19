@@ -22,9 +22,11 @@
 <div class="area01-memwb area01-memwxmr l">
 	<ul class="wbtab l">
 		<li class="select three_sidebar_type" data-field="all" data-val=""><a href="javascript:;" class="mbmr">全部微信账号 </a></li>
+		<!-- 
 		<li class="three_sidebar_type" data-field="tj" data-val="1"><a href="javascript:;" class="wntj">为您推荐 </a></li>
 		<li class="three_sidebar_type" data-field="rmwx" data-val="1"><a href="javascript:;" class="hotzh">热门微信账号 </a></li>
 		<li class="three_sidebar_type" data-field="xstj" data-val="1"><a href="javascript:;" class="xstj">限时特价</a></li>
+		 -->
 		<li class="three_sidebar_type" data-field="cksc" data-val="1"><a href="javascript:;" class="cksc">查看收藏</a></li>
 		<li class="three_sidebar_type" data-field="ckhmd" data-val="1"><a href="javascript:;" class="hmd">查看黑名单</a></li>
 	
@@ -81,6 +83,7 @@
 				</volist>
 				</div><div class="part03-price fl"><input type="text" class="text ipt_fansNum_start" /><i>-</i><input type="text" class="text ipt_fansNum_over" /><i>万</i></div><span class="btn okbtn fl btn_fansNum_yes" data-tag_class="fans_num_tags">确定</span></td>
 		  </tr>
+		  <!--  
 		  <tr>
 			<td class="t1">视频认证  <img src="{$global_tpl_view.Group_Resource_Path}images/qa_icon.png" />：</td>
 			<td class="t2">
@@ -90,6 +93,7 @@
 				</volist>	
 			</td>
 		  </tr>
+		  -->
 		  <tr>
 			<td class="t1">其它筛选：</td>
 			<td class="t2">
@@ -109,6 +113,7 @@
 					</volist>
 					</div>	
 				</div>
+				<!--  
 				<div class="box01-procsess l">
 					<strong class="blue fl">粉丝量认证时间：</strong>
 					<div class="part01-cate fl">
@@ -117,6 +122,7 @@
 					</volist>
 					</div>
 				</div>
+				-->
 				<div class="box01-procsess l">
 					<strong class="blue fl">周平均阅读数：</strong>
 					<div class="part01-cate fl">
@@ -138,24 +144,27 @@
 	</div>
 	<div class="orderbox l">
 		<b class="total fr">共<span id="all_data_num"></span>个</b><b class="total fr"><span id="all_page_num"></span>页</b>
-		<select class="fl"><option>选择排序方式</option></select><span class="orderspan orderspan-select fl">默认排序</span><span class="orderspan">粉丝数量</span><span class="orderspan">单图文报价</span>
+		<!--  <select class="fl"><option>选择排序方式</option></select>-->
+		<span class="orderspan orderspan-select fl" data-sort_type="order_id">默认排序</span>
+		<span class="orderspan" data-sort_type="fans_num">粉丝数量</span>
+		<!--  <span class="orderspan">单图文报价</span>-->
 	</div>
 	<div class="col01-wx l">
 		<table class="tab01-weibo tab01-wx l">
-		 <tbody>
+		 <thead>
 		  <tr>
 			<th class="t1"><b>微信名称</b></th>
-			<th class="t2">行业分类</th>
-			<th class="t3">粉丝</th>
-			<th class="t4">价格</th>
-			<th class="t5">性别比例</th>
-			<th class="t6">效果值</th>
-			<th class="t7">月订单量</th>
+			<th class="t7">行业分类</th>
+			<th class="t7">粉丝</th>
+			<th class="t1">价格</th>
+			<!--  <th class="t5">性别比例</th>-->
+			<!--  <th class="t6">效果值</th>-->
+			<th class="t4">月订单量</th>
 			<!-- <th class="t8">可用广告位</th> -->
-			<th class="t9">二维码</th>
-			<th class="last">操作</th>
+			<th class="t4">二维码</th>
+			<th class="t4">操作</th>
 		  </tr>
-		  </tbody>
+		  </thead>
 		  <tbody id="list_content">
 		  
 
@@ -274,31 +283,44 @@ var public_post_fn = function (obj_data) {
 var create_now_html = function ($data,$post_data) {
 	
 	var html = '';
-	html += '<tr class="accounts_'+$data.id+'" data-order_id="'+$data.id+'" data-order_num="'+$data.week_order_num+'"  data-fans_num="'+$data.fans_num+'">';
-	html += '<td class="t1"><div class="weibopart"><input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.id+'"/><img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" /><div class="grp fl"><h5 class="l account_name" data-account_name="'+$data.account_name+'"><b>'+$data.account_name+'</b><span class="heart"></span><span class="heart"></span></h5><div class="weixininfo l"><span class="weixinhao fl">微信号：'+$data.weixinhao+'</span><i class="i-rz"></i><i class="i-sp"></i></div><div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>';
-	html += '<td class="t2"><b class="red">娱乐圈</b></td>';
-	html += '<td class="t3"><div class="fsbox"><p>'+$data.fans_num+'</p><img width="44" src="{$global_tpl_view.Group_Resource_Path}images/wx_img01.gif" /></div></td>';
-	html += '<td class="t4"><div class="pricebox">'
-	html += '<p>单图文价格：<em class="now_money" data-money="'+$data.dtb_money+'">￥'+$data.dtb_money+'</em></p><p>多图文第一条：<em data-money="'+$data.dtwdyt_money+'">￥'+$data.dtwdyt_money+'</em></p><p>多图文第二条：<em data-money="'+$data.dtwdet_money+'">￥'+$data.dtwdet_money+'</em></p><p>多图文第3-N条：<em data-money="'+$data.dtwqtwz_money+'">￥'+$data.dtwqtwz_money+'</em></p>';
-	html += '</div></td>';
-	html += '<td class="t5"><p>男：占20%</p></td>';
-	html += '<td class="t6"><p>图文打开率：占20</p><p>周平均阅读数：占20</p></td>';
-	html += '<td class="t7">'+$data.month_order_nub+'</td>';
-	//html += '<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
-	html += '<td class="t9"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>';
-	html += '<td class="last"><div class="ctrl">';
+	html += '<tr class="accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-fans_num="'+$data.bs_fans_num+'">';
+	html += '<td class="t1"><div class="weibopart">';
+	html += '<input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.bs_id+'"/>';
+	html += '<img src="{$global_tpl_view.Group_Resource_Path}images/wx_img03.gif" class="wbimg" />';
+	html += '<div class="grp fl">';
+	html += '<h5 class="l account_name" data-account_name="'+$data.bs_account_name+'"><b>'+$data.bs_account_name+'</b><span class="heart"></span><span class="heart"></span></h5>';
+	html += '<div class="weixininfo l"><span class="weixinhao fl">微信号：'+$data.bs_weixinhao+'</span><i class="i-rz"></i><i class="i-sp"></i></div>';
+	//html += '<div class="desc l">简介：全球头条新闻全球头条新闻</div></div></div></td>';
 	
-	html += '<span class="wxdetail">详情</span>';
+	html += '<td class="t7"><b class="red">'+$data.pg_cjfl_explain+'</b></td>';
+	html += '<td class="t7"><div class="fsbox"><p>'+$data.bs_fans_num / 10000+'万</p>';
+	//html += '<img width="44" src="{$global_tpl_view.Group_Resource_Path}images/wx_img01.gif" />';
+	html += '</div></td>';
+	html += '<td class="t1"><div class="pricebox">'
+	html += '<p>单图文价格：<em class="now_money" data-money="'+$data.bs_dtb_money+'">￥'+$data.bs_dtb_money+'</em></p>';
+	html += '<p>多图文第一条：<em data-money="'+$data.bs_dtwdyt_money+'">￥'+$data.bs_dtwdyt_money+'</em></p>';
+	html += '<p>多图文第二条：<em data-money="'+$data.bs_dtwdet_money+'">￥'+$data.bs_dtwdet_money+'</em></p>';
+	html += '<p>多图文第3-N条：<em data-money="'+$data.bs_dtwqtwz_money+'">￥'+$data.bs_dtwqtwz_money+'</em></p>';
+	html += '</div></td>';
+	
+	//html += '<td class="t5"><p>男：占20%</p></td>';
+	//html += '<td class="t6"><p>图文打开率：占20</p><p>周平均阅读数：占20</p></td>';
+	html += '<td class="t4">'+$data.bs_month_order_nub+'</td>';
+	//html += '<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
+	html += '<td class="t4"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>';
+	html += '<td class="t4"><div class="ctrl">';
+	
+	html += '<span class="wxdetail">详情</span><br/>';
 	if ($post_data.cksc == undefined) {
-		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weixin_id="' + $data.id + '">收藏</span>';
+		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weixin_id="' + $data.bs_id + '">收藏</span><br/>';
 	}else if ($post_data.cksc == 1) {
-		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weixin_id="' + $data.id + '">取消收藏</span>';
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weixin_id="' + $data.bs_id + '">取消收藏</span><br/>';
 	}
 
 	if ($post_data.ckhmd == undefined) {
-		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weixin_id="' + $data.id + '">拉黑</span>';
+		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weixin_id="' + $data.bs_id + '">拉黑</span><br/>';
 	}else if ($post_data.ckhmd == 1) {
-		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weixin_id="' + $data.id + '">取消拉黑</span>';
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weixin_id="' + $data.bs_id + '">取消拉黑</span><br/>';
 	}
 	html += '</div></td>';
 	

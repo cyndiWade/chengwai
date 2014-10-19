@@ -56,6 +56,21 @@ System.prototype.in_array = function (str, arr) {
     return false;
 }
 
+
+/**
+ * 格式化日期，成时间戳
+ * @param {Object} $date_string 2013-10-10 12:13
+ * return 111111111111
+ */
+System.prototype.fomat_date = function ($date_string) {
+	if ($date_string == '') {
+		return 0;
+	} else {
+		return Date.parse($date_string.replace(/-/ig,'/'));
+	}
+	
+}
+
 var System = new System();
 window.onload = function () {
 	System.init();

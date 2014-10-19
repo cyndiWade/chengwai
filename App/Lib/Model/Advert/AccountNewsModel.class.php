@@ -79,6 +79,7 @@
 			//统计表字段，加上别名
 			$account_news_fields = parent::field_add_prefix('AccountNews','bs_','w.');
 			$index_news_fields = parent::field_add_prefix('IndexNews','sy_','b.');
+			$Region = D('Region');	//区域表
 			
 			//差集统计长度
 			$list = $this->where($where)
@@ -92,18 +93,22 @@
 			
 			//新闻源处理
 			$data['sfxwy'] = $CategoryTagsInfo[$tags_ids['sfxwy']];
-			$data['sfxwy'] = regroupKey($data['sfxwy'],'val',true);
+	//		$data['sfxwy'] = regroupKey($data['sfxwy'],'val',true);
 			
 			//文本连接
 			$data['dljzk'] = $CategoryTagsInfo[$tags_ids['dljzk']];
-			$data['dljzk'] = regroupKey($data['dljzk'],'val',true);
+	//		$data['dljzk'] = regroupKey($data['dljzk'],'val',true);
 		
 			//门户类型
 			$data['mh_type'] = $CategoryTagsInfo[$tags_ids['mh_type']];
-			$data['mh_type'] = regroupKey($data['mh_type'],'val',true);
+			//$data['mh_type'] = regroupKey($data['mh_type'],'val',true);
 			
-			$Region = D('Region');	//区域表
 			
+			//排序按照val排序数据
+			foreach ($data as $key=>$info) {
+				$data[$key] = regroupKey($info,'val',true);
+			}
+				
 			
 			if ($list == true) {
 				foreach ($list as $key=>$val) {	

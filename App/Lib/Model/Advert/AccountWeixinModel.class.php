@@ -78,10 +78,39 @@
 			->join('app_grassroots_weixin as b on w.id = b.weixin_id')
 			->count();
 			//差集统计长度
+			
+			//统计表字段，加上别名
+			$account_weixin_fields = parent::field_add_prefix('AccountWeixin','bs_','w.');
+			$grassroots_weixin_fields = parent::field_add_prefix('GrassrootsWeixin','sy_','b.');
+				
 			$list = $this->where($where)
 			->table('app_account_weixin as w')
 			->join('app_grassroots_weixin as b on w.id = b.weixin_id')
-			->limit($now_page,$limit)->field('w.*,b.common,b.more_ying_price,b.more_ruang_price,b.one_yingg_price,b.one_ruangg_price,b.more_twoy_price,b.more_twor_price,b.more_ny_price,b.more_nr_price,b.fans_number,b.audience_man,b.audience_women,b.fans_c_time,b.read_number')->select();
+			->limit($now_page,$limit)
+			//->field('w.*,b.common,b.more_ying_price,b.more_ruang_price,b.one_yingg_price,b.one_ruangg_price,b.more_twoy_price,b.more_twor_price,b.more_ny_price,b.more_nr_price,b.fans_number,b.audience_man,b.audience_women,b.fans_c_time,b.read_number')
+			->field($account_weixin_fields.','.$grassroots_weixin_fields)
+			->select();
+			
+			
+			$tags_ids = C('Big_Nav_Class_Ids.weixin_caogen_tags_ids');		
+			$CategoryTagsInfo = D('CategoryTags')->get_classify_data($tags_ids['top_parent_id']);
+			$data['cjfl'] = $CategoryTagsInfo[$tags_ids['cjfl']];
+			//
+			
+			//排序按照val排序数据
+			foreach ($data as $key=>$info) {
+				$data[$key] = regroupKey($info,'val',true);
+			}
+			
+				
+			if ($list == true) {
+				foreach ($list as $key=>$val) {
+					//名人领域
+					$cjfl = $data['cjfl'][$val['sy_common']]['title'];
+					$list[$key]['pg_cjfl_explain'] = $cjfl ? $cjfl : '不限';
+				}
+			}	
+			
 			return array('list'=>$list,'count'=>$count);
 		}
 		
@@ -99,28 +128,16 @@
 			{
 				switch ($addslArray['zfjg_type']) {
 					case 1:
-						$wheres['b.more_ying_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
+						$wheres['b.dtb_money'] = $this->getLeftRightstr($addslArray['jg'],'-');
 					break;
 					case 2:
-						$wheres['b.more_ruang_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
+						$wheres['b.dtwdyt_money'] = $this->getLeftRightstr($addslArray['jg'],'-');
 					break;
 					case 3:
-						$wheres['b.one_yingg_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
+						$wheres['b.dtwdet_money'] = $this->getLeftRightstr($addslArray['jg'],'-');
 					break;
 					case 4:
-						$wheres['b.one_ruangg_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
-					break;
-					case 5:
-						$wheres['b.more_twoy_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
-					break;
-					case 6:
-						$wheres['b.more_twor_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
-					break;
-					case 7:
-						$wheres['b.more_ny_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
-					break;
-					case 8:
-						$wheres['b.more_nr_price'] = $this->getLeftRightstr($addslArray['jg'],'-');
+						$wheres['b.dtwqtwz_money'] = $this->getLeftRightstr($addslArray['jg'],'-');
 					break;
 				}
 			}
@@ -284,11 +301,60 @@
 			->table('app_account_weixin as w')
 			->join('app_celeprityindex_weixin as b on w.id = b.weixin_id')
 			->count();
+			
+			//统计表字段，加上别名
+			$account_weixin_fields = parent::field_add_prefix('AccountWeixin','bs_','w.');
+			$iceleprityindex_weixin_fields = parent::field_add_prefix('CeleprityindexWeixin','sy_','b.');
+			
 			//差集统计长度
 			$list = $this->where($where)
 			->table('app_account_weixin as w')
 			->join('app_celeprityindex_weixin as b on w.id = b.weixin_id')
-			->limit($now_page,$limit)->field('w.*,b.occupation,b.ck_price,b.yc_price,b.interest,b.coordination,b.fansnumber')->select();
+			->limit($now_page,$limit)
+			->field($account_weixin_fields.','.$iceleprityindex_weixin_fields)
+			//->field('w.*,b.occupation,b.ck_price,b.yc_price,b.interest,b.coordination,b.fansnumber')
+			->select();
+			
+			//导航用到的标签数据
+			$tags_ids = C('Big_Nav_Class_Ids.weixin_celebrity_tags_ids');
+			$CategoryTagsInfo = D('CategoryTags')->get_classify_data($tags_ids['top_parent_id']);	
+			$data['phd'] = $CategoryTagsInfo[$tags_ids['phd']];	//配合度
+			$data['mrzy'] = $CategoryTagsInfo[$tags_ids['mrzy']];	//名人职业
+			$data['mtly'] = $CategoryTagsInfo[$tags_ids['mtly']];	//名人领域
+			$data['mrxb'] = $CategoryTagsInfo[$tags_ids['mrxb']];	//名人性别
+
+			$Region = D('Region');	//区域表	
+			
+			//排序按照val排序数据
+			foreach ($data as $key=>$info) {
+				$data[$key] = regroupKey($info,'val',true);
+			}
+			
+			if($list == true) {
+				foreach ($list as $key=>$val) {	
+					//配合度	
+					$phd = $data['phd'][$val['sy_coordination']]['title'];
+					$list[$key]['pg_phd_explain'] = $phd ? $phd : '不限';	
+					
+					//名人置业
+					$mrzy = $data['mrzy'][$val['sy_occupation']]['title'];
+					$list[$key]['pg_occupation_explain'] = $mrzy ? $mrzy : '不限';
+					
+					//名人领域
+					$mtly = $data['mtly'][$val['sy_field']]['title'];
+					$list[$key]['pg_field_explain'] = $mtly ? $mtly : '不限';
+					
+					//地方名人
+					$region_info = $Region->get_regionInfo_by_id($val['sy_cirymedia']);
+					$list[$key]['pg_cirymedia_explain'] = $region_info['region_name'] ? $region_info['region_name'] : '不限';
+				
+					//名人性别
+					$mrxb = $data['mrxb'][$val['sy_sex']]['title'];
+					$list[$key]['pg_mrxb_explain'] = $mrxb ? $mrxb : '不限';						
+					
+				}
+			}
+			
 			return array('list'=>$list,'count'=>$count);
 		}
 		
