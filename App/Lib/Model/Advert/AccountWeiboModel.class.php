@@ -125,7 +125,7 @@
 			//性别区分
 			if($addslArray['fans_sex']!='')
 			{
-				$wheres['b.fans_sex'] = $addslArray['fans_sex'];
+				$wheres['b.sex'] = $addslArray['fans_sex'];
 			}
 			//为您推荐
 			if($addslArray['tj']!='')

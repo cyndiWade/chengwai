@@ -181,7 +181,7 @@
 			//周平均阅读数
 			if($addslArray['zpjyds']!='')
 			{
-				$wheres['b.fans_c_time'] = $this->getLeftRightstr($addslArray['zpjyds'],'-');
+				$wheres['b.read_number'] = $this->getLeftRightstr($addslArray['zpjyds'],'-');
 			}
 			//为您推荐
 			if($addslArray['tj']!='')
