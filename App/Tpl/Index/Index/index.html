@@ -201,10 +201,9 @@ function check() {
     <div class="mod_title"><h3>网站公告</h3></div>
       <div class="mod_con">
         <ul class="list_li28">
-          <li class="pl15"><span class="middot"></span>众多知名微信自媒体加入城外圈</li>
-          <li class="pl15"><span class="middot"></span>提现免费及快速到账承诺</li>
-          <li class="pl15"><span class="middot"></span>大量广告预算，静候优质微信大号！</li>
-          <li class="pl15"><span class="middot"></span>新希望集团合作媒体招募中</li>
+         	<volist name="view_data['announcement']" id="vo">
+          	<li class="pl15" title="{$vo.val}"><span class="middot"></span>{$vo.title}</li>
+          	</volist>
         </ul>
       </div>
     </div>
@@ -328,9 +327,9 @@ function check() {
       <div class="mod_con">
       	<div class="fl w80 p10"><img src="http://www.elongstatic.com/images/promotion/qiang_20140827_hangzhou2.jpg" style=" width:80px; height:70px;"/></div>
         <ul class="list_li28 fr w200">
-          <li class="pl15"><span class="middot"></span>如何查询账户余额？</li>
-          <li class="pl15"><span class="middot"></span>如何查询消费记录？</li>
-          <li class="pl15"><span class="middot"></span>如何修改支付密码？</li>
+          	<volist name="view_data['help']" id="vo">    
+          		<li class="pl15" title="{$vo.val}"><span class="middot"></span>{$vo.title}</li>
+          	</volist>
         </ul>
       </div>
     </div>
@@ -345,11 +344,17 @@ function check() {
       <div class="mod_con pt10 pb10 clearfix" id="tab_body1">
       	<div>
       	<volist name="view_data['weixin_recommended_list']" id="vo">
-	  	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view['Global_Resource_Path']}images/default_head.jpg" class="png"></dt>
+	  	<dl class="weixin_item clearfix pt10 pb10"><dt>
+	  		<if condition="$vo['head_img'] eq ''">
+	  			<img src="{$global_tpl_view['Global_Resource_Path']}images/default_head.jpg" class="png">
+	  		<else />
+	  			<img src="{$vo.head_img}" class="png">
+	  		</if>
+	  	</dt>
         <dd><h3>{$vo.account_name}</h3>
-          <p>粉丝数： <b>422385</b></p>
+          <p>粉丝数： <b>{$vo.fans_num_format}</b></p>
           <p>认证情况： <b>已认证</b></p>   
-          <p>男： <b>{$vo.male_precent}%</b>女： <b>{$vo.female_precent}%</b></p>
+          <!--  <p>男： <b>{$vo.male_precent}%</b>女： <b>{$vo.female_precent}%</b></p>-->
         </dd></dl>
 		</volist>
       
@@ -474,9 +479,16 @@ function check() {
       	<div>
       	
       	<volist name="view_data['weibo_recommended_list']" id="vo">
-      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view['Global_Resource_Path']}images/default_head.jpg" class="png"></dt>
+      	<dl class="weixin_item clearfix pt10 pb10">
+      	<dt>
+      	<if condition="$vo['head_img'] eq ''">
+	  		<img src="{$global_tpl_view['Global_Resource_Path']}images/default_head.jpg" class="png">
+	  	<else />
+	  		<img src="{$vo.head_img}" class="png">
+	  	</if>
+      	</dt>
         <dd><h3>{$vo.account_name}</h3>
-          <p>粉丝数： <b>{$vo.fansnumber}</b></p>
+          <p>粉丝数： <b>{$vo.fans_num_format}</b></p>
           <p>认证情况： <b>已认证</b></p>   
         </dd></dl>
         </volist>
@@ -606,7 +618,16 @@ function check() {
       	<div>
       	
       		<volist name="view_data['news_recommended_list']" id="vo">
-      		<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view['Global_Resource_Path']}images/default_head.jpg" class="png"></dt>
+      		<dl class="weixin_item clearfix pt10 pb10">
+      		<dt>
+      		
+      		<if condition="$vo['head_img'] eq ''">
+	  			<img src="{$global_tpl_view['Global_Resource_Path']}images/default_head.jpg" class="png">
+	  		<else />
+	  			<img src="{$vo.head_img}" class="png">
+	  		</if>
+	  
+      		</dt>
 	        <dd><h3>{$vo.account_name}</h3>
 	          <p>新闻源： <b>百度新闻源</b></p>
 	          <p>门户类型： <b>{$vo.type_of_portal_explain}</b></p>   

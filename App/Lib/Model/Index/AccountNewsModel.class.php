@@ -8,6 +8,7 @@ class AccountNewsModel extends IndexBaseModel {
 		->table($this->prefix.'account_news AS a')
 		->join($this->prefix.'index_news AS i ON a.id = i.news_id')
 		->where($where)
+		->limit(9)
 		->select();
 		return $data;
 	}

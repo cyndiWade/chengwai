@@ -8,8 +8,8 @@ class AccountWeixinModel extends IndexBaseModel {
 		->table($this->prefix.'account_weixin AS a')
 		->join($this->prefix.'celeprityindex_weixin AS i ON a.id = i.weixin_id')
 		->where($where)
+		->limit(9)
 		->select();
-		
 		return $data;
 	}
 }

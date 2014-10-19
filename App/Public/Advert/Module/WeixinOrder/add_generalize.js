@@ -94,6 +94,7 @@ init_check_form();
 	});
 })();
 
+
 (function () {
 	var dxfkjg = $('.dxfkjg');
 	var iphone = $('.iphone');

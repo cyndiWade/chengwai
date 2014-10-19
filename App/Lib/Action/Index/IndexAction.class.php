@@ -32,6 +32,7 @@ class IndexAction extends IndexBaseAction {
 		'AccountNews'=>'AccountNews',
 		'AccountWeixin'=>'AccountWeixin',
 		'AccountWeibo'=>'AccountWeibo',
+		'Help'=>'Help'
 	);
 	
 	private $links_explain = array(
@@ -41,25 +42,22 @@ class IndexAction extends IndexBaseAction {
 	);
 	private $type_of_portal_explain = array(
 		0 => '所有',
-		1 => '中央门户',
+		1 => '地方门户',
 		2 => '行业门户',
-		3 => '其它门户'
+		3 => '重点门户',
+		4 => '其他'
 	);
 
 	
 	//首页
 	public function index() {
 
-// 		$fields = parent::field_add_prefix('AccountNews','bs_');
-		//$result = $this->db['AccountNews']->field($fields)->select();
-		//dump($result);
 		//新闻推荐数据
 		$news_recommended_list = $this->db['AccountNews']->get_news_account_list(array('a.recommended_status'=>1,'a.is_del'=>0));
 		if ($news_recommended_list == true) {
 			foreach ($news_recommended_list as $key=>$val) {
 				$news_recommended_list[$key]['links_explain'] = $this->links_explain[$val['links']];
 				$news_recommended_list[$key]['type_of_portal_explain'] = $this->type_of_portal_explain[$val['type_of_portal']];
-				
 			}
 		}
 		$data['news_recommended_list'] = $news_recommended_list;
@@ -69,6 +67,7 @@ class IndexAction extends IndexBaseAction {
 		$weibo_recommended_list = $this->db['AccountWeibo']->get_weibo_account_list(array('a.recommended_status'=>1,'a.is_del'=>0));
 		if ($weibo_recommended_list == true) {
 			foreach ($weibo_recommended_list as $key=>$val) {
+				$weibo_recommended_list[$key]['fans_num_format'] = ($val['fans_num'] / 10000).'万';
 			}
 		}
 		$data['weibo_recommended_list'] = $weibo_recommended_list;
@@ -76,9 +75,21 @@ class IndexAction extends IndexBaseAction {
 		
 		//微信推荐资源
 		$weixin_recommended_list = $this->db['AccountWeixin']->get_weixin_account_list(array('a.recommended_status'=>1,'a.is_del'=>0));
+		if ($weixin_recommended_list == true) {
+			foreach ($weixin_recommended_list as $key=>$val) {
+				$weixin_recommended_list[$key]['fans_num_format'] = ($val['fans_num'] / 10000).'万';
+			}
+		}
+		
 		$data['weixin_recommended_list'] = $weixin_recommended_list;
 		
-		//weibo_recommended_list
+		
+		
+		
+		//获取网站公告、帮助信息
+		$data['announcement'] =  $this->db['Help']->where(array('parent_id'=>15,'is_del'=>0))->select();
+		$data['help'] = $this->db['Help']->where(array('parent_id'=>32,'is_del'=>0))->select();
+		
 		parent::data_to_view($data);
 		parent::data_to_view(array(
 			//二级导航属性

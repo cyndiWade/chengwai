@@ -8,6 +8,7 @@ class AccountWeiboModel extends IndexBaseModel {
 		->table($this->prefix.'account_weibo AS a')
 		->join($this->prefix.'celeprityindex_weibo AS i ON a.id = i.weibo_id')
 		->where($where)
+		->limit(9)
 		->select();
 		return $data;
 	}
