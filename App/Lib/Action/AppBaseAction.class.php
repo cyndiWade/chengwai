@@ -314,6 +314,7 @@ class AppBaseAction extends GlobalParameterAction {
 			$grass_info['yg_zhifa'] = $AccountWeiboInfo['yg_zhifa'];
 			$grass_info['rg_zhuanfa'] = $AccountWeiboInfo['rg_zhuanfa'];
 			$grass_info['rg_zhifa'] = $AccountWeiboInfo['rg_zhifa'];
+			$grass_info['recommend'] = $AccountWeiboInfo['recommended_status'];
 			switch($AccountWeiboInfo['is_celebrity'])
 			{
 				//草根
@@ -367,9 +368,14 @@ class AppBaseAction extends GlobalParameterAction {
 			//需要同步的数据
 			$cele_info['fansnumber'] = $grass_info['fans_number'] = $AccountWeixinInfo['fans_num'];
 			$cele_info['ck_price'] = $AccountWeixinInfo['ck_money'];
+			$grass_info['dtb_money'] = $AccountWeixinInfo['dtb_money'];
+			$grass_info['dtwdyt_money'] = $AccountWeixinInfo['dtwdyt_money'];
+			$grass_info['dtwdet_money'] = $AccountWeixinInfo['dtwdet_money'];
+			$grass_info['dtwqtwz_money'] = $AccountWeixinInfo['dtwqtwz_money'];
 			$grass_info['read_number'] = $AccountWeixinInfo['weekly_read_avg'];
 			$grass_info['audience_man'] = $AccountWeixinInfo['male_precent'];
 			$grass_info['audience_women'] = $AccountWeixinInfo['female_precent'];
+			$grass_info['recommend'] = $AccountWeixinInfo['recommended_status'];
 			switch($AccountWeixinInfo['is_celebrity'])
 			{
 				//草根
@@ -420,7 +426,9 @@ class AppBaseAction extends GlobalParameterAction {
 		$AccountNewsInfo = D('AccountNews')->where(array('id'=>$id))->find();
 		if($AccountNewsInfo!='')
 		{
+			$new_info['area'] = $AccountNewsInfo['area_id'];
 			$new_info['price'] = $AccountNewsInfo['money'];
+			$new_info['type_of_portal'] = $AccountNewsInfo['pt_type'];
 			$new_info['is_news'] = $AccountNewsInfo['url_type'];
 			$new_info['links'] = $AccountNewsInfo['url_status'];
 			//判断索引表数据是否已经存在
