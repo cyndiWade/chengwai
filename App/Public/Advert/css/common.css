@@ -176,3 +176,6 @@ body{ background:#fefefe;}
 
 .popBox{position:absolute;left:0px; top:0px; z-index:10000;}
 .popBox .popMask {display:block;  background:#000\9; filter:alpha(opacity=50)\9; background:rgba(0,0,0,0.5);}
+
+/*1021*/
+.part02-batch{ height:147px; overflow:auto;}

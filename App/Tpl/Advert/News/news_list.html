@@ -5,6 +5,11 @@
     <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/member.css" type="text/css" />
 	<title>新闻媒体列表</title>
+	<style type="text/css">
+		.head_img {
+			height:100px  !important;
+		}
+	</style>
 </head>
 <body>
 
@@ -279,9 +284,9 @@ var create_now_html = function ($data) {
 	//html += '<img src="{$global_tpl_view.Group_Resource_Path}images/mt_img01.gif" class="mtimg" />';
 	
 	if ($data.bs_head_img == '') {
-		html += '<img src="{$global_tpl_view.Global_Resource_Path}images/default_head.jpg" class="mtimg" />';
+		html += '<img src="{$global_tpl_view.Global_Resource_Path}images/default_head.jpg" class="mtimg head_img" />';
 	} else {
-		html += '<img src="'+$data.bs_head_img+'" class="mtimg" />';
+		html += '<img src="'+$data.bs_head_img+'" class="mtimg head_img" />';
 	}
 	
 	html += '<div class="grp fl"><h5 class="l"><b class="account_name" data-account_name="'+$data.bs_account_name+'">'+$data.bs_account_name+'</b></h5>';
