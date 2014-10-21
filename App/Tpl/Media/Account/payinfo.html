@@ -19,6 +19,33 @@
             </div>
             <div class="phone-reg l">
                 <table class="tab01-allorder tab01-allorder-pay l">
+                <tr>
+                    <th class="t1">平台</th>
+                    <th class="t2">开户银行</th>
+                    <th class="t3">卡号</th>
+                    <th class="t4">真实姓名</th>
+                    <th class="last tc">操作</th>
+                </tr>
+                <empty name="view_data.list">
+                <tr>
+                    <td colspan="5" align="center">暂无数据</td>
+                </tr>
+                <else />
+                <volist name="view_data.list" id="item">
+                <tr>
+                    <td class="t1"><img src="images/zfb.gif" /></td>
+                    <td class="t2">{$item.name}</td>
+                    <td class="t3">{$item.card}</td>
+                    <td class="t4">{$item.truename}</td>
+                    <td class="last tc">
+                        <div class="ctrl">
+                            <span><a href="">修改</a></span> | 
+                            <span>删除</span>
+                        </div>
+                    </td>
+                </tr>
+                </volist>
+                </empty>
                   <tr>
                     <th class="t1">平台</th>
                     <th class="t2">开户银行</th>
@@ -63,8 +90,6 @@
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
-<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.js"></script>
-<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.pop.js"></script>
 <script type="text/javascript">
 $(function(){
 	$('.tab01-allorder tr:even').addClass('even');

@@ -82,7 +82,7 @@ define(function (require) {
 
         var win = new W.Window({
             title: W.util.formatStr('添加 {0} 账号', platformData.platformName),
-            height: "auto",
+            height: platformData.pid == 4 ? 500 : "auto",
             width: 921,
             tbar: winOption.tbar
         });

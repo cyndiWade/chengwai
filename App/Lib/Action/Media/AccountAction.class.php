@@ -19,7 +19,8 @@ class AccountAction extends MediaBaseAction {
 			'CategoryTags'=>'CategoryTags',
 			'Users' => 'Users',
 			'Verify'=>'Verify',
-			'User_media' => 'UserMedia'
+			'User_media' => 'UserMedia',
+			'Blank' => 'Blank'
 	);
 	
 	//和构造方法
@@ -327,6 +328,20 @@ class AccountAction extends MediaBaseAction {
      */
     function payinfo()
     {
+        import('ORG.Util.Page');
+        $page = I('page', 1, 'intval');
+        $pageSize = I('pagesize', 20, 'intval');
+        
+        $userInfos = parent::get_session('user_info');
+        $blankModel = $this->db['Blank'];
+        $where = array(
+            'user_id' => $userInfos['id'],
+        );
+        $lists = $blankModel->getList($where);
+        
+        $Page       = new Page($datas['total'], $pageSize);
+		$show       = $Page->show();
+        
         parent::data_to_view(array(
             //二级导航
             'secondSiderbar' => array(
@@ -335,6 +350,8 @@ class AccountAction extends MediaBaseAction {
                 '支付信息' => array('select' => true, 'url' => U('/Media/Account/payinfo')),
             ),
             'secondPosition' => '支付信息',
+            'page' => $show,
+            'list' => $datas['list'],
         ));
         $this->display();
     }

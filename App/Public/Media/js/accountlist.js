@@ -2520,7 +2520,7 @@ define(function(require, exports) {
             initNotAllowedTips();
             initReviewTips();
             initIsEnableMicroTaskTips();
-            getchecktips();
+            // getchecktips();
             initIsAuthDialogue();
         },
         getGrid: function() {

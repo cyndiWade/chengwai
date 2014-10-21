@@ -1,7 +1,7 @@
 define(function(require, exports) {
     var detail = require('./detail.js');
 
-    var weibo_type = 3;
+    var weibo_type = 4;
 
     var grid;
 
