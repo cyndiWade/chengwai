@@ -35,7 +35,7 @@
 			$this->over_time = strtotime($new_post['over_time']);
 			$this->sfyq = $new_post['sfyq']=='' ? 0 : 1;
 			$this->create_time = time();
-			return $this->add($now_val);
+			return $this->add();
 		}
 		
 		
