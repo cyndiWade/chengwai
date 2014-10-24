@@ -106,26 +106,30 @@
 		{
 			if($arr!='')
 			{
-				$add['users_id'] = $arr['users_id'];
-				$add['tfpt_type'] = $arr['tfpt_type'];
-				$add['fslx_type'] = $arr['fslx_type'];
-				$add['ryg_type'] = $arr['ryg_type'];
-				$add['hd_name'] = $arr['yxd_name'];
-				$add['zf_url'] = $arr['zf_url'];
-				$add['zfy_type'] = $arr['zfy_type'];
-				$add['zw_info'] = $arr['zw_info'];
-				$add['wa_url_status'] = $arr['wa_url_status'];
-				$add['zfnr_type'] = $arr['zfnr_type'];
-				$add['start_time'] = $arr['start_time'];
-				$add['over_time'] = $arr['over_time'];
-				$add['sfyq'] = $arr['sfyq'];
-				$add['dx_status'] = $arr['dx_status'];
-				$add['dx_phone'] = $arr['dx_phone'];
-				$add['bz_info'] = $arr['bz_info'];
-				$add['all_price'] = $arr['all_price'];
-				$add['source_type'] = 1;
-				$add['create_time'] = time();
-				return $this->add($add);
+				// $add['users_id'] = $arr['users_id'];
+				// $add['tfpt_type'] = $arr['tfpt_type'];
+				// $add['fslx_type'] = $arr['fslx_type'];
+				// $add['ryg_type'] = $arr['ryg_type'];
+				// $add['hd_name'] = $arr['yxd_name'];
+				// $add['zf_url'] = $arr['zf_url'];
+				// $add['zfy_type'] = $arr['zfy_type'];
+				// $add['zw_info'] = $arr['zw_info'];
+				// $add['wa_url_status'] = $arr['wa_url_status'];
+				// $add['zfnr_type'] = $arr['zfnr_type'];
+				// $add['start_time'] = $arr['start_time'];
+				// $add['over_time'] = $arr['over_time'];
+				// $add['sfyq'] = $arr['sfyq'];
+				// $add['dx_status'] = $arr['dx_status'];
+				// $add['dx_phone'] = $arr['dx_phone'];
+				// $add['bz_info'] = $arr['bz_info'];
+				// $add['all_price'] = $arr['all_price'];
+				$this->create();
+				$this->hd_name = $arr['yxd_name'];
+				$this->source_type = 1;
+				$this->create_time = time();
+				// $add['source_type'] = 1;
+				// $add['create_time'] = time();
+				return $this->add();
 			}
 		}	
 	}

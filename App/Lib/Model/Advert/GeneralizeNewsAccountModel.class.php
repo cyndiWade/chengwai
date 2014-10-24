@@ -127,4 +127,26 @@
 				return $name['account_name'];
 			}
 		}
+
+		//获取大订单下面的子订单状态
+		// public function getBigSmall($array)
+		// {
+		// 	if($array!='')
+		// 	{
+		// 		$str_arr = array();
+		// 		foreach($array as $value)
+		// 		{
+		// 			$str_arr[] = $value['id'];
+		// 		}
+		// 		$select_status = $this->where(array('generalize_id'=>array('in',$str_arr)))->field('generalize_id,audit_status')->select();
+		// 		$new_array = array();
+		// 		foreach($select_status as $v)
+		// 		{
+		// 			$new_array[$v['generalize_id']][] = $v['audit_status'];
+		// 		}
+		// 		return $new_array;
+		// 	}
+		// }
+
+
 	}

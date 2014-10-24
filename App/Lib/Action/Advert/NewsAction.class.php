@@ -129,12 +129,16 @@ class NewsAction extends AdvertBaseAction {
 		$list = $GeneralizeNewsOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
 		->order('id desc')->field('id,title,start_time,web_url,all_price,status')->select();
 		
-		$Order_Status = C('Order_Status');
-		if ($list == true) {
-			foreach ($list as $key=>$val) {
-				$list[$key]['status_explain'] = $Order_Status[$val['status']]['explain'];
-			}
-		}
+		//获取付款状态
+		// $list_arr = $this->db['GeneralizeNewsAccount']->getBigSmall($list);
+		// var_dump($list_arr);
+
+		// $Order_Status = C('Order_Status');
+		// if ($list == true) {
+		// 	foreach ($list as $key=>$val) {
+		// 		$list[$key]['status_explain'] = $Order_Status[$val['status']]['explain'];
+		// 	}
+		// }
 		parent::data_to_view(array(
 				'page' => $show ,
 				'list' => $list,

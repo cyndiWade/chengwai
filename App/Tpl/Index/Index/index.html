@@ -28,14 +28,14 @@
     <div class="blank20"></div>
     <div class="panel-email">
       <span class="prepend"><i class="icon-user"></i></span>
-      <input name="account" placeholder="账户" type="text" id="username" value="" class="inpt" placeholder="请输入账号">
+      <input name="account" placeholder="账户" type="text" id="username" value="" class="inpt adname" placeholder="请输入账号">
     </div>
     <div class="panel-password">
         <span class="prepend"><i class="icon-key"></i></span>
-        <input name="password" type="password" placeholder="密码" class="inpt" id="password" value="" placeholder="请输入密码">
+        <input name="password" type="password" placeholder="密码" class="inpt adpass" id="password" value="" placeholder="请输入密码">
     </div>
      <div class="panel-password">
-        <input name="verify" type="text" placeholder="验证码" class="verify_code" id="" value="">
+        <input name="verify" type="text" placeholder="验证码" class="verify_code adver" id="" value="">
    		<img src="{:U('Advert/Account/verify')}" id="resetVerifyCode"/>
     </div>
     <!-- 
@@ -45,7 +45,7 @@
       <span>&nbsp;&nbsp;<a href="http://www.cwq.com/member/send.php">忘记了密码？</a></span>
      </div>
        -->
-      <div class="panel-submit"><input type="submit" name="submit" class="subbtn" value=" 登 录 "></div>
+      <div class="panel-submit"><input type="button" name="submit" id="advertsub" class="subbtn" value=" 登 录 "></div>
     </form>
 </div>
 
@@ -779,7 +779,36 @@ function check() {
 		$("#tab_body4>ul").eq(div_index).show().siblings().hide();
   });
 </script>
-
+<script>
+  var info = function(){
+      advertsub = $('#advertsub');
+      
+  }
+  info();
+  advertsub.click(function(){
+     var adname = $('.adname').val();
+     var adpass = $('.adpass').val();
+     var adver = $('.adver').val();
+     $.ajax({
+        type: "POST",
+        url: "{:U('Advert/Account/check_login')}",
+        data: {
+            'account': adname,
+            'password' : adpass,
+            'verify' : adver
+        },
+        dataType: "json",
+        success: function (msg) {
+          if(msg.status==0)
+          {
+            window.location.href="{:U('Advert/Member/datum_edit')}";
+          }else{
+            alert(msg.msg);
+          }
+        }
+     });
+  });
+</script>
 <include file="Public:footer" />
 
 <include file="Public:bottom" />

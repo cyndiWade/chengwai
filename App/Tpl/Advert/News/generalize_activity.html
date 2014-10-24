@@ -60,10 +60,13 @@
 						<td class="last">
 							<div class="ctrl">
 								<span><a href="{:U('Advert/News/generalize_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
+								<span><a href="{:U('Advert/News/news_list',array('order_id'=>$vo['id']))}">添加媒体</a></span>
 								<span class="delete_order" data-id="{$vo['id']}">删除</span>
-								<!-- <if condition="$vo['status'] eq 2">
-									<span class="zhifu_order" data-id="{$vo['id']}">支付</span>
-								</if> -->
+								<if condition="$vo['status'] ELT 4">
+									<span class="zhifu_order">未付款</span>
+								<else />
+									<span class="zhifu_order">已付款</span>
+								</if>
 							</div>
 						</td>
 					</tr>
@@ -107,23 +110,23 @@
 			}
 		}
 	});
-	$('.zhifu_order').click(function(){
-		var _this = $(this);
-		var check_status = confirm('确定要支付吗？');
-		if(check_status==true){
-			var post_data ={};
-			post_data.id = _this.data('id');
-			var result = System.ajax_post_setup('{:U('Advert/News/zhifu')}',post_data);
-			if(result.status==0)
-			{
-				alert(result.msg);
-				window.location.reload();
-			}else{
-				alert(result.msg);
-				return false;
-			}
-		}
-	});
+	// $('.zhifu_order').click(function(){
+	// 	var _this = $(this);
+	// 	var check_status = confirm('确定要支付吗？');
+	// 	if(check_status==true){
+	// 		var post_data ={};
+	// 		post_data.id = _this.data('id');
+	// 		var result = System.ajax_post_setup('{:U('Advert/News/zhifu')}',post_data);
+	// 		if(result.status==0)
+	// 		{
+	// 			alert(result.msg);
+	// 			window.location.reload();
+	// 		}else{
+	// 			alert(result.msg);
+	// 			return false;
+	// 		}
+	// 	}
+	// });
 })();
 
 </script>
