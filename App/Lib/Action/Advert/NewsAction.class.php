@@ -186,10 +186,21 @@ class NewsAction extends AdvertBaseAction {
 	{
 		if($this->isPost())
 		{
+			//走先选择账号流程
+			$account_id = trim($_GET['account_ids']);
 			$id = $this->db['GeneralizeNewsOrder']->insertPost($_POST,$this->oUser->id);
 			if($id!='')
 			{
-				$this->redirect('Advert/News/news_list',array('order_id'=>$id));
+				if($account_id!='')
+				{
+					//组合数据
+					$arr = array('order_id'=>$id,'account_ids'=>$account_id);
+					$this->db['GeneralizeNewsAccount']->insertAll($arr,$this->oUser->id);
+					$this->db['GeneralizeNewsOrder']->where(array('id'=>$id))->save(array('status'=>1));
+					$this->redirect('Advert/News/generalize_activity');
+				}else{
+					$this->redirect('Advert/News/news_list',array('order_id'=>$id));
+				}
 			}
 		}
 	}

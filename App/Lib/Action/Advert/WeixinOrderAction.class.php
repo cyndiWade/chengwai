@@ -237,24 +237,52 @@ class WeixinOrderAction extends AdvertBaseAction {
     //添加推广
     public function add_extension()
     {
-    	$id = $this->db['GeneralizeWeixinOrder']->insertPost($_POST,$this->oUser->id);
-    	if($id!='')
+    	if($this->isPost())
     	{
-    		$img_array = $this->upload_img($_FILES,$id);
-			$this->db['GeneralizeWeixinFiles']->insertImg($img_array);
-			$this->redirect('Advert/Weixin/weixin',array('order_id'=>$id));
+    		$id = $this->db['GeneralizeWeixinOrder']->insertPost($_POST,$this->oUser->id);
+    		//走先选择账号流程
+			$account_id = trim($_GET['account_ids']);
+	    	if($id!='')
+	    	{
+	    		$img_array = $this->upload_img($_FILES,$id);
+				$this->db['GeneralizeWeixinFiles']->insertImg($img_array);
+	    		if($account_id!='')
+	    		{
+	    			$arr = array('order_id'=>$id,'account_ids'=>$account_id);
+	    			$this->db['GeneralizeWeixinAccount']->insertAll($arr,$this->oUser->id);
+	    			//修改订单状态为1，平台审核的类型
+					$this->db['GeneralizeWeixinOrder']->where(array('id'=>$id))->save(array('status'=>1));
+	    			$this->redirect('Advert/WeixinOrder/generalize_activity');
+	    		}else{
+	    			$this->redirect('Advert/Weixin/weixin',array('order_id'=>$id));
+	    		}
+	    	}
     	}
     }
 
     //区分开来以防变更 添加名人
     public function add_yxtintes()
     {
-    	$id = $this->db['IntentionWeixinOrder']->insertPost($_POST,$this->oUser->id);
-    	if($id!='')
+    	if($this->isPost())
     	{
-    		$img_array = $this->upload_img($_FILES,$id);
-			$this->db['IntentionWeixinFiles']->insertImg($img_array);
-			$this->redirect('Advert/Weixin/celebrity_weixin',array('order_id'=>$id));
+	    	$id = $this->db['IntentionWeixinOrder']->insertPost($_POST,$this->oUser->id);
+	    	//走先选择账号流程
+			$account_id = trim($_GET['account_ids']);
+	    	if($id!='')
+	    	{
+	    		$img_array = $this->upload_img($_FILES,$id);
+				$this->db['IntentionWeixinFiles']->insertImg($img_array);
+				if($account_id!='')
+				{
+					$arr = array('order_id'=>$id,'account_ids'=>$account_id);
+					$this->db['IntentionWeixinAccount']->insertAll($arr,$this->oUser->id);
+					//修改订单状态为1，平台审核的类型
+					$this->db['IntentionWeixinOrder']->where(array('id'=>$id))->save(array('status'=>1));
+					$this->redirect('Advert/WeixinOrder/intention_list');
+				}else{
+					$this->redirect('Advert/Weixin/celebrity_weixin',array('order_id'=>$id));
+				}
+	    	}
     	}
     }
 
