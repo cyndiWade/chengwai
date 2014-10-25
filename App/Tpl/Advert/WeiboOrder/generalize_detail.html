@@ -45,7 +45,7 @@
 				<th class="t1">开始时间：</th>
 				<td class="t3">{$view_data.order_info.start_time|date="Y-m-d H:i:s",###}</td>
 				<th class="t1">反馈时间：</th>
-				<td class="t2">{$view_data.order_info.over_time|date="Y-m-d H:i:s",###}</td>
+				<td class="t2"><if condition="($view_data.order_info.over_time neq 0)">{$view_data.order_info.over_time|date="Y-m-d H:i:s",###}<else />无</if></td>
 			  </tr>
 			  <tr>
 				<th class="t1">活动状态：</th>
