@@ -157,7 +157,10 @@
 .grp02-view li{ padding-bottom:10px; width:100%; float:left; padding-top:10px; height:40px; border-top:1px solid #ccc;}
 .grp02-view li img{ width:40px; height:40px; float:right;}
 .grp02-view li strong{ float:left; padding-right:10px; width:205px; padding-top:3px; line-height:20px;}
-
+.pop_photoview {
+	max-width:258px;
+	max-height:393px;
+}
 
 
 ul{ margin:0; padding:0; list-style: none;}

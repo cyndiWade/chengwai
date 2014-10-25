@@ -10,6 +10,7 @@
 			{
 				$new_array[$key] = addslashes($value);
 			}
+			/*
 			$add['users_id'] = $id;
 			$add['tfpt_type'] = $new_array['tfpt_type'];
 			$add['fslx_type'] = $new_array['fslx_type'];
@@ -26,7 +27,14 @@
 			$add['dx_phone'] = $new_array['dx_phone'] ? $new_array['dx_phone'] : '';
 			$add['bz_info'] = $new_array['bz_info'];
 			$add['create_time'] = time();
-			return $this->add($add);
+			*/
+			$this->create();
+			$this->users_id= $id;
+			$this->start_time = strtotime($new_array['start_time']);
+			$this->over_time =  strtotime($new_array['over_time']);
+			$this->sfyq =  $new_array['sfyq'] =='' ? 0 : 1;
+			$this->create_time = time();
+			return $this->add();
 		}
 
 		//统计确认和执行的数量

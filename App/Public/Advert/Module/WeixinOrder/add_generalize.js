@@ -125,23 +125,36 @@ init_check_form();
 var WeixinOrderAddGeneralize = function () {
 	//this.tab01-Weixin = $('.tab01-Weixin tr:even');
 	//this.now_page_url = {:U('/DMIN/')}
+	
+	this.obj_date = new Date();	
+	this.now_date = this.obj_date.getFullYear()+'-'+(this.obj_date.getMonth()+1)+'-'+this.obj_date.getDate();
 }
 
 
 //初始化对象
 WeixinOrderAddGeneralize.prototype.init = function () {
+	this.tooltip_tonus = $('.tooltip_tonus');
+	
 	this.ggw_type = $('.ggw_type');	//广告位类型	
 	this.phoneview_Id = $('#phoneview');	//预览事件按钮
 	this.phonebox = $('.phonebox');	//容器
 	
-	//form
-	this.title = $('input[name=title]');
+	this.top_view_li = $('.top-view li');
+	this.part01_view = $('.part01-view');
+	this.part01_detail = $('.part01-detail');
 	
+	//form
+	this.title = $('input[name=title]');	//系统标题
+	this.zhaiyao = $('textarea[name=zhaiyao]');	//系统摘要
+	this.zw_info = $('textarea[name=zw_info]');	//正文
 	
 	//pop
 	this.pop_title = $('.pop_title');
 	this.pop_time = $('.pop_time');
 	this.pop_zhaiyao = $('.pop_zhaiyao');
+	this.pop_dtw = $('.pop_dtw');
+	this.pop_photoview = $('.pop_photoview');
+	
 }
 
 
@@ -162,23 +175,131 @@ WeixinOrderAddGeneralize.prototype.get_GgwType_Val_Fn = function () {
 }
 
 
-//
+//预览事件触发器
 WeixinOrderAddGeneralize.prototype.phoneview_Fn = function () {
 	var _father_this = this;
 	
+	//预览
 	_father_this.phoneview_Id.click(function(){
 		
-		show_phoneview(_father_this.get_GgwType_Val_Fn());
+		_father_this.show_phoneview_fn(_father_this.get_GgwType_Val_Fn());
 		
 		_father_this.phonebox.popOn();
-		//$('.phonebox').popOn();
+		
+	});
+	
+	
+	_father_this.top_view_li.click(function(){
+		var _this = $(this);
+		var i=_this.index();
+		_this.addClass('select');
+		_this.siblings().removeClass('select');
+		_father_this.part01_view.hide();
+		_father_this.part01_view.eq(i).show();
+		_father_this.part01_detail.hide();
 	})
 	
-	var show_phoneview = function ($type) {
-		if ($type == 1) {
+	
+	_father_this.part01_view.find('a').click(function(){
+		_father_this.part01_view.hide();
+		_father_this.part01_detail.show();
+	})
+	
+}
+
+WeixinOrderAddGeneralize.prototype.show_phoneview_fn = function ($type) {
+	var _father_this = this;
+	_father_this.init();
+		
+	//form_info
+	var default_info = '博主自己更新的内容';
+	var title_info = _father_this.title.val();	//标题信息
+	var zhaiyao_info = _father_this.zhaiyao.val();	//摘要信息
+	
+	//defautl_info
+	_father_this.pop_title.text(title_info);
+	_father_this.pop_time.text(_father_this.now_date);
+	_father_this.pop_zhaiyao.text(zhaiyao_info);
+	
+	
+	//public——css
+	_father_this.top_view_li.removeClass('select');
+	_father_this.part01_view.hide();
+	_father_this.part01_detail.hide();
+	
+	
+	//var stemTxt = CKEDITOR.instances.TextArea1.document.getBody().getText(); //取得纯文本 
+	
+	var stemHtml = CKEDITOR.instances.TextArea1.getData();	//获取HTML数据
+	
+	_father_this.pop_photoview.html(stemHtml);
+	//alert(stemHtml)
+	
+	//单图文
+	if ($type == 1) {
+		
+		_father_this.top_view_li.eq(0).addClass('select');
+		
+		_father_this.part01_view.eq(0).show();
+		
+	//多图文第一条	
+	} else if ($type == 2) {
+		
+		_father_this.top_view_li.eq(1).addClass('select');
+		
+		_father_this.part01_view.eq(1).show();
+		
+		_father_this.pop_dtw.text(default_info);
+		
+	//多图文第二条	
+	} else if ($type == 3) {
+		
+		_father_this.top_view_li.eq(1).addClass('select');
+		
+		_father_this.part01_view.eq(1).show();
+		
+		_father_this.pop_title.text(default_info);
+		
+		_father_this.pop_dtw.text(default_info);
+		
+		_father_this.pop_dtw.eq(0).text(title_info);
+		
+	//多图文第三-N条		
+	} else if ($type == 4) {
+		
+		_father_this.top_view_li.eq(1).addClass('select');
+		
+		_father_this.part01_view.eq(1).show();
 			
+		_father_this.pop_title.text(default_info);
+		
+		_father_this.pop_dtw.text(default_info);
+		
+		for (var i=1;i<=_father_this.pop_dtw.size();i++) {
+			_father_this.pop_dtw.eq(i).text(title_info);
 		}
+		
 	}
+
+	
+}
+
+
+//放大图片
+WeixinOrderAddGeneralize.prototype.tooltip_tonus_fn = function () {
+	var _father_this = this; 
+	_father_this.tooltip_tonus.tooltip({
+		delay: 0,
+		showURL: false,
+		bodyHandler: function() {
+			var _this = $(this);
+			var src = _this.data('src');
+			var width = _this.data('width');
+			var height = _this.data('height');
+			var html = '<img src="'+src+'" width="'+width+'" height="'+height+'" />';
+			return html;
+		}
+	});
 }
 
 
@@ -191,7 +312,9 @@ WeixinOrderAddGeneralize.prototype.run = function () {
 	
 	_father_this.phoneview_Fn();
 	
-	_father_this.phonebox.popOn();
+	_father_this.tooltip_tonus_fn();
+	
+	//_father_this.phonebox.popOn();
 }
 
 
