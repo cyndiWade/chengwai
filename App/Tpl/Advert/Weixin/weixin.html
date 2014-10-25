@@ -10,7 +10,8 @@
 			width:200px !important;
 		}
 	</style>
-</head>
+		
+</head>	
 <body>
 
 <!-- 头部 -->
@@ -243,7 +244,19 @@ var list_content = $('#list_content');
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/page.js"></script>
 <script src="{$global_tpl_view.Module_Resource_Path}weixin.js"></script>
 
+
+	
+<!-- 插件 -->
+<link rel="stylesheet" href="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.tooltip.css" />
+<script src="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.bgiframe.js" type="text/javascript"></script>
+<script src="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.dimensions.js" type="text/javascript"></script>
+<script src="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.tooltip.js" type="text/javascript"></script>
+	
+	<!-- 
+	131<img class="tooltip_tonus" src="{$global_tpl_view.Group_Resource_Path}images/close.gif" height="80" title="No delay. The src value is displayed below the title" />
+	-->
 <script type="text/javascript">
+
 var public_post_fn = function (obj_data) {
 	var post_data = {};
 	post_data.pt_type = system_info.pt_type;	//平台类型，1新浪、2腾讯
@@ -290,6 +303,8 @@ var public_post_fn = function (obj_data) {
 		Weixin.dataNum_And_PageNum(result.data.count);
 		
 		Weixin.create_details_fn('{:U('Advert/WeixinOrder/getAccountInfo')}');
+		
+		Weixin.tooltip_tonus_fn();	
 		
 		Weixin.page_init_fn();	//加载页面初始化
 		
@@ -341,7 +356,7 @@ var create_now_html = function ($data,$post_data) {
 	//html += '<td class="t6"><p>图文打开率：占20</p><p>周平均阅读数：占20</p></td>';
 	html += '<td class="t4">'+$data.bs_month_order_nub+'</td>';
 	//html += '<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
-	html += '<td class="t4"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>';
+	html += '<td class="t4"><img class="tooltip_tonus" width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" data-src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" data-width="100" date-heigth=100"" /></td>';
 	html += '<td class="t4"><div class="ctrl">';
 	
 	html += '<span class="wxdetail" data-weixin_id="'+$data.bs_id+'">详情</span><br/>';

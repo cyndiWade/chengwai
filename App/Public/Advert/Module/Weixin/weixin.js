@@ -75,6 +75,8 @@ Weixin.prototype.init = function () {
 	this.confirm_order = $('.confirm_order');	//确认订单
 	this.tbody = $('.tbody');	//微博账号容器
 	this.orderspan = $('.orderspan');	//排序按钮
+	
+	this.tooltip_tonus = $('.tooltip_tonus');	//逗比
 }
 
 
@@ -999,6 +1001,39 @@ Weixin.prototype.sort_table_fn = function ($sort_type) {
 	for (var i=0;i<tr_arr.length;i++) {
 		_father_this.tbody.append(tr_arr[i]);
 	}
+}
+
+
+//放大图片
+Weixin.prototype.tooltip_tonus_fn = function () {
+	var _father_this = this; 
+	_father_this.tooltip_tonus.tooltip({
+		delay: 0,
+		showURL: false,
+		bodyHandler: function() {
+			var _this = $(this);
+			var html = '<img src="'+_this.attr('src')+'" />';
+			return html;
+		}
+	});
+}
+
+
+//放大图片
+Weixin.prototype.tooltip_tonus_fn = function () {
+	var _father_this = this; 
+	_father_this.tooltip_tonus.tooltip({
+		delay: 0,
+		showURL: false,
+		bodyHandler: function() {
+			var _this = $(this);
+			var src = _this.data('src');
+			var width = _this.data('width');
+			var height = _this.data('height');
+			var html = '<img src="'+src+'" width="'+width+'" height="'+height+'" />';
+			return html;
+		}
+	});
 }
 
 
