@@ -60,7 +60,7 @@
 						<td class="last">
 							<div class="ctrl">
 								<span><a href="{:U('Advert/WeixinOrder/generalize_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
-								<span><a href="{:U('Advert/News/news_list',array('order_id'=>$vo['id']))}">添加媒体</a></span>
+								<span><a href="{:U('Advert/Weixin/weixin',array('order_id'=>$vo['id']))}">添加媒体</a></span>
 								<span class="delete_order" data-id="{$vo['id']}">删除</span>
 								<if condition="$vo['status'] ELT 4">
 									<span class="zhifu_order">未付款</span>
