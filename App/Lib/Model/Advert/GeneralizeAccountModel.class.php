@@ -11,7 +11,6 @@
 			{
 				$new_array[$key] = addslashes($value);
 			}
-			
 			//活动订单ID
 			$arr['generalize_id'] = $new_array['order_id'];
 			//获得该订单的发送类型和软硬广
