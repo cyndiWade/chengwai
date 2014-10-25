@@ -597,4 +597,31 @@ function getTree($items) {
     return $tree;
 }
 
+
+
+
+//1、弹窗返回
+function alertBack($_info) {
+	echo "<script type='text/javascript'>alert('$_info');history.back();</script>";
+	exit();
+}
+
+//2、弹窗关闭
+function alertClose($_info) {
+	echo "<script type='text/javascript'>alert('$_info');close();</script>";
+	exit();
+
+}
+
+//3、弹窗跳转
+function alertLocation ($_info,$_url) {
+	if (!empty($_info)) {
+		echo "<script type='text/javascript'>alert('$_info');location.href='$_url';</script>";
+		exit();
+	} else {
+		header('Location:'.$_url);
+		exit();
+	}
+}
+
 ?>
