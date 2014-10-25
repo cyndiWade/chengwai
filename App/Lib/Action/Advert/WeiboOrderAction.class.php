@@ -423,6 +423,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 				//统计订单总金额
 				$extend_order_info['sum_money'] += $val['g_price'];
 				
+				$account_order_list[$key]['other'] = $Account_Order_Status[$val['g_audit_status']]['other'];
+
 				//统计据单数
 				if ($val['g_audit_status'] == $Account_Order_Status[4]['status']) {
 					$extend_order_info['jy_order_sum'] += 1;
@@ -508,6 +510,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 				
 				//统计订单总金额
 				$extend_order_info['sum_money'] += $val['g_price'];
+				
+				$account_order_list[$key]['other'] = $Account_Order_Status[$val['g_audit_status']]['other'];
 				
 				//统计拒绝单数
 				if ($val['g_audit_status'] == $Account_Order_Status[4]['status']) {

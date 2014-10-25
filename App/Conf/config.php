@@ -181,54 +181,65 @@ $custom= array (
 			0=>array(
 				'status'=>0,
 				'explain'=>'新订单',
-				'explain_yxd'=>'预约中'
+				'explain_yxd'=>'预约中',
+				'other' =>	'等待城外圈审核!'
 			),
 			1=>array(				
 				'status'=>1,			//城外圈审核通过即可支付
 				'explain'=>'审核通过',
-				'explain_yxd'=>'已接受'
+				'explain_yxd'=>'已接受',
+				'other' => '城外圈开始审核!'
 			),
 			2=>array(
 				'status'=>2,			//城外圈审核失败
 				'explain'=>'审核失败',
-				'explain_yxd'=>'已拒绝'
+				'explain_yxd'=>'已拒绝',
+				'other' => '城外圈审核失败!'
 			),
 			3=>array(
 				'status'=>3,			//客户支付成功的状态
 				'explain'=>'支付成功',
-				'explain_yxd'=>'需要修改'
+				'explain_yxd'=>'需要修改',
+				'other' => '支付成功,等待媒体主执行!'
 			),
 			4=>array(
 				'status'=>4,
 				'explain'=>'媒体主拒绝',		//这里拒绝后，要把钱从冻结资金中打回客户的资金池中
-				'explain_yxd'=>'媒体主拒绝'	
+				'explain_yxd'=>'媒体主拒绝',
+				'other' => '媒体拒绝执行!'
 			),
 			5=>array(
 				'status'=>5,			//媒体主确认后，订单的状态
 				'explain'=>'执行中',
 				'explain_yxd'=>'媒体主确认',
+				'other' => '媒体主确认,正在执行!'
 			),
 			6=>array(
 				'status'=>6,			//媒体主执行完成后的状态
-				'explain'=>'执行完成'
+				'explain'=>'执行完成',
+				'other' => '媒体主执行完成!'
 			),
 			7=>array(
 				'status'=>7,			//确认完成后的状态
-				'explain'=>'确认完成'
+				'explain'=>'确认完成',
+				'other' => '确认执行完成！'
 			),	
 			8=>array(
 				'status'=>8,
 				'explain'=>'已流单',
-				'explain_yxd'=>'已创建推广单'	//意向单不可再次点击
+				'explain_yxd'=>'已创建推广单',//意向单不可再次点击
+				'other' => '已创建推广单!'
 			),
 			
 			9=>array(
 				'status'=>9,
-				'explain'=>'已取消'	//订单过期
+				'explain'=>'已取消',	//订单过期
+				'other' => '订单过期!'
 			),
 			10=>array(
 				'status'=>10,
-				'explain'=>'不合格'	//订单执行不合格
+				'explain'=>'不合格',	//订单执行不合格
+				'other' => '订单执行不合格!'
 			),			
 			
 		),

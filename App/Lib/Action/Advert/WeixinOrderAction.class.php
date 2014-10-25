@@ -402,6 +402,9 @@ class WeixinOrderAction extends AdvertBaseAction {
 				// 	$account_order_list[$key]['is_show_affirm_btn'] = true;
 				// }
 				$account_order_list[$key]['is_show_affirm_btn'] = $val['g_audit_status'];
+
+				$account_order_list[$key]['other'] = $Account_Order_Status[$val['g_audit_status']]['other'];
+
 				//统计订单总金额
 				$extend_order_info['sum_money'] += $val['g_price'];
 				
@@ -491,6 +494,8 @@ class WeixinOrderAction extends AdvertBaseAction {
 				
 				//统计订单总金额
 				$extend_order_info['sum_money'] += $val['g_price'];
+				
+				$account_order_list[$key]['other'] = $Account_Order_Status[$val['g_audit_status']]['other'];
 				
 				//统计拒单数
 				if ($val['g_audit_status'] == $Account_Order_Status[4]['status']) {

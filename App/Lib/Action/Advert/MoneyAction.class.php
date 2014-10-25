@@ -35,6 +35,7 @@ class MoneyAction extends AdvertBaseAction {
 				'module_explain'=>$this->module_explain,
 		));
 		
+		if (ACTION_NAME == 'record') $this->big_type = 5;
 		parent::big_type_urls($this->big_type);		//大分类URL
 
 	}

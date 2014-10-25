@@ -138,15 +138,17 @@ class AdvertBaseAction extends AppBaseAction {
 		$data[2] = array(2=>'select');
 		$data[3] = array(3=>'cash');
 		$data[4] = array(4=>'cash');
+		$data[5] = array(5=>'cash');
 		parent::global_tpl_view(array(
 			'big_type_class' => $data[$big_type],	//
 			
 			'big_type_urls'=>array(
-				0 => U('/Advert/News/news_list'),	
+				0 => U('Advert/News/news_list'),	
 				1 => U('Advert/Weixin/celebrity_weixin'),	
-				2 => U('/Advert/Weibo/celebrity_weibo',array('pt_type'=>1)),
-				3 => U('/Advert/Help/index'),
-				4 => U('/Advert/Money/index'),
+				2 => U('Advert/Weibo/celebrity_weibo',array('pt_type'=>1)),
+				3 => U('Advert/Help/index'),
+				4 => U('Advert/Money/index'),
+				5 => U('Advert/Money/record')
 			),
 		));
 
