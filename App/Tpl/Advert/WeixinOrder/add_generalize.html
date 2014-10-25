@@ -47,10 +47,10 @@
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>广告位：</strong></span></td>
 				<td class="t2">
-					<span class="soft fl"><input type="radio" name="ggw_type" checked="checked" class="radio" value="1"/><strong>单图文</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
-					<span class="soft fl"><input type="radio" name="ggw_type" class="radio" value="2"/><strong>多图文第一条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
-					<span class="soft fl"><input type="radio" name="ggw_type" class="radio" value="3"/><strong>多图文第二条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
-					<span class="soft fl"><input type="radio" name="ggw_type" class="radio" value="4"/><strong>多图文第3-N条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
+					<span class="soft fl"><input type="radio" name="ggw_type" checked="checked" class="radio ggw_type" value="1"/><strong>单图文</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
+					<span class="soft fl"><input type="radio" name="ggw_type" class="radio ggw_type" value="2"/><strong>多图文第一条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
+					<span class="soft fl"><input type="radio" name="ggw_type" class="radio ggw_type" value="3"/><strong>多图文第二条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
+					<span class="soft fl"><input type="radio" name="ggw_type" class="radio ggw_type" value="4"/><strong>多图文第3-N条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
 				</td>
 			  </tr>
 			  <tr>
@@ -143,6 +143,12 @@
 				<td class="t1"></td>
 				<td class="t2"><div class="agreebox f12"><input type="checkbox" value="1" name="is_ht_ok" class="check fl is_ht" checked="checked"  datatype="*" errormsg="请同意服务协议"  nullmsg="请同意服务协议" /><strong class="fl">同意<a class="blue" href="#">服务协议</a></strong></div></td>
 			  </tr>
+			  <!-- 
+			  <tr>
+				<td class="t1"></td>
+				<td class="t2"><span class="phone cur fl" id="phoneview"><img src="{$global_tpl_view.Group_Resource_Path}images/phone.gif" /></span><input type="submit" class="btn brownbtn" value="提交" /></td>
+			  </tr>
+			   -->
 			  <tr>
 				<td class="t1"></td>
 				<td class="t2"><span class="phone cur fl" id="phoneview"><img src="{$global_tpl_view.Group_Resource_Path}images/phone.gif" /></span><input type="submit" class="btn brownbtn" value="提交" /></td>
@@ -156,13 +162,63 @@
 
 <include file="Public:member_footer" />
 
-<!-- 手机预览弹窗 -->
+<!-- 手机预览弹窗 
 <div class="phonebox none tl">
 	<span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/del_phone.png" /></span>
 	<div class="mid-phone l">
 		<img class="previmg" src="{$global_tpl_view.Group_Resource_Path}images/phone_img01.gif" />	
 	</div>
 </div>
+-->
+<!-- 手机预览弹窗 -->
+<div class="phonebox none tl">
+	<span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/del_phone.png" /></span>
+	<div class="mid-phone l">
+		<div class="phoneview">
+        	<ul class="top-view"><li class="select">单图文</li><li>多图文</li></ul>
+            <div class="mid-view fl">
+            	<div class="part01-view l">
+            		<h5 class="pop_title">标题标题标题标题</h5>
+            		<p class="pop_time">标题标题</p>
+            		
+                	<div class="grp01-view">
+                    	<a href="javascript:;"><img src="{$global_tpl_view.Group_Resource_Path}images/img01.jpg" />
+                        <div class="txt"><div class="bg"></div><p class="pop_zhaiyao">多图文多多图文多图文多图文多图文多图文多图文多图文多图文多图文图文多图文</p></div></a>                   
+                    </div>
+                    
+                   <p class="pop_zhaiyao">摘要摘摘要摘要摘要摘要</p>
+              </div>
+              <div class="part01-view l none">
+                	<div class="grp01-view">
+                    	<a href="javascript:;"><img src="{$global_tpl_view.Group_Resource_Path}images/img01.jpg" />
+                        <div class="txt"><div class="bg"></div><p>多图文多多图文多图文多图文多图文多图文多图文多图文多图文多图文图文多图文</p></div></a>                   
+                    </div>
+                    <ul class="grp02-view">
+                    	<li><a href="javascript:;"><strong>多图文多图文多图文多图文多图文多图文</strong><img src="{$global_tpl_view.Group_Resource_Path}images/img01.jpg" /></a></li>
+                        <li><a href="javascript:;"><strong>多图文多图文多图文多图文多图文多图文</strong><img src="{$global_tpl_view.Group_Resource_Path}images/img01.jpg" /></a></li>
+                        <li><a href="javascript:;"><strong>多图文多图文多图文多图文多图文多图文</strong><img src="{$global_tpl_view.Group_Resource_Path}images/img01.jpg" /></a></li>
+                        <li><a href="javascript:;"><strong>多图文多图文多图文多图文多图文多图文</strong><img src="{$global_tpl_view.Group_Resource_Path}images/img01.jpg" /></a></li>
+                    </ul>
+              </div>
+              <div class="part01-detail none">
+              	<h5>多图文多图文多图文多图文多图文多图文</h5>
+                <p>2014-12-12</p>
+                <div class="photoview">
+                <!-- 
+                <img src="{$global_tpl_view.Group_Resource_Path}images/img01.jpg" />
+                </div>
+                <div class="infoview">
+                多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文
+                </div>
+             -->
+             
+            
+              </div>
+            </div>
+        </div>
+	</div>
+</div>
+
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 

@@ -120,10 +120,107 @@ init_check_form();
 })();
 
 
-(function () {
-	$('#phoneview').click(function(){
-		$('.phonebox').popOn();
+
+
+var WeixinOrderAddGeneralize = function () {
+	//this.tab01-Weixin = $('.tab01-Weixin tr:even');
+	//this.now_page_url = {:U('/DMIN/')}
+}
+
+
+//初始化对象
+WeixinOrderAddGeneralize.prototype.init = function () {
+	this.ggw_type = $('.ggw_type');	//广告位类型	
+	this.phoneview_Id = $('#phoneview');	//预览事件按钮
+	this.phonebox = $('.phonebox');	//容器
+	
+	//form
+	this.title = $('input[name=title]');
+	
+	
+	//pop
+	this.pop_title = $('.pop_title');
+	this.pop_time = $('.pop_time');
+	this.pop_zhaiyao = $('.pop_zhaiyao');
+}
+
+
+//获取当前选中的数据
+WeixinOrderAddGeneralize.prototype.get_GgwType_Val_Fn = function () {
+	var _father_this = this;
+	
+	var value = 0;
+	_father_this.ggw_type.each(function () {
+		var _this = $(this);
+		if (_this.prop('checked') == true) {
+			value = _this.val();
+			return false;
+		}
+	});
+	
+	return value;
+}
+
+
+//
+WeixinOrderAddGeneralize.prototype.phoneview_Fn = function () {
+	var _father_this = this;
+	
+	_father_this.phoneview_Id.click(function(){
+		
+		show_phoneview(_father_this.get_GgwType_Val_Fn());
+		
+		_father_this.phonebox.popOn();
+		//$('.phonebox').popOn();
 	})
 	
+	var show_phoneview = function ($type) {
+		if ($type == 1) {
+			
+		}
+	}
+}
+
+
+
+//执行
+WeixinOrderAddGeneralize.prototype.run = function () {
+	var _father_this = this;
 	
-})();
+	_father_this.init();
+	
+	_father_this.phoneview_Fn();
+	
+	_father_this.phonebox.popOn();
+}
+
+
+//运行
+var WeixinOrderAddGeneralize = new WeixinOrderAddGeneralize();
+window.onload = function () {
+	WeixinOrderAddGeneralize.init();
+	WeixinOrderAddGeneralize.run();	
+}
+
+//$('#phoneview').click(function(){
+//	$('.phonebox').popOn();
+//})
+//$('.top-view li').click(function(){
+//	var i=$(this).index();
+//	$(this).addClass('select');
+//	$(this).siblings().removeClass('select');
+//	$('.part01-view').hide();
+//	$('.part01-view').eq(i).show();
+//	$('.part01-detail').hide();
+//})
+//$('.part01-view a').click(function(){
+//	$('.part01-view').hide();
+//	$('.part01-detail').show();
+//})
+
+
+//(function () {
+//	$('#phoneview').click(function(){
+//		$('.phonebox').popOn();
+//	})
+//})();
