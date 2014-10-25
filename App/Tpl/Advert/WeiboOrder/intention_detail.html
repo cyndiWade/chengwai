@@ -43,8 +43,16 @@
 				<td class="t2">{$view_data.order_info.tfpt_type|getPt}</td>
 			  </tr>
 			  <tr>
-				<th class="t1">活动类型：</th>
-				<td class="t2">直发</td>
+				<th class="t1">转发地址：</th>
+				<td class="t2">{$view_data.order_info.zf_url}</td>
+				<th class="t1">转发语类型：</th>
+				<td class="t3">{$view_data.order_info.zfy_type|getZhuanf}</td>
+				<th class="t1">文案包含链接：</th>
+				<td class="t2">{$view_data.order_info.wa_url_status|wenAn}</td>
+			  </tr>
+			  <tr>
+				<th class="t1">直发内容类型：</th>
+				<td class="t2">{$view_data.order_info.zfnr_type|zfNeir}</td>
 				<th class="t1">开始时间：</th>
 				<td class="t3">{$view_data.order_info.start_time|date="Y-m-d H:i:s",###}</td>
 				<th class="t1">反馈时间：</th>
@@ -53,16 +61,26 @@
 			  <tr>
 				<th class="t1">活动状态：</th>
 				<td class="t2">{$view_data.order_info.status_explain}</td>
-				<th class="t1">直发内容类型：</th>
-				<td class="t3">指定直发内容</td>
-				<th class="t1">正品证明：</th>
-				<td class="t2">无</td>
+				<th class="t1">软硬广：</th>
+				<td class="t3">{$view_data.order_info.ryg_type|getRyG}</td>
+				<th class="t1">是否延期：</th>
+				<td class="t2">{$view_data.order_info.sfyq|getFenm}</td>
+			  </tr>
+			  <tr>
+				<th class="t1">手机号：</th>
+				<td class="t2">{$view_data.order_info.dx_phone}</td>
+				<th class="t1">是否短信通知：</th>
+				<td class="t2">{$view_data.order_info.dx_status|getFenm}</td>
+				<th class="t1">发送类型：</th>
+				<td class="t2">{$view_data.order_info.fslx_type|getFsT}</td>
+			  </tr>
+			  <tr>
+				<th class="t1">正文：</th>
+				<td colspan="5">{$view_data.order_info.zw_info}</td>
 			  </tr>
 			  <tr>
 				<th class="t1">直发内容：</th>
-				<td colspan="3">指定直发内容</td>
-				<th class="t1">配图：</th>
-				<td class="t2">无</td>
+				<td colspan="5">{$view_data.order_info.zfnr_info}</td>
 			  </tr>
 			  <tr>
 				<th class="t1">活动备注：</th>
