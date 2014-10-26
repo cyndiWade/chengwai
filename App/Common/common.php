@@ -707,10 +707,11 @@ function create_excel($name,$content) {
 		}
 	}
 
+	
 	header('Content-Type:text/html;charset=utf-8');
 	header("Content-Type: application/force-download");
 	header("Content-Type: text/csv");					//CSV文件
-	header("Content-Disposition: attachment; filename=$name");					//强制跳出下载对话框
+	header("Content-Disposition: attachment; filename=$name.csv");					//强制跳出下载对话框
 	header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
 	header('Expires:0');
 	header('Pragma:public');

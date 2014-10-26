@@ -418,6 +418,17 @@ class NewsAction extends AdvertBaseAction {
 			parent::callback(C('STATUS_UPDATE_DATA'),'请勿重复评论!');
 		}
 	}
+	
+	
+	//导出CSV
+	public function export_csv () {
+		
+		$data = M('AccountNews')->select();
+		create_excel('abc',$data);
+	}
+	
+	
+	
 }	
 
 ?>
