@@ -132,7 +132,8 @@
 			  <tr>
 				<th class="t1"><b>微博名称</b></th>
 				<th class="t2">粉丝数</th>
-				<th class="t3">转评值</th>
+				<!--  
+				<th class="t3">转评值</th>-->
 				<th class="t4">硬广转发价</th>
 				<th class="t5">软广转发价</th>
 				<th class="t6">硬广直发价</th>
@@ -279,7 +280,7 @@ var create_now_html = function ($data,$post_data) {
 	html += '</div>';
 	html += '</td>';
 	html += '<td class="t2"><b class="red">'+($data.bs_fans_num / 10000)+'万</b></td>';
-	html += '<td class="t3">1.00</td>';
+	//html += '<td class="t3">1.00</td>';
 	html += '<td class="t4 now_money" data-money="'+$data.bs_yg_zhuanfa+'">'+$data.bs_yg_zhuanfa+'元</td>';
 	html += '<td class="t5" data-money="'+$data.bs_rg_zhuanfa+'">'+$data.bs_rg_zhuanfa+'元</td>';
 	html += '<td class="t6" data-money="'+$data.bs_yg_zhifa+'">'+$data.bs_yg_zhifa+'元</td>';
