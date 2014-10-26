@@ -84,11 +84,10 @@ class IndexAction extends IndexBaseAction {
 		$data['weixin_recommended_list'] = $weixin_recommended_list;
 		
 		
-		
-		
+	
 		//获取网站公告、帮助信息
-		$data['announcement'] =  $this->db['Help']->where(array('parent_id'=>15,'is_del'=>0))->select();
-		$data['help'] = $this->db['Help']->where(array('parent_id'=>32,'is_del'=>0))->select();
+		$data['announcement'] =  $this->db['Help']->where(array('type'=>2,'parent_id'=>37,'is_del'=>0))->select();
+		$data['help'] = $this->db['Help']->where(array('type'=>2,'parent_id'=>38,'is_del'=>0))->select();
 		
 		parent::data_to_view($data);
 		parent::data_to_view(array(

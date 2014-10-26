@@ -83,6 +83,7 @@ class NewsAction extends AdvertBaseAction {
 	
 	//添加推广单
 	public function add_generalize() {
+		
 		parent::data_to_view(array(
 				//二级导航属性
 				'sidebar_two'=>array(1=>'select',),//第一个加依次类推
@@ -182,12 +183,6 @@ class NewsAction extends AdvertBaseAction {
 	{
 		if($this->isPost())
 		{
-			$bool = parent::banwordCheck($_POST);
-			if($bool!='')
-			{
-				$info = '您提交的内容中含有敏感词 "' . $bool['keyword'] . '",请修改!';
-				alertBack($info);
-			}
 			//走先选择账号流程
 			$account_id = passport_decrypt(trim($_GET['account_ids']),'account_ids');
 			$id = $this->db['GeneralizeNewsOrder']->insertPost($_POST,$this->oUser->id);
@@ -420,12 +415,6 @@ class NewsAction extends AdvertBaseAction {
 	}
 	
 	
-	//导出CSV
-	public function export_csv () {
-		
-		$data = M('AccountNews')->select();
-		create_excel('abc',$data);
-	}
 	
 	
 	

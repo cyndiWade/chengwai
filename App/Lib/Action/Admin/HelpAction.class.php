@@ -13,6 +13,8 @@ class HelpAction extends AdminBaseAction {
 	);
 	
 	private $parent_id;
+	
+	private $type;
 
 	/**
 	 * 构造方法
@@ -25,6 +27,9 @@ class HelpAction extends AdminBaseAction {
 		
 		$this->parent_id = $this->_get('parent_id');
 		empty($this->parent_id) ? $this->parent_id = 0 : $this->parent_id;
+		
+		$this->type = $this->_get('type');
+		empty($this->type) ? $this->type = 0 : $this->type;
 	}
 	
 	
@@ -35,10 +40,21 @@ class HelpAction extends AdminBaseAction {
 		//连接数据库
 		$Help= $this->db['Help'];	
 
-		$data['list']  = $Help->get_spe_data(array('parent_id'=>$this->parent_id,'is_del'=>0));
+		$data['list']  = $Help->get_spe_data(array('type'=>$this->type,'parent_id'=>$this->parent_id,'is_del'=>0));
+
 		
 		if ($data['list'] == true) {
 			foreach ($data['list'] as $key=>$val) {
+				
+				$parent_info = $Help->get_one_data(array('id'=>$val['parent_id']));
+				
+				$parent_name = $parent_info['title'];
+				if ($parent_name == '') {
+					$parent_name = '顶层';
+				}
+				
+				$data['list'][$key]['parent_name'] = $parent_name;
+				
 				if ($val['show_status'] == 1) {
 					$data['list'][$key]['show_status_explain'] = '显示';
 				} elseif($val['show_status'] == 0) {
@@ -58,7 +74,7 @@ class HelpAction extends AdminBaseAction {
 			'add_name'=>$add_name	
 		));
 		$data['parent_id'] = $this->parent_id;
-		
+		$data['type'] = $this->type;
 		$Help->get_spe_data(array('parent_id'=>$this->parent_id,'is_del'=>0));
 		
 		$prev_parent_info = $Help->get_one_data(array('id'=>$this->parent_id),'parent_id');
@@ -82,6 +98,7 @@ class HelpAction extends AdminBaseAction {
 			if ($this->isPost()) {
 				$Help->create();
 				$Help->parent_id = $this->parent_id;
+				$Help->type = $this->type;
 				$Help->add() ? $this->success('保存成功！',$prve_url) : $this->error('保存失败请稍后重新尝试！');
 				exit;
 			}

@@ -39,6 +39,14 @@ class CategoryTagsAction extends AdminBaseAction {
 		
 		if ($data['list'] == true) {
 			foreach ($data['list'] as $key=>$val) {
+				
+				$parent_info = $CategoryTags->get_one_data(array('id'=>$val['parent_id']));
+				
+				$parent_name = $parent_info['title'];
+				if ($parent_name == '') {
+					$parent_name = '顶层';
+				}  
+				$data['list'][$key]['parent_name'] = $parent_name;
 				if ($val['show_status'] == 1) {
 					$data['list'][$key]['show_status_explain'] = '显示';
 				} elseif($val['show_status'] == 0) {
