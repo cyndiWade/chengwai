@@ -744,7 +744,8 @@ html += '<td class="t1">账号名：<em>'+data.bs_account_name+'</em></td>';
 html += '</tr>';
 html += '<tr>';
 html += '<td class="t1">账号：<em>'+data.bs_weixinhao+'</em></td>';
-html += '<td class="t1">二维码：<em class="tooltip_tonus" data-src="/App/Public/Advert/images/wx_img02.gif" data-width="100px" data-height="100px" >查看</em></td>';
+//html += '<td class="t1">二维码：<em class="tooltip_tonus" data-src="/App/Public/Advert/images/wx_img02.gif" data-width="100px" data-height="100px" >查看</em></td>';
+html += '<td class="t1">二维码：<em class="tooltip_tonus" data-src="'+data.bs_qr_code+'" data-width="300px" data-height="300px" >查看</em></td>';
 html += '</tr>';
 html += '<tr>';
 html += '<td class="t1">月订单：<em>'+data.bs_month_order_nub+'</em></td>';
@@ -817,6 +818,7 @@ html += '</div>';
 		
 		_father_this.batchboxdetail.popOn();
 
+		
 	}
 	
 }
@@ -1034,7 +1036,7 @@ Weixin.prototype.tooltip_tonus_fn = function () {
 			var src = _this.data('src');
 			var width = _this.data('width'); 
 			var height = _this.data('height');
-			var html = '<img src="'+src+'" style="width:'+width+';height:'+height+';z-index:10;"/>';
+			var html = '<img src="'+src+'" style="width:'+width+';height:'+height+'"/>';
 			return html;
 		}
 	});
