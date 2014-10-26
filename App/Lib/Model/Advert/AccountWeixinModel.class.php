@@ -82,14 +82,23 @@
 			//统计表字段，加上别名
 			$account_weixin_fields = parent::field_add_prefix('AccountWeixin','bs_','w.');
 			$grassroots_weixin_fields = parent::field_add_prefix('GrassrootsWeixin','sy_','b.');
-				
-			$list = $this->where($where)
-			->table('app_account_weixin as w')
-			->join('app_grassroots_weixin as b on w.id = b.weixin_id')
-			->limit($now_page,$limit)
-			//->field('w.*,b.common,b.more_ying_price,b.more_ruang_price,b.one_yingg_price,b.one_ruangg_price,b.more_twoy_price,b.more_twor_price,b.more_ny_price,b.more_nr_price,b.fans_number,b.audience_man,b.audience_women,b.fans_c_time,b.read_number')
-			->field($account_weixin_fields.','.$grassroots_weixin_fields)
-			->select();
+			
+			if($addvalue['ids']!='')
+			{
+				$list = $this->where($where)
+				->table('app_account_weixin as w')
+				->join('app_grassroots_weixin as b on w.id = b.weixin_id')
+				->field($account_weixin_fields.','.$grassroots_weixin_fields)
+				->select();
+			}else{
+				$list = $this->where($where)
+				->table('app_account_weixin as w')
+				->join('app_grassroots_weixin as b on w.id = b.weixin_id')
+				->limit($now_page,$limit)
+				->field($account_weixin_fields.','.$grassroots_weixin_fields)
+				->select();
+			}	
+			
 			
 			
 			$tags_ids = C('Big_Nav_Class_Ids.weixin_caogen_tags_ids');		
@@ -315,16 +324,26 @@
 			//统计表字段，加上别名
 			$account_weixin_fields = parent::field_add_prefix('AccountWeixin','bs_','w.');
 			$iceleprityindex_weixin_fields = parent::field_add_prefix('CeleprityindexWeixin','sy_','b.');
-			
-			//差集统计长度
-			$list = $this->where($where)
-			->table('app_account_weixin as w')
-			->join('app_celeprityindex_weixin as b on w.id = b.weixin_id')
-			->limit($now_page,$limit)
-			->field($account_weixin_fields.','.$iceleprityindex_weixin_fields)
-			//->field('w.*,b.occupation,b.ck_price,b.yc_price,b.interest,b.coordination,b.fansnumber')
-			->select();
-			
+
+
+			if($addvalue['ids']!='')
+			{
+				//差集统计长度
+				$list = $this->where($where)
+				->table('app_account_weixin as w')
+				->join('app_celeprityindex_weixin as b on w.id = b.weixin_id')
+				->field($account_weixin_fields.','.$iceleprityindex_weixin_fields)
+				->select();
+			}else{
+				//差集统计长度
+				$list = $this->where($where)
+				->table('app_account_weixin as w')
+				->join('app_celeprityindex_weixin as b on w.id = b.weixin_id')
+				->limit($now_page,$limit)
+				->field($account_weixin_fields.','.$iceleprityindex_weixin_fields)
+				->select();
+			}
+				
 			//导航用到的标签数据
 			$tags_ids = C('Big_Nav_Class_Ids.weixin_celebrity_tags_ids');
 			$CategoryTagsInfo = D('CategoryTags')->get_classify_data($tags_ids['top_parent_id']);	

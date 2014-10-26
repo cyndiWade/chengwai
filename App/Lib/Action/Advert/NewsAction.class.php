@@ -415,7 +415,7 @@ class NewsAction extends AdvertBaseAction {
 	}
 	
 	//导出CSV
-	public function export_csv ()
+	public function export_csv()
 	{
 		$ids = $_REQUEST['ids'];
 		$array = array('ids'=>$ids);
@@ -423,6 +423,8 @@ class NewsAction extends AdvertBaseAction {
 		{
 			$data = $this->db['AccountNews']->getPostArray($array,$this->oUser->id);
 		}else{
+			$ides = $this->db['AccountNews']->getField('id',0);
+			$array = array('ids'=>implode(',',$ides));
 			$data = $this->db['AccountNews']->getPostArray($array,$this->oUser->id);
 		}
 		$new_array = array();
@@ -441,6 +443,7 @@ class NewsAction extends AdvertBaseAction {
 			$lin_arr[] = $value['bs_month_order_nub'];
 			$new_array[] = $lin_arr;
 		}
+		//var_dump($new_array);
 		create_excel('news',$new_array);
 	}
 	

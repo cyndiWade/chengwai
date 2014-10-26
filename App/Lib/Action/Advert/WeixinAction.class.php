@@ -221,7 +221,7 @@ class WeixinAction extends AdvertBaseAction {
 	{
 		$ids = $_REQUEST['ids'];
 		$array = array('ids'=>$ids);
-		$type = $_REQUEST['type']!='' ? 1 : 0;	//0为草根 1是名人
+		$type = $_REQUEST['type'];	//0为草根 1是名人
 		if($ids!='')
 		{
 			switch($type)
@@ -237,9 +237,13 @@ class WeixinAction extends AdvertBaseAction {
 			switch($type)
 			{
 				case 0;
+					$ides = $this->db['AccountWeixin']->where(array('is_celeprity'=>0))->getField('id',0);
+					$array = array('ids'=>implode(',',$ides));
 					$data = $this->db['AccountWeixin']->getPostcgArray($array,$this->oUser->id);
 				break;
 				case 1:
+					$ides = $this->db['AccountWeixin']->where(array('is_celeprity'=>1))->getField('id',0);
+					$array = array('ids'=>implode(',',$ides));
 					$data = $this->db['AccountWeixin']->getPostmrArray($array,$this->oUser->id);
 				break;
 			}
@@ -278,9 +282,9 @@ class WeixinAction extends AdvertBaseAction {
 					$lin_arr[] = $value['pg_occupation_explain'];
 					$lin_arr[] = $value['pg_field_explain'];
 					$lin_arr[] = ceil($value['bs_fans_num'] / 10000) . '万';
-					$lin_arr[] = $value['bs_ck_money'];
+					$lin_arr[] = ceil($value['bs_ck_money']/ 10000) . '万';
 					$lin_arr[] = $value['pg_phd_explain'];
-					$lin_arr[] = $value['introduction'];
+					$lin_arr[] = $value['bs_introduction'];
 					$lin_arr[] = $value['bs_week_order_num'];
 					$lin_arr[] = $value['bs_month_order_nub'];
 					$new_array[] = $lin_arr;
