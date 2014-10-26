@@ -22,9 +22,10 @@ class AppBaseAction extends GlobalParameterAction {
 	}
 	
 	private function global_system() {
+		
 		$this->global_tpl_view(array(
 			//网站公共的资源路径
-			'Global_Resource_Path'=>'/'.APP_PATH.'Public/Global/'	
+			'Global_Resource_Path'=>C('LocalHost').'/'.APP_PATH.'Public/Global/'	
 		));
 	}
 

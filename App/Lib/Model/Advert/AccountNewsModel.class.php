@@ -142,7 +142,9 @@
 			//地区筛选
 			if($addslArray['dqsx']!='')
 			{
-				$wheres['b.area'] = $addslArray['dqsx'];
+				//$wheres['b.area'] = $addslArray['dqsx'];
+				$wheres['b.area'] = array('in',explode(',',$addslArray['dqsx']));
+				
 			}
 			//优惠专区
 			if($addslArray['yhzq']!='')

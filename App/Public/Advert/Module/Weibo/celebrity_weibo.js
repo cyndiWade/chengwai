@@ -771,11 +771,15 @@ Weibo.prototype.create_details_fn = function ($url) {
 		html += '<table class="tab01-mr">';
 		html += '<tr>';
 		html += '<td class="t1">国籍:</td>';
-		html += '<td class="t2">中国</td>';
+		html += '<td class="t2">暂无数据</td>';
 		html += '</tr>';
 		html += '<tr>';
 		html += '<td class="t1">主要成就:</td>';
 		html += '<td class="t2">暂无数据</td>';
+		html += '</tr>';
+		html += '<tr>';
+		html += '<td class="t1">账号名:</td>';
+		html += '<td class="t2">'+data.bs_account_name+'</td>';
 		html += '</tr>';
 		html += '</table>';
 		html += '</div>';
