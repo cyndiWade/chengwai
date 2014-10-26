@@ -863,9 +863,9 @@ Weibo.prototype.page_init_fn = function () {
 	
 	//对没有订单的情况进行隐藏
 	if (_father_this.pt_type.val() =='' || _father_this.order_id.val() == '') {
-		_father_this.all_selected.css({'display':'none'});
-		_father_this.add_selected_box.css({'display':'none'});
-		_father_this.now_selected.remove();
+		//_father_this.all_selected.css({'display':'none'});
+		//_father_this.add_selected_box.css({'display':'none'});
+		//_father_this.now_selected.remove();
 	}
 }
 
