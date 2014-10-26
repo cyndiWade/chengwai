@@ -184,7 +184,7 @@ class NewsAction extends AdvertBaseAction {
 		if($this->isPost())
 		{
 			//走先选择账号流程
-			$account_id = trim($_GET['account_ids']);
+			$account_id = passport_decrypt(trim($_GET['account_ids']),'account_ids');
 			$id = $this->db['GeneralizeNewsOrder']->insertPost($_POST,$this->oUser->id);
 			if($id!='')
 			{
@@ -208,18 +208,22 @@ class NewsAction extends AdvertBaseAction {
 
 		if($this->isPost())
 		{
-			$status = $this->db['GeneralizeNewsAccount']->insertAll($_POST,$this->oUser->id);
-			
-			if ($status == true) {
+			if(intval($_POST['order_id']!=''))
+			{
+				$status = $this->db['GeneralizeNewsAccount']->insertAll($_POST,$this->oUser->id);
 				
-				//修改订单状态为1，平台审核的类型
-				$this->db['GeneralizeNewsOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
-				
-				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/News/generalize_activity')));
-			} else {
-				parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
+				if ($status == true) {
+					
+					//修改订单状态为1，平台审核的类型
+					$this->db['GeneralizeNewsOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
+					
+					parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/News/generalize_activity')));
+				} else {
+					parent::callback(C('STATUS_UPDATE_DATA'),'改订单已有重复账号');
+				}
+			}else{
+				parent::callback(C('STATUS_SUCCESS'),'正在跳转...',array('go_to_url'=>U('Advert/News/add_generalize',array('account_ids'=>passport_encrypt($_POST['account_ids'],'account_ids')))));
 			}
-			
 		}
 	}
 

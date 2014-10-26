@@ -28,7 +28,7 @@
 		<div class="box02-intention l">
 			<div class="int-tip l">注：<b class="red">*</b> 为必填项</div>
 			
-			<form action="{:U('Advert/WeixinOrder/add_extension')}" method="post" class="generalize_form" enctype="multipart/form-data" >
+			<form action="{:U('Advert/WeixinOrder/add_extension',array('account_ids'=>$_GET['account_ids']))}" method="post" class="generalize_form" enctype="multipart/form-data" >
 			<table class="tab01-inten l">
 			  <tr>
 				<td class="t1"><i>*</i><strong>投放平台：</strong></td>
