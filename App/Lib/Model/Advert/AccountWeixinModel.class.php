@@ -144,7 +144,8 @@
 			//地方名人/媒体
 			if($addslArray['dfmr_mt']!='')
 			{
-				$wheres['b.cirymedia'] = $addslArray['dfmr_mt'];
+				//$wheres['b.cirymedia'] = $addslArray['dfmr_mt'];
+				$wheres['b.cirymedia'] = array('in',explode(',',$addslArray['dfmr_mt']));
 			}
 			//粉丝数量
 			if($addslArray['fans_num']!='')
@@ -392,7 +393,8 @@
 			//地方名人媒体
 			if($addslArray['dfmr_mt']!='')
 			{
-				$wheres['b.cirymedia'] = $addslArray['dfmr_mt'];
+				//$wheres['b.cirymedia'] = $addslArray['dfmr_mt'];
+				$wheres['b.cirymedia'] = array('in',explode(',',$addslArray['dfmr_mt']));
 			}
 			//兴趣标签
 			if($addslArray['xqbq']!='')

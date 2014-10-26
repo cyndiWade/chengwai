@@ -138,7 +138,8 @@
 			//地方名人/媒体
 			if($addslArray['dfmr_mt']!='')
 			{
-				$wheres['b.cirymedia'] = $addslArray['dfmr_mt'];
+				//$wheres['b.cirymedia'] = $addslArray['dfmr_mt'];
+				$wheres['b.cirymedia'] = array('in',explode(',',$addslArray['dfmr_mt']));
 			}
 			//性别区分
 			if($addslArray['fans_sex']!='')
@@ -354,7 +355,8 @@
 			//地方名人/媒体
 			if($addslArray['dfmr_mt']!='')
 			{
-				$wheres['b.cirymedia'] = $addslArray['dfmr_mt'];
+				//$wheres['b.cirymedia'] = $addslArray['dfmr_mt'];
+				$wheres['b.cirymedia'] = array('in',explode(',',$addslArray['dfmr_mt']));
 			}
 			//兴趣标签
 			if($addslArray['xqbq']!='')
