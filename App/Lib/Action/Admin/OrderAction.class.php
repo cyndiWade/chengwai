@@ -35,6 +35,8 @@ class OrderAction extends AdminBaseAction {
 		//微信意向单，订单关联边
 		'IntentionWeixinAccount'=>'IntentionWeixinAccount',
 			
+		'Users'=>'Users',	//用户账号表
+			
 		//订单日志表	
 		'OrderLog'=>'OrderLog',
 
@@ -60,6 +62,8 @@ class OrderAction extends AdminBaseAction {
 	private function _init_data () {
 		$this->OrderLog = $this->db['OrderLog'];
 		
+		$this->Order_Status = C('Order_Status');
+		
 		$this->Account_Order_Status = C('Account_Order_Status');
 	}
 	
@@ -72,6 +76,21 @@ class OrderAction extends AdminBaseAction {
 		$where['status'] = 1;
 		$list = $GeneralizeNewsOrder->get_order_list($where);
 	
+		if ($list == true) {
+			foreach ($list as $key=>$val) {
+				//用户
+				$user_info = $this->db['Users']->get_user_info(array('id'=>$val['users_id']));
+				$list[$key]['order_user_account'] = $user_info['account'];
+				
+				//媒体账号数
+				$list[$key]['account_num'] =  $this->db['GeneralizeNewsAccount']->where(array('generalize_id'=>$val['id']))->count();
+ 			
+				//状态
+				$list[$key]['status_explain'] = $this->Order_Status[$val['status']]['explain'];
+				
+			}
+		}
+				
 		$data['list'] = $list;
 		parent::global_tpl_view( array(
 			'action_name'=>'新闻媒体推广单',
@@ -129,6 +148,22 @@ class OrderAction extends AdminBaseAction {
 		$where['status'] = 1;
 		$list = $GeneralizeOrder->get_order_list($where);
 	
+
+		if ($list == true) {
+			foreach ($list as $key=>$val) {
+				//用户
+				$user_info = $this->db['Users']->get_user_info(array('id'=>$val['users_id']));
+				$list[$key]['order_user_account'] = $user_info['account'];
+		
+				//媒体账号数
+				$list[$key]['account_num'] =  $this->db['GeneralizeAccount']->where(array('generalize_id'=>$val['id']))->count();
+		
+				//状态
+				$list[$key]['status_explain'] = $this->Order_Status[$val['status']]['explain'];
+		
+			}
+		}
+		
 		$data['list'] = $list;
 		parent::global_tpl_view( array(
 				'action_name'=>'微博推广单',
@@ -186,6 +221,21 @@ class OrderAction extends AdminBaseAction {
 		$where['status'] = 1;
 		$list = $IntentionWeiboOrder->get_order_list($where);
 	
+		if ($list == true) {
+			foreach ($list as $key=>$val) {
+				//用户
+				$user_info = $this->db['Users']->get_user_info(array('id'=>$val['users_id']));
+				$list[$key]['order_user_account'] = $user_info['account'];
+		
+				//媒体账号数
+				$list[$key]['account_num'] =  $this->db['IntentionWeiboAccount']->where(array('intention_id'=>$val['id']))->count();
+		
+				//状态
+				$list[$key]['status_explain'] = $this->Order_Status[$val['status']]['explain'];
+		
+			}
+		}
+		
 		$data['list'] = $list;
 		parent::global_tpl_view( array(
 				'action_name'=>'微博意向单',
@@ -245,6 +295,22 @@ class OrderAction extends AdminBaseAction {
 		$where['status'] = 1;
 		$list = $GeneralizeWeixinOrder->get_order_list($where);
 	
+		if ($list == true) {
+			foreach ($list as $key=>$val) {
+				//用户
+				$user_info = $this->db['Users']->get_user_info(array('id'=>$val['users_id']));
+				$list[$key]['order_user_account'] = $user_info['account'];
+		
+				//媒体账号数
+				$list[$key]['account_num'] =  $this->db['GeneralizeWeixinAccount']->where(array('generalize_id'=>$val['id']))->count();
+		
+				//状态
+				$list[$key]['status_explain'] = $this->Order_Status[$val['status']]['explain'];
+		
+			}
+		}
+		
+		
 		$data['list'] = $list;
 		parent::global_tpl_view( array(
 				'action_name'=>'微信推广单',
@@ -300,6 +366,21 @@ class OrderAction extends AdminBaseAction {
 		$IntentionWeixinOrder = $this->db['IntentionWeixinOrder'];
 		$where['status'] = 1;
 		$list = $IntentionWeixinOrder->get_order_list($where);
+		
+		if ($list == true) {
+			foreach ($list as $key=>$val) {
+				//用户
+				$user_info = $this->db['Users']->get_user_info(array('id'=>$val['users_id']));
+				$list[$key]['order_user_account'] = $user_info['account'];
+		
+				//媒体账号数
+				$list[$key]['account_num'] = $this->db['IntentionWeixinAccount']->where(array('generalize_id'=>$val['id']))->count();
+		
+				//状态
+				$list[$key]['status_explain'] = $this->Order_Status[$val['status']]['explain'];
+		
+			}
+		}
 		
 		$data['list'] = $list;
 		parent::global_tpl_view( array(
