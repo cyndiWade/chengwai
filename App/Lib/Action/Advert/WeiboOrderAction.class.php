@@ -282,6 +282,13 @@ class WeiboOrderAction extends AdvertBaseAction {
 		//新增数据
 		if($this->isPost())
 		{
+			$bool = parent::banwordCheck($_POST);
+			if($bool!='')
+			{
+				$info = '您提交的内容中含有敏感词 "' . $bool['keyword'] . '",请修改!';
+				alertBack($info);
+			}
+
 			$id = $this->db['IntentionWeiboOrder']->insertPost($_POST,$this->oUser->id);
 			$account_id = passport_decrypt(trim($_GET['account_ids']),'account_ids');
 			$pt_type = intval($_GET['pttype']);
@@ -315,6 +322,13 @@ class WeiboOrderAction extends AdvertBaseAction {
 	{
 		if($this->isPost())
 		{
+			$bool = parent::banwordCheck($_POST);
+			if($bool!='')
+			{
+				$info = '您提交的内容中含有敏感词 "' . $bool['keyword'] . '",请修改!';
+				alertBack($info);
+			}
+
 			//获得新增数据ID
 			$id = $this->db['GeneralizeOrder']->insertPost($_POST,$this->oUser->id);
 			$account_id = passport_decrypt(trim($_GET['account_ids']),'account_ids');

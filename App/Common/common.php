@@ -602,12 +602,14 @@ function getTree($items) {
 
 //1、弹窗返回
 function alertBack($_info) {
+	header('Content-Type:text/html;charset=utf-8');
 	echo "<script type='text/javascript'>alert('$_info');history.back();</script>";
 	exit();
 }
 
 //2、弹窗关闭
 function alertClose($_info) {
+	header('Content-Type:text/html;charset=utf-8');
 	echo "<script type='text/javascript'>alert('$_info');close();</script>";
 	exit();
 
@@ -615,6 +617,7 @@ function alertClose($_info) {
 
 //3、弹窗跳转
 function alertLocation ($_info,$_url) {
+	header('Content-Type:text/html;charset=utf-8');
 	if (!empty($_info)) {
 		echo "<script type='text/javascript'>alert('$_info');location.href='$_url';</script>";
 		exit();

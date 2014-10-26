@@ -470,32 +470,23 @@ class AppBaseAction extends GlobalParameterAction {
 	}
 
 	
-	//敏感词过滤 格式为key1|key2|key3|....
+	//敏感词过滤
 	protected function banwordCheck($array)
 	{
 		$keywords = D('back_keywords')->getField('back_keywords',0);
-		$words = implode('|', $keywords);
-		if($words!='')
+		if($keywords!='')
 		{
-			foreach($array as $value)
+			foreach($array as $key=>$value)
 			{
-
-				$string = strtolower($value);  
-				$matched = preg_match('/'.$words.'/i', $string, $result);  
-				if ( $matched && isset($result[0]) && strlen($result[0]) > 0 )  
-				{  
-					if (strlen($result[0])==2)
+				foreach($keywords as $v)
+				{
+					if(is_numeric(stripos($value,$v)))
 					{
-						$matched = preg_match('/'.$words.'/iu', $string, $result);  
+						return array('keyword'=>$v,'name'=>$key);
 					}
-					if($matched && isset($result[0]) && strlen($result[0])==0)
-					{ 
-						return false;  
-					}      
 				}
 			}
 		}
-		return true;
 	}
 	
 	

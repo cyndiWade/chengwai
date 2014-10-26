@@ -239,6 +239,13 @@ class WeixinOrderAction extends AdvertBaseAction {
     {
     	if($this->isPost())
     	{
+    		$bool = parent::banwordCheck($_POST);
+			if($bool!='')
+			{
+				$info = '您提交的内容中含有敏感词 "' . $bool['keyword'] . '",请修改!';
+				alertBack($info);
+			}
+
     		$id = $this->db['GeneralizeWeixinOrder']->insertPost($_POST,$this->oUser->id);
     		//走先选择账号流程
 			$account_id = passport_decrypt(trim($_GET['account_ids']),'account_ids');
@@ -265,6 +272,13 @@ class WeixinOrderAction extends AdvertBaseAction {
     {
     	if($this->isPost())
     	{
+    		$bool = parent::banwordCheck($_POST);
+			if($bool!='')
+			{
+				$info = '您提交的内容中含有敏感词 "' . $bool['keyword'] . '",请修改!';
+				alertBack($info);
+			}
+			
 	    	$id = $this->db['IntentionWeixinOrder']->insertPost($_POST,$this->oUser->id);
 	    	//走先选择账号流程
 			$account_id = trim($_GET['account_ids']);
