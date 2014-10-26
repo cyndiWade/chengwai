@@ -414,9 +414,35 @@ class NewsAction extends AdvertBaseAction {
 		}
 	}
 	
-	
-	
-	
+	//导出CSV
+	public function export_csv ()
+	{
+		$ids = $_REQUEST['ids'];
+		$array = array('ids'=>$ids);
+		if($ids!='')
+		{
+			$data = $this->db['AccountNews']->getPostArray($array,$this->oUser->id);
+		}else{
+			$data = $this->db['AccountNews']->getPostArray($array,$this->oUser->id);
+		}
+		$new_array = array();
+		$new_array[] = array('媒体名称','价格','新闻源','地区','能否带文本链接','门户','案例地址','周订单数','月订单数');
+		foreach($data['list'] as $value)
+		{
+			$lin_arr = array();
+			$lin_arr[] = $value['bs_account_name'];
+			$lin_arr[] = $value['bs_money'].'元';
+			$lin_arr[] = $value['pg_news_explain'];
+			$lin_arr[] = $value['pg_area_name'];
+			$lin_arr[] = $value['pg_links_explain'];
+			$lin_arr[] = $value['pg_type_of_portal_explain'];
+			$lin_arr[] = $value['bs_url'];
+			$lin_arr[] = $value['bs_week_order_num'];
+			$lin_arr[] = $value['bs_month_order_nub'];
+			$new_array[] = $lin_arr;
+		}
+		create_excel('news',$new_array);
+	}
 	
 }	
 

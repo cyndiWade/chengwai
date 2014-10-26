@@ -118,6 +118,10 @@
 		private function getcgWhere($addslArray)
 		{
 			$wheres = array();
+			if($addslArray['ids']!='')
+			{
+				$wheres['w.id'] = array('in',explode(',',$addslArray['ids']));
+			}
 			//处理分类数据 常见分类
 			if($addslArray['cjfl']!='')
 			{
@@ -368,6 +372,10 @@
 		private function getmrWhere($addslArray)
 		{
 			$wheres = array();
+			if($addslArray['ids']!='')
+			{
+				$wheres['w.id'] = array('in',explode(',',$addslArray['ids']));
+			}
 			//名人职业
 			if($addslArray['mrzy']!='')
 			{

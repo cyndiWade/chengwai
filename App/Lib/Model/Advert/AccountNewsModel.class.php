@@ -134,6 +134,10 @@
 		private function getWhere($addslArray)
 		{
 			$wheres = array();
+			if($addslArray['ids']!='')
+			{
+				$wheres['w.id'] = array('in',explode(',',$addslArray['ids']));
+			}
 			//行业分类
 			if($addslArray['hyfl']!='')
 			{
