@@ -2,8 +2,31 @@
 <html>
 <head>
 	<include file="Public:top" />
-	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
 	<title>媒体主_账号管理</title>
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
+    <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+    <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.js"></script>
+    <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/sea.js" id="seajsnode"></script>
+    <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/seajs-config.js"></script>
+    <script>
+    var doT, Weiboyi, W;
+    seajs.on('exec', function(data) {
+        if (data.uri === seajs.resolve('weiboyi')) {
+            Weiboyi = W = data.exports;
+        } else if (data.uri === seajs.resolve('doT')) {
+            doT = data.exports;
+        } else if (data.uri===seajs.resolve('plupload')) {
+            $.pluploadOpts.url = '{:U('/Media/Public/uploadImg')}';
+            $.pluploadOpts.viewBasePath = '{$Think.config.PUBLIC_VISIT.domain}{$Think.config.PUBLIC_VISIT.dir}';
+        }
+    });
+
+    seajs.config({
+        preload: ['seajsText', 'seajsCss', 'doT', 'cookie', 'rest', 'form', 'weiboyi', 'plupload']
+    });
+    seajs.use(['seajsText', 'seajsCss', 'doT', 'cookie', 'rest', 'form']);
+    seajs.use(['weiboyi'], function (W){});
+    </script>
 </head>
 <body>
 
@@ -18,85 +41,33 @@
                 <strong class="fl"><b class="yel">{$global_tpl_view.oUser.account}</b>支付信息</strong><span class="addbtn fl">添加支付方式</span>
             </div>
             <div class="phone-reg l">
-                <table class="tab01-allorder tab01-allorder-pay l">
-                <tr>
-                    <th class="t1">平台</th>
-                    <th class="t2">开户银行</th>
-                    <th class="t3">卡号</th>
-                    <th class="t4">真实姓名</th>
-                    <th class="last tc">操作</th>
-                </tr>
-                <empty name="view_data.list">
-                <tr>
-                    <td colspan="5" align="center">暂无数据</td>
-                </tr>
-                <else />
-                <volist name="view_data.list" id="item">
-                <tr>
-                    <td class="t1"><img src="images/zfb.gif" /></td>
-                    <td class="t2">{$item.name}</td>
-                    <td class="t3">{$item.card}</td>
-                    <td class="t4">{$item.truename}</td>
-                    <td class="last tc">
-                        <div class="ctrl">
-                            <span><a href="">修改</a></span> | 
-                            <span>删除</span>
-                        </div>
-                    </td>
-                </tr>
-                </volist>
-                </empty>
-                  <tr>
-                    <th class="t1">平台</th>
-                    <th class="t2">开户银行</th>
-                    <th class="t3">卡号</th>
-                    <th class="t4">真实姓名</th>
-                    <th class="last tc">操作</th>
-                  </tr>
-                  <tr>
-                    <td class="t1"><img src="images/zfb.gif" /></td>
-                    <td class="t2">招商银行</td>
-                    <td class="t3">5644 4544 5445 5454 2254</td>
-                    <td class="t4">张三 </td>
-                    <td class="last tc"><div class="ctrl"><span>修改</span> | <span>删除</span></div></td>
-                  </tr>
-                </table>
+                <div id="list"></div>
             </div>
         </div>
     </div>
 </div>
-<!-- 添加账号弹窗 -->
-<div class="batchbox tl">
-	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>添加支付账号</b></div>
-	<div class="mid-batch pr l">
-		<form action="" method="post">
-        <table class="tab01-inten l">
-		  <tr>
-			<td class="t1"><span><i>*</i><strong> 真实姓名：</strong></span></td>
-			<td class="t2"><input name="truename" type="text" placeholder="请输入正确的姓名" class="text" /></td>
-		  </tr>
-		  <tr>
-			<td class="t1"><span><i>*</i><strong>账号：</strong></span></td>
-			<td class="t2"><input name="account" type="text" placeholder="请输入账号" class="text" /></td>
-		  </tr>
-		  <tr>
-			<td class="t1"></td>
-			<td class="t2"><span class="btn graybtn">提&nbsp;&nbsp;&nbsp;&nbsp;交</span><span class="btn graybtn">取消</span></td>
-		  </tr>
-		</table>
-        </form>
-	</div>
-</div>
+<script type="text/html" id="add_dialog_manager_contact_template">
+    <span class="cBox_fansWaring" data-bind="visible: weibo_alert_notice(), html: weibo_alert_notice"></span>
+    <span data-bind="click: submit, css: errors().length>0 ? 'cBox_btn02' : 'cBox_btnSumbit'" href="javascript:;" class="btn graybtn">提&nbsp;&nbsp;&nbsp;&nbsp;交</span>
+    <span data-bind="click: close" href="javascript:;" class="btn graybtn">取消</span>
+</script>
+
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
+<link rel="stylesheet" type="text/css" href="{$global_tpl_view.Group_Resource_Path}css/cmp_all.css" />
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
 <script type="text/javascript">
-$(function(){
-	$('.tab01-allorder tr:even').addClass('even');
-	$("span[class='addbtn fl']").click(function(){
-		$('.batchbox').popOn();
-	})
-})
+
+seajs.use(['showAddBlankWin.js', 'blanklists.js'], function (blankWin, blankList) {
+    $("span[class='addbtn fl']").click(function(){
+        blankWin.showAddBlankWin();
+    });
+    $(function(){
+        blankList.init();
+        blankList.initGrid();
+        $('.tab01-allorder tr:even').addClass('even');
+    });
+});
 </script>
 </body>
 </html>

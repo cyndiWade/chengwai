@@ -328,20 +328,6 @@ class AccountAction extends MediaBaseAction {
      */
     function payinfo()
     {
-        import('ORG.Util.Page');
-        $page = I('page', 1, 'intval');
-        $pageSize = I('pagesize', 20, 'intval');
-        
-        $userInfos = parent::get_session('user_info');
-        $blankModel = $this->db['Blank'];
-        $where = array(
-            'user_id' => $userInfos['id'],
-        );
-        $lists = $blankModel->getList($where);
-        
-        $Page       = new Page($datas['total'], $pageSize);
-		$show       = $Page->show();
-        
         parent::data_to_view(array(
             //二级导航
             'secondSiderbar' => array(
@@ -350,11 +336,146 @@ class AccountAction extends MediaBaseAction {
                 '支付信息' => array('select' => true, 'url' => U('/Media/Account/payinfo')),
             ),
             'secondPosition' => '支付信息',
-            'page' => $show,
-            'list' => $datas['list'],
         ));
         $this->display();
     }
+    
+    /**
+     * 支付帐号列表
+     * 
+     * @author lurongchang
+     * @date   2014-10-24
+     * @return void
+     */
+    function blankLists()
+    {
+        $start          = I('start', 0, 'intval');
+        $pageSize       = I('limit', 20, 'intval');
+        
+        $filters        = I('filters', array());
+        extract($filters);
+        
+        $userInfos = parent::get_session('user_info');
+        $blankModel = $this->db['Blank'];
+        $where = array(
+            'user_id' => $userInfos['id'],
+        );
+        $page = ceil(($start + 1) / $pageSize);
+        $lists = array('list' => 0, 'count' => 0);
+        $lists = $blankModel->getList($where, 'id DESC', $page, $pageSize);
+        $newList = array();
+        if ($lists) {
+            $cardType = array('支付宝', '银行卡');
+            foreach ($lists['list'] AS $key => $info) {
+                $info['typename'] = $cardType[$info['cardtype']];
+                $info['date'] = date('Y-m-d H:i:s', $info['addtime']);
+                $info['account'] = $info['card'];
+                $temp = array(
+                    'id' => $info['id'],
+                    'cells' => $info,
+                );
+                $lists['list'][$key] = $temp;
+                // $lists['list'][$key]['typename'] = $cardType[$info['cardtype']];
+                // $lists['list'][$key]['date'] = date('Y-m-d H:i:s', $info['addtime']);
+            }
+        }
+        
+        parent::callback(1, '成功获取数据', array(
+            'start' => floor($start/$pageSize) * $pageSize,
+            'limit' => $pageSize,
+            'total' => $lists['total'],
+            'rows'  => $lists['list'],
+        ), array(
+            'code' => 1000
+        ));
+        exit;
+    }
+    
+    /**
+     * 增加支付帐号
+     * 
+     * @author lurongchang
+     * @date   2014-10-24
+     * @return void
+     */
+    function addBlank()
+    {
+        $id = I('id', 0, 'intval');
+        $truename = I('truename', '', 'setString');
+        $cardtype = I('cardtype', 0, 'intval');
+        $account = I('account', '', 'setString');
+        
+        if (empty($truename)) {
+            parent::callback(0, '真实姓名错误，请填写正确的真实姓名!');
+        }
+        
+        import("@.Tool.Validate");
+        $check = ($cartype == 0) ? Validate::checkEmail($account) : (strlen($account) == 16);
+        if (empty($account) || !$check) {
+            parent::callback(0, '支付帐号错误，支付宝请填写正确的邮箱，银行卡请填写16位号码!');
+        }
+        
+        $userInfos = parent::get_session('user_info');
+        $blankModel = $this->db['Blank'];
+        if ($id) {
+            $where = array(
+                'id' => $id,
+                'user_id' => $userInfos['id']
+            );
+            $datas = array(
+                'cardtype'  => $cardtype,
+                'card'      => $account,
+                'truename'  => $truename,
+            );
+            $status = $blankModel->where($where)->save($datas);
+            $status = ($status !== false) ? true : false;
+        } else {
+            $datas = array(
+                'user_id'   => $userInfos['id'],
+                'cardtype'  => $cardtype,
+                'card'      => $account,
+                'truename'  => $truename,
+                'addtime'   => $_SERVER['REQUEST_TIME'],
+            );
+            $status = $blankModel->add($datas);
+        }
+        if ($status) {
+            parent::callback(1, '提交成功', array(), array(
+                'code'  => 1000
+            ));
+        } else {
+            parent::callback(0, '数据保存错误, 请重新提交', array($status));
+        }
+    }
+    
+    /**
+     * 删除支付帐号
+     * 
+     * @author lurongchang
+     * @date   2014-10-24
+     * @return void
+     */
+    function delBlank()
+    {
+        $id = I('id', 0, 'intval');
+        
+        if (empty($id)) {
+            parent::callback(0, '帐号ID错误!');
+        }
+        
+        $userInfos = parent::get_session('user_info');
+        $where = array(
+            'id'   => $id,
+            'user_id'   => $userInfos['id'],
+        );
+        $blankModel = $this->db['Blank'];
+        $status = $blankModel->where($where)->delete();
+        if ($status) {
+            parent::callback(1, 'success', array(), array(
+                'code'  => 1000
+            ));
+        } else {
+            parent::callback(0, '数据保存错误, 请重新提交', array($status));
+        }
+    }
 }
-
-?>
