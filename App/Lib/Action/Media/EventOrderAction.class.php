@@ -73,8 +73,15 @@ class EventOrderAction extends MediaBaseAction {
         $markNums = $newsDatas[1] + $weiboDatas[1] + $weixinDatas[1];
         
         //好评数
-        $arryAll = $mediaWeiboList + $mediaWeixinList + $mediaNewsList;
-        $whereWeibo['account_id'] = array("in",  array_keys($arryAll)) ;
+        $arryAll = array();
+        if(!is_array($mediaWeiboList))
+        	$arryAll = array_keys($mediaWeiboList);
+        if(!is_array($mediaWeixinList))
+        	$arryAll = array_keys($mediaWeixinList );
+        if(!is_array($mediaNewsList))
+        	$arryAll = array_keys( $mediaNewsList);
+                
+        $whereWeibo['account_id'] = array("in", $arryAll) ;
         $orderEvaluate = M('evaluate')->where($whereWeibo)->getField('type', true); 
         $allDatas = $orderEvaluate ? array_count_values($orderEvaluate) : array(0, 0);
         $all = $allDatas[1] + $allDatas[2]  + $allDatas[3];
