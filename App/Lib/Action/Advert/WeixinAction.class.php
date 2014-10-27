@@ -216,6 +216,85 @@ class WeixinAction extends AdvertBaseAction {
 		}
 	}
     
+	//导出CSV
+	public function export_csv ()
+	{
+		$ids = $_REQUEST['ids'];
+		$array = array('ids'=>$ids);
+		$type = $_REQUEST['type'];	//0为草根 1是名人
+		if($ids!='')
+		{
+			switch($type)
+			{
+				case 0;
+					$data = $this->db['AccountWeixin']->getPostcgArray($array,$this->oUser->id);
+				break;
+				case 1:
+					$data = $this->db['AccountWeixin']->getPostmrArray($array,$this->oUser->id);
+				break;
+			}
+		}else{
+			switch($type)
+			{
+				case 0;
+					$ides = $this->db['AccountWeixin']->where(array('is_celeprity'=>0))->getField('id',0);
+					$array = array('ids'=>implode(',',$ides));
+					$data = $this->db['AccountWeixin']->getPostcgArray($array,$this->oUser->id);
+				break;
+				case 1:
+					$ides = $this->db['AccountWeixin']->where(array('is_celeprity'=>1))->getField('id',0);
+					$array = array('ids'=>implode(',',$ides));
+					$data = $this->db['AccountWeixin']->getPostmrArray($array,$this->oUser->id);
+				break;
+			}
+		}
+		$new_array = array();
+		switch($type)
+		{
+
+			case 0:
+				$new_array[] = array('微信号','账号名','行业分类','粉丝量','单图文价格','多图文第一条','多图文第二条','多图文第3-N条','性别分布:男','性别分布:女','周订单数','月订单数');
+				foreach($data['list'] as $value)
+				{
+					$lin_arr = array();
+					$lin_arr[] = $value['bs_weixinhao'];
+					$lin_arr[] = $value['bs_account_name'];
+					$lin_arr[] = $value['pg_cjfl_explain'];
+					$lin_arr[] = ceil($value['bs_fans_num'] / 10000) . '万';
+					$lin_arr[] = $value['bs_dtb_money'] . '元';
+					$lin_arr[] = $value['bs_dtwdyt_money'] . '元';
+					$lin_arr[] = $value['bs_dtwdet_money'] . '元';
+					$lin_arr[] = $value['bs_dtwqtwz_money'] . '元';
+					$lin_arr[] = $value['bs_male_precent'] .'%';
+					$lin_arr[] = $value['bs_female_precent'] .'%';
+					$lin_arr[] = $value['bs_week_order_num'];
+					$lin_arr[] = $value['bs_month_order_nub'];
+					$new_array[] = $lin_arr;
+				}
+			break;
+			case 1;
+				$new_array[] = array('微信号','账号名','职业','领域','粉丝量','参考价格','配合度','简介','周订单数','月订单数');
+				foreach($data['list'] as $value)
+				{
+					$lin_arr = array();
+					$lin_arr[] = $value['bs_weixinhao'];
+					$lin_arr[] = $value['bs_account_name'];
+					$lin_arr[] = $value['pg_occupation_explain'];
+					$lin_arr[] = $value['pg_field_explain'];
+					$lin_arr[] = ceil($value['bs_fans_num'] / 10000) . '万';
+					$lin_arr[] = ceil($value['bs_ck_money']/ 10000) . '万';
+					$lin_arr[] = $value['pg_phd_explain'];
+					$lin_arr[] = $value['bs_introduction'];
+					$lin_arr[] = $value['bs_week_order_num'];
+					$lin_arr[] = $value['bs_month_order_nub'];
+					$new_array[] = $lin_arr;
+				}
+			break;
+		}
+		//var_dump($new_array);
+		create_excel('weixin',$new_array);
+	}
+
 }
 
 ?>

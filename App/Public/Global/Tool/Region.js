@@ -30,13 +30,26 @@ Region.prototype.select_city_fn = function () {
 	_father_this.region_left.change(function () {
 		var _this = $(this);
 		_father_this.region_right.empty();
+		if (_this.val() == '') {
+			_father_this.region_right.append('<option value="">请选择</option>');
+			return false;
+		};
+		
 		post_data = {'parent_id':_this.val()};
 		var result = System.ajax_post_setup(_father_this.post_url,post_data,'JSON');
 		if (result.status == 0) {
 			//console.log(result.data);
+			var all_region_ids = [];
+			for (var key in result.data) {
+				all_region_ids.push(result.data[key].region_id);
+			}
+			_father_this.region_right.append('<option value="'+all_region_ids+'">所有</option>');
+
 			for (var key in result.data) {
 				_father_this.region_right.append('<option value="'+result.data[key].region_id+'">'+result.data[key].region_name+'</option>');
 			}
+			
+		
 		}
 	});
 }

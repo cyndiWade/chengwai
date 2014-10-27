@@ -135,6 +135,7 @@ class NewsAction extends AdvertBaseAction {
 				$list[$key]['status_explain'] = $Order_Status[$val['status']]['explain'];
 			}
 		}
+		
 		parent::data_to_view(array(
 				'page' => $show ,
 				'list' => $list,
@@ -182,10 +183,21 @@ class NewsAction extends AdvertBaseAction {
 	{
 		if($this->isPost())
 		{
+			//走先选择账号流程
+			$account_id = passport_decrypt(trim($_GET['account_ids']),'account_ids');
 			$id = $this->db['GeneralizeNewsOrder']->insertPost($_POST,$this->oUser->id);
 			if($id!='')
 			{
-				$this->redirect('Advert/News/news_list',array('order_id'=>$id));
+				if($account_id!='')
+				{
+					//组合数据
+					$arr = array('order_id'=>$id,'account_ids'=>$account_id);
+					$this->db['GeneralizeNewsAccount']->insertAll($arr,$this->oUser->id);
+					$this->db['GeneralizeNewsOrder']->where(array('id'=>$id))->save(array('status'=>1));
+					$this->redirect('Advert/News/generalize_activity');
+				}else{
+					$this->redirect('Advert/News/news_list',array('order_id'=>$id));
+				}
 			}
 		}
 	}
@@ -196,18 +208,22 @@ class NewsAction extends AdvertBaseAction {
 
 		if($this->isPost())
 		{
-			$status = $this->db['GeneralizeNewsAccount']->insertAll($_POST,$this->oUser->id);
-			
-			if ($status == true) {
+			if(intval($_POST['order_id']!=''))
+			{
+				$status = $this->db['GeneralizeNewsAccount']->insertAll($_POST,$this->oUser->id);
 				
-				//修改订单状态为1，平台审核的类型
-				$this->db['GeneralizeNewsOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
-				
-				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/News/generalize_activity')));
-			} else {
-				parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
+				if ($status == true) {
+					
+					//修改订单状态为1，平台审核的类型
+					$this->db['GeneralizeNewsOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
+					
+					parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/News/generalize_activity')));
+				} else {
+					parent::callback(C('STATUS_UPDATE_DATA'),'改订单已有重复账号');
+				}
+			}else{
+				parent::callback(C('STATUS_SUCCESS'),'正在跳转...',array('go_to_url'=>U('Advert/News/add_generalize',array('account_ids'=>passport_encrypt($_POST['account_ids'],'account_ids')))));
 			}
-			
 		}
 	}
 
@@ -271,6 +287,8 @@ class NewsAction extends AdvertBaseAction {
 				//统计订单总金额
 				$extend_order_info['sum_money'] += $val['g_price'];
 				
+				$account_order_list[$key]['other'] = $Account_Order_Status[$val['g_audit_status']]['other'];
+
 				//统计据单数
 				if ($val['g_audit_status'] == $Account_Order_Status[4]['status']) {
 					$extend_order_info['jy_order_sum'] += 1;
@@ -395,6 +413,40 @@ class NewsAction extends AdvertBaseAction {
 			parent::callback(C('STATUS_UPDATE_DATA'),'请勿重复评论!');
 		}
 	}
+	
+	//导出CSV
+	public function export_csv()
+	{
+		$ids = $_REQUEST['ids'];
+		$array = array('ids'=>$ids);
+		if($ids!='')
+		{
+			$data = $this->db['AccountNews']->getPostArray($array,$this->oUser->id);
+		}else{
+			$ides = $this->db['AccountNews']->getField('id',0);
+			$array = array('ids'=>implode(',',$ides));
+			$data = $this->db['AccountNews']->getPostArray($array,$this->oUser->id);
+		}
+		$new_array = array();
+		$new_array[] = array('媒体名称','价格','新闻源','地区','能否带文本链接','门户','案例地址','周订单数','月订单数');
+		foreach($data['list'] as $value)
+		{
+			$lin_arr = array();
+			$lin_arr[] = $value['bs_account_name'];
+			$lin_arr[] = $value['bs_money'].'元';
+			$lin_arr[] = $value['pg_news_explain'];
+			$lin_arr[] = $value['pg_area_name'];
+			$lin_arr[] = $value['pg_links_explain'];
+			$lin_arr[] = $value['pg_type_of_portal_explain'];
+			$lin_arr[] = $value['bs_url'];
+			$lin_arr[] = $value['bs_week_order_num'];
+			$lin_arr[] = $value['bs_month_order_nub'];
+			$new_array[] = $lin_arr;
+		}
+		//var_dump($new_array);
+		create_excel('news',$new_array);
+	}
+	
 }	
 
 ?>

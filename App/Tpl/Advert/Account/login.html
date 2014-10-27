@@ -36,7 +36,7 @@
 				  </tr>
 				  <tr>
 					<td class="t1"></td>
-					<td class="t2"><input type="submit" class="btn redbtn" value="立即登陆" /></td>
+					<td class="t2"><input type="button" class="btn redbtn advertsub" value="立即登陆" /></td>
 				  </tr>
 				</table>
 			</form>
@@ -67,6 +67,36 @@
 		var href = "{:U('Advert/Account/verify')}"+'#'+timenow;
 		_this.attr('src',href);
 	});
+</script>
+<script>
+  var info = function(){
+      advertsub = $('.advertsub');
+      
+  }
+  info();
+  advertsub.click(function(){
+     var adname = $("input[name='account']").val();
+     var adpass = $("input[name='password']").val();
+     var adver = $("input[name='verify']").val();
+     $.ajax({
+        type: "POST",
+        url: "{:U('Advert/Account/check_login')}",
+        data: {
+            'account': adname,
+            'password' : adpass,
+            'verify' : adver
+        },
+        dataType: "json",
+        success: function (msg) {
+          if(msg.status==0)
+          {
+            window.location.href="{:U('Advert/Member/datum_edit')}";
+          }else{
+            alert(msg.msg);
+          }
+        }
+     });
+  });
 </script>
 </body>
 </html>

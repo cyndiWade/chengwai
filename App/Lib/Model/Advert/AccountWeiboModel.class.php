@@ -87,14 +87,23 @@
 			//统计表字段，加上别名
 			$account_weibo_fields = parent::field_add_prefix('AccountWeibo','bs_','w.');
 			$grassroots_weibo_fields = parent::field_add_prefix('GrassrootsWeibo','sy_','b.');
-				
-			$list = $this->where($where)
-			->table('app_account_weibo as w')
-			->join('app_grassroots_weibo as b on w.id = b.weibo_id')
-			->limit($now_page,$limit)
-			->field($account_weibo_fields.','.$grassroots_weibo_fields)
-			//->field('w.*,b.common,b.sex')
-			->select();
+			
+
+			if($addvalue['ids']!='')
+			{
+				$list = $this->where($where)
+				->table('app_account_weibo as w')
+				->join('app_grassroots_weibo as b on w.id = b.weibo_id')
+				->field($account_weibo_fields.','.$grassroots_weibo_fields)
+				->select();
+			}else{
+				$list = $this->where($where)
+				->table('app_account_weibo as w')
+				->join('app_grassroots_weibo as b on w.id = b.weibo_id')
+				->limit($now_page,$limit)
+				->field($account_weibo_fields.','.$grassroots_weibo_fields)
+				->select();
+			}
 			
 			$tags_ids = C('Big_Nav_Class_Ids.caogen_tags_ids');
 			$CategoryTagsInfo = D('CategoryTags')->get_classify_data($tags_ids['top_parent_id']);
@@ -107,6 +116,10 @@
 		private function getcgWhere($addslArray)
 		{
 			$wheres = array();
+			if($addslArray['ids']!='')
+			{
+				$wheres['w.id'] = array('in',explode(',',$addslArray['ids']));
+			}
 			//处理分类数据 常见分类
 			if($addslArray['cjfl']!='')
 			{
@@ -138,7 +151,8 @@
 			//地方名人/媒体
 			if($addslArray['dfmr_mt']!='')
 			{
-				$wheres['b.cirymedia'] = $addslArray['dfmr_mt'];
+				//$wheres['b.cirymedia'] = $addslArray['dfmr_mt'];
+				$wheres['b.cirymedia'] = array('in',explode(',',$addslArray['dfmr_mt']));
 			}
 			//性别区分
 			if($addslArray['fans_sex']!='')
@@ -277,13 +291,23 @@
 			$celeprityindex_weibo_fields = parent::field_add_prefix('CeleprityindexWeibo','sy_','b.');
 			$Region = D('Region');	//区域表
 			
-			$list = $this->where($where)
-			->table('app_account_weibo as w')
-			->join('app_celeprityindex_weibo as b on w.id = b.weibo_id')
-			->limit($now_page,$limit)
-			->field($account_weibo_fields.','.$celeprityindex_weibo_fields)
-			//->field('w.*,b.occupation,b.ck_price,b.yc_price,b.field,b.coordination,b.fansnumber,b.strategic_c,b.originality')
-			->select();
+
+			if($addvalue['ids']!='')
+			{
+				$list = $this->where($where)
+				->table('app_account_weibo as w')
+				->join('app_celeprityindex_weibo as b on w.id = b.weibo_id')
+				->field($account_weibo_fields.','.$celeprityindex_weibo_fields)
+				->select();
+			}else{
+				$list = $this->where($where)
+				->table('app_account_weibo as w')
+				->join('app_celeprityindex_weibo as b on w.id = b.weibo_id')
+				->limit($now_page,$limit)
+				->field($account_weibo_fields.','.$celeprityindex_weibo_fields)
+				->select();
+			}
+			
 			
 			//微博名人导航分类
 			$tags_ids = C('Big_Nav_Class_Ids.celebrity_tags_ids');
@@ -329,6 +353,10 @@
 		private function getmrWhere($addslArray)
 		{
 			$wheres = array();
+			if($addslArray['ids']!='')
+			{
+				$wheres['w.id'] = array('in',explode(',',$addslArray['ids']));
+			}
 			//名人职业
 			if($addslArray['mrzy']!='')
 			{
@@ -354,7 +382,8 @@
 			//地方名人/媒体
 			if($addslArray['dfmr_mt']!='')
 			{
-				$wheres['b.cirymedia'] = $addslArray['dfmr_mt'];
+				//$wheres['b.cirymedia'] = $addslArray['dfmr_mt'];
+				$wheres['b.cirymedia'] = array('in',explode(',',$addslArray['dfmr_mt']));
 			}
 			//兴趣标签
 			if($addslArray['xqbq']!='')

@@ -205,4 +205,62 @@
 			break;
 		}
 	}
+
+	//封面显示正文 延期 短信通知
+	function getFenm($id)
+	{
+		switch ($id) {
+			case 0:
+				return '否';
+			break;
+			case 1:
+				return '是';
+			break;
+		}
+	}
+
+	//转发语类型
+	function getZhuanf($id)
+	{
+		switch ($id) {
+			case 1:
+				return '指定转发语';
+			break;
+			case 2:
+				return '博主自拟转发语';
+			break;
+			default:
+				return '无转发语';
+			break;
+		}
+	}
+
+	//文案是否包含链接
+	function wenAn($id)
+	{
+		switch ($id) {
+			case 1:
+				return '包含';
+			break;
+			default:
+				return '不包含';
+			break;
+		}
+	}
+
+	//直发内容类型
+	function zfNeir($id)
+	{
+		switch ($id) {
+			case 1:
+				return '指定直发内容';
+			break;
+			case 2:
+				return '博主自拟直发内容';
+			break;
+			default:
+				return '无';
+			break;
+		}
+	}
 ?>

@@ -115,17 +115,17 @@ class AccountAction extends AdvertBaseAction {
 			$password = $this->_post('password');					//用户密码
 			$verify = $this->_post('verify');
 			//数据过滤
-			if (Validate::checkNull($account)){ $this->error('账号不能为空！'); };
-			if (Validate::checkNull($password)){ $this->error('密码不能为空！'); };
-			if (!Validate::check_string_num($account)){ $this->error('账号密码只能输入英文或数字!'); };
-			if (md5($verify)!=$_SESSION['verify']){ $this->error('验证码错误!'); }
+			if (Validate::checkNull($account)){parent::callback(C('STATUS_OTHER'),'账号不能为空！!'); };
+			if (Validate::checkNull($password)){parent::callback(C('STATUS_OTHER'),'密码不能为空！!'); };
+			if (!Validate::check_string_num($account)){parent::callback(C('STATUS_OTHER'),'账号密码只能输入英文或数字!');};
+			if (md5($verify)!=$_SESSION['verify']){parent::callback(C('STATUS_OTHER'),'验证码错误!');}
 			$user_type = 2;
 			//读取用户数据
 			$user_info = $Users->get_user_info(array('account'=>$account,'type'=>$user_type,'is_del'=>0));
 
 			//验证用户数据
 			if (empty($user_info)) {
-				$this->error('此用户不存在或被删除！'); 
+				parent::callback(C('STATUS_OTHER'),'此用户不存在或被删除！'); 
 			} else {
 				$status_info = C('ACCOUNT_STATUS');
 				//状态验证
@@ -134,7 +134,7 @@ class AccountAction extends AdvertBaseAction {
 				}
 				//验证密码
 				if (md5($password) != $user_info['password']) {
-					 $this->error('密码错误！'); 
+					parent::callback(C('STATUS_OTHER'),'密码错误！'); 
 				} else {
 					$moneyget = $this->db['UserAdvertisement']->getMoney($user_info['id']);
 					$tmp_arr = array(
@@ -149,7 +149,7 @@ class AccountAction extends AdvertBaseAction {
 				parent::set_session(array('user_info'=>$tmp_arr));
 				//更新用户信息
 				$Users->up_login_info($user_info['id']);
-				$this->redirect('Advert/Member/datum_edit');
+				parent::callback(C('STATUS_SUCCESS'),'ok');
 			}
 		} else {
 			$this->redirect('Advert/Account/login');
@@ -161,7 +161,7 @@ class AccountAction extends AdvertBaseAction {
     public function logout () {
     	if (session_start()) {
     		parent::del_session('user_info');
-    		$this->success('退出成功',U('Advert/Account/login'));
+    		$this->redirect('Advert/Account/login');
     	} 
     }
 }

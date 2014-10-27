@@ -81,11 +81,22 @@
 			$index_news_fields = parent::field_add_prefix('IndexNews','sy_','b.');
 			$Region = D('Region');	//区域表
 			
-			//差集统计长度
-			$list = $this->where($where)
-			->table('app_account_news as w')
-			->join('app_index_news as b on w.id = b.news_id')
-			->limit($now_page,$limit)->field($account_news_fields.','.$index_news_fields)->select();
+
+			if($addvalue['ids']!='')
+			{
+				//差集统计长度
+				$list = $this->where($where)
+				->table('app_account_news as w')
+				->join('app_index_news as b on w.id = b.news_id')
+				->field($account_news_fields.','.$index_news_fields)->select();
+			}else{
+				//差集统计长度
+				$list = $this->where($where)
+				->table('app_account_news as w')
+				->join('app_index_news as b on w.id = b.news_id')
+				->limit($now_page,$limit)->field($account_news_fields.','.$index_news_fields)->select();
+			}
+
 			
 			//新闻用到分类集合
 			$tags_ids = C('Big_Nav_Class_Ids.xinwen_tags_ids');
@@ -134,6 +145,10 @@
 		private function getWhere($addslArray)
 		{
 			$wheres = array();
+			if($addslArray['ids']!='')
+			{
+				$wheres['w.id'] = array('in',explode(',',$addslArray['ids']));
+			}
 			//行业分类
 			if($addslArray['hyfl']!='')
 			{
@@ -142,7 +157,9 @@
 			//地区筛选
 			if($addslArray['dqsx']!='')
 			{
-				$wheres['b.area'] = $addslArray['dqsx'];
+				//$wheres['b.area'] = $addslArray['dqsx'];
+				$wheres['b.area'] = array('in',explode(',',$addslArray['dqsx']));
+				
 			}
 			//优惠专区
 			if($addslArray['yhzq']!='')

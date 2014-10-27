@@ -597,4 +597,129 @@ function getTree($items) {
     return $tree;
 }
 
+
+
+
+//1、弹窗返回
+function alertBack($_info) {
+	header('Content-Type:text/html;charset=utf-8');
+	echo "<script type='text/javascript'>alert('$_info');history.back();</script>";
+	exit();
+}
+
+//2、弹窗关闭
+function alertClose($_info) {
+	header('Content-Type:text/html;charset=utf-8');
+	echo "<script type='text/javascript'>alert('$_info');close();</script>";
+	exit();
+
+}
+
+//3、弹窗跳转
+function alertLocation ($_info,$_url) {
+	header('Content-Type:text/html;charset=utf-8');
+	if (!empty($_info)) {
+		echo "<script type='text/javascript'>alert('$_info');location.href='$_url';</script>";
+		exit();
+	} else {
+		header('Location:'.$_url);
+		exit();
+	}
+}
+
+
+/**
+ * 解析csv文件 成数组
+ * @param String $file_name
+ * $csv_data = array_splice($csv_data,1,count($csv_data)-2);
+ */
+function analysis_csv ($file_name) {
+	if (file_exists($file_name) == false) {
+		return false;
+	}
+
+	$result = array();
+
+	$file = fopen($file_name,"r");
+	while(!feof($file))
+	{
+		$csv_data = fgetcsv($file);
+			
+		$tmp_array = array();
+		foreach ($csv_data as $key=>$val) {
+			$format_string = iconv('gbk','utf-8',$val);
+			array_push($tmp_array,$format_string);
+		}
+
+		array_push($result,$tmp_array);
+		$tmp_array = null;
+	}
+
+	fclose($file);
+	return $result;
+}
+
+/**
+ * 解析文本文件成数组
+ * @param String $file_name
+ * @param String $ex
+ */
+function analysis_txt ($file_name,$ex = ' ') {
+	header('Content-Type:text/html;charset=utf-8');
+
+	if (file_exists($file_name) == false) {
+		return false;
+	}
+
+	$result = array();
+
+	$file_source = fopen($file_name,"r");
+	while (! feof ($file_source)) {
+		$line_str = fgets ($file_source);
+		if (empty($line_str)) continue;
+		$line_array = explode($ex,$line_str);
+		array_push($result,$line_array);
+	}
+
+	fclose($file_source);
+
+	return $result;
+}
+
+
+/**
+ * 根据数据源创建csv文件
+ * @param String $name
+ * @param Array OR String $content
+ */
+function create_excel($name,$content) {
+
+	if (is_array($content)) {
+
+		//$title = '会员号,b,c'."\n";
+		$result = '';
+		foreach ($content as $key=>$val) {
+			foreach ($val as $k=>$v) {
+				//$str .= (iconv( "UTF-8","gbk",$val['oid'])).',';
+				$result .= $v.',';
+			}
+			$result .= "\n";
+		}
+	}
+
+	
+	header('Content-Type:text/html;charset=utf-8');
+	header("Content-Type: application/force-download");
+	header("Content-Type: text/csv");					//CSV文件
+	header("Content-Disposition: attachment; filename=$name.csv");					//强制跳出下载对话框
+	header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
+	header('Expires:0');
+	header('Pragma:public');
+
+	$content = (iconv( "UTF-8","gbk",$result)).',';
+
+	echo $content;
+}
+
+
 ?>

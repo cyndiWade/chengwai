@@ -29,7 +29,7 @@ var TableManaged = function () {
                 },
                 "aoColumnDefs": [{
                         'bSortable': false,
-                        'aTargets': [0]
+                        'aTargets': []
                     }
                 ]
             });

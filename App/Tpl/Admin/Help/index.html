@@ -43,10 +43,10 @@
 							<div class="portlet-body">
 								<div class="clearfix">
 									<div class="btn-group">									
-										<button  class="btn green btn_bak" data-url="{:U('Admin/Help/edit',array('act'=>'add','parent_id'=>$view_data['parent_id']))}" data-record_prev="1">
+										<button  class="btn green btn_bak" data-url="{:U('Admin/Help/edit',array('act'=>'add','parent_id'=>$view_data['parent_id'],'type'=>$view_data['type']))}" data-record_prev="1">
 											{$global_tpl_view.add_name}<i class="icon-plus"></i>
 										</button>						
-									</div>																		<div class="btn-group">										<a class="btn" href="#" data-toggle="dropdown">											<i class="m-icon-swapleft"></i>										</a>										<ul class="dropdown-menu">											<li><a href="{:U('Admin/Help/index',array('parent_id'=>$view_data['prev_parent_id']))}"><i class="icon-arrow-left"></i> 返回上一层操作</a></li>											<li><a href="{:U('Admin/Help/index')}"><i class="icon-arrow-left"></i> 返回顶层</a></li>																					</ul>									</div>									
+									</div>																		<div class="btn-group">										<a class="btn" href="#" data-toggle="dropdown">											<i class="m-icon-swapleft"></i>										</a>										<ul class="dropdown-menu">											<li><a href="{:U('Admin/Help/index',array('parent_id'=>$view_data['prev_parent_id'],'type'=>$view_data['type']))}"><i class="icon-arrow-left"></i> 返回上一层操作</a></li>											<li><a href="{:U('Admin/Help/index',array('type'=>$view_data['type']))}"><i class="icon-arrow-left"></i> 返回顶层</a></li>																					</ul>									</div>									
 								</div>								
 								<table class="table table-striped table-bordered table-hover sample_1"" >
 									<thead>
@@ -54,10 +54,10 @@
 										</tr>
 									</thead>
 									<tbody>										<volist name="view_data['list']" id="vo">
-										<tr>											<td>{$vo.id}</td>											<td>{$vo.parent_id}</td>
+										<tr>											<td>{$vo.id}</td>											<td title="{$vo.parent_id}">{$vo.parent_name}</td>
 											<td>{$vo.title}</td>
 											<td>{$vo.val}</td>											<td>{$vo.show_status_explain}</td>
-											<td class="center">												<if condition="($vo['parent_id'] eq 0)">												<a href="javascript:;" class="btn_bak"  data-url="{:U('Admin/Help/index',array('parent_id'=>$vo['id']))}">查分类帮助</a> | 												</if>			
+											<td class="center">												<if condition="($vo['parent_id'] eq 0)">												<a href="javascript:;" class="btn_bak"  data-url="{:U('Admin/Help/index',array('parent_id'=>$vo['id'],'type'=>$view_data['type']))}">查分类帮助</a> | 												</if>			
 												
 												<a href="javascript:;" class="btn_bak"  data-url="{:U('Admin/Help/edit',array('act'=>update,'id'=>$vo['id']))}">编辑</a>
 												| <a href="{:U('Admin/Help/edit',array('act'=>delete,'id'=>$vo['id']))}" class="check" >删除</a>												| <if condition="($vo['show_status'] eq 1)">													<a href="{:U('Admin/Help/edit',array('act'=>is_show,'id'=>$vo['id'],'show_status'=>0))}" class="check">不显示</span></a>													<else />													<a href="{:U('Admin/Help/edit',array('act'=>is_show,'id'=>$vo['id'],'show_status'=>1))}" class="check">显示</a>												</if>																				</td>

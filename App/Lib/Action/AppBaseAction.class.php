@@ -22,9 +22,10 @@ class AppBaseAction extends GlobalParameterAction {
 	}
 	
 	private function global_system() {
+		
 		$this->global_tpl_view(array(
 			//网站公共的资源路径
-			'Global_Resource_Path'=>'/'.APP_PATH.'Public/Global/'	
+			'Global_Resource_Path'=>C('LocalHost').'/'.APP_PATH.'Public/Global/'	
 		));
 	}
 
@@ -469,7 +470,24 @@ class AppBaseAction extends GlobalParameterAction {
 	}
 
 	
-
+	//敏感词过滤
+	protected function banwordCheck($array)
+	{
+		$keywords = D('back_keywords')->getField('back_keywords',0);
+		if($keywords!='')
+		{
+			foreach($array as $key=>$value)
+			{
+				foreach($keywords as $v)
+				{
+					if(is_numeric(stripos($value,$v)))
+					{
+						return array('keyword'=>$v,'name'=>$key);
+					}
+				}
+			}
+		}
+	}
 	
 	
 	

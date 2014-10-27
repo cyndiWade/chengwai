@@ -9,8 +9,12 @@
 		.t6 {
 			width:200px !important;
 		}
+		#tooltip {
+			z-index:100001 !important;
+		}
 	</style>
-</head>
+		
+</head>	
 <body>
 
 <!-- 头部 -->
@@ -194,7 +198,7 @@
 			<div class="controlbox fl">
 				<span class="all_selected">全选</span>
 				<span id="batch" class="add_selected_box">批量添加账号</span>
-				<!-- <span>批量导出报价单</span> -->
+				<span><a href="{:U('Advert/Weixin/export_csv',array('type'=>0))}">批量导出报价单</a></span>
 			</div>
 		</div>
 	</div>
@@ -243,7 +247,16 @@ var list_content = $('#list_content');
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/page.js"></script>
 <script src="{$global_tpl_view.Module_Resource_Path}weixin.js"></script>
 
+	
+<!-- 插件 -->
+<link rel="stylesheet" href="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.tooltip.css" />
+<script src="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.bgiframe.js" type="text/javascript"></script>
+<script src="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.dimensions.js" type="text/javascript"></script>
+<script src="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.tooltip.js" type="text/javascript"></script>
+	
+
 <script type="text/javascript">
+
 var public_post_fn = function (obj_data) {
 	var post_data = {};
 	post_data.pt_type = system_info.pt_type;	//平台类型，1新浪、2腾讯
@@ -291,6 +304,8 @@ var public_post_fn = function (obj_data) {
 		
 		Weixin.create_details_fn('{:U('Advert/WeixinOrder/getAccountInfo')}');
 		
+		Weixin.tooltip_tonus_fn();	
+		
 		Weixin.page_init_fn();	//加载页面初始化
 		
 		//更新page
@@ -300,6 +315,13 @@ var public_post_fn = function (obj_data) {
 
 
 var create_now_html = function ($data,$post_data) {
+	
+	var bs_qr_code = '';
+	if ($data.bs_qr_code == '') {
+		bs_qr_code = '{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif';
+	} else {
+		bs_qr_code = $data.bs_qr_code;
+	}
 	
 	var html = '';
 	html += '<tr class="accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-fans_num="'+$data.bs_fans_num+'">';
@@ -341,7 +363,12 @@ var create_now_html = function ($data,$post_data) {
 	//html += '<td class="t6"><p>图文打开率：占20</p><p>周平均阅读数：占20</p></td>';
 	html += '<td class="t4">'+$data.bs_month_order_nub+'</td>';
 	//html += '<td class="t8"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
-	html += '<td class="t4"><img width="28" src="{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif" /></td>';
+	html += '<td class="t4">';
+	
+
+	html += '<img class="tooltip_tonus" width="28" src="'+bs_qr_code+'" data-src="'+bs_qr_code+'" data-width="150px" data-height="150px" />';
+	
+	html += '</td>';
 	html += '<td class="t4"><div class="ctrl">';
 	
 	html += '<span class="wxdetail" data-weixin_id="'+$data.bs_id+'">详情</span><br/>';

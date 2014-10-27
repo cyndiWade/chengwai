@@ -19,7 +19,7 @@
 	<div class="area01-myorder l">
 			<div class="box01-addorder l">
 				<a href="#" class="help fr">帮助手册！</a>
-				<a href="{:U('/Advert/WeixinOrder/add_intention')}" class="btn brownbtn fl">创建意向单页</a>
+				<a href="{:U('/Advert/WeixinOrder/add_intention',array('account_ids'=>$_GET['account_ids']))}" class="btn brownbtn fl">创建意向单页</a>
 				<div class="searnum fl">
 					<b class="red">【{$view_data.status_0}】</b>个确认中， <b class="red">【{$view_data.status_1}】</b>个已确认待执行
 				</div>
@@ -57,6 +57,7 @@
 						<td class="last">
 							<div class="ctrl" >
 								<span><a href="{:U('Advert/WeixinOrder/intention_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
+								<span><a href="{:U('Advert/Weixin/celebrity_weixin',array('order_id'=>$vo['id']))}">添加媒体</a></span>
 								<span class="delete_order" data-id="{$vo['id']}">删除</span>
 							</div>
 						</td>

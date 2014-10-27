@@ -23,15 +23,15 @@
 		<div class="box02-intention l">
 			<div class="int-tip l">注：<b class="red">*</b> 为必填项</div>
 			
-			<form action="{:U('Advert/WeiboOrder/add_extension')}" method="post" class="generalize_form" enctype="multipart/form-data" >
+			<form action="{:U('Advert/WeiboOrder/add_extension',array('account_ids'=>$_GET['account_ids'],'pttype'=>$_GET['pttype']))}" method="post" class="generalize_form" enctype="multipart/form-data" >
 			<table class="tab01-inten l">
 			  <tr>
 				<td class="t1"><i>*</i><strong>投放平台：</strong></td>
 				<td class="t2">
-					<input type="radio" name="tfpt_type" value="1" checked="checked" class="tfpt_type" datatype="*" errormsg="请选择！~" />新浪微博
-					<input type="radio" name="tfpt_type" value="2" class="tfpt_type" datatype="*" errormsg="请选择！~" />腾讯微博
+					<input type="radio" name="tfpt_type" value="1" <if condition="(!empty($_GET['pttype']))">disabled</if>  <if condition="($_GET['pttype'] eq 1)">checked</if> class="tfpt_type" datatype="*" errormsg="请选择！~" /> 新浪微博
+					<input type="radio" name="tfpt_type" value="2" <if condition="(!empty($_GET['pttype']))">disabled</if>  <if condition="($_GET['pttype'] eq 2)">checked</if> class="tfpt_type" datatype="*" errormsg="请选择！~" /> 腾讯微博
 				</td>
-			  </tr>
+			  </tr>  
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>发送类型：</strong></span></td>
 				<td class="t2">
@@ -41,55 +41,50 @@
 					</select>
 					<p>转发：将已有的微博链接转发</p>
 				</td>
-			  </tr>
+			  </tr>		  
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>软硬广：</strong></span></td>
 				<td class="t2">
-					<span class="soft fl"><input type="radio" name="ryg_type" checked="checked" value="1" class="radio ryg_type" /><strong>硬广</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
-					<span class="soft fl"><input type="radio" value="2" name="ryg_type" class="radio ryg_type" /><strong>软广</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span></td>
+					<span class="soft fl"><input type="radio" name="ryg_type" checked="checked" value="1" class="radio ryg_type" /><strong>硬广</strong><!-- <img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /> --></span>
+					<span class="soft fl"><input type="radio" value="2" name="ryg_type" class="radio ryg_type" /><strong>软广</strong><!-- <img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span> -->
+				</td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>活动名称：</strong></span></td>
 				<td class="t2"><input type="text" name="hd_name" class="text hd_name" datatype="*1-50" errormsg="请正确填写范围是1-50个字符" nullmsg="请填写活动名称"  /></td>
 			  </tr>
-			   <!--根据发送类型变化start-->
-			  <tr>
-				<td class="t1"><span><i>*</i><strong>转发链接：</strong></span></td>
-				<td class="t2">
-					<input type="text" name="zf_url" class="text zf_url" datatype="url" errormsg="请正确填写转发链接"  nullmsg="请填写转发链接"/>
-					<div class="writetip"><span class="gray">例：http://weibo.com/1675718025/xhUXoBAJa </span>
-						<!-- <a class="why blue" href="#">什么是转发链接? </a> -->
-					</div>
-				</td>
+			  
+			  
+			  <tr class="tr_zhifa">
+				
+			  </tr> 
+			  <tr class="tr_zhifa">
+				
 			  </tr>
-			  <tr>
-				<td class="t1"><span><i>*</i><strong>转发语类型：</strong></span></td>
-				<td class="t2">
-				<span class="soft fl"><input type="radio" name="zfy_type" class="radio zfy_type" value="1" datatype="*" errormsg="请正确选择"  nullmsg="请选择转发语类型" checked="checked"/><strong>指定转发语</strong></span>
-				<span class="soft fl"><input type="radio" name="zfy_type" class="radio zfy_type" value="2" datatype="*" errormsg="请正确选择"  nullmsg="请选择转发语类型"/><strong>博主自拟转发语</strong></span>
-				<span class="soft fl"><input type="radio" name="zfy_type" class="radio zfy_type" value="3" datatype="*" errormsg="请正确选择"  nullmsg="请选择转发语类型"/><strong>无转发语</strong></span></td>
+			  <tr class="tr_zhifa">
+				
 			  </tr>
-			  <tr>
-				<td class="t1"><span><i>*</i><strong>转发语：</strong></span></td>
-				<td class="t2"><div class="forward"><textarea name="zw_info" class="textarea zw_info" ignore="ignore" datatype="*10-500" errormsg="请正确填写范围是10-500个字符" ></textarea><p>此内容会直接发出，请不要填写与转发语无关的信息。请不要超过140字，您还可以输入140个字</p></div></td>
+			 
+			     
+			  <tr class="tr_zhuanfa">
+				
 			  </tr>
+			  <tr  class="tr_zhuanfa">
+			  
+			  </tr>
+			  <tr  class="tr_zhuanfa">
+				
+			  </tr>
+			  
+			  
+			  
 			  <tr>
 				<td class="t1"><span><strong>文案是否含链接：</strong></span></td>
 				<td class="t2"><div class="linkbox l">
 					<span class="soft fl"><input type="radio" class="radio" name="wa_url_status" value="1" /><strong>包含</strong></span>
 					<span class="soft fl"><input type="radio" class="radio" name="wa_url_status" value="0" checked="checked"/><strong>不包含</strong></span></div><p class="l">请您如实选择，以免影响后续创建的活动类型</p></td>
-			  </tr>	  
-			  <tr>
-				<td class="t1"><span><i>*</i><strong>直发内容类型：</strong></span></td>
-				<td class="t2"> <input type="radio" name="zfnr_type" class="zfnr_type" id="content_type_1" value="1" datatype="*" errormsg="请正确选择"  nullmsg="请选择直发内容类型" /> 指定直发内容
-				 <input type="radio" name="zfnr_type" class="zfnr_type" id="content_type_2" value="2" datatype="*" errormsg="请正确选择"  nullmsg="请选择直发内容类型" checked="checked"/> 博主自拟直发内容	 
-				</td>
-			  </tr>
-			  <tr>
-				<td class="t1"><span><i>*</i><strong>直发配图：</strong></span></td>
-				<td class="t2"> <input type="file" name="contentTypeRetweet" > 
-				</td>
-			  </tr>
+			  </tr>	
+			 
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>开始时间：</strong></span></td>
 				<td class="t2">
@@ -101,12 +96,14 @@
 					</div><p>请选择当前时间60分钟后，14天之内的时间</p>
 				</td>
 			  </tr>
+			  <!--  
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>反馈截止时间：</strong></span></td>
 				<td class="t2"><div class="timestart">
 					<input type="text" name="over_time" data-check_type="start" class="text text-time over_time timeSubject"  datatype="*1-50" errormsg="请正确选择填写"  nullmsg="请选择结束时间" />
 					</div><p>博主会在该时间之前反馈，请选择当前时间30分钟后，14天之内的时间</p></td>
 			  </tr>
+			  -->
 			  <tr>
 				<td class="t1"><span><strong>短信通知反馈结果：</strong></span></td>
 				<td class="t2">
@@ -122,7 +119,7 @@
 				<td class="t2"><div class="forward"><textarea class="textarea bz_info" name="bz_info" ignore="ignore" datatype="*0-300" errormsg="请正确填写范围是10-300个字符"  nullmsg="请输入"></textarea><p>请填写备注信息，请不要超过300个汉字！</p></div></td>
 			  </tr>
 			  <tr>
-				<td class="t1"><span><i>*</i><strong>上传正品证明：</strong></span></td>
+				<td class="t1"><span><strong>上传资质证明：</strong></span></td>
 				<td class="t2"><div class="provebox l"><input type="file" class="file fl" name="genuineFile"/>
 				<!-- <span class="btn brownbtn fl use_history_img">使用历史证明</span>  -->
 				</div><p class="l">仅支持jpg、gif、png图片文件，文件小于5M，且允许上传5张</p><p class="red l"><span class="red">若您推广的单品属于知名品牌，请务必上传该商品的正品证明</span></p></td>

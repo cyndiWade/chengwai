@@ -234,17 +234,21 @@ class WeiboOrderAction extends AdvertBaseAction {
 
 		if($this->isPost())
 		{
-			$status = $this->db['GeneralizeAccount']->insertAll($_POST,$this->oUser->id);
-			if ($status == true) {
-				
-				//修改订单状态为1，平台审核的类型
-				$this->db['GeneralizeOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
-				
-				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('/Advert/WeiboOrder/generalize_activity')));
-			} else {
-				parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
+			if(intval($_POST['order_id']!=''))
+    		{
+				$status = $this->db['GeneralizeAccount']->insertAll($_POST,$this->oUser->id);
+				if ($status == true) {
+					
+					//修改订单状态为1，平台审核的类型
+					$this->db['GeneralizeOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
+					
+					parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('/Advert/WeiboOrder/generalize_activity')));
+				} else {
+					parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
+				}
+			}else{
+				parent::callback(C('STATUS_SUCCESS'),'正在跳转...',array('go_to_url'=>U('Advert/WeiboOrder/add_generalize',array('account_ids'=>passport_encrypt($_POST['account_ids'],'account_ids'),'pttype'=>$_POST['pt_type']))));
 			}
-			
 		}
 	}
 
@@ -254,17 +258,21 @@ class WeiboOrderAction extends AdvertBaseAction {
 
 		if($this->isPost())
 		{
-			$status = $this->db['IntentionWeiboAccount']->insertAll($_POST,$this->oUser->id);
-			if ($status == true) {
-				
-				//修改订单状态为1，平台审核的类型
-				$this->db['IntentionWeiboOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
-				
-				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('/Advert/WeiboOrder/intention_list')));
-			} else {
-				parent::callback(C('STATUS_UPDATE_DATA'),'添加失败');
+			if(intval($_POST['order_id']!=''))
+    		{
+				$status = $this->db['IntentionWeiboAccount']->insertAll($_POST,$this->oUser->id);
+				if ($status == true) {
+					
+					//修改订单状态为1，平台审核的类型
+					$this->db['IntentionWeiboOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
+					
+					parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('/Advert/WeiboOrder/intention_list')));
+				} else {
+					parent::callback(C('STATUS_UPDATE_DATA'),'该订单账号已存在');
+				}
+			}else{
+				parent::callback(C('STATUS_SUCCESS'),'正在跳转...',array('go_to_url'=>U('Advert/WeiboOrder/add_intention',array('account_ids'=>passport_encrypt($_POST['account_ids'],'account_ids'),'pttype'=>$_POST['pt_type']))));
 			}
-			
 		}
 	}
 
@@ -274,16 +282,34 @@ class WeiboOrderAction extends AdvertBaseAction {
 		//新增数据
 		if($this->isPost())
 		{
+			$bool = parent::banwordCheck($_POST);
+			if($bool!='')
+			{
+				$info = '您提交的内容中含有敏感词 "' . $bool['keyword'] . '",请修改!';
+				alertBack($info);
+			}
+
 			$id = $this->db['IntentionWeiboOrder']->insertPost($_POST,$this->oUser->id);
+			$account_id = passport_decrypt(trim($_GET['account_ids']),'account_ids');
+			$pt_type = intval($_GET['pttype']);
 			if($id!='')
 			{
 				$img_array = $this->upload_img($_FILES,$id,false);
 				$this->db['IntentionWeiboFiles']->insertImg($img_array);
-				if($_POST['tfpt_type']==1)
+				if($account_id!='')
 				{
-					$this->redirect('Advert/Weibo/celebrity_weibo',array('pt_type'=>1,'order_id'=>$id));
+					$arr = array('order_id'=>$id,'pt_type'=>$pt_type,'account_ids'=>$account_id);
+					$this->db['IntentionWeiboAccount']->insertAll($arr,$this->oUser->id);
+					//修改订单状态为1，平台审核的类型
+					$this->db['IntentionWeiboOrder']->where(array('id'=>$id))->save(array('status'=>1));
+					$this->redirect('Advert/WeiboOrder/intention_list');
 				}else{
-					$this->redirect('Advert/Weibo/celebrity_weibo',array('pt_type'=>2,'order_id'=>$id));
+					if($_POST['tfpt_type']==1)
+					{
+						$this->redirect('Advert/Weibo/celebrity_weibo',array('pt_type'=>1,'order_id'=>$id));
+					}else{
+						$this->redirect('Advert/Weibo/celebrity_weibo',array('pt_type'=>2,'order_id'=>$id));
+					}
 				}
 			}else{
 				parent::callback(C('STATUS_DATA_LOST'),'参数错误!');
@@ -296,20 +322,38 @@ class WeiboOrderAction extends AdvertBaseAction {
 	{
 		if($this->isPost())
 		{
+			$bool = parent::banwordCheck($_POST);
+			if($bool!='')
+			{
+				$info = '您提交的内容中含有敏感词 "' . $bool['keyword'] . '",请修改!';
+				alertBack($info);
+			}
+
 			//获得新增数据ID
 			$id = $this->db['GeneralizeOrder']->insertPost($_POST,$this->oUser->id);
+			$account_id = passport_decrypt(trim($_GET['account_ids']),'account_ids');
+			$pt_type = intval($_GET['pttype']);
 			if($id!='')
 			{
 				$img_array = $this->upload_img($_FILES,$id);
 				$this->db['GeneralizeFiles']->insertImg($img_array);
 				//根据ID跳转
-				if($_POST['tfpt_type']==1)
+				if($account_id!='')
 				{
-					//新浪草根
-					$this->redirect('Advert/Weibo/caogen_weibo',array('pt_type'=>1,'order_id'=>$id));
+					$arr = array('order_id'=>$id,'pt_type'=>$pt_type,'account_ids'=>$account_id);
+					$this->db['GeneralizeAccount']->insertAll($arr,$this->oUser->id);
+					//修改订单状态为1，平台审核的类型
+					$this->db['GeneralizeOrder']->where(array('id'=>$id))->save(array('status'=>1));
+					$this->redirect('Advert/WeiboOrder/generalize_activity');
 				}else{
-					//腾讯草根
-					$this->redirect('Advert/Weibo/caogen_weibo',array('pt_type'=>2,'order_id'=>$id));
+					if($_POST['tfpt_type']==1)
+					{
+						//新浪草根
+						$this->redirect('Advert/Weibo/caogen_weibo',array('pt_type'=>1,'order_id'=>$id));
+					}else{
+						//腾讯草根
+						$this->redirect('Advert/Weibo/caogen_weibo',array('pt_type'=>2,'order_id'=>$id));
+					}
 				}
 			}else{
 				parent::callback(C('STATUS_DATA_LOST'),'参数错误!');
@@ -401,6 +445,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 				//统计订单总金额
 				$extend_order_info['sum_money'] += $val['g_price'];
 				
+				$account_order_list[$key]['other'] = $Account_Order_Status[$val['g_audit_status']]['other'];
+
 				//统计据单数
 				if ($val['g_audit_status'] == $Account_Order_Status[4]['status']) {
 					$extend_order_info['jy_order_sum'] += 1;
@@ -486,6 +532,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 				
 				//统计订单总金额
 				$extend_order_info['sum_money'] += $val['g_price'];
+				
+				$account_order_list[$key]['other'] = $Account_Order_Status[$val['g_audit_status']]['other'];
 				
 				//统计拒绝单数
 				if ($val['g_audit_status'] == $Account_Order_Status[4]['status']) {

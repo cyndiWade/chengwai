@@ -5,11 +5,7 @@
     <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/member.css" type="text/css" />
 	<title>新闻媒体列表</title>
-	<style type="text/css">
-		.head_img {
-			height:100px  !important;
-		}
-	</style>
+	
 </head>
 <body>
 
@@ -41,7 +37,7 @@
 			  -->
 		</div>
 		<div class="mid-search l">
-			<input type="text" class="seatext search_account" data-field="account" data-ischeck="0" value="" placeholder="请输入名称" /><input type="submit" class="btn seabtn" id="search" value="搜索" />
+			<input type="text" class="seatext search_account" data-field="account" data-ischeck="0" value="" placeholder="请输入账号名称" /><input type="submit" class="btn seabtn" id="search" value="搜索" />
 		</div>
 	</div>
 	<div class="catebox l">
@@ -177,7 +173,7 @@
 			<div class="controlbox fl">
 				<span class="all_selected">全选</span><span id="batch"  class="add_selected_box">批量添加账号</span>
 				
-				<!-- <span>批量导出报价单</span> -->
+				<span><a href="{:U('Advert/News/export_csv')}">批量导出报价单</a></span>
 			</div>
 		</div>
 	</div>

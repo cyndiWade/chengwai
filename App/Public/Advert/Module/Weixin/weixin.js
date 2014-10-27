@@ -75,6 +75,10 @@ Weixin.prototype.init = function () {
 	this.confirm_order = $('.confirm_order');	//确认订单
 	this.tbody = $('.tbody');	//微博账号容器
 	this.orderspan = $('.orderspan');	//排序按钮
+	
+	this.tooltip_tonus = $('.tooltip_tonus');	//放大图
+	
+	this.qr_code = $('.qr_code');	//二维码详情
 }
 
 
@@ -735,6 +739,15 @@ html += '<div class="mid-batchdetail l">';
 html += '<div class="box01-batchdetail fl">';
 html += '<table class="tab01-batchdetail">';
 html += '<tr>';
+html += '<td class="t1">账号ID：<em>'+data.bs_id+'</em></td>';
+html += '<td class="t1">账号名：<em>'+data.bs_account_name+'</em></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">账号：<em>'+data.bs_weixinhao+'</em></td>';
+//html += '<td class="t1">二维码：<em class="tooltip_tonus" data-src="/App/Public/Advert/images/wx_img02.gif" data-width="100px" data-height="100px" >查看</em></td>';
+html += '<td class="t1">二维码：<em class="tooltip_tonus" data-src="'+data.bs_qr_code+'" data-width="300px" data-height="300px" >查看</em></td>';
+html += '</tr>';
+html += '<tr>';
 html += '<td class="t1">月订单：<em>'+data.bs_month_order_nub+'</em></td>';
 html += '<td class="t1">周订单：<em>'+data.bs_week_order_num+'</em></td>';
 html += '</tr>';
@@ -747,16 +760,8 @@ html += '<td class="t1">多图文第二条报价：<em>'+data.bs_dtwdet_money+'<
 html += '<td class="t1">多图文第三条及N条报价：<em>'+data.bs_dtwqtwz_money+'</em></td>';
 html += '</tr>';
 //html += '<tr>';
-//html += '<td class="t1">月流单率：<em>暂无报价</em></td>';
-//html += '<td class="t1">月拒单率：<em>5%</em></td>';
+//html += '<td colspan="2">账号ID：<em>'+data.bs_id+'</em></td>';
 //html += '</tr>';
-//html += '<tr>';
-//html += '<td class="t1">月合格率：<em>5%</em></td>';
-//html += '<td class="t1">是否接硬广：<em>是</em></td>';
-//html += '</tr>';
-html += '<tr>';
-html += '<td colspan="2">账号ID：<em>'+data.bs_id+'</em></td>';
-html += '</tr>';
 //html += '<tr>';
 //html += '<td colspan="2">账号分类：<em>资讯</em><em>时尚</em><em>服装箱包</em><em>服装</em></td>';
 //html += '</tr>';
@@ -809,8 +814,11 @@ html += '</div>';
 		
 		_father_this.add_old_class();
 		
+		_father_this.tooltip_tonus_fn();	//加载二维码
+		
 		_father_this.batchboxdetail.popOn();
 
+		
 	}
 	
 }
@@ -938,10 +946,10 @@ Weixin.prototype.add_selected_box_fn = function () {
 				//提交操作
 				var result = System.ajax_post_setup(system_info.post_order_url,post_data,'JSON');
 				if (result.status == 0) {
-					alert('提交成功！');
+					alert(result.msg);
 					window.location.href= result.data.go_to_url;	//跳转
 				} else {
-					alert('添加失败请稍后重新再试！');
+					alert(result.msg);
 				}
 			}
 			
@@ -1002,15 +1010,48 @@ Weixin.prototype.sort_table_fn = function ($sort_type) {
 }
 
 
+////放大图片
+//Weixin.prototype.tooltip_tonus_fn = function () {
+//	var _father_this = this; 
+//	_father_this.tooltip_tonus.tooltip({
+//		delay: 0,
+//		showURL: false,
+//		bodyHandler: function() {
+//			var _this = $(this);
+//			var html = '<img src="'+_this.attr('src')+'" />';
+//			return html;
+//		}
+//	});
+//}
+
+
+//放大图片
+Weixin.prototype.tooltip_tonus_fn = function () {
+	var _father_this = this; 
+	_father_this.tooltip_tonus.tooltip({
+		delay: 0,
+		showURL: false,
+		bodyHandler: function() {
+			var _this = $(this);
+			var src = _this.data('src');
+			var width = _this.data('width'); 
+			var height = _this.data('height');
+			var html = '<img src="'+src+'" style="width:'+width+';height:'+height+'"/>';
+			return html;
+		}
+	});
+}
+
+
 //页面记载完毕后执行的方法
 Weixin.prototype.page_init_fn = function () {
 	var _father_this = this;
 	
 	//对没有订单的情况进行隐藏
 	if (_father_this.order_id.val() == '') {
-		_father_this.all_selected.css({'display':'none'});
-		_father_this.add_selected_box.css({'display':'none'});
-		_father_this.now_selected.remove();
+		//_father_this.all_selected.css({'display':'none'});
+		//_father_this.add_selected_box.css({'display':'none'});
+		//_father_this.now_selected.remove();
 	}
 }
 

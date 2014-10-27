@@ -23,13 +23,13 @@
 		</div>
 		<div class="box02-intention l">
 			<div class="int-tip l">注：<b class="red">*</b> 为必填项</div>
-			<form action="{:U('Advert/WeiboOrder/add_intenYx')}" method="POST" class="intention_form" enctype="multipart/form-data" >
+			<form action="{:U('Advert/WeiboOrder/add_intenYx',array('account_ids'=>$_GET['account_ids'],'pttype'=>$_GET['pttype']))}" method="POST" class="intention_form" enctype="multipart/form-data" >
 			<table class="tab01-inten l">
 			  <tr>
 				<td class="t1"><i>*</i><strong>投放平台：</strong></td>
 				<td class="t2">
-					<input type="radio" name="tfpt_type" value="1" checked="checked" class="tfpt_type" datatype="*" errormsg="请选择！~" />新浪微博
-					<input type="radio" name="tfpt_type" value="2" class="tfpt_type" datatype="*" errormsg="请选择！~" />腾讯微博
+					<input type="radio" name="tfpt_type" value="1" <if condition="(!empty($_GET['pttype']))">disabled</if>  <if condition="($_GET['pttype'] eq 1)">checked</if> class="tfpt_type" datatype="*" errormsg="请选择！~" />新浪微博
+					<input type="radio" name="tfpt_type" value="2" <if condition="(!empty($_GET['pttype']))">disabled</if>  <if condition="($_GET['pttype'] eq 2)">checked</if> class="tfpt_type" datatype="*" errormsg="请选择！~" />腾讯微博
 				</td>
 			  </tr>
 			  <tr>
@@ -55,6 +55,28 @@
 					<input type="text" class="text text-erro yxd_namer" name="yxd_name"  datatype="*1-50" errormsg="请正确填写范围是1-50个字符" nullmsg="请填写名称"/>
 				</td>
 			  </tr>
+			  
+			  <tr class="tr_zhifa">
+				
+			  </tr> 
+			  <tr class="tr_zhifa">
+				
+			  </tr>
+			  <tr class="tr_zhifa">
+				
+			  </tr>
+			 
+			     
+			  <tr class="tr_zhuanfa">
+				
+			  </tr>
+			  <tr  class="tr_zhuanfa">
+			  
+			  </tr>
+			  <tr  class="tr_zhuanfa">
+				
+			  </tr>
+			  <!-- 
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>转发链接：</strong></span></td>
 				<td class="t2"><input type="text" name="zf_url" class="text zf_url" datatype="url" errormsg="请正确填写转发链接"  nullmsg="请填写转发链接"/><div class="writetip"><span class="gray">例：http://weibo.com/1675718025/xhUXoBAJa </span><a class="why blue" href="#">什么是转发链接? </a></div></td>
@@ -69,13 +91,15 @@
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>转发语：</strong></span></td>
 				<td class="t2"><div class="forward"><textarea name="zw_info" class="textarea zw_info" datatype="*10-140" errormsg="请正确填写范围是10-140个字符" ></textarea><p>此内容会直接发出，请不要填写与转发语无关的信息。请不要超过140字，您还可以输入140个字</p></div></td>
-			  </tr>		
+			  </tr>
+			   -->		
 			  <tr>
 				<td class="t1"><span><strong>文案是否含链接：</strong></span></td>
 				<td class="t2"><div class="linkbox l">
 					<span class="soft fl"><input type="radio" class="radio" name="wa_url_status" value="1" /><strong>包含</strong></span>
 					<span class="soft fl"><input type="radio" class="radio" name="wa_url_status" value="0" checked="checked"/><strong>不包含</strong></span></div><p class="l">请您如实选择，以免影响后续创建的活动类型</p></td>
 			  </tr>
+			  <!--  
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>直发内容类型：</strong></span></td>
 				<td class="t2"> <input type="radio" name="zfnr_type" class="zfnr_type" id="content_type_1" value="1" datatype="*" errormsg="请正确选择"  nullmsg="请选择直发内容类型" /> 指定直发内容
@@ -87,28 +111,28 @@
 				<td class="t2"> <input type="file" name="contentTypeRetweet" > 
 				</td>
 			  </tr>
+			  -->
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>预计执行时间：</strong></span></td>
 				<td class="t2"><div class="timestart">
-					<input type="text" name="start_time" class="text text-time start_time timeSubject"  datatype="*1-50" errormsg="请正确选择填写"  nullmsg="请选择开始时间" />
+					<input type="text" name="start_time" data-check_type="start" class="text text-time start_time timeSubject"  datatype="*1-50" errormsg="请正确选择填写"  nullmsg="请选择开始时间" />
 					<span><input type="checkbox" name="sfyq" class="check sfyq" value="1">延期</span>
 				</div><p>请选择当前时间60分钟后，14天之内的时间</p></td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>反馈截止时间：</strong></span></td>
 				<td class="t2"><div class="timestart">
-					<input type="text" name="over_time" class="text text-time over_time timeSubject"  datatype="*1-50" errormsg="请正确选择填写"  nullmsg="请选择结束时间" />
+					<input type="text" name="over_time" data-check_type="start"  class="text text-time over_time timeSubject"  datatype="*1-50" errormsg="请正确选择填写"  nullmsg="请选择结束时间" />
 					</div><p>博主会在该时间之前反馈，请选择当前时间30分钟后，14天之内的时间</p></td>
 			  </tr>
 			  <tr>
 				<td class="t1"><span><strong>短信通知反馈结果：</strong></span></td>
 				<td class="t2">
-				<span class="soft fl"><input type="radio" name="dx_status" value="1" checked="checked" class="radio" /><strong>需要</strong></span>
-				<span class="soft fl"><input type="radio" name="dx_status" value="0" class="radio" /><strong>不需要</strong></span></td>
+				<span class="soft fl"><input type="radio" name="dx_status" value="1" checked="checked" class="radio dxfkjg" /><strong>需要</strong></span>
+				<span class="soft fl"><input type="radio" name="dx_status" value="0" class="radio dxfkjg" /><strong>不需要</strong></span></td>
 			  </tr>
-			  <tr>
-				<td class="t1"><span><strong>手机号：</strong></span></td>
-				<td class="t2"><input type="text" class="text" name="dx_phone" ignore="ignore" datatype="m" errormsg="请正确选择填写"  nullmsg="请填写手机号码" /><p class="writetip">请准确填写您的手机号码，以便及时短信告知您确认结果</p></td>
+			  <tr class="iphone" >
+				
 			  </tr>
 			  <tr>
 				<td class="t1"><span><strong>备注：</strong></span></td>
@@ -116,7 +140,7 @@
 			  </tr>
 			  <tr>
 				<td class="t1">
-				<span><i>*</i><strong>上传正品证明：</strong></span>
+				<span><strong>上传资质证明：</strong></span>
 				</td>
 				<td class="t2"><div class="provebox l"><input type="file" name="genuineFile" class="file fl" />
 				<!-- 
@@ -126,7 +150,7 @@
 			  </tr>
 			  <tr>
 				<td class="t1"></td>
-				<td class="t2"><div class="agreebox f12"><input type="checkbox" class="check fl" name="is_ht_ok" datatype="*" errormsg="请同意服务协议"  nullmsg="请同意服务协议" /><strong class="fl">同意<a class="blue" href="#">服务协议</a></strong></div></td>
+				<td class="t2"><div class="agreebox f12"><input type="checkbox" class="check fl" name="is_ht_ok" datatype="*" checked="checked" errormsg="请同意服务协议"  nullmsg="请同意服务协议" /><strong class="fl">同意<a class="blue" href="#">服务协议</a></strong></div></td>
 			  </tr>
 			  <tr>
 				<td class="t1"></td>

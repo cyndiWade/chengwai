@@ -40,7 +40,7 @@
 .tab01-inten .file{ margin:4px 0;}
 .coverselect{ margin-right:20px;}
 .tab01-inten .phone{ margin-right:10px;}
-.phonebox{ background:url(../images/phonebg.png) no-repeat; width:258px; height:540px; position:absolute;}
+.phonebox{ background:url(../images/phonebg.png) no-repeat; width:360px; height:753px; position:absolute;}
 .phonebox .previmg{ width:216px; height:313px; margin:76px 0 0 22px;}
 .phonebox .close{ right:-40px; top:-10px;}
 /*订单详情*/
@@ -133,8 +133,34 @@
 .tab01-addorder-page .t5{ width:70px;}
 .tab01-addorder-page .t6{ width:152px;}
 .tab01-addorder-page .t7{ width:152px ;}
-
-
+/*1021*/
+.phonebox .close{ top:10px;}
+.viewpic{ width:86px; padding:10px 0 0 0; text-align:center;}
+.viewpic img{ width:84px; height:84px; border:1px solid #ccc; margin-bottom:5px;}
+.delpic{ cursor:pointer; color:#238cc8; cursor:pointer;}
+.phoneview{ width:280px; margin:130px auto;}
+.top-view{ padding-top:4px; height:36px; background:#2e4653; margin-bottom:10px;}
+.top-view li{ float:left; height:36px; font-size:16px; color:#fff; font-weight:bold; line-height:36px; cursor:pointer; margin-left:10px; width:100px; border-radius:5px 5px 0 0; text-align:center;}
+.top-view li.select{ background:#eff3f4; color:#172934;}
+.mid-view{ padding:12px 10px 30px 10px; width:258px; border:1px solid #e9ece6;}
+.part01-detail h5{ padding-bottom:6px; color:#000;}
+.part01-detail p{ padding-bottom:6px; color:#929292;}
+.photoview{ padding-top:10px; text-align:center}
+.photoview img{ max-width:258px; margin-bottom:20px;}
+.photoview a{ color:#30262d; text-decoration:underline;}
+.grp01-view{ width:100%; position:relative; float:left; margin-bottom:10px; height:140px;}
+.grp01-view img{ width:258px; height:140px;}
+.grp01-view .txt{ position:absolute; left:0; bottom:0;}
+.grp01-view .txt .bg{ background:#000; height:42px; width:258px; position:absolute; left:0; bottom:0; display:block;}
+.grp01-view .txt p{ color:#fff; left:0; bottom:5px; font-size:13px; padding:0 5px; position:absolute; z-index:2; width:248px;}
+.grp02-view{  margin-top:10px;}
+.grp02-view li{ padding-bottom:10px; width:100%; float:left; padding-top:10px; height:40px; border-top:1px solid #ccc;}
+.grp02-view li img{ width:40px; height:40px; float:right;}
+.grp02-view li strong{ float:left; padding-right:10px; width:205px; padding-top:3px; line-height:20px;}
+.pop_photoview {
+	max-width:258px;
+	max-height:393px;
+}
 
 
 ul{ margin:0; padding:0; list-style: none;}
@@ -154,3 +180,4 @@ ul{ margin:0; padding:0; list-style: none;}
 .controsub{border:1px solid red;}
 .fontc{float:left;width:50px;margin-left: 25px;margin-top:5px;font-size: 13px;margin-top: 25px;}
 .jumpTK{background:white;border:1px solid #eff3f4;width: 300px;height: 220px;position:absolute;top:100%;left:40%;line-height: 10px;display: none;}
+

@@ -771,11 +771,15 @@ Weibo.prototype.create_details_fn = function ($url) {
 		html += '<table class="tab01-mr">';
 		html += '<tr>';
 		html += '<td class="t1">国籍:</td>';
-		html += '<td class="t2">中国</td>';
+		html += '<td class="t2">暂无数据</td>';
 		html += '</tr>';
 		html += '<tr>';
 		html += '<td class="t1">主要成就:</td>';
 		html += '<td class="t2">暂无数据</td>';
+		html += '</tr>';
+		html += '<tr>';
+		html += '<td class="t1">账号名:</td>';
+		html += '<td class="t2">'+data.bs_account_name+'</td>';
 		html += '</tr>';
 		html += '</table>';
 		html += '</div>';
@@ -926,10 +930,10 @@ Weibo.prototype.add_selected_box_fn = function () {
 				//提交操作
 				var result = System.ajax_post_setup(system_info.post_order_url,post_data,'JSON');
 				if (result.status == 0) {
-					alert('提交成功！');
+					alert(result.msg);
 					window.location.href= result.data.go_to_url;	//跳转
 				} else {
-					alert('添加失败请稍后重新再试！');
+					alert(result.msg);
 					return false;
 				}
 			}
@@ -998,9 +1002,9 @@ Weibo.prototype.page_init_fn = function () {
 	
 	//对没有订单的情况进行隐藏
 	if (_father_this.order_id.val() == '') {
-		_father_this.all_selected.css({'display':'none'});
-		_father_this.add_selected_box.css({'display':'none'});
-		_father_this.now_selected.remove();
+		//_father_this.all_selected.css({'display':'none'});
+		//_father_this.add_selected_box.css({'display':'none'});
+		//_father_this.now_selected.remove();
 	}
 }
 

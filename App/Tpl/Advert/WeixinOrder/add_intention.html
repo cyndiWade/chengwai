@@ -28,7 +28,7 @@
 		<div class="box02-intention l">
 			<div class="int-tip l">注：<b class="red">*</b> 为必填项</div>
 			
-			<form action="{:U('Advert/WeixinOrder/add_yxtintes')}" method="post" class="generalize_form" enctype="multipart/form-data" >
+			<form action="{:U('Advert/WeixinOrder/add_yxtintes',array('account_ids'=>$_GET['account_ids']))}" method="post" class="generalize_form" enctype="multipart/form-data" >
 			<table class="tab01-inten l">
 			  <tr>
 				<td class="t1"><i>*</i><strong>投放平台：</strong></td>
@@ -47,10 +47,10 @@
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>广告位：</strong></span></td>
 				<td class="t2">
-					<span class="soft fl"><input type="radio" name="ggw_type" checked="checked" class="radio" value="1"/><strong>单图文</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
-					<span class="soft fl"><input type="radio" name="ggw_type" class="radio" value="2"/><strong>多图文第一条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
-					<span class="soft fl"><input type="radio" name="ggw_type" class="radio" value="3"/><strong>多图文第二条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
-					<span class="soft fl"><input type="radio" name="ggw_type" class="radio" value="4"/><strong>多图文第3-N条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" /></span>
+					<span class="soft fl"><input type="radio" name="ggw_type" checked="checked" class="radio ggw_type" value="1"/><strong>单图文</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" class="tooltip_tonus" data-src="{$global_tpl_view.Group_Resource_Path}images/weixin_location_101.jpg" data-width="220" date-heigth="300"  /></span>
+					<span class="soft fl"><input type="radio" name="ggw_type" class="radio ggw_type" value="2"/><strong>多图文第一条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" class="tooltip_tonus" data-src="{$global_tpl_view.Group_Resource_Path}images/weixin_location_201.jpg" data-width="220" date-heigth="300" /></span>
+					<span class="soft fl"><input type="radio" name="ggw_type" class="radio ggw_type" value="3"/><strong>多图文第二条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" class="tooltip_tonus" data-src="{$global_tpl_view.Group_Resource_Path}images/weixin_location_202.jpg" data-width="220" date-heigth="300"  /></span>
+					<span class="soft fl"><input type="radio" name="ggw_type" class="radio ggw_type" value="4"/><strong>多图文第3-N条</strong><img src="{$global_tpl_view.Group_Resource_Path}images/qa.png" class="tooltip_tonus" data-src="{$global_tpl_view.Group_Resource_Path}images/weixin_location_203.jpg" data-width="220" date-heigth="300"  /></span>
 				</td>
 			  </tr>
 			  <tr>
@@ -64,6 +64,14 @@
 				<td class="t1"><span><i>*</i><strong>标题：</strong></span></td>
 				<td class="t2"><input type="text" name="title" class="text" datatype="*1-50" errormsg="请正确填写范围是1-50个字符" nullmsg="请填写标题名称" />
 				<p class="writetip">请不要超过50个字</p>
+				</td>
+			  </tr>
+			  <tr>
+				<td class="t1"><span><strong>摘要：</strong></span></td>
+				<td class="t2">
+					<div class="forward">
+						<textarea name="zhaiyao" class="textarea" datatype="*0-1000"  nullmsg="请输入内容" errormsg="字符范围10-1000个" ></textarea>
+					</div>
 				</td>
 			  </tr>
 			  <tr>
@@ -83,7 +91,7 @@
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>正文：</strong></span></td>
 				<td class="t2"><div class="forward">
-					<textarea name="zw_info" id="TextArea1" class="ckeditor"  datatype="*10-1000"  nullmsg="请输入内容" errormsg="字符最多1000个" ></textarea>
+					<textarea name="zw_info" id="TextArea1" class="ckeditor"  datatype="*0-1000"  nullmsg="请输入内容" errormsg="字符最多1000个" ></textarea>
 				</div></td>
 			  </tr>
 			  <tr>
@@ -134,7 +142,7 @@
 				<td class="t2"><div class="forward"><textarea class="textarea bz_info" name="bz_info" ></textarea><p>请填写备注信息，请不要超过300个汉字！</p></div></td>
 			  </tr>
 			  <tr>
-				<td class="t1"><span><i>*</i><strong>传资质文件：</strong></span></td>
+				<td class="t1"><span><i>*</i><strong>上传资质文件：</strong></span></td>
 				<td class="t2">
 					<div class="provebox l"><input type="file" class="file fl" name="genuineFile" />
 					<!--  <span class="btn brownbtn fl">使用历史证明</span> -->
@@ -158,18 +166,78 @@
 <include file="Public:member_footer" />
 
 <!-- 手机预览弹窗 -->
+<!-- 手机预览弹窗 -->
 <div class="phonebox none tl">
 	<span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/del_phone.png" /></span>
 	<div class="mid-phone l">
-		<img class="previmg" src="{$global_tpl_view.Group_Resource_Path}images/phone_img01.gif" />	
+		<div class="phoneview">
+        	<ul class="top-view"><li class="select">单图文</li><li>多图文</li></ul>
+        	
+            <div class="mid-view fl">
+            
+            	<!-- 单图文 -->
+            	<div class="part01-view l">
+            		<h5 class="pop_title"></h5>
+            		<p class="pop_time"></p>
+            		
+                	<div class="grp01-view">
+                    	<a href="javascript:;"><img src="{$global_tpl_view.Group_Resource_Path}images/img01.jpg" />
+                        	<div class="txt">
+                        		<div class="bg"></div>
+                       			 <p class="pop_zhaiyao"></p>
+                        	</div>
+                        </a>                   
+                    </div>
+                    
+                   <p class="pop_zhaiyao"></p>
+              </div>
+              
+              <!-- 多图文 -->
+              <div class="part01-view l none">
+                	<div class="grp01-view">
+                    	<a href="javascript:;"><img src="{$global_tpl_view.Group_Resource_Path}images/img01.jpg" />
+                        <div class="txt"><div class="bg"></div><p class="pop_title"></p></div></a>                   
+                    </div>
+                    <ul class="grp02-view">
+                    	<li><a href="javascript:;"><strong class="pop_dtw"></strong><img src="{$global_tpl_view.Group_Resource_Path}images/img01.jpg" /></a></li>
+                        <li><a href="javascript:;"><strong class="pop_dtw"></strong><img src="{$global_tpl_view.Group_Resource_Path}images/img01.jpg" /></a></li>
+                        <li><a href="javascript:;"><strong class="pop_dtw"></strong><img src="{$global_tpl_view.Group_Resource_Path}images/img01.jpg" /></a></li>
+                        <li><a href="javascript:;"><strong class="pop_dtw"></strong><img src="{$global_tpl_view.Group_Resource_Path}images/img01.jpg" /></a></li>
+                    </ul>
+              </div>
+              
+              <!-- 详情 -->
+              <div class="part01-detail none">
+              	<h5 class="pop_title"></h5>
+                <p class="pop_time"></p>
+                <div class="pop_photoview">
+                <!-- 
+                <img src="{$global_tpl_view.Group_Resource_Path}images/img01.jpg" />
+                </div>
+                <div class="infoview">
+                多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文多图文
+                </div>
+             -->
+             
+            
+              </div>
+            </div>
+        </div>
 	</div>
 </div>
+
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 
 <script src="{$global_tpl_view.Global_Resource_Path}Validform/js/Validform_v5.3.2.js"></script>
 
 <script src="{$global_tpl_view.Global_Resource_Path}ckeditor/ckeditor.js"></script>
+
+<!-- 插件 -->
+<link rel="stylesheet" href="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.tooltip.css" />
+<script src="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.bgiframe.js" type="text/javascript"></script>
+<script src="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.dimensions.js" type="text/javascript"></script>
+<script src="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.tooltip.js" type="text/javascript"></script>
 
 <script src="{$global_tpl_view.Module_Resource_Path}add_generalize.js"></script>
 

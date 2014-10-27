@@ -179,3 +179,8 @@ body{ background:#fefefe;}
 
 /*1021*/
 .part02-batch{ height:147px; overflow:auto;}
+
+.head_img {
+	height:120px  !important;
+	width:60px; 
+}

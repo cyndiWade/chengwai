@@ -30,6 +30,9 @@ class AccountNewsAction extends AdminBaseAction {
 		
 		$list = $this->db['NowAccountObj']->where(array('is_del'=>0))->select();
 		
+		if ($list == true) {
+			
+		}
 		
 		$data['list'] = $list;
 		
