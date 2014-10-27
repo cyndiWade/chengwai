@@ -129,14 +129,38 @@ class OrderAction extends AdminBaseAction {
 				$this->OrderLog->create();
 				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
 			}
-			$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 			
-		}
+		} elseif ($act == 'update_order') {
+			if ($this->isPost()) {
+				
+				//修改订单状态
+				$this->db['GeneralizeNewsOrder']->create();
+				$st = $this->db['GeneralizeNewsOrder']->where(array('id'=>$order_id))->save();
+			}
+		}	
 		
+		
+		
+		$data['order_id'] = $order_id;
+		
+		$order_info = $this->db['GeneralizeNewsOrder']->where(array('id'=>$order_id))->find();
+		$data['order_info'] = $order_info;
+		
+		$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 		$data['order_log_list'] = $order_log_list;
+		
+		parent::global_tpl_view( array(
+				'action_name'=>'新闻媒体推广单',
+				'title_name'=>'新闻媒体推广单',
+				'add_name'=>'添加类别'
+		));
+		
 		parent::data_to_view($data);
 		$this->display();
 	}
+	
+	
+	
 	
 	
 	
@@ -163,6 +187,7 @@ class OrderAction extends AdminBaseAction {
 		
 			}
 		}
+		
 		
 		$data['list'] = $list;
 		parent::global_tpl_view( array(
@@ -202,12 +227,33 @@ class OrderAction extends AdminBaseAction {
 				$this->OrderLog->create();
 				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
 			}
-			$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 			
-		}
+		}elseif ($act == 'update_order') {
+			if ($this->isPost()) {
+				
+				//修改订单状态
+				$this->db['GeneralizeOrder']->create();
+				$st = $this->db['GeneralizeOrder']->where(array('id'=>$order_id))->save();
+			}
+		}	
 		
+			
+		$data['order_id'] = $order_id;
+		
+		$order_info = $this->db['GeneralizeOrder']->where(array('id'=>$order_id))->find();
+		$data['order_info'] = $order_info;
+		
+		$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 		$data['order_log_list'] = $order_log_list;
+	
+		parent::global_tpl_view( array(
+				'action_name'=>'微博推广单',
+				'title_name'=>'微博推广单',
+				'add_name'=>'添加类别'
+		));
+		
 		parent::data_to_view($data);
+		
 		$this->display();
 	}
 	
