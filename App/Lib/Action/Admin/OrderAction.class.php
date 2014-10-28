@@ -36,6 +36,10 @@ class OrderAction extends AdminBaseAction {
 		'IntentionWeixinAccount'=>'IntentionWeixinAccount',
 			
 		'Users'=>'Users',	//用户账号表
+		
+		'AccountNews'=>'AccountNews',
+		'AccountWeibo'=>'AccountWeibo',
+		'AccountWeixin'=>'AccountWeixin',
 			
 		//订单日志表	
 		'OrderLog'=>'OrderLog',
@@ -67,7 +71,7 @@ class OrderAction extends AdminBaseAction {
 		$this->Account_Order_Status = C('Account_Order_Status');
 	}
 	
-	
+		
 	
 	//新闻媒体数据列表
 	public function news_generalize () {
@@ -137,7 +141,17 @@ class OrderAction extends AdminBaseAction {
 				$this->db['GeneralizeNewsOrder']->create();
 				$st = $this->db['GeneralizeNewsOrder']->where(array('id'=>$order_id))->save();
 			}
-		}	
+			
+		//当个确认	
+		} elseif ($act == 'confirm') {
+			$account_id = $this->_get('account_id');	//账号ID
+			
+			$audit_status = $this->Account_Order_Status[1]['status'];
+			$this->db['GeneralizeNewsAccount']->where(array('id'=>$account_id))->save(array('audit_status'=>$audit_status));
+			
+			alertLocation('',C('PREV_URL'));
+			//$this->redirect('/Admin/Order/'.__FUNCTION__.'/'.12313);
+		}
 		
 		
 		
@@ -148,6 +162,20 @@ class OrderAction extends AdminBaseAction {
 		
 		$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 		$data['order_log_list'] = $order_log_list;
+		
+		
+		$account_list = $this->db['GeneralizeNewsAccount']->where(array('generalize_id'=>$order_id))->select();
+		if($account_list == true) {
+			foreach ($account_list as $key=>$val) {
+				$account_data = $this->db['AccountNews']->where(array('id'=>$val['account_id']))->find();
+				$account_list[$key]['account_name'] =$account_data['account_name'];
+				$account_list[$key]['status_explain'] = $this->Account_Order_Status[$val['audit_status']]['explain'];
+				
+			}
+		}
+	
+		
+		$data['account_list'] = $account_list;
 		
 		parent::global_tpl_view( array(
 				'action_name'=>'新闻媒体推广单',
@@ -286,7 +314,6 @@ class OrderAction extends AdminBaseAction {
 		parent::global_tpl_view( array(
 				'action_name'=>'微博意向单',
 				'title_name'=>'微博意向单',
-				'add_name'=>'添加类别'
 		));
 	
 		parent::data_to_view($data);
@@ -322,11 +349,32 @@ class OrderAction extends AdminBaseAction {
 				$this->OrderLog->create();
 				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
 			}
-			$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 			
-		}
+			
+		} elseif ($act == 'update_order') {
+			if ($this->isPost()) {
+				
+				//修改订单状态
+				$this->db['IntentionWeiboOrder']->create();
+				$st = $this->db['IntentionWeiboOrder']->where(array('id'=>$order_id))->save();
+			}
+		}	
 		
+			
+		$data['order_id'] = $order_id;
+		
+		$order_info = $this->db['IntentionWeiboOrder']->where(array('id'=>$order_id))->find();
+		$data['order_info'] = $order_info;
+		
+		$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 		$data['order_log_list'] = $order_log_list;
+		
+		parent::global_tpl_view( array(
+				'action_name'=>'微博意向单',
+				'title_name'=>'微博意向单',
+		));
+		
+		
 		parent::data_to_view($data);
 		$this->display();
 	}
@@ -396,11 +444,30 @@ class OrderAction extends AdminBaseAction {
 				$this->OrderLog->create();
 				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
 			}
-			$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 			
-		}
+			
+		}elseif ($act == 'update_order') {
+			if ($this->isPost()) {
+				
+				//修改订单状态
+				$this->db['GeneralizeWeixinOrder']->create();
+				$st = $this->db['GeneralizeWeixinOrder']->where(array('id'=>$order_id))->save();
+			}
+		}	
 		
+			
+		$data['order_id'] = $order_id;
+		
+		$order_info = $this->db['GeneralizeWeixinOrder']->where(array('id'=>$order_id))->find();
+		$data['order_info'] = $order_info;
+		
+		$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 		$data['order_log_list'] = $order_log_list;
+		
+		parent::global_tpl_view( array(
+				'action_name'=>'微信推广单',
+				'title_name'=>'微信推广单',
+		));
 		parent::data_to_view($data);
 		$this->display();
 	}
@@ -467,11 +534,30 @@ class OrderAction extends AdminBaseAction {
 				$this->OrderLog->create();
 				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
 			}
-			$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
-			
-		}
 		
+		}elseif ($act == 'update_order') {
+			if ($this->isPost()) {
+				
+				//修改订单状态
+				$this->db['IntentionWeixinOrder']->create();
+				$st = $this->db['IntentionWeixinOrder']->where(array('id'=>$order_id))->save();
+			}
+		}	
+		
+			
+		$data['order_id'] = $order_id;
+		
+		$order_info = $this->db['IntentionWeixinOrder']->where(array('id'=>$order_id))->find();
+		$data['order_info'] = $order_info;
+		
+		$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 		$data['order_log_list'] = $order_log_list;
+	
+		parent::global_tpl_view( array(
+				'action_name'=>'微信意向单',
+				'title_name'=>'微信意向单',
+				'add_name'=>'添加类别'
+		));
 		parent::data_to_view($data);
 		$this->display();
 	}
