@@ -150,7 +150,6 @@ class OrderAction extends AdminBaseAction {
 			$this->db['GeneralizeNewsAccount']->where(array('id'=>$account_id))->save(array('audit_status'=>$audit_status));
 			
 			alertLocation('',C('PREV_URL'));
-			//$this->redirect('/Admin/Order/'.__FUNCTION__.'/'.12313);
 		}
 		
 		
@@ -173,8 +172,6 @@ class OrderAction extends AdminBaseAction {
 				
 			}
 		}
-	
-		
 		$data['account_list'] = $account_list;
 		
 		parent::global_tpl_view( array(
@@ -186,7 +183,6 @@ class OrderAction extends AdminBaseAction {
 		parent::data_to_view($data);
 		$this->display();
 	}
-	
 	
 	
 	
@@ -263,7 +259,14 @@ class OrderAction extends AdminBaseAction {
 				$this->db['GeneralizeOrder']->create();
 				$st = $this->db['GeneralizeOrder']->where(array('id'=>$order_id))->save();
 			}
-		}	
+		}elseif ($act == 'confirm') {
+			$account_id = $this->_get('account_id');	//账号ID
+			
+			$audit_status = $this->Account_Order_Status[1]['status'];
+			$this->db['GeneralizeAccount']->where(array('id'=>$account_id))->save(array('audit_status'=>$audit_status));
+			
+			alertLocation('',C('PREV_URL'));
+		}
 		
 			
 		$data['order_id'] = $order_id;
@@ -274,6 +277,18 @@ class OrderAction extends AdminBaseAction {
 		$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 		$data['order_log_list'] = $order_log_list;
 	
+
+		$account_list = $this->db['GeneralizeAccount']->where(array('generalize_id'=>$order_id))->select();
+		if($account_list == true) {
+			foreach ($account_list as $key=>$val) {
+				$account_data = $this->db['AccountWeibo']->where(array('id'=>$val['account_id']))->find();
+				$account_list[$key]['account_name'] =$account_data['account_name'];
+				$account_list[$key]['status_explain'] = $this->Account_Order_Status[$val['audit_status']]['explain'];
+		
+			}
+		}
+		$data['account_list'] = $account_list;
+		
 		parent::global_tpl_view( array(
 				'action_name'=>'微博推广单',
 				'title_name'=>'微博推广单',
@@ -358,7 +373,14 @@ class OrderAction extends AdminBaseAction {
 				$this->db['IntentionWeiboOrder']->create();
 				$st = $this->db['IntentionWeiboOrder']->where(array('id'=>$order_id))->save();
 			}
-		}	
+		}elseif ($act == 'confirm') {
+			$account_id = $this->_get('account_id');	//账号ID
+			
+			$audit_status = $this->Account_Order_Status[1]['status'];
+			$this->db['IntentionWeiboAccount']->where(array('id'=>$account_id))->save(array('audit_status'=>$audit_status));
+			
+			alertLocation('',C('PREV_URL'));
+		}
 		
 			
 		$data['order_id'] = $order_id;
@@ -368,6 +390,18 @@ class OrderAction extends AdminBaseAction {
 		
 		$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 		$data['order_log_list'] = $order_log_list;
+		
+
+		$account_list = $this->db['IntentionWeiboAccount']->where(array('intention_id'=>$order_id))->select();
+		if($account_list == true) {
+			foreach ($account_list as $key=>$val) {
+				$account_data = $this->db['AccountWeibo']->where(array('id'=>$val['account_id']))->find();
+				$account_list[$key]['account_name'] =$account_data['account_name'];
+				$account_list[$key]['status_explain'] = $this->Account_Order_Status[$val['audit_status']]['explain'];
+		
+			}
+		}
+		$data['account_list'] = $account_list;
 		
 		parent::global_tpl_view( array(
 				'action_name'=>'微博意向单',
@@ -453,7 +487,16 @@ class OrderAction extends AdminBaseAction {
 				$this->db['GeneralizeWeixinOrder']->create();
 				$st = $this->db['GeneralizeWeixinOrder']->where(array('id'=>$order_id))->save();
 			}
-		}	
+			
+		}elseif ($act == 'confirm') {
+			$account_id = $this->_get('account_id');	//账号ID
+			
+			$audit_status = $this->Account_Order_Status[1]['status'];
+			$this->db['GeneralizeWeixinAccount']->where(array('id'=>$account_id))->save(array('audit_status'=>$audit_status));
+			
+			alertLocation('',C('PREV_URL'));
+		}
+		
 		
 			
 		$data['order_id'] = $order_id;
@@ -463,6 +506,19 @@ class OrderAction extends AdminBaseAction {
 		
 		$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 		$data['order_log_list'] = $order_log_list;
+		
+
+		$account_list = $this->db['GeneralizeWeixinAccount']->where(array('generalize_id'=>$order_id))->select();
+		if($account_list == true) {
+			foreach ($account_list as $key=>$val) {
+				$account_data = $this->db['AccountWeixin']->where(array('id'=>$val['account_id']))->find();
+				$account_list[$key]['account_name'] =$account_data['account_name'];
+				$account_list[$key]['status_explain'] = $this->Account_Order_Status[$val['audit_status']]['explain'];
+		
+			}
+		}
+		$data['account_list'] = $account_list;
+		
 		
 		parent::global_tpl_view( array(
 				'action_name'=>'微信推广单',
@@ -542,7 +598,15 @@ class OrderAction extends AdminBaseAction {
 				$this->db['IntentionWeixinOrder']->create();
 				$st = $this->db['IntentionWeixinOrder']->where(array('id'=>$order_id))->save();
 			}
-		}	
+		
+		}elseif ($act == 'confirm') {
+			$account_id = $this->_get('account_id');	//账号ID
+			
+			$audit_status = $this->Account_Order_Status[1]['status'];
+			$this->db['IntentionWeixinAccount']->where(array('id'=>$account_id))->save(array('audit_status'=>$audit_status));
+			
+			alertLocation('',C('PREV_URL'));
+		}
 		
 			
 		$data['order_id'] = $order_id;
@@ -553,6 +617,17 @@ class OrderAction extends AdminBaseAction {
 		$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 		$data['order_log_list'] = $order_log_list;
 	
+		$account_list = $this->db['IntentionWeixinAccount']->where(array('generalize_id'=>$order_id))->select();
+		if($account_list == true) {
+			foreach ($account_list as $key=>$val) {
+				$account_data = $this->db['AccountWeixin']->where(array('id'=>$val['account_id']))->find();
+				$account_list[$key]['account_name'] =$account_data['account_name'];
+				$account_list[$key]['status_explain'] = $this->Account_Order_Status[$val['audit_status']]['explain'];
+		
+			}
+		}
+		$data['account_list'] = $account_list;
+		
 		parent::global_tpl_view( array(
 				'action_name'=>'微信意向单',
 				'title_name'=>'微信意向单',

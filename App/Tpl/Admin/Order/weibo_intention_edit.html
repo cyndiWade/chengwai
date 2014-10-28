@@ -341,7 +341,72 @@
 					</div>
 
 				</div>
-				<!-- END PAGE CONTENT-->         
+				<!-- END PAGE CONTENT-->   
+				
+				
+				<!-- 媒体账号 -->
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->
+
+						<div class="portlet box blue">
+
+							<div class="portlet-title">
+
+								<div class="caption"><i class="icon-globe"></i>订单日志</div>
+
+								<div class="tools">
+
+									<a href="javascript:;" class="collapse"></a>
+									
+									<a href="javascript:;" class="reload"></a>
+			
+
+								</div>
+
+							</div>
+
+
+							<div class="portlet-body">
+								
+								<table class="table table-striped table-bordered table-hover sample_1">
+									<thead>
+										<tr>
+											<th>预约ID</th>
+											<th>预约媒体账号</th>
+											<th>价格</th>
+											<th>状态</th>		
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>	
+										<volist name="view_data['account_list']" id="vo" key="i">
+										<tr class="odd gradeX">
+											<td >{$vo.id}</td>
+											<td>{$vo.account_name}</td>
+											<td>{$vo.price}</td>
+											<td>{$vo.status_explain}</td>
+											<td class="center">
+											<a href="{:U('Admin/Order/weibo_intention_edit',array('act'=>'confirm','account_id'=>$vo['id']))}">
+											通过
+											</a>
+											</td>
+										</tr>
+										</volist>										
+									</tbody>
+								</table>
+							</div>
+	
+						</div>
+
+						<!-- END EXAMPLE TABLE PORTLET-->
+
+					</div>
+
+				</div>
+			      
 
 				<!-- 订单日志 -->
 				<div class="row-fluid">
