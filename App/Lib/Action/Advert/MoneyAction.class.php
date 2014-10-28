@@ -60,6 +60,7 @@ class MoneyAction extends AdvertBaseAction {
 		import('ORG.Util.Page');
 		$fund = $this->db['Fund'];
 		$where['users_id'] =  $this->oUser->id;
+		$where['adormed'] = 2;
 		$count      = $fund->where($where)->count();
 		$Page       = new Page($count,10);
 		$show       = $Page->show();

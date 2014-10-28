@@ -410,13 +410,13 @@ class WeiboOrderAction extends AdvertBaseAction {
 	//订单详情
 	public function generalize_detail () {
 			$order_id = $this->_get('order_id');
-		if (empty($order_id)) $this->error('非法操作！');
+		if (empty($order_id)) alertClose('非法操作！');
 		
 		//获取订单数据
 		$GeneralizeOrder = $this->db['GeneralizeOrder'];
 		$order_info = $GeneralizeOrder->get_OrderInfo_By_Id($order_id,$this->oUser->id);
 		
-		if (empty($order_info)) $this->error('订单不存在');
+		if (empty($order_info)) alertBack('订单不存在！');
 		
 		//获取订单下的账号列表
 		$GeneralizeAccount = $this->db['GeneralizeAccount'];
@@ -497,14 +497,14 @@ class WeiboOrderAction extends AdvertBaseAction {
 	//意向单订单详情
 	public function intention_detail () {
 		$order_id = $this->_get('order_id');
-		if (empty($order_id)) $this->error('非法操作！');
+		if (empty($order_id)) alertClose('非法操作！');
 		
 		//获取订单数据
 		$IntentionWeiboOrder = $this->db['IntentionWeiboOrder'];
 		$order_info = $IntentionWeiboOrder->get_OrderInfo_By_Id($order_id,$this->oUser->id);
 	
 		
-		if (empty($order_info)) $this->error('订单不存在');
+		if (empty($order_info)) alertBack('订单不存在');
 		
 		//获取订单下的账号列表
 		$IntentionWeiboAccount = $this->db['IntentionWeiboAccount'];

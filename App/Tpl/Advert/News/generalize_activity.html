@@ -62,11 +62,6 @@
 								<span><a href="{:U('Advert/News/generalize_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
 								<span><a href="{:U('Advert/News/news_list',array('order_id'=>$vo['id']))}">添加媒体</a></span>
 								<span class="delete_order" data-id="{$vo['id']}">删除</span>
-								<if condition="$vo['status'] ELT 4">
-									<span class="zhifu_order">未付款</span>
-								<else />
-									<span class="zhifu_order">已付款</span>
-								</if>
 							</div>
 						</td>
 					</tr>

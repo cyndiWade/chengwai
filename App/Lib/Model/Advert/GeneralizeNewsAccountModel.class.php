@@ -81,7 +81,7 @@
 						$Account_Order_Status = C('Account_Order_Status');
 						
 						if ($NewsOrderStatus == true) {
-							return $this->where(array('generalize_id'=>$zhifu_id))->save(array('audit_status'=>$Account_Order_Status[3]['status']));
+							return $this->where(array('generalize_id'=>$zhifu_id,'audit_status'=>1))->save(array('audit_status'=>$Account_Order_Status[3]['status']));
 						}
 						
 						//return true;

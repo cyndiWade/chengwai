@@ -252,13 +252,13 @@ class NewsAction extends AdvertBaseAction {
 	//订单详情
 	public function generalize_detail () {
 		$order_id = $this->_get('order_id');
-		if (empty($order_id)) $this->error('非法操作！');
+		if (empty($order_id)) alertBack('非法操作！');
 		
 		//获取订单数据
 		$GeneralizeNewsOrder = $this->db['GeneralizeNewsOrder'];
 		$order_info = $GeneralizeNewsOrder->get_OrderInfo_By_Id($order_id,$this->oUser->id);
 		
-		if (empty($order_info)) $this->error('订单不存在');
+		if (empty($order_info)) alertBack('订单不存在！');
 		
 		//获取订单下的账号列表
 		$GeneralizeNewsAccount = $this->db['GeneralizeNewsAccount'];

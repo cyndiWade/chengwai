@@ -393,14 +393,14 @@ class WeixinOrderAction extends AdvertBaseAction {
 	//订单详情
 	public function generalize_detail () {
 		$order_id = $this->_get('order_id');
-		if (empty($order_id)) $this->error('非法操作！');
+		if (empty($order_id)) alertClose('非法操作！');
 		
 		//获取订单数据
 		$GeneralizeWeixinOrder = $this->db['GeneralizeWeixinOrder'];
 		$order_info = $GeneralizeWeixinOrder->get_OrderInfo_By_Id($order_id,$this->oUser->id);
 	
 		
-		if (empty($order_info)) $this->error('订单不存在');
+		if (empty($order_info)) alertBack('订单不存在');
 		
 		//获取订单下的账号列表
 		$GeneralizeWeixinAccount = $this->db['GeneralizeWeixinAccount'];
@@ -483,14 +483,14 @@ class WeixinOrderAction extends AdvertBaseAction {
 	//意向单详情页
 	public function intention_detail () {
 		$order_id = $this->_get('order_id');
-		if (empty($order_id)) $this->error('非法操作！');
+		if (empty($order_id)) alertClose('非法操作！');
 		
 		//获取订单数据
 		$IntentionWeixinOrder = $this->db['IntentionWeixinOrder'];
 		$order_info = $IntentionWeixinOrder->get_OrderInfo_By_Id($order_id,$this->oUser->id);
 	
 		
-		if (empty($order_info)) $this->error('订单不存在');
+		if (empty($order_info)) alertBack('订单不存在');
 		
 		//获取订单下的账号列表
 		$IntentionWeixinAccount = $this->db['IntentionWeixinAccount'];

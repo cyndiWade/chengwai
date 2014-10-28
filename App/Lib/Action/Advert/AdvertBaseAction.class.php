@@ -69,7 +69,7 @@ class AdvertBaseAction extends AppBaseAction {
 	//验证方法
 	private function check_system_info () {
 		$check_result = $this->init_check($this->oUser);
-		if ($check_result['status'] == false) $this->error($check_result['message']);
+		if ($check_result['status'] == false) alertBack($check_result['message']);
 	}
 	
 	
