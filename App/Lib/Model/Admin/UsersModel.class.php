@@ -62,14 +62,60 @@ class UsersModel extends AdminBaseModel {
 	public function seek_all_data () {
 		$data = $this->field('u.id,u.account,u.last_login_time,u.last_login_ip,u.type,u.status')
 		->table($this->prefix.'users AS u')
-		->where(array('u.is_del'=>0,'u.type'=>array('neq',0)))
+		//->where(array('u.is_del'=>0,'u.type'=>array('neq',0)))
+		->where(array('u.is_del'=>0,'u.type'=>array('eq',0)))
 		->select();
 		parent::set_all_time($data, array('last_login_time'));
 		return $data;
 	}
 
 	
+	public function get_user_detail_info_list ($type) {
+		$users_fields = parent::field_add_prefix('Users','bs_','u.');
+		$result = array();
 	
+		//媒体主
+		if ($type == C('ACCOUNT_TYPE.Media')) {
+			
+			$user_media_fields = parent::field_add_prefix('UserMedia','mt_','m.');	
+			$result = $this->field($users_fields.','.$user_media_fields)
+			->table($this->prefix.'users AS u')
+			->join($this->prefix.'user_media AS m ON u.id = m.users_id')
+			->where(array('u.type'=>$type,'u.is_del'=>0))
+			->select();
+
+		//广告主	
+		} elseif ($type == C('ACCOUNT_TYPE.Advert')) {
+			
+			$user_advertisement_fields = parent::field_add_prefix('UserAdvertisement','ad_','a.');
+			$result = $this->field($users_fields.','.$user_advertisement_fields)
+			->table($this->prefix.'users AS u')
+			->join($this->prefix.'user_advertisement AS a ON u.id = a.users_id')
+			->where(array('u.type'=>$type,'u.is_del'=>0))
+			->select();
+		}
+		
+		
+		return $result;
+	}
+	
+	
+	public function get_user_detail_info_one ($id = 2) {
+		$result = array();
+		
+		$users_fields = parent::field_add_prefix('Users','bs_');
+		
+		$user_base  = $this->field($users_fields)->where(array('id'=>$id))->find();
+		
+		//媒体主
+		if ($user_base['bs_type'] == C('ACCOUNT_TYPE.Media')) {
+			$user_media_fields = parent::field_add_prefix('UserMedia','mt_');
+			$user_media_info = D('UserMedia')->field($user_media_fields)->where(array('users_id'=>$id))->find();
+		
+			array_merge($user_base,$user_media_info);
+		}
+		
+	}
 	
 	
 	

@@ -108,7 +108,7 @@
 					</ul>
 				</li>
 				
-				<!-- 
+				
 				<li class="">
 					<a href="javascript:;">
 
@@ -133,12 +133,33 @@
 					</ul>
 				</li>
 				
-				 -->
-
+				
 				<li class="">
 					<a href="javascript:;">
-					<i class="icon-cogs"></i>
-					<span class="title">系统管理</span>
+
+					<i class="icon-user-md"></i> 
+
+					<span class="title">会员管理</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+						<li>
+							<a href="{:U('Admin/Member/index',array('type'=>1))}">媒体主会员列表</a>
+						</li>
+						<li>
+							<a href="{:U('Admin/Member/index',array('type'=>2))}">广告主会员列表</a>
+						</li>
+					</ul>
+				</li>
+				
+				
+				<li class="">
+					<a href="javascript:;">
+					<i class="icon-cog"></i>
+					<span class="title">网站管理</span>
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
@@ -148,6 +169,17 @@
 						<li>
 							<a href="{:U('Admin/System/finance')}">财务设置</a>
 						</li>
+					</ul>
+				</li>
+				
+
+				<li class="">
+					<a href="javascript:;">
+					<i class="icon-cogs"></i>
+					<span class="title">系统管理</span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
 						<li>
 							<a href="{:U('Admin/User/index')}">账号管理</a>
 						</li>

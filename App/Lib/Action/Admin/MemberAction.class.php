@@ -1,16 +1,18 @@
 <?php
 /**
- *	后台用户管理
+ *	会员管理
  *
  */
-class UserAction extends AdminBaseAction {
+class MemberAction extends AdminBaseAction {
    
-	private $module_name = '系统管理';
+	private $module_name = '会员管理';
 	
 	protected  $db = array(
 		'Users' => 'Users'		
 	);
 	
+	
+	private $type;
 	/**
 	 * 构造方法
 	 */
@@ -18,6 +20,8 @@ class UserAction extends AdminBaseAction {
 		parent::__construct();
 		
 		parent::global_tpl_view(array('module_name'=>$this->module_name));
+		
+		$this->type = $this->_get('type');
 	}
 	
 	//用户列表	
@@ -25,7 +29,11 @@ class UserAction extends AdminBaseAction {
 		$Users = D('Users');
 		$user_status = C('ACCOUNT_STATUS');		//状态
 		$user_list = $Users->seek_all_data();
-
+		
+		$Users->get_user_detail_info_list($this->type);
+		
+		$Users->get_user_detail_info_one();
+		
 		foreach ($user_list AS $key=>$val) {
 			$user_list[$key]['status_info'] = $user_status[$val['status']];
 		}
@@ -117,7 +125,7 @@ class UserAction extends AdminBaseAction {
 					if ($account_is_have) $this->error('此账号已存在');
 						
 					$Users->create();
-					$user_id = $Users->add_account(C('ACCOUNT_TYPE.ADMIN'));
+					$user_id = $Users->add_account(C('ACCOUNT_TYPE.HOTEL'));
 					$user_id ? $this->success('添加成功！') : $this->error('添加失败，请重新尝试！');
 					exit;
 				}
