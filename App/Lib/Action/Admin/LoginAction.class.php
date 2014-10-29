@@ -32,7 +32,7 @@ class LoginAction extends AdminBaseAction {
     		if (!Validate::check_string_num($account)) $this->error('账号密码只能输入英文或数字');
     	
     		//读取用户数据
-    		$user_info = $Users->get_user_info(array('account'=>$account,'is_del'=>0));
+    		$user_info = $Users->get_user_info(array('account'=>$account,'type'=>0,'is_del'=>0));
     	
     		//验证用户数据
     		if (empty($user_info)) {
