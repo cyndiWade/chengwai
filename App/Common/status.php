@@ -1,4 +1,4 @@
-'<?php
+<?php
 	
 	//广告位
 	function adGet($id)
