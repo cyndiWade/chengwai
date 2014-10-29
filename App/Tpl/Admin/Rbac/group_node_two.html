@@ -48,17 +48,17 @@
 							</div>
 							<div class="portlet-body form">
 								<!-- BEGIN FORM-->
-								<form action="?s=/Admin/Rbac/group_node_update" method="post"  class="form-horizontal">									<input type="hidden" name="group_id" value="{$group_id}" />
+								<form action="{:U('Admin/Rbac/group_node_update')}" method="post"  class="form-horizontal">									<input type="hidden" name="group_id" value="{$group_id}" />
 
 									<div class="control-group">
 										<label class="control-label">选择权限：</label>
 										<div class="controls">
 											<div class="row-fluid">
-												<div class="span3">													<volist name="node_group" id="vo">														<p>															<input type="checkbox" {$vo.checked} name="node[]" value="{$vo.id}" />																	<input type="checkbox" {$vo.checked} name="have_node[]" value="{$vo.id}" class="wade_check_box"/>															<span class="wade_local" data-url="?s=/Admin/Rbac/group_node_two/group_id/{$group_id}/module_pid/{$vo.id}">{$vo.name}-({$vo.title})</span>														</p>													</volist>
+												<div class="span3">													<volist name="node_group" id="vo">														<p>															<input type="checkbox" {$vo.checked} name="node[]" value="{$vo.id}" />																	<input type="checkbox" {$vo.checked} name="have_node[]" value="{$vo.id}" class="wade_check_box"/>															<!--<span class="wade_local" data-url="?s=/Admin/Rbac/group_node_two/group_id/{$group_id}/module_pid/{$vo.id}">{$vo.name}-({$vo.title})</span>-->															<span class="wade_local" data-url="{:U('Admin/Rbac/group_node_two',array('group_id'=>$group_id,'module_pid'=>$vo['id']))}">{$vo.name}-({$vo.title})</span>														</p>													</volist>
 												</div>
 												<div class="span3">
-													<volist name="node_module" id="vo">														<p>															<input type="checkbox" {$vo.checked}  name="node[]" value="{$vo.id}"  />															<input type="checkbox" {$vo.checked} name="have_node[]" value="{$vo.id}" class="wade_check_box"/>															<span class="wade_local" data-url="?s=/Admin/Rbac/group_node_two/group_id/{$group_id}/module_pid/{$module_pid}/action_pid/{$vo.id}">{$vo.name}-({$vo.title})</span>														</p>													</volist>
-												</div>												<div class="span3">													<volist name="node_action" id="vo">														<p>															<input type="checkbox" {$vo.checked}  name="node[]" value="{$vo.id}"  />															<input type="checkbox" {$vo.checked} name="have_node[]" value="{$vo.id}" class="wade_check_box"/>															<span class="wade_local" data-url="?s=/Admin/Rbac/group_node_two/group_id/{$group_id}/module_pid/{$vo.id}">{$vo.name}-({$vo.title})</span>														</p>													</volist>												</div>
+													<volist name="node_module" id="vo">														<p>															<input type="checkbox" {$vo.checked}  name="node[]" value="{$vo.id}"  />															<input type="checkbox" {$vo.checked} name="have_node[]" value="{$vo.id}" class="wade_check_box"/>															<!--<span class="wade_local" data-url="?s=/Admin/Rbac/group_node_two/group_id/{$group_id}/module_pid/{$module_pid}/action_pid/{$vo.id}">{$vo.name}-({$vo.title})</span>-->															<span class="wade_local" data-url="{:U('Admin/Rbac/group_node_two',array('group_id'=>$group_id,'module_pid'=>$module_pid,'action_pid'=>$vo['id']))}">{$vo.name}-({$vo.title})</span>														</p>													</volist>
+												</div>												<div class="span3">													<volist name="node_action" id="vo">														<p>															<input type="checkbox" {$vo.checked}  name="node[]" value="{$vo.id}"  />															<input type="checkbox" {$vo.checked} name="have_node[]" value="{$vo.id}" class="wade_check_box"/>															<!--<span class="wade_local" data-url="?s=/Admin/Rbac/group_node_two/group_id/{$group_id}/module_pid/{$vo.id}">{$vo.name}-({$vo.title})</span>-->															<span >{$vo.name}-({$vo.title})</span>														</p>													</volist>												</div>
 											</div>
 										</div>
 									</div>

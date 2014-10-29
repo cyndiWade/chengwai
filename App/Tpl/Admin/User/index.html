@@ -51,14 +51,14 @@
 									<thead>
 										<tr>
 											<th>账号</th>
-											<th class="hidden-480">最后登录时间</th>											<th class="hidden-480">最后登录IP</th>											<th class="hidden-480">账号状态</th>
+											<th class="hidden-480">最后登录时间</th>											<th class="hidden-480">最后登录IP</th>											<!-- <th class="hidden-480">账号状态</th>-->
 											<th >操作</th>
 										</tr>
 									</thead>
 									<tbody>																		<volist name="user_list" id="vo">
 										<tr class="odd gradeX">
 											<td>{$vo.account}</td>
-											<td class="center hidden-480">{$vo.last_login_time}</td>											<td class="center hidden-480">{$vo.last_login_ip}</td>											<td class="center hidden-480">												<if condition="($vo[status] eq 0)">													{$vo.status_info}												<else />													<span class="required">{$vo.status_info}</span>												</if>																							</td>
+											<td class="center hidden-480">{$vo.last_login_time}</td>											<td class="center hidden-480">{$vo.last_login_ip}</td>											<!--																					<td class="center hidden-480">												<if condition="($vo[status] eq 0)">													{$vo.status_info}												<else />													<span class="required">{$vo.status_info}</span>												</if>																							</td>												-->
 											<td >												<if condition="($vo[status] eq 0)">													<a href="{:U('Admin/User/user_status',array('id'=>$vo['id'],'status'=>2))}" class="check">禁用</span></a>												<else />													<a href="{:U('Admin/User/user_status',array('id'=>$vo['id'],'status'=>0))}" class="check">启用</a>												</if>													| <a href="{:U('Admin/User/del_account',array('id'=>$vo['id']))}" class="check">删除</a>																							</td>
 										</tr>										</volist>
 									</tbody>
@@ -82,7 +82,7 @@
 	<!-- END PAGE LEVEL PLUGINS -->
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/app.js"></script>
-	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/table-managed-Admin-User-index.js"></script>     
+	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/table-managed-Admin-Public.js"></script>     
 	<script type="text/javascript">
 		jQuery(document).ready(function() {       
 		   App.init();

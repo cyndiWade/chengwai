@@ -73,7 +73,7 @@
 									</div>																		<div class="control-group">										<label class="control-label">组说明<span class="required">*</span></label>										<div class="controls">											<input type="text" name="title" value="{$group_info.title}" data-required="1"class="span6 m-wrap"/>										</div>									</div>
 									<div class="form-actions">										
 										<button type="submit" class="btn purple">添加</button>
-										<a href="?s=/Admin/Rbac/group/pid/{$pid}"<button type="button" class="btn">取消</button></a>
+										<!--<a href="?s=/Admin/Rbac/group/pid/{$pid}"<button type="button" class="btn">取消</button></a>-->										<a href="{:U('Admin/Rbac/group',array('pid'=>$pid))}"<button type="button" class="btn">取消</button></a>
 									</div>
 								</form>
 								<!-- END FORM-->

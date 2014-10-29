@@ -42,7 +42,7 @@
 							</div>
 							<div class="portlet-body">
 								<div class="clearfix">
-									<div class="btn-group">																		<a href="?s=/Admin/Rbac/groupEdit/type/add/pid/{$pid}">
+									<div class="btn-group">																		<a href="{:U('Admin/Rbac/groupEdit',array('type'=>'add','pid'=>$pid))}">
 											<button id="sample_editable_1_new" class="btn green">
 											添加新组 <i class="icon-plus"></i>
 											</button>										</a>								
@@ -63,7 +63,7 @@
 											<td class="hidden-480">{$vo.title}</a></td>
 											<td class="hidden-480">{$vo.create_time}</td>
 											<td class="center hidden-480">{$vo.update_time}</td>
-											<td >												<a href="javascript:;"><span class="wade_group_red btn_bak" data-record_prev="1" data-url="{:U('Admin/Rbac/group_node_two',array('group_id'=>$vo['id']))}">分配权限</span></a>												| <a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/Rbac/group_user',array('id'=>$vo['id']))}">分配用户</a>												| <a href="?s=/Admin/Rbac/group/pid/{$vo.id}">查看子组</a>												| <a href="?s=/Admin/Rbac/groupEdit/type/update/id/{$vo.id}">编辑</a>												| <a href="?s=/Admin/Rbac/groupEdit/type/delete/id/{$vo.id}" class="check">删除</a>																							</td>
+											<td >												<a href="javascript:;"><span class="wade_group_red btn_bak" data-record_prev="1" data-url="{:U('Admin/Rbac/group_node_two',array('group_id'=>$vo['id']))}">分配权限</span></a>												| <a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/Rbac/group_user',array('id'=>$vo['id']))}">分配用户</a>												<!--												| <a href="?s=/Admin/Rbac/group/pid/{$vo.id}">查看子组</a>												| <a href="?s=/Admin/Rbac/groupEdit/type/update/id/{$vo.id}">编辑</a>												| <a href="?s=/Admin/Rbac/groupEdit/type/delete/id/{$vo.id}" class="check">删除</a>												-->												| <a href="{:U('Admin/Rbac/group',array('pid'=>$vo['id']))}">查看子组</a>												| <a href="{:U('Admin/Rbac/groupEdit',array('type'=>'update','id'=>$vo['id']))}">编辑</a>												| <a href="{:U('Admin/Rbac/groupEdit',array('type'=>'delete','id'=>$vo['id']))}" class="check">删除</a>																							</td>
 										</tr>										</volist>
 									</tbody>
 								</table>
