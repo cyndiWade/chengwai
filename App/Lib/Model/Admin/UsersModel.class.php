@@ -112,9 +112,15 @@ class UsersModel extends AdminBaseModel {
 			$user_media_fields = parent::field_add_prefix('UserMedia','mt_');
 			$user_media_info = D('UserMedia')->field($user_media_fields)->where(array('users_id'=>$id))->find();
 		
-			array_merge($user_base,$user_media_info);
+			$result  = array_merge($user_base,$user_media_info);
+		}elseif ($user_base['bs_type'] == C('ACCOUNT_TYPE.Advert')) {
+			$user_advertisement_fields = parent::field_add_prefix('UserAdvertisement','ad_');
+			$user_advert_info = D('UserAdvertisement')->field($user_advertisement_fields)->where(array('users_id'=>$id))->find();
+
+			$result  = array_merge($user_base,$user_advert_info);
 		}
 		
+		return $result;
 	}
 	
 	
