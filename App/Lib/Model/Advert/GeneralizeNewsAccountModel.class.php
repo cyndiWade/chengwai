@@ -4,6 +4,41 @@
 	{
 		
 		//新增数据
+		// public function insertAll($array,$id)
+		// {
+		// 	$new_array = array();
+		// 	foreach($array as $key=>$value)
+		// 	{
+		// 		$new_array[$key] = addslashes($value);
+		// 	}
+		// 	//活动订单ID
+		// 	$arr['generalize_id'] = $new_array['order_id'];
+		// 	//微博账号
+		// 	$account_id = explode(',', $new_array['account_ids']);
+		// 	foreach($account_id as $value)
+		// 	{
+		// 		$arr['account_id'] = $value;
+		// 		if (parent::get_one_data($arr) == false) {
+		// 			$AccountNews = D('AccountNews')->getMoneyoUser($value);
+		// 			//用户ID
+		// 			$arr['users_id'] = $AccountNews['users_id'];
+		// 			$arr['price'] = $AccountNews['money'];
+		// 			$status = $this->add($arr);
+		// 		}
+				
+		// 	}
+		// 	$update['all_price'] = $this->where(array('generalize_id'=>$new_array['order_id']))->sum('price');
+		// 	$bool = D('GeneralizeNewsOrder')->where(array('id'=>$arr['generalize_id']))->save($update);
+		// 	if($bool)
+		// 	{
+		// 		return true;
+		// 	}else{
+		// 		return false;
+		// 	}
+		// 	return $status;
+		// }
+		
+		//执行新的直接扣款流程
 		public function insertAll($array,$id)
 		{
 			$new_array = array();
@@ -27,17 +62,77 @@
 				}
 				
 			}
+			$GeneralizeNewsOrder = D('GeneralizeNewsOrder');
 			$update['all_price'] = $this->where(array('generalize_id'=>$new_array['order_id']))->sum('price');
-			$bool = D('GeneralizeNewsOrder')->where(array('id'=>$arr['generalize_id']))->save($update);
-			if($bool)
+			$GeneralizeNewsOrder->where(array('id'=>$arr['generalize_id']))->save($update);
+			$UserAdvertisement = D('UserAdvertisement');
+			$money = $UserAdvertisement->where(array('users_id'=>$id))->getField('money');
+			$Fund = D('Fund');
+			if($money > $update['all_price'])
 			{
+				$now_money['money'] = (int)$money - (int)$update['all_price'];
+				$UserAdvertisement->where(array('users_id'=>$id))->save($now_money);
+				$add_arr = array(
+					'users_id' => $id,
+					'shop_number' => 'XF'.time(),
+					'money' => $update['all_price'],
+					'type' => 3,
+					'adormed' => 2,
+					'member_info' => '用户消费',
+					'admin_info' => '用户消费',
+					'time' => time(),
+					'status' => 1
+				);
+				$Fund->add($add_arr);
+				$this->bigOrderChild($new_array['order_id']);
 				return true;
 			}else{
+				$Order_Status = C('Order_Status');
+				$Account_Order_Status = C('Account_Order_Status');
+				$update_status = array('status'=>$Order_Status[2]['status']);
+				$GeneralizeNewsOrder->where(array('id'=>$arr['generalize_id']))->save($update_status);
+				$audit_status = array('audit_status'=>$Account_Order_Status[1]['status']);
+				$this->where(array('generalize_id'=>$arr['generalize_id']))->save($audit_status);
 				return false;
 			}
-			return $status;
 		}
-		
+
+
+		//根据总订单ID处理所有的子订单用户加钱
+		private function bigOrderChild($order_id)
+		{
+			if($order_id!='')
+			{
+				$now_list = $this->where(array('generalize_id'=>$order_id))->field('users_id,price')->select();
+				$Fund = D('Fund');
+				$UserMedia = D('UserMedia');
+				foreach($now_list as $value)
+				{
+					$money_media = $UserMedia->where(array('users_id'=>$value['users_id']))->getField('money');
+					$now_val['money'] = (int)$value['price'] + (int)$money_media;
+					$UserMedia->where(array('users_id'=>$value['users_id']))->save($now_val);
+					$media_arr = array(
+						'users_id' => $value['users_id'],
+						'shop_number' => 'SL'.time(),
+						'money' => $money_media,
+						'type' => 5,
+						'adormed' => 1,
+						'member_info' => '收入',
+						'admin_info' => '收入',
+						'time' => time(),
+						'status' => 1
+					);
+					$Fund->add($media_arr);
+				}
+				$Account_Order_Status = C('Account_Order_Status');
+				$Order_Status = C('Order_Status');
+				$all_status = array('audit_status'=>$Account_Order_Status[3]['status']);
+				$this->where(array('generalize_id'=>$order_id))->save($all_status);
+				$gen_arr = array('status'=>$Order_Status[4]['status']);
+				D('GeneralizeNewsOrder')->where(array('id'=>$order_id))->save($gen_arr);
+			}
+		}
+
 		
 		//获取账号下的订单列表
 		public function get_account_order ($generalize_id) {

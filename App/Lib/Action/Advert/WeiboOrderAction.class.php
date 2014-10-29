@@ -240,11 +240,11 @@ class WeiboOrderAction extends AdvertBaseAction {
 				if ($status == true) {
 					
 					//修改订单状态为1，平台审核的类型
-					$this->db['GeneralizeOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
-					
-					parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('/Advert/WeiboOrder/generalize_activity')));
+					//$this->db['GeneralizeOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
+					parent::updateMoney($this->oUser->id);
+					parent::callback(C('STATUS_SUCCESS'),'下单成功!',array('go_to_url'=>U('/Advert/WeiboOrder/generalize_activity')));
 				} else {
-					parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
+					parent::callback(C('STATUS_UPDATE_DATA'),'下单失败,请检查余额！');
 				}
 			}else{
 				parent::callback(C('STATUS_SUCCESS'),'正在跳转...',array('go_to_url'=>U('Advert/WeiboOrder/add_generalize',array('account_ids'=>passport_encrypt($_POST['account_ids'],'account_ids'),'pttype'=>$_POST['pt_type']))));
@@ -343,7 +343,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 					$arr = array('order_id'=>$id,'pt_type'=>$pt_type,'account_ids'=>$account_id);
 					$this->db['GeneralizeAccount']->insertAll($arr,$this->oUser->id);
 					//修改订单状态为1，平台审核的类型
-					$this->db['GeneralizeOrder']->where(array('id'=>$id))->save(array('status'=>1));
+					//$this->db['GeneralizeOrder']->where(array('id'=>$id))->save(array('status'=>1));
+					parent::updateMoney($this->oUser->id);
 					$this->redirect('Advert/WeiboOrder/generalize_activity');
 				}else{
 					if($_POST['tfpt_type']==1)

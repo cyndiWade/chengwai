@@ -257,8 +257,9 @@ class WeixinOrderAction extends AdvertBaseAction {
 	    		{
 	    			$arr = array('order_id'=>$id,'account_ids'=>$account_id);
 	    			$this->db['GeneralizeWeixinAccount']->insertAll($arr,$this->oUser->id);
+	    			parent::updateMoney($this->oUser->id);
 	    			//修改订单状态为1，平台审核的类型
-					$this->db['GeneralizeWeixinOrder']->where(array('id'=>$id))->save(array('status'=>1));
+					//$this->db['GeneralizeWeixinOrder']->where(array('id'=>$id))->save(array('status'=>1));
 	    			$this->redirect('Advert/WeixinOrder/generalize_activity');
 	    		}else{
 	    			$this->redirect('Advert/Weixin/weixin',array('order_id'=>$id));
@@ -301,6 +302,29 @@ class WeixinOrderAction extends AdvertBaseAction {
     }
 
     //存储草根关联账号
+   //  public function add_account()
+   //  {
+   //  	if($this->isPost())
+   //  	{
+   //  		if(intval($_POST['order_id']!=''))
+   //  		{
+	  //   		$status = $this->db['GeneralizeWeixinAccount']->insertAll($_POST,$this->oUser->id);
+			// 	if ($status == true) {
+					
+			// 		//修改订单状态为1，平台审核的类型
+			// 		$this->db['GeneralizeWeixinOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
+					
+			// 		parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/generalize_activity')));
+			// 	} else {
+			// 		parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
+			// 	}
+			// }else{
+			// 	parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/add_generalize',array('account_ids'=>passport_encrypt($_POST['account_ids'],'account_ids')))));
+			// }
+   //  	}
+   //  }
+
+    //存储草根关联账号新流程
     public function add_account()
     {
     	if($this->isPost())
@@ -311,18 +335,17 @@ class WeixinOrderAction extends AdvertBaseAction {
 				if ($status == true) {
 					
 					//修改订单状态为1，平台审核的类型
-					$this->db['GeneralizeWeixinOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
-					
-					parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/generalize_activity')));
+					//$this->db['GeneralizeWeixinOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
+					parent::updateMoney($this->oUser->id);
+					parent::callback(C('STATUS_SUCCESS'),'下单成功!',array('go_to_url'=>U('Advert/WeixinOrder/generalize_activity')));
 				} else {
-					parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
+					parent::callback(C('STATUS_UPDATE_DATA'),'下单失败,请检查余额！');
 				}
 			}else{
 				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/add_generalize',array('account_ids'=>passport_encrypt($_POST['account_ids'],'account_ids')))));
 			}
     	}
     }
-
 
     //存储意向关联账号
     public function add_yxaccount()
