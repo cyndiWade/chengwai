@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+
+<!-- BEGIN HEAD -->
+
+<head>
+
+	<!-- 全局样式 -->
+	<include file="Public:top" />
+
+	<!-- BEGIN PAGE LEVEL STYLES -->
+
+	<link rel="stylesheet" type="text/css" href="{$global_tpl_view.Group_Resource_Path}css/select2_metro.css" />
+
+	<link rel="stylesheet" type="text/css" href="{$global_tpl_view.Group_Resource_Path}css/chosen.css" />
+
+
+	<!-- END PAGE LEVEL STYLES -->
+
+	
+</head>
+
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+
+<body class="page-header-fixed">
+
+	<include file="Public:header" />
+
+	<!-- BEGIN CONTAINER -->
+
+	<div class="page-container row-fluid">
+
+		<!-- 左侧导航 -->
+		<include file="Public:sidebar" />
+
+		<!-- BEGIN PAGE -->  
+
+		<div class="page-content">
+
+			<!-- BEGIN PAGE CONTAINER-->
+
+			<div class="container-fluid">
+
+				<!-- BEGIN PAGE HEADER-->   
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN STYLE CUSTOMIZER -->
+						<!-- END BEGIN STYLE CUSTOMIZER -->     
+
+						<h3 class="page-title">
+
+						{$global_tpl_view.module_name}<small> {$global_tpl_view.action_name}</small>
+
+						</h3>
+		
+					</div>
+
+				</div>
+				<!-- END PAGE HEADER-->
+
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN VALIDATION STATES-->
+
+						<div class="portlet box blue">
+
+							<div class="portlet-title">
+
+								<div class="caption"><i class="icon-reorder"></i>{$global_tpl_view.title_name}</div>
+
+								<div class="tools">
+
+									<a href="javascript:;" class="collapse"></a>
+
+									<a href="javascript:;" class="reload"></a>				
+
+								</div>
+
+							</div>
+
+							<div class="portlet-body form">
+
+								<!-- BEGIN FORM-->
+
+								<form action="{:U('Admin/System/edit',array('act'=>'save_finance'))}" id="form_sample_1" method="post" class="form-horizontal" enctype="multipart/form-data">
+                     
+									<div class="alert alert-error hide">
+
+										<button class="close" data-dismiss="alert"></button>
+
+										请在文本框输入相应内容.
+
+									</div>
+
+									<div class="alert alert-success hide">
+
+										<button class="close" data-dismiss="alert"></button>
+
+										验证成功
+
+									</div>
+									
+									
+									<div class="control-group">
+										<label class="control-label">在线充值：</label>
+											<div class="controls">
+												<select class="small m-wrap" tabindex="1" name="pay">
+														<option value="1" selected="selected">开启</option>
+														<option value="0" >关闭</option>
+												</select>
+											</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">最小充值金额：</label>
+										<div class="controls">
+											<input type="text" value="{$view_data['pay_min']}" name="pay_min" data-required="1" class="span4 m-wrap">
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">线下付款地址：</label>
+										<div class="controls">
+											<input type="text" value="{$view_data['offline_pay_url']}" name="offline_pay_url" data-required="1" class="span4 m-wrap">
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">会员提现：</label>
+											<div class="controls">
+												<select class="small m-wrap" tabindex="1" name="member_tx">
+														<option value="1" selected="selected">开启</option>
+														<option value="0" >关闭</option>
+												</select>
+											</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">提现方式：</label>
+										<div class="controls">
+											<input type="text" value="{$view_data['tx_type']}" name="tx_type" data-required="1" class="span4 m-wrap">
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">24小时提现次数：</label>
+										<div class="controls">
+											<input type="text" value="{$view_data['tx_twenty_four_num']}" name="tx_twenty_four_num" data-required="1" class="span4 m-wrap">
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">每次提现最小金额：</label>
+										<div class="controls">
+											<input type="text" value="{$view_data['tx_min_money']}" name="tx_min_money" data-required="1" class="span4 m-wrap">
+										</div>
+									</div>
+									
+									
+									<div class="control-group">
+										<label class="control-label">每次提现最大金额：</label>
+										<div class="controls">
+											<input type="text" value="{$view_data['tx_max_money']}" name="tx_max_money" data-required="1" class="span4 m-wrap">
+										</div>
+									</div>
+									
+									
+									<div class="control-group">
+										<label class="control-label">提现费率：</label>
+										<div class="controls">
+											<input type="text" value="{$view_data['tx_fl']}" name="tx_fl" data-required="1" class="span4 m-wrap">
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">提现费率最小值：</label>
+										<div class="controls">
+											<input type="text" value="{$view_data['tx_fl_min']}" name="tx_fl_min" data-required="1" class="span4 m-wrap">
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">提现费率最大值：</label>
+										<div class="controls">
+											<input type="text" value="{$view_data['tx_fl_max']}" name="tx_fl_max" data-required="1" class="span4 m-wrap">
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">买家确认收货时间限制：</label>
+										<div class="controls">
+											<input type="text" value="{$view_data['buyer_affirm']}" name="buyer_affirm" data-required="1" class="span4 m-wrap">
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">买家确认发货时间限制：</label>
+										<div class="controls">
+											<input type="text" value="{$view_data['seller_affirm']}" name="seller_affirm" data-required="1" class="span4 m-wrap">
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">常用支付方式：</label>
+										<div class="controls">
+											<input type="text" value="{$view_data['often_zf']}" name="often_zf" data-required="1" class="span4 m-wrap">
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">常用物流方式：</label>
+										<div class="controls">
+											<input type="text" value="{$view_data['often_wl']}" name="often_wl" data-required="1" class="span4 m-wrap">
+										</div>
+									</div>	
+
+									<div class="form-actions">			
+										<button type="submit" class="btn purple">提交</button>
+										<button class="btn" type="reset">重置</button>
+									</div>
+
+								</form>
+
+								<!-- END FORM-->
+
+							</div>
+
+						</div>
+
+						<!-- END VALIDATION STATES-->
+
+					</div>
+
+				</div>
+				<!-- END PAGE CONTENT-->         
+			
+			</div>
+
+			<!-- END PAGE CONTAINER-->
+
+		</div>
+
+		<!-- END PAGE -->  
+
+	</div>
+
+	<!-- END CONTAINER -->
+
+	<!-- 页脚 -->
+	<include file="Public:foot" />
+
+
+	<!-- 核心插件 -->
+	<include file="Public:bottom" />
+
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+
+	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.validate.min.js"></script>
+
+	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/additional-methods.min.js"></script>
+
+	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/select2.min.js"></script>
+
+	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/chosen.jquery.min.js"></script>
+	
+
+
+	<!-- END PAGE LEVEL PLUGINS -->
+
+	<!-- BEGIN PAGE LEVEL STYLES -->
+
+	<script src="{$global_tpl_view.Group_Resource_Path}js/app.js"></script>
+
+	<script src="{$global_tpl_view.Group_Resource_Path}js/form-validation-Admin-Siri-edit.js"></script> 
+		
+	
+
+	<!-- END PAGE LEVEL STYLES -->    
+
+	<script>
+
+		jQuery(document).ready(function() {   
+
+		   // initiate layout and plugins
+
+		   App.init();
+
+		  // FormValidation.init();
+		
+			
+		});
+
+	</script>
+
+	<!-- END JAVASCRIPTS -->   
+
+
+<!-- END BODY -->
+
+</html>

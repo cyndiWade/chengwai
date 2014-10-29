@@ -130,7 +130,13 @@ $custom= array (
 				'PWD'=>'gztzwl'
 		),
 		
-
+		//系统配置属性
+		'WEB_SYSTEM' => array(
+			'base_id'=>1,		//system_base 表ID
+			'finance_id'=>1, 	//system_finance 表ID	
+		),
+		
+		
 		'ACCOUNT_STATUS' => array(
 				0 => array(
 						'status' => 0,

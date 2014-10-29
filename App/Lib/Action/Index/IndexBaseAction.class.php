@@ -66,6 +66,12 @@ class IndexBaseAction extends AppBaseAction {
 	
 	//验证方法
 	private function check_system_info () {
+		
+		if ($this->global_system['web_status'] == 0) {
+			echo '对不起，网站已关闭';
+			exit;
+		}
+		
 		$check_result = $this->init_check($this->oUser);
 		if ($check_result['status'] == false) $this->error($check_result['message']);
 	}

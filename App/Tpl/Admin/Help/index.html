@@ -59,7 +59,7 @@
 											<td>{$vo.val}</td>											<td>{$vo.show_status_explain}</td>
 											<td class="center">												<if condition="($vo['parent_id'] eq 0)">												<a href="javascript:;" class="btn_bak"  data-url="{:U('Admin/Help/index',array('parent_id'=>$vo['id'],'type'=>$view_data['type']))}">查分类帮助</a> | 												</if>			
 												
-												<a href="javascript:;" class="btn_bak"  data-url="{:U('Admin/Help/edit',array('act'=>update,'id'=>$vo['id']))}">编辑</a>
+												<a href="javascript:;" class="btn_bak"  data-url="{:U('Admin/Help/edit',array('act'=>update,'id'=>$vo['id']))}" data-record_prev="1">编辑</a>
 												| <a href="{:U('Admin/Help/edit',array('act'=>delete,'id'=>$vo['id']))}" class="check" >删除</a>												| <if condition="($vo['show_status'] eq 1)">													<a href="{:U('Admin/Help/edit',array('act'=>is_show,'id'=>$vo['id'],'show_status'=>0))}" class="check">不显示</span></a>													<else />													<a href="{:U('Admin/Help/edit',array('act'=>is_show,'id'=>$vo['id'],'show_status'=>1))}" class="check">显示</a>												</if>																				</td>
 										</tr>
 									</volist>

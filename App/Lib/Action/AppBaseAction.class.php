@@ -22,13 +22,22 @@ class AppBaseAction extends GlobalParameterAction {
 	}
 	
 	private function global_system() {
+
+		//系统基本属性
+		$system_base_data = D('SystemBase')->where(array('id'=> C('WEB_SYSTEM.base_id')))->select();
+		if ($system_base_data[0]['web_logo'] == true) {
+			self::public_file_dir($system_base_data, 'web_logo', 'images/');
+		} else {
+			$system_base_data[0]['web_logo'] = '/App/Public/Index/images/logo.png';
+		}
+		$this->global_system = $system_base_data[0];
 		
 		$this->global_tpl_view(array(
 			//网站公共的资源路径
 			'Global_Resource_Path'=>C('LocalHost').'/'.APP_PATH.'Public/Global/'	
 		));
 	}
-
+	
 	
 	//初始化DB连接
 	private function db_init() {
