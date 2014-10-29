@@ -47,7 +47,8 @@
 				'type'	=>	4,
 				'member_info'	=>	'冻结资金',
 				'admin_info'	=>	'冻结资金',
-				'time'	=>	time()
+				'time'	=>	time(),
+				'status' => 1
 			);
 			$this->add($insertArr);
 		}

@@ -17,6 +17,7 @@
 			$add['member_info'] = '收入';
 			$add['admin_info'] = '收入';
 			$add['time'] = time();
+			$add['status'] = 1;
 			D('Fund')->add($add);
 		}
 	}

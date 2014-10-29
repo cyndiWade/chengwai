@@ -1,4 +1,4 @@
-<?php
+'<?php
 	
 	//广告位
 	function adGet($id)
@@ -260,6 +260,19 @@
 			break;
 			default:
 				return '无';
+			break;
+		}
+	}
+
+	//record状态
+	function recordStatus($id)
+	{
+		switch ($id) {
+			case 0:
+				return '操作失败';
+			break;
+			case 1:
+				return '操作成功';
 			break;
 		}
 	}

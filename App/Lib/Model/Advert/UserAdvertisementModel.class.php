@@ -74,6 +74,7 @@ class UserAdvertisementModel extends AdvertBaseModel
 		$add['member_info'] = '消费冻结资金';
 		$add['admin_info'] = '消费冻结资金';
 		$add['time'] = time();
+		$add['status'] = 1;
 		D('Fund')->add($add);
 		return $bool;
 	}
