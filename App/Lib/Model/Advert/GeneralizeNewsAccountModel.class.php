@@ -62,33 +62,60 @@
 				}
 				
 			}
+
+
 			$GeneralizeNewsOrder = D('GeneralizeNewsOrder');
+
+			//获得未计算的小订单价格
+			$all_price = $this->where(array('generalize_id'=>$new_array['order_id'],'audit_status'=>0))->sum('price');
+
+			//冲计算总价
 			$update['all_price'] = $this->where(array('generalize_id'=>$new_array['order_id']))->sum('price');
 			$GeneralizeNewsOrder->where(array('id'=>$arr['generalize_id']))->save($update);
+
+
 			$UserAdvertisement = D('UserAdvertisement');
-			$money = $UserAdvertisement->where(array('users_id'=>$id))->getField('money');
+
+			//获得用户的账户信息
+			$money = $UserAdvertisement->where(array('users_id'=>$id))->field('money,freeze_funds')->find();
+
+
 			$Fund = D('Fund');
-			if($money > $update['all_price'])
+			$Order_Status = C('Order_Status');
+			$Account_Order_Status = C('Account_Order_Status');
+
+
+			if($money['money'] > $all_price)
 			{
-				$now_money['money'] = (int)$money - (int)$update['all_price'];
+				$now_money['money'] = $money['money'] - $all_price;
+
+				$now_money['freeze_funds'] = $money['freeze_funds'] + $all_price;
+
 				$UserAdvertisement->where(array('users_id'=>$id))->save($now_money);
+
 				$add_arr = array(
 					'users_id' => $id,
 					'shop_number' => 'XF'.time(),
-					'money' => $update['all_price'],
-					'type' => 3,
+					'money' => $all_price,
+					'type' => 4,
 					'adormed' => 2,
-					'member_info' => '用户消费',
-					'admin_info' => '用户消费',
+					'member_info' => '冻结资金',
+					'admin_info' => '冻结资金',
 					'time' => time(),
 					'status' => 1
 				);
 				$Fund->add($add_arr);
-				$this->bigOrderChild($new_array['order_id']);
+
+
+				$all_status = array('audit_status'=>$Account_Order_Status[3]['status']);
+				$this->where(array('generalize_id'=>$new_array['order_id']))->save($all_status);
+				$gen_arr = array('status'=>$Order_Status[4]['status']);
+				D('GeneralizeNewsOrder')->where(array('id'=>$new_array['order_id']))->save($gen_arr);
+
+
+				//$this->bigOrderChild($new_array['order_id']);
 				return true;
 			}else{
-				$Order_Status = C('Order_Status');
-				$Account_Order_Status = C('Account_Order_Status');
 				$update_status = array('status'=>$Order_Status[2]['status']);
 				$GeneralizeNewsOrder->where(array('id'=>$arr['generalize_id']))->save($update_status);
 				$audit_status = array('audit_status'=>$Account_Order_Status[1]['status']);
