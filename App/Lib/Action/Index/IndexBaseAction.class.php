@@ -59,6 +59,8 @@ class IndexBaseAction extends AppBaseAction {
 				'user_info' => array(
 					'account' => $this->oUser->account
 				),
+				
+				'Index_Footer_Html'=>$this->global_system['web_copyright']
 			));
 
 	}
