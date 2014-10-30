@@ -184,6 +184,8 @@
 			if($zhifu_id!='')
 			{
 				$UserAdvertisement = D('UserAdvertisement');
+				
+				$Account_Order_Status = C('Account_Order_Status');
 				//审核通过的价格
 				$price = $this->where(array('generalize_id'=>$zhifu_id,'audit_status'=>1))->sum('price');
 				$account_money = $UserAdvertisement->where(array('users_id'=>$account_id))->field('money,freeze_funds')->find();
@@ -197,15 +199,14 @@
 					$bool = $UserAdvertisement->where(array('users_id'=>$account_id))->save($update);
 					if($bool)
 					{
-						$save = array('status'=>4,'all_price'=>$price);
+						$save = array('status'=>$Account_Order_Status[4]['status'],'all_price'=>$price);
 						$OrderStatus = D('GeneralizeOrder')->where(array('id'=>$zhifu_id))->save($save);
 						
 						D('Fund')->djFund($account_id,$price);
 
 						//修改关联表的状态为已支付状态
-						$Account_Order_Status = C('Account_Order_Status');
 						if ($OrderStatus == true) {
-							return $this->where(array('generalize_id'=>$zhifu_id,'audit_status'=>1))->save(array('audit_status'=>$Account_Order_Status[3]['status']));
+							return $this->where(array('generalize_id'=>$zhifu_id,'audit_status'=>$Account_Order_Status[1]['status']))->save(array('audit_status'=>$Account_Order_Status[3]['status']));
 						}
 						//return true;
 					}else{
