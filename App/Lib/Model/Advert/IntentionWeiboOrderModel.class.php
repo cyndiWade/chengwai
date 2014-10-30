@@ -33,9 +33,9 @@
 			
 			$this->create();
 			$this->users_id = $id;
-			$this->start_time = strtotime($new_post['start_time']);
-			$this->over_time = strtotime($new_post['over_time']);
-			$this->sfyq = $new_post['sfyq']=='' ? 0 : 1;
+			$this->start_time = strtotime($new_array['start_time']);
+			$this->over_time = strtotime($new_array['over_time']);
+			$this->sfyq = $new_array['sfyq']=='' ? 0 : 1;
 			$this->create_time = time();
 			
 			return $this->add();

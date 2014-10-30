@@ -248,7 +248,9 @@ class WeixinOrderAction extends AdvertBaseAction {
 
     		$id = $this->db['GeneralizeWeixinOrder']->insertPost($_POST,$this->oUser->id);
     		//走先选择账号流程
-			$account_id = passport_decrypt(trim($_GET['account_ids']),'account_ids');
+			//$account_id = passport_decrypt(trim($_GET['account_ids']),'account_ids');
+			$account_id = urldecode(trim($_GET['account_ids']));
+			
 	    	if($id!='')
 	    	{
 	    		$img_array = $this->upload_img($_FILES,$id);
@@ -282,7 +284,9 @@ class WeixinOrderAction extends AdvertBaseAction {
 			
 	    	$id = $this->db['IntentionWeixinOrder']->insertPost($_POST,$this->oUser->id);
 	    	//走先选择账号流程
-			$account_id = trim($_GET['account_ids']);
+			//$account_id = trim($_GET['account_ids']);
+	    	$account_id = urldecode(trim($_GET['account_ids']));
+	    	
 	    	if($id!='')
 	    	{
 	    		$img_array = $this->upload_img($_FILES,$id);
@@ -342,7 +346,9 @@ class WeixinOrderAction extends AdvertBaseAction {
 					parent::callback(C('STATUS_UPDATE_DATA'),'下单失败,请检查余额！');
 				}
 			}else{
-				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/add_generalize',array('account_ids'=>passport_encrypt($_POST['account_ids'],'account_ids')))));
+				//$account_ids = passport_encrypt($_POST['account_ids'],'account_ids');
+				$account_ids = urlencode($_POST['account_ids']);
+				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/add_generalize',array('account_ids'=>$account_ids))));
 			}
     	}
     }
@@ -364,7 +370,9 @@ class WeixinOrderAction extends AdvertBaseAction {
 					parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
 				}
 			}else{
-				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/add_intention',array('account_ids'=>passport_encrypt($_POST['account_ids'],'account_ids')))));
+				//$account_ids = passport_encrypt($_POST['account_ids'],'account_ids');
+				$account_ids = urlencode($_POST['account_ids']);
+				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/add_intention',array('account_ids'=>$account_ids))));
 			}
     	}
     }
