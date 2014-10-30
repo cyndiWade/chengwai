@@ -54,7 +54,7 @@ class UserAction extends AdminBaseAction {
 	public function del_account() {
 		$id = $this->_get('id');
 		$Users = $this->db['Users'];
-		$Users->is_del = -2;
+		$Users->is_del = 1;
 		$Users->save_one_data(array('id'=>$id)) ? $this->success('删除成功！') : $this->error('删除失败，请稍后再试！');
 	}
 	

@@ -22,20 +22,24 @@ class MemberAction extends AdminBaseAction {
 		parent::global_tpl_view(array('module_name'=>$this->module_name));
 		
 		$this->type = $this->_get('type');
+		
+		parent::data_to_view(array(
+			'type'=>$this->type	
+				
+		));
 	}
 	
 	//用户列表	
 	public function index () {
 		$Users = D('Users');
 		$user_status = C('ACCOUNT_STATUS');		//状态
-		$user_list = $Users->seek_all_data();
+		$user_list = $Users->get_user_detail_info_list($this->type);
+	
 		
-		$Users->get_user_detail_info_list($this->type);
-		
-		$Users->get_user_detail_info_one();
+		//dump($user_list);
 		
 		foreach ($user_list AS $key=>$val) {
-			$user_list[$key]['status_info'] = $user_status[$val['status']];
+			$user_list[$key]['status_explain'] = $user_status[$val['bs_status']]['explain'];
 		}
 		
 		parent::global_tpl_view( array(
@@ -44,7 +48,15 @@ class MemberAction extends AdminBaseAction {
 				'add_name' => '添加账号'
 		));
 		$this->assign('user_list',$user_list);
-		$this->display();
+		
+		if ($this->type == 1) {
+			$page_name = 'media';
+		} elseif ($this->type == 2) {
+			$page_name = 'advert';
+		} else {
+			$this->error('非法操作！');
+		}	
+		$this->display($page_name);
 	}
 	
 	/**

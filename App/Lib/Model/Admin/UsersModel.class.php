@@ -95,6 +95,8 @@ class UsersModel extends AdminBaseModel {
 			->select();
 		}
 		
+		parent::set_all_time($result, array('bs_last_login_time'));
+		
 		
 		return $result;
 	}
@@ -119,6 +121,8 @@ class UsersModel extends AdminBaseModel {
 
 			$result  = array_merge($user_base,$user_advert_info);
 		}
+		
+		
 		
 		return $result;
 	}
