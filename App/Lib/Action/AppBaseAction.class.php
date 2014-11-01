@@ -32,6 +32,11 @@ class AppBaseAction extends GlobalParameterAction {
 		}
 		$this->global_system = $system_base_data[0];
 		
+		//短信属性
+		$system_sms = D('SystemSms')->where(array('id'=>C('WEB_SYSTEM.sms_id')))->find();
+		$this->global_sms = $system_sms;
+		
+		
 		$this->global_tpl_view(array(
 			//网站公共的资源路径
 			'Global_Resource_Path'=>C('LocalHost').'/'.APP_PATH.'Public/Global/'	
@@ -63,9 +68,18 @@ class AppBaseAction extends GlobalParameterAction {
 // 		return $send;
 // 	}
 	protected function send_shp ($telephone,$msg) {
-		$shp_type = C('SHP.TYPE');
-		$shp_name = C('SHP.NAME');
-		$shp_password = C('SHP.PWD');
+		
+		if ($this->global_sms == true) {
+			$shp_type = $this->global_sms['sms_type']; 
+			$shp_name = $this->global_sms['sms_account'];
+			$shp_password = $this->global_sms['sms_pass'];
+		} else {
+			$shp_type = C('SHP.TYPE');
+			$shp_name = C('SHP.NAME');
+			$shp_password = C('SHP.PWD');		 
+		}
+
+
 		switch ($shp_type) {
 			case 'SHP' :
 				import("@.Tool.SHP");				//SHP短信发送类

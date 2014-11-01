@@ -20,6 +20,8 @@ class GlobalParameterAction extends Action {
 	
 	protected $is_login = false;				//是否登录
 	
+	protected $global_sms = array();			//短信属性
+	
 
 	
 	/**

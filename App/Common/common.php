@@ -721,5 +721,50 @@ function create_excel($name,$content) {
 	echo $content;
 }
 
+/**
+ * 筛选数组中邮箱的数据
+ * @param Array $array
+ * @param Array $kw	(需要，或者不需要的键)
+ * @param Blooe $is_not (是否取反，如果为true，则在数组中获取$kw不存在的数据)
+ * @return multitype:
+ */
+function format_array(&$array,$fields,$is_not = false) {
+	$result = array();
+	if (empty($array)) return $result;
+	
+	switch ($is_not) {
+		case true :	
+			foreach ($array as $key=>$detail) {
+				$Arr_tmp = array();
+				
+				foreach ($detail as $two_key=>$val) {
+					if (!in_array($two_key,$fields)) {
+						$Arr_tmp[$two_key] = $val[$two_key];
+					}
+				}
+				
+				$result[$key] = $Arr_tmp;
+			}
+			break;
+			
+		case false :
+			foreach ($array as $key=>$detail) {
+				
+				$Arr_tmp = array();
+				
+				foreach($fields as $fd) {
+					if(array_key_exists($fd,$detail)) {
+						$Arr_tmp[$fd] = $detail[$fd];
+					}
+				}
+				
+				$result[$key] = $Arr_tmp;
+			}
+			break;
+	}
+	
+	return $result;
+}
+
 
 ?>

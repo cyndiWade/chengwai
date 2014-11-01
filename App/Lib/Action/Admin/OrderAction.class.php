@@ -49,6 +49,8 @@ class OrderAction extends AdminBaseAction {
 	private $OrderLog;	
 	
 	private $Account_Order_Status;
+	
+	private $where;
 
 	/**
 	 * 构造方法
@@ -69,6 +71,8 @@ class OrderAction extends AdminBaseAction {
 		$this->Order_Status = C('Order_Status');
 		
 		$this->Account_Order_Status = C('Account_Order_Status');
+		
+		$this->where['status'] = array('IN',array(1,2,3,4,5));
 	}
 	
 		
@@ -77,23 +81,25 @@ class OrderAction extends AdminBaseAction {
 	public function news_generalize () {
 	
 		$GeneralizeNewsOrder = $this->db['GeneralizeNewsOrder'];
-		$where['status'] = 1;
-		$list = $GeneralizeNewsOrder->get_order_list($where);
+		$where = $this->where;
 	
-		if ($list == true) {
-			foreach ($list as $key=>$val) {
-				//用户
-				$user_info = $this->db['Users']->get_user_info(array('id'=>$val['users_id']));
-				$list[$key]['order_user_account'] = $user_info['account'];
+		$list = $GeneralizeNewsOrder->get_order_list($where);
+
+		
+// 		if ($list == true) {
+// 			foreach ($list as $key=>$val) {
+// 				//用户
+// 				$user_info = $this->db['Users']->get_user_info(array('id'=>$val['users_id']));
+// 				$list[$key]['order_user_account'] = $user_info['account'];
 				
-				//媒体账号数
-				$list[$key]['account_num'] =  $this->db['GeneralizeNewsAccount']->where(array('generalize_id'=>$val['id']))->count();
+// 				//媒体账号数
+// 				$list[$key]['account_num'] =  $this->db['GeneralizeNewsAccount']->where(array('generalize_id'=>$val['id']))->count();
  			
-				//状态
-				$list[$key]['status_explain'] = $this->Order_Status[$val['status']]['explain'];
+// 				//状态
+// 				$list[$key]['status_explain'] = $this->Order_Status[$val['status']]['explain'];
 				
-			}
-		}
+// 			}
+// 		}
 				
 		$data['list'] = $list;
 		parent::global_tpl_view( array(
@@ -189,32 +195,28 @@ class OrderAction extends AdminBaseAction {
 	
 	
 	
-	
-	
-	
-	
 	//微博推广单列表
 	public function weibo_generalize () {
 	
 		$GeneralizeOrder = $this->db['GeneralizeOrder'];
-		$where['status'] = 1;
+		$where = $this->where;
 		$list = $GeneralizeOrder->get_order_list($where);
 	
 
-		if ($list == true) {
-			foreach ($list as $key=>$val) {
-				//用户
-				$user_info = $this->db['Users']->get_user_info(array('id'=>$val['users_id']));
-				$list[$key]['order_user_account'] = $user_info['account'];
+// 		if ($list == true) {
+// 			foreach ($list as $key=>$val) {
+// 				//用户
+// 				$user_info = $this->db['Users']->get_user_info(array('id'=>$val['users_id']));
+// 				$list[$key]['order_user_account'] = $user_info['account'];
 		
-				//媒体账号数
-				$list[$key]['account_num'] =  $this->db['GeneralizeAccount']->where(array('generalize_id'=>$val['id']))->count();
+// 				//媒体账号数
+// 				$list[$key]['account_num'] =  $this->db['GeneralizeAccount']->where(array('generalize_id'=>$val['id']))->count();
 		
-				//状态
-				$list[$key]['status_explain'] = $this->Order_Status[$val['status']]['explain'];
+// 				//状态
+// 				$list[$key]['status_explain'] = $this->Order_Status[$val['status']]['explain'];
 		
-			}
-		}
+// 			}
+// 		}
 		
 		
 		$data['list'] = $list;
@@ -292,23 +294,23 @@ class OrderAction extends AdminBaseAction {
 	public function weibo_intention () {
 	
 		$IntentionWeiboOrder = $this->db['IntentionWeiboOrder'];
-		$where['status'] = 1;
+		$where = $this->where;
 		$list = $IntentionWeiboOrder->get_order_list($where);
 	
-		if ($list == true) {
-			foreach ($list as $key=>$val) {
-				//用户
-				$user_info = $this->db['Users']->get_user_info(array('id'=>$val['users_id']));
-				$list[$key]['order_user_account'] = $user_info['account'];
+// 		if ($list == true) {
+// 			foreach ($list as $key=>$val) {
+// 				//用户
+// 				$user_info = $this->db['Users']->get_user_info(array('id'=>$val['users_id']));
+// 				$list[$key]['order_user_account'] = $user_info['account'];
 		
-				//媒体账号数
-				$list[$key]['account_num'] =  $this->db['IntentionWeiboAccount']->where(array('intention_id'=>$val['id']))->count();
+// 				//媒体账号数
+// 				$list[$key]['account_num'] =  $this->db['IntentionWeiboAccount']->where(array('intention_id'=>$val['id']))->count();
 		
-				//状态
-				$list[$key]['status_explain'] = $this->Order_Status[$val['status']]['explain'];
+// 				//状态
+// 				$list[$key]['status_explain'] = $this->Order_Status[$val['status']]['explain'];
 		
-			}
-		}
+// 			}
+// 		}
 		
 		$data['list'] = $list;
 		parent::global_tpl_view( array(
@@ -386,23 +388,23 @@ class OrderAction extends AdminBaseAction {
 	public function weixin_generalize () {
 	
 		$GeneralizeWeixinOrder = $this->db['GeneralizeWeixinOrder'];
-		$where['status'] = 1;
+		$where = $this->where;
 		$list = $GeneralizeWeixinOrder->get_order_list($where);
 	
-		if ($list == true) {
-			foreach ($list as $key=>$val) {
-				//用户
-				$user_info = $this->db['Users']->get_user_info(array('id'=>$val['users_id']));
-				$list[$key]['order_user_account'] = $user_info['account'];
+// 		if ($list == true) {
+// 			foreach ($list as $key=>$val) {
+// 				//用户
+// 				$user_info = $this->db['Users']->get_user_info(array('id'=>$val['users_id']));
+// 				$list[$key]['order_user_account'] = $user_info['account'];
 		
-				//媒体账号数
-				$list[$key]['account_num'] =  $this->db['GeneralizeWeixinAccount']->where(array('generalize_id'=>$val['id']))->count();
+// 				//媒体账号数
+// 				$list[$key]['account_num'] =  $this->db['GeneralizeWeixinAccount']->where(array('generalize_id'=>$val['id']))->count();
 		
-				//状态
-				$list[$key]['status_explain'] = $this->Order_Status[$val['status']]['explain'];
+// 				//状态
+// 				$list[$key]['status_explain'] = $this->Order_Status[$val['status']]['explain'];
 		
-			}
-		}
+// 			}
+// 		}
 		
 		
 		$data['list'] = $list;
@@ -477,7 +479,7 @@ class OrderAction extends AdminBaseAction {
 	//微信意向单
 	public function weixin_intention () {
 		$IntentionWeixinOrder = $this->db['IntentionWeixinOrder'];
-		$where['status'] = 1;
+		$where = $this->where;
 		$list = $IntentionWeixinOrder->get_order_list($where);
 		
 		if ($list == true) {

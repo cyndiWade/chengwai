@@ -134,6 +134,7 @@ $custom= array (
 		'WEB_SYSTEM' => array(
 			'base_id'=>1,		//system_base 表ID
 			'finance_id'=>1, 	//system_finance 表ID	
+			'sms_id'=>1,    	  //system_sms 表ID
 		),
 		
 		
