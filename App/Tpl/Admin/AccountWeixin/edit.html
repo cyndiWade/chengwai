@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+
+<!-- BEGIN HEAD -->
+
+<head>
+
+	<!-- 全局样式 -->
+	<include file="Public:top" />
+
+	<!-- BEGIN PAGE LEVEL STYLES -->
+
+	<link rel="stylesheet" type="text/css" href="{$global_tpl_view.Group_Resource_Path}css/select2_metro.css" />
+
+	<link rel="stylesheet" type="text/css" href="{$global_tpl_view.Group_Resource_Path}css/chosen.css" />
+
+
+	<!-- END PAGE LEVEL STYLES -->
+
+	
+</head>
+
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+
+<body class="page-header-fixed">
+
+	<include file="Public:header" />
+
+	<!-- BEGIN CONTAINER -->
+
+	<div class="page-container row-fluid">
+
+		<!-- 左侧导航 -->
+		<include file="Public:sidebar" />
+
+		<!-- BEGIN PAGE -->  
+
+		<div class="page-content">
+
+			<!-- BEGIN PAGE CONTAINER-->
+
+			<div class="container-fluid">
+
+				<!-- BEGIN PAGE HEADER-->   
+
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN STYLE CUSTOMIZER -->
+						<!-- END BEGIN STYLE CUSTOMIZER -->     
+
+						<h3 class="page-title">
+
+						{$global_tpl_view.module_name}<small> {$global_tpl_view.action_name}</small>
+
+						</h3>
+		
+					</div>
+
+				</div>
+				<!-- END PAGE HEADER-->
+				
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN VALIDATION STATES-->
+
+						<div class="portlet box blue">
+
+							<div class="portlet-title">
+
+								<div class="caption"><i class="icon-reorder"></i>{$global_tpl_view.title_name}</div>
+
+								<div class="tools">
+
+									<a href="javascript:;" class="collapse"></a>
+
+									<a href="javascript:;" class="reload"></a>				
+
+								</div>
+
+							</div>
+
+							<div class="portlet-body form">
+
+								<!-- BEGIN FORM-->
+
+								<form action="" id="form_sample_1" method="post" class="form-horizontal">
+                     
+									<div class="alert alert-error hide">
+
+										<button class="close" data-dismiss="alert"></button>
+
+										请在文本框输入相应内容.
+
+									</div>
+
+									<div class="alert alert-success hide">
+
+										<button class="close" data-dismiss="alert"></button>
+
+										验证成功
+
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">账号ID：</label>
+											<div class="controls">
+												<input type="text" class="span1 m-wrap" disabled="disabled"  value="{$view_data.ac_id}" >
+									
+											</div>
+									</div>
+									
+									
+									<div class="control-group">
+										<label class="control-label">是否名人：</label>
+										<div class="controls">                                                
+											<label class="radio">
+												<div class="radio">
+												<span><input type="radio" name=is_celebrity value="1"></span>
+												</div>
+												是
+											</label>
+
+											<label class="radio">
+												<div class="radio">
+													<span class="checked"><input type="radio" name="is_celebrity" value="0" ></span>
+												</div>
+												否
+											</label>  
+										</div>
+									</div>
+								
+									<div class="control-group">
+										<label class="control-label">微信号：</label>
+										<div class="controls">
+											<input type="text" class="span3 m-wrap" data-required="1"  name="weixinhao" value="{$view_data.ac_weixinhao}" />
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">微信名称：</label>
+										<div class="controls">
+											<input type="text" class="span3 m-wrap" data-required="1"  name="account_name" value="{$view_data.ac_account_name}" />
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">粉丝数量：</label>
+										<div class="controls">
+											<input type="text" class="span3 m-wrap" data-required="1"  name="fans_num" value="{$view_data.ac_fans_num}" />
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">单图文报价：</label>
+										<div class="controls">
+											<input type="text" class="span3 m-wrap" data-required="1"  name="dtb_money" value="{$view_data.ac_dtb_money}" />
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">多图文第一条报价：</label>
+										<div class="controls">
+											<input type="text" class="span3 m-wrap" data-required="1"  name="dtwdyt_money" value="{$view_data.ac_dtwdyt_money}" />
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">多图文第二条报价：</label>
+										<div class="controls">
+											<input type="text" class="span3 m-wrap" data-required="1"  name="dtwdet_money" value="{$view_data.ac_dtwdet_money}" />
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">多图文第三-N条：</label>
+										<div class="controls">
+											<input type="text" class="span3 m-wrap" data-required="1"  name="dtwqtwz_money" value="{$view_data.ac_dtwqtwz_money}" />
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">名人参考报价：</label>
+										<div class="controls">
+											<input type="text" class="span3 m-wrap" data-required="1"  name="ck_money" value="{$view_data.ac_ck_money}" />
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">原创参考报价：</label>
+										<div class="controls">
+											<input type="text" class="span3 m-wrap" data-required="1"  name="yc_money" value="{$view_data.ac_yc_money}" />
+										</div>
+									</div>	
+									
+									<div class="control-group">
+										<label class="control-label">周订单：</label>
+											<div class="controls">
+												<input type="text" class="span3 m-wrap" disabled="disabled"  value="{$view_data.ac_week_order_num}" >	
+											</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">月订单：</label>
+											<div class="controls">
+												<input type="text" class="span3 m-wrap" disabled="disabled"  value="{$view_data.ac_month_order_nub}" >	
+											</div>
+									</div>
+									
+									
+									<div class="control-group">
+										<label class="control-label">状态：</label>
+											<div class="controls">
+												<select name="status" tabindex="1" class="small m-wrap">
+														<option selected="selected" value="1">审核通过</option>
+														<option value="0">不通过</option>
+												</select>
+											</div>
+									</div>
+									
+									
+									<div class="control-group">
+										<label class="control-label">备注：<span class="required"></span></label>
+										<div class="controls">
+											<textarea rows="3" name="introduction" class="span4 m-wrap">{$view_data.ac_introduction}</textarea>
+										</div>
+									</div>
+									
+
+									<div class="form-actions">			
+										<button type="submit" class="btn purple">提交</button>
+										<button class="btn" type="reset">重置</button>
+										<!-- 
+										<button class="btn blue btn_bak" type="button" data-return_prev="1">返回</button>
+										 -->
+									</div>
+
+								</form>
+
+								<!-- END FORM-->
+
+							</div>
+
+						</div>
+
+						<!-- END VALIDATION STATES-->
+
+					</div>
+
+				</div>
+				<!-- END PAGE CONTENT-->         
+
+			</div>
+
+			<!-- END PAGE CONTAINER-->
+
+		</div>
+
+		<!-- END PAGE -->  
+
+	</div>
+
+	<!-- END CONTAINER -->
+
+	<!-- 页脚 -->
+	<include file="Public:foot" />
+
+
+	<!-- 核心插件 -->
+	<include file="Public:bottom" />
+
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+
+	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.validate.min.js"></script>
+
+	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/additional-methods.min.js"></script>
+
+	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/select2.min.js"></script>
+
+	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/chosen.jquery.min.js"></script>
+	
+
+
+	<!-- END PAGE LEVEL PLUGINS -->
+
+	<!-- BEGIN PAGE LEVEL STYLES -->
+
+	<script src="{$global_tpl_view.Group_Resource_Path}js/app.js"></script>
+
+	<script src="{$global_tpl_view.Group_Resource_Path}js/form-validation-Admin-Siri-edit.js"></script> 
+		
+	
+
+	<!-- END PAGE LEVEL STYLES -->    
+
+	<script>
+
+		jQuery(document).ready(function() {   
+
+		   // initiate layout and plugins
+
+		   App.init();
+
+		  // FormValidation.init();
+		
+			
+		});
+
+	</script>
+
+	<!-- END JAVASCRIPTS -->   
+
+
+<!-- END BODY -->
+
+</html>

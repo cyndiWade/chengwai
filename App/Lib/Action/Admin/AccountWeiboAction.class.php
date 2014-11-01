@@ -26,6 +26,8 @@ class AccountWeiboAction extends AdminBaseAction {
 	
 		parent::global_tpl_view(array('module_name'=>$this->module_name));
 		
+		$this->Medie_Account_Status = C('Medie_Account_Status');
+		
 	}
 	
 	
@@ -33,12 +35,16 @@ class AccountWeiboAction extends AdminBaseAction {
 	//数据列表
 	public function index () {
 		
-		$list = $this->db['NowAccountObj']->where(array('is_del'=>0))->select();
-			
+		$list = $this->db['NowAccountObj']->get_account_data_list();
+		
 		if ($list == true ) {
 			foreach ($list as $key=>$val) {
-				$list[$key]['celebrity_explain'] =  $val['is_celebrity'] == 0 ? '草根账号' : '名人';
-				$list[$key]['type_explain'] =  $this->type_explain[$val['pt_type']];
+				$list[$key]['pg_celebrity_explain'] =  $val['ac_is_celebrity'] == 0 ? '草根账号' : '名人';
+				$list[$key]['pg_type_explain'] =  $this->type_explain[$val['ac_pt_type']];
+				$list[$key]['pg_fans_num'] =  ($val['ac_fans_num'] / 10000).'万';
+				$list[$key]['pa_edit_url'] = U(GROUP_NAME.'/'.MODULE_NAME.'/edit',array('act'=>'edit','id'=>$val['ac_id']));
+				
+				$list[$key]['pg_status_explain'] = $this->Medie_Account_Status[$val['ac_status']]['explain'];
 			}
 		}
 		
@@ -58,16 +64,38 @@ class AccountWeiboAction extends AdminBaseAction {
 		$act = $this->_get('act');						//操作类型
 		$id = $this->_get('id');						//上一页地址
 		$recommended_status = $this->_get('recommended_status');		//推荐状态
+		
+		$info = $this->db['NowAccountObj']->get_account_data_one($id);
 	
 		if($act == 'recommended') {
 			$Help->show_status = $show_status;
 			$is_up = $this->db['NowAccountObj']->where(array('id'=>$id))->save(array('recommended_status'=>$recommended_status));
 			$is_up ? $this->success('修改成功！') : $this->error('修改失败！');
 			exit;
+		} elseif ($act == 'edit') {
+			
+			if ($this->isPost()) {
+				$this->db['NowAccountObj']->create();
+				$this->db['NowAccountObj']->where(array('id'=>$id))->save();
+				
+				parent::weiboDataprocess($id);	//同步方法
+				$this->redirect(GROUP_NAME.'/'.MODULE_NAME.'/edit',array('act'=>$act,'id'=>$id));
+			}
+			
 		} else {
 			$this->error('非法操作');
 			exit;
 		}
+		
+		
+		
+		parent::global_tpl_view( array(
+				'action_name'=>'账号详情',
+				'title_name'=>'账号详情',
+		));
+		
+		$this->data_to_view($info);
+		$this->display();
 			
 	}
 	

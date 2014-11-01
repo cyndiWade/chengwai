@@ -137,6 +137,17 @@ $custom= array (
 		),
 		
 		
+		'Medie_Account_Status' => array(
+				0 => array(
+						'status' => 0,
+						'explain' => '待审核',
+				),
+				1 => array(
+						'status' => 1,
+						'explain' => '审核通过',
+				),
+		),
+		
 		'ACCOUNT_STATUS' => array(
 				0 => array(
 						'status' => 0,
