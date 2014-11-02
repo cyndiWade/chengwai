@@ -71,7 +71,8 @@
 				}
 			}
 			$where['w.is_del'] = 0;
-			$count = $this->where($where)
+			$where['w.status'] = 1;
+ 			$count = $this->where($where)
 			->table('app_account_news as w')
 			->join('app_index_news as b on w.id = b.news_id')
 			->count();
