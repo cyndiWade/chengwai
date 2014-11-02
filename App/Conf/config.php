@@ -101,6 +101,7 @@ $custom= array (
 			'ADMIN' => 0,			//管理员
 			'Media' => 1,			//媒体主
 			'Advert' => 2,			//广告主
+			'Salesman'=>3,			//销售员
 		),
 
 		//上传文件目录

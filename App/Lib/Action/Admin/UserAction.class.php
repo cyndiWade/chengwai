@@ -106,6 +106,7 @@ class UserAction extends AdminBaseAction {
 	public function edit () {
 		$id = $this->_get('id');				//id
 		$act = $this->_get('act');			//动作
+		$type = $this->_post('type');
 		$Users = D('Users');			//注册用户表
 	
 		switch ($act) {
@@ -115,9 +116,14 @@ class UserAction extends AdminBaseAction {
 					/* 验证账号是否存在 */
 					$account_is_have = $Users->account_is_have($_POST['account']);
 					if ($account_is_have) $this->error('此账号已存在');
-						
+				
 					$Users->create();
-					$user_id = $Users->add_account(C('ACCOUNT_TYPE.ADMIN'));
+					//$user_id = $Users->add_account(C('ACCOUNT_TYPE.ADMIN'));
+					if (empty($type)) {
+						$type = C('ACCOUNT_TYPE.ADMIN');
+					}
+					$user_id = $Users->add_account($type);
+					
 					$user_id ? $this->success('添加成功！') : $this->error('添加失败，请重新尝试！');
 					exit;
 				}
