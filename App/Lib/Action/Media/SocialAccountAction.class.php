@@ -20,6 +20,8 @@ class SocialAccountAction extends MediaBaseAction {
         'AccountWeibo'  => 'AccountWeibo',
         'AccountWeixin' => 'AccountWeixin',
         'Region'        => 'Region',
+        'CategoryTags'  => 'CategoryTags',
+        'CeleprityindexWeibo'  => 'CeleprityindexWeibo',
 	);
 	
 	//和构造方法
@@ -728,7 +730,21 @@ class SocialAccountAction extends MediaBaseAction {
             
             if (in_array($weiboType, array(1, 2))) {
                 // 新浪微博
-                $retweetPrice       = I('retweet_price', 0, 'floatval');
+                $retweetPrice	= I('retweet_price', 0, 'floatval');
+				
+				// 名人职业
+                $occupation		= I('occupation', 0, 'intval');
+				// 媒体领域
+                $field       	= I('field', 0, 'intval');
+				// 地方名人/媒体
+                $cirymedia		= I('cirymedia', 0, 'intval');
+				// 兴趣标签
+                $interest       = I('interest', 0, 'intval');
+				// 配合度
+                $coordination	= I('coordination', 0, 'intval');
+				// 是否支持原创
+                $originality	= I('originality', 0, 'intval');
+				
                 if (empty($retweetPrice)) {
                     parent::callback(0, '价格错误');
                 }
@@ -736,31 +752,45 @@ class SocialAccountAction extends MediaBaseAction {
                 $weiboModel = $this->db['AccountWeibo'];
                 $apiInfos = $weiboModel->getInfosFromApi($weiboId, $weiboType);
                 
-                if ($apiInfos['followers_count'] <= 499) {
-                    parent::callback(0, '粉丝数至少为500!', array(), array(
-                        'code'  => 900
-                    ));
-                }
+                // if ($apiInfos['followers_count'] <= 499) {
+                    // parent::callback(0, '粉丝数至少为500!', array(), array(
+                        // 'code'  => 900
+                    // ));
+                // }
                 
                 $userInfos = parent::get_session('user_info');
                 $datas = array(
                     // 默认待审核
                     'audit_status'  => 0,
                     'users_id'      => $userInfos['id'],
-                    'is_celebrity'  => $apiInfos['verified'],
+                    'is_celebrity'  => intval($apiInfos['verified']),
                     'pt_type'       => ($weiboType == 1) ? 1: 2,
                     'account_name'  => $weiboId,
-                    'fans_num'      => $apiInfos['followers_count'],
+                    'fans_num'      => intval($apiInfos['followers_count']),
                     'yg_zhuanfa'    => $retweetPrice,
                     'yg_zhifa'      => $retweetPrice,
                     'rg_zhuanfa'    => $retweetPrice * 0.7,
                     'rg_zhifa'      => $retweetPrice * 0.7,
                     'create_time'   => $_SERVER['REQUEST_TIME'],
                 );
-                
                 $insertId = $weiboModel->add($datas);
                 if ($insertId) {
-                    parent::weiboDataprocess($insertId);
+					$indexDatas = array(
+						'occupation'	=> $occupation,
+						'field'			=> $field,
+						'ck_price'		=> $retweetPrice,
+						'yc_price'		=> $retweetPrice,
+						'cirymedia'		=> $cirymedia,
+						'interest'		=> $interest,
+						'coordination'	=> $coordination,
+						'originality'	=> $originality,
+						'fansnumber'	=> $datas['fans_num'],
+						'weibo_id'		=> $insertId,
+					);
+					$celeprityindexWeiboModel = $this->db['CeleprityindexWeibo'];
+					$celeprityindexWeiboModel->add($indexDatas);
+					
+					parent::weiboDataprocess($insertId);
                     parent::callback(1, '增加帐号成功!', array(), array(
                         'code'  => 1000
                     ));
@@ -786,6 +816,18 @@ class SocialAccountAction extends MediaBaseAction {
                 $uploadImgAvatar    = I('uploadImgAvatar', '', 'setString');
                 $uploadImgQrCode    = I('uploadImgQrCode', '', 'setString');
                 $uploadImgFollowers = I('uploadImgFollowers', '', 'setString');
+				// 名人职业
+                $occupation			= I('occupation', 0, 'intval');
+				// 媒体领域
+                $field       		= I('field', 0, 'intval');
+				// 地方名人/媒体
+                $cirymedia			= I('cirymedia', 0, 'intval');
+				// 兴趣标签
+                $interest       	= I('interest', 0, 'intval');
+				// 配合度
+                $coordination		= I('coordination', 0, 'intval');
+				// 是否支持原创
+                $originality		= I('originality', 0, 'intval');
                 
                 $userInfos = parent::get_session('user_info');
                 $datas = array(
@@ -812,6 +854,21 @@ class SocialAccountAction extends MediaBaseAction {
                 $weixinModel = $this->db['AccountWeixin'];
                 $insertId = $weixinModel->add($datas);
                 if ($insertId) {
+					$indexDatas = array(
+						'occupation'	=> $occupation,
+						'field'			=> $field,
+						'ck_price'		=> $price,
+						'yc_price'		=> $price,
+						'cirymedia'		=> $cirymedia,
+						'interest'		=> $interest,
+						'coordination'	=> $coordination,
+						'originality'	=> $originality,
+						'fansnumber'	=> $datas['fans_num'],
+						'weibo_id'		=> $insertId,
+					);
+					$celeprityindexWeiboModel = $this->db['CeleprityindexWeibo'];
+					$celeprityindexWeiboModel->add($indexDatas);
+					
                     parent::weixinDataprocess($insertId);
                     parent::callback(1, '增加帐号成功!', array(), array(
                         'code'  => 1000
@@ -1718,6 +1775,37 @@ class SocialAccountAction extends MediaBaseAction {
                 'url' => '',
                 'success' => 0,
             ));
+        }
+    }
+	
+    /**
+     * 获取标签
+     * 
+     * @author lurongchang
+     * @date   2014-10-29
+     * @return void
+     */
+    public function getTags()
+    {
+        if ($this->isGet()) {
+            $tagId = I('get.id', '', 'addslashes');
+			$tagIds = explode(',', $tagId);
+            
+            $lists = $this->db['CategoryTags']->getTagsList($tagIds);
+			$datas = array();
+            foreach ($lists AS $key => $value) {
+                $datas[$value['parent_id']][] = array(
+                    'id'    => $value['id'],
+                    'val'   => $value['val'],
+                    'name'  => $value['title']
+                );
+            }
+            
+            parent::callback(1, 'success', $datas, array(
+                'code' => 1000
+            ));
+        } else {
+            parent::callback(C('STATUS_ACCESS'), 'error');
         }
     }
 	

@@ -5,6 +5,7 @@ define(function(require) {
     var ImageModel = require('./image_model.js');
     var RateModel = require('./rate_model.js');
     require('./area.js');
+    require('./getTags.js');
     require('./knockout/knockout_utility.js');
 
     function object2Array(obj) {
@@ -998,7 +999,38 @@ define(function(require) {
                 });
             }
         };
-        
+		
+		// 微博部分
+		// 名人职业
+		self.occupation = ko.observable(data.occupation);
+		// 媒体领域
+		self.field = ko.observable(data.field);
+		// 地方名人/媒体
+		self.cirymedia = ko.observable(data.cirymedia);
+		// 兴趣标签
+		self.interest = ko.observable(data.interest);
+		
+		// 配合度
+		self.coordination = ko.observable(data.coordination);
+        self.coordination_option = ko.observableArray([
+            {id: 0, name: '不限'},
+            {id: 1, name: '高'},
+            {id: 2, name: '中'},
+            {id: 3, name: '低'}
+        ]);
+		self.coordination_name = function(){
+            return getOptionName(self.coordination(), self.coordination_option());
+        }();
+		// 是否支持原创
+		self.originality = ko.observable(data.originality);
+        self.originality_option = ko.observableArray([
+            {id: 0, name: '不限'},
+            {id: 1, name: '是'},
+            {id: 2, name: '否'}
+        ]);
+		self.originality_name = function(){
+            return getOptionName(self.originality(), self.originality_option());
+        }();
         
         // 周平均阅读数
         self.weekly_read_avg = ko.observable(data.weekly_read_avg);

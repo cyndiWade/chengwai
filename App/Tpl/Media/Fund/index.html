@@ -17,22 +17,32 @@
             <table class="tab01-allorder tab01-allorder-water l">
               <tr>
                 <th class="t1">流水号</th>
-                <th class="t2">日期</th>
-                <th class="t3">记录</th>
-                <!-- <th class="last">余额</th> -->
+                <th class="t2">发生时间</th>
+                <th class="t2">分类</th>
+                <th class="t2">金额</th>
+                <th class="t2">支付平台</th>
+                <!-- <th class="t2">余额</th> -->
+                <th class="t2">状态</th>
+                <th class="t2">事由</th>
+                <th class="t2">备注</th>
               </tr>
               <empty name="view_data.list">
               <tr>
                 <td colspan="3" align="center">暂无数据</td>
               </tr>
               <else />
-              <php> $moneyType = array('', '充值', '退款', '消费');</php>
+              <php> $moneyType = array('', '充值', '退款', '消费', '冻结', '收入');</php>
               <volist name="view_data.list" id="item">
               <tr>
                 <td class="t1">{$item.id}</td>
                 <td class="t2">{$item.time|date='Y-m-d', ###}</td>
-                <td class="t3">{$moneyType[$item['type']]}<span class="yel">{$item.money}</span>元</td>
-                <!-- <td class="last"><span class="yel">10.00</span>元</td> -->
+                <td class="t3">{$moneyType[$item['type']]}</td>
+                <td class="t3"><span class="yel">{$item.money}</span>元</td>
+                <td class="t3">支付宝</td>
+                <!-- <td class="t3">余额</td> -->
+                <td class="t3">{$item.status}</td>
+                <td class="t3">{$item.member_info}</td>
+                <td class="t3">{$item.admin_info}</td>
               </tr>
               </volist>
               </empty>

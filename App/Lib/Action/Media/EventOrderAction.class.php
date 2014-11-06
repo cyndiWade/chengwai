@@ -182,10 +182,10 @@ class EventOrderAction extends MediaBaseAction {
         parent::data_to_view(array(
 			//二级导航
 			'secondSiderbar' => array(
-				'待执行订单'		=> array('select' => true, 'url' => U('/Media/EventOrder/index')),
-				'微博订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorder')),
-				'微信订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorderWeixin')),
+				'待执行订单'	=> array('select' => true, 'url' => U('/Media/EventOrder/index')),
 				'新闻媒体订单'	=> array('select' => false, 'url' => U('/Media/EventOrder/allorderNews')),
+				'微信订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorderWeixin')),
+				'微博订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorder')),
 			),
             'userMediaInfo' => $userMediaInfo,
             'markNums' => $markNums,

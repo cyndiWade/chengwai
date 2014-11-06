@@ -138,7 +138,6 @@ $custom= array (
 			'sms_id'=>1,    	  //system_sms 表ID
 		),
 		
-		
 		'Medie_Account_Status' => array(
 				0 => array(
 						'status' => 0,
@@ -149,7 +148,6 @@ $custom= array (
 						'explain' => '审核通过',
 				),
 		),
-		
 		'ACCOUNT_STATUS' => array(
 				0 => array(
 						'status' => 0,
@@ -185,7 +183,7 @@ $custom= array (
 			),
 			4=>array(
 				'status'=>4,
-				'explain'=>'已支付'
+				'explain'=>'已支付，待执行'
 			),
 			5=>array(
 				'status'=>5,
@@ -207,7 +205,7 @@ $custom= array (
 				'status'=>1,			//城外圈审核通过即可支付
 				'explain'=>'审核通过',
 				'explain_yxd'=>'已接受',
-				'other' => '城外圈审核通过!'
+				'other' => '城外圈开始审核!'
 			),
 			2=>array(
 				'status'=>2,			//城外圈审核失败

@@ -192,7 +192,7 @@ define(function (require) {
                 });
                 win.close();
                 validation.weibo_alert_notice('');
-                $('#addcount').removeClass('btn_small_disabled').addClass('btn_small_strong');
+                // $('#addcount').removeClass('btn_small_disabled').addClass('btn_small_strong');
             });
 
             defer.fail(function (error) {
