@@ -21,7 +21,8 @@ class SocialAccountAction extends MediaBaseAction {
         'AccountWeixin' => 'AccountWeixin',
         'Region'        => 'Region',
         'CategoryTags'  => 'CategoryTags',
-        'CeleprityindexWeibo'  => 'CeleprityindexWeibo',
+        'CeleprityindexWeibo'   => 'CeleprityindexWeibo',
+        'CeleprityindexWeixin'  => 'CeleprityindexWeixin',
 	);
 	
 	//和构造方法
@@ -866,8 +867,8 @@ class SocialAccountAction extends MediaBaseAction {
 						'fansnumber'	=> $datas['fans_num'],
 						'weibo_id'		=> $insertId,
 					);
-					$celeprityindexWeiboModel = $this->db['CeleprityindexWeibo'];
-					$celeprityindexWeiboModel->add($indexDatas);
+					$celeprityindexWeixinModel = $this->db['CeleprityindexWeixin'];
+					$celeprityindexWeixinModel->add($indexDatas);
 					
                     parent::weixinDataprocess($insertId);
                     parent::callback(1, '增加帐号成功!', array(), array(
