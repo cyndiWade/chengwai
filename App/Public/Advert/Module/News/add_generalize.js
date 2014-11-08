@@ -44,21 +44,39 @@ $(".generalize_form").Validform({
 
 (function () {	
 	
+	var timeSubject = $('.timeSubject');
+	
+	timeSubject.val(function () {
+		//获取当前时间
+		var date = new Date();		
+		var now_date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+' '+(date.getHours() + 3 )+':'+date.getMinutes()+':'+date.getSeconds()
+		
+		return now_date;
+	});
+	
+	
+	var get_now_time = function () {
+	
+		//获取当前时间
+		var date = new Date();		
+		var now_date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
+		
+		return now_date;
+	}
 	
 	//验证日期
 	var check_date = function ($ojb) {
 		var _this = $($ojb);
 		
-		//获取当前时间
-		var date = new Date();		
-		var now_date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
+		var now_date = get_now_time();
+		
 		//格式化当前时间
 		var now_date_format = System.fomat_date(now_date);	 
 
 		//获取选择的时间
 		var select_date = System.fomat_date(_this.val());
 					
-		//24小时*60分钟*60秒*1000毫秒
+		//2小时*60分钟*60秒*1000毫秒
 		var two_hours = 2 * 60 * 60 * 1000;
 		
 		if (select_date - now_date_format <  two_hours) {
@@ -68,7 +86,7 @@ $(".generalize_form").Validform({
 	}
 	
 	//显示时间的选择
-	$(".timeSubject").ymdateplugin({
+	timeSubject.ymdateplugin({
 		//attr 属性 ，更多格式参加书本
 		altField:'#otherField',			//同步元素日期到其他元素上
 		dateFormat:'yy-mm-dd',		//日期格式设置

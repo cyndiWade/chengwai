@@ -184,3 +184,7 @@ body{ background:#fefefe;}
 	height:120px  !important;
 	width:60px; 
 }
+/* 隐藏编辑器的保存按钮 */
+#cke_9 {
+	display:none;
+}
