@@ -75,7 +75,10 @@ class AdvertBaseAction extends AppBaseAction {
 		}
 
 		$check_result = $this->init_check($this->oUser);
-		if ($check_result['status'] == false) alertBack($check_result['message']);
+		if ($check_result['status'] == false) {
+			$this->redirect('Advert/Account/login');
+			//alertBack($check_result['message']);
+		}
 	}
 	
 	

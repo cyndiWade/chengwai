@@ -149,7 +149,7 @@ class AccountAction extends AdvertBaseAction {
 				parent::set_session(array('user_info'=>$tmp_arr));
 				//更新用户信息
 				$Users->up_login_info($user_info['id']);
-				parent::callback(C('STATUS_SUCCESS'),'ok');
+				parent::callback(C('STATUS_SUCCESS'),'ok',array(),array('goto_url'=>U('/Advert/Weixin/celebrity_weixin')));
 			}
 		} else {
 			$this->redirect('Advert/Account/login');

@@ -24,6 +24,7 @@ class SendMsgAction extends ApiBaseAction {
 	//初始化数据库连接
 	protected  $db = array(
 		'Verify'=>'Verify',
+		'UserAdvertisement'=>'UserAdvertisement'
 	);
 	
 	private $telephone;			//目标手机号码
@@ -98,6 +99,12 @@ class SendMsgAction extends ApiBaseAction {
 	
 		//手机号码
 		if ($this->isPost()) {
+			
+			$iphone_is_have = $this->db['UserAdvertisement']->iphone_is_have($this->telephone);
+			if ($iphone_is_have == true) {
+				parent::callback(C('STATUS_OTHER'),'对不起此手机已注册');
+			}
+			
 			$this->msg = $this->verify.'，为您的账号注册验证码，请在'.$this->expired_time.'分钟内完成注册，如非本人注册，请忽略；'.$this->date.'。';
 			$this->_add_data(2);
 			exit;

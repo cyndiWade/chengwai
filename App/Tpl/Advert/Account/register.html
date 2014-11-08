@@ -112,7 +112,7 @@
 	});
 	function settime(){
 		var _this = $('.phoneclick');
-		var thist = parseInt(_this.html().substr(4,2));
+		var thist = parseInt(_this.html().substr(4,3));
 		var nextt = thist - 1 ;
 		if(nextt==0)
 		{
@@ -132,16 +132,22 @@
 			{
 				_this.attr('class','text');
 				_this.next().next().html('发送手机验证码中...').show();
-				phone_this.html('倒计时 '+ '30' +' 秒');
+				phone_this.html('倒计时 '+ 120 +' 秒');
 				settime();
+				
 				$.ajax({
 					url : "{:U('Api/SendMsg/advert_register_send')}",
 					type : "POST",
 					async : false,
 					cache :　false,
 					data : {telephone:_this.val()},
-					success : function(value)
+					success : function(result_data)
 					{
+						if (result_data.status == 0) {
+							
+						} else {
+							alert(result_data.msg);
+						}
 						_this.next().show();
 						_this.next().next().hide();
 					}

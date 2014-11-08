@@ -5,6 +5,15 @@
 
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/reg.css" type="text/css" />
 	<title>登录广告主</title>
+	<style type=text/css>
+		.text-phone {
+			width:50px !important;
+		}
+		.exchange_img {
+			cursor:pointer;
+		}
+
+	</style>
 </head>
 <body>
 <include file="Web:Public:header" />
@@ -32,7 +41,15 @@
 				  </tr>
 				  <tr>
 					<td class="t1"><span>验证码：</span></td>
-					<td class="t2"><input type="text" class="text text-phone" name="verify"/><div style="margin-top:7px;" class="validcode fl"><img src="{:U('Advert/Account/verify')}" id="resetVerifyCode"/></div></td>
+					<td class="t2">
+						<input type="text" class="text text-phone" name="verify"/>
+						<div style="margin-top:7px;" class="validcode fl">
+							<img src="{:U('Advert/Account/verify')}" id="resetVerifyCode"/>
+						</div>
+						<div style="margin-top:7px;" class="validcode fl">
+							<span class="exchange_img">换一张</span>
+						</div>
+					</td>
 				  </tr>
 				  <tr>
 					<td class="t1"></td>
@@ -60,13 +77,27 @@
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 <!-- 自动引入当前的js文件 -->
-<script>
-	$('#resetVerifyCode').click(function(){
-		var timenow = new Date().getTime();
-		var _this = $(this);
-		var href = "{:U('Advert/Account/verify')}"+'#'+timenow;
-		_this.attr('src',href);
-	});
+<script type="text/javascript">
+	(function ($) {
+
+		var resetVerifyCode = $('#resetVerifyCode');
+		resetVerifyCode.click(function(){
+			var timenow = new Date().getTime();
+			var _this = $(this);
+			var href = "{:U('Advert/Account/verify')}"+'#'+timenow;
+			_this.attr('src',href);
+		});
+		
+		var exchange_img = $('.exchange_img');
+		exchange_img.click(function () {
+			var timenow = new Date().getTime();
+			var href = "{:U('Advert/Account/verify')}"+'#'+timenow;
+			resetVerifyCode.attr('src',href);
+		});
+		
+		
+	})(jQuery);
+	
 </script>
 <script>
   var info = function(){
@@ -90,7 +121,8 @@
         success: function (msg) {
           if(msg.status==0)
           {
-            window.location.href="{:U('Advert/Member/datum_edit')}";
+            //window.location.href="{:U('Advert/Member/datum_edit')}";
+			window.location.href = msg.goto_url;
           }else{
             alert(msg.msg);
           }
