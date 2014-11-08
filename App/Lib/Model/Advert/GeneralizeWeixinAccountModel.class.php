@@ -51,6 +51,8 @@
 			
 			//活动订单ID
 			$arr['generalize_id'] = $new_array['order_id'];
+			//调用折扣比例
+			$arr['rebate'] = 0.3;
 			//获得图文类型
 			$GeneralizeWeixinOrder = D('GeneralizeWeixinOrder');
 			$ggw = $GeneralizeWeixinOrder->where(array('id'=>$new_array['order_id']))->field('ggw_type')->find();
@@ -67,12 +69,25 @@
 				}
 			}
 
-			//获得未计算的小订单价格
-			$all_price = $this->where(array('generalize_id'=>$new_array['order_id'],'audit_status'=>0))->sum('price');
+			//计算小订单价格价格
+			$sum_price = $this->where(array('generalize_id'=>$new_array['order_id']))->field('price,rebate,audit_status')->select();
+			//状态未支付订单价格
+			$all_price = 0;
+			//总订单价格
+			$now_price = 0;
 
+			foreach($sum_price as $price)
+			{
+				//获得未计算的小订单价格
+				if($price['audit_status']==0)
+				{
+					$all_price += $price['price'] + ($price['price'] * $price['rebate']);
+				}
+				$now_price += $price['price'] + ($price['price'] * $price['rebate']);
+			}
 
-			//重计算总价
-			$update['all_price'] = $this->where(array('generalize_id'=>$new_array['order_id']))->sum('price');
+			$update['all_price'] = $now_price;
+			
 			$GeneralizeWeixinOrder->where(array('id'=>$arr['generalize_id']))->save($update);
 
 
@@ -233,6 +248,7 @@
 						$add['generalize_id'] = $ien_id;
 						$add['account_id'] = $value['account_id'];
 						$add['price'] = $value['price'];
+						$add['rebate'] = 0.3;
 						$add['audit_status'] = 0;
 						$this->add($add);
 					}
@@ -261,10 +277,12 @@
 			if($small_order_id!='' && $users_id!='')
 			{
 				$Account_Order_Status = C('Account_Order_Status');
-				$all_array = $this->where(array('id'=>$small_order_id))->field('users_id,price')->find();
+				$all_array = $this->where(array('id'=>$small_order_id))->field('users_id,price,rebate')->find();
 				$UserMedia = D('UserMedia');
 				$UserMedia->insertPirce($all_array['users_id'],$all_array['price']);
-				$bool = D('UserAdvertisement')->updateFreeze($users_id,$all_array['price']);
+				//计算折扣*原价从广告主冻结资金里面扣除
+				$sum_price = $all_array['price'] + ($all_array['price'] * $all_array['rebate']);
+				$bool = D('UserAdvertisement')->updateFreeze($users_id,$sum_price);
 				if($bool)
 				{
 					$update['audit_status'] = $Account_Order_Status[7]['status'];

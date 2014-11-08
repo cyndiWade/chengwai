@@ -658,6 +658,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 			$bool = $this->db['GeneralizeWeixinAccount']->getUserPr($small_order_id,$this->oUser->id);
 			if($bool)
 			{
+				parent::updateMoney($this->oUser->id);
 				parent::callback(C('STATUS_SUCCESS'),'支付成功!');
 			}else{
 				parent::callback(C('STATUS_UPDATE_DATA'),'支付失败,请稍后尝试!');
