@@ -1,3 +1,4 @@
+
 $(".generalize_form").Validform({
 	btnSubmit:".btn_sub",
 	btnReset:"#btn_reset",			//重置
@@ -10,13 +11,21 @@ $(".generalize_form").Validform({
 	
 	
 	//表单验证之前，提交时执行的函数
-	beforeCheck:function(curform){	
+	beforeCheck:function(curform){
+		var TextArea1 = $('#TextArea1');
+		//alert(TextArea1.val().length)
+	
+		//return false;
+		
+		//console.log(curform.);
+		//return false;
 		//在表单提交执行验证之前执行的函数，curform参数是当前表单对象。
 			//这里明确return false的话将不会继续执行验证操作;	
 	},
 		
 	//表单验证成功，提交时执行的函数
 	beforeSubmit:function(curform){
+		
 		//在验证成功后，表单提交前执行的函数，curform参数是当前表单对象。
 		//这里明确return false的话表单将不会提交;
 		//return false;

@@ -11,6 +11,8 @@ var init_check_form = function () {
 		
 		//表单验证之前，提交时执行的函数
 		beforeCheck:function(curform){	
+			//var TextArea1 = $('#TextArea1');
+			//alert(TextArea1.val().length)
 			//在表单提交执行验证之前执行的函数，curform参数是当前表单对象。
 				//这里明确return false的话将不会继续执行验证操作;	
 		},
@@ -236,6 +238,7 @@ WeixinOrderAddGeneralize.prototype.show_phoneview_fn = function ($type) {
 	_father_this.top_view_li.removeClass('select');
 	_father_this.part01_view.hide();
 	_father_this.part01_detail.hide();
+	_father_this.top_view_li.hide();
 	
 	
 	//var stemTxt = CKEDITOR.instances.TextArea1.document.getBody().getText(); //取得纯文本 
@@ -250,12 +253,16 @@ WeixinOrderAddGeneralize.prototype.show_phoneview_fn = function ($type) {
 		
 		_father_this.top_view_li.eq(0).addClass('select');
 		
+		_father_this.top_view_li.eq(0).show();
+		
 		_father_this.part01_view.eq(0).show();
 		
 	//多图文第一条	
 	} else if ($type == 2) {
 		
 		_father_this.top_view_li.eq(1).addClass('select');
+		
+		_father_this.top_view_li.eq(1).show();
 		
 		_father_this.part01_view.eq(1).show();
 		
@@ -265,6 +272,8 @@ WeixinOrderAddGeneralize.prototype.show_phoneview_fn = function ($type) {
 	} else if ($type == 3) {
 		
 		_father_this.top_view_li.eq(1).addClass('select');
+		
+		_father_this.top_view_li.eq(1).show();
 		
 		_father_this.part01_view.eq(1).show();
 		
@@ -278,6 +287,8 @@ WeixinOrderAddGeneralize.prototype.show_phoneview_fn = function ($type) {
 	} else if ($type == 4) {
 		
 		_father_this.top_view_li.eq(1).addClass('select');
+
+		_father_this.top_view_li.eq(1).show();
 		
 		_father_this.part01_view.eq(1).show();
 			
