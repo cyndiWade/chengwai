@@ -80,7 +80,7 @@
 				//获得未计算的小订单价格
 				if($price['audit_status']==0)
 				{
-					$all_price += $price['price'] + ($price['price'] * $price['rebate']);
+					$all_price += $price['price'] +  $price['rebate'];
 				}
 				$now_price += $price['price'] + ($price['price'] * $price['rebate']);
 			}
@@ -242,7 +242,7 @@
 				$UserMedia = D('UserMedia');
 				$UserMedia->insertPirce($all_array['users_id'],$all_array['price']);
 				//计算折扣*原价从广告主冻结资金里面扣除
-				$sum_price = $all_array['price'] + ($all_array['price'] * $all_array['rebate']);
+				$sum_price = $all_array['price'] + $all_array['rebate'];
 				$bool = D('UserAdvertisement')->updateFreeze($users_id,$sum_price);
 				if($bool)
 				{
