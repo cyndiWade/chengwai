@@ -47,7 +47,6 @@ class MemberAction extends AdvertBaseAction {
 				parent::callback(C('STATUS_UPDATE_DATA'),'','',array('info'=>'请重新尝试下'));
 			}
 		}
-
 		//选中样式
 		$this->data_to_view(array('member_sidebar_datumEdit_class'=>'class="on"',));
 		$big_list = $this->db['UserAdvertisement']->select_account_list($this->_user_id);

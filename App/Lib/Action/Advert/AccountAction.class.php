@@ -85,7 +85,9 @@ class AccountAction extends AdvertBaseAction {
 					'account'=>$account,
 					'nickname' => '',
 					'type' => 2,
-					'money' => $moneyget['money']
+					'money' => $moneyget['money'],
+					'freeze_funds' => $moneyget['freeze_funds'],
+					'all_price' => $moneyget['money'] + $moneyget['freeze_funds']
 				);
 				parent::set_session(array('user_info'=>$db_data));
 				parent::callback(C('STATUS_OTHER'),'ok');
@@ -142,7 +144,9 @@ class AccountAction extends AdvertBaseAction {
 						'account' => $user_info['account'],
 						'nickname' => $user_info['nickname'],
 						'type'=>$user_info['type'],
-						'money' => $moneyget['money']
+						'money' => $moneyget['money'],
+						'freeze_funds' => $moneyget['freeze_funds'],
+						'all_price' => $moneyget['money'] + $moneyget['freeze_funds']
 					);
 				}
 				//写入SESSION

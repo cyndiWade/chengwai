@@ -49,6 +49,7 @@ class MoneyAction extends AdvertBaseAction {
 				'spnumber'=>$spnumber,
 				'spye' => $money['money'],
 				'spdjzj' => $money['freeze_funds'],
+				'all_price' => $money['money'] + $money['freeze_funds'],
 				'spshow' => base64_encode('http://'.$_SERVER['HTTP_HOST'].'/index.php/Advert/Money/index.html')
 		));
 		$this->display();

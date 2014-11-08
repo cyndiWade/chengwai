@@ -32,16 +32,20 @@
 				<td class="t2">新闻媒体</td>
 			  </tr>
 			  <tr>
-				<th class="t1">开始时间：</th>
+				<th class="t1">发布时间：</th>
 				<td class="t3">{$view_data.order_info.start_time|date="Y-m-d H:i:s",###}</td>
-				<th class="t1">执行时间段：</th>
-				<td class="t2">{$view_data.order_info.start_time|date="Y-m-d H:i:s",###}</td>
+				<th class="t1">订单创建时间：</th>
+				<td class="t2">{$view_data.order_info.create_time|date="Y-m-d H:i:s",###}</td>
 				<th class="t1">活动状态：</th>
 				<td class="t2">{$view_data.order_info.status_explain}</td>
 			  </tr>
 			  <tr>
 				<th class="t1">活动备注：</th>
 				<td colspan="5">{$view_data.order_info.bz_info}</td>
+			  </tr>
+			  <tr>
+			  	<th class="t1">活动正文：</th>
+				<td colspan="5">{$view_data.order_info.zf_info}</td>
 			  </tr>
 			</table>
 		</div>
@@ -77,8 +81,13 @@
 
 				<td class="">{$vo.g_price}元</td>
 				<td class=""><strong class="finish">{$vo.g_status_explain}</strong></td>
-				<td class=""><a href="{:U('Advert/News/look_perform_pic',array('order_id'=>$view_data['order_id'],'account_id'=>$vo['g_account_id']))}" target="_blank" class="blue" data-order_id="{$vo.g_id}">查看执行链接</a></td>
-	
+				<td class="">
+					<if condition="($vo.is_show_affirm_btn EGT 6)">
+						<a href="{:U('Advert/News/look_perform_pic',array('order_id'=>$view_data['order_id'],'account_id'=>$vo['g_account_id']))}" target="_blank" class="blue" data-order_id="{$vo.g_id}">查看执行链接</a>
+					<else />
+						无
+					</if>
+				</td>
 				<td class="">
 					<if condition="($vo['is_show_affirm_btn'] eq 6)">
 						<a href="javascript:;" class="blue affirm_order" data-order_id="{$vo.g_id}">确认完成</a>	
