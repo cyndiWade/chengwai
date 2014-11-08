@@ -59,7 +59,9 @@ class AdvertBaseAction extends AppBaseAction {
 		
 				'user_info' => array(
 					'account' => $this->oUser->account,
-					'money' => $this->oUser->money
+					'money' => $this->oUser->money,
+					'freeze_funds' => $this->oUser->freeze_funds,
+					'all_price' => $this->oUser->all_price,
 				),
 			));
 

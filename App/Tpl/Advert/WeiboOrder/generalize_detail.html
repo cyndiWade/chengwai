@@ -105,8 +105,13 @@
 
 				<td class="">{$vo.g_price}元</td>
 				<td class=""><strong class="finish">{$vo.g_status_explain}</strong></td>
-				<td class=""><a href="{:U('Advert/WeiboOrder/look_perform_pic',array('order_id'=>$view_data['order_id'],'account_id'=>$vo['g_account_id']))}" target="_blank" class="blue" data-order_id="{$vo.g_id}">查看执行截图</a></td>
-	
+				<td class="">
+					<if condition="($vo.is_show_affirm_btn EGT 6)">
+						<a href="{:U('Advert/WeiboOrder/look_perform_pic',array('order_id'=>$view_data['order_id'],'account_id'=>$vo['g_account_id']))}" target="_blank" class="blue" data-order_id="{$vo.g_id}">查看执行截图</a>
+					<else />
+						无
+					</if>
+				</td>
 				<td class="">
 					<if condition="($vo['is_show_affirm_btn'] eq 6)">
 					<a href="javascript:;" class="blue affirm_order" data-order_id="{$vo.g_id}">确认完成</a>

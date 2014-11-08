@@ -489,7 +489,9 @@ class AppBaseAction extends GlobalParameterAction {
 					'account'=>$Users['account'],
 					'nickname' => $Users['nickname'],
 					'type' => $Users['type'],
-					'money' => $money['money']
+					'money' => $money['money'],
+					'freeze_funds' => $money['freeze_funds'],
+					'all_price' => $money['money'] + $money['freeze_funds']
 				)
 			);
 			$_SESSION[C('SESSION_DOMAIN')][GROUP_NAME] = $db_data;
