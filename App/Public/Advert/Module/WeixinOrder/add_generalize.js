@@ -48,6 +48,16 @@ init_check_form();
 
 (function () {	
 	
+	var timeSubject = $('.timeSubject');
+	
+	timeSubject.val(function () {
+		//获取当前时间
+		var date = new Date();		
+		var now_date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+' '+(date.getHours() + 3 )+':'+date.getMinutes()+':'+date.getSeconds()
+		
+		return now_date;
+	});
+	
 	//验证日期
 	var check_date = function ($ojb) {
 		var _this = $($ojb);
@@ -75,7 +85,7 @@ init_check_form();
 	}
 	
 	//显示时间的选择
-	$(".timeSubject").ymdateplugin({
+	timeSubject.ymdateplugin({
 		//attr 属性 ，更多格式参加书本
 		altField:'#otherField',			//同步元素日期到其他元素上
 		dateFormat:'yy-mm-dd',		//日期格式设置

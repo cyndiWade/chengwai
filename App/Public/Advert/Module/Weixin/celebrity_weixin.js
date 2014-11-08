@@ -660,7 +660,7 @@ Weixin.prototype.lahei_and_shoucang_fn = function ($urL) {
 	var _father_this = this;
 	_father_this.init();
 	_father_this.lahei_and_shoucang.click(function () {
-		if (confirm('确认操作?') == false) return false; 
+		//if (confirm('确认操作?') == false) return false; 
 		var _this = $(this);
 		var post_data = {
 			'action' : _this.data('action'),	
@@ -671,10 +671,10 @@ Weixin.prototype.lahei_and_shoucang_fn = function ($urL) {
 		var result = System.ajax_post_setup($urL,post_data,'JSON');
 		
 		if (result.status == 1) {
-			alert(result.msg);
+			//alert(result.msg);
 			public_post_fn({});
 		} else {
-			alert(result.msg);
+			//alert(result.msg);
 		}
 	
 	});
@@ -796,7 +796,7 @@ Weixin.prototype.add_selected_box_fn = function () {
 	
 	//点击批量添加账号时
 	_father_this.add_selected_box.click(function () {
-		if (confirm('确认操作？') == false) return false;
+		//if (confirm('确认操作？') == false) return false;
 		
 		_father_this.init();
 		_account_ids = [];
@@ -901,7 +901,7 @@ Weixin.prototype.add_selected_box_fn = function () {
 				//提交操作
 				var result = System.ajax_post_setup(system_info.post_order_url,post_data,'JSON');
 				if (result.status == 0) {
-					alert(result.msg);
+					//alert(result.msg);
 					window.location.href= result.data.go_to_url;	//跳转
 				} else {
 					alert(result.msg);
