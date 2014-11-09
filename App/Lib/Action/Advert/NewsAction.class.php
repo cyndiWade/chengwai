@@ -194,7 +194,7 @@ class NewsAction extends AdvertBaseAction {
 				{
 					//组合数据
 					$arr = array('order_id'=>$id,'account_ids'=>$account_id);
-					$this->db['GeneralizeNewsAccount']->insertAll($arr,$this->oUser->id);
+					$this->db['GeneralizeNewsAccount']->insertAll($arr,$this->oUser->id,$this->global_finance['news_proportion']);
 					parent::updateMoney($this->oUser->id);
 					//$this->db['GeneralizeNewsOrder']->where(array('id'=>$id))->save(array('status'=>1));
 					$this->redirect('Advert/News/generalize_activity');
@@ -213,7 +213,7 @@ class NewsAction extends AdvertBaseAction {
 	// 	{
 	// 		if(intval($_POST['order_id']!=''))
 	// 		{
-	// 			$status = $this->db['GeneralizeNewsAccount']->insertAll($_POST,$this->oUser->id);
+	// 			$status = $this->db['GeneralizeNewsAccount']->insertAll($_POST,$this->oUser->id,$this->global_finance['news_proportion']);
 				
 	// 			if ($status == true) {
 					
@@ -238,7 +238,7 @@ class NewsAction extends AdvertBaseAction {
 		{
 			if(intval($_POST['order_id']!=''))
 			{
-				$status = $this->db['GeneralizeNewsAccount']->insertAll($_POST,$this->oUser->id);
+				$status = $this->db['GeneralizeNewsAccount']->insertAll($_POST,$this->oUser->id,$this->global_finance['news_proportion']);
 				
 				if ($status == true) {
 					parent::updateMoney($this->oUser->id);

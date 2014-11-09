@@ -39,7 +39,7 @@
 		// }
 		
 		//执行新的直接扣款流程
-		public function insertAll($array,$id)
+		public function insertAll($array,$id,$finance)
 		{
 			$new_array = array();
 			foreach($array as $key=>$value)
@@ -49,7 +49,7 @@
 			//活动订单ID
 			$arr['generalize_id'] = $new_array['order_id'];
 			//调用折扣比例
-			$arr['rebate'] = $this->global_finance['news_proportion'];
+			$arr['rebate'] = $finance;
 			//微博账号
 			$account_id = explode(',', $new_array['account_ids']);
 			foreach($account_id as $value)
@@ -80,7 +80,7 @@
 				//获得未计算的小订单价格
 				if($price['audit_status']==0)
 				{
-					$all_price += $price['price'] +  $price['rebate'];
+					$all_price += $price['price'] + $price['rebate'];
 				}
 				$now_price += $price['price'] + $price['rebate'];
 			}

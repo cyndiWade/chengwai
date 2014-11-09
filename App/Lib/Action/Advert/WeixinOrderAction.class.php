@@ -258,7 +258,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 	    		if($account_id!='')
 	    		{
 	    			$arr = array('order_id'=>$id,'account_ids'=>$account_id);
-	    			$this->db['GeneralizeWeixinAccount']->insertAll($arr,$this->oUser->id);
+	    			$this->db['GeneralizeWeixinAccount']->insertAll($arr,$this->oUser->id,$this->global_finance['weixin_proportion']);
 	    			parent::updateMoney($this->oUser->id);
 	    			//修改订单状态为1，平台审核的类型
 					//$this->db['GeneralizeWeixinOrder']->where(array('id'=>$id))->save(array('status'=>1));
@@ -294,7 +294,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 				if($account_id!='')
 				{
 					$arr = array('order_id'=>$id,'account_ids'=>$account_id);
-					$this->db['IntentionWeixinAccount']->insertAll($arr,$this->oUser->id);
+					$this->db['IntentionWeixinAccount']->insertAll($arr,$this->oUser->id,$this->global_finance['weixin_proportion']);
 					//修改订单状态为1，平台审核的类型
 					$this->db['IntentionWeixinOrder']->where(array('id'=>$id))->save(array('status'=>1));
 					$this->redirect('Advert/WeixinOrder/intention_list');
@@ -335,7 +335,7 @@ class WeixinOrderAction extends AdvertBaseAction {
     	{
     		if(intval($_POST['order_id']!=''))
     		{
-	    		$status = $this->db['GeneralizeWeixinAccount']->insertAll($_POST,$this->oUser->id);
+	    		$status = $this->db['GeneralizeWeixinAccount']->insertAll($_POST,$this->oUser->id,$this->global_finance['weixin_proportion']);
 				if ($status == true) {
 					
 					//修改订单状态为1，平台审核的类型
@@ -360,7 +360,7 @@ class WeixinOrderAction extends AdvertBaseAction {
     	{
     		if(intval($_POST['order_id']!=''))
     		{
-	    		$status = $this->db['IntentionWeixinAccount']->insertAll($_POST,$this->oUser->id);
+	    		$status = $this->db['IntentionWeixinAccount']->insertAll($_POST,$this->oUser->id,$this->global_finance['weixin_proportion']);
 				if ($status == true) {
 					//修改订单状态为1，平台审核的类型
 					$this->db['IntentionWeixinOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));

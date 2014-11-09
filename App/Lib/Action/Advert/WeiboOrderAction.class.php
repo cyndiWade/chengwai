@@ -236,7 +236,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 		{
 			if(intval($_POST['order_id']!=''))
     		{
-				$status = $this->db['GeneralizeAccount']->insertAll($_POST,$this->oUser->id);
+				$status = $this->db['GeneralizeAccount']->insertAll($_POST,$this->oUser->id,$this->global_finance['weibo_proportion']);
 				if ($status == true) {
 					
 					//修改订单状态为1，平台审核的类型
@@ -262,7 +262,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 		{
 			if(intval($_POST['order_id']!=''))
     		{
-				$status = $this->db['IntentionWeiboAccount']->insertAll($_POST,$this->oUser->id);
+				$status = $this->db['IntentionWeiboAccount']->insertAll($_POST,$this->oUser->id,$this->global_finance['weibo_proportion']);
 				if ($status == true) {
 					
 					//修改订单状态为1，平台审核的类型
@@ -307,7 +307,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 				if($account_id!='')
 				{
 					$arr = array('order_id'=>$id,'pt_type'=>$pt_type,'account_ids'=>$account_id);
-					$this->db['IntentionWeiboAccount']->insertAll($arr,$this->oUser->id);
+					$this->db['IntentionWeiboAccount']->insertAll($arr,$this->oUser->id,$this->global_finance['weibo_proportion']);
 					//修改订单状态为1，平台审核的类型
 					$this->db['IntentionWeiboOrder']->where(array('id'=>$id))->save(array('status'=>1));
 					$this->redirect('Advert/WeiboOrder/intention_list');
@@ -352,7 +352,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 				if($account_id!='')
 				{
 					$arr = array('order_id'=>$id,'pt_type'=>$pt_type,'account_ids'=>$account_id);
-					$this->db['GeneralizeAccount']->insertAll($arr,$this->oUser->id);
+					$this->db['GeneralizeAccount']->insertAll($arr,$this->oUser->id,$this->global_finance['weibo_proportion']);
 					//修改订单状态为1，平台审核的类型
 					//$this->db['GeneralizeOrder']->where(array('id'=>$id))->save(array('status'=>1));
 					parent::updateMoney($this->oUser->id);

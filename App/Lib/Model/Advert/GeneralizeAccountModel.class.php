@@ -42,7 +42,7 @@
 		// }
 
 		//微博新流程直接付钱
-		public function insertAll($array,$id)
+		public function insertAll($array,$id,$finance)
 		{
 			$new_array = array();
 			foreach($array as $key=>$value)
@@ -57,7 +57,7 @@
 			//平台类型
 			$arr['account_type'] = $new_array['pt_type'];
 			//调用折扣比例
-			$arr['rebate'] = $this->global_finance['weibo_proportion'];
+			$arr['rebate'] = $finance;
 			//微博账号
 			$account_id = explode(',', $new_array['account_ids']);
 			foreach($account_id as $value)

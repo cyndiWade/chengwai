@@ -4,7 +4,7 @@
 	{
 
 		//新增数据
-		public function insertAll($array,$id)
+		public function insertAll($array,$id,$finance)
 		{
 			$new_array = array();
 			foreach($array as $key=>$value)
@@ -13,6 +13,8 @@
 			}
 			//活动订单ID
 			$arr['generalize_id'] = $new_array['order_id'];
+			//调用折扣比例
+			$arr['rebate'] = $finance;
 			//微博账号
 			$account_id = explode(',', $new_array['account_ids']);
 			foreach($account_id as $value)

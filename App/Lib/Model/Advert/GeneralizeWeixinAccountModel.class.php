@@ -41,7 +41,7 @@
 
 
 		//新增数据直接付款的流程
-		public function insertAll($array,$id)
+		public function insertAll($array,$id,$finance)
 		{
 			$new_array = array();
 			foreach($array as $key=>$value)
@@ -52,7 +52,7 @@
 			//活动订单ID
 			$arr['generalize_id'] = $new_array['order_id'];
 			//调用折扣比例
-			$arr['rebate'] = $this->global_finance['weixin_proportion'];
+			$arr['rebate'] = $finance;
 			//获得图文类型
 			$GeneralizeWeixinOrder = D('GeneralizeWeixinOrder');
 			$ggw = $GeneralizeWeixinOrder->where(array('id'=>$new_array['order_id']))->field('ggw_type')->find();
