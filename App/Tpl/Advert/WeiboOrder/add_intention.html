@@ -28,8 +28,14 @@
 			  <tr>
 				<td class="t1"><i>*</i><strong>投放平台：</strong></td>
 				<td class="t2">
-					<input type="radio" name="tfpt_type" value="1" <if condition="(!empty($_GET['pttype']))">disabled</if>  <if condition="($_GET['pttype'] eq 1)">checked</if> class="tfpt_type" datatype="*" errormsg="请选择！~" />新浪微博
-					<input type="radio" name="tfpt_type" value="2" <if condition="(!empty($_GET['pttype']))">disabled</if>  <if condition="($_GET['pttype'] eq 2)">checked</if> class="tfpt_type" datatype="*" errormsg="请选择！~" />腾讯微博
+					<if condition="($_GET['pttype'] eq 1)">
+						<input type="radio" name="tfpt_type" value="1" class="tfpt_type" datatype="*" errormsg="请选择！~" checked="true" />新浪微博
+					<elseif condition="($_GET['pttype'] eq 2)"/>
+						<input type="radio" name="tfpt_type" value="2" class="tfpt_type" datatype="*" errormsg="请选择！~" checked="true" />腾讯微博
+					<else />
+						<input type="radio" name="tfpt_type" value="1" class="tfpt_type" datatype="*" errormsg="请选择！~" checked="true" />新浪微博
+						<input type="radio" name="tfpt_type" value="2" class="tfpt_type" datatype="*" errormsg="请选择！~" />腾讯微博
+					</if>
 				</td>
 			  </tr>
 			  <tr>
