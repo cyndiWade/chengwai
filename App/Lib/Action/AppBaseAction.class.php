@@ -36,6 +36,8 @@ class AppBaseAction extends GlobalParameterAction {
 		$system_sms = D('SystemSms')->where(array('id'=>C('WEB_SYSTEM.sms_id')))->find();
 		$this->global_sms = $system_sms;
 		
+		//财务属性
+		$this->global_finance = D('SystemFinance')->field('weixin_proportion,weibo_proportion,news_proportion')->where(array('id'=>C('WEB_SYSTEM.finance_id')))->find();
 		
 		$this->global_tpl_view(array(
 			//网站公共的资源路径

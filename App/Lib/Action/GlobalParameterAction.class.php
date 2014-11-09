@@ -22,6 +22,8 @@ class GlobalParameterAction extends Action {
 	
 	protected $global_sms = array();			//短信属性
 	
+	protected $global_finance = array();		//财务属性
+	
 
 	
 	/**
