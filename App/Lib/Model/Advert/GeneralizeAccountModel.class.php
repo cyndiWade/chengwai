@@ -250,7 +250,7 @@
 						$add['account_id'] = $value['account_id'];
 						$add['account_type'] = $value['account_type'];
 						$add['price'] = $value['price'];
-						$add['rebate'] = 0.3;
+						$add['rebate'] = $value['rebate'];
 						$add['audit_status'] = 0;
 						$this->add($add);
 					}
