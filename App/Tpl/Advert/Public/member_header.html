@@ -1,53 +1,34 @@
-<!-- 头部 -->
-<div class="phd phd-member l">
-	<div class="box-hd">
-		<div class="box01-hd l">
-			<!-- 登录前 -->
-			<div class="logbefore none l">
-				<div class="tel fr"><b>4006 - 876 - 308</b></div>
-				<div class="part01-hd fr">
-					<a href="#">免费注册</a> | <a href="#">立即登陆</a> | <a href="#">港澳专区</a> | <a href="#">推广讲坛</a> | <a href="">帮助中心</a> | <a href="#">联系我们</a>			
-				</div>
-			</div>
-			<!-- 登录后 -->
-			<div class="logafter l">
-				<div class="userctrl pr fr"><!-- <em class="count">1</em> -->
-				<span>可用余额(<em class="red">{$global_tpl_view.user_info.money}</em>元)</span>
-				<span>冻结余额(<em class="red">{$global_tpl_view.user_info.freeze_funds}</em>元)</span>
-				<span>账户总额(<em class="red">{$global_tpl_view.user_info.all_price}</em>元)</span>
-				<a href="{:U('/Advert/Member/pass_save')}">修改密码</a><!-- <a href="#">客服中心</a> -->
-				<a href="{:U('/Advert/Help/index')}">帮助中心</a><!-- <a href="#">消息</a> -->
-				<a href="{:U('/Advert/Account/logout')}">退出</a></div>
-				<div class="part01-wel fl">
-					  欢来到城外圈<a href="#" class="blue">{$global_tpl_view.user_info.account}</a>
-				</div>
-			</div>
-		</div>
-		<div class="box02-hd l">
-			<a href="{:U('/Advert/Member/datum_edit')}" class="logo fl"><img src="{$global_tpl_view.Group_Resource_Path}images/logo_member.png" alt="城外圈会员中心" /></a>		
-		</div>
-		<div class="box03-hd l">
-			<div class="mem-hd fr">
-				<a href="{$global_tpl_view['big_type_urls'][3]}" class="help fl {$global_tpl_view['big_type_class'][3]}">帮助中心</a>
-				<a href="{$global_tpl_view['big_type_urls'][4]}" class="help fl {$global_tpl_view['big_type_class'][4]}">在线充值</a>
-				<a href="{$global_tpl_view['big_type_urls'][5]}" class="help fl {$global_tpl_view['big_type_class'][5]}">流水明细</a>
-			</div>
-			<!-- 一级导航 -->
-			<ul class="nav-mem fl">
-				<li class="nav-new {$global_tpl_view['big_type_class'][0]}" ><a class="xwmt" href="{$global_tpl_view['big_type_urls'][0]}">新闻媒体</a></li>
-				<li class="nav-wx {$global_tpl_view['big_type_class'][1]}"><a class="wxtg" href="{$global_tpl_view['big_type_urls'][1]}">微信推广</a></li>
-				<li class="nav-wb {$global_tpl_view['big_type_class'][2]}"><a class="wbtg" href="{$global_tpl_view['big_type_urls'][2]}">微博推广</a></li>
-			</ul>
-		</div>
 
-		<!-- 二级导航 -->
-		<if condition="($global_tpl_view['big_type_class'][0] eq true)"> 
-			<include file="Public:news_sidebar" />
-		<elseif condition="($global_tpl_view['big_type_class'][1] eq true)"/>
-			<include file="Public:weixin_sidebar" />
-		<elseif condition="($global_tpl_view['big_type_class'][2] eq true)"/>
-			<include file="Public:weibo_sidebar" />	
-		</if>
-		
-	</div>
+<!-- 头部 -->
+<div class="header">
+  <div class="header_top">
+    <div class="w1200">
+      <div class="top_left">
+      	您好，欢迎来到城外圈      </div>
+      <div class="top_right">
+        <ul>
+        <li><a href="javascript:;">账号：{$global_tpl_view.user_info.account}</a>&nbsp;<a href="{:U('/Advert/Account/logout')}">[退出]</a></li>
+        <li>余额<span class="red">{$global_tpl_view.user_info.all_price}</span>元</li>
+        <li>可用余额<span class="red">{$global_tpl_view.user_info.money}</span>元</li>
+        <li>冻结金额<span class="red">{$global_tpl_view.user_info.freeze_funds}</span>元</li>
+      <!-- <li><a href="javascript:;">消息<span style="display: none;" id="msgNum" class="msg-num">0</span></a></li> -->  
+        <li><a target="_blank" href="{:U('/Advert/Help/index')}">帮助中心</a></li>
+        </ul>      
+      </div>
+    </div>
+  </div>
+  <div class="blank10"></div>
+  <div class="header_lc">
+    <div class="header_nav w1200"><div class="member_logo"><a href="/" class="png" title="城外圈广告主推广平台" style="cursor:pointer;"></a></div><div class="member_logotxt">广告主推广平台</div>
+    <div class="member_menu"><ul>
+      <li class="png {$global_tpl_view['big_type_class'][0]}"><a href="{$global_tpl_view['big_type_urls'][0]}" title="新闻发稿" class="png">新闻发稿</a></li>
+      <li class="png {$global_tpl_view['big_type_class'][1]}"><a href="{$global_tpl_view['big_type_urls'][1]}" title="微信推广" class="png">微信推广</a></li>
+      <li class="png {$global_tpl_view['big_type_class'][2]}"><a href="{$global_tpl_view['big_type_urls'][2]}" title="微博推广" class="png">微博推广</a></li>
+      <li class="png {$global_tpl_view['big_type_class'][3]}"><a href="{$global_tpl_view['big_type_urls'][3]}" title="我的订单" class="png">我的订单</a></li>
+      <li class="png {$global_tpl_view['big_type_class'][4]}"><a href="{$global_tpl_view['big_type_urls'][4]}" title="资金流水" class="png">资金流水</a></li>
+      <li class="png {$global_tpl_view['big_type_class'][5]}"><a href="{$global_tpl_view['big_type_urls'][5]}" title="会员" class="png">我的信息</a></li>
+      <li class="nav_next png {$global_tpl_view['big_type_class'][6]}"><a href="{$global_tpl_view['big_type_urls'][6]}" class="png">在线充值</a></li>
+    </ul></div></div>
+  </div>
 </div>
+<!-- end头部 -->

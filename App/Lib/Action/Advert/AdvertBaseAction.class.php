@@ -144,15 +144,18 @@ class AdvertBaseAction extends AppBaseAction {
 	 */
 	protected function big_type_urls ($big_type) {
 		
-		$data[0] = array(0=>'select');
-		$data[1] = array(1=>'select');
-		$data[2] = array(2=>'select');
-		$data[3] = array(3=>'cash');
-		$data[4] = array(4=>'cash');
-		$data[5] = array(5=>'cash');
+		$data[0] = array(0=>'nav_cur');
+		$data[1] = array(1=>'nav_cur');
+		$data[2] = array(2=>'nav_cur');
+		$data[3] = array(3=>'nav_cur');
+		$data[4] = array(4=>'nav_cur');
+		$data[5] = array(5=>'nav_cur');
+		$data[6] = array(6=>'nav_cur');
 		parent::global_tpl_view(array(
 			'big_type_class' => $data[$big_type],	//
 			
+				//{:U('Advert/News/news_list')}
+			/*
 			'big_type_urls'=>array(
 				0 => U('Advert/News/news_list'),	
 				1 => U('Advert/Weixin/celebrity_weixin'),	
@@ -160,6 +163,16 @@ class AdvertBaseAction extends AppBaseAction {
 				3 => U('Advert/Help/index'),
 				4 => U('Advert/Money/index'),
 				5 => U('Advert/Money/record')
+			),
+			*/
+			'big_type_urls'=>array(
+				0 => U('Advert/News/news_list'),
+				1 => U('Advert/Weixin/celebrity_weixin'),
+				2 => U('Advert/Weibo/celebrity_weibo',array('pt_type'=>1)),	
+				3 => '',
+				4 => U('Advert/Money/record'),
+				5 => U('Advert/Member/datum_edit'),
+				6 => U('Advert/Money/index')
 			),
 		));
 

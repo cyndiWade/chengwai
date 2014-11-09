@@ -25,14 +25,13 @@
 <div class="location l">
 	当前位置：<a href="#">首页</a>  >  <a href="#">微信推广</a> > <span class="blue">查看草根微信</span>
 </div>
+
+<include file="Public:weixin_sidebar" />
+
 <div class="area01-memwb area01-memwxmr l">
+	<!-- 
 	<ul class="wbtab l">
 		<li class="select three_sidebar_type" data-field="all" data-val=""><a href="javascript:;" class="mbmr">全部微信账号 </a></li>
-		<!-- 
-		<li class="three_sidebar_type" data-field="tj" data-val="1"><a href="javascript:;" class="wntj">为您推荐 </a></li>
-		<li class="three_sidebar_type" data-field="rmwx" data-val="1"><a href="javascript:;" class="hotzh">热门微信账号 </a></li>
-		<li class="three_sidebar_type" data-field="xstj" data-val="1"><a href="javascript:;" class="xstj">限时特价</a></li>
-		 -->
 		<li class="three_sidebar_type" data-field="cksc" data-val="1"><a href="javascript:;" class="cksc">查看收藏</a></li>
 		<li class="three_sidebar_type" data-field="ckhmd" data-val="1"><a href="javascript:;" class="hmd">查看黑名单</a></li>
 	
@@ -40,14 +39,12 @@
 	<div class="searchbox fl">
 		<div class="top-search l">
 			<strong class="on">搜账号名称/微信号</strong>
-			<!--  
-			<strong>搜索关键字 </strong>
-			 -->
 		</div>
 		<div class="mid-search l">
 			<input type="text" class="seatext search_account" data-field="account" data-ischeck="0" value="" placeholder="请输账号名或账号关键字" /><input type="submit" class="btn seabtn" id="search" value="搜索" />
 		</div>
 	</div>
+	 -->
 	<div class="catebox l">
 		<table class="tab01-cate l">
 		  <tr>
@@ -163,13 +160,27 @@
 			</ul>
 		</div>
 	</div>
+	<!--  
 	<div class="orderbox l">
 		<b class="total fr">共<span id="all_data_num"></span>个</b><b class="total fr"><span id="all_page_num"></span>页</b>
-		<!--  <select class="fl"><option>选择排序方式</option></select>-->
 		<span class="orderspan orderspan-select fl" data-sort_type="order_id">默认排序</span>
 		<span class="orderspan" data-sort_type="fans_num">粉丝数量</span>
-		<!--  <span class="orderspan">单图文报价</span>-->
 	</div>
+	-->
+		<!-- 排序条件 -->
+		<div class="filter_box fl">
+	      <div class="fore1">
+	      <!--<dl class="filter_order"><dt>排序：</dt><dd class="curr"><a href="javascript:;">默认排序</a><b></b></dd><dd><a href="javascript:;">粉丝量</a><b></b></dd><dd><a href="javascript:;">月订单</a><b></b></dd><dd><a href="javascript:;">自定义</a><b></b></dd></dl>-->	
+	      <dl class="filter_type">
+	      	<dt>媒体类型：</dt>	
+	      	<dd id="mtypeall" class="three_sidebar_type selected" data-field="all" data-val=""><b></b>全部</dd>
+	      	<dd id="mcollect" class="three_sidebar_type" data-field="cksc" data-val="1"><b></b>收藏</dd>
+	      	<dd id="mblacklist" class="three_sidebar_type" data-field="ckhmd" data-val="1"><b></b>黑名单</dd></dl>   
+	       
+	      <div class="total"><span>共<strong id="all_data_num"></strong>个</span></div><span class="clr"></span></div>
+	      <div class="clear"></div>
+	    </div>
+    	<!-- end 排序条件 -->
 	<div class="col01-wx l">
 		<table class="tab01-weibo tab01-wx l">
 		 <thead>

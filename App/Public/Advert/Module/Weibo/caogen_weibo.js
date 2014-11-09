@@ -466,8 +466,10 @@ Weibo.prototype.three_sidebar_type_fn = function () {
 	
 	_father_this.three_sidebar_type.click(function () {
 		_father_this.three_sidebar_type.removeClass("select");
+		_father_this.three_sidebar_type.removeClass("selected");
 		var _this = $(this);
 		_this.addClass("select");
+		_this.addClass("selected");
 		public_post_fn({});
 	});
 	

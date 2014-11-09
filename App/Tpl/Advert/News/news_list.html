@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<!-- 头部 -->
+<!-- 头部 -->  
 <include file="Public:member_header" />
 
 <div class="wrap l">
@@ -18,28 +18,9 @@
 	当前位置：<a href="#">首页</a>  >  <a href="#">新闻媒体</a> > <span class="blue">查看新闻媒体</span>
 </div>
 <div class="area01-memwb area01-memmt l">
-	<ul class="wbtab l">
-		<li class="select three_sidebar_type" data-field="all" data-val=""><a href="javascript:;" class="mtzh">全部媒体账号 </a></li>
-			<!-- 
-		<li class="three_sidebar_type" data-field="tj" data-val="1"><a href="javascript:;" class="wntj">为您推荐 </a></li>
-		<li class="three_sidebar_type" data-field="rmwx" data-val="1"><a href="javascript:;" class="hotzh">热门媒体账号 </a></li>
-		<li class="three_sidebar_type" data-field="xstj" data-val="1"><a href="javascript:;" class="xstj">限时特价</a></li>
-	
-		<li class="three_sidebar_type" data-field="cksc" data-val="1"><a href="javascript:;" class="cksc">查看收藏</a></li>
-		<li class="three_sidebar_type" data-field="ckhmd" data-val="1"><a href="javascript:;" class="hmd">查看黑名单</a></li>
-		 -->
-	</ul>
-	<div class="searchbox fl">
-		<div class="top-search l">
-			<strong class="on">搜索新闻媒体账号</strong>
-			<!--
-			<strong>搜索关键字 </strong>
-			  -->
-		</div>
-		<div class="mid-search l">
-			<input type="text" class="seatext search_account" data-field="account" data-ischeck="0" value="" placeholder="请输入账号名称" /><input type="submit" class="btn seabtn" id="search" value="搜索" />
-		</div>
-	</div>
+
+	<include file="Public:news_sidebar" />
+
 	<div class="catebox l">
 		<table class="tab01-cate l">
 		<!--  
@@ -133,14 +114,37 @@
 			</ul>
 		</div>
 	</div>
+	<!-- 
 	<div class="orderbox l">
-		<b class="total fr">共<span id="all_data_num"></span>个</b><b class="total fr"><span id="all_page_num"></span>页</b>
-		<!-- <select class="fl"><option>选择排序方式</option></select> -->
-		
-		
+		<b class="total fr">共<span id="all_data_num"></span>个</b><b class="total fr"><span id="all_page_num"></span>页</b>		
 		<span class="orderspan orderspan-select fl" data-sort_type="order_id">默认排序</span>
 		<span class="orderspan" data-sort_type="money">价格升降</span>
 	</div>
+	 -->
+	<!-- 排序条件 -->
+	<div class="filter_box l">
+        <div class="fore1">
+        <!--  
+        <dl class="filter_order">
+        <dt>排序：</dt>
+        <dd class="curr"><a href="javascript:;">默认排序</a><b></b></dd>
+        
+        <dd><a href="javascript:;">粉丝量</a><b></b></dd>
+        <dd><a href="javascript:;">月订单</a><b></b></dd><dd><a href="javascript:;">自定义</a><b></b></dd>
+        
+       	</dl>
+       	-->
+        <dl class="filter_type">
+        	<dt>媒体类型：</dt>
+        	<dd id="typeall" class="selected"><b></b>全部</dd>
+        	<!--<dd id="collect"><b></b>收藏</dd>-->
+        </dl>
+        <!--  <div class="pagin pagin-m"><span class="text"><i>1</i>/2</span><span class="prev-disabled">上一页<b></b></span><a href="javascript:;" class="next">下一页<b></b></a></div>-->
+        <div class="total"><span>共<strong id="all_data_num"></strong>个</span></div><span class="clr"></span></div>
+        <div class="clear"></div>
+      </div>
+    <!-- end 排序条件 -->
+	 
 	<div class="col01-wx l">
 		<table class="tab01-weibo tab01-mt l">
 			<thead>

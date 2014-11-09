@@ -11,6 +11,8 @@ class MemberAction extends AdvertBaseAction {
 	
 	protected  $not_check_fn = array();	//无需登录和验证rbac的方法名
 	
+	private $big_type = 5;
+	
 	//控制器说明
 	private $module_explain = '我是广告主';
 	
@@ -22,7 +24,7 @@ class MemberAction extends AdvertBaseAction {
 		$this->_user_id =$this->oUser->id;
 		parent::data_to_view(array('account'=>$this->oUser->account));
 		
-		parent::big_type_urls();		//大分类URL
+		parent::big_type_urls($this->big_type);		//大分类URL
 	}
 	
 	//初始化数据库连接

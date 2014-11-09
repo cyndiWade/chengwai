@@ -1,0 +1,30 @@
+﻿@charset "utf-8";
+/* CSS Document */
+.phd-member-media{ background:url(../images/mediabg01.gif) repeat-x left top;}
+.logafter span{ margin-left:19px;}
+.part01-wel a{ margin-left:6px;}
+.nav-media{ padding-top:4px; height:36px; }
+.nav-media li{ float:left;}
+.nav-media li a{ display:block; width:109px; height:29px; padding-left:15px; padding-top:7px; font-size:16px;color:#fff; font-weight:bold;}
+.nav-media li .hddd{ background:url(../images/nav_a_media.png) no-repeat 9px 6px; }
+.nav-media li .yydd{ background:url(../images/nav_b_media.png) no-repeat 9px 6px; }
+.nav-media li .zhgl{ background:url(../images/nav_c_media.png) no-repeat 9px 6px; }
+.nav-media li .zdcx{ background:url(../images/nav_d_media.png) no-repeat 9px 6px; }
+.nav-media li .yhzx{ background:url(../images/nav_e_media.png) no-repeat 9px 6px; }
+.nav-media li .bzzx{ background:url(../images/nav_f_media.png) no-repeat 10px 6px; }
+.nav-media li.select a{border-radius:3px 3px 0 0;color:#eb6b4c;background:url(../images/nav_f_media_hover.png) no-repeat 10px 6px #fff;}
+
+.side-help{ width:200px; overflow:hidden;}
+.box01-help h4{ height:50px; background:#a3a199; line-height:50px;}
+.box01-help h4 img{ margin-top:15px; margin-left:10px; float:left;}
+.box01-help h4 b{ float:left; color:#fff; margin-left:13px;}
+.helpnav li{ height:50px; line-height:50px; border-top:1px solid #fff;}
+.helpnav li a{ padding-left:19px; display:block; background:#eeede6;}
+.helpnav li a:hover,.helpnav li.select a{ background:url(../images/arr_right_yel.png) no-repeat 173px center #eeede6; color:#eb6b4c}
+.content-help{ width:780px; overflow:hidden;}
+.top-media{ height:48px; background:#f9f9f6; border-top:2px solid #eb6b4c; line-height:48px; margin-bottom:20px;}
+.top-media b{ margin-left:24px; color:#4662b1;}
+.mid-media{ padding:0 20px;}
+.part01-help{ margin-bottom:25px;}
+.part01-help .title{ font-size:14px; font-weight:bold; color:#eb6b4c; padding-bottom:5px;}
+.part01-help p{ line-height:20px; color:#30262d;}

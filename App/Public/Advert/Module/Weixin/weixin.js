@@ -609,8 +609,10 @@ Weixin.prototype.three_sidebar_type_fn = function () {
 	
 	_father_this.three_sidebar_type.click(function () {
 		_father_this.three_sidebar_type.removeClass("select");
+		_father_this.three_sidebar_type.removeClass("selected");
 		var _this = $(this);
 		_this.addClass("select");
+		_this.addClass("selected");
 		public_post_fn({});
 	});
 	
@@ -667,7 +669,7 @@ Weixin.prototype.lahei_and_shoucang_fn = function ($urL) {
 	var _father_this = this;
 	_father_this.init();
 	_father_this.lahei_and_shoucang.click(function () {
-		if (confirm('确认操作?') == false) return false; 
+		//if (confirm('确认操作?') == false) return false; 
 		var _this = $(this);
 		var post_data = {
 			'action' : _this.data('action'),
@@ -678,10 +680,10 @@ Weixin.prototype.lahei_and_shoucang_fn = function ($urL) {
 		var result = System.ajax_post_setup($urL,post_data,'JSON');
 		
 		if (result.status == 1) {
-			alert(result.msg);
+			//alert(result.msg);
 			public_post_fn({});
 		} else {
-			alert(result.msg);
+			//alert(result.msg);
 		}
 	
 	});

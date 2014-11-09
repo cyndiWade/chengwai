@@ -11,7 +11,7 @@ class MoneyAction extends AdvertBaseAction {
 	
 	protected  $not_check_fn = array();	//无需登录和验证rbac的方法名
 	
-	private $big_type = 4;
+	private $big_type = 6;
 	
 	
 	private $module_explain = '充值页面页面';
@@ -35,7 +35,7 @@ class MoneyAction extends AdvertBaseAction {
 				'module_explain'=>$this->module_explain,
 		));
 		
-		if (ACTION_NAME == 'record') $this->big_type = 5;
+		if (ACTION_NAME == 'record') $this->big_type = 4;
 		parent::big_type_urls($this->big_type);		//大分类URL
 
 	}
