@@ -57,7 +57,7 @@
 			//平台类型
 			$arr['account_type'] = $new_array['pt_type'];
 			//调用折扣比例
-			$arr['rebate'] = 0.3;
+			$arr['rebate'] = $this->global_finance['weibo_proportion'];
 			//微博账号
 			$account_id = explode(',', $new_array['account_ids']);
 			foreach($account_id as $value)
@@ -202,14 +202,19 @@
 				
 				$Account_Order_Status = C('Account_Order_Status');
 				//审核通过的价格
-				$price = $this->where(array('generalize_id'=>$zhifu_id,'audit_status'=>1))->sum('price');
+				$price_select = $this->where(array('generalize_id'=>$zhifu_id,'audit_status'=>1))->field('price,rebate')->select();
+				$price = 0;
+				foreach($price_select as $val)
+				{
+					$price += $val['price'] + ($val['price'] * $val['rebate']);
+				}
 				$account_money = $UserAdvertisement->where(array('users_id'=>$account_id))->field('money,freeze_funds')->find();
 				if($account_money['money'] < $price)
 				{
 					return false;
 				}else{
 					$money = $account_money['money'] - $price;
-					$zprice = $price + $account_money['freeze_funds'];
+					$zprice = $account_money['freeze_funds'] + $price;
 					$update = array('money'=>$money,'freeze_funds'=>$zprice);
 					$bool = $UserAdvertisement->where(array('users_id'=>$account_id))->save($update);
 					if($bool)

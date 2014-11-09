@@ -83,7 +83,6 @@ class MemberAction extends AdvertBaseAction {
     
     //评价list
     public function evaluate () {
-    	
     	//选中样式
     	$this->data_to_view(array(
     			'member_sidebar_evaluate_class'=>'class="on"',

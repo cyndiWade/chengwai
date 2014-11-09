@@ -52,7 +52,7 @@
 			//活动订单ID
 			$arr['generalize_id'] = $new_array['order_id'];
 			//调用折扣比例
-			$arr['rebate'] = 0.3;
+			$arr['rebate'] = $this->global_finance['weixin_proportion'];
 			//获得图文类型
 			$GeneralizeWeixinOrder = D('GeneralizeWeixinOrder');
 			$ggw = $GeneralizeWeixinOrder->where(array('id'=>$new_array['order_id']))->field('ggw_type')->find();
@@ -186,7 +186,12 @@
 
 				$Account_Order_Status = C('Account_Order_Status');
 				//审核通过的价格
-				$price = $this->where(array('generalize_id'=>$zhifu_id,'audit_status'=>1))->sum('price');
+				$price_select = $this->where(array('generalize_id'=>$zhifu_id,'audit_status'=>1))->field('price,rebate')->select();
+				$price = 0;
+				foreach($price_select as $val)
+				{
+					$price += $val['price'] + ($val['price'] * $val['rebate']);
+				}
 				$account_money = $UserAdvertisement->where(array('users_id'=>$account_id))->field('money,freeze_funds')->find();
 				if($account_money['money'] < $price)
 				{
