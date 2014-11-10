@@ -222,7 +222,7 @@
 			$account_name = trim($addslArray['account']);
 			if($account_name!='')
 			{
-				$wheres['b.account_name'] = array('like','%'.$account_name.'%');
+				$wheres['w.account_name'] = array('like','%'.$account_name.'%');
 			}
 			return $wheres;
 		}
