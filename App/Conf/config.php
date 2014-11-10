@@ -24,7 +24,7 @@ $system  = array(
 
 		/* URL配置 */
 		'URL_MODEL'             => 2,
-		'URL_ROUTER_ON'   => false, 	//开启路由
+		'URL_ROUTER_ON'   => true, 	//开启路由
 		'URL_ROUTE_RULES' => array(
 				'join' => array('/Public/register'),    		 	 //注册
 				'index'=>array('?s=/Index/index'),			//功能介绍

@@ -522,8 +522,12 @@ Weibo.prototype.lahei_and_shoucang_fn = function ($urL) {
 	var _father_this = this;
 	_father_this.init();
 	_father_this.lahei_and_shoucang.click(function () {
-		//if (confirm('确认操作?') == false) return false; 
 		var _this = $(this);
+		
+		if (_this.data('or_type') == 0) {
+			if (confirm('确认操作?') == false) return false; 
+		}
+		
 		var post_data = {
 			'action' : _this.data('action'),
 			'pt_type' :system_info.pt_type,	
