@@ -159,10 +159,10 @@ class WeixinAction extends AdvertBaseAction {
 		$is_celeprity = intval($_POST['is_celebrity']);
 		if($is_celeprity==0)
 		{
-			$list_new = $this->db['AccountWeixin']->getPostcgArray($_POST,$this->oUser->id);
+			$list_new = $this->db['AccountWeixin']->getPostcgArray($_POST,$this->oUser->id,$this->global_finance['weixin_proportion']);
 			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
 		}else{
-			$list_new = $this->db['AccountWeixin']->getPostmrArray($_POST,$this->oUser->id);
+			$list_new = $this->db['AccountWeixin']->getPostmrArray($_POST,$this->oUser->id,$this->global_finance['weixin_proportion']);
 			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
 		}
     }
@@ -227,10 +227,10 @@ class WeixinAction extends AdvertBaseAction {
 			switch($type)
 			{
 				case 0;
-					$data = $this->db['AccountWeixin']->getPostcgArray($array,$this->oUser->id);
+					$data = $this->db['AccountWeixin']->getPostcgArray($array,$this->oUser->id,$this->global_finance['weixin_proportion']);
 				break;
 				case 1:
-					$data = $this->db['AccountWeixin']->getPostmrArray($array,$this->oUser->id);
+					$data = $this->db['AccountWeixin']->getPostmrArray($array,$this->oUser->id,$this->global_finance['weixin_proportion']);
 				break;
 			}
 		}else{
@@ -239,12 +239,12 @@ class WeixinAction extends AdvertBaseAction {
 				case 0;
 					$ides = $this->db['AccountWeixin']->where(array('is_celeprity'=>0))->getField('id',0);
 					$array = array('ids'=>implode(',',$ides));
-					$data = $this->db['AccountWeixin']->getPostcgArray($array,$this->oUser->id);
+					$data = $this->db['AccountWeixin']->getPostcgArray($array,$this->oUser->id,$this->global_finance['weixin_proportion']);
 				break;
 				case 1:
 					$ides = $this->db['AccountWeixin']->where(array('is_celeprity'=>1))->getField('id',0);
 					$array = array('ids'=>implode(',',$ides));
-					$data = $this->db['AccountWeixin']->getPostmrArray($array,$this->oUser->id);
+					$data = $this->db['AccountWeixin']->getPostmrArray($array,$this->oUser->id,$this->global_finance['weixin_proportion']);
 				break;
 			}
 		}
@@ -260,7 +260,7 @@ class WeixinAction extends AdvertBaseAction {
 					$lin_arr[] = $value['bs_weixinhao'];
 					$lin_arr[] = $value['bs_account_name'];
 					$lin_arr[] = $value['pg_cjfl_explain'];
-					$lin_arr[] = ceil($value['bs_fans_num'] / 10000) . '万';
+					$lin_arr[] = $value['bs_fans_num'] / 10000 . '万';
 					$lin_arr[] = $value['bs_dtb_money'] . '元';
 					$lin_arr[] = $value['bs_dtwdyt_money'] . '元';
 					$lin_arr[] = $value['bs_dtwdet_money'] . '元';
@@ -281,8 +281,8 @@ class WeixinAction extends AdvertBaseAction {
 					$lin_arr[] = $value['bs_account_name'];
 					$lin_arr[] = $value['pg_occupation_explain'];
 					$lin_arr[] = $value['pg_field_explain'];
-					$lin_arr[] = ceil($value['bs_fans_num'] / 10000) . '万';
-					$lin_arr[] = ceil($value['bs_ck_money']/ 10000) . '万';
+					$lin_arr[] = $value['bs_fans_num'] / 10000 . '万';
+					$lin_arr[] = $value['bs_ck_money']/ 10000 . '万';
 					$lin_arr[] = $value['pg_phd_explain'];
 					$lin_arr[] = $value['bs_introduction'];
 					$lin_arr[] = $value['bs_week_order_num'];

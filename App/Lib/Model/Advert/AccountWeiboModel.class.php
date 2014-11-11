@@ -5,7 +5,7 @@
 	{
 
 		//接受参数 返回草根信息数据 | $type区分新浪 1 或者腾讯 2  | 用户ID
-		public function getPostcgArray($array,$type,$id)
+		public function getPostcgArray($array,$type,$id,$gloubid)
 		{
 			
 			if(!empty($array))
@@ -35,17 +35,17 @@
 					//分页 p
 					$p = $addvalue['p'];
 					$p_limit = ($p - 1) * 10;
-					$returnList = $this->setcgSql($addvalue,$p_limit,$limit,$where,$type,$id,0);
+					$returnList = $this->setcgSql($addvalue,$p_limit,$limit,$where,$type,$id,0,$gloubid);
 					return $new_list = array('list'=>$returnList['list'],'p'=>$p,'count'=>$returnList['count']);
 				}else{
-					$returnList = $this->setcgSql($addvalue,0,$limit,$where,$type,$id,0);
+					$returnList = $this->setcgSql($addvalue,0,$limit,$where,$type,$id,0,$gloubid);
 					return $new_list = array('list'=>$returnList['list'],'p'=>1,'count'=>$returnList['count']);
 				}
 			}
 		}
 
 		//sql查询	
-		private function setcgSql($addvalue,$now_page,$limit,$where,$type,$id,$is_celebrity)
+		private function setcgSql($addvalue,$now_page,$limit,$where,$type,$id,$is_celebrity,$gloubid)
 		{
 			//查询出该用户拉黑的名单
 			$Blackorcollection = D('BlackorcollectionWeibo');
@@ -109,6 +109,17 @@
 			$tags_ids = C('Big_Nav_Class_Ids.caogen_tags_ids');
 			$CategoryTagsInfo = D('CategoryTags')->get_classify_data($tags_ids['top_parent_id']);
 			
+			//重新计算价格
+			if($list==true)
+			{
+				foreach($list as $key=>$val)
+				{
+					$list[$key]['bs_yg_zhuanfa'] = $val['bs_yg_zhuanfa'] + ($val['bs_yg_zhuanfa'] * $gloubid);
+					$list[$key]['bs_yg_zhifa'] = $val['bs_yg_zhifa'] + ($val['bs_yg_zhifa'] * $gloubid);
+					$list[$key]['bs_rg_zhuanfa'] = $val['bs_rg_zhuanfa'] + ($val['bs_rg_zhuanfa'] * $gloubid);
+					$list[$key]['bs_rg_zhifa'] = $val['bs_rg_zhifa'] + ($val['bs_rg_zhifa'] * $gloubid);
+				}
+			}
 
 			return array('list'=>$list,'count'=>$count);
 		}
@@ -207,7 +218,7 @@
 
 
 		//接受参数 返回名人信息数据 | $type区分新浪 1 或者腾讯 2  | 用户ID
-		public function getPostmrArray($array,$type,$id)
+		public function getPostmrArray($array,$type,$id,$gloubid)
 		{
 			
 			if(!empty($array))
@@ -237,17 +248,17 @@
 					//分页 p
 					$p = $addvalue['p'];
 					$p_limit = ($p - 1) * 10;
-					$returnList = $this->setmrSql($addvalue,$p_limit,$limit,$where,$type,$id,1);
+					$returnList = $this->setmrSql($addvalue,$p_limit,$limit,$where,$type,$id,1,$gloubid);
 					return $new_list = array('list'=>$returnList['list'],'p'=>$p,'count'=>$returnList['count']);
 				}else{
-					$returnList = $this->setmrSql($addvalue,0,$limit,$where,$type,$id,1);
+					$returnList = $this->setmrSql($addvalue,0,$limit,$where,$type,$id,1,$gloubid);
 					return $new_list = array('list'=>$returnList['list'],'p'=>1,'count'=>$returnList['count']);
 				}
 			}
 		}
 
 		//sql查询	
-		private function setmrSql($addvalue,$now_page,$limit,$where,$type,$id,$is_celebrity)
+		private function setmrSql($addvalue,$now_page,$limit,$where,$type,$id,$is_celebrity,$gloubid)
 		{
 			//0是黑名单 1是收藏
 			//查询出该用户拉黑的名单
@@ -325,6 +336,9 @@
 			
 			if($list == true) {
 				foreach ($list as $key=>$val) {
+					//重新计算价格
+					$list[$key]['bs_ck_money'] = $val['bs_ck_money'] + ($gloubid * $val['bs_ck_money']);
+
 					//配合度
 					$phd = $data['phd'][$val['sy_coordination']]['title'];
 					$list[$key]['pg_phd_explain'] = $phd ? $phd : '不限';

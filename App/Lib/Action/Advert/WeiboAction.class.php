@@ -157,7 +157,7 @@ class WeiboAction extends AdvertBaseAction {
 		$pt_type = intval($_POST['pt_type']);
 		if(!empty($pt_type))
 		{
-			$list_new = $this->db['AccountWeibo']->getPostcgArray($_POST,$pt_type,$this->oUser->id);
+			$list_new = $this->db['AccountWeibo']->getPostcgArray($_POST,$pt_type,$this->oUser->id,$this->global_finance['weibo_proportion']);
 			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
 		}
 	}
@@ -170,7 +170,7 @@ class WeiboAction extends AdvertBaseAction {
 		$pt_type = intval($_POST['pt_type']);
 		if(!empty($pt_type))
 		{
-			$list_new = $this->db['AccountWeibo']->getPostmrArray($_POST,$pt_type,$this->oUser->id);
+			$list_new = $this->db['AccountWeibo']->getPostmrArray($_POST,$pt_type,$this->oUser->id,$this->global_finance['weibo_proportion']);
 			parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
 		}
 	}
@@ -271,10 +271,10 @@ class WeiboAction extends AdvertBaseAction {
 			switch($type)
 			{
 				case 0:
-					$data = $this->db['AccountWeibo']->getPostcgArray($array,$pt_type,$this->oUser->id);
+					$data = $this->db['AccountWeibo']->getPostcgArray($array,$pt_type,$this->oUser->id,$this->global_finance['weibo_proportion']);
 				break;
 				case 1:
-					$data = $this->db['AccountWeibo']->getPostmrArray($array,$pt_type,$this->oUser->id);
+					$data = $this->db['AccountWeibo']->getPostmrArray($array,$pt_type,$this->oUser->id,$this->global_finance['weibo_proportion']);
 				break;
 			}
 		}else{
@@ -283,12 +283,12 @@ class WeiboAction extends AdvertBaseAction {
 				case 0:
 					$ides = $this->db['AccountWeibo']->where(array('is_celebrity'=>0,'pt_type'=>$pt_type))->getField('id',0);
 					$array = array('ids'=>implode(',',$ides));
-					$data = $this->db['AccountWeibo']->getPostcgArray($array,$pt_type,$this->oUser->id);
+					$data = $this->db['AccountWeibo']->getPostcgArray($array,$pt_type,$this->oUser->id,$this->global_finance['weibo_proportion']);
 				break;
 				case 1:
 					$ides = $this->db['AccountWeibo']->where(array('is_celebrity'=>1,'pt_type'=>$pt_type))->getField('id',0);
 					$array = array('ids'=>implode(',',$ides));
-					$data = $this->db['AccountWeibo']->getPostmrArray($array,$pt_type,$this->oUser->id);
+					$data = $this->db['AccountWeibo']->getPostmrArray($array,$pt_type,$this->oUser->id,$this->global_finance['weibo_proportion']);
 				break;
 			}
 		}
@@ -301,7 +301,7 @@ class WeiboAction extends AdvertBaseAction {
 				{
 					$lin_arr = array();
 					$lin_arr[] = $value['bs_account_name'];
-					$lin_arr[] = ceil($value['bs_fans_num'] / 10000) . '万';
+					$lin_arr[] = $value['bs_fans_num'] / 10000 . '万';
 					$lin_arr[] = $value['bs_yg_zhuanfa'] . '元';
 					$lin_arr[] = $value['bs_rg_zhuanfa'] . '元';
 					$lin_arr[] = $value['bs_yg_zhifa'] . '元';
@@ -319,8 +319,8 @@ class WeiboAction extends AdvertBaseAction {
 					$lin_arr[] = $value['bs_account_name'];
 					$lin_arr[] = $value['pg_occupation_explain'];
 					$lin_arr[] = $value['pg_field_explain'];
-					$lin_arr[] = ceil($value['bs_fans_num'] / 10000) . '万';
-					$lin_arr[] = ceil($value['bs_ck_money'] /10000) . '万';
+					$lin_arr[] = $value['bs_fans_num'] / 10000 . '万';
+					$lin_arr[] = $value['bs_ck_money'] /10000 . '万';
 					$lin_arr[] = $value['pg_cirymedia_explain'];
 					$lin_arr[] = $value['pg_phd_explain'];
 					$lin_arr[] = $value['bs_introduction'];
