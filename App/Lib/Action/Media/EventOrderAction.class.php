@@ -930,7 +930,17 @@ class EventOrderAction extends MediaBaseAction {
 		//日拒单数
 		$countAjectDay = 0;
 		//日拒单订单总金额
-		$countPriceAjectDay = 0;				
+		$countPriceAjectDay = 0;
+		//日取消数
+		$countCancelDay = 0;
+		//日取消订单总金额
+		$countPriceCancelDay = 0;
+		//日派单数
+		$countDoingDay = 0;
+		//日派单订单总金额
+		$countPriceDoingDay = 0;
+
+			
 
 			
 		//周订单数
@@ -953,6 +963,15 @@ class EventOrderAction extends MediaBaseAction {
 		$countAjectWeek = 0;
 		//周流单总金额	
 		$countPriceAjectWeek = 0;
+		//周取消数
+		$countCancelWeek = 0;
+		//周取消订单总金额
+		$countPriceCancelWeek = 0;
+		//周派单数
+		$countDoingWeek = 0;
+		//周派单订单总金额
+		$countPriceDoingWeek = 0;
+		
 				
 		//月订单数
 		$countMonth = 0;
@@ -973,7 +992,16 @@ class EventOrderAction extends MediaBaseAction {
 		//月拒单数
 		$countAjectMonth = 0;	
 		//月拒单总金额
-		$countPriceAjectMonth = 0;		
+		$countPriceAjectMonth = 0;	
+		//月取消数
+		$countCancelMonth = 0;
+		//月取消订单总金额
+		$countPriceCancelMonth = 0;
+		//月派单数
+		$countDoingMonth = 0;
+		//月派单订单总金额
+		$countPriceDoingMonth = 0;
+			
 		
 		$whereWeibo = $whereWeixin = $whereNew = array();
 		
@@ -1037,6 +1065,14 @@ class EventOrderAction extends MediaBaseAction {
 							$countAjectDay ++;
 							$countPriceAjectDay += $value['price'];
 							break;	
+						case 5:
+							$countDoingDay ++;
+							$countPriceDoingDay += $value['price'];
+							break;	
+						case 9:
+							$countCancelDay ++;
+							$countPriceCancelDay += $value['price'];
+							break;															
 					}
 					$countDay ++;		
 					$countPriceDay += $value['price'];	
@@ -1060,6 +1096,14 @@ class EventOrderAction extends MediaBaseAction {
 							$countAjectWeek ++;
 							$countPriceAjectWeek += $value['price'];
 							break;	
+						case 5:
+							$countDoingWeek ++;
+							$countPriceDoingWeek += $value['price'];
+							break;	
+						case 9:
+							$countCancelWeek ++;
+							$countPriceCancelWeek += $value['price'];
+							break;	
 					}
 					$countWeek ++;	
 					$countPriceWeek += $value['price'];		
@@ -1082,6 +1126,14 @@ class EventOrderAction extends MediaBaseAction {
 						case 4:
 							$countAjectMonth ++;
 							$countPriceAjectMonth += $value['price'];
+							break;	
+						case 5:
+							$countDoingMonth ++;
+							$countPriceDoingMonth += $value['price'];
+							break;	
+						case 9:
+							$countCancelMonth ++;
+							$countPriceCancelMonth += $value['price'];
 							break;	
 					}
 					$countMonth ++;		
@@ -1112,6 +1164,14 @@ class EventOrderAction extends MediaBaseAction {
 							$countAjectDay ++;
 							$countPriceAjectDay += $value['price'];
 							break;	
+						case 5:
+							$countDoingDay ++;
+							$countPriceDoingDay += $value['price'];
+							break;	
+						case 9:
+							$countCancelDay ++;
+							$countPriceCancelDay += $value['price'];
+							break;	
 					}
 					$countDay ++;		
 					$countPriceDay += $value['price'];	
@@ -1135,6 +1195,14 @@ class EventOrderAction extends MediaBaseAction {
 							$countAjectWeek ++;
 							$countPriceAjectWeek += $value['price'];
 							break;	
+						case 5:
+							$countDoingWeek ++;
+							$countPriceDoingWeek += $value['price'];
+							break;	
+						case 9:
+							$countCancelWeek ++;
+							$countPriceCancelWeek += $value['price'];
+							break;
 					}
 					$countWeek ++;	
 					$countPriceWeek += $value['price'];		
@@ -1157,6 +1225,14 @@ class EventOrderAction extends MediaBaseAction {
 						case 4:
 							$countAjectMonth ++;
 							$countPriceAjectMonth += $value['price'];
+							break;	
+						case 5:
+							$countDoingMonth ++;
+							$countPriceDoingMonth += $value['price'];
+							break;	
+						case 9:
+							$countCancelMonth ++;
+							$countPriceCancelMonth += $value['price'];
 							break;	
 					}
 					$countMonth ++;		
@@ -1188,6 +1264,14 @@ class EventOrderAction extends MediaBaseAction {
 							$countAjectDay ++;
 							$countPriceAjectDay += $value['price'];
 							break;	
+						case 5:
+							$countDoingDay ++;
+							$countPriceDoingDay += $value['price'];
+							break;	
+						case 9:
+							$countCancelDay ++;
+							$countPriceCancelDay += $value['price'];
+							break;	
 					}
 					$countDay ++;		
 					$countPriceDay += $value['price'];	
@@ -1211,6 +1295,14 @@ class EventOrderAction extends MediaBaseAction {
 							$countAjectWeek ++;
 							$countPriceAjectWeek += $value['price'];
 							break;	
+						case 5:
+							$countDoingWeek ++;
+							$countPriceDoingWeek += $value['price'];
+							break;	
+						case 9:
+							$countCancelWeek ++;
+							$countPriceCancelWeek += $value['price'];
+							break;	
 					}
 					$countWeek ++;	
 					$countPriceWeek += $value['price'];		
@@ -1233,7 +1325,15 @@ class EventOrderAction extends MediaBaseAction {
 						case 4:
 							$countAjectMonth ++;
 							$countPriceAjectMonth += $value['price'];
+							break;
+						case 5:
+							$countDoingMonth ++;
+							$countPriceDoingMonth += $value['price'];
 							break;	
+						case 9:
+							$countCancelMonth ++;
+							$countPriceCancelMonth += $value['price'];
+							break;		
 					}
 					$countMonth ++;		
 					$countPriceMonth += $value['price'];
@@ -1241,13 +1341,13 @@ class EventOrderAction extends MediaBaseAction {
 			}
 		}
 	 
-		$arryTotal['day']   = array($countDay, $countFinshedDay, $countFailedDay, $countOverDay, $countAjectDay);
-		$arryTotal['week']  = array($countWeek, $countFinshedWeek, $countFailedWeek, $countOverWeek, $countAjectWeek);
-		$arryTotal['month'] = array($countMonth, $countFinshedMonth, $countFailedMonth, $countOverMonth, $countAjectMonth);
+		$arryTotal['day']   = array($countDay, $countFinshedDay, $countFailedDay, $countOverDay, $countAjectDay, $countCancelDay, $countDoingDay);
+		$arryTotal['week']  = array($countWeek, $countFinshedWeek, $countFailedWeek, $countOverWeek, $countAjectWeek, $countCancelWeek, $countDoingWeek);
+		$arryTotal['month'] = array($countMonth, $countFinshedMonth, $countFailedMonth, $countOverMonth, $countAjectMonth, $countCancelWeek, $countDoingWeek);
 		
-		$arryPrice['day']  = array($countPriceDay, $countPriceFinishedDay, $countPriceFailedDay, $countOverDay, $countPriceAjectDay);
-		$arryPrice['week']  = array($countPriceWeek, $countPriceFinishedWeek, $countPriceFailedWeek, $countOverWeek, $countPriceAjectWeek);
-		$arryPrice['month']  = array($countPriceMonth, $countPriceFinishedMonth, $countPriceFailedMonth, $countOverMonth, $countPriceAjectMonth);
+		$arryPrice['day']  = array($countPriceDay, $countPriceFinishedDay, $countPriceFailedDay, $countOverDay, $countPriceAjectDay, $countPriceCancelDay, $countPriceDoingDay);
+		$arryPrice['week']  = array($countPriceWeek, $countPriceFinishedWeek, $countPriceFailedWeek, $countOverWeek, $countPriceAjectWeek, $countPriceCancelWeek, $countPriceDoingWeek);
+		$arryPrice['month']  = array($countPriceMonth, $countPriceFinishedMonth, $countPriceFailedMonth, $countOverMonth, $countPriceAjectMonth, $countPriceCancelMonth, $countPriceDoingMonth);
 		
 		return array("total"=>$arryTotal, 'price'=>$arryPrice);
     }

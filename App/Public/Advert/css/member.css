@@ -229,12 +229,12 @@
 .part01-tag span.select{ border:1px solid #ea6060; font-weight:bold; color:#ea6060; background:#fffced;}
 .orderbox .ordermt{display:inline-block; height:24px; margin:2px 0 0 10px; line-height:24px; cursor:pointer; width:75px; text-align:center; border:1px solid #d1d6d4; background:url(../images/arr_down.gif) no-repeat 60px center}
 .col01-mr{ padding-top:23px; border-top:3px solid #2e4653; padding-top:23px;}
-.box01-cele{ width:998px; height:191px; margin-bottom:10px; border:1px solid #e5ece9; padding-top:14px;}
+.box01-cele{ width:1198px; height:191px; margin-bottom:10px; border:1px solid #e5ece9; padding-top:14px;}
 .box01-cele .check{ margin-top:80px; margin:80px 7px 0 7px;}
 .box01-cele .part01-cele{ width:140px;}
 .box01-cele .part01-cele img{ width:138px; height:138px; border:1px solid #e6edea; margin-bottom:4px;}
 .box01-cele .ctrl span{ display:inline-block; width:68px; height:28px; border:1px solid #e5ece9; line-height:28px; text-align:center; cursor:pointer; margin-left:-1px;}
-.part02-cele{ width:780px; padding-left:19px;}
+.part02-cele{ width:980px; padding-left:19px;}
 .grp01-cele{ height:38px; border-bottom:1px solid #e5ece9; margin-bottom:20px;}
 .part02-cele .weibo{ display:block; background:url(../images/cer_img02.gif) no-repeat; width:22px; height:17px; margin-right:7px;}
 .part02-cele .v{ display:block; background:url(../images/cer_img03.gif) no-repeat; width:22px; height:17px; margin-right:10px;}
@@ -243,7 +243,7 @@
 .part02-cele .name{padding-right:18px; font-size:16px; color:#238cc8; margin-right:10px; font-weight:bold;}
 .part02-cele .city{padding:0 5px 0 21px; line-height:20px; height:20px; border:1px solid #e5ece9; background:url(../images/cer_img05.gif) no-repeat 5px 3px; margin-right:10px;}
 .part02-cele .yxl{padding:0 5px 0 25px; line-height:20px; height:20px; border:1px solid #ea6060; background:url(../images/cer_img06.gif) no-repeat 5px 2px; display:block; color:#ea6060;}
-.arr01-cele li{ float:left; width:191px;}
+.arr01-cele li{ float:left; width:241px;}
 .arr01-cele{ padding-bottom:35px;}
 .arr02-cele{ line-height:22px; font-size:13px;}
 .tem01-cele{ width:220px;}

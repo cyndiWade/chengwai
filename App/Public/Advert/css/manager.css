@@ -1,7 +1,7 @@
 ﻿@charset "utf-8";
 /* CSS Document */
 .side-user{ width:200px;}
-.content-user{ width:780px;}
+.content-user{ width:980px;}
 .usernav li{ height:50px; line-height:50px; border-bottom:1px solid #fff;}
 .usernav li a{ display:block; background:#e2e7ea; padding-left:20px; width:180px; color:#2e4653;}
 .usernav li a:hover,.usernav li a.on{ background:url(../images/mem_bg02.gif) no-repeat; color:#fff; font-weight:bold;}
@@ -26,9 +26,9 @@ center; font-size:14px; color:#ea6060; font-weight:bold;}
 .tab01-comment th{ height:50px; border-top:1px solid #2e4653;}
 .tab01-comment .t1{ padding-left:10px; width:85px;}
 .tab01-comment .t2{  width:143px;}
-.tab01-comment .t3{  width:82px;}
+.tab01-comment .t3{  width:102px;}
 .tab01-comment .t4{  width:92px;}
-.tab01-comment .t5{  width:227px;}
+.tab01-comment .t5{  width:367px;}
 .tab01-comment td{ padding:15px 0;}
 .tab01-comment td{ background:#eff3f4;}
 .tab01-comment tr.even td{ background:#fff;}
@@ -57,7 +57,7 @@ center; font-size:14px; color:#ea6060; font-weight:bold;}
 .helpnav li a:hover,.helpnav li.on a{color:#fff; background:url(../images/arr_right.png) no-repeat 170px center #2e4653;}
 .helpnav li a:hover em,.helpnav li.on a em{ background:url(../images/numbg02.png) no-repeat;}
 
-.content-help { width:780px; overflow:hidden;}
+.content-help { width:980px; overflow:hidden;}
 .mid-help{ padding-top:16px;}
 .part01-help{ padding:0 15px 15px 15px; margin-bottom:15px; border-bottom:1px solid #e9ece6;}
 .part01-help .title{ color:#ea6060; font-size:14px; font-weight:bold; margin-bottom:15px;}
@@ -65,7 +65,7 @@ center; font-size:14px; color:#ea6060; font-weight:bold;}
 .top-user .gray{ color:#929292;}
 /*流水*/
 .tab01-water th{ border-top:1px solid #2e4653; height:50px; background:#eff3f4;}
-.tab01-water .t1{ width:250px; padding-left:10px;}
+.tab01-water .t1{ width:450px; padding-left:10px;}
 .tab01-water .t2{ width:220px; }
 .tab01-water .t3{ width:368px; }
 .tab01-water td{ padding:20px 0;}

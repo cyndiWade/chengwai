@@ -8,7 +8,7 @@
 .box04-hd a{ display:inline-block; height:32px; line-height:32px; padding:0 20px; background:url(../images/line.gif) no-repeat right 6px; border-radius:3px; font-size:14px; margin-right:5px; font-weight:bold;color:#2e4653;}
 .box04-hd a.last{ background:none;}
 .box04-hd a.select,.box04-hd a:hover{color:#fff; background:#2e4653;}
-.area01-intention{ border:1px solid #e9ece6; padding:26px 0 26px 94px; width:902px;}
+.area01-intention{ border:1px solid #e9ece6; padding:26px 0 26px 94px; width:1102px;}
 .box01-intention{ margin-bottom:19px;}
 .int-tip{ margin-bottom:52px;}
 .tab01-inten td{ padding-bottom:24px; vertical-align:top; color:#30262d; font-size:14px;}
@@ -108,7 +108,7 @@
 .tab01-addorder{ margin-bottom:16px;}
 .tab01-addorder th{ height:50px; line-height:50px; background:#eff3f4; border-top:1px solid #2e4653; color:#2e4653;}
 .tab01-addorder .t1{ padding-left:11px; width:89px;}
-.tab01-addorder .t2{ width:122px;}
+.tab01-addorder .t2{ width:322px;}
 .tab01-addorder .t3{ width:77px;}
 .tab01-addorder .t4{ width:48px;}
 .tab01-addorder .t5{ width:122px;}
@@ -122,7 +122,7 @@
 .tab01-addorder .wpd{ padding-right:15px; background:url(../images/wpd_icon.png) no-repeat right 0;}
 .tab01-addorder .cg{ padding-right:15px; background:url(../images/cg_icon.png) no-repeat right 0;}
 /*添加推广*/
-.area01-extension{ border:1px solid #e9ece6; width:998px; padding:37px 0;}
+.area01-extension{ border:1px solid #e9ece6; width:1198px; padding:37px 0;}
 .box01-extension img{ margin:0 auto; padding-bottom:27px;}
 .area01-extension .box02-intention{ padding-left:94px;}
 
