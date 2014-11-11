@@ -152,7 +152,7 @@ class NewsAction extends AdvertBaseAction {
 	public function get_news_list()
 	{
 		//判断是名人还是草根
-		$list_new = $this->db['AccountNews']->getPostArray($_POST,$this->oUser->id);
+		$list_new = $this->db['AccountNews']->getPostArray($_POST,$this->oUser->id,$this->global_finance['news_proportion']);
 		parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
 	}
 	
@@ -311,8 +311,10 @@ class NewsAction extends AdvertBaseAction {
 				// 	$account_order_list[$key]['is_show_affirm_btn'] = true;
 				// }
 				$account_order_list[$key]['is_show_affirm_btn'] = $val['g_audit_status'];
+				
 				//统计订单总金额
-				$extend_order_info['sum_money'] += $val['g_price'];
+				//$extend_order_info['sum_money'] += $val['g_price'] + $this->global_finance['news_proportion'];
+				$extend_order_info['sum_money'] += $account_order_list[$key]['g_price'] = $val['g_price'] + $this->global_finance['news_proportion'];
 				
 				$account_order_list[$key]['other'] = $Account_Order_Status[$val['g_audit_status']]['other'];
 
@@ -434,11 +436,11 @@ class NewsAction extends AdvertBaseAction {
 		$array = array('ids'=>$ids);
 		if($ids!='')
 		{
-			$data = $this->db['AccountNews']->getPostArray($array,$this->oUser->id);
+			$data = $this->db['AccountNews']->getPostArray($array,$this->oUser->id,$this->global_finance['news_proportion']);
 		}else{
 			$ides = $this->db['AccountNews']->getField('id',0);
 			$array = array('ids'=>implode(',',$ides));
-			$data = $this->db['AccountNews']->getPostArray($array,$this->oUser->id);
+			$data = $this->db['AccountNews']->getPostArray($array,$this->oUser->id,$this->global_finance['news_proportion']);
 		}
 		$new_array = array();
 		$new_array[] = array('媒体名称','价格','新闻源','地区','能否带文本链接','门户','案例地址','周订单数','月订单数');

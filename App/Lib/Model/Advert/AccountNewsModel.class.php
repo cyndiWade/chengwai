@@ -5,9 +5,8 @@
 	{
 
 		//接受参数 返回新闻信息数据
-		public function getPostArray($array,$id)
+		public function getPostArray($array,$id,$gloubid)
 		{
-			
 			if(!empty($array))
 			{
 				//过滤数据
@@ -28,17 +27,17 @@
 				{
 					$p = $addvalue['p'];
 					$p_limit = ($p - 1) * 10;
-					$returnList = $this->setSql($addvalue,$p_limit,$limit,$where,$id);
+					$returnList = $this->setSql($addvalue,$p_limit,$limit,$where,$id,$gloubid);
 					return $new_list = array('list'=>$returnList['list'],'p'=>$p,'count'=>$returnList['count']);
 				}else{
-					$returnList = $this->setSql($addvalue,0,$limit,$where,$id);
+					$returnList = $this->setSql($addvalue,0,$limit,$where,$id,$gloubid);
 					return $new_list = array('list'=>$returnList['list'],'p'=>1,'count'=>$returnList['count']);
 				}
 			}
 		}
 
 		//sql查询	
-		private function setSql($addvalue,$now_page,$limit,$where,$id)
+		private function setSql($addvalue,$now_page,$limit,$where,$id,$gloubid)
 		{
 			//查询出该用户拉黑的名单
 			$Blackorcollection = D('BlackorcollectionNews');
@@ -123,7 +122,10 @@
 				
 			
 			if ($list == true) {
-				foreach ($list as $key=>$val) {	
+				foreach ($list as $key=>$val) {
+					//加上价格比例
+					$list[$key]['bs_money'] = $val['bs_money'] + $gloubid;
+
 					//区域
 					$region_info = $Region->get_regionInfo_by_id($val['sy_area']);
 					$list[$key]['pg_area_name'] = $region_info['region_name'] ? $region_info['region_name'] : '不限';

@@ -5,7 +5,7 @@
 	{
 
 		//接受参数 返回草根信息数据  用户ID
-		public function getPostcgArray($array,$id)
+		public function getPostcgArray($array,$id,$gloubid)
 		{
 			
 			if(!empty($array))
@@ -30,17 +30,17 @@
 				{
 					$p = $addvalue['p'];
 					$p_limit = ($p - 1) * 10;
-					$returnList = $this->setcgSql($addvalue,$p_limit,$limit,$where,$id,0);
+					$returnList = $this->setcgSql($addvalue,$p_limit,$limit,$where,$id,0,$gloubid);
 					return $new_list = array('list'=>$returnList['list'],'p'=>$p,'count'=>$returnList['count']);
 				}else{
-					$returnList = $this->setcgSql($addvalue,0,$limit,$where,$id,0);
+					$returnList = $this->setcgSql($addvalue,0,$limit,$where,$id,0,$gloubid);
 					return $new_list = array('list'=>$returnList['list'],'p'=>1,'count'=>$returnList['count']);
 				}
 			}
 		}
 
 		//sql查询	
-		private function setcgSql($addvalue,$now_page,$limit,$where,$id,$is_celebrity)
+		private function setcgSql($addvalue,$now_page,$limit,$where,$id,$is_celebrity,$gloubid)
 		{
 			//查询出该用户拉黑的名单
 			$Blackorcollection = D('BlackorcollectionWeixin');
@@ -115,6 +115,12 @@
 				
 			if ($list == true) {
 				foreach ($list as $key=>$val) {
+					//价格换算
+					$list[$key]['bs_dtb_money'] = $val['bs_dtb_money'] + ($val['bs_dtb_money'] * $gloubid);
+					$list[$key]['bs_dtwdyt_money'] = $val['bs_dtwdyt_money'] + ($val['bs_dtwdyt_money'] * $gloubid);
+					$list[$key]['bs_dtwdet_money'] = $val['bs_dtwdet_money'] + ($val['bs_dtwdet_money'] * $gloubid);
+					$list[$key]['bs_dtwqtwz_money'] = $val['bs_dtwqtwz_money'] + ($val['bs_dtwqtwz_money'] * $gloubid);
+
 					//名人领域
 					$cjfl = $data['cjfl'][$val['sy_common']]['title'];
 					$list[$key]['pg_cjfl_explain'] = $cjfl ? $cjfl : '不限';
@@ -249,7 +255,7 @@
 
 
 		//接受参数 返回名人信息数据  | 用户ID
-		public function getPostmrArray($array,$id)
+		public function getPostmrArray($array,$id,$gloubid)
 		{
 			
 			if(!empty($array))
@@ -274,17 +280,17 @@
 				{
 					$p = $addvalue['p'];
 					$p_limit = ($p - 1) * 10;
-					$returnList = $this->setmrSql($addvalue,$p_limit,$limit,$where,$id,1);
+					$returnList = $this->setmrSql($addvalue,$p_limit,$limit,$where,$id,1,$gloubid);
 					return $new_list = array('list'=>$returnList['list'],'p'=>$p,'count'=>$returnList['count']);
 				}else{
-					$returnList = $this->setmrSql($addvalue,0,$limit,$where,$id,1);
+					$returnList = $this->setmrSql($addvalue,0,$limit,$where,$id,1,$gloubid);
 					return $new_list = array('list'=>$returnList['list'],'p'=>1,'count'=>$returnList['count']);
 				}
 			}
 		}
 
 		//sql查询	
-		private function setmrSql($addvalue,$now_page,$limit,$where,$id,$is_celebrity)
+		private function setmrSql($addvalue,$now_page,$limit,$where,$id,$is_celebrity,$gloubid)
 		{
 			//查询出该用户拉黑的名单
 			$Blackorcollection = D('BlackorcollectionWeixin');
@@ -362,7 +368,10 @@
 			}
 			
 			if($list == true) {
-				foreach ($list as $key=>$val) {	
+				foreach ($list as $key=>$val) {
+					//参考报价
+					$list[$key]['bs_ck_money'] = $val['bs_ck_money'] + ($val['bs_ck_money'] * $gloubid);
+
 					//配合度	
 					$phd = $data['phd'][$val['sy_coordination']]['title'];
 					$list[$key]['pg_phd_explain'] = $phd ? $phd : '不限';	
