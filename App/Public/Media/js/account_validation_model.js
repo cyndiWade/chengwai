@@ -727,59 +727,62 @@ define(function (require) {
 		
 		if (weibo_type != 4) {
 			
-			// 名人职业
-			self.occupation = self.occupation.extend(function () {
+            self.accountType = self.accountType.extend(function () {
                 return {
-                    required: {message: '请选择职业'}
+                    required: {message: '请选择帐号类型'}
                 };
-            }()).extend({
+            }());
+			
+			
+			// 名人职业
+			self.occupation.extend({
 				getTags:{
 					url : '/Media/SocialAccount/getTags'
 				}
 			});
 			
 			// 媒体领域
-			self.field.extend(function () {
-                return {
-                    required: {message: '请选择所属领域'}
-                };
-            }()).extend({
+			self.field.extend({
 				getTags:{
 					url : '/Media/SocialAccount/getTags'
 				}
 			});
 			// 地方名人/媒体
-			self.cirymedia.extend(function () {
-                return {
-                    required: {message: '请选择所在区域'}
-                };
-            }()).extend({
+			self.cirymedia.extend({
 				getTags:{
 					url : '/Media/SocialAccount/getTags'
 				}
 			});
 			// 兴趣标签
-			self.interest.extend(function () {
-                return {
-                    required: {message: '请选择兴趣标签'}
-                };
-            }()).extend({
+			self.interest.extend({
 				getTags:{
 					url : '/Media/SocialAccount/getTags'
 				}
 			});
 			// 配合度
-			self.coordination = self.coordination.extend(function () {
-                return {
-                    required: {message: '请选择你能提供的配合度'}
-                };
-            }());
+			// self.coordination = self.coordination.extend(function () {
+                // return {
+                    // required: {message: '请选择你能提供的配合度'}
+                // };
+            // }());
 			// 是否支持原创
-			self.originality = self.originality.extend(function () {
-                return {
-                    required: {message: '请选择是否支持原创'}
-                };
-            }());
+			// self.originality = self.originality.extend(function () {
+                // return {
+                    // required: {message: '请选择是否支持原创'}
+                // };
+            // }());
+			// 常见分类
+			self.common.extend({
+				getTags:{
+					url : '/Media/SocialAccount/getTags'
+				}
+			});
+			// 粉丝性别
+			self.sex.extend({
+				getTags:{
+					url : '/Media/SocialAccount/getTags'
+				}
+			});
 		}
         
         if (weibo_type == 4) {

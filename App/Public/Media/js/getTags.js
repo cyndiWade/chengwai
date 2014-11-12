@@ -3,13 +3,17 @@ define(function(require) {
     ko.extenders.getTags = function(target, cfg) {
 
         target.occupation = ko.observable();
-        target.occupation_option = ko.observableArray([{id:1, name: '中国'}]);
+        target.occupation_option = ko.observableArray();
         target.field = ko.observable();
         target.field_option = ko.observableArray();
         target.cirymedia = ko.observable();
         target.cirymedia_option = ko.observableArray();
         target.interest = ko.observable();
         target.interest_option = ko.observableArray();
+        target.common = ko.observable();
+        target.common_option = ko.observableArray();
+        target.sex = ko.observable();
+        target.sex_option = ko.observableArray();
 
         option = {
             url : '',
@@ -44,11 +48,13 @@ define(function(require) {
         target.interest_option([]);
 		 */
 		 
-		$.restGet(option.url, {id : '21,22,106,118'}, function(code, datas){
+		$.restGet(option.url, {id : '21,22,106,118,295,711,298'}, function(code, datas){
 			target.occupation_option(datas[21]);
 			target.field_option(datas[22]);
 			target.cirymedia_option(datas[106]);
 			target.interest_option(datas[118]);
+			target.common_option(datas[295]);
+			target.sex_option(datas[298]);
 		});
 		target.occupation('');
         target.occupation_option({});
@@ -58,6 +64,10 @@ define(function(require) {
         target.cirymedia_option([]);
 		target.interest('');
         target.interest_option([]);
+		target.common('');
+        target.common_option([]);
+		target.sex('');
+        target.sex_option([]);
 		
         return target;
     };
