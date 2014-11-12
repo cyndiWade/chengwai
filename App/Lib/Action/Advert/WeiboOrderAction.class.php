@@ -455,7 +455,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 				// }
 				$account_order_list[$key]['is_show_affirm_btn'] = $val['g_audit_status'];
 				//统计订单总金额
-				$extend_order_info['sum_money'] += $account_order_list[$key]['g_price'] = $val['g_price'] + ($val['g_price'] * $this->global_finance['weibo_proportion']);
+				$extend_order_info['sum_money'] += $account_order_list[$key]['g_price'] = $val['g_price'] + ($val['g_price'] * $val['g_rebate']);
 				
 				$account_order_list[$key]['other'] = $Account_Order_Status[$val['g_audit_status']]['other'];
 
@@ -543,7 +543,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 				}
 				
 				//统计订单总金额
-				$extend_order_info['sum_money'] += $account_order_list[$key]['g_price'] = $val['g_price'] + ($val['g_price'] * $this->global_finance['weibo_proportion']);
+				$extend_order_info['sum_money'] += $account_order_list[$key]['g_price'] = $val['g_price'] + ($val['g_price'] * $val['g_rebate']);
 				
 				$account_order_list[$key]['other'] = $Account_Order_Status[$val['g_audit_status']]['other'];
 				

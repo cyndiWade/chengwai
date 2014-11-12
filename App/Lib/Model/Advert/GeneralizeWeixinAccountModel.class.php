@@ -226,7 +226,7 @@
 		
 		public function get_account_order ($generalize_id) {
 			$where['g.generalize_id'] = $generalize_id;
-			$field = 'g.id AS g_id,g.price AS g_price,g.audit_status AS g_audit_status,g.account_id AS g_account_id,a.*';
+			$field = 'g.id AS g_id,g.price AS g_price,g.rebate AS g_rebate,g.audit_status AS g_audit_status,g.account_id AS g_account_id,a.*';
 				
 			$data = $this->field($field)
 			->table($this->prefix.'generalize_weixin_account AS g')
