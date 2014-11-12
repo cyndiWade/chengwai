@@ -12,8 +12,7 @@ return array(
 		'ADMIN_AUTH_KEY' => 'index',					//管理员账号标识，不用认证的账号
 		//'NOT_AUTH_GROUP'=> '',						//无需认证分组，多个用,号分割
 		'NOT_AUTH_MODULE' => '', 				// 默认无需认证模块，多个用,号分割
-		'NOT_AUTH_ACTION' => '', 						// 默认无需认证方法，多个用,号分割
-		
+		'NOT_AUTH_ACTION' => '', 						// 默认无需认证方法，多个用,号分割	
 		
 );
 ?>

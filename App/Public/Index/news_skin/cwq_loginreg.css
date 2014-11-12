@@ -1,0 +1,98 @@
+﻿.login_container{background: #f7f7f7;}
+.login_reg {border: 1px solid #dddddd;border-radius: 2px!important;background: #fff;}
+.login_form {margin: 50px 0;padding: 0 60px 0 40px;width:640px;float: left;border-right: 1px dashed #ddd;
+}
+.login_aside {width: 420px;float: right;min-height: 300px;margin:120px 0 40px 0;padding-bottom: 80px;text-align:left;}
+.login_mod{}
+.login_mod .login_title{ height:42px; line-height:42px;font-size:16px; font-weight:bold;line-height:42px; height:42px;position:relative;}
+.login_mod .login_title a{ font-weight:bold;}
+.login_mod .login_title a:hover{font-weight:bold;}
+.login_mod .login_con{padding: 40px 60px;}
+.login_bg1 .login_title{ border-bottom:2px solid #eee;}
+.login_bg1 .login_title span{ width:120px; float:left; display:inline; text-align:center; bottom:-2px;border-bottom:2px solid #eee; color:#545454; margin-right:10px; cursor:pointer}
+.login_bg1 .login_title span.currot{border-bottom:2px solid #be1218;color:#760004;}
+.login_bg1 .login_title a{color:#760004;}
+.login_bg1 .login_title a:hover{color:#760004; text-decoration:underline;}
+.J_infoTrigger {display: inline-block;width: 17px;height: 17px;background: url(images/qa.png) no-repeat right 0px;vertical-align: middle; padding-left:10px; position:relative;}
+.popover{position:absolute;top:15px;left:50%;z-index:1010;display:none;max-width:276px; margin-left:-111px;padding:1px;text-align:left;white-space:normal;background-color:#fff;border:1px solid #ccc;border:1px solid rgba(0,0,0,.2);border-radius:6px;-webkit-box-shadow:0 5px 10px rgba(0,0,0,.2);box-shadow:0 5px 10px rgba(0,0,0,.2);background-clip:padding-box; line-height:24px; font-weight:normal; font-size:12px; color:#333}
+.popover.top{margin-top:-10px}
+.popover.right{margin-left:10px}
+.popover.bottom{margin-top:10px}
+.popover.left{margin-left:-10px}
+.popover-title{padding:8px 14px;margin:0;font-size:14px;font-weight:normal;line-height:18px;background-color:#f7f7f7;border-bottom:1px solid #ebebeb;border-radius:5px 5px 0 0}
+.popover-content{padding:9px 14px}
+.popover .popover_arrow,.popover .popover_arrow:after{position:absolute;display:block;width:0;height:0;border-color:transparent;border-style:solid}
+.popover .popover_arrow{border-width:11px}
+.popover .popover_arrow:after{border-width:10px;content:""}
+.popover.top .popover_arrow{bottom:-11px;left:50%;margin-left:-11px;border-top-color:#999;border-top-color:rgba(0,0,0,.25);border-bottom-width:0}
+.popover.top .popover_arrow:after{bottom:1px;margin-left:-10px;border-top-color:#fff;border-bottom-width:0;content:" "}
+.popover.right .popover_arrow{top:50%;left:-11px;margin-top:-11px;border-right-color:#999;border-right-color:rgba(0,0,0,.25);border-left-width:0}
+.popover.right .popover_arrow:after{bottom:-10px;left:1px;border-right-color:#fff;border-left-width:0;content:" "}
+.popover.bottom .popover_arrow{top:-11px;left:50%;margin-left:-11px;border-bottom-color:#999;border-bottom-color:rgba(0,0,0,.25);border-top-width:0}
+.popover.bottom .popover_arrow:after{top:1px;margin-left:-10px;border-bottom-color:#fff;border-top-width:0;content:" "}
+.popover.left .popover_arrow{top:50%;right:-11px;margin-top:-11px;border-left-color:#999;border-left-color:rgba(0,0,0,.25);border-right-width:0}
+.popover.left .popover_arrow:after{right:1px;bottom:-10px;border-left-color:#fff;border-right-width:0;content:" "}
+
+.form-left {width: 120px;text-align: right;font-weight: 400;font-size: 14px; display:block; height:34px; line-height:34px; float:left;}
+.form-left em {color: #ea6060;padding-right: 5px;font-style: normal;}
+.form-right {display: inline-block;padding: 0px 0 0px 10px;width:360px;vertical-align: text-top; float:left;}
+.text {display: block;width:300px;height: 24px; line-height:24px;padding: 5px 12px;font-size: 14px;color: #555;vertical-align: middle;background-color: #fff;background-image: none;border: 1px solid #ccc;border-radius: 4px;-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);-webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;}
+.text {font-weight: normal;color: #333333;background-color: #ffffff;border: 1px solid #e8e8e8; float:left;}
+.text:focus {border-color: rgba(82,168,236,0.8);outline: 0;outline: thin dotted \9;-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);}
+.text-error {border-color: rgba(255,175,173,0.8);outline: 0;outline: thin dotted \9;-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,175,173,0.6);-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,175,173,0.6);box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,175,173,0.6);}
+.texttip {color: #666;font-size: 12px;padding: 6px 0 0 0px;clear: both;}
+.errortip {background: url(images/error_icon.png) no-repeat 0 8px;color: #ea6060;font-size: 12px;padding: 6px 0 0 20px;clear: both;}
+.oktip {display:none;background: url(images/right_icon.png) no-repeat;width: 16px;height: 16px;float: left;margin-left: 5px;margin-top: 7px;}
+
+.phoneclick{ float:left;display:inline;width:110px;height:36px;background: #ea6060;line-height: 36px;text-align: center; color: #fff; margin-left:10px;}
+.phoneclick:hover{background: red;cursor: pointer;}
+.agreebox{ font-size:12px; color:#929292;}
+.agreebox input{ margin-right:16px;}
+.agreebox a{ text-decoration:underline; color:#238cc8;}
+.redbtn{ width:200px; height:50px; background:#ea6060; line-height:50px; font-size:18px; color:#fff;display: inline-block;cursor: pointer;border: none;}
+.redbtn:hover{ background:#f00;}
+
+.login_text{ line-height:40px;}
+.login_text strong{ padding-right:10px; font-weight:normal;}
+.textbtn{ width:75px; height:30px; background:#ea6060; line-height:30px; font-size:14px; color:#fff;display: inline-block;cursor: pointer;border: none; text-align:center}
+.textbtn:hover{ background:#f00; color:#fff; text-decoration:none;}
+.validcode{ float:left; width:200px; padding:0px 0px 0px 10px;}
+.validcode img{ padding-top:8px;float:left}
+.validcode span {float: left; padding:8px 0px 0px 10px;color: #666;}
+.validcode span a{color: #238cc8;}
+.validcode span a:hover{color: #238cc8;}
+/*找回密码 begin*/
+.steps-bar {padding-left: 0;font-size: 0;line-height: 0;background: #eee;border-radius: 3px;overflow: hidden;white-space: nowrap}
+
+.steps-bar .step {position: relative;display: inline-block;*display: inline;width: 245px;font-size: 14px;line-height: 30px;_line-height: 29px;text-align: center;color: #666;*zoom: 1;*vertical-align: top}
+
+.steps-bar .step--post {color: #999}
+
+.steps-bar .step--current {color: #fff;background: #ff8900}
+
+.steps-bar .step--current .arrow__foreground {border-left-color: #ff8900}
+
+.steps-bar .step--last .icon--complete {position: absolute;width: 17px;height: 17px;top: 9px;left: 88px;}
+
+.steps-bar .step__num {font-size: 18px;font-weight: bold;font-family: Arial}
+
+.steps-bar .arrow__foreground,.steps-bar .arrow__background {position: absolute;top: 0;_top: -1px;right: -15px;width: 0;height: 0;border-width: 15px 0 15px 15px;border-style: dashed dashed dashed solid;border-color: transparent transparent transparent #eee;font-size: 0;line-height: 0;z-index: 1}
+
+.steps-bar .arrow__background {right: -17px;top: -2px;_top: -3px;border-left-color: #FFF;border-width: 17px 0 17px 17px}
+
+.steps-bar-3 .step {width: 33.33%;}
+
+.steps-bar-4 .step {width: 25%;}
+
+.steps-bar--dark {background: #dedede}
+
+.steps-bar--dark .arrow__foreground {border-color: transparent transparent transparent #dedede}
+.retrieve-type{ position:relative;}
+.retrieve-type>h2 {margin: 0;font-size: 16px; height:50px; line-height:50px; font-weight:bold;}
+.retrieve-type>p {
+font-size: 14px; height:30px; line-height:30px;}
+.retrieve-type a.js-step-btn{ position:absolute; right:50px; top:20px; width:80px; height:40px; background:#ea6060; line-height:40px; font-size:14px; color:#fff;display: inline-block;cursor: pointer;border: none; text-align:center}
+.retrieve-type a.js-step-btn:hover{ background:#f00; color:#fff; text-decoration:none;}
+
+.text_verify{ color:#35aa47; line-height:40px; height:40px; overflow:hidden; font-size:18px; text-align:center;background: url(images/right_icon.png) no-repeat left center; padding-left:20px; margin:0 auto;}
+/*找回密码 end*/
