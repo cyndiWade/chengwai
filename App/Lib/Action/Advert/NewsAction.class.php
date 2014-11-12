@@ -135,15 +135,18 @@ class NewsAction extends AdvertBaseAction {
 				$list[$key]['status_explain'] = $Order_Status[$val['status']]['explain'];
 			}
 		}
-		
 		parent::data_to_view(array(
 				'page' => $show ,
 				'list' => $list,
 				'search_name' => $new_array['search_name'],
 				'start_time' => $new_array['start_time'],
 				'end_time' => $new_array['end_time'],
-				'status_0' => $number[0],
-				'status_1' => $number[1]
+				'status_0' => empty($number[0]) ? 0 : $number[0],
+				'status_1' => empty($number[1]) ? 0 : $number[1],
+				'status_2' => empty($number[2]) ? 0 : $number[2],
+				'status_3' => empty($number[3]) ? 0 : $number[3],
+				'status_4' => empty($number[4]) ? 0 : $number[4],
+				'status_5' => empty($number[5]) ? 0 : $number[5],
 		));
 		$this->display();
 	}

@@ -21,7 +21,7 @@
 				<a href="#" class="help fr">帮助手册！</a>
 				<a href="{:U('/Advert/WeixinOrder/add_intention',array('account_ids'=>$_GET['account_ids']))}" class="btn brownbtn fl">创建意向单页</a>
 				<div class="searnum fl">
-					<b class="red">【{$view_data.status_0}】</b>个确认中， <b class="red">【{$view_data.status_1}】</b>个已确认待执行
+					<b class="red">【{$view_data.status_0}】</b>个派单中，<b class="red">【{$view_data.status_1}】</b>个待审核，<b class="red">【{$view_data.status_2}】</b>个审核通过，<b class="red">【{$view_data.status_3}】</b>个已拒单
 				</div>
 			</div>
 			<div class="box01-time l">
@@ -36,25 +36,23 @@
 			</div>
 			<table class="tab01-addorder tab01-addorder-page l">
 				<tr>
-					<th class="t1">意向单名称</th>
-					<th class="t2">意向单ID</th>
-					<th class="t3">发送类型</th>
-					<th class="t4">账号个数</th>
-					<th class="t5">平台</th>
-					<th class="t6">创建时间</th>
-					<th class="t7">反馈截止时间</th>
-					<th class="last">操作</th>
+					<th class="t2" align="center">意向单ID</th>
+					<th class="t1" align="center">意向单名称</th>
+					<th class="t3" align="center">发送类型</th>
+					<th class="t4" align="center">账号个数</th>
+					<th class="t6" align="center">创建时间</th>
+					<th class="t7" align="center">反馈截止时间</th>
+					<th class="last" align="center">操作</th>
 				</tr>
 				<volist name="view_data.list" id="vo">
 					<tr class="now_tr_{$vo['id']}">
-						<td class="t1">{$vo['yxd_name']}</td>
-						<td class="t2">{$vo['id']}</td>
-						<td class="t3">{$vo['fslx_type']|getFsT}</td>
-						<td class="t4">{$view_data[intention_id_num][$vo['id']]}</td>
-						<td class="t5">{$vo['tfpt_type']|getPt}</td>
-						<td class="t6">{$vo['start_time']|date="Y-m-d H:i:s",###}</td>
-						<td class="t7">{$vo['over_time']|date="Y-m-d H:i:s",###}</td>
-						<td class="last">
+						<td class="t2" align="center">{$vo['id']}</td>
+						<td class="t1" align="center">{$vo['yxd_name']}</td>
+						<td class="t3" align="center">{$vo['fslx_type']|getFsT}</td>
+						<td class="t4" align="center">{$view_data[intention_id_num][$vo['id']]}</td>
+						<td class="t6" align="center">{$vo['start_time']|date="Y-m-d H:i:s",###}</td>
+						<td class="t7" align="center">{$vo['over_time']|date="Y-m-d H:i:s",###}</td>
+						<td class="last" align="center">
 							<div class="ctrl" >
 								<span><a href="{:U('Advert/WeixinOrder/intention_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
 								<span><a href="{:U('Advert/Weixin/celebrity_weixin',array('order_id'=>$vo['id']))}">添加媒体</a></span>

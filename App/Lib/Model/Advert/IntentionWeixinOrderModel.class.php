@@ -41,18 +41,12 @@
 		public function get_OrderInfo_num($id)
 		{
 			$val = $this->where(array('users_id'=>$id))->field('status')->select();
-			$i = 0;
-			$j = 0;
+			$new_val = array();
 			foreach($val as $v)
 			{
-				if($v['status']==0)
-				{
-					$i++;
-				}else{
-					$j++;
-				}
+				$new_val[] = $v['status'];
 			}
-			return array('0'=>$i,'1'=>$j);
+			return array_count_values($new_val);
 		}
 
 		//删除数据

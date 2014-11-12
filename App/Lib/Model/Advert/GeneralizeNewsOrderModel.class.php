@@ -32,18 +32,12 @@
 		public function get_OrderInfo_num($id)
 		{
 			$val = $this->where(array('users_id'=>$id))->field('status')->select();
-			$i = 0;
-			$j = 0;
-			foreach($val as $v)
+			$new_val = array();
+			foreach($val as $value)
 			{
-				if($v['status']==0)
-				{
-					$i++;
-				}else{
-					$j++;
-				}
+				$new_val[] = $value['status'];
 			}
-			return array('0'=>$i,'1'=>$j);
+			return array_count_values($new_val);
 		}
 
 		//删除书数据
