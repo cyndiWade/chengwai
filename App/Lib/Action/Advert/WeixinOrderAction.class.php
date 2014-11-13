@@ -115,8 +115,12 @@ class WeixinOrderAction extends AdvertBaseAction {
 				'search_name' => $new_array['search_name'],
 				'start_time' => $new_array['start_time'],
 				'end_time' => $new_array['end_time'],
-				'status_0' => $number[0],
-				'status_1' => $number[1]
+				'status_0' => empty($number[0]) ? 0 : $number[0],
+				'status_1' => empty($number[1]) ? 0 : $number[1],
+				'status_2' => empty($number[2]) ? 0 : $number[2],
+				'status_3' => empty($number[3]) ? 0 : $number[3],
+				'status_4' => empty($number[4]) ? 0 : $number[4],
+				'status_5' => empty($number[5]) ? 0 : $number[5]
 		));
 		$this->display();
 	}
@@ -216,8 +220,12 @@ class WeixinOrderAction extends AdvertBaseAction {
 				'search_name' => $new_array['search_name'],
 				'start_time' => $new_array['start_time'],
 				'end_time' => $new_array['end_time'],
-				'status_0' => $number[0],
-				'status_1' => $number[1],
+				'status_0' => empty($number[0]) ? 0 : $number[0],
+				'status_1' => empty($number[1]) ? 0 : $number[1],
+				'status_2' => empty($number[2]) ? 0 : $number[2],
+				'status_3' => empty($number[3]) ? 0 : $number[3],
+				'status_4' => empty($number[4]) ? 0 : $number[4],
+				'status_5' => empty($number[5]) ? 0 : $number[5],
 				'intention_id_num' => $intention_id_num
 		));
 		$this->display();
@@ -461,7 +469,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 				$account_order_list[$key]['other'] = $Account_Order_Status[$val['g_audit_status']]['other'];
 
 				//统计订单总金额
-				$extend_order_info['sum_money'] +=  $account_order_list[$key]['g_price'] = $val['g_price'] + ($val['g_price'] * $this->global_finance['weixin_proportion']);
+				$extend_order_info['sum_money'] += $account_order_list[$key]['g_price'] = $val['g_price'] + ($val['g_price'] * $val['g_rebate']);
 				
 				//统计据单数
 				if ($val['g_audit_status'] == $Account_Order_Status[4]['status']) {
@@ -548,7 +556,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 				}
 				
 				//统计订单总金额
-				$extend_order_info['sum_money'] += $val['g_price'];
+				$extend_order_info['sum_money'] += $account_order_list[$key]['g_price'] = $val['g_price'] + ($val['g_price'] * $val['g_rebate']);
 				
 				$account_order_list[$key]['other'] = $Account_Order_Status[$val['g_audit_status']]['other'];
 				

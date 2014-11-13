@@ -1,0 +1,60 @@
+﻿/*关于我们 begin*/
+.abuot_left{ width:199px; position:absolute; left:0px; top:77px;}
+.abuot_left .abuot_menu{overflow:hidden;}
+.abuot_left .abuot_menu li{ line-height:60px; height:60px; overflow:hidden; text-align:center;}
+.abuot_left .abuot_menu li a{ color:#090909; font-size:16px;background:#fefefe; display:block;line-height:58px; height:58px; border-right:1px solid #ff9217;}
+.abuot_left .abuot_menu li a:hover,.abuot_left .abuot_menu li.cur a{ color:#be1218; background:#fff; text-decoration:none;border-top:1px solid #ff9217;border-bottom:1px solid #ff9217;border-left:5px solid #ff9217;border-right:0px solid #fff;}
+
+.abuot_right{ width:900px; padding:50px; border:1px solid #ff9217; float:right; overflow:hidden;background:url(images/abuot_left_bj.png) repeat-y left top;}
+
+.artmp{ padding:0px 20px;}
+.artmp h1,h1.arth1{ font-size:26px; color:#090909; line-height:26px; padding:0px 0px 10px 0px;}
+{ font-size:26px; color:#090909; line-height:26px; padding:0px 0px 10px 0px;}
+.artbody{line-height:28px;}
+.artbody h3{font-size:18px; color:#090909; line-height:26px; padding:5px 10px; color:#ce0000; font-weight:bold;}
+.artbody h3 b{font-size:14px; color:#ce0000; line-height:20px; padding-left:10px;}
+.artbody p span{font-size:14px;font-weight:bold;}
+.artbody p{ padding:10px 0px; text-indent:2em; line-height:28px;}
+.arth3{ overflow:hidden; border-top:1px dashed #ccc; padding:20px 0px 20px;}
+.arth3 h3{font-size:18px; line-height:40px;color:#000; font-weight:bold;}
+.arth3 h4{font-size:15px; line-height:30px;color:#BE1218; font-weight:bold; text-indent:2em;}
+.arth3 span{ display:block; margin:0px 10px 0px 0px; padding:0px 10px; height:26px; line-height:26px; background:#2D92DA; float:left; width:200px; color:#fff; text-indent:0px; }
+.arth3 dl{ padding:5px 0px; line-height:26px;}
+.arth3 dt{ display:block; margin:0px 10px 0px 0px; padding:0px 10px; height:26px; line-height:26px; background:#2D92DA; float:left; width:100px; color:#fff; text-indent:0px; }
+.arth4 h4{font-size:14px; line-height:36px;color:#000; font-weight:bold; text-indent:2em;}
+
+.contact {position: relative;}
+.contact_tab{position: relative; left: 0px; top: 0px; line-height: 25px;}
+.contact_tab .contact_title{font-size: 20px; color: #000; line-height:40px;}
+.contact_tab .contact_add,.contact_tab .contact_phone,.contact_tab .contact_email{ position:relative;font-size: 14px; color: #333; padding:10px 0px 10px 45px;}
+.contact_ico,.contact_ico2,.contact_ico3{ background:url(images/contect.png) no-repeat; position:absolute; width:35px; height:35px;}
+.contact_ico{ background-position:0px -40px; left:0px; top:18px;}
+.contact_ico2{ background-position:0px 0px; left:0px; top:6px;}
+.contact_ico3{ background-position:0px -80px; left:0px; top:6px;}
+#mapDiv-Imgbutton{position:absolute; left: 700px; top: 80px; cursor:pointer;}
+
+/*关于我们 end*/
+.question_left{ width:250px; position:absolute; left:0px; top:77px;}
+.question_right{ width:849px; padding:50px; border:1px solid #ff9217; float:right; overflow:hidden;background:url(images/abuot_left_bj.png) repeat-y left top;}
+.question_menu{overflow:hidden;border:1px solid #ff9217; border-bottom:none;}
+.question_menu li{ line-height:60px; height:60px; overflow:hidden; text-align:center;}
+.question_menu li a{ color:#090909; font-size:14px;background:#fff; display:block;line-height:59px; height:59px; border-bottom:1px solid #ff9217;}
+.question_menu li.first{ color:#fff; background:#ff9217; font-size:18px; font-weight:bold;}
+
+
+.ques_right{ width:688px; overflow:hidden; float:right; padding:20px; border:1px solid #D8D8D8; min-height:870px;}
+.article-text,.article-inf,.article-inf,.article-inf p{float:left;width:100%;}
+.article-text h1{float:left;width:100%;height:40px;line-height:40px;text-align:center;font: normal 24px/40px Microsoft YaHei;color:#333;}
+.article-text h1.text-left,.article-text .time-text.text-left{text-align:left}
+.article-text .time-text{float:left;width:100%;line-height:20px;font-size:12px;color:#878787; text-align:center;padding-bottom:10px;}
+.article-inf{line-height:28px; padding-top:20px;}
+.article-inf p{padding:10px 0}
+.article-inf img{max-width:633px;}
+.article-answer{float:left;width:42px;line-height:20px;padding-left:10px; background:url(images/bg_answer.gif) no-repeat;font-size:12px;font-weight:bold;color:#fff;}
+
+.article-page{float:left;width:100%; margin-top:30px; display:inline;padding:10px 0;border-top:1px solid #EBEBEB; text-align:right}
+.article-page a:link,.article-page a:visited,.article-page a:hover{width:71px;height:24px;line-height:24px;background:url(../images_main/bg_btn.jpg) no-repeat;color:#fff;text-decoration:none; text-align:center; margin-left:10px;display: inline-block; *display:inline;*zoom:1;}
+.article-page a:link,.article-page a:visited{ background-position:-90px -10px;}
+.article-page a:hover{background-position:-170px -10px;}
+
+/*关于我们end*/

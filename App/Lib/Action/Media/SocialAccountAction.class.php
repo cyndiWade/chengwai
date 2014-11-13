@@ -23,6 +23,8 @@ class SocialAccountAction extends MediaBaseAction {
         'CategoryTags'  => 'CategoryTags',
         'CeleprityindexWeibo'   => 'CeleprityindexWeibo',
         'CeleprityindexWeixin'  => 'CeleprityindexWeixin',
+        'GrassrootsWeibo'   => 'GrassrootsWeibo',
+        'GrassrootsWeixin'  => 'GrassrootsWeixin',
 	);
 	
 	//和构造方法
@@ -733,6 +735,8 @@ class SocialAccountAction extends MediaBaseAction {
                 // 新浪微博
                 $retweetPrice	= I('retweet_price', 0, 'floatval');
 				
+                $accountType	= I('accountType', 0, 'intval');
+				
 				// 名人职业
                 $occupation		= I('occupation', 0, 'intval');
 				// 媒体领域
@@ -745,6 +749,13 @@ class SocialAccountAction extends MediaBaseAction {
                 $coordination	= I('coordination', 0, 'intval');
 				// 是否支持原创
                 $originality	= I('originality', 0, 'intval');
+				
+				// 常见分类
+                $common	= I('common', 0, 'intval');
+				// 地区
+                $sex	= I('sex', 0, 'intval');
+				
+				
 				
                 if (empty($retweetPrice)) {
                     parent::callback(0, '价格错误');
@@ -759,6 +770,7 @@ class SocialAccountAction extends MediaBaseAction {
                     // ));
                 // }
                 
+				$weiboPriceRatio = C('WEIBO_PRICE_RATIO');
                 $userInfos = parent::get_session('user_info');
                 $datas = array(
                     // 默认待审核
@@ -768,28 +780,47 @@ class SocialAccountAction extends MediaBaseAction {
                     'pt_type'       => ($weiboType == 1) ? 1: 2,
                     'account_name'  => $weiboId,
                     'fans_num'      => intval($apiInfos['followers_count']),
-                    'yg_zhuanfa'    => $retweetPrice,
-                    'yg_zhifa'      => $retweetPrice,
-                    'rg_zhuanfa'    => $retweetPrice * 0.7,
-                    'rg_zhifa'      => $retweetPrice * 0.7,
+                    'yg_zhuanfa'    => $retweetPrice * $weiboPriceRatio['retweetPrice'],
+                    'yg_zhifa'      => $retweetPrice * $weiboPriceRatio['tweetPrice'],
+                    'rg_zhuanfa'    => $retweetPrice * $weiboPriceRatio['softRetweetPrice'],
+                    'rg_zhifa'      => $retweetPrice * $weiboPriceRatio['softTweetPrice'],
                     'create_time'   => $_SERVER['REQUEST_TIME'],
                 );
                 $insertId = $weiboModel->add($datas);
                 if ($insertId) {
-					$indexDatas = array(
-						'occupation'	=> $occupation,
-						'field'			=> $field,
-						'ck_price'		=> $retweetPrice,
-						'yc_price'		=> $retweetPrice,
-						'cirymedia'		=> $cirymedia,
-						'interest'		=> $interest,
-						'coordination'	=> $coordination,
-						'originality'	=> $originality,
-						'fansnumber'	=> $datas['fans_num'],
-						'weibo_id'		=> $insertId,
-					);
-					$celeprityindexWeiboModel = $this->db['CeleprityindexWeibo'];
-					$celeprityindexWeiboModel->add($indexDatas);
+					
+					if ($accountType == 1) {
+						// 名人
+						$indexDatas = array(
+							'occupation'	=> $occupation,
+							'field'			=> $field,
+							'ck_price'		=> $retweetPrice,
+							'yc_price'		=> $retweetPrice,
+							'cirymedia'		=> $cirymedia,
+							'interest'		=> $interest,
+							'coordination'	=> $coordination,
+							'originality'	=> $originality,
+							'fansnumber'	=> $datas['fans_num'],
+							'weibo_id'		=> $insertId,
+						);
+						$celeprityindexWeiboModel = $this->db['CeleprityindexWeibo'];
+						$celeprityindexWeiboModel->add($indexDatas);
+					} else {
+						// 草根
+						$indexDatas = array(
+							'common'		=> $common,
+							'cirymedia'		=> $cirymedia,
+							'fans_num'		=> $datas['fans_num'],
+							'yg_zhuanfa'    => $retweetPrice * $weiboPriceRatio['retweetPrice'],
+							'yg_zhifa'      => $retweetPrice * $weiboPriceRatio['tweetPrice'],
+							'rg_zhuanfa'    => $retweetPrice * $weiboPriceRatio['softRetweetPrice'],
+							'rg_zhifa'      => $retweetPrice * $weiboPriceRatio['softTweetPrice'],
+							'sex'			=> $sex,
+							'weibo_id'		=> $insertId,
+						);
+						$grassrootsWeiboModel = $this->db['GrassrootsWeibo'];
+						$grassrootsWeiboModel->add($indexDatas);
+					}
 					
 					parent::weiboDataprocess($insertId);
                     parent::callback(1, '增加帐号成功!', array(), array(
@@ -817,6 +848,9 @@ class SocialAccountAction extends MediaBaseAction {
                 $uploadImgAvatar    = I('uploadImgAvatar', '', 'setString');
                 $uploadImgQrCode    = I('uploadImgQrCode', '', 'setString');
                 $uploadImgFollowers = I('uploadImgFollowers', '', 'setString');
+				
+				$accountType		= I('accountType', 0, 'intval');
+				
 				// 名人职业
                 $occupation			= I('occupation', 0, 'intval');
 				// 媒体领域
@@ -829,6 +863,12 @@ class SocialAccountAction extends MediaBaseAction {
                 $coordination		= I('coordination', 0, 'intval');
 				// 是否支持原创
                 $originality		= I('originality', 0, 'intval');
+				
+				
+				// 常见分类
+                $common	= I('common', 0, 'intval');
+				// 地区
+                $sex	= I('sex', 0, 'intval');
                 
                 $userInfos = parent::get_session('user_info');
                 $datas = array(
@@ -855,20 +895,40 @@ class SocialAccountAction extends MediaBaseAction {
                 $weixinModel = $this->db['AccountWeixin'];
                 $insertId = $weixinModel->add($datas);
                 if ($insertId) {
-					$indexDatas = array(
-						'occupation'	=> $occupation,
-						'field'			=> $field,
-						'ck_price'		=> $price,
-						'yc_price'		=> $price,
-						'cirymedia'		=> $cirymedia,
-						'interest'		=> $interest,
-						'coordination'	=> $coordination,
-						'originality'	=> $originality,
-						'fansnumber'	=> $datas['fans_num'],
-						'weibo_id'		=> $insertId,
-					);
-					$celeprityindexWeixinModel = $this->db['CeleprityindexWeixin'];
-					$celeprityindexWeixinModel->add($indexDatas);
+					
+					if ($accountType == 1) {
+						$indexDatas = array(
+							'occupation'	=> $occupation,
+							'field'			=> $field,
+							'ck_price'		=> $price,
+							'yc_price'		=> $price,
+							'cirymedia'		=> $cirymedia,
+							'interest'		=> $interest,
+							'coordination'	=> $coordination,
+							'originality'	=> $originality,
+							'fansnumber'	=> $datas['fans_num'],
+							'weibo_id'		=> $insertId,
+						);
+						$celeprityindexWeixinModel = $this->db['CeleprityindexWeixin'];
+						$celeprityindexWeixinModel->add($indexDatas);
+					} else {
+						// 草根
+						$indexDatas = array(
+							'common'		=> $common,
+							'cirymedia'		=> $cirymedia,
+							'fans_number'	=> $datas['fans_num'],
+							'dtb_money'		=> $price,
+							'dtwdyt_money'  => $topPrice,
+							'dtwdet_money'  => $secondPrice,
+							'dtwqtwz_money' => $otherPrice,
+							'audience_man'	=> $malePrecent,
+							'audience_women'=> $femalePrecent,
+							'read_number'	=> $weeklyReadAvg,
+							'weibo_id'		=> $insertId,
+						);
+						$grassrootsWeixinModel = $this->db['GrassrootsWeixin'];
+						$grassrootsWeixinModel->add($indexDatas);
+					}
 					
                     parent::weixinDataprocess($insertId);
                     parent::callback(1, '增加帐号成功!', array(), array(

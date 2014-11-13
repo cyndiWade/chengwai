@@ -82,7 +82,7 @@ define(function (require) {
 
         var win = new W.Window({
             title: W.util.formatStr('添加 {0} 账号', platformData.platformName),
-            height: platformData.pid == 4 ? 500 : "auto",
+            height: 500,
             width: 921,
             tbar: winOption.tbar
         });
@@ -153,6 +153,20 @@ define(function (require) {
                     validation.multi_graphic_second_price(singleGraphicPrice * 0.4);
                     validation.multi_graphic_other_price(singleGraphicPrice * 0.25);
                     validation.content_price(singleGraphicPrice * 0.25);
+                }
+            );
+        }
+		
+		if(platformData.pid != 4){
+            validation.accountType.subscribe(
+                function (type) {
+                    if (type == 1) {
+						$('.celeprityindex').show();
+						$('.grassroots').hide();
+					} else {
+						$('.celeprityindex').hide();
+						$('.grassroots').show();
+					}
                 }
             );
         }

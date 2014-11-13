@@ -37,11 +37,12 @@
 		<div class="box03-allorder l">
 			<em class="fl">显示类型：</em>
 			<a href="{:U('Media/EventOrder/allorderNews')}"><span class="ordernav <eq name='view_data.status' value=''>select</eq> fl ">所有订单</span></a>
-			<a href="{:U('Media/EventOrder/allorderNews?status=7')}"><span class="ordernav <eq name='view_data.status' value='7'>select</eq> fl">已完成的订单</span></a>
-			<a href="{:U('Media/EventOrder/allorderNews?status=4')}"><span class="ordernav <eq name='view_data.status' value='4'>select</eq> fl">拒单</span></a>
-			<a href="{:U('Media/EventOrder/allorderNews?status=8')}"><span class="ordernav <eq name='view_data.status' value='8'>select</eq> fl">流单</span></a>
-			<a href="{:U('Media/EventOrder/allorderNews?status=9')}"><span class="ordernav <eq name='view_data.status' value='9'>select</eq> fl">已取消</span></a>
-			<a href="{:U('Media/EventOrder/allorderNews?status=10')}"><span class="ordernav <eq name='view_data.status' value='10'>select</eq> fl">不合格</span></a>
+			<a href="{:U('Media/EventOrder/allorderNews?status=7')}"><span class="ordernav <eq name='view_data.status' value='7'>select</eq> fl">已完成</span></a>
+			<a href="{:U('Media/EventOrder/allorderNews?status=5')}"><span class="ordernav <eq name='view_data.status' value='5'>select</eq> fl">执行中</span></a>
+			<a href="{:U('Media/EventOrder/allorderNews?status=3')}"><span class="ordernav <eq name='view_data.status' value='3'>select</eq> fl">派单中</span></a>
+			<a href="{:U('Media/EventOrder/allorderNews?status=4')}"><span class="ordernav <eq name='view_data.status' value='4'>select</eq> fl">已拒单</span></a>
+			<a href="{:U('Media/EventOrder/allorderNews?status=8')}"><span class="ordernav <eq name='view_data.status' value='8'>select</eq> fl">已流单</span></a>
+			<a href="{:U('Media/EventOrder/allorderNews?status=9')}"><span class="ordernav <eq name='view_data.status' value='9'>select</eq> fl">已取消</span></a>		
 		</div>
 		<div class="box04-allorder l">
 			<table class="tab01-allorder l">
@@ -65,9 +66,9 @@
 				<td class="last"><div class="ctrl"><span><a href="{:U('Media/EventOrder/showNews?id='.$vo[generalize_id])}">查看</a></span>
 				<if condition='$vo.audit_status eq 3'>
 				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="4"><span>拒单</span></a> 
-				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="5"><span>去执行</span></a>  
+				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="5"><span>同意接单</span></a>  
 				 <elseif condition='$vo.audit_status eq 5'/> 
-				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="6"><span>执行完成</span></a> 
+				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="6"><span>上传反馈数据</span></a> 
 				 </if>
 				 </div></td>
 			  </tr>

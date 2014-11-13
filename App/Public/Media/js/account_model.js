@@ -1001,6 +1001,8 @@ define(function(require) {
         };
 		
 		// 微博部分
+		self.accountType = ko.observable(data.accountType);
+		
 		// 名人职业
 		self.occupation = ko.observable(data.occupation);
 		// 媒体领域
@@ -1031,6 +1033,11 @@ define(function(require) {
 		self.originality_name = function(){
             return getOptionName(self.originality(), self.originality_option());
         }();
+		
+		// 常见分类
+		self.common = ko.observable(data.common);
+		// 粉丝性别
+		self.sex = ko.observable(data.sex);
         
         // 周平均阅读数
         self.weekly_read_avg = ko.observable(data.weekly_read_avg);

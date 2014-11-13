@@ -1,0 +1,58 @@
+ <div class="login_nav tab-1">
+  <div class="loginFunc">
+      <div id="lbNormal" class="loginFuncNormal">广告主</div>
+      <div id="lbDynPw" class="loginFuncDynPw">媒体主</div>
+  </div>
+  <div class="loginForm">
+      <form id="login126" name="login126" method="post" action="" target="frameforlogin">
+          <input type="hidden" id="username" name="username" value="0">
+          <input type="hidden" id="savelogin" name="savelogin" value="0">
+          <input type="hidden" id="url2" name="url2" value="http://mail.126.com/errorpage/error126.htm">
+          <div id="idInputLine" class="loginFormIpt showPlaceholder">
+              <b class="ico ico-uid"></b>
+              <input class="formIpt" tabindex="1" title="请输入帐号" id="idInput" type="text" maxlength="50" value="" autocomplete="off">
+          </div>
+          <!-- 普通密码登录 -->
+          <div id="normalLogin" style="display: block;">
+              <div id="pwdInputLine" class="loginFormIpt showPlaceholder">
+                  <b class="ico ico-pwd"></b>
+                  <input class="formIpt" tabindex="2" title="请输入密码" id="pwdInput" name="password" type="password">
+              </div>
+              <div class="loginFormCheck">
+                  <div id="lfAutoLogin" class="loginFormCheckInner">
+                      <label class="label_left">
+                          <input tabindex="3" title="十天内免登录" class="loginFormCbx" type="checkbox" id="remAutoLogin">
+                      十天内免登录</label>
+                      <label class="label_right">忘记密码了</label>
+                      
+                  </div>
+                  
+              </div>
+              <div class="loginFormBtn">
+                  <button id="loginBtn" class="login_btn btn-main btn-login" tabindex="6" type="submit">登&nbsp;&nbsp;录</button>
+                  <a id="lfBtnReg" class="login_btn btn-side btn-reg" href="{:U('Advert/Account/register')}" target="_blank" tabindex="7">注&nbsp;&nbsp;册</a>
+              </div>
+          </div>
+          <!-- 动态密码登录 -->
+<div class="lophone">热线：<script src="{$global_tpl_view.Group_Resource_Path}news_skin/js/phone.js"></script></div> 
+     </form>
+
+  </div>
+</div>            
+<script type="text/javascript">
+function check() {
+	var l;
+	var f;
+	f = 'username';
+	if(Dd(f).value == 0) {
+		Dmsg('账号不能为空', 'username', 1);
+		return false;
+	}
+	f = 'password';
+	if(Dd(f).value == 0) {
+		Dmsg('密码不能为空', 'password', 1);
+		return false;
+	}
+	return true;
+}
+</script> 

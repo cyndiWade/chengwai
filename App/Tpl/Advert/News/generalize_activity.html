@@ -22,7 +22,7 @@
 				<a href="#" class="help fr">帮助手册！</a>
 				<a href="{:U('/Advert/News/add_generalize')}" class="btn bluebtn fl">添加活动</a>
 				<div class="searnum fl">
-					<b>【{$view_data.status_0}】</b>个确认中，<b>【{$view_data.status_1}】</b>个已确认待执行
+					<b>【{$view_data.status_0}】</b>个派单中，<b>【{$view_data.status_1}】</b>个待审核，<b>【{$view_data.status_2}】</b>个审核通过，<b>【{$view_data.status_3}】</b>个已拒单，<b>【{$view_data.status_4}】</b>个执行中，<b>【{$view_data.status_5}】</b>个已完成
 				</div>
 			</div>
 			<div class="box01-time l">
@@ -37,27 +37,27 @@
 			</div>
 			<table class="tab01-addorder l">
 				<tr>
-					<th class="t1">活动ID</th>
-					<th class="t2">标题</th>
-					<th class="t3">总价</th>
-					<th class="t4"></th>
-					<th class="t5">发布时间</th>
-					<th class="t6"></th>
-					<th class="t7"></th>
-					<th class="t8">状态</th>
-					<th class="last">操作</th>
+					<th class="t1" align="center">活动ID</th>
+					<th class="t2" align="center">标题</th>
+					<th class="t3" align="center">总价</th>
+					<th class="t5" align="center">发布时间</th>
+					<th class="t6" align="center"></th>
+					<th class="t5" align="center">创建时间</th>
+					<th class="t6" align="center"></th>
+					<th class="t8" align="center">状态</th>
+					<th class="last" align="center">操作</th>
 				</tr>
 				<volist name="view_data.list" id="vo">
 					<tr class="now_tr_{$vo['id']}">
-						<td class="t1">{$vo['id']}</td>
-						<td class="t2">{$vo['title']}</td>
-						<td class="t3">{$vo['all_price']}</td>
-						<td class="t4"></td>
-						<td class="t5">{$vo['start_time']|date="Y-m-d H:i:s",###}</td>
-						<td class="t6"></td>
-						<td class="t7"></td>
-						<td class="t8"><strong class="wpd">{$vo['status_explain']}</strong></td>
-						<td class="last">
+						<td class="t1" align="center">{$vo['id']}</td>
+						<td class="t2" align="center">{$vo['title']}</td>
+						<td class="t3" align="center">{$vo['all_price']}</td>
+						<td class="t5" align="center">{$vo['start_time']|date="Y-m-d H:i:s",###}</td>
+						<td class="t6" align="center"></td>
+						<td class="t5" align="center">{$vo['create_time']|date="Y-m-d H:i:s",###}</td>
+						<td class="t6" align="center"></td>
+						<td class="t8" align="center"><strong class="wpd">{$vo['status_explain']}</strong></td>
+						<td class="last" align="center">
 							<div class="ctrl">
 								<span><a href="{:U('Advert/News/generalize_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
 								<if condition="($vo['status'] LT 4)">

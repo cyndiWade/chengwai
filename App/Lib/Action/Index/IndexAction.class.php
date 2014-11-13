@@ -49,9 +49,10 @@ class IndexAction extends IndexBaseAction {
 	);
 
 	
+	
 	//首页
 	public function index() {
-
+		
 		//新闻推荐数据
 		$news_recommended_list = $this->db['AccountNews']->get_news_account_list(array('a.recommended_status'=>1,'a.is_del'=>0));
 		if ($news_recommended_list == true) {
@@ -127,9 +128,7 @@ class IndexAction extends IndexBaseAction {
 		$this->display();
 	}
 	
-	
-	//名人代言
-	public function spokesperson() {
+	public function vip() {
 		parent::data_to_view(array(
 				//二级导航属性
 				'sidebar_one'=>array(4=>'fir_cur',),//第一个加依次类推
@@ -148,8 +147,8 @@ class IndexAction extends IndexBaseAction {
 	}
 	
 	
-	//大客户服务
-	public function vip() {
+	//媒体入住
+	public function locate() {
 		parent::data_to_view(array(
 				//二级导航属性
 				'sidebar_one'=>array(6=>'fir_cur',),//第一个加依次类推
@@ -158,12 +157,34 @@ class IndexAction extends IndexBaseAction {
 	}
 	
 	
+	//大客户服务
+	/**
+	public function vip() {
+		parent::data_to_view(array(
+				//二级导航属性
+				'sidebar_one'=>array(6=>'fir_cur',),//第一个加依次类推
+		));
+		$this->display();
+	}
+	*/
+	
+	
 	//关于我们
 	public function about_us() {
 		parent::data_to_view(array(
 				//二级导航属性
 				'sidebar_one'=>array(7=>'fir_cur',),//第一个加依次类推
-				'sidebar_three'=>array(0=>'select',),
+				'sidebar_three'=>array(0=>'cur',),
+		));
+		$this->display();
+	}
+	
+	
+	public function services() {
+		parent::data_to_view(array(
+				//二级导航属性
+				'sidebar_one'=>array(7=>'fir_cur',),//第一个加依次类推
+				'sidebar_three'=>array(2=>'cur',),
 		));
 		$this->display();
 	}
@@ -173,11 +194,13 @@ class IndexAction extends IndexBaseAction {
 		parent::data_to_view(array(
 			//二级导航属性
 			'sidebar_one'=>array(7=>'fir_cur',),//第一个加依次类推
-			'sidebar_three'=>array(3=>'select',),
+			'sidebar_three'=>array(4=>'cur',),
 		));
 		$this->display();
 	}
 	
+	
+
 }
 
 ?>

@@ -97,9 +97,10 @@ class IndexBaseAction extends AppBaseAction {
 				1 => U('/Index/Index/news'),
 				2 => U('/Index/Index/wechat'),
 				3 => U('/Index/Index/weibo'),
-				4 => U('/Index/Index/spokesperson'),
+				4 => U('/Index/Index/vip'),
+				//4 => U('/Index/Index/spokesperson'),
 				5 => U('/Index/Index/kh_case'),
-				//6 => U('/Index/Index/vip'),
+				6 => U('/Index/Index/locate'),
 				7 => U('/Index/Index/about_us'),
 				8 => U('/Media/Account/login'),		//媒体主登录
 				9 => U('/Advert/Account/login'),	//广告主登录
@@ -108,18 +109,38 @@ class IndexBaseAction extends AppBaseAction {
 		//关于我们导航
 		$data[2] = array(
 			0 => U('/Index/Index/about_us'),
-			//1 => U('/Index/Index/news'),
-			2 => U('/Index/Index/kh_case'),
-			3 => U('/Index/Index/contact'),
+			1 => U('/Index/Index/about_us'),
+			2 => U('/Index/Index/services'),
+			3 => U('/Index/Index/kh_case'),
+			4 => U('/Index/Index/contact'),
+				
 		);
+		
+		//帮助中心
+		$data[3] = array(
+			0 => U('Index/Faq/show',array('page'=>'index')),
+			1 => U('Index/Faq/show',array('page'=>'122')),
+			2 => U('Index/Faq/show',array('page'=>'1')),
+			3 => U('Index/Faq/show',array('page'=>'8')),
+			4 => U('Index/Faq/show',array('page'=>'5')),
+			5 => U('Index/Faq/show',array('page'=>'6')),
+			6 => U('Index/Faq/show',array('page'=>'7')),
+			7 => U('Index/Faq/show',array('page'=>'4')),
+			8 => U('Index/Faq/show',array('page'=>'3')),
+			9 => U('Index/Faq/show',array('page'=>'2')),
+	//{$view_data['sidebar_faq_css'][0]}
+		);
+		
 
 		parent::data_to_view(array(
 			//以及导航URL
 			'sidebar_one_url'=>	$data[0],//URL
 			//二级导航
 			'sidebar_two_url'=> $data[1],//URL
-			//关于我们左侧导航
+			//关于我们左侧导航	
 			'sidebar_three_url'=> $data[2],//URL
+			
+			'sidebar_faq_url'=>	$data[3],
 		));
 	}
 	
