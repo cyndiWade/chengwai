@@ -416,7 +416,23 @@ input.subbtn{ width:100%;height:32px; text-align:center;line-height:22px;border:
     .banner .slider li { float: left; display: inline-block; height: 96px; margin-right: 20px; vertical-align: middle; }
 .banner .btns { width: 281px; margin: 13px 0 0 55px; }
 
-.login_nav {width: 295px;height:360px;padding: 13px 14px 15px;top:0px;right: 0px;text-align: left;position: absolute;z-index: 9999;background: url(images/login.png) no-repeat;-background-image: url(images/login_ie6.png);}
+.login_nav {
+	width: 295px;
+	height:360px;
+	padding: 13px 14px 15px;
+	top:0px;
+	right: 0px;
+	text-align: left;
+	position: absolute;
+	z-index: 9999;
+	/*background: url("images/login.png") 0px 0px no-repeat;*/
+	
+	-background-image: url(images/login_ie6.png);
+}
+
+.tap1{background: url("images/login.png") 0px 0px no-repeat;}
+.tap2{background: url("images/login.png") -323px 0px no-repeat}
+
 .loginFunc {width: 100%;height: 47px;overflow: hidden;clear: both;}
 .loginFuncNormal, .loginFuncDynPw {width: 148px;height: 100%;overflow: hidden;position: relative;line-height: 46px;float: left;font-size: 16px; font-weight:bold;text-align: center;color: #333;cursor: pointer;}
 .loginFuncDynPw {width: 147px;border-right: none;}

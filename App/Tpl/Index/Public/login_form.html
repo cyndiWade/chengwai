@@ -1,33 +1,38 @@
- <div class="login_nav tab-1">
+ <div class="login_nav tap1">
   <div class="loginFunc">
-      <div id="lbNormal" class="loginFuncNormal">广告主</div>
-      <div id="lbDynPw" class="loginFuncDynPw">媒体主</div>
+      <div id="lbNormal" class="loginFuncNormal login_account">广告主</div>
+      <div id="lbDynPw" class="loginFuncDynPw login_account">媒体主</div>
   </div>
+  
+  <!-- 广告主 -->
   <div class="loginForm">
-      <form id="login126" name="login126" method="post" action="" target="frameforlogin">
-          <input type="hidden" id="username" name="username" value="0">
-          <input type="hidden" id="savelogin" name="savelogin" value="0">
-          <input type="hidden" id="url2" name="url2" value="http://mail.126.com/errorpage/error126.htm">
-          <div id="idInputLine" class="loginFormIpt showPlaceholder">
-              <b class="ico ico-uid"></b>
-              <input class="formIpt" tabindex="1" title="请输入帐号" id="idInput" type="text" maxlength="50" value="" autocomplete="off">
-          </div>
+      <form id="login126" name="login126" method="post" action="{:U('Advert/Account/check_login')}"  target="frameforlogin">
+          
+          <input type="hidden" name="notcheck" value="verify">
+                
           <!-- 普通密码登录 -->
           <div id="normalLogin" style="display: block;">
+          
+         	 <div id="idInputLine" class="loginFormIpt showPlaceholder">
+            	  <b class="ico ico-uid"></b>
+            	  <input name="account" class="formIpt" tabindex="1" title="请输入帐号" id="idInput" type="text" maxlength="50" value="" autocomplete="off">
+        	  </div>
+          
               <div id="pwdInputLine" class="loginFormIpt showPlaceholder">
                   <b class="ico ico-pwd"></b>
-                  <input class="formIpt" tabindex="2" title="请输入密码" id="pwdInput" name="password" type="password">
+                  <input name="password" class="formIpt" tabindex="2" title="请输入密码" id="pwdInput"  type="password">
               </div>
+            
               <div class="loginFormCheck">
                   <div id="lfAutoLogin" class="loginFormCheckInner">
                       <label class="label_left">
                           <input tabindex="3" title="十天内免登录" class="loginFormCbx" type="checkbox" id="remAutoLogin">
                       十天内免登录</label>
-                      <label class="label_right">忘记密码了</label>
-                      
+                      <label class="label_right"><a href="{:U('Index/Pass/index')}">忘记密码了</a></label>  
                   </div>
                   
               </div>
+              
               <div class="loginFormBtn">
                   <button id="loginBtn" class="login_btn btn-main btn-login" tabindex="6" type="submit">登&nbsp;&nbsp;录</button>
                   <a id="lfBtnReg" class="login_btn btn-side btn-reg" href="{:U('Advert/Account/register')}" target="_blank" tabindex="7">注&nbsp;&nbsp;册</a>
@@ -38,8 +43,76 @@
      </form>
 
   </div>
+  
+  
+  
 </div>            
 <script type="text/javascript">
+
+
+var login_system = function () {
+	
+	var login_account = $('.login_account');	//选项
+	var form_div = $('.form_div');
+	login_account.click(function () {
+		var _this = $(this);
+		var _index = _this.index();
+		
+		login_account.removeClass('login_account_select');
+		_this.addClass('login_account_select');
+		
+		form_div.css({display:'none'});
+		form_div.eq(_index).css({display:'block'});
+	});
+	
+}();
+
+var info = function(){
+    advertsub = $('#advertsub');
+    
+}
+
+info();
+advertsub.click(function(){
+   var adname = $('.adname').val();
+   var adpass = $('.adpass').val();
+   var adver = $('.adver').val();
+   $.ajax({
+      type: "POST",
+      url: "{:U('Advert/Account/check_login')}",
+      data: {
+          'account': adname,
+          'password' : adpass,
+          'verify' : adver
+      },
+      dataType: "json",
+      success: function (msg) {
+        if(msg.status==0)
+        {
+          window.location.href="{:U('Advert/Member/datum_edit')}";
+        }else{
+          alert(msg.msg);
+        }
+      }
+   });
+});
+
+
+$('#resetVerifyCode').click(function(){
+	var timenow = new Date().getTime();
+	var _this = $(this);
+	var href = "{:U('Advert/Account/verify')}"+'#'+timenow;
+	_this.attr('src',href);
+});
+
+$('#MediaResetVerifyCode').click(function(){
+	var timenow = new Date().getTime();
+	var _this = $(this);
+	var href = "{:U('Media/Account/verify')}"+'#'+timenow;
+	_this.attr('src',href);
+});
+
+
 function check() {
 	var l;
 	var f;
