@@ -139,7 +139,8 @@ class AccountAction extends AdvertBaseAction {
 				$status_info = C('ACCOUNT_STATUS');
 				//状态验证
 				if ($user_info['status'] != $status_info[0]['status']) {
-					alertBack($status_info[$user_info['status']]['explain']);
+					parent::callback(C('STATUS_OTHER'),$status_info[$user_info['status']]['explain']);
+					//alertBack($status_info[$user_info['status']]['explain']);
 				}
 				//验证密码
 				if (md5($password) != $user_info['password']) {

@@ -118,36 +118,45 @@ class AccountAction extends MediaBaseAction {
 	public function check_login() {
 	
 		if ($this->isPost()) {
+			
+			$notcheck = explode(',', $this->_post('notcheck'));
+			
 			$Users = $this->db['Users'];						//系统用户表模型
-	
 			import("@.Tool.Validate");							//验证类
-			 
-			$account = $_POST['account'];					//用户账号
-			$password = $_POST['password'];					//用户密码
+			$account = $this->_post('account');					//用户账号
+			$password = $this->_post('password');					//用户密码
 			$verify = $this->_post('verify');
 			//数据过滤
-			if (Validate::checkNull($account)){$this->error('账号不能为空!');};
-			if (Validate::checkNull($password)){$this->error('密码不能为空!');};
-			if (!Validate::check_string_num($account)){$this->error('账号密码只能输入英文或数字');};
-			if (md5($verify)!=$_SESSION['verify']){ $this->error('验证码错误!'); }
-			 
-			$user_type = C('ACCOUNT_TYPE.Media');
+			if (Validate::checkNull($account)){parent::callback(C('STATUS_OTHER'),'账号不能为空！!'); };
+			if (Validate::checkNull($password)){parent::callback(C('STATUS_OTHER'),'密码不能为空！!'); };
+			if (!Validate::check_string_num($account)){parent::callback(C('STATUS_OTHER'),'账号密码只能输入英文或数字!');};
+			
+			if (!in_array('verify',$notcheck)) {
+				if (md5($verify)!=$_SESSION['verify']){parent::callback(C('STATUS_OTHER'),'验证码错误!');}
+			}
+			
+			//$user_type = C('ACCOUNT_TYPE.Media');
+			
+			$user_type = 1;
 			//读取用户数据
 			$user_info = $Users->get_user_info(array('account'=>$account,'type'=>$user_type,'is_del'=>0));
-
+			
+			
 			//验证用户数据
 			if (empty($user_info)) {
-				$this->error("此用户不存在或被删除"); 
+				parent::callback(C('STATUS_OTHER'),'此用户不存在或被删除！');
 			} else {
 				$status_info = C('ACCOUNT_STATUS');
 				//状态验证
 				if ($user_info['status'] != $status_info[0]['status']) {
-					echo $status_info[$user_info['status']]['explain'];exit;
+					parent::callback(C('STATUS_OTHER'),$status_info[$user_info['status']]['explain']);
+					//alertBack($status_info[$user_info['status']]['explain']);
 				}
 				
 				//验证密码
 				if (md5($password) != $user_info['password']) {
-					$this->error("密码错误"); 
+					//$this->error("密码错误"); 
+					parent::callback(C('STATUS_OTHER'),'密码错误！');
 				} else {
 					$tmp_arr = array(
 						'id' =>$user_info['id'],
@@ -161,7 +170,9 @@ class AccountAction extends MediaBaseAction {
 				//更新用户信息
 				$Users->up_login_info($user_info['id']);
 				// $this->redirect('/Media/Account/user_system');
-				$this->redirect('/Media/EventOrder/index');
+				//$this->redirect('/Media/EventOrder/index');
+				parent::callback(C('STATUS_SUCCESS'),'ok',array(),array('goto_url'=>U('Media/EventOrder/index')));
+				
 			}
 		} else {
 			$this->redirect('/Media/Account/login');

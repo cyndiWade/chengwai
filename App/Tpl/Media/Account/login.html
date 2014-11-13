@@ -13,11 +13,13 @@
 <div class="adbox l">
 	<img src="{$global_tpl_view.Group_Resource_Path}images/ad_img02.gif" />
 </div>
+
 <div class="area01-reg area01-reg-media fl">
 	<div class="title-reg fl"><b>登录账号</b></div>
 	<div class="regbox l">
 		<div class="left-regbox fl">
 			<form action="{:U('Media/Account/check_login')}" method="POST">
+			
 				<table class="tab01-reg l">
 				  <tr>
 					<td class="t1"><span>会员名：</span></td>
@@ -29,13 +31,22 @@
 				  </tr>
 				  <tr>
 					<td class="t1"><span>验证码：</span></td>
-					<td class="t2"><input type="text" class="text text-phone" name="verify"/><div style="margin-top:7px;" class="validcode fl"><img src="{:U('Advert/Account/verify')}" id="resetVerifyCode"/></div></td>
+					<td class="t2">
+						<input type="text" class="text text-phone" name="verify"/>
+						<div style="margin-top:7px;" class="validcode fl">
+							<img src="{:U('Media/Account/verify')}" id="resetVerifyCode"/>
+						</div>
+						<div style="margin-top:7px;" class="validcode fl">
+							<span class="exchange_img">换一张</span>
+						</div>
+					</td>
 				  </tr>
 				  <tr>
 					<td class="t1"></td>
-					<td class="t2"><input type="submit" class="btn redbtn" value="立即登陆" /></td>
+					<td class="t2"><input type="button" class="btn redbtn advertsub" value="立即登陆" /></td>
 				  </tr>
 				</table>
+			
 			</form>
 		</div>
 		<div class="right-regbox fl">
@@ -51,19 +62,70 @@
 		</div>
 	</div>
 </div>
+
+
+
 </div>
 </div>
+
+
+
 <include file="Web:Public:footer" />
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 <!-- 自动引入当前的js文件 -->
 <script type="text/javascript">
-	$('#resetVerifyCode').click(function(){
+
+(function ($) {
+
+	var resetVerifyCode = $('#resetVerifyCode');
+	resetVerifyCode.click(function(){
 		var timenow = new Date().getTime();
 		var _this = $(this);
 		var href = "{:U('Media/Account/verify')}"+'#'+timenow;
 		_this.attr('src',href);
 	});
+	
+	var exchange_img = $('.exchange_img');
+	exchange_img.click(function () {
+		var timenow = new Date().getTime();
+		var href = "{:U('Media/Account/verify')}"+'#'+timenow;
+		resetVerifyCode.attr('src',href);
+	});
+	
+	
+})(jQuery);
+
+
+	var info = function(){
+	      advertsub = $('.advertsub');
+	      
+	  }
+	  info();
+	  advertsub.click(function(){
+	     var adname = $("input[name='account']").val();
+	     var adpass = $("input[name='password']").val();
+	     var adver = $("input[name='verify']").val();
+	     $.ajax({
+	        type: "POST",
+	        url: "{:U('Media/Account/check_login')}",
+	        data: {
+	            'account': adname,
+	            'password' : adpass,
+	            'verify' : adver
+	        },
+	        dataType: "json",
+	        success: function (msg) {
+	          if(msg.status==0)
+	          {
+	            //window.location.href="{:U('Advert/Member/datum_edit')}";
+				window.location.href = msg.goto_url;
+	          }else{
+	            alert(msg.msg);
+	          }
+	        }
+	     });
+	  });
 </script>
 </body>
 </html>

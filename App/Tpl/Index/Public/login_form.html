@@ -5,8 +5,8 @@
   </div>
   
   <!-- 广告主 -->
-  <div class="loginForm">
-      <form id="login126" name="login126" method="post" action="{:U('Advert/Account/check_login')}"  target="frameforlogin">
+  <div class="loginForm form_div">
+      <form class="advert_form" id="login126" name="login126" method="post" action="{:U('Advert/Account/check_login')}"  target="frameforlogin">
           
           <input type="hidden" name="notcheck" value="verify">
                 
@@ -34,7 +34,47 @@
               </div>
               
               <div class="loginFormBtn">
-                  <button id="loginBtn" class="login_btn btn-main btn-login" tabindex="6" type="submit">登&nbsp;&nbsp;录</button>
+                  <button id="loginBtn" class="login_btn btn-main btn-login sub_advert_form" tabindex="6" type="button">登&nbsp;&nbsp;录</button>
+                  <a id="lfBtnReg" class="login_btn btn-side btn-reg" href="{:U('Advert/Account/register')}" target="_blank" tabindex="7">注&nbsp;&nbsp;册</a>
+              </div>
+          </div>
+          <!-- 动态密码登录 -->
+<div class="lophone">热线：<script src="{$global_tpl_view.Group_Resource_Path}news_skin/js/phone.js"></script></div> 
+     </form>
+
+  </div>
+  
+  <!-- 媒体主 -->
+  <div class="loginForm form_div">
+      <form class="media_form" id="login126" name="login126" method="post" action="{:U('Advert/Account/check_login')}"  target="frameforlogin">
+          
+          <input type="hidden" name="notcheck" value="verify">
+                
+          <!-- 普通密码登录 -->
+          <div id="normalLogin" style="display: block;">
+          
+         	 <div id="idInputLine" class="loginFormIpt showPlaceholder">
+            	  <b class="ico ico-uid"></b>
+            	  <input name="account" class="formIpt" tabindex="1" title="请输入帐号" id="idInput" type="text" maxlength="50" value="" autocomplete="off">
+        	  </div>
+          
+              <div id="pwdInputLine" class="loginFormIpt showPlaceholder">
+                  <b class="ico ico-pwd"></b>
+                  <input name="password" class="formIpt" tabindex="2" title="请输入密码" id="pwdInput"  type="password">
+              </div>
+            
+              <div class="loginFormCheck">
+                  <div id="lfAutoLogin" class="loginFormCheckInner">
+                      <label class="label_left">
+                          <input tabindex="3" title="十天内免登录" class="loginFormCbx" type="checkbox" id="remAutoLogin">
+                      十天内免登录</label>
+                      <label class="label_right"><a href="{:U('Index/Pass/index')}">忘记密码了</a></label>  
+                  </div>
+                  
+              </div>
+              
+              <div class="loginFormBtn">
+                  <button id="loginBtn" class="login_btn btn-main btn-login sub_media_form" tabindex="6" type="button">登&nbsp;&nbsp;录</button>
                   <a id="lfBtnReg" class="login_btn btn-side btn-reg" href="{:U('Advert/Account/register')}" target="_blank" tabindex="7">注&nbsp;&nbsp;册</a>
               </div>
           </div>
@@ -54,48 +94,82 @@ var login_system = function () {
 	
 	var login_account = $('.login_account');	//选项
 	var form_div = $('.form_div');
+	var login_nav = $('.login_nav');
+	
+	form_div.css({display:'none'});
+	form_div.eq(0).css({display:'block'});
+	
 	login_account.click(function () {
 		var _this = $(this);
 		var _index = _this.index();
 		
-		login_account.removeClass('login_account_select');
-		_this.addClass('login_account_select');
-		
+		login_nav.removeClass('tap1');
+		login_nav.removeClass('tap2');
 		form_div.css({display:'none'});
+		
+		if (_index == 0) {	
+			login_nav.addClass('tap1');
+		} else if (_index == 1) {
+			login_nav.addClass('tap2');
+		}
+		
+		
 		form_div.eq(_index).css({display:'block'});
+		//tap1
+		
+		
+		//_this.addClass('login_account_select');
+		
+		//form_div.css({display:'none'});
+		//form_div.eq(_index).css({display:'block'});
 	});
 	
 }();
 
-var info = function(){
-    advertsub = $('#advertsub');
-    
-}
 
-info();
-advertsub.click(function(){
-   var adname = $('.adname').val();
-   var adpass = $('.adpass').val();
-   var adver = $('.adver').val();
-   $.ajax({
-      type: "POST",
-      url: "{:U('Advert/Account/check_login')}",
-      data: {
-          'account': adname,
-          'password' : adpass,
-          'verify' : adver
-      },
-      dataType: "json",
-      success: function (msg) {
-        if(msg.status==0)
-        {
+
+var post_form = function () {
+	
+	//广告主
+	var advert_form = $('.advert_form');
+	var sub_advert_form = $('.sub_advert_form');
+	sub_advert_form.click(function () {
+		
+		var post_data = {};
+		post_data.account = advert_form.find('input[name=account]').val();
+		post_data.password = advert_form.find('input[name=password]').val();
+		post_data.notcheck = advert_form.find('input[name=notcheck]').val();
+		
+		var result = System.ajax_post_setup('{:U('Advert/Account/check_login')}',post_data,'JSON');
+		
+		if (result.status==0) {
           window.location.href="{:U('Advert/Member/datum_edit')}";
-        }else{
-          alert(msg.msg);
+        } else {
+          alert(result.msg);
         }
-      }
-   });
-});
+	});
+	
+	
+	//媒体主
+	var media_form = $('.media_form');
+	var sub_media_form = $('.sub_media_form');
+	sub_media_form.click(function () {
+		
+		var post_data = {};
+		post_data.account = media_form.find('input[name=account]').val();
+		post_data.password = media_form.find('input[name=password]').val();
+		post_data.notcheck = media_form.find('input[name=notcheck]').val();
+		
+		var result = System.ajax_post_setup('{:U('Media/Account/check_login')}',post_data,'JSON');
+		
+		if (result.status==0) {
+          window.location.href="{:U('Media/EventOrder/index')}";
+        } else {
+          alert(result.msg);
+        }
+	});
+	
+}();
 
 
 $('#resetVerifyCode').click(function(){
