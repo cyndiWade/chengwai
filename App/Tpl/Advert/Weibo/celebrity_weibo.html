@@ -198,7 +198,6 @@
 			<div class="controlbox fl">
 				<span class="all_selected">全选</span>
 				<span id="batch" class="add_selected_box">批量添加账号</span>
-				<span><a href="{:U('Advert/Weibo/export_csv',array('pt_type'=>$_GET['pt_type'],'type'=>1))}">批量导出报价单</a></span>
 			</div>
 		</div>
 	</div>
@@ -218,6 +217,10 @@
 		<ul class="part02-batch fl account_selected" >
 
 		</ul>
+		<!--  
+		<span><a href="{:U('Advert/Weibo/export_csv',array('pt_type'=>$_GET['pt_type'],'type'=>1))}">批量导出报价单</a></span>
+		-->
+		<a class="bluebtn_bjd btn export_csv" href="javascript:;" data-base_src="/Advert/Weibo/export_csv/pt_type/<php>echo $_GET['pt_type'];</php>/type/1">批量导出报价单</a>
 		<a href="javascript:;" class="btn bluebtn confirm_order">立即派单</a>
 	</div>
 </div>
@@ -235,6 +238,8 @@ var system_info = {
 	page_limit : 10,	//每页条数
 	post_order_url : '{:U('Advert/WeiboOrder/add_intens')}',
 	Global_Resource_Path : '{$global_tpl_view['Global_Resource_Path']}',
+	export_url : '{:U('Advert/Member/ajax_export_order')}',
+	account_ids : '{$view_data.account_ids}'
 }
 var list_content = $('#list_content');
 </script>
@@ -250,6 +255,8 @@ var public_post_fn = function (obj_data) {
 	var post_data = {};
 	post_data.pt_type = system_info.pt_type;	//平台类型，1新浪、2腾讯
 	post_data.is_celebrity = system_info.is_celebrity;	//是否是名人
+	
+	post_data.ids = system_info.account_ids;
 	
 	//三级导航已选择数据
 	var three_sidebar_selected = Weibo.get_three_sidebar_selected();
@@ -292,11 +299,22 @@ var public_post_fn = function (obj_data) {
 		
 		Weibo.create_details_fn('{:U('/Advert/WeiboOrder/getAccountInfo')}');
 		
+		Weibo.add_selected_box_fn();
+		
 		Weibo.page_init_fn();	//加载页面初始化
 		
 		//更新page
-		page_now_list(result.data.count,result.data.p,system_info.page_limit);
+		if (system_info.account_ids == '') {
+			page_now_list(result.data.count,result.data.p,system_info.page_limit);
+			Weibo.add_selected_box_fn(system_info.account_ids);
+		} else {
+			Weibo.now_selected.prop('checked',true);
+			Weibo.add_selected_account_to_vessel();
+		}
+		
 	} 
+	
+	system_info.account_ids = '';
 }
 
 

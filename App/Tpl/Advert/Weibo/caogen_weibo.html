@@ -174,7 +174,6 @@
 			<div class="controlbox fl">
 				<span class="all_selected">全选</span>
 				<span id="batch" class="add_selected_box">批量添加账号</span>
-				<span><a href="{:U('Advert/Weibo/export_csv',array('pt_type'=>$_GET['pt_type'],'type'=>0))}">批量导出报价单</a></span>
 			</div>
 		</div>
 	</div>
@@ -188,12 +187,19 @@
 <div class="batchbox none tl order_vessel">
 	<div class="top-batch l pr"><span class="close cur pa close_order_vessel"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选择账号</b></div>
 	<div class="mid-batch l" >
-		<div class="part01-batch fl">
+		<div class="part01-batch fl account_all_html">
+			<!--  
 			已选择<b class="account_num"></b>个账号，计费<b class="account_money"></b>元
+			-->
 		</div>
 		<ul class="part02-batch fl account_selected" >
 
 		</ul>
+		
+		<!--  
+		<span><a href="{:U('Advert/Weibo/export_csv',array('pt_type'=>$_GET['pt_type'],'type'=>0))}">批量导出报价单</a></span>
+		-->
+		<a class="bluebtn_bjd btn export_csv" href="javascript:;" data-base_src="/Advert/Weibo/export_csv/pt_type/<php>echo $_GET['pt_type'];</php>/type/0">批量导出报价单</a>
 		<a href="javascript:;" class="btn bluebtn confirm_order">立即派单</a>
 	</div>
 </div>
@@ -213,6 +219,8 @@ var system_info = {
 	page_limit : 10,	//每页条数
 	post_order_url : '{:U('Advert/WeiboOrder/add_users')}',
 	Global_Resource_Path : '{$global_tpl_view['Global_Resource_Path']}',
+	export_url : '{:U('Advert/Member/ajax_export_order')}',
+	account_ids : '{$view_data.account_ids}'
 	
 }
 </script>
@@ -229,6 +237,8 @@ var public_post_fn = function (obj_data) {
 	var post_data = {};
 	post_data.pt_type = system_info.pt_type;	//平台类型，1新浪、2腾讯
 	post_data.is_celebrity = system_info.is_celebrity;	//是否是名人
+	
+	post_data.ids = system_info.account_ids;
 	
 	//三级导航已选择数据
 	var three_sidebar_selected = Weibo.get_three_sidebar_selected();
@@ -273,8 +283,18 @@ var public_post_fn = function (obj_data) {
 		Weibo.page_init_fn();	//加载页面初始化
 		
 		//更新page
-		page_now_list(result.data.count,result.data.p,system_info.page_limit);
+		if (system_info.account_ids == '') {
+			page_now_list(result.data.count,result.data.p,system_info.page_limit);
+			Weibo.add_selected_box_fn(system_info.account_ids);
+		} else {
+			Weibo.now_selected.prop('checked',true);
+			Weibo.add_selected_account_to_vessel();
+		}
+		
+		
 	} 
+	
+	system_info.account_ids = '';
 }
 
 
@@ -283,7 +303,7 @@ var create_now_html = function ($data,$post_data) {
 	var html = '';
 	html += '<tr class="accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-fans_num="'+$data.bs_fans_num+'">';
 	html += '<td class="t1">';
-	html += '<div class="weibopart"><input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.bs_id+'"/>';
+	html += '<div class="weibopart"><input type="checkbox" class="check now_selected add_selected_box" data-field="id" data-id="'+$data.bs_id+'"/>';
 
 	if ($data.bs_head_img == '') {
 		html += '<img src="'+system_info.Global_Resource_Path+'images/default_nothing.jpg" class="wbimg" />';
@@ -301,9 +321,9 @@ var create_now_html = function ($data,$post_data) {
 	html += '<td class="t2"><b class="red">'+($data.bs_fans_num / 10000)+'万</b></td>';
 	//html += '<td class="t3">1.00</td>';
 	html += '<td class="t4 now_money" data-money="'+$data.bs_yg_zhuanfa+'">'+$data.bs_yg_zhuanfa+'元</td>';
-	html += '<td class="t5" data-money="'+$data.bs_rg_zhuanfa+'">'+$data.bs_rg_zhuanfa+'元</td>';
-	html += '<td class="t6" data-money="'+$data.bs_yg_zhifa+'">'+$data.bs_yg_zhifa+'元</td>';
-	html += '<td class="t7" data-money="'+$data.bs_rg_zhuanfa+'">'+$data.bs_rg_zhuanfa+'元</td>';
+	html += '<td class="t5 now_money" data-money="'+$data.bs_rg_zhuanfa+'">'+$data.bs_rg_zhuanfa+'元</td>';
+	html += '<td class="t6 now_money" data-money="'+$data.bs_yg_zhifa+'">'+$data.bs_yg_zhifa+'元</td>';
+	html += '<td class="t7 now_money" data-money="'+$data.bs_rg_zhuanfa+'">'+$data.bs_rg_zhuanfa+'元</td>';
 	html += '<td class="t8" data-week_order_num="'+$data.bs_week_order_num+'">'+$data.bs_week_order_num+'</td>';
 	//html += '<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>';
 	//html += '<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';

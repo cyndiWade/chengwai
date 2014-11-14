@@ -67,6 +67,8 @@ Weibo.prototype.init = function () {
 	this.tbody = $('.tbody');	//微博账号容器
 	this.orderspan = $('.orderspan');	//排序按钮
 	
+	this.export_csv = $('.export_csv');
+	
 }
 
 
@@ -671,7 +673,7 @@ Weibo.prototype.create_now_html = function (result,$post_data) {
 		var $data = result[key];
 		var html = '';
 		html += '<div class="box01-cele fl accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-fans_num="'+$data.bs_fans_num+'">';
-		html += '<input type="checkbox" class="check fl now_selected" data-field="id" data-id="'+$data.bs_id+'" />';
+		html += '<input type="checkbox" class="check fl now_selected add_selected_box" data-field="id" data-id="'+$data.bs_id+'" />';
 		html += '<div class="part01-cele fl">';
 		
 		if ($data.bs_head_img == '') {
@@ -824,32 +826,26 @@ Weibo.prototype.all_selected_fn = function () {
 	});
 }
 
+
 //批量添加数据源
 Weibo.prototype.add_selected_box_fn = function () {
 	var _father_this = this;
-	var _account_ids;	//账号IDs
 	
+	_father_this.add_selected_box.unbind();
 	//点击批量添加账号时
 	_father_this.add_selected_box.click(function () {
-		//if (confirm('确认操作？') == false) return false;
-		
-		_father_this.init();
-		_account_ids = [];
-		_father_this.now_selected.each(function () {
-			var _this = $(this);
-			if (_this.prop('checked') == true) {
-				_account_ids.push(_this.data('id'))
-			}
-		});
-		if (_account_ids == '') {
-			alert('请选择账号！');
-			return false;
-		} else {
-			cache_select_account();
-		}
-	});
-	
+		_father_this.add_selected_account_to_vessel()
+	}); 
+}
 
+
+//批量订单实际流程
+Weibo.prototype.add_selected_account_to_vessel = function () {
+	var _father_this = this;
+	var _account_ids;	//账号IDs
+	
+	_father_this.init();
+	
 	//缓存选择后的账号的数据数据在HTML中
 	var cache_select_account = function () {
 		var _vessel_ids = get_order_vessel_ids();
@@ -860,7 +856,7 @@ Weibo.prototype.add_selected_box_fn = function () {
 				var _now_account_x = $('.accounts_'+n);	//列表的行
 				var _name = _now_account_x.find('.account_name').data('account_name');
 				var _money = _now_account_x.find('.now_money').data('money');
-				_father_this.account_selected.append('<li data-select_account_id="'+n+'" data-money="'+_money+'"><span class="del fr delet_account"></span><strong>'+_name+'</strong></li>');
+				_father_this.account_selected.append('<li data-select_account_id="'+n+'" data-money="'+_money+'"><span class="del fr delet_account"></span><strong>'+_name+'</strong><strong>'+_money+'</strong></li>');
 			}
 		});
 		
@@ -872,7 +868,7 @@ Weibo.prototype.add_selected_box_fn = function () {
 		_father_this.order_vessel.show();
 	}
 	
-	
+
 	//在订单容器中，获取已经选择的数据
 	var get_order_vessel_ids = function () {
 		var have_ids = [];
@@ -887,6 +883,7 @@ Weibo.prototype.add_selected_box_fn = function () {
 	} 
 	
 	
+
 	//计算当前的账号总数和价格总数
 	var set_order_data = function () {
 		
@@ -915,9 +912,36 @@ Weibo.prototype.add_selected_box_fn = function () {
 		});
 	}
 	
+	//关闭窗口
+	var close_order_vessel_fn = function () {
+		_father_this.close_order_vessel.unbind();
+		_father_this.close_order_vessel.click(function () {
+			//弹窗插件
+			_father_this.order_vessel.hide();
+		});
+	}();
+
+	
+	//流程控制
+	//alert(_account_ids);
+	_account_ids = [];
+	_father_this.now_selected.each(function () {
+		var _this = $(this);
+		if (_this.prop('checked') == true) {
+			_account_ids.push(_this.data('id'))
+		}
+	});
+	if (_account_ids == '') {
+		//alert('请选择账号！');
+		return false;
+	} else {
+		cache_select_account();
+	}
+	
 	
 	//确认提交订单
 	_father_this.confirm_order_fn = function () {
+		_father_this.confirm_order.unbind();
 		_father_this.confirm_order.click(function () {
 			var selected_account_ids = [];	//已选中的ID
 			_father_this.account_selected.children().each(function (){
@@ -941,23 +965,15 @@ Weibo.prototype.add_selected_box_fn = function () {
 					window.location.href= result.data.go_to_url;	//跳转
 				} else {
 				//	alert(result.msg);
-					return false;
 				}
 			}
 			
 		});
 	}();
-	
-	
-	//关闭窗口
-	var close_order_vessel_fn = function () {
-		_father_this.close_order_vessel.click(function () {
-			//弹窗插件
-			_father_this.order_vessel.hide();
-		});
-	}();
 }
 
+
+//排序
 Weibo.prototype.orderspan_fn = function () {
 	var _father_this = this; 
 	
@@ -1016,6 +1032,49 @@ Weibo.prototype.page_init_fn = function () {
 }
 
 
+//根据选中的账号导出报价单
+Weibo.prototype.export_csv_fn = function () {
+	var _father_this = this;
+	
+	_father_this.export_csv.click(function(){
+		var _this = $(this);
+		var base_src = _this.data('base_src');
+		var selected_account_ids = [];
+		var url;
+		_father_this.account_selected.find('li').each(function () {
+			var _li_this = $(this);
+			selected_account_ids.push(_li_this.data('select_account_id'));	
+		}); 
+		
+		if (selected_account_ids == '') {
+			alert('请先选择账号！');
+			return false;
+		} else {
+			url = base_src + '/ids/' + selected_account_ids.join(',');
+			_this.attr('href',url);
+			
+			var export_data = {};
+			export_data.account_ids = selected_account_ids.join(',');
+			
+			if (system_info.pt_type == 1) {
+				export_data.type = 4;
+			} else if (system_info.pt_type == 2) {
+				export_data.type = 5;
+			}
+			
+			_father_this.export_post_data(system_info.export_url,export_data);
+		}
+	});
+}
+
+//把导出记录保存到数据库中
+Weibo.prototype.export_post_data = function (urL,post_data) {
+	if (post_data == '' || urL == '' ) return false;
+
+	var result = System.ajax_post_setup(urL,post_data,'JSON');
+	
+	return result;
+}
 
 //执行
 Weibo.prototype.run = function () {
@@ -1045,6 +1104,8 @@ Weibo.prototype.run = function () {
 	_father_this.orderspan_fn();
 	
 	_father_this.sort_table_fn();
+	
+	_father_this.export_csv_fn();
 }
 
 

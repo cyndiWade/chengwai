@@ -203,10 +203,13 @@
                     <thead>
                     <tr>
                         <th class="t1">订单号</th>
-                        <th class="t2">账号名</th>
                         <th class="t3">活动</th>
+                        <th class="t2">发布时间</th>
+                        <th class="t2">账号名</th>
+						<th class="t4">广告位</th>
                         <th class="t4">价格(元)</th>
-                        <th class="t5">开始时间</th>
+                        <!--<th class="t2">推广平台</th>
+                        <th class="t5">创建时间</th>-->
                         <th class="t6">订单状态</th>
                         <th class="last">操作</th>
                     </tr>
@@ -230,15 +233,18 @@
                     </div>
                     <table class="tab01-allorder l">
                     <thead>
-                    <tr>
+                      <tr>
                         <th class="t1">订单号</th>
-                        <th class="t2">账号名</th>
                         <th class="t3">活动</th>
+                        <th class="t2">发布时间</th>
+                        <th class="t2">账号名</th>
+					<!--<th class="t4">广告位</th>-->
                         <th class="t4">价格(元)</th>
-                        <th class="t5">开始时间</th>
-                        <th class="last">订单状态</th>
+                        <th class="t2">推广平台</th>
+                       <!-- <th class="t5">创建时间</th>-->
+                        <th class="t6">订单状态</th>
                         <th class="last">操作</th>
-                      </tr>
+                    </tr>
                     </thead>
                     <tbody>
                     </tbody>
@@ -368,10 +374,12 @@ function getOrderList(type) {
                     );
                     html += '<tr>' +
                         '<td class="t1">' + item.order_id + '</td>' +
-                        '<td class="t3">' + item.account_name + '</td>' +
                         '<td class="t3">' + item.title + '</td>' +
+                        '<td class="t2">' + item.start_time + '</td>' +                        
+                        '<td class="t2">' + item.account_name + '</td>' +
+                        //'<td class="t3">' + item.account_type + '</td>' +
                         '<td class="t4">' + item.price + '</td>' +
-                        '<td class="t5">' + item.start_time + '</td>' +
+                        '<td class="t4">' + item.type_info + '</td>' +
                         '<td class="last">' + item.order_status_name + '</td>' +
                         '<td class="last">' + statusHtml + '</td>' +
                     '</tr>';
@@ -381,6 +389,7 @@ function getOrderList(type) {
         error: function(error){
         }
     });
+                  
     if ('' == html) {
         html = '<tr>' +
             '<td colspan="9" class="noorder">' +
