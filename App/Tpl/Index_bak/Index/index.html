@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -842,4 +843,853 @@ function check() {
 </script>	
 
 </body>
+=======
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<include file="Public:top" />
+<link href="{$global_tpl_view.Group_Resource_Path}cwq_index.css" rel="stylesheet" media="screen" type="text/css" />
+<title>城外圈：一站式广告平台！媒体购买首选CWQ.COM，资源更全，效果领先！</title>
+<meta name="description" content="城外圈：国内首家一站式广告平台，为您提供超10万种媒体推广资源，包括软文发稿,微信推广,微博推广,名人明星代言,自媒体营销,广告投放,网络广告,APP广告等等。" />
+<meta name="keywords" content="软文发稿,微信推广,微博推广,自媒体营销,广告投放,网络广告,APP广告" />
+</head>
+<body>
+
+<include file="Public:header" />
+
+<script src="{$global_tpl_view.Group_Resource_Path}js/slider_jquery.js"></script>
+<div id="banner" class="banner0">
+  <div class="w980 mto posi">
+  <div class="focus_left png">
+    <div class="mlowr">  
+   		 <!--<div class="tdtab">按时打算打打</div>-->
+		<div class="login_account login_account_select" data-type="advert">广告主</div>
+		<div class="login_account" data-type="media">媒体主</div>
+    </div>
+  
+<!-- 表单内容广告主 -->    
+<div class="mlowr form_div">
+	<form method="post" action="{:U('Advert/Account/check_login')}"  onsubmit="return Dcheck();">
+    <input name="forward" type="hidden" id="forward" value="http://www.cwq.com/member/">
+    <div class="blank20"></div>
+    <div class="panel-email">
+      <span class="prepend"><i class="icon-user"></i></span>
+      <input name="account" placeholder="账户" type="text" id="username" value="" class="inpt adname" placeholder="请输入账号">
+    </div>
+    <div class="panel-password">
+        <span class="prepend"><i class="icon-key"></i></span>
+        <input name="password" type="password" placeholder="密码" class="inpt adpass" id="password" value="" placeholder="请输入密码">
+    </div>
+     <div class="panel-password">
+        <input name="verify" type="text" placeholder="验证码" class="verify_code adver" id="" value="">
+   		<img src="{:U('Advert/Account/verify')}" id="resetVerifyCode"/>
+    </div>
+    <!-- 
+    <div style="text-align:center;"><span title="选中后 一月内不用再次登录 网吧或公共计算机请勿选"><input type="checkbox" name="cookietime" value="1" id="cookietime" checked=""><label for="cookietime">记住我</label></span>
+      <span style="display:none;" title="选中后 将直接进入商务室 不返回登录前的页面">&nbsp;&nbsp;<input type="checkbox" name="goto" value="1" id="goto" checked=""><label for="goto">进入商务室</label></span>
+      <span>&nbsp;&nbsp;<a href="http://www.cwq.com/member/invite.php?user=cwqpapertop&goto=register">立即注册</a></span>
+      <span>&nbsp;&nbsp;<a href="http://www.cwq.com/member/send.php">忘记了密码？</a></span>
+     </div>
+       -->
+      <div class="panel-submit"><input type="button" name="submit" id="advertsub" class="subbtn" value=" 登 录 "></div>
+    </form>
+</div>
+
+<!-- 表单内容--媒体主 -->    
+<div class="mlowr form_div" style="display:none;">
+	<form method="post" action="{:U('Media/Account/check_login')}"  onsubmit="return Dcheck();">
+    <input name="forward" type="hidden" id="forward" value="http://www.cwq.com/member/">
+    <div class="blank20"></div>
+    <div class="panel-email">
+      <span class="prepend"><i class="icon-user"></i></span>
+      <input name="account" placeholder="账户" type="text" id="username" value="" class="inpt" placeholder="请输入账号">
+    </div>
+    <div class="panel-password">
+        <span class="prepend"><i class="icon-key"></i></span>
+        <input name="password" type="password" placeholder="密码" class="inpt" id="password" value="" placeholder="请输入密码">
+    </div>
+     <div class="panel-password">
+        <input name="verify" type="text" placeholder="验证码" class="verify_code" id="" value="">
+   		<img src="{:U('Media/Account/verify')}" id="MediaResetVerifyCode"/>
+    </div>
+    <!-- 
+    <div style="text-align:center;"><span title="选中后 一月内不用再次登录 网吧或公共计算机请勿选"><input type="checkbox" name="cookietime" value="1" id="cookietime" checked=""><label for="cookietime">记住我</label></span>
+      <span style="display:none;" title="选中后 将直接进入商务室 不返回登录前的页面">&nbsp;&nbsp;<input type="checkbox" name="goto" value="1" id="goto" checked=""><label for="goto">进入商务室</label></span>
+      <span>&nbsp;&nbsp;<a href="http://www.cwq.com/member/invite.php?user=cwqpapertop&goto=register">立即注册</a></span>
+      <span>&nbsp;&nbsp;<a href="http://www.cwq.com/member/send.php">忘记了密码？</a></span>
+     </div>
+       -->
+      <div class="panel-submit"><input type="submit" name="submit" class="subbtn" value=" 登 录 "></div>
+    </form>
+</div>
+
+<div class="lophone">热线：<script src="{$global_tpl_view.Group_Resource_Path}js/phone.js"></script></div>
+<script type="text/javascript">
+
+var login_system = function () {
+	
+	var login_account = $('.login_account');	//选项
+	var form_div = $('.form_div');
+	login_account.click(function () {
+		var _this = $(this);
+		var _index = _this.index();
+		
+		login_account.removeClass('login_account_select');
+		_this.addClass('login_account_select');
+		
+		form_div.css({display:'none'});
+		form_div.eq(_index).css({display:'block'});
+	});
+	
+}();
+
+
+$('#resetVerifyCode').click(function(){
+	var timenow = new Date().getTime();
+	var _this = $(this);
+	var href = "{:U('Advert/Account/verify')}"+'#'+timenow;
+	_this.attr('src',href);
+});
+
+$('#MediaResetVerifyCode').click(function(){
+	var timenow = new Date().getTime();
+	var _this = $(this);
+	var href = "{:U('Media/Account/verify')}"+'#'+timenow;
+	_this.attr('src',href);
+});
+
+
+
+function check() {
+	var l;
+	var f;
+	f = 'username';
+	if(Dd(f).value == 0) {
+		Dmsg('账号不能为空', 'username', 1);
+		return false;
+	}
+	f = 'password';
+	if(Dd(f).value == 0) {
+		Dmsg('密码不能为空', 'password', 1);
+		return false;
+	}
+	return true;
+}
+</script> 
+
+
+  </div>
+
+
+  <div class="focus_right">
+    <div class="focusdiv fr" id="focus_right"><ul class="focus_list"><li><a href="http://www.cwq.com/lucky/" title="" target="_blank"><img class="png" src="{$global_tpl_view.Group_Resource_Path}news_cwq/index_banner4.png"></a></li>
+<li><a href="{:U('Advert/Account/login')}" title="" target="_blank"><img class="png" src="{$global_tpl_view.Group_Resource_Path}news_cwq/index_banner1.png"></a></li>
+<li><a href="{:U('Advert/Account/login')}" title="" target="_blank"><img class="png" src="{$global_tpl_view.Group_Resource_Path}news_cwq/index_banner2.png"></a></li>
+<li><a href="{:U('Advert/Account/login')}" title="" target="_blank"><img class="png" src="{$global_tpl_view.Group_Resource_Path}news_cwq/index_banner3.png"></a></li></ul></div>
+  </div>
+  </div>
+  <div class="inner">
+      <div class="fmenu">
+      </div>
+  </div>
+  <div class="mask"></div>
+</div>
+
+<div class="blank20"></div>
+<div class="index-item">
+  <div class="bor itemlist">
+    <ul>
+        <li class="tel borr">
+            <a href="{:U('Advert/Account/login')}" class="p10 pd"><ins class="ico-01"></ins>
+            <div class="blank10"></div>
+            <h2>新闻媒体发稿<span>News release</span></h2>
+            <p>覆盖6千家权威、门户、行业 主流垂直媒体</p></a>
+        </li>
+        <li class="borr">
+            <a href="{:U('Advert/Account/login')}" class="p10 pd"><ins class="ico-02"></ins>
+            <div class="blank10"></div>
+            <h2>微信大号推广<span>Wechat Promotion</span></h2>
+            <p>与4.5万微信名人一起玩转微信营销</p></a>
+        </li>
+        <li class="borr">
+            <a href="{:U('Advert/Account/login')}" class="p10 pd"><ins class="ico-03"></ins>
+            <div class="blank10"></div>
+            <h2>微博大号推广<span>Weibo promotion</span></h2>
+            <p>9万个一线明星、网络红人和行业达人微博</p></a>
+        </li>
+        <li>
+            <a href="/{:U('Advert/Account/login')}" class="p10 pd"><ins class="ico-04"></ins>
+            <div class="blank10"></div>
+            <h2>名人微代言<span>Micro endorsement</span></h2>
+            <p>让600名人明星为您的品牌代言</p></a>
+        </li>
+    </ul>
+  </div>
+</div>
+<div class="blank20"></div>
+<div class="newcwq_wrap clearfix">
+<div class="cwqmod_right">
+	<!-- 
+<div class="cwq_text">
+<div class="text1 pb10"><span>昨日订单数：<strong class="red  fans-num-count">3950</strong></span></div>
+<div class="text1 pb10"><span>昨日投放客户数：<strong class="red  fans-num-count">1422</strong></span></div>
+<div class="text1 pb10"><span>自媒体数量：<strong class="red  fans-num-count">472636</strong></span></div>
+
+</div>
+-->
+<div class="clear"></div>
+<!-- 
+<a href="http://www.cwq.com/member/login.php" class="cwq_login fl">立即登陆</a>
+<a href="http://www.cwq.com/member/invite.php?user=cwqpapertop&goto=register" class="cwq_register fr">免费注册</a>
+-->
+<div class="blank20"></div>
+    <div class="mod_nav cwqmod_bg3">
+    <div class="mod_title"><h3>网站公告</h3></div>
+      <div class="mod_con">
+        <ul class="list_li28">
+         	<volist name="view_data['announcement']" id="vo">
+          	<li class="pl15 tooltip_tonus" title="{$vo.val}" data-val="{$vo.val}"><span class="middot"></span>{$vo.title}</li>
+          	</volist>
+        </ul>
+      </div>
+    </div>
+    <div class="blank10"></div>
+    <!--  
+    <div class="mod_nav cwqmod_bg1">
+    <div class="mod_title"><h3 id="tab_menu4"><span class="currot">优秀媒体主</span><span>最新订单</span></h3></div>
+      <div class="mod_con pt10" id="tab_body4">
+        <ul class="list_li28">
+          <li>
+            <span class="order-li fl">1</span> 
+            <span class="w80 fl">财富人生</span>
+            <span class="order-fans-num fr">253000</span>
+          </li>
+          <li>
+            <span class="order-li fl">2</span> 
+            <span class="w80 fl">互联网那些事</span>
+            <span class="order-fans-num fr">138941</span>
+          </li>
+          <li>
+            <span class="order-li fl">3</span> 
+            <span class="w80 fl">保险、理财与生活</span>
+            <span class="order-fans-num fr">96696</span>
+          </li>
+          <li>
+            <span class="order-li order-li-gray fl">4</span> 
+            <span class="w80 fl">穿衣打扮</span>
+            <span class="order-fans-num fr">227440</span>
+          </li>
+          <li>
+            <span class="order-li order-li-gray fl">5</span> 
+            <span class="w80 fl">吃喝玩乐</span>
+            <span class="order-fans-num fr">90000</span>
+          </li>
+          <li>
+            <span class="order-li order-li-gray fl">6</span> 
+            <span class="w80 fl">环球旅行</span>
+            <span class="order-fans-num fr">450045</span>
+          </li>
+          <li>
+            <span class="order-li order-li-gray fl">7</span> 
+            <span class="w80 fl">小本创业项目大全</span>
+            <span class="order-fans-num fr">82566</span>
+          </li>
+          <li>
+            <span class="order-li order-li-gray fl">8</span> 
+            <span class="w80 fl">瘦身女王</span>
+            <span class="order-fans-num fr">58629</span>
+          </li>
+          <li>
+            <span class="order-li order-li-gray fl">9</span> 
+            <span class="w80 fl">小本创业项目大全</span>
+            <span class="order-fans-num fr">82566</span>
+          </li>
+          <li>
+            <span class="order-li order-li-gray fl">10</span> 
+            <span class="w80 fl">瘦身女王</span>
+            <span class="order-fans-num fr">58629</span>
+          </li>
+          
+        </ul>
+        <ul class="list_li28" style=" display:none;">
+          <li>
+            <span class="order-li fl">1</span> 
+            <span class="w80 fl">人生财富</span>
+            <span class="order-fans-num fr">2014-09-25</span>
+          </li>
+          <li>
+            <span class="order-li fl">2</span> 
+            <span class="w80 fl">网那些事互联</span>
+            <span class="order-fans-num fr">2014-09-25</span>
+          </li>
+          <li>
+            <span class="order-li fl">3</span> 
+            <span class="w80 fl">保险、理财与生活</span>
+            <span class="order-fans-num fr">2014-09-25</span>
+          </li>
+          <li>
+            <span class="order-li order-li-gray fl">4</span> 
+            <span class="w80 fl">穿衣打扮</span>
+            <span class="order-fans-num fr">2014-09-25</span>
+          </li>
+          <li>
+            <span class="order-li order-li-gray fl">5</span> 
+            <span class="w80 fl">吃喝玩乐</span>
+            <span class="order-fans-num fr">2014-09-25</span>
+          </li>
+          <li>
+            <span class="order-li order-li-gray fl">6</span> 
+            <span class="w80 fl">环球旅行</span>
+            <span class="order-fans-num fr">2014-09-25</span>
+          </li>
+          <li>
+            <span class="order-li order-li-gray fl">7</span> 
+            <span class="w80 fl">小本创业项目大全</span>
+            <span class="order-fans-num fr">2014-09-25</span>
+          </li>
+          <li>
+            <span class="order-li order-li-gray fl">8</span> 
+            <span class="w80 fl">瘦身女王</span>
+            <span class="order-fans-num fr">2014-09-25</span>
+          </li>
+          <li>
+            <span class="order-li order-li-gray fl">9</span> 
+            <span class="w80 fl">小本创业项目大全</span>
+            <span class="order-fans-num fr">2014-09-25</span>
+          </li>
+          <li>
+            <span class="order-li order-li-gray fl">10</span> 
+            <span class="w80 fl">瘦身女王</span>
+            <span class="order-fans-num fr">2014-09-25</span>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+    <div class="blank10"></div>
+   -->
+    <div class="mod_nav cwqmod_bg3">
+    <div class="mod_title"><h3>帮助中心</h3></div>
+      <div class="mod_con">
+      	<div class="fl w80 p10"><img src="http://www.elongstatic.com/images/promotion/qiang_20140827_hangzhou2.jpg" style=" width:80px; height:70px;"/></div>
+        <ul class="list_li28 fr w200">
+          	<volist name="view_data['help']" id="vo">    
+          		<li class="pl15 tooltip_tonus" title="{$vo.val}" data-val="{$vo.val}"><span class="middot"></span>{$vo.title}</li>
+          	</volist>
+        </ul>
+      </div>
+    </div>
+        
+</div>
+<div class="cwqmod_left">
+    <div class="mod_nav cwqmod_bg1">
+      <div class="mod_title">
+      <h3>
+      <!-- <ul class="item_list" id="tab_menu1"><li class="ithover">时尚</li><li>娱乐</li><li>旅游</li><li>美食</li></ul> -->
+      <span class="currot">微信资源</span></h3></div>
+      <div class="mod_con pt10 pb10 clearfix" id="tab_body1">
+      	<div>
+      	<volist name="view_data['weixin_recommended_list']" id="vo">
+	  	<dl class="weixin_item clearfix pt10 pb10"><dt>
+	  		<if condition="$vo['head_img'] eq ''">
+	  			<img src="{$global_tpl_view['Global_Resource_Path']}images/default_head.jpg" class="png">
+	  		<else />
+	  			<img src="{$vo.head_img}" class="png">
+	  		</if>
+	  	</dt>
+        <dd><h3>{$vo.account_name}</h3>
+          <p>粉丝数： <b>{$vo.fans_num_format}</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <!--  <p>男： <b>{$vo.male_precent}%</b>女： <b>{$vo.female_precent}%</b></p>-->
+        </dd></dl>
+		</volist>
+      
+	  </div>
+      	<div style="display:none;"><dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl></div>
+      	<div style="display:none;"><dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl></div>
+      	<div style="display:none;"><dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl></div>
+      </div>
+    </div>    
+    <div class="clear"></div>
+    <div class="mod_nav cwqmod_bg1">
+	  <div class="mod_title">
+	      <h3>
+	      <!--<ul class="item_list" id="tab_menu2"><li class="ithover">时尚</li><li>娱乐</li><li>旅游</li><li>美食</li></ul> -->
+	      <span class="currot">微博资源</span>
+	      </h3>
+      </div>
+      
+      <div class="mod_con pt10 pb10 clearfix" id="tab_body2">
+      	<div>
+      	
+      	<volist name="view_data['weibo_recommended_list']" id="vo">
+      	<dl class="weixin_item clearfix pt10 pb10">
+      	<dt>
+      	<if condition="$vo['head_img'] eq ''">
+	  		<img src="{$global_tpl_view['Global_Resource_Path']}images/default_head.jpg" class="png">
+	  	<else />
+	  		<img src="{$vo.head_img}" class="png">
+	  	</if>
+      	</dt>
+        <dd><h3>{$vo.account_name}</h3>
+          <p>粉丝数： <b>{$vo.fans_num_format}</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+        </dd></dl>
+        </volist>
+        
+        </div>
+      	
+      	
+      	<div style="display:none;"><dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl></div>
+      	<div style="display:none;"><dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl></div>
+      	<div style="display:none;"><dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>每天进步一点点</h3>
+          <p>粉丝数： <b>422385</b></p>
+          <p>认证情况： <b>已认证</b></p>   
+          <p>男： <b>62%</b>女： <b>31%</b></p>
+        </dd></dl></div>
+      </div>
+    </div>    
+    <div class="clear"></div>
+    <div class="mod_nav cwqmod_bg1">
+      <div class="mod_title">
+      <h3>
+     	 <!--  <ul class="item_list" id="tab_menu3"><li class="ithover">时尚</li><li>娱乐</li><li>旅游</li><li>美食</li></ul>-->
+     	 <span class="currot">新闻资源</span>
+      </h3>
+      </div>
+      <div class="mod_con pt10 pb10 clearfix" id="tab_body3">
+      	<div>
+      	
+      		<volist name="view_data['news_recommended_list']" id="vo">
+      		<dl class="weixin_item clearfix pt10 pb10">
+      		<dt>
+      		
+      		<if condition="$vo['head_img'] eq ''">
+	  			<img src="{$global_tpl_view['Global_Resource_Path']}images/default_head.jpg" class="png">
+	  		<else />
+	  			<img src="{$vo.head_img}" class="png">
+	  		</if>
+	  
+      		</dt>
+	        <dd><h3>{$vo.account_name}</h3>
+	          <p>新闻源： <b>百度新闻源</b></p>
+	          <p>门户类型： <b>{$vo.type_of_portal_explain}</b></p>   
+	          <p>是否带链接： <b>{$vo.links_explain}</b></p>
+	        </dd></dl>
+	        </volist>
+	       
+        </div>
+      <div style="display:none;"><dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>21cn</h3>
+          <p>新闻源： <b>百度新闻源</b></p>
+          <p>门户类型： <b>中央门户</b></p>   
+          <p>是否带链接： <b>可带文本网址</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>21cn</h3>
+          <p>新闻源： <b>百度新闻源</b></p>
+          <p>门户类型： <b>中央门户</b></p>   
+          <p>是否带链接： <b>可带文本网址</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>21cn</h3>
+          <p>新闻源： <b>百度新闻源</b></p>
+          <p>门户类型： <b>中央门户</b></p>   
+          <p>是否带链接： <b>可带文本网址</b></p>
+        </dd></dl></div>
+      	<div style="display:none;"><dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>21cn</h3>
+          <p>新闻源： <b>百度新闻源</b></p>
+          <p>门户类型： <b>中央门户</b></p>   
+          <p>是否带链接： <b>可带文本网址</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>21cn</h3>
+          <p>新闻源： <b>百度新闻源</b></p>
+          <p>门户类型： <b>中央门户</b></p>   
+          <p>是否带链接： <b>可带文本网址</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>21cn</h3>
+          <p>新闻源： <b>百度新闻源</b></p>
+          <p>门户类型： <b>中央门户</b></p>   
+          <p>是否带链接： <b>可带文本网址</b></p>
+        </dd></dl></div>
+      	<div style="display:none;"><dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>21cn</h3>
+          <p>新闻源： <b>百度新闻源</b></p>
+          <p>门户类型： <b>中央门户</b></p>   
+          <p>是否带链接： <b>可带文本网址</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>21cn</h3>
+          <p>新闻源： <b>百度新闻源</b></p>
+          <p>门户类型： <b>中央门户</b></p>   
+          <p>是否带链接： <b>可带文本网址</b></p>
+        </dd></dl>
+      	<dl class="weixin_item clearfix pt10 pb10"><dt><img src="{$global_tpl_view.Group_Resource_Path}111.jpg" class="png"></dt>
+        <dd><h3>21cn</h3>
+          <p>新闻源： <b>百度新闻源</b></p>
+          <p>门户类型： <b>中央门户</b></p>   
+          <p>是否带链接： <b>可带文本网址</b></p>
+        </dd></dl></div>
+      </div>
+    </div>    
+</div>
+</div>
+    <div class="blank20"></div>
+  <div class="newcwq_wrap">
+  <div class="tab_adlist">
+    <div class="tab_adlist_tit"><h3 class="png tab_adico1">传媒伙伴</h3></div>
+    <div class="tab_adlist_con">
+    <div class="clientcarou"><div class="client_caseMask">
+      <ul id="imgscroll" class="adlist_logo">
+          <li><img src="http://www.cwq.com/news_skin/news_cwq/brand/dd_1.jpg"></li>
+          <li><img src="http://www.cwq.com/news_skin/news_cwq/brand/dd_2.jpg"></li>
+          <li><img src="http://www.cwq.com/news_skin/news_cwq/brand/dd_3.jpg"></li>
+          <li><img src="http://www.cwq.com/news_skin/news_cwq/brand/dd_11.png" class="png"></li>
+          <li><img src="http://www.cwq.com/news_skin/news_cwq/brand/dd_4.jpg"></li>
+          <li><img src="http://www.cwq.com/news_skin/news_cwq/brand/dd_5.jpg"></li>
+          <li><img src="http://www.cwq.com/news_skin/news_cwq/brand/dd_6.jpg"></li>
+          <li><img src="http://www.cwq.com/news_skin/news_cwq/brand/dd_7.jpg"></li>
+          <li><img src="http://www.cwq.com/news_skin/news_cwq/brand/dd_8.jpg"></li>
+          <li><img src="http://www.cwq.com/news_skin/news_cwq/brand/dd_9.jpg"></li>
+      </ul>
+      </div></div>
+    </div>
+  </div>
+  <script type="text/javascript" src="http://www.cwq.com/news_skin/js/pic_scroll.js"></script>
+  <div class="blank5"></div>
+  <div class="tab_list">
+    <div class="tab_list_tit"><a href="{:U('Index/Index/kh_case')}" title="客户案例" class="a_ico">他们选择信赖我们</a></div>
+    <div class="tab_list_con pt10">
+    	<ul class="client_brand2">
+      	<li><img src="http://www.cwq.com/news_skin/news_cwq/indexlogo/c_ge.jpg"></li>
+      	<li><img src="http://www.cwq.com/news_skin/news_cwq/indexlogo/c_ferrari.jpg"></li>
+      	<li><img src="http://www.cwq.com/news_skin/news_cwq/indexlogo/c_benz.jpg"></li>
+      	<li><img src="http://www.cwq.com/news_skin/news_cwq/indexlogo/c_tele.jpg"></li>
+      	<li><img src="http://www.cwq.com/news_skin/news_cwq/indexlogo/c_hy.jpg"></li>
+      	<li><img src="http://www.cwq.com/news_skin/news_cwq/indexlogo/c_fxcm.jpg"></li>
+      	<li><img src="http://www.cwq.com/news_skin/news_cwq/indexlogo/c_fotile.jpg"></li>
+
+      	<li><img src="http://www.cwq.com/news_skin/news_cwq/indexlogo/c_chang.jpg"></li>
+      	<li><img src="http://www.cwq.com/news_skin/news_cwq/indexlogo/c_jinhengde.jpg"></li>
+      	<li><img src="http://www.cwq.com/news_skin/news_cwq/indexlogo/c_feiyin.jpg"></li>
+      	<li><img src="http://www.cwq.com/news_skin/news_cwq/indexlogo/c_91wan.jpg"></li>
+      	<li><img src="http://www.cwq.com/news_skin/news_cwq/indexlogo/c_demage.jpg"></li>
+      	<li><img src="http://www.cwq.com/news_skin/news_cwq/indexlogo/c_91wan.jpg"></li>
+      	<li><img src="http://www.cwq.com/news_skin/news_cwq/indexlogo/c_demage.jpg"></li>
+      </ul>
+    
+    </div>
+  </div>
+
+<div class="blank20"></div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+	$(".tips").hover(function(){
+	$(this).css({"z-index":"10"});
+  $(this).find(".tipsBox").show();
+	 },function(){
+	$(this).find(".tipsBox").hide();
+	$(this).css({"z-index":"1"});
+	 });
+  });
+  var $div_li1 = $("#tab_menu1 li");
+  $div_li1.click(function(){
+		$(this).addClass("ithover").siblings().removeClass("ithover");
+		var div_index = $div_li1.index(this);
+		$("#tab_body1>div").eq(div_index).show().siblings().hide();
+  });
+  var $div_li2 = $("#tab_menu2 li");
+  $div_li2.click(function(){
+		$(this).addClass("ithover").siblings().removeClass("ithover");
+		var div_index = $div_li2.index(this);
+		$("#tab_body2>div").eq(div_index).show().siblings().hide();
+  });
+  var $div_li3 = $("#tab_menu3 li");
+  $div_li3.click(function(){
+		$(this).addClass("ithover").siblings().removeClass("ithover");
+		var div_index = $div_li3.index(this);
+		$("#tab_body3>div").eq(div_index).show().siblings().hide();
+  });
+  var $div_li4 = $("#tab_menu4 span");
+  $div_li4.click(function(){
+		$(this).addClass("currot").siblings().removeClass("currot");
+		var div_index = $div_li4.index(this);
+		$("#tab_body4>ul").eq(div_index).show().siblings().hide();
+  });
+</script>
+<script>
+  var info = function(){
+      advertsub = $('#advertsub');
+      
+  }
+  info();
+  advertsub.click(function(){
+     var adname = $('.adname').val();
+     var adpass = $('.adpass').val();
+     var adver = $('.adver').val();
+     $.ajax({
+        type: "POST",
+        url: "{:U('Advert/Account/check_login')}",
+        data: {
+            'account': adname,
+            'password' : adpass,
+            'verify' : adver
+        },
+        dataType: "json",
+        success: function (msg) {
+          if(msg.status==0)
+          {
+            window.location.href="{:U('Advert/Member/datum_edit')}";
+          }else{
+            alert(msg.msg);
+          }
+        }
+     });
+  });
+</script>
+<include file="Public:footer" />
+
+<include file="Public:bottom" />
+</span>
+<!-- 插件 -->
+<link rel="stylesheet" href="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.tooltip.css" />
+<script src="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.bgiframe.js" type="text/javascript"></script>
+<script src="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.dimensions.js" type="text/javascript"></script>
+<script src="{$global_tpl_view.Global_Resource_Path}jQuery_Tools/jquery-tooltip/jquery.tooltip.js" type="text/javascript"></script>
+	
+<script type="text/javascript">
+//悬浮窗口
+(function () {
+	$('.tooltip_tonus').tooltip({
+		delay: 0,
+		showURL: false,
+		bodyHandler: function() {
+			var _this = $(this);
+			var val = _this.data('val');
+			/* var width = _this.data('width'); 
+			var height = _this.data('height'); */
+			//alert(val)
+			//var html = '<img src="'+src+'" style="width:'+width+';height:'+height+'"/>';
+			html = '<div style="width:200px;height:200px;">'+val+'</div>';
+			return html;
+		}
+	});	
+})();
+
+
+</script>	
+
+</body>
+>>>>>>> 826fca2e8df32f0881ad64b4cf6d6ab2a458cb68
 </html>

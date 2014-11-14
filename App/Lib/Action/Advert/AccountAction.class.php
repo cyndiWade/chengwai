@@ -111,6 +111,9 @@ class AccountAction extends AdvertBaseAction {
 	 */
 	public function check_login() {
 		if ($this->isPost()) {
+			
+			$notcheck = explode(',', $this->_post('notcheck'));
+			
 			$Users = $this->db['Users'];						//系统用户表模型
 			import("@.Tool.Validate");							//验证类
 			$account = $this->_post('account');					//用户账号
@@ -120,7 +123,11 @@ class AccountAction extends AdvertBaseAction {
 			if (Validate::checkNull($account)){parent::callback(C('STATUS_OTHER'),'账号不能为空！!'); };
 			if (Validate::checkNull($password)){parent::callback(C('STATUS_OTHER'),'密码不能为空！!'); };
 			if (!Validate::check_string_num($account)){parent::callback(C('STATUS_OTHER'),'账号密码只能输入英文或数字!');};
-			if (md5($verify)!=$_SESSION['verify']){parent::callback(C('STATUS_OTHER'),'验证码错误!');}
+			
+			if (!in_array('verify',$notcheck)) {
+				if (md5($verify)!=$_SESSION['verify']){parent::callback(C('STATUS_OTHER'),'验证码错误!');}
+			}
+			
 			$user_type = 2;
 			//读取用户数据
 			$user_info = $Users->get_user_info(array('account'=>$account,'type'=>$user_type,'is_del'=>0));
@@ -132,7 +139,8 @@ class AccountAction extends AdvertBaseAction {
 				$status_info = C('ACCOUNT_STATUS');
 				//状态验证
 				if ($user_info['status'] != $status_info[0]['status']) {
-					alertBack($status_info[$user_info['status']]['explain']);
+					parent::callback(C('STATUS_OTHER'),$status_info[$user_info['status']]['explain']);
+					//alertBack($status_info[$user_info['status']]['explain']);
 				}
 				//验证密码
 				if (md5($password) != $user_info['password']) {
@@ -153,7 +161,7 @@ class AccountAction extends AdvertBaseAction {
 				parent::set_session(array('user_info'=>$tmp_arr));
 				//更新用户信息
 				$Users->up_login_info($user_info['id']);
-				parent::callback(C('STATUS_SUCCESS'),'ok',array(),array('goto_url'=>U('/Advert/Weixin/celebrity_weixin')));
+				parent::callback(C('STATUS_SUCCESS'),'ok',array(),array('goto_url'=>U('Advert/Weixin/celebrity_weixin')));
 			}
 		} else {
 			$this->redirect('Advert/Account/login');

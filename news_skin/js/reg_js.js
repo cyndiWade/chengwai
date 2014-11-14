@@ -1,1 +1,0 @@
-﻿document.write('<a target="_blank" href="http://www.cwq.com/member/reguser.php"></a>');

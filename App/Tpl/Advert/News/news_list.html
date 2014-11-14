@@ -23,18 +23,7 @@
 
 	<div class="catebox l">
 		<table class="tab01-cate l">
-		<!--  
-		  <tr>
-			<td class="t1">行业分类：</td>
-			<td class="t2">
-				<div class="part01-cate fl">
-				<volist name="view_data['hyfl']" id="vo">
-					<span class="hyfl_tags" data-tag_class="hyfl_tags" data-tag_id="{$vo.id}"  data-classify="行业分类" data-field="hyfl" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
-				</volist>			
-				</div><div class="more fl" id="morecate">更多</div>
-			</td>
-		  </tr>
-		  -->
+		
 		  <tr>
 			<td class="t1">地区筛选：</td>
 			<td class="t2">
@@ -82,6 +71,17 @@
 					<span class="mh_type_tags" data-tag_class="mh_type_tags" data-tag_id="{$vo.id}"  data-classify="门户类型" data-field="mh_type" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
 				</volist>
 				</div>
+			</td>
+		  </tr>
+		  
+		  <tr>
+			<td class="t1">行业分类：</td>
+			<td class="t2">
+				<div class="part01-cate fl">
+				<volist name="view_data['hyfl']" id="vo">
+					<span class="hyfl_tags" data-tag_class="hyfl_tags" data-tag_id="{$vo.id}"  data-classify="行业分类" data-field="hyfl" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>			
+				</div><div class="more fl" id="morecate">更多</div>
 			</td>
 		  </tr>
 		   
