@@ -1,6 +1,6 @@
 <?php
 
-/**
+/**	
  * 新闻媒体
  */
 class NewsAction extends AdvertBaseAction {
@@ -62,6 +62,7 @@ class NewsAction extends AdvertBaseAction {
 	public function news_list () {
 		//验证
 		$order_id = $this->_get('order_id') ;
+		$account_ids = $this->_get('account_ids') ;
 		if (!empty($order_id)) {
 			$order_info = $this->db['GeneralizeNewsOrder']->get_OrderInfo_By_Id($order_id,$this->oUser->id);
 			if ($order_info == false) {
@@ -75,7 +76,8 @@ class NewsAction extends AdvertBaseAction {
 		parent::data_to_view(array(
 			//二级导航属性
 			'sidebar_two'=>array(0=>'select',),//第一个加依次类推
-			'order_id' =>$order_id
+			'order_id' =>$order_id,
+			'account_ids'=>$account_ids
 		));
 		$this->display();
 	}

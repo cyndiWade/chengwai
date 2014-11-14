@@ -94,6 +94,7 @@ class WeiboAction extends AdvertBaseAction {
 		
 		//验证
 		$order_id = $this->_get('order_id') ;
+		$account_ids = $this->_get('account_ids') ;
 		if (!empty($order_id)) {
 			$order_info = $this->db['IntentionWeiboOrder']->get_OrderInfo_By_Id($order_id,$this->oUser->id);
 			if ($order_info == false) {
@@ -111,7 +112,8 @@ class WeiboAction extends AdvertBaseAction {
 			//二级导航属性
 			'sidebar_two'=>array($show_num=>'select',),//第一个加依次类推
 			'pt_type' => $this->pt_type,
-			'order_id' => $order_id
+			'order_id' => $order_id,
+			'account_ids'=>$account_ids
 				
 		));
 		$this->display();
@@ -124,6 +126,7 @@ class WeiboAction extends AdvertBaseAction {
 		
 		//验证
 		$order_id = $this->_get('order_id') ;
+		$account_ids = $this->_get('account_ids') ;
 		if (!empty($order_id)) {
 			$order_info = $this->db['GeneralizeOrder']->get_OrderInfo_By_Id($order_id,$this->oUser->id);
 			if ($order_info == false) {
@@ -143,7 +146,8 @@ class WeiboAction extends AdvertBaseAction {
 			//二级导航属性
 			'sidebar_two'=>array($show_num=>'select'),//第一个加
 			'pt_type' => $this->pt_type,
-			'order_id' => $order_id
+			'order_id' => $order_id,
+			'account_ids'=>$account_ids
 		));
 		
 		$this->display();
@@ -331,7 +335,7 @@ class WeiboAction extends AdvertBaseAction {
 			break;
 		}
 		//var_dump($new_array);
-		create_excel('news',$new_array);
+		create_excel('weibo',$new_array);
 	}
 
 }

@@ -15,7 +15,7 @@
 <div class="wrap l">
 <div class="pbd">
 <div class="location l">
-	当前位置：<a href="#">首页</a>  >  <a href="#">新闻媒体</a> > <span class="blue">查看新闻媒体</span>
+	当前位置：<a href="#">首页</a>  >  <a href="{:U('Advert/News/news_list')}">新闻媒体</a> > <span class="blue">查看新闻媒体</span>
 </div>
 <div class="area01-memwb area01-memmt l">
 
@@ -177,7 +177,7 @@
 			<div class="controlbox fl">
 				<span class="all_selected">全选</span><span id="batch"  class="add_selected_box">批量添加账号</span>
 				
-				<span><a href="{:U('Advert/News/export_csv')}">批量导出报价单</a></span>
+				
 			</div>
 		</div>
 	</div>
@@ -188,7 +188,7 @@
 <include file="Public:member_footer" />
 
 <!-- 批量添加弹窗 -->
-<div class="batchbox none tl order_vessel">
+<div class="batchbox none tl order_vessel" >
 	<div class="top-batch l pr"><span class="close cur pa close_order_vessel"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选择账号</b></div>
 	<div class="mid-batch l" >
 		<div class="part01-batch fl">
@@ -197,11 +197,15 @@
 		<ul class="part02-batch fl account_selected" >
 
 		</ul>
+		
+		<a class="bluebtn_bjd btn export_csv" href="javascript:;" data-base_src="/Advert/News/export_csv">批量导出报价单</a>
 		<a href="javascript:;" class="btn bluebtn confirm_order">立即派单</a>
 	</div>
 </div>
 
 <input type="hidden" id="order_id" value="{$view_data.order_id}"/>
+
+<input type="hidden" id="account_ids" value="{$view_data.account_ids}"/>
 
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
@@ -211,6 +215,9 @@ var system_info = {
 	is_celeprity : 1,	//是否是名人1是、0不是
 	page_limit : 10,	//每页条数
 	post_order_url : '{:U('Advert/News/add_people')}',
+	export_url : '{:U('Advert/Member/ajax_export_order')}',
+	account_ids : '{$view_data.account_ids}'
+//tmp_limit : 
 }
 var list_content = $('#list_content');
 </script>
@@ -222,11 +229,12 @@ var list_content = $('#list_content');
 
 <script type="text/javascript">
 
-
 //公共JS方法。每个事件都要触发这个函数
 var public_post_fn = function (obj_data) {
 	var post_data = {};
 	post_data.is_celeprity = system_info.is_celeprity;	//是否是名人
+	
+	post_data.ids = system_info.account_ids;
 	
 	//三级导航已选择数据
 	var three_sidebar_selected = News.get_three_sidebar_selected();
@@ -254,7 +262,6 @@ var public_post_fn = function (obj_data) {
 	//AJAX获取数据
 	var result = System.ajax_post_setup('{:U('/Advert/News/get_news_list')}',post_data,'JSON');
 	
-	
 	if (result.status == 1) {
 		list_content.empty();
 		for (var key in result.data.list) {
@@ -267,10 +274,19 @@ var public_post_fn = function (obj_data) {
 		News.dataNum_And_PageNum(result.data.count);
 		
 		News.page_init_fn();	//加载页面初始化
-		
+			
 		//更新page
-		page_now_list(result.data.count,result.data.p,system_info.page_limit);
+		if (system_info.account_ids == '') {
+			page_now_list(result.data.count,result.data.p,system_info.page_limit);
+			News.add_selected_box_fn(system_info.account_ids);
+		} else {
+			News.now_selected.prop('checked',true);
+			News.add_selected_account_to_vessel();
+		}
+					
 	} 
+	
+	system_info.account_ids = '';
 }
 
 
@@ -280,7 +296,7 @@ var create_now_html = function ($data) {
 	var html = '';
 	html += '<tr class="accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-money="'+$data.bs_money+'">';
 	html += '<td class="t1">';
-	html += '<div class="mediapart"><input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.bs_id+'" />';
+	html += '<div class="mediapart"><input type="checkbox" class="check now_selected add_selected_box" data-field="id" data-id="'+$data.bs_id+'" />';
 	//html += '<img src="{$global_tpl_view.Group_Resource_Path}images/mt_img01.gif" class="mtimg" />';
 	
 	if ($data.bs_head_img == '') {

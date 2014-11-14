@@ -209,7 +209,7 @@
 			<div class="controlbox fl">
 				<span class="all_selected">全选</span>
 				<span id="batch" class="add_selected_box">批量添加账号</span>
-				<span><a href="{:U('Advert/Weixin/export_csv',array('type'=>0))}">批量导出报价单</a></span>
+				
 			</div>
 		</div>
 	</div>
@@ -223,12 +223,14 @@
 <div class="batchbox none tl order_vessel">
 	<div class="top-batch l pr"><span class="close cur pa close_order_vessel"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选择账号</b></div>
 	<div class="mid-batch l" >
-		<div class="part01-batch fl">
-			已选择<b class="account_num"></b>个账号，计费<b class="account_money"></b>元
+		<div class="part01-batch fl account_all_html">
+		
 		</div>
 		<ul class="part02-batch fl account_selected" >
 
 		</ul>
+				
+		<a class="bluebtn_bjd btn export_csv" href="javascript:;" data-base_src="/Advert/Weixin/export_csv/type/0">批量导出报价单</a>
 		<a href="javascript:;" class="btn bluebtn confirm_order">立即派单</a>
 	</div>
 </div>
@@ -248,6 +250,8 @@ var system_info = {
 	page_limit : 10,	//每页条数
 	post_order_url : '{:U('Advert/WeixinOrder/add_account')}',
 	Global_Resource_Path : '{$global_tpl_view['Global_Resource_Path']}',
+	export_url : '{:U('Advert/Member/ajax_export_order')}',
+	account_ids : '{$view_data.account_ids}'
 }
 var list_content = $('#list_content');
 </script>
@@ -272,6 +276,8 @@ var public_post_fn = function (obj_data) {
 	var post_data = {};
 	post_data.pt_type = system_info.pt_type;	//平台类型，1新浪、2腾讯
 	post_data.is_celebrity = system_info.is_celebrity;	//是否是名人
+	
+	post_data.ids = system_info.account_ids;
 	
 	//三级导航已选择数据
 	var three_sidebar_selected = Weixin.get_three_sidebar_selected();
@@ -319,9 +325,19 @@ var public_post_fn = function (obj_data) {
 		
 		Weixin.page_init_fn();	//加载页面初始化
 		
+		Weixin.add_selected_box_fn();	//添加
+		
 		//更新page
-		page_now_list(result.data.count,result.data.p,system_info.page_limit);
+		if (system_info.account_ids == '') {
+			page_now_list(result.data.count,result.data.p,system_info.page_limit);
+			Weixin.add_selected_box_fn(system_info.account_ids);
+		} else {
+			Weixin.now_selected.prop('checked',true);
+			Weixin.add_selected_account_to_vessel();
+		}
 	} 
+	
+	system_info.account_ids = '';
 }
 
 
@@ -338,7 +354,7 @@ var create_now_html = function ($data,$post_data) {
 	html += '<tr class="accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-fans_num="'+$data.bs_fans_num+'">';
 	html += '<td class="t1">';
 		html += '<div class="weibopart">';
-			html += '<input type="checkbox" class="check now_selected" data-field="id" data-id="'+$data.bs_id+'"/>';
+			html += '<input type="checkbox" class="check now_selected add_selected_box" data-field="id" data-id="'+$data.bs_id+'"/>';
 		
 			if ($data.bs_head_img == '') {
 				html += '<img src="'+system_info.Global_Resource_Path+'images/default_media.jpg" class="wbimg" />';
@@ -365,9 +381,9 @@ var create_now_html = function ($data,$post_data) {
 	html += '</div></td>';
 	html += '<td class="t6"><div class="pricebox">'
 	html += '<p>单图文价格：<em class="now_money" data-money="'+$data.bs_dtb_money+'">￥'+$data.bs_dtb_money+'</em></p>';
-	html += '<p>多图文第一条：<em data-money="'+$data.bs_dtwdyt_money+'">￥'+$data.bs_dtwdyt_money+'</em></p>';
-	html += '<p>多图文第二条：<em data-money="'+$data.bs_dtwdet_money+'">￥'+$data.bs_dtwdet_money+'</em></p>';
-	html += '<p>多图文第3-N条：<em data-money="'+$data.bs_dtwqtwz_money+'">￥'+$data.bs_dtwqtwz_money+'</em></p>';
+	html += '<p>多图文第一条：<em class="now_money" data-money="'+$data.bs_dtwdyt_money+'">￥'+$data.bs_dtwdyt_money+'</em></p>';
+	html += '<p>多图文第二条：<em class="now_money" data-money="'+$data.bs_dtwdet_money+'">￥'+$data.bs_dtwdet_money+'</em></p>';
+	html += '<p>多图文第3-N条：<em class="now_money" data-money="'+$data.bs_dtwqtwz_money+'">￥'+$data.bs_dtwqtwz_money+'</em></p>';
 	html += '</div></td>';
 	
 	//html += '<td class="t5"><p>男：占20%</p></td>';

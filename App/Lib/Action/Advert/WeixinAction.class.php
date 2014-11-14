@@ -59,7 +59,7 @@ class WeixinAction extends AdvertBaseAction {
 	//微信名人列表页
 	public function celebrity_weixin () {
 		$order_id = $this->_get('order_id') ;
-		
+		$account_ids = $this->_get('account_ids') ;
 		$this->show_celebrity_category_tags();
 		parent::data_to_view(array(
 					
@@ -67,7 +67,9 @@ class WeixinAction extends AdvertBaseAction {
 			'sidebar_two'=>array(
 				0=>'select',//第一个加
 			),
-			'order_id'=>$order_id
+			'order_id'=>$order_id,
+			'account_ids'=>$account_ids
+				
 		));
 		$this->display();
 	}
@@ -78,6 +80,7 @@ class WeixinAction extends AdvertBaseAction {
 
 		//验证
 		$order_id = $this->_get('order_id') ;
+		$account_ids = $this->_get('account_ids') ;
 		if (!empty($order_id)) {
 			$order_info = $this->db['GeneralizeWeixinOrder']->get_OrderInfo_By_Id($order_id,$this->oUser->id);
 			if ($order_info == false) {
@@ -93,7 +96,8 @@ class WeixinAction extends AdvertBaseAction {
 				1=>'select',//第一个加
 			),
 				
-			'order_id'=>$order_id
+			'order_id'=>$order_id,
+			'account_ids'=>$account_ids
 		));
 		$this->display();
 		

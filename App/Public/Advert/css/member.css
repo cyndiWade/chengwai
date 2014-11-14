@@ -127,6 +127,11 @@
 .part02-batch li strong{ padding-left:18px; color:#929292; font-weight:bold;}
 .part02-batch li .del{ background:url(../images/del.gif) no-repeat; width:16px; height:16px; margin:16px 9px 0 0; cursor:pointer;}
 .mid-batch .bluebtn{ width:136px; height:38px; text-align:center; line-height:38px; float:right; margin-right:26px;}
+.mid-batch .bluebtn_bjd{ width:136px; height:38px;
+text-align:center; line-height:38px; float:left; margin-left:23px;
+	background: none repeat scroll 0 0 #00a6e5;
+    color: #fff;
+    font-size: 18px;}
 /*详情弹窗*/
 .batchboxdetail{ width:921px;border:5px solid #a3a3a3; background:#fff; border-radius:3px; position:absolute;}
 .top-batchdetail{ height:38px; line-height:38px; background:#eff3f4; width:100%;}

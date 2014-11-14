@@ -59,6 +59,7 @@ News.prototype.init = function () {
 	
 	this.pt_type = $('#pt_type');	//平台类型ID
 	this.order_id = $('#order_id');	//订单ID
+	this.account_ids = $('#account_ids');	//媒体账号
 	
 	this.order_vessel = $('.order_vessel');	//订单容器
 	this.close_order_vessel = $('.close_order_vessel');//关闭订单容器
@@ -69,6 +70,8 @@ News.prototype.init = function () {
 	this.confirm_order = $('.confirm_order');	//确认订单
 	this.tbody = $('.tbody');	//微博账号容器
 	this.orderspan = $('.orderspan');	//排序按钮
+	
+	this.export_csv = $('.export_csv');	//导出CSV按钮
 	
 }
 
@@ -598,31 +601,26 @@ News.prototype.all_selected_fn = function () {
 	});
 }
 
+
 //批量添加数据源
 News.prototype.add_selected_box_fn = function () {
 	var _father_this = this;
-	var _account_ids;	//账号IDs
 	
+	_father_this.add_selected_box.unbind();
 	//点击批量添加账号时
 	_father_this.add_selected_box.click(function () {
-		//if (confirm('确认选择？') == false) return false;
-		_father_this.init();
-		_account_ids = [];
-		_father_this.now_selected.each(function () {
-			var _this = $(this);
-			if (_this.prop('checked') == true) {
-				_account_ids.push(_this.data('id'))
-			}
-		});
-		if (_account_ids == '') {
-			alert('请选择账号！');
-			return false;
-		} else {
-			cache_select_account();
-		}
-	});
-	
+		_father_this.add_selected_account_to_vessel()
+	}); 
+}
 
+
+//批量订单实际流程
+News.prototype.add_selected_account_to_vessel = function () {
+	var _father_this = this;
+	var _account_ids;	//账号IDs
+	
+	_father_this.init();
+	
 	//缓存选择后的账号的数据数据在HTML中
 	var cache_select_account = function () {
 		var _vessel_ids = get_order_vessel_ids();
@@ -633,7 +631,7 @@ News.prototype.add_selected_box_fn = function () {
 				var _now_account_x = $('.accounts_'+n);	//列表的行
 				var _name = _now_account_x.find('.account_name').data('account_name');
 				var _money = _now_account_x.find('.now_money').data('money');
-				_father_this.account_selected.append('<li data-select_account_id="'+n+'" data-money="'+_money+'"><span class="del fr delet_account"></span><strong>'+_name+'</strong></li>');
+				_father_this.account_selected.append('<li data-select_account_id="'+n+'" data-money="'+_money+'"><span class="del fr delet_account"></span><strong>'+_name+'</strong><strong>单价：'+_money+'</strong></li>');
 			}
 		});
 		
@@ -645,7 +643,7 @@ News.prototype.add_selected_box_fn = function () {
 		_father_this.order_vessel.show();
 	}
 	
-	
+
 	//在订单容器中，获取已经选择的数据
 	var get_order_vessel_ids = function () {
 		var have_ids = [];
@@ -688,9 +686,36 @@ News.prototype.add_selected_box_fn = function () {
 		});
 	}
 	
+	//关闭窗口
+	var close_order_vessel_fn = function () {
+		_father_this.close_order_vessel.unbind();
+		_father_this.close_order_vessel.click(function () {
+			//弹窗插件
+			_father_this.order_vessel.hide();
+		});
+	}();
+
+	
+	//流程控制
+	//alert(_account_ids);
+	_account_ids = [];
+	_father_this.now_selected.each(function () {
+		var _this = $(this);
+		if (_this.prop('checked') == true) {
+			_account_ids.push(_this.data('id'))
+		}
+	});
+	if (_account_ids == '') {
+		//alert('请选择账号！');
+		return false;
+	} else {
+		cache_select_account();
+	}
+	
 	
 	//确认提交订单
 	_father_this.confirm_order_fn = function () {
+		_father_this.confirm_order.unbind();
 		_father_this.confirm_order.click(function () {
 			var selected_account_ids = [];	//已选中的ID
 			_father_this.account_selected.children().each(function (){
@@ -720,17 +745,10 @@ News.prototype.add_selected_box_fn = function () {
 		});
 	}();
 	
-	//关闭窗口
-	var close_order_vessel_fn = function () {
-		_father_this.close_order_vessel.click(function () {
-			//弹窗插件
-			_father_this.order_vessel.hide();
-		});
-	}();
 }
 
 
-
+//订单排序
 News.prototype.orderspan_fn = function () {
 	var _father_this = this; 
 	
@@ -744,6 +762,9 @@ News.prototype.orderspan_fn = function () {
 		_father_this.sort_table_fn(_sort_type);	//执行排序
 	});
 }
+
+
+
 
 //排序表单
 News.prototype.sort_table_fn = function ($sort_type) {
@@ -789,6 +810,62 @@ News.prototype.page_init_fn = function () {
 }
 
 
+//根据选中的账号导出报价单
+News.prototype.export_csv_fn = function () {
+	var _father_this = this;
+	
+	_father_this.export_csv.click(function(){
+		var _this = $(this);
+		var base_src = _this.data('base_src');
+		var selected_account_ids = [];
+		var url;
+		_father_this.account_selected.find('li').each(function () {
+			var _li_this = $(this);
+			selected_account_ids.push(_li_this.data('select_account_id'));	
+		}); 
+		
+		if (selected_account_ids == '') {
+			alert('请先选择账号！');
+			return false;
+		} else {
+			url = base_src + '/ids/' + selected_account_ids.join(',');
+			_this.attr('href',url);
+			
+			var export_data = {};
+			export_data.account_ids = selected_account_ids.join(',');
+			export_data.type = 1;
+			_father_this.export_post_data(system_info.export_url,export_data);
+		}
+	});
+}
+
+
+//把导出记录保存到数据库中
+News.prototype.export_post_data = function (urL,post_data) {
+	if (post_data == '' || urL == '' ) return false;
+
+	var result = System.ajax_post_setup(urL,post_data,'JSON');
+	
+	return result;
+}
+
+
+News.prototype.now_selected_fn = function () {
+	
+	var _father_this = this;
+	_father_this.now_selected.click(function () {
+	
+		var _this = $(this);
+		var id = _this.data('id');
+		
+	//	_father_this.order_vessel.show();
+	});
+}
+
+
+
+
+
 
 //执行
 News.prototype.run = function () {
@@ -808,7 +885,6 @@ News.prototype.run = function () {
 	
 	_father_this.search_fn();
 	
-	
 	_father_this.page_init_fn();	//加载页面初始化
 	
 	_father_this.all_selected_fn();	//全选
@@ -818,6 +894,8 @@ News.prototype.run = function () {
 	_father_this.orderspan_fn();
 	
 	_father_this.sort_table_fn();
+	
+	_father_this.export_csv_fn();
 }
 
 

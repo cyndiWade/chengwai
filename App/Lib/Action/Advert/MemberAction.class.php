@@ -33,7 +33,8 @@ class MemberAction extends AdvertBaseAction {
 			'Users' => 'Users',
 			'Verify'=>'Verify',
 			'UserAdvertisement' => 'UserAdvertisement',
-			'Discss'	=>	'Discss'
+			'Discss'	=>	'Discss',
+			'ExportOrder' => 'ExportOrder'
 	);
 	
 	
@@ -138,6 +139,42 @@ class MemberAction extends AdvertBaseAction {
 			}
     	}
     }
+    
+    
+    //ajax接口
+    public function ajax_export_order () {
+    	
+    	if ($this->isPost()) {
+    		$post_data = $this->_post();	
+    		$status = $this->db['ExportOrder']->add_data($this->oUser->id);
+    		
+    		parent::callback(C('STATUS_SUCCESS'),'成功');
+    	
+    		//$post_data
+    	}
+    }
+    
+    
+    public function export_order () {
+    	import('ORG.Util.Page');
+    	
+    	$where['users_id'] = $this->oUser->id;
+    	$count = $this->db['ExportOrder']->get_count($where);
+    	
+    	$Page    = new Page($count,10);
+    	$show     = $Page->show();
+    	
+    	$list = $this->db['ExportOrder']->get_list($where,$Page->firstRow.','.$Page->listRows);
+    	//$list = $Discss->where($map)->limit($Page->firstRow.','.$Page->listRows)->order('id desc')->select();
+    	//dump($list);
+    	$this->data_to_view(array(
+    		'member_sidebar_export_order_class'=>'class="on"',
+    		'page' => $show ,
+    		'list' => $list,
+    	));
+    	$this->display();
+    }
+    
 }
 
 ?>

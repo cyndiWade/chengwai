@@ -14,7 +14,7 @@
 <div class="wrap l">
 <div class="pbd">
 <div class="location l">
-	当前位置：<a href="#">首页</a>  >  <a href="#">微信推广</a> > <span class="blue">查看名人微信</span>
+	当前位置：<a href="#">首页</a>  >  <a href="{:U('Advert/Weixin/celebrity_weixin')}">微信推广</a> > <span class="blue">查看名人微信</span>
 </div>
 
 <include file="Public:weixin_sidebar" />
@@ -207,7 +207,7 @@
 			<div class="controlbox fl">
 				<span class="all_selected">全选</span>
 				<span id="batch" class="add_selected_box">批量添加账号</span>
-				<span><a href="{:U('Advert/Weixin/export_csv',array('type'=>1))}">批量导出报价单</a></span>
+			
 			</div>
 		</div>
 	</div>
@@ -227,6 +227,8 @@
 		<ul class="part02-batch fl account_selected" >
 
 		</ul>
+		
+		<a class="bluebtn_bjd btn export_csv" href="javascript:;" data-base_src="/Advert/Weixin/export_csv/type/1">批量导出报价单</a>
 		<a href="javascript:;" class="btn bluebtn confirm_order">立即派单</a>
 	</div>
 </div>
@@ -243,6 +245,8 @@ var system_info = {
 	page_limit : 10,	//每页条数
 	post_order_url : '{:U('Advert/WeixinOrder/add_yxaccount')}',
 	Global_Resource_Path : '{$global_tpl_view['Global_Resource_Path']}',
+	export_url : '{:U('Advert/Member/ajax_export_order')}',
+	account_ids : '{$view_data.account_ids}'
 }
 var list_content = $('#list_content');
 </script>
@@ -258,6 +262,8 @@ var list_content = $('#list_content');
 var public_post_fn = function (obj_data) {
 	var post_data = {};
 	post_data.is_celebrity = system_info.is_celebrity;	//是否是名人
+	
+	post_data.ids = system_info.account_ids;
 	
 	//三级导航已选择数据
 	var three_sidebar_selected = Weixin.get_three_sidebar_selected();
@@ -303,8 +309,16 @@ var public_post_fn = function (obj_data) {
 		Weixin.page_init_fn();	//加载页面初始化
 		
 		//更新page
-		page_now_list(result.data.count,result.data.p,system_info.page_limit);
+		if (system_info.account_ids == '') {
+			page_now_list(result.data.count,result.data.p,system_info.page_limit);
+			Weixin.add_selected_box_fn(system_info.account_ids);
+		} else {
+			Weixin.now_selected.prop('checked',true);
+			Weixin.add_selected_account_to_vessel();
+		}
 	} 
+	
+	system_info.account_ids = '';
 }
 
 
@@ -312,7 +326,7 @@ var public_post_fn = function (obj_data) {
 var create_now_html = function ($data,$post_data) {
 	var html = '';
 	html += '<div class="box01-cele fl accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-fans_num="'+$data.bs_fans_num+'">';
-	html += '<input type="checkbox" class="check fl now_selected" data-field="id" data-id="'+$data.bs_id+'" />';
+	html += '<input type="checkbox" class="check fl now_selected add_selected_box" data-field="id" data-id="'+$data.bs_id+'" />';
 	html += '<div class="part01-cele fl">';
 	
 	if ($data.bs_head_img == '') {
