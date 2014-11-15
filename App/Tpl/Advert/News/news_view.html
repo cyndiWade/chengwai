@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+	<title>新闻预览</title>
+    <link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/member.css" type="text/css" />	
+</head>
+<body>
+
+<!-- 头部 -->  
+<include file="Public:member_header" />
+
+<div class="wrap l">
+<div class="pbd">
+<div class="location l">
+	当前位置：<a href="#">首页</a>  >  <a href="{:U('Advert/News/news_list')}">新闻媒体推广</a> > <span class="blue">新闻媒体预览</span>
+</div>
+<div class="area01-memwb area01-memwx l">
+    <div class="filter_box fl">
+        <div class="news_title">{$view_data['title']}</div>
+        <div class="sub_newstitle">时间：{$view_data['start_time'] | date="Y-m-d H:i:s",### }&nbsp;&nbsp;<a href="{$view_data['web_url']}" target="_blank">原文链接</a></div>
+        <div class="news_content">
+			{$view_data['zf_info']}
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<include file="Public:member_footer" />
+
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+
+<script type="text/javascript">
+$(function(){
+	$('.tab01-weibo tr:even').addClass('even');
+	$('#batch').click(function(){
+		$('.batchbox').show();
+	})
+	$('.close').click(function(){
+		$('.batchbox').hide();
+	})
+	$('.top-search strong').click(function(){
+		$(this).siblings().removeClass('on')
+		$(this).addClass('on');
+	})
+	$('#morecate').click(function(){
+		$('.part01-cate').toggleClass('part01-cate-auot');
+	})
+	$('.part01-cate span').click(function(){
+		$('#resultgrp').find('.licate').remove();
+		var spantxt=$(this).text();
+		$(this).siblings().removeClass('select');
+		$(this).addClass('select');
+		var linktxt='<li class="licate">'+'<strong>'+spantxt+'</strong>'+'<em class="del">'+'</em>'+'</li>';
+		$(linktxt).appendTo($('#resultgrp'));
+		$('.del').click(function(){
+			$(this).parent().remove();
+		})
+	})
+	$('.part02-price span').click(function(){
+		$('#resultgrp').find('.liprice').remove();
+		var spantxt=$(this).text();
+		$(this).siblings().removeClass('select');
+		$(this).addClass('select');
+		var linktxt='<li class="liprice">'+'<strong>'+spantxt+'</strong>'+'<em class="del">'+'</em>'+'</li>';
+		$(linktxt).appendTo($('#resultgrp'));
+		$('.del').click(function(){
+			$(this).parent().remove();
+		})
+	})
+	$('.part02-fance span').click(function(){
+		$('#resultgrp').find('.lifance').remove();
+		var spantxt=$(this).text();
+		$(this).siblings().removeClass('select');
+		$(this).addClass('select');
+		var linktxt='<li class="lifance">'+'<strong>'+spantxt+'</strong>'+'<em class="del">'+'</em>'+'</li>';
+		$(linktxt).appendTo($('#resultgrp'));
+		$('.del').click(function(){
+			$(this).parent().remove();
+		})
+	})
+	$('.part01-select span').click(function(){
+		$('#resultgrp').find('.liselect').remove();
+		var spantxt=$(this).text();
+		$(this).siblings().removeClass('select');
+		$(this).addClass('select');
+		var linktxt='<li class="liselect">'+'<strong>'+spantxt+'</strong>'+'<em class="del">'+'</em>'+'</li>';
+		$(linktxt).appendTo($('#resultgrp'));
+		$('.del').click(function(){
+			$(this).parent().remove();
+		})
+	})
+	$('.part01-video span').click(function(){
+		if($(this).find('input').prop('checked')==true){
+			var spantxt=$(this).text();
+			$(this).siblings().removeClass('select');
+			$(this).addClass('select');
+			var linktxt='<li class="livideo">'+'<strong>'+spantxt+'</strong>'+'<em class="del">'+'</em>'+'</li>';
+			$(linktxt).appendTo($('#resultgrp'));
+			$('.del').click(function(){
+				$(this).parent().remove();
+			})
+		}else{
+			$('#resultgrp').find('.livideo').remove();
+		}
+	})
+	$('.part01-other span').click(function(){
+		$(this).siblings().find('dl').hide();
+		$(this).find('dl').toggle();
+	})
+	$('.part01-other span dt').click(function(){
+		var spantxt=$(this).text();
+		$(this).siblings().removeClass('select');
+		$(this).addClass('select');
+		var linktxt='<li class="liother">'+'<strong>'+spantxt+'</strong>'+'<em class="del">'+'</em>'+'</li>';
+		$(linktxt).appendTo($('#resultgrp'));
+		$('.del').click(function(){
+			$(this).parent().remove();
+		})
+	})
+	$('#trash').click(function(){
+		$('#resultgrp').html('');
+	})
+})
+</script>
+</body>
+</html>

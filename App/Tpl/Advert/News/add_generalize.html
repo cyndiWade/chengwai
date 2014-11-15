@@ -36,7 +36,7 @@
 				<td class="t1"><span><i>*</i><strong>发布时间：</strong></span></td>
 				<td class="t2">
 					<div class="timestart">
-						<input type="text" name="start_time" data-check_type="start" class="text text-time start_time timeSubject"  datatype="*15-18" errormsg="请正确选择填写"  nullmsg="请选择开始时间" />
+						<input type="text" name="start_time" data-check_type="start" class="text text-time start_time timeSubject"  datatype="*12-20" errormsg="请正确选择填写"  nullmsg="请选择开始时间" />
 					</div>
 					<p>请提前2小时</p>
 				</td>
@@ -69,7 +69,10 @@
 			  </tr>
 			  <tr>
 				<td class="t1"></td>
-				<td class="t2"><input type="submit" class="btn brownbtn" value="下一步" /></td>
+				<td class="t2">
+				<input type="button" class="btn brownbtn news_view" data-url="{:U('Advert/News/news_view')}" value="预览" />
+				<input type="submit" class="btn brownbtn" value="下一步" />
+				</td>
 			  </tr>
 			</table>
 			</form>
@@ -80,9 +83,17 @@
 
 <include file="Public:member_footer" />
 
-
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
+
+
+<script type="text/javascript">
+var system_info = {
+	news_view_url : '/Advert/News/news_view',
+}
+
+</script>
+
 
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
 
@@ -91,6 +102,7 @@
 <script src="{$global_tpl_view.Global_Resource_Path}ckeditor/ckeditor.js"></script>
 
 <script src="{$global_tpl_view.Module_Resource_Path}add_generalize.js"></script>
+
 
 </body>
 </html>

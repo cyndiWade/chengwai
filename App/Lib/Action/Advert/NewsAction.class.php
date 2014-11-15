@@ -31,7 +31,8 @@ class NewsAction extends AdvertBaseAction {
 			'GeneralizeNewsOrder' => 'GeneralizeNewsOrder',
 			'GeneralizeNewsAccount' => 'GeneralizeNewsAccount',
 			'GeneralizeNewsFiles'=>'GeneralizeNewsFiles',
-			'Discss'	=>	'Discss'
+			'Discss'	=>	'Discss',
+			'NewsView' => 'NewsView'
 	);
 	
 	//和构造方法
@@ -465,6 +466,25 @@ class NewsAction extends AdvertBaseAction {
 		//var_dump($new_array);
 		create_excel('news',$new_array);
 	}
+	
+	
+	public function news_view() {
+		if ($this->isPost()) {
+			$post_data = $this->_post();
+			$status = $this->db['NewsView']->add_data($this->oUser->id);
+			
+			parent::callback(C('STATUS_SUCCESS'),'成功',$status);
+		}
+		//get_one
+		$id = $this->_get('id');
+		
+		$data = $this->db['NewsView']->get_one(array('id'=>$id,'users_id'=>$this->oUser->id));
+	
+		
+		parent::data_to_view($data);
+		$this->display();	
+	}
+	
 	
 }	
 
