@@ -1204,7 +1204,8 @@ define(function(require, exports) {
                                 href: "javascript: void(0)"
                             }).text("详情");
 
-                            return div.append("否&nbsp;").append('<br/>').append(a);
+                            // return div.append("否&nbsp;").append('<br/>').append(a);
+                            return div.append("否&nbsp;").append('<br/>');
 
                         }
                     }
