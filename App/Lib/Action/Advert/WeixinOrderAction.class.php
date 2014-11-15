@@ -101,7 +101,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 		$Page       = new Page($count,10);
 		$show       = $Page->show();
 		$list = $GeneralizeWeixinOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
-		->order('id desc')->field('id,tfpt_type,fslx_type,ggw_type,yxd_name,start_time,all_price,over_time,status')->select();
+		->order('id desc')->field('id,tfpt_type,fslx_type,ggw_type,yxd_name,start_time,all_price,over_time,status,create_time')->select();
 		
 		$Order_Status = C('Order_Status');
 		if ($list == true) {
@@ -207,13 +207,14 @@ class WeixinOrderAction extends AdvertBaseAction {
 		$Page       = new Page($count,10);
 		$show       = $Page->show();
 		$list = $IntentionWeixinOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
-		->order('id desc')->field('id,tfpt_type,fslx_type,ggw_type,yxd_name,start_time,over_time,status')->select();
+		->order('id desc')->field('id,tfpt_type,fslx_type,ggw_type,yxd_name,start_time,over_time,status,create_time')->select();
 		$new_list_id = array();
 		foreach($list as $value)
 		{
 			$new_list_id[] =$value['id'];
 		}
 		$intention_id_num = $this->db['IntentionWeixinAccount']->getListNum($new_list_id,$this->oUser->id);
+		
 		parent::data_to_view(array(
 				'page' => $show ,
 				'list' => $list,

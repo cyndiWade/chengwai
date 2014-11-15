@@ -34,12 +34,6 @@ System.prototype.ajax_post_setup = function ($url,$data,$type) {
 }
 
 
-
-System.prototype.run = function () {
-	var _fater_this = this;
-	_fater_this.validateImageFn();
-}
-
 /**
  * @desc 判断数组内是否包含字符串
  * @param str
@@ -69,6 +63,12 @@ System.prototype.fomat_date = function ($date_string) {
 		return Date.parse($date_string.replace(/-/ig,'/'));
 	}
 	
+}
+
+
+System.prototype.run = function () {
+	var _fater_this = this;
+	_fater_this.validateImageFn();
 }
 
 var System = new System();

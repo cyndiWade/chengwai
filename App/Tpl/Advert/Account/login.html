@@ -129,7 +129,6 @@
         success: function (msg) {
           if(msg.status==0)
           {
-            //window.location.href="{:U('Advert/Member/datum_edit')}";
 			window.location.href = msg.goto_url;
           }else{
             alert(msg.msg);

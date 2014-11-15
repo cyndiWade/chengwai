@@ -17,7 +17,7 @@
 		}
 		
 		public function get_list ($where,$limit) {
-			$result = $this->where($where)->limit($limit)->select();
+			$result = $this->where($where)->limit($limit)->order('id DESC')->select();
 			
 			$type_explain = array(
 				1 => array('name'=>'新闻媒体','url'=>'/Advert/News/news_list'),

@@ -45,8 +45,8 @@
 			if($array!='')
 			{
 				$where['generalize_id'] = array('IN',$array);
-				$where['users_id'] = $users_id;
 				$val_list = $this->where($where)->group('generalize_id')->field('count(id) as number,generalize_id')->select();
+			
 				$last_array = array();
 				foreach($val_list as $value)
 				{

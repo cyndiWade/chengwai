@@ -212,7 +212,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$Page       = new Page($count,5);
 		$show       = $Page->show();
 		$list = $IntentionWeiboOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
-		->order('id desc')->field('id,yxd_name,tfpt_type,fslx_type,ryg_type,start_time,over_time,status')->select();
+		->order('id desc')->field('id,yxd_name,tfpt_type,fslx_type,ryg_type,start_time,over_time,status,create_time')->select();
 		$new_list_id = array();
 		foreach($list as $value)
 		{
