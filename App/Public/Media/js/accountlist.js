@@ -875,7 +875,7 @@ define(function(require, exports) {
         var columns= null;
         if (weiboType == 23) {
             // 朋友圈
-            columns = [
+            /* columns = [
                 {
                     align: "center",
                     text: "微信名字",
@@ -1051,7 +1051,7 @@ define(function(require, exports) {
                     width:36,
                     formatter: formatters.detail
                 }
-            ];
+            ]; */
         }else{
             columns = [
                 {
@@ -1152,8 +1152,8 @@ define(function(require, exports) {
                     formatter: function (data, row) {
                         if (data == "0" || data == '2') {
                             var div = $("<div></div>");
-                            var a = $("<a id='js_show_review' data-accountId = " + row.cells.account_id + 
-                                " data-accountType = " + weiboType + " class='blue'></a>");
+                            var a = $("<a id='js_show_review' data-account_id = '" + row.cells.account_id + 
+                                "' data-account_type = '" + weiboType + "' class='blue'></a>");
                             a.attr({
                                 href: "javascript: void(0)"
                             }).text("详情");
@@ -1175,7 +1175,8 @@ define(function(require, exports) {
                         } else if (data == "1") {
                             return "是";
                         } else {
-                            var a = $("<a id='js_show_allow_order' class='blue' data-accountId = " + row.cells.account_id + " class='blue'></a>");
+                            var a = $("<a id='js_show_allow_order' class='blue' data-account_id = '" + row.cells.account_id + 
+							"' data-account_type = '" + weiboType + "' class='blue'></a>");
 
                             a.attr({
                                 href: "javascript: void(0)"
@@ -1197,7 +1198,8 @@ define(function(require, exports) {
                             return "是";
                         } else {
                             var div = $("<div></div>");
-                            var a = $("<a id='js_show_online' class='blue' data-accountId = " + row.cells.account_id + "></a>");
+                            var a = $("<a id='js_show_online' class='blue' data-account_id = '" + row.cells.account_id + 
+							"' data-account_type = '" + weiboType + "'></a>");
                             a.attr({
                                 href: "javascript: void(0)"
                             }).text("详情");
@@ -2118,7 +2120,7 @@ define(function(require, exports) {
             height: 'auto',
             listeners: {
                 ontargetchanged: function () {
-                    var id = this.getCurrentTarget().attr("data-accountId");
+                    var id = this.getCurrentTarget().attr("data-account_id");
                     showOnline.setLoader({
                         url: '/information/accountmanage/online',
                         dataType: "json",
@@ -2159,8 +2161,9 @@ define(function(require, exports) {
             height: 'auto',
             listeners: {
                 ontargetchanged: function () {
-                    var id = this.getCurrentTarget().attr("data-accountId");
-                    var type = this.getCurrentTarget().attr("data-accountType");
+                    console.log(this.getCurrentTarget());
+					var id = this.getCurrentTarget().attr("data-account_id");
+                    var type = this.getCurrentTarget().attr("data-account_type");
                     tips.setLoader({
                         url: '/Media/SocialAccount/notallow',
                         dataType: "json",
@@ -2198,8 +2201,8 @@ define(function(require, exports) {
             height: 'auto',
             listeners: {
                 ontargetchanged: function () {
-                    var id = this.getCurrentTarget().attr("data-accountId");
-                    var type = this.getCurrentTarget().attr("data-accountType");
+                    var id = this.getCurrentTarget().attr("data-account_id");
+                    var type = this.getCurrentTarget().attr("data-account_type");
                     t.setLoader({
                         url: '/Media/SocialAccount/review',
                         dataType: "json",
