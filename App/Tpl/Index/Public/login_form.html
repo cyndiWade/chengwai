@@ -39,7 +39,7 @@
               </div>
           </div>
           <!-- 动态密码登录 -->
-<div class="lophone">热线：<script src="{$global_tpl_view.Group_Resource_Path}news_skin/js/phone.js"></script></div> 
+<div class="lophone">热线：<script src="/news_skin/js/phone.js"></script></div> 
      </form>
 
   </div>
@@ -79,7 +79,7 @@
               </div>
           </div>
           <!-- 动态密码登录 -->
-<div class="lophone">热线：<script src="{$global_tpl_view.Group_Resource_Path}news_skin/js/phone.js"></script></div> 
+<div class="lophone">热线：<script src="/news_skin/js/phone.js"></script></div> 
      </form>
 
   </div>
@@ -162,8 +162,8 @@ var post_form = function () {
 		
 		var result = System.ajax_post_setup('{:U('Media/Account/check_login')}',post_data,'JSON');
 		
-		alert(result.goto_url);
-		return false;
+		//alert(result.goto_url);
+		//return false;
 		if (result.status==0) {
           window.location.href=result.goto_url;
         } else {
