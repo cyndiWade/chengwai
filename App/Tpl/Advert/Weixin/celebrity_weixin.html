@@ -170,6 +170,12 @@
 		<div class="filter_box fl">
 	      <div class="fore1">
 	      <!--<dl class="filter_order"><dt>排序：</dt><dd class="curr"><a href="javascript:;">默认排序</a><b></b></dd><dd><a href="javascript:;">粉丝量</a><b></b></dd><dd><a href="javascript:;">月订单</a><b></b></dd><dd><a href="javascript:;">自定义</a><b></b></dd></dl>-->	
+	      <dl class="filter_order">
+		      <dt>排序：</dt>
+		      <dd class="curr orderspan" data-sort_type="order_id"><a href="javascript:;">默认排序</a><b></b></dd>
+		      <dd class="orderspan" data-sort_type="fans_num"><a href="javascript:;">粉丝量</a><b></b></dd>
+		      <dd class="orderspan" data-sort_type="order_num"><a href="javascript:;">月订单</a><b></b></dd>
+	      </dl>
 	      <dl class="filter_type">
 	      	<dt>媒体类型：</dt>
 	      	<!-- 
@@ -325,7 +331,7 @@ var public_post_fn = function (obj_data) {
 
 var create_now_html = function ($data,$post_data) {
 	var html = '';
-	html += '<div class="box01-cele fl accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-fans_num="'+$data.bs_fans_num+'">';
+	html += '<div class="box01-cele fl accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_month_order_nub+'"  data-fans_num="'+$data.bs_fans_num+'">';
 	html += '<input type="checkbox" class="check fl now_selected add_selected_box" data-field="id" data-id="'+$data.bs_id+'" />';
 	html += '<div class="part01-cele fl">';
 	

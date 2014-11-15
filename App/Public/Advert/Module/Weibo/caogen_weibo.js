@@ -1025,8 +1025,8 @@ Weibo.prototype.orderspan_fn = function () {
 	
 	_father_this.orderspan.click(function () {	//orderspan-select
 		var _this = $(this);
-		_father_this.orderspan.removeClass('orderspan-select');
-		_this.addClass('orderspan-select');
+		_father_this.orderspan.removeClass('curr');
+		_this.addClass('curr');
 		
 		//排序
 		var _sort_type = _this.data('sort_type');//排序类型
@@ -1038,7 +1038,7 @@ Weibo.prototype.orderspan_fn = function () {
 Weibo.prototype.sort_table_fn = function ($sort_type) {
 	
 	var _father_this = this;
-	var tr = _father_this.tbody.children();
+	var tr = _father_this.list_content.children();
 	var tr_arr = [];
 	
 	//把tr放入数组中，用作排序
@@ -1060,7 +1060,7 @@ Weibo.prototype.sort_table_fn = function ($sort_type) {
 	
 	//重新插入到table中
 	for (var i=0;i<tr_arr.length;i++) {
-		_father_this.tbody.append(tr_arr[i]);
+		_father_this.list_content.append(tr_arr[i]);
 	}
 }
 

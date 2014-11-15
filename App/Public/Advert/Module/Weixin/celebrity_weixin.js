@@ -957,8 +957,8 @@ Weixin.prototype.orderspan_fn = function () {
 	
 	_father_this.orderspan.click(function () {	//orderspan-select
 		var _this = $(this);
-		_father_this.orderspan.removeClass('orderspan-select');
-		_this.addClass('orderspan-select');
+		_father_this.orderspan.removeClass('curr');
+		_this.addClass('curr');
 		
 		//排序
 		var _sort_type = _this.data('sort_type');//排序类型

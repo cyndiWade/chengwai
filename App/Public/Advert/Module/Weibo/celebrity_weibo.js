@@ -672,7 +672,7 @@ Weibo.prototype.create_now_html = function (result,$post_data) {
 	for (var key in result) {
 		var $data = result[key];
 		var html = '';
-		html += '<div class="box01-cele fl accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-fans_num="'+$data.bs_fans_num+'">';
+		html += '<div class="box01-cele fl accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_month_order_nub+'"  data-fans_num="'+$data.bs_fans_num+'">';
 		html += '<input type="checkbox" class="check fl now_selected add_selected_box" data-field="id" data-id="'+$data.bs_id+'" />';
 		html += '<div class="part01-cele fl">';
 		
@@ -979,8 +979,8 @@ Weibo.prototype.orderspan_fn = function () {
 	
 	_father_this.orderspan.click(function () {	//orderspan-select
 		var _this = $(this);
-		_father_this.orderspan.removeClass('orderspan-select');
-		_this.addClass('orderspan-select');
+		_father_this.orderspan.removeClass('curr');
+		_this.addClass('curr');
 		
 		//排序
 		var _sort_type = _this.data('sort_type');//排序类型
