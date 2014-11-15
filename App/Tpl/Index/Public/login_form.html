@@ -141,9 +141,9 @@ var post_form = function () {
 		post_data.notcheck = advert_form.find('input[name=notcheck]').val();
 		
 		var result = System.ajax_post_setup('{:U('Advert/Account/check_login')}',post_data,'JSON');
-		
+
 		if (result.status==0) {
-          window.location.href="{:U('Advert/Member/datum_edit')}";
+         // window.location.href=result.goto_url;
         } else {
           alert(result.msg);
         }
@@ -162,8 +162,10 @@ var post_form = function () {
 		
 		var result = System.ajax_post_setup('{:U('Media/Account/check_login')}',post_data,'JSON');
 		
+		alert(result.goto_url);
+		return false;
 		if (result.status==0) {
-          window.location.href="{:U('Media/EventOrder/index')}";
+          window.location.href=result.goto_url;
         } else {
           alert(result.msg);
         }

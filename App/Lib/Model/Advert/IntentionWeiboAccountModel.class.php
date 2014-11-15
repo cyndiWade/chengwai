@@ -46,7 +46,7 @@
 			if($array!='')
 			{
 				$where['intention_id'] = array('IN',$array);
-				$where['users_id'] = $users_id;
+			//	$where['users_id'] = $users_id;
 				$val_list = $this->where($where)->group('intention_id')->field('count(id) as number,intention_id')->select();
 				$last_array = array();
 				foreach($val_list as $value)

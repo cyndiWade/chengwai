@@ -130,7 +130,7 @@ class NewsAction extends AdvertBaseAction {
 		$Page       = new Page($count,10);
 		$show       = $Page->show();
 		$list = $GeneralizeNewsOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
-		->order('id desc')->field('id,title,start_time,web_url,all_price,status')->select();
+		->order('id desc')->field('id,title,start_time,web_url,all_price,status,create_time')->select();
 		
 		$Order_Status = C('Order_Status');
 		if ($list == true) {
