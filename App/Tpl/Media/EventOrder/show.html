@@ -90,9 +90,9 @@
 					<td class="">
 						<if condition="$vo['audit_status'] eq 3">
 						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="4">拒绝</a>	&nbsp;&nbsp;&nbsp;&nbsp;
-						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="5">执行</a>	
+						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="5">同意接单</a>	
 						 <elseif condition="$vo['audit_status'] eq 5" />
-						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="6">执行完成</a>	
+						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="6">上传反馈数据</a>	
 						<else />
 						暂无
 						</if>

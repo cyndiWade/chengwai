@@ -38,5 +38,5 @@ class GeneralizeAccountModel extends MediaBaseModel
 		$return = $this->where($where)->field($fields)->find();
 		return $return ;
 	}
-	
+
 }

@@ -44,7 +44,7 @@
 .phonebox .previmg{ width:216px; height:313px; margin:76px 0 0 22px;}
 .phonebox .close{ right:-40px; top:-10px;}
 /*订单详情*/
-.top-myorder{height:48px; border:1px solid #e9ece6; background:#eff3f4; line-height:48px; border-bottom:none; width:998px;}
+.top-myorder{height:48px; border:1px solid #e9ece6; background:#eff3f4; line-height:48px; border-bottom:none; }
 .top-myorder b{ padding-left:18px; color:#2e4653;}
 .tab01-myorder td,.tab01-myorder th{ border:1px solid #e9ece6; height:48px; line-height:48px;}
 .tab01-myorder td{ padding-left:10px;}

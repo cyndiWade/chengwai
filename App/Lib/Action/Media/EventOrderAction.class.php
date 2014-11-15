@@ -762,21 +762,24 @@ class EventOrderAction extends MediaBaseAction {
    			case 'weibo':
    				$GeneralizeAccount	= D('GeneralizeAccount');
     			$mediaObject		= D('AccountWeibo');
+    			$orderModel			= M('generalize_order');
     			$typeTip			= 2;
     			break;
    			case 'weixin':
    				$GeneralizeAccount	= D('GeneralizeWeixinAccount');
     			$mediaObject		= D('AccountWeixin');
+    			$orderModel			= M('generalize_weixin_order');
     			$typeTip			= 4;
     			break; 
    			case 'news':
    				$GeneralizeAccount	= D('GeneralizeNewsAccount');
     			$mediaObject		= D('AccountNews');
+    			$orderModel			= M('generalize_news_order');
     			$typeTip			= 1;
     			break;    			   			
    		}
 
-    	$media_Info = $GeneralizeAccount->getInfoById($id, "account_id");
+    	$media_Info = $GeneralizeAccount->getInfoById($id, "account_id, price, rebate, generalize_id");
     	//检查是否是本人
     	$test = $mediaObject->checkAccountByUserId($media_Info['account_id'], $this->oUser->id);
     	 
@@ -799,6 +802,12 @@ class EventOrderAction extends MediaBaseAction {
 	    		$arryOrderLog['content']		= $reason;
 	    		$arryOrderLog['create_time']	= time();
 	    		D('OrderLog')->orderLogAdd($arryOrderLog);
+	    		
+	    		//处理返回冻结金额（给广告主解冻金额）
+	    		$adUserID = $orderModel->where(array("id"=>$media_Info['generalize_id']))->getField('users_id');
+	    		//总金额
+	    		$allMoney = $this->getAdMoney($media_Info['price'], $type, $media_Info['rebate']);
+	    		D("UserAdvertisement")->setMoney($allMoney, $adUserID);
     		}
     		    		
     		$GeneralizeAccount->setAccountStatus($id, $status);
@@ -1350,5 +1359,31 @@ class EventOrderAction extends MediaBaseAction {
 		$arryPrice['month']  = array($countPriceMonth, $countPriceFinishedMonth, $countPriceFailedMonth, $countOverMonth, $countPriceAjectMonth, $countPriceCancelMonth, $countPriceDoingMonth);
 		
 		return array("total"=>$arryTotal, 'price'=>$arryPrice);
+    }
+    
+    /**
+     * 计算加价的总金额
+     * 
+     * @param  float 	$money	订单账号的金额
+     * @param  int		$type	类型：weibo weixin news
+     * @author bumtime
+     * @date   2014-11-15
+     * 
+     * @return array   
+     **/
+    private function getAdMoney($money, $type, $rebate)
+    {
+    	switch($type)
+    	{
+    		case 'weibo' :
+    		case 'weixin' : 
+    			$money = $money * (1+$rebate);
+    			break;
+    		case 'news' :
+    			$money = $money + $rebate;
+    			break;
+    	}
+    	
+    	return $money;
     }
 }
