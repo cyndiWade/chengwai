@@ -307,6 +307,13 @@ var public_post_fn = function (obj_data) {
 
 var create_now_html = function ($data,$post_data) {
 	
+	var weibo_url;
+	if (system_info.pt_type == 1) {
+		weibo_url = 'http://weibo.com/';
+	} else if (system_info.pt_type ==  2) {
+		weibo_url = 'http://t.qq.com/';
+	}
+	
 	var html = '';
 	html += '<tr class="accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_month_order_nub+'"  data-fans_num="'+$data.bs_fans_num+'">';
 	html += '<td class="t1">';
@@ -319,7 +326,7 @@ var create_now_html = function ($data,$post_data) {
 	}
 	
 	html += 		'<div class="grp fl">';
-	html += 		'<h5 class="l"><b class="account_name" data-account_name="'+$data.bs_account_name+'">'+$data.bs_account_name+'</b><span class="heart"></span><span class="heart"></span></h5>';
+	html += 		'<h5 class="l"><b class="account_name" data-account_name="'+$data.bs_account_name+'"><a href="'+weibo_url + $data.bs_account_name+'">'+$data.bs_account_name+'</a></b><span class="heart"></span><span class="heart"></span></h5>';
 	html += 		'<div class="address l">'+$data.bs_account_name+'</div>';
 	html += 		'<div class="desc l">简介：'+$data.bs_introduction+'</div>';
 	html += 		'</div>';

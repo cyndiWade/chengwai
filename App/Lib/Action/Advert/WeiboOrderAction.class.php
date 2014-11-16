@@ -637,7 +637,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$where['account_id'] = $account_id;
 		$where['type'] = $type;
 		$result = $this->db['GeneralizeFiles']->get_fiels_list($where);
-		parent::public_file_dir($result,array('url'),'images/');
+		parent::public_file_dir($result,array('url'),'images/screenshot/');
 	
 	
 		parent::data_to_view(array(

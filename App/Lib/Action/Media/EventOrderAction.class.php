@@ -874,6 +874,7 @@ class EventOrderAction extends MediaBaseAction {
    		}
    		
     	$media_Info = $GeneralizeAccount->getInfoById($id, "account_id");
+    	
     	//检查是否是本人
     	if(!$mediaObject ->checkAccountByUserId($media_Info['account_id'], $this->oUser->id))
     	{
@@ -891,7 +892,8 @@ class EventOrderAction extends MediaBaseAction {
 				
 				$data['users_id']				= $this->oUser->id;
 				$data['generalize_order_id']	= $order_id;
-				$data['account_id']				= $id;
+				//$data['account_id']				= $id;
+				$data['account_id']				= $media_Info['account_id'];  
 				$data['type']					= 3;
 				$data['url']					= $pic_url;
 				$data['link_url']				= $link_url;
@@ -903,7 +905,8 @@ class EventOrderAction extends MediaBaseAction {
 		{
 				$data['users_id']				= $this->oUser->id;
 				$data['generalize_order_id']	= $order_id;
-				$data['account_id']				= $id;
+				//$data['account_id']				= $id;
+				$data['account_id'] = 			$media_Info['account_id']; 
 				$data['type']					= 3;
 				$data['link_url']				= $link_url;
 				$fileObject->add($data);

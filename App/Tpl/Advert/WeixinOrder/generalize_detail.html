@@ -220,10 +220,10 @@ $(function(){
 		post_data.id = order_id;
 		var result = System.ajax_post_setup('{:U('Advert/WeixinOrder/insertPrice')}',post_data);
 		if (result.status == 0) {
-			alert(result.msg);
+			//alert(result.msg);
 			window.location.reload(); 
 		} else {
-			alert(result.msg)
+			//alert(result.msg)
 		}
 		
 	});

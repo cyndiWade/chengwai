@@ -669,6 +669,13 @@ Weibo.prototype.create_now_html = function (result,$post_data) {
 	var _father_this = this;
 	_father_this.list_content.empty();
 
+	var weibo_url;
+	if (system_info.pt_type == 1) {
+		weibo_url = 'http://weibo.com/';
+	} else if (system_info.pt_type ==  2) {
+		weibo_url = 'http://t.qq.com/';
+	}
+
 	for (var key in result) {
 		var $data = result[key];
 		var html = '';
@@ -700,7 +707,7 @@ Weibo.prototype.create_now_html = function (result,$post_data) {
 		html += '</div>';
 		html += '<div class="part02-cele fl">';
 		html += '<div class="grp01-cele l">';
-		html += '<span class="mrdetail cur fr" data-weibo_id="'+$data.bs_id+'">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl account_name" data-account_name="'+$data.bs_account_name+'">'+$data.bs_account_name+'</span>';
+		html += '<span class="mrdetail cur fr" data-weibo_id="'+$data.bs_id+'">查看详情</span><i class="weibo fl"></i><i class="v fl"></i><span class="femail fl account_name" data-account_name="'+$data.bs_account_name+'"><a href="'+weibo_url + $data.bs_account_name+'" target="_blank">'+$data.bs_account_name+'</a></span>';
 		html += '<span class="city fl">'+$data.pg_cirymedia_explain+'</span>';
 		//html += '<span class="yxl fl">影响力：1212</span>';
 		html += '</div>';
