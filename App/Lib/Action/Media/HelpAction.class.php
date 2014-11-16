@@ -37,10 +37,11 @@ class HelpAction extends MediaBaseAction {
      */
 	public function index()
     {
-        $currentid = I('id', 0, 'intval');
+        $type 		= I('type', 1, 'intval');
+        $currentid 	= I('id', 0, 'intval');
         
         $helpModel = $this->db['Help'];
-        $list = $helpModel->getList();
+        $list = $helpModel->getList($type);
         $helpList = array();
         if ($list) {
             foreach ($list AS $info) {
@@ -60,7 +61,7 @@ class HelpAction extends MediaBaseAction {
             $currentInfo = &$helpList[$currentid];
         }
         
-        
+        import('ORG.Util.String');
 		parent::data_to_view(array(
 			'type'          => $type,
             'accountType'   => $accountTypeList,

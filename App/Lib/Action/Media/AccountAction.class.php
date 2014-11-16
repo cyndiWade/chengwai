@@ -411,10 +411,11 @@ class AccountAction extends MediaBaseAction {
      */
     function addBlank()
     {
-        $id = I('id', 0, 'intval');
-        $truename = I('truename', '', 'setString');
-        $cardtype = I('cardtype', 0, 'intval');
-        $account = I('account', '', 'setString');
+        $id 		= I('id', 0, 'intval');
+        $truename 	= I('truename', '', 'setString');
+        $cardtype 	= I('cardtype', 0, 'intval');
+        $account 	= I('account', '', 'setString');
+        $bank 		= I('bank', '', 'setString');
         
         if (empty($truename)) {
             parent::callback(0, '真实姓名错误，请填写正确的真实姓名!');
@@ -437,6 +438,7 @@ class AccountAction extends MediaBaseAction {
                 'cardtype'  => $cardtype,
                 'card'      => $account,
                 'truename'  => $truename,
+                'bank'  	=> $bank,
             );
             $status = $blankModel->where($where)->save($datas);
             $status = ($status !== false) ? true : false;
@@ -445,6 +447,7 @@ class AccountAction extends MediaBaseAction {
                 'user_id'   => $userInfos['id'],
                 'cardtype'  => $cardtype,
                 'card'      => $account,
+                'bank'  	=> $bank,
                 'truename'  => $truename,
                 'addtime'   => $_SERVER['REQUEST_TIME'],
             );

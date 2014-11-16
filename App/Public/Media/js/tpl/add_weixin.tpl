@@ -42,7 +42,7 @@
             </div>
             <p data-bind="css: gender_distribution_male.error() || gender_distribution_female.error() ? 'error' : 'correct'" class="cBox_tip">
                 <span data-bind="text: gender_distribution_male.error() || gender_distribution_female.error()"></span>
-                <a href="/help/search/index/key/sex_range" target="_blank">如何查看微信公众账号的“性别分布”？</a></p>
+                </p>
         </td>
       </tr>
       <tr>

@@ -20,7 +20,7 @@
                     <h4><img class="fl" src="{$global_tpl_view.Group_Resource_Path}images/media_icon01.png"><b class="fl">{$item.title}</b></h4>
                     <ul class="helpnav l">
                         <volist name="item.son" id="item1">
-                        <li <eq name="item1.id" value="$currentid">class="on"</eq>><a href="{:U('/Media/Help/index', array('id' => $item1['id']))}">{$item1.title}</a></li>
+                        <li <eq name="item1.id" value="$currentid">class="on"</eq>><a href="{:U('/Media/Help/index', array('type' => $item1['type'], 'id' => $item1['id']))}">{$item1.title|String::msubstr=0, 12, 'UTF-8', false}</a></li>
                         </volist>
                     </ul>
                 </div>

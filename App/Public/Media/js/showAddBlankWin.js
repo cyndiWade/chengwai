@@ -120,6 +120,8 @@ define(function (require) {
         
         // 帐号
         validation.account = ko.observable((data && data.account) || '');
+		
+		validation.bank = ko.observable((data && data.bank) || '');
         
         //类型转换判断
         ko.computed(function(){
@@ -134,6 +136,7 @@ define(function (require) {
                     }
                 };
             }());
+			(cardtype == 1) ? $('.blanktype').show() : $('.blanktype').hide();
         });
         validation.account.init_prompt = "请输入正确的帐号！";
         validation.account.focus_prompt = "请输入正确的帐号！";

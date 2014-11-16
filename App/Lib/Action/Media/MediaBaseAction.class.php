@@ -19,7 +19,8 @@ class MediaBaseAction extends AppBaseAction {
 		
 		//初始化用户数据
 		$this->check_system_info();
-
+		
+		$this->getHeaderInfo();
 	}
 	
 	
@@ -130,8 +131,34 @@ class MediaBaseAction extends AppBaseAction {
 		$Verify->save_verify_status($shp_info['id']);
 		return array('status'=>true,'msg'=>'验证通过');
 	}
-    	
+	
+	/**
+	 * 获取header头部公共数据
+	 * 
+	 * @author lurongchang
+	 * @date   2014-11-16
+	 * @return void
+	 */
+	private function getHeaderInfo()
+	{
+		// 平台数量
+		$where = array(
+			'users_id' => $this->oUser->id
+		);
+		$newsNums = M('AccountNews')->where($where)->count();
+		$weiboNums = M('AccountWeibo')->where($where)->count();
+		$weixinNums = M('AccountWeixin')->where($where)->count();
+		$this->typeNums = ($newsNums ? 1 : 0) + ($weiboNums ? 1 : 0) + ($weixinNums ? 1 : 0);
+		
+		// 昨日订单数
+		$yesterday = strtotime(date('Y-m-d', $_SERVER['REQUEST_TIME'] - 86400));
+		$where = array(
+			'users_id' => $this->oUser->id,
+			'create_time' => array('BETWEEN', array($yesterday, $yesterday +86399))
+		);
+		$newsOrderNums =  M('GeneralizeNewsOrder')->where($where)->count();
+		$weiboOrderNums =  M('GeneralizeOrder')->where($where)->count();
+		$weixinOrderNums =  M('GeneralizeWeixinOrder')->where($where)->count();
+		$this->yesterdayOrder = $newsOrderNums + $weiboOrderNums + $weixinOrderNums;
+	}
 }
-
-
-?>

@@ -249,7 +249,7 @@ class SocialAccountAction extends MediaBaseAction {
                     "is_extend" => $val['is_yg_status'],
                     "self_register" => 1,
                     // 是否审核
-                    "is_verify" => $val['audit_status'],
+                    "is_verify" => $val['status'],
                     // 订单授权状态 1授权正常 2未授权 3即将过期  4授权过期
                     "is_auth" => 2,
                     "is_auth_ds" => 2,
@@ -595,7 +595,7 @@ class SocialAccountAction extends MediaBaseAction {
                                     'users_id'          => $userInfos['id'],
                                     'pt_type'           => $typeOfPortal,
                                     // 默认待审核
-                                    'audit_status'      => 0,
+                                    'status'      => 0,
                                     'account_name'      => $accountName,
                                     'web_type'          => $included,
                                     'money'             => $price,
@@ -774,7 +774,7 @@ class SocialAccountAction extends MediaBaseAction {
                 $userInfos = parent::get_session('user_info');
                 $datas = array(
                     // 默认待审核
-                    'audit_status'  => 0,
+                    'status'  => 0,
                     'users_id'      => $userInfos['id'],
                     'is_celebrity'  => intval($apiInfos['verified']),
                     'pt_type'       => ($weiboType == 1) ? 1: 2,
@@ -875,7 +875,7 @@ class SocialAccountAction extends MediaBaseAction {
                     'users_id'          => $userInfos['id'],
                     'pt_type'           => 1,
                     // 默认待审核
-                    'audit_status'      => 0,
+                    'status'      => 0,
                     'account_name'      => $weiboName,
                     'fans_num'          => $followersCount,
                     'dtb_money'         => $price,
@@ -989,7 +989,7 @@ class SocialAccountAction extends MediaBaseAction {
                         // 'big_type'      => 1,
                         'pt_type'       => $typeOfPortal,
                         // 默认待审核
-                        'audit_status'  => 0,
+                        'status'  => 0,
                         'account_name'  => $weiboId,
                         'web_type'      => $isWebSiteIncluded,
                         'money'         => $retweetPrice,
@@ -1124,7 +1124,7 @@ class SocialAccountAction extends MediaBaseAction {
                 4 => 'AccountNews',
             );
             $accountModel = $this->db[$accountDB[$accountType]];
-            $status = $accountModel->where(array('id' => $accountId))->getField('audit_status');
+            $status = $accountModel->where(array('id' => $accountId))->getField('status');
             $statusName = array('待审核', '审核通过', '审核失败');
             echo json_encode(array(
                 'error' => $statusName[$status]

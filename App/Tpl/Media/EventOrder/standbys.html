@@ -31,12 +31,12 @@
                 </div>
                 <div class="box01-user l">
                     <div class="top-user l">
-                        <a href="#" class="more fr">更多》</a><b>通告</b>
+                        <a target="_blank" href="{:U('/Media/Help/index', array('type' => 2))}" class="more fr">更多》</a><b>通告</b>
                     </div>
                     <ul class="noticelist fl">
-                        <li><a href="#">有关订单图片无有关订单图片无法打开的免责法打开的免责</a><img src="{$global_tpl_view.Group_Resource_Path}images/new.gif" class="new fl" /></li>
-                        <li><a href="#">有关订单图片无法打开的免责</a></li>
-                        <li><a href="#">有关订单图片无法打开的免责</a></li>
+                        <volist name="view_data.notices" id="item">
+						<li><a target="_blank" href="{:U('/Media/Help/index', array('type' => $item['type'], 'id' => $item['id']))}">{$item.title}</a><if condition="date('Y-m-d', $item['addtime']) eq date('Y-m-d')"><img src="{$global_tpl_view.Group_Resource_Path}images/new.gif" class="new fl" /></if></li>
+						</volist>
                     </ul>
                 </div>
                 <div class="box01-user l">

@@ -200,6 +200,7 @@ define(function (require) {
                             text: "确定",
                             handler: function () {
                                 this.close();
+								location.reload();
                             }
                         }
                     ]

@@ -23,6 +23,13 @@
             <p data-bind="html: account.notice_text, css: account.notice_css" class="cBox_tip"></p>
         </td>
       </tr>
+      <tr class="blanktype" style="display:none">
+        <td class="t1"><span><i>*</i><strong>开户行：</strong></span></td>
+        <td class="t2">
+            <input data-bind="validThreeState: bank, value: bank" type="text" class="text text-error" name="bank"/>
+            <p data-bind="html: bank.notice_text, css: bank.notice_css" class="cBox_tip"></p>
+        </td>
+      </tr>
     </table>
     </form>
 </div>

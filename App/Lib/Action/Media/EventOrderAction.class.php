@@ -44,6 +44,7 @@ class EventOrderAction extends MediaBaseAction {
 		$userInfos = parent::get_session('user_info');
         $userMediaModel = $this->db['UserMedia'];
         $userMediaInfo = $userMediaModel->getInfoByIds($userInfos['id']);
+        $userMediaInfo = $userMediaInfo ? reset($userMediaInfo) : array();
         
         // 收藏或者黑名单数量 
         $mediaWeiboList		= D("AccountWeibo")->getListsByUserID($this->oUser->id);
@@ -126,9 +127,9 @@ class EventOrderAction extends MediaBaseAction {
             $accountNums += count($newsInfo);
             foreach ($newsInfo AS $info) {
                 $notallowNums += $info['receiving_status'] ? 0 : 1;
-                if ($info['audit_status'] == 2) {
+                if ($info['status'] == 2) {
                     $auditFailNums += 1;
-                } elseif ($info['audit_status'] == 0) {
+                } elseif ($info['status'] == 0) {
                     $auditWaitNums += 1;
                 }
                 $leaveNums += $info['tmp_receiving_status'] ? 1 : 0;
@@ -142,9 +143,9 @@ class EventOrderAction extends MediaBaseAction {
             foreach ($weiboInfo AS $info) {
                 $fansNums += $info['fans_num'];
                 $notallowNums += $info['receiving_status'] ? 0 : 1;
-                if ($info['audit_status'] == 2) {
+                if ($info['status'] == 2) {
                     $auditFailNums += 1;
-                } elseif ($info['audit_status'] == 0) {
+                } elseif ($info['status'] == 0) {
                     $auditWaitNums += 1;
                 }
                 $leaveNums += $info['tmp_receiving_status'] ? 1 : 0;
@@ -162,9 +163,9 @@ class EventOrderAction extends MediaBaseAction {
             foreach ($weixinInfo AS $info) {
                 $fansNums += $info['fans_num'];
                 $notallowNums += $info['receiving_status'] ? 0 : 1;
-                if ($info['audit_status'] == 2) {
+                if ($info['status'] == 2) {
                     $auditFailNums += 1;
-                } elseif ($info['audit_status'] == 0) {
+                } elseif ($info['status'] == 0) {
                     $auditWaitNums += 1;
                 }
                 $leaveNums += $info['tmp_receiving_status'] ? 1 : 0;
@@ -178,6 +179,14 @@ class EventOrderAction extends MediaBaseAction {
         }  
         
 		$arrayTotal = $this->getTotal($mediaWeiboList, $mediaWeixinList, $mediaNewsList);
+		
+		// 通告
+		$noticeWhere = array(
+			'parent_id' 	=> 37, 
+			'show_status' 	=> 1,
+			'is_del' 		=> 0
+		);
+		$notices = M('Help')->where($noticeWhere)->limit(3)->order('id DESC')->select();
 
         parent::data_to_view(array(
 			//二级导航
@@ -207,7 +216,8 @@ class EventOrderAction extends MediaBaseAction {
             'noTodayShotNums' => $noTodayShotNums,
             'orderEvaluate'=>$allDatas,
             'mediaTotal' => $arrayTotal['total'],
-            'mediaPrice' => $arrayTotal['price']
+            'mediaPrice' => $arrayTotal['price'],
+            'notices' => $notices
 		)); 
 		$this->display('standbys');
 	}
@@ -297,7 +307,7 @@ class EventOrderAction extends MediaBaseAction {
 		//状态
 		if($new_array['order_status']!='')
 		{
-			$where['audit_status'] = intval($new_array['order_status']);
+			$where['status'] = intval($new_array['order_status']);
 		}
 		//账号
 		if($new_array['search_account']!='')
@@ -330,7 +340,7 @@ class EventOrderAction extends MediaBaseAction {
 			$show       = $Page->show();
  
 			$list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."generalize_order go on ga.generalize_id = go.id")->where($where)->limit($Page->firstRow.','.$Page->listRows)
-					->order('ga.id desc')->field('`generalize_id`, `account_type`, `account_id`, `price`, `audit_status`,  go.`id` as order_id, ga.id,
+					->order('ga.id desc')->field('`generalize_id`, `account_type`, `account_id`, `price`, `status`,  go.`id` as order_id, ga.id,
 												 `tfpt_type`, `fslx_type`, `ryg_type`, `hd_name`, `start_time`, `all_price`, `status`')->select();
 			if($list)
 			{
@@ -394,7 +404,7 @@ class EventOrderAction extends MediaBaseAction {
 		$order_info = $GeneralizeOrder->getOrderInfo($order_id);
 		 
 		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_weibo wb on ga.account_id = wb.id")->where($where)
-					->order('ga.id desc')->field('ga.id, `price`, ga.`audit_status`,`account_name`')->select();
+					->order('ga.id desc')->field('ga.id, `price`, ga.`status`,`account_name`')->select();
 					 
 		//统计
 		$count      	= $GeneralizeAccount->where($where)->count();
@@ -460,7 +470,7 @@ class EventOrderAction extends MediaBaseAction {
 		//状态
 		if($new_array['order_status']!='')
 		{
-			$where['audit_status'] = intval($new_array['order_status']);
+			$where['status'] = intval($new_array['order_status']);
 		}
 		//账号
 		if($new_array['search_account']!='')
@@ -493,7 +503,7 @@ class EventOrderAction extends MediaBaseAction {
 			$show       = $Page->show();
  
 			$list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."generalize_weixin_order go on ga.generalize_id = go.id")->where($where)->limit($Page->firstRow.','.$Page->listRows)
-					->order('ga.id desc')->field('`generalize_id`, `account_id`, `price`, `audit_status`,  go.`id` as order_id, ga.id,
+					->order('ga.id desc')->field('`generalize_id`, `account_id`, `price`, `status`,  go.`id` as order_id, ga.id,
 												 `ggw_type`, `yxd_name`, `title`, `start_time`, `status`')->select();
 					 
 			if($list)
@@ -557,7 +567,7 @@ class EventOrderAction extends MediaBaseAction {
 		$order_info = $GeneralizeOrder->getOrderInfo($order_id);
 		 
 		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_weixin wb on ga.account_id = wb.id")->where($where)
-					->order('ga.id desc')->field('ga.id, `price`, ga.`audit_status`,`account_name`')->select();
+					->order('ga.id desc')->field('ga.id, `price`, ga.`status`,`account_name`')->select();
 				 
 		//统计
 		$count      	= $GeneralizeAccount->where($where)->count();
@@ -623,7 +633,7 @@ class EventOrderAction extends MediaBaseAction {
 		//状态
 		if($new_array['order_status']!='')
 		{
-			$where['audit_status'] = intval($new_array['order_status']);
+			$where['status'] = intval($new_array['order_status']);
 		}
 		//账号
 		if($new_array['search_account']!='')
@@ -656,7 +666,7 @@ class EventOrderAction extends MediaBaseAction {
 			$show       = $Page->show();
  
 			$list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."generalize_news_order go on ga.generalize_id = go.id")->where($where)->limit($Page->firstRow.','.$Page->listRows)
-					->order('ga.id desc')->field('`generalize_id`, `account_id`, `price`, `audit_status`, go.`id` as order_id, ga.id,
+					->order('ga.id desc')->field('`generalize_id`, `account_id`, `price`, `status`, go.`id` as order_id, ga.id,
 												 `title`, `start_time`, `web_url`, `bz_info`, `zf_info`, `create_time`, `status`')->select();
 			
 			if($list)
@@ -720,7 +730,7 @@ class EventOrderAction extends MediaBaseAction {
 		$order_info = $GeneralizeOrder->getOrderInfo($order_id);
 		
 		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_news wb on ga.account_id = wb.id")->where($where)
-					->order('ga.id desc')->field('ga.id, `price`, ga.`audit_status`,`account_name`')->select();
+					->order('ga.id desc')->field('ga.id, `price`, ga.`status`,`account_name`')->select();
 					 
 		//统计
 		$count      	= $GeneralizeAccount->where($where)->count();
@@ -1038,15 +1048,15 @@ class EventOrderAction extends MediaBaseAction {
 		
         //微博
 		$listWeibo	= $weiboAccountModel->alias('ga')->join(" ".C('db_prefix')."generalize_order go on ga.generalize_id = go.id")->where($whereWeibo)
-					->order('ga.id desc')->field('`generalize_id`,  `account_id`, `price`, `audit_status`,  go.`id` as order_id, ga.id,
+					->order('ga.id desc')->field('`generalize_id`,  `account_id`, `price`, `status`,  go.`id` as order_id, ga.id,
 												 `start_time`, `status`')->select();
 		//微信
 		$listWeixin = $weixinAccountModel->alias('ga')->join(" ".C('db_prefix')."generalize_weixin_order go on ga.generalize_id = go.id")->where($whereWeixin)
-					->order('ga.id desc')->field('`generalize_id`,  `price`, `audit_status`,  go.`id` as order_id, ga.id,
+					->order('ga.id desc')->field('`generalize_id`,  `price`, `status`,  go.`id` as order_id, ga.id,
 												  `start_time`, `status`')->select();
 		//新闻媒体
 		$listNew 	= $newsAccountModel->alias('ga')->join(" ".C('db_prefix')."generalize_news_order go on ga.generalize_id = go.id")->where($whereNews)
-					->order('ga.id desc')->field('`generalize_id`,  `price`, `audit_status`, go.`id` as order_id, ga.id,
+					->order('ga.id desc')->field('`generalize_id`,  `price`, `status`, go.`id` as order_id, ga.id,
 												 `start_time`, `status`')->select();
 					 $beginToday=mktime(0,0,0,date('m'),date('d'),date('Y'));
 
@@ -1057,7 +1067,7 @@ class EventOrderAction extends MediaBaseAction {
 			{
 				if($value['start_time'] >= $startYesterday && $value['start_time'] <= $endYesterday)
 				{
-					switch ($value['audit_status'])
+					switch ($value['status'])
 					{
 						case 7:
 							$countFinshedDay ++;
@@ -1088,7 +1098,7 @@ class EventOrderAction extends MediaBaseAction {
 				}
 				if($value['start_time'] >= $startWeek && $value['start_time'] <= $endWeek)
 				{
-					switch ($value['audit_status'])
+					switch ($value['status'])
 					{
 						case 7:
 							$countFinshedWeek ++;
@@ -1119,7 +1129,7 @@ class EventOrderAction extends MediaBaseAction {
 				}
 				if ($value['start_time'] >= $startMonth && $value['start_time'] <= $endMonth)
 				{
-					switch ($value['audit_status'])
+					switch ($value['status'])
 					{
 						case 7:
 							$countFinshedMonth ++;
@@ -1156,7 +1166,7 @@ class EventOrderAction extends MediaBaseAction {
 			{
 				if($value['start_time'] >= $startYesterday && $value['start_time'] <= $endYesterday)
 				{
-					switch ($value['audit_status'])
+					switch ($value['status'])
 					{
 						case 7:
 							$countFinshedDay ++;
@@ -1187,7 +1197,7 @@ class EventOrderAction extends MediaBaseAction {
 				}
 				if($value['start_time'] >= $startWeek && $value['start_time'] <= $endWeek)
 				{
-					switch ($value['audit_status'])
+					switch ($value['status'])
 					{
 						case 7:
 							$countFinshedWeek ++;
@@ -1218,7 +1228,7 @@ class EventOrderAction extends MediaBaseAction {
 				}
 				if ($value['start_time'] >= $startMonth && $value['start_time'] <= $endMonth)
 				{
-					switch ($value['audit_status'])
+					switch ($value['status'])
 					{
 						case 7:
 							$countFinshedMonth ++;
@@ -1256,7 +1266,7 @@ class EventOrderAction extends MediaBaseAction {
 			{
 				if($value['start_time'] >= $startYesterday && $value['start_time'] <= $endYesterday)
 				{
-					switch ($value['audit_status'])
+					switch ($value['status'])
 					{
 						case 7:
 							$countFinshedDay ++;
@@ -1287,7 +1297,7 @@ class EventOrderAction extends MediaBaseAction {
 				}
 				if($value['start_time'] >= $startWeek && $value['start_time'] <= $endWeek)
 				{
-					switch ($value['audit_status'])
+					switch ($value['status'])
 					{
 						case 7:
 							$countFinshedWeek ++;
@@ -1318,7 +1328,7 @@ class EventOrderAction extends MediaBaseAction {
 				}
 				if ($value['start_time'] >= $startMonth && $value['start_time'] <= $endMonth)
 				{
-					switch ($value['audit_status'])
+					switch ($value['status'])
 					{
 						case 7:
 							$countFinshedMonth ++;
