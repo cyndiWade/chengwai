@@ -159,6 +159,7 @@ WeixinOrderAddGeneralize.prototype.init = function () {
 	this.title = $('input[name=title]');	//系统标题
 	this.zhaiyao = $('textarea[name=zhaiyao]');	//系统摘要
 	this.zw_info = $('textarea[name=zw_info]');	//正文
+	this.ly_url = $('input[name=ly_url]');	//来源网址
 	
 	//pop
 	this.pop_title = $('.pop_title');
@@ -166,6 +167,7 @@ WeixinOrderAddGeneralize.prototype.init = function () {
 	this.pop_zhaiyao = $('.pop_zhaiyao');
 	this.pop_dtw = $('.pop_dtw');
 	this.pop_photoview = $('.pop_photoview');
+	this.pop_ly_url = $('.pop_ly_url');
 	
 }
 
@@ -234,19 +236,26 @@ WeixinOrderAddGeneralize.prototype.show_phoneview_fn = function ($type) {
 	_father_this.pop_zhaiyao.text(zhaiyao_info);
 	
 	
+	if (_father_this.ly_url.val() != '') {
+		_father_this.pop_ly_url.find('a').attr('href',_father_this.ly_url.val())
+		_father_this.pop_ly_url.show(); 
+	} else {
+		_father_this.pop_ly_url.hide(); 
+	}
+	//pop_ly_url
+	
 	//public——css
 	_father_this.top_view_li.removeClass('select');
 	_father_this.part01_view.hide();
 	_father_this.part01_detail.hide();
 	_father_this.top_view_li.hide();
 	
-	
 	//var stemTxt = CKEDITOR.instances.TextArea1.document.getBody().getText(); //取得纯文本 
 	
 	var stemHtml = CKEDITOR.instances.TextArea1.getData();	//获取HTML数据
 	
 	_father_this.pop_photoview.html(stemHtml);
-	//alert(stemHtml)
+	
 	
 	//单图文
 	if ($type == 1) {
@@ -295,6 +304,7 @@ WeixinOrderAddGeneralize.prototype.show_phoneview_fn = function ($type) {
 		_father_this.pop_title.text(default_info);
 		
 		_father_this.pop_dtw.text(default_info);
+		
 		
 		for (var i=1;i<=_father_this.pop_dtw.size();i++) {
 			_father_this.pop_dtw.eq(i).text(title_info);
