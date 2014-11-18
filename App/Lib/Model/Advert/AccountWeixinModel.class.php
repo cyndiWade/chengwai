@@ -86,6 +86,7 @@
 			
 			if($addvalue['ids']!='')
 			{
+				$where['w.id'] = array('IN',$addvalue['ids']);
 				$list = $this->where($where)
 				->table('app_account_weixin as w')
 				->join('app_grassroots_weixin as b on w.id = b.weixin_id')
@@ -336,7 +337,7 @@
 
 			if($addvalue['ids']!='')
 			{
-				//差集统计长度
+				$where['w.id'] = array('IN',$addvalue['ids']);
 				$list = $this->where($where)
 				->table('app_account_weixin as w')
 				->join('app_celeprityindex_weixin as b on w.id = b.weixin_id')

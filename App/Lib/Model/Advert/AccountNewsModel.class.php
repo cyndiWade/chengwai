@@ -84,7 +84,7 @@
 
 			if($addvalue['ids']!='')
 			{
-				//差集统计长度
+				$where['w.id'] = array('IN',$addvalue['ids']);
 				$list = $this->where($where)
 				->table('app_account_news as w')
 				->join('app_index_news as b on w.id = b.news_id')
