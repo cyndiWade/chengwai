@@ -62,7 +62,17 @@ class PassAction extends IndexBaseAction {
 		$id = $this->db['Users']->where(array('account'=>$name,'type'=>$type))->getField('id');
 		if($id)
 		{
-			parent::callback(C('STATUS_SUCCESS'),'ok',array(),array('goto_url'=>U('Index/Pass/phone',array('name'=>$name,'usd'=>$id))));
+			if($type == 1){
+				$phone_number = $this->db['UserMedia']->where(array('users_id'=>$id))->getField('iphone');
+			}else{
+				$phone_number = $this->db['UserAdvertisement']->where(array('users_id'=>$id))->getField('contact_phone');
+			}
+			if($phone_number!='')
+			{
+				parent::callback(C('STATUS_SUCCESS'),'ok',array(),array('goto_url'=>U('Index/Pass/phone',array('name'=>$name,'usd'=>$id))));
+			}else{
+				parent::callback(C('STATUS_OTHER'),'您未预留手机号，请联系客服!');
+			}
 		}else{
 			parent::callback(C('STATUS_OTHER'),'用户不存在!');
 		}
