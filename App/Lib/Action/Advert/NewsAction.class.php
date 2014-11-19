@@ -131,7 +131,12 @@ class NewsAction extends AdvertBaseAction {
 		$show       = $Page->show();
 		$list = $GeneralizeNewsOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
 		->order('id desc')->field('id,title,start_time,web_url,all_price,status,create_time')->select();
-		
+		$new_list_id = array();
+		foreach($list as $value)
+		{
+			$new_list_id[] =$value['id'];
+		}
+		$generalize_id_num = $this->db['GeneralizeNewsAccount']->getListNum($new_list_id);
 		$Order_Status = C('Order_Status');
 		if ($list == true) {
 			foreach ($list as $key=>$val) {
@@ -144,6 +149,7 @@ class NewsAction extends AdvertBaseAction {
 				'search_name' => $new_array['search_name'],
 				'start_time' => $new_array['start_time'],
 				'end_time' => $new_array['end_time'],
+				'generalize_id_num'=>$generalize_id_num,
 				'status_0' => empty($number[0]) ? 0 : $number[0],
 				'status_1' => empty($number[1]) ? 0 : $number[1],
 				'status_2' => empty($number[2]) ? 0 : $number[2],
@@ -245,7 +251,6 @@ class NewsAction extends AdvertBaseAction {
 			if(intval($_POST['order_id']!=''))
 			{
 				$status = $this->db['GeneralizeNewsAccount']->insertAll($_POST,$this->oUser->id,$this->global_finance['news_proportion']);
-				
 				if ($status == true) {
 					parent::updateMoney($this->oUser->id);
 					parent::callback(C('STATUS_SUCCESS'),'下单成功!',array('go_to_url'=>U('Advert/News/generalize_activity')));
