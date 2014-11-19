@@ -502,8 +502,8 @@
 						return $value['dtwdet_money'];
 					break;
 					case 4:
-						$value = $this->where(array('id'=>$account_id))->field('dtyqtwz_money')->find();
-						return $value['dtyqtwz_money'];
+						$value = $this->where(array('id'=>$account_id))->field('dtwqtwz_money')->find();
+						return $value['dtwqtwz_money'];
 					break;
 				}
 			}

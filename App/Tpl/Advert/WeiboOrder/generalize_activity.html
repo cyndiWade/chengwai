@@ -37,22 +37,24 @@
 			</div>
 			<table class="tab01-addorder l">
 				<tr>
-					<th class="t1" align="center">活动ID</th>
-					<th class="t2" align="center">活动名称</th>
+					<th class="t1" align="center">订单号</th>
+					<th class="t2" align="center">订单名称</th>
 					<th class="t3" align="center">平台</th>
+					<th class="t3" align="center">媒体数</th>
 					<th class="t4" align="center">发送类型</th>
 					<th class="t5" align="center">活动时间</th>
 					<th class="t5" align="center">创建时间</th>
-					<th class="t6" align="center">实际消费</th>
+					<th class="t6" align="center">消费金额</th>
 					<th class="t7" align="center">订单状态</th>
 					<th class="t3" align="center">软硬广</th>
 					<th class="last" align="center">操作</th>
 				</tr>
 				<volist name="view_data.list" id="vo">
 					<tr class="now_tr_{$vo['id']}">
-						<td class="t1" align="center">{$vo['id']}</td>
+						<td class="t1" align="center">{$vo['create_time']}{$vo['id']}</td>
 						<td class="t2" align="center">{$vo['hd_name']}</td>
 						<td class="t3" align="center">{$vo['tfpt_type']|getPt}</td>
+						<td class="t3" align="center">{$view_data[generalize_id_num][$vo['id']]}</td>
 						<td class="t4" align="center">{$vo['fslx_type']|getFsT}</td>
 						<td class="t5" align="center">{$vo['start_time']|date="Y-m-d H:i:s",###}</td>
 						<td class="t5" align="center">{$vo['create_time']|date="Y-m-d H:i:s",###}</td>
@@ -63,7 +65,7 @@
 							<div class="ctrl">
 								<!-- <span>复制</span> |  -->
 								<span><a href="{:U('Advert/WeiboOrder/generalize_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
-								<if condition="($vo['status'] LT 4)">
+								<if condition="($vo['status'] LT 4 && $vo['status'] neq 3)">
 									<span><a href="{:U('Advert/Weibo/caogen_weibo',array('order_id'=>$vo['id'],'pt_type'=>$vo['tfpt_type']))}">添加媒体</a></span>
 									<span class="delete_order" data-id="{$vo['id']}">删除</span>
 								</if>

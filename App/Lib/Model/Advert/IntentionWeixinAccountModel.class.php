@@ -40,7 +40,7 @@
 		}
 
 		//获得账号数量
-		public function getListNum($array,$users_id)
+		public function getListNum($array)
 		{
 			if($array!='')
 			{

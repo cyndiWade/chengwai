@@ -60,7 +60,7 @@
 					//用户ID
 					$arr['users_id'] = $AccountNews['users_id'];
 					$arr['price'] = $AccountNews['money'];
-					$status = $this->add($arr);
+					$this->add($arr);
 				}
 				
 			}
@@ -78,7 +78,7 @@
 			foreach($sum_price as $price)
 			{
 				//获得未计算的小订单价格
-				if($price['audit_status']==0)
+				if($price['audit_status']==0 || $price['audit_status']==1)
 				{
 					$all_price += $price['price'] + $price['rebate'];
 				}
@@ -111,7 +111,7 @@
 
 				$add_arr = array(
 					'users_id' => $id,
-					'shop_number' => 'XF'.time(),
+					'shop_number' => 'DJ'.time(),
 					'money' => $all_price,
 					'type' => 4,
 					'adormed' => 2,
@@ -124,7 +124,9 @@
 
 
 				$all_status = array('audit_status'=>$Account_Order_Status[3]['status']);
-				$this->where(array('generalize_id'=>$new_array['order_id']))->save($all_status);
+				$old_where['generalize_id'] = array('eq',$new_array['order_id']);
+				$old_where['audit_status'] = array(array('eq',0),array('eq',1),'or');
+				$this->where($old_where)->save($all_status);
 				$gen_arr = array('status'=>$Order_Status[4]['status']);
 				D('GeneralizeNewsOrder')->where(array('id'=>$new_array['order_id']))->save($gen_arr);
 
@@ -135,7 +137,9 @@
 				$update_status = array('status'=>$Order_Status[2]['status']);
 				$GeneralizeNewsOrder->where(array('id'=>$arr['generalize_id']))->save($update_status);
 				$audit_status = array('audit_status'=>$Account_Order_Status[1]['status']);
-				$this->where(array('generalize_id'=>$arr['generalize_id']))->save($audit_status);
+				$old_where['generalize_id'] = array('eq',$new_array['order_id']);
+				$old_where['audit_status'] = array(array('eq',0),array('eq',1),'or');
+				$this->where($old_where)->save($audit_status);
 				return false;
 			}
 		}
@@ -293,5 +297,29 @@
 		// 	}
 		// }
 
+		//获得账号数量
+		public function getListNum($array)
+		{
+			if($array!='')
+			{
+				$where['generalize_id'] = array('IN',$array);
+				$val_list = $this->where($where)->group('generalize_id')
+				->field('count(id) as number,generalize_id')->select();
+			
+				$last_array = array();
+				foreach($val_list as $value)
+				{
+					$last_array[$value['generalize_id']] = $value['number'];
+				}
+				foreach($array as $val)
+				{
+					if(!in_array($val,array_keys($last_array)))
+					{
+						$last_array[$val] = '0';
+					}
+				}
+				return $last_array;
+			}
+		}
 
 	}
