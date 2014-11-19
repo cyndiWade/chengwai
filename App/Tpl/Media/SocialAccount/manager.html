@@ -17,7 +17,7 @@ seajs.on('exec', function(data) {
         doT = data.exports;
     } else if (data.uri===seajs.resolve('plupload')) {
         $.pluploadOpts.url = '{:U('/Media/Public/uploadImg')}';
-        $.pluploadOpts.viewBasePath = '{$Think.config.PUBLIC_VISIT.domain}{$Think.config.PUBLIC_VISIT.dir}';
+        $.pluploadOpts.viewBasePath = '{$Think.config.PUBLIC_VISIT.domain}{$Think.config.PUBLIC_VISIT.dir}images/';
     }
 });
 
@@ -283,7 +283,7 @@ function tmplColWeiboNameFromAccount(account){
 <php>
 if ($view_data['type'] == 3){
     $needJS = array('information' => 'weixin.js', 'update' => 'update_price.js');
-    echo 'var weixin_min_followers = 500;';
+    echo 'var weixin_min_followers = 1000;';
 } elseif ($view_data['type'] == 4) {
     $needJS = array('information' => 'media_news.js');
 } else {

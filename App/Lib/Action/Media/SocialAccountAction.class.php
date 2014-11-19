@@ -656,7 +656,7 @@ class SocialAccountAction extends MediaBaseAction {
         }
         // 粉丝数不足
         $fansNum = 0;
-        $minFansNums = 2000;
+        $minFansNums = 1000;
         if ($fansNum < $minFansNums) {
             $msg = '该账号的粉丝不足' . $minFansNums;
             parent::callback(1, '', array(

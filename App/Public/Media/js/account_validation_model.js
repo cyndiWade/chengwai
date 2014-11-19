@@ -318,14 +318,14 @@ define(function (require) {
                 return {
                     required: {message: '此处为必填项！'},
                     digit: {message: '必须为整数！'},
-                    min: {params: 500, message: '粉丝数必须大于等于500！'}
+                    min: {params: 1000, message: '粉丝数必须大于等于1000！'}
                 };
             }else if(weibo_type != 1 && weibo_type != 2 && weibo_type != 4 && weibo_type != 17 && weibo_type != 5 && weibo_type != 19){
                 //其他
                 return {
                     required: {message: '粉丝数不能为空！'},
                     digit: {message: '请输入正确的粉丝数！'},
-                    min: {params: 2000, message: '粉丝数必须大于等于2000！'}
+                    min: {params: 1000, message: '粉丝数必须大于等于1000！'}
                 };
             }
         }());
