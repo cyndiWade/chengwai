@@ -550,6 +550,8 @@ class SocialAccountAction extends MediaBaseAction {
                                 $link           = setString(trim($temp_info[13]));
                                 $typeOfPortal   = setString(trim($temp_info[14]));
                                 $mediaShot      = setString(trim($temp_info[15]));
+                                $lenlimit      	= intval(trim($lenlimit[16]));
+                                $industries     = intval(trim($temp_info[17]));
                                 
                                 if (empty($accountName) || empty($channalName) || empty($price)
                                 || (!empty($exampleUrl) && !Validate::checkUrl($exampleUrl)) || (!empty($mediaShot) && !Validate::checkUrl($mediaShot))) {
@@ -560,7 +562,10 @@ class SocialAccountAction extends MediaBaseAction {
                                 $included = in_array($included, array(0, 1, 2, 3, 4, 5, 6, 7, 8)) ? $included : 0;
                                 $needSource = in_array($needSource, array(0, 1)) ? $needSource : 0;
                                 $pressWeekly = in_array($pressWeekly, array(0, 1)) ? $pressWeekly : 0;
+                                $link = in_array($link, array(0, 1, 2, 3, 4, 5)) ? $link : 0;
                                 $typeOfPortal = in_array($typeOfPortal, array(0, 1, 2, 3, 4)) ? $typeOfPortal : 0;
+                                $lenlimit = in_array($lenlimit, array(0, 1, 2, 3, 4)) ? $lenlimit : 0;
+                                $industries = in_array($industries, array(0, 1, 2, 3, 4)) ? $industries : 0;
                                 
                                 $where = array(
                                     'account_name'  => $accountName,
@@ -610,6 +615,9 @@ class SocialAccountAction extends MediaBaseAction {
                                     'press_weekly'      => $pressWeekly,
                                     'url'               => $exampleUrl,
                                     'is_need_source'    => $needSource,
+                                    'is_need_source'    => $needSource,
+                                    'lenlimit'    		=> $lenlimit,
+                                    'industries'    	=> $industries,
                                     'create_time'       => $_SERVER['REQUEST_TIME'],
                                 );
                                 $insertId = $mediaNewsModel->add($insertData);
