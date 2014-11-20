@@ -949,6 +949,7 @@ class SocialAccountAction extends MediaBaseAction {
                 $isNeedSource       = I('is_need_source', '', 'intval');
                 $url                = I('url', '', 'setString');
                 $isPressWeekly      = I('is_press_weekly', '', 'intval');
+                $isTextLink      	= I('is_text_link', '', 'intval');
                 $typeOfPortal       = I('type_of_portal', '', 'intval');
                 $imgPath            = I('uploadImgMedia', '', 'setString');
                 
