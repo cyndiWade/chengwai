@@ -56,13 +56,51 @@
 		//统计确认和执行的数量
 		public function get_OrderInfo_num($id)
 		{
-			$val = $this->where(array('users_id'=>$id))->field('status')->select();
-			$new_val = array();
-			foreach($val as $v)
+			$val = $this->where(array('users_id'=>$id))->getField('status',0);
+			//已完成
+			$ywc = 0;
+			//拍单中
+			$pdz = 0;
+			//执行中
+			$zxz = 0;
+			//已拒单
+			$yjd = 0;
+			foreach($val as $value)
 			{
-				$new_val[] = $v['status'];
+				switch($value)
+				{
+					case 5:
+						$ywc++;
+					break;
+					case 4:
+						$zxz++;
+					break;
+					case 3:
+						$yjd++;
+					break;
+					case 2:
+						$pdz++;
+					break;
+					case 1:
+						$pdz++;
+					break;
+					case 0:
+						$pdz++;
+					break;
+				}
 			}
-			return array_count_values($new_val);
+			$sql = 'select count(b.generalize_id) as aid from app_generalize_order as a left join app_generalize_account as b on a.id = b.generalize_id where a.users_id = "'.$id.'" group by b.generalize_id';
+			$model = new Model();
+			$caogao_arr = $model->query($sql);
+			$caogao = 0;
+			foreach($caogao_arr as $v)
+			{
+				if($v['aid']==0)
+				{
+					$caogao++;
+				}
+			}
+			return array('ywc'=>$ywc,'pdz'=>$pdz,'zxz'=>$zxz,'yjd'=>$yjd,'caogao'=>$caogao);
 		}
 
 		//删除书数据

@@ -122,12 +122,11 @@ class WeixinOrderAction extends AdvertBaseAction {
 				'start_time' => $new_array['start_time'],
 				'end_time' => $new_array['end_time'],
 				'generalize_id_num'=>$generalize_id_num,
-				'status_0' => empty($number[0]) ? 0 : $number[0],
-				'status_1' => empty($number[1]) ? 0 : $number[1],
-				'status_2' => empty($number[2]) ? 0 : $number[2],
-				'status_3' => empty($number[3]) ? 0 : $number[3],
-				'status_4' => empty($number[4]) ? 0 : $number[4],
-				'status_5' => empty($number[5]) ? 0 : $number[5]
+				'ywc'=>$number['ywc'],
+				'pdz'=>$number['pdz'],
+				'zxz'=>$number['zxz'],
+				'yjd'=>$number['yjd'],
+				'caogao'=>$number['caogao'],
 		));
 		$this->display();
 	}
