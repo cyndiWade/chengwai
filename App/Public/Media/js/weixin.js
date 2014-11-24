@@ -196,7 +196,7 @@ define(function(require, exports) {
                     tmplPreprocessor: PreParseData,
                     tmpl: priceTpl
                 },
-                {
+               /* {
                     align: "left",
                     text: renderTitle("带号价", "daihaojia"),
                     dataIndex: "content_price",
@@ -204,7 +204,7 @@ define(function(require, exports) {
                     editable: isPriceEditable,
                     editHandler: editHandler,
                     formatter: formatters.price
-                },
+                },*/
 
                 {
                     align: "left",

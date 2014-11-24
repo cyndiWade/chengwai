@@ -1301,7 +1301,7 @@ define(function(require, exports) {
                         return doT.template($('#tmplIsEnableMicroTaskColumns').html())(row.cells);
                     }
                 },
-                {
+                /*{
                     align: "center",
                     // text: '<div id="autoSendTips"><span>订单</span><img id="order_auto_send" src="/resources/images/icon_tips.jpg" title="点击查看详情"><span><br>托管</span></div>',
                     text: renderTitleMiddelImg("订单", "order_auto_send", '<br/>托管'),
@@ -1333,7 +1333,7 @@ define(function(require, exports) {
                             return $(imgTip).append('<em class="no">否</em>');
                         }
                     }
-                },
+                },*/
                 {
                     align: "center",
                     text: '<span class="js_tour_detail">详情</span>',

@@ -305,9 +305,9 @@ class EventOrderAction extends MediaBaseAction {
 			$where['hd_name'] = array('like','%'.$new_array['search_name'].'%');
 		}
 		//状态
-		if($new_array['order_status']!='')
+		if($new_array['status']!='')
 		{
-			$where['status'] = intval($new_array['order_status']);
+			$where['ga.audit_status'] = intval($new_array['status']);
 		}
 		//账号
 		if($new_array['search_account']!='')
@@ -342,6 +342,8 @@ class EventOrderAction extends MediaBaseAction {
 			$list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."generalize_order go on ga.generalize_id = go.id")->where($where)->limit($Page->firstRow.','.$Page->listRows)
 					->order('ga.id desc')->field('`generalize_id`, `account_type`, `account_id`, `price`, `status`,  go.`id` as order_id, ga.id,
 												 `tfpt_type`, `fslx_type`, `ryg_type`, `hd_name`, `start_time`, `all_price`, `status`')->select();
+			
+			 
 			if($list)
 			{
 				$stutas_list = C('Account_Order_Status');
@@ -468,9 +470,9 @@ class EventOrderAction extends MediaBaseAction {
 			$where['yxd_name'] = array('like','%'.$new_array['search_name'].'%');
 		}
 		//状态
-		if($new_array['order_status']!='')
+		if($new_array['status']!='')
 		{
-			$where['status'] = intval($new_array['order_status']);
+			$where['ga.audit_status'] = intval($new_array['status']);
 		}
 		//账号
 		if($new_array['search_account']!='')
@@ -505,6 +507,7 @@ class EventOrderAction extends MediaBaseAction {
 			$list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."generalize_weixin_order go on ga.generalize_id = go.id")->where($where)->limit($Page->firstRow.','.$Page->listRows)
 					->order('ga.id desc')->field('`generalize_id`, `account_id`, `price`, `status`,  go.`id` as order_id, ga.id,
 												 `ggw_type`, `yxd_name`, `title`, `start_time`, `status`')->select();
+				 
 					 
 			if($list)
 			{
@@ -631,9 +634,9 @@ class EventOrderAction extends MediaBaseAction {
 			$where['title'] = array('like','%'.$new_array['search_name'].'%');
 		}
 		//状态
-		if($new_array['order_status']!='')
+		if($new_array['status']!='')
 		{
-			$where['status'] = intval($new_array['order_status']);
+			$where['ga.audit_status'] = intval($new_array['status']);
 		}
 		//账号
 		if($new_array['search_account']!='')
@@ -655,6 +658,7 @@ class EventOrderAction extends MediaBaseAction {
 		$show = "";
 		$list = array();
 		$count = $sum = 0;
+		
 		if($media_list)
 		{
 			$where["account_id"] = array("IN", array_keys($media_list));
@@ -668,7 +672,7 @@ class EventOrderAction extends MediaBaseAction {
 			$list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."generalize_news_order go on ga.generalize_id = go.id")->where($where)->limit($Page->firstRow.','.$Page->listRows)
 					->order('ga.id desc')->field('`generalize_id`, `account_id`, `price`, `status`, go.`id` as order_id, ga.id,
 												 `title`, `start_time`, `web_url`, `bz_info`, `zf_info`, `create_time`, `status`')->select();
-			
+
 			if($list)
 			{
 				$Order_Status_list = C('Order_Status');

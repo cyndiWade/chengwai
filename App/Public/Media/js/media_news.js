@@ -106,7 +106,7 @@ define(function(require, exports) {
                     align: "left",
                     text: "账号名",
                     cls: "t1",
-                    width: 120,
+                    width: 200,
                     dataIndex: "weibo_name",
                     // 使用模板前对数据预处理
                     tmplPreprocessor: tmplColWeiboNamePreprocessor,
@@ -160,7 +160,7 @@ define(function(require, exports) {
                         }
                     }
                 },
-                {
+               /* {
                     align: "left",
                     text: "接单状态",
                     cls: "t1",
@@ -181,7 +181,7 @@ define(function(require, exports) {
                             return div.append("否&nbsp;").append(a);
                         }
                     }
-                },
+                },*/
                 {
                     align: "left",
                     text: renderTitle("是否上架", "shifoushangjia"),

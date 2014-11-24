@@ -662,9 +662,47 @@ class SocialAccountAction extends MediaBaseAction {
                 'followers_count' => $msg
             ));
         }
-        // 粉丝数不足
-        $fansNum = 0;
-        $minFansNums = 1000;
+       // 粉丝数不足
+       $fansNum = $userAcountID =  0;
+       $minFansNums = 1000;
+       $where = array("id"=>$accountId);
+       
+       //当前登录会员ID
+       $userInfos = parent::get_session('user_info');
+       $uesr_id   = &$userInfos['id'];
+       
+        //不同平台取粉丝数
+        switch ($accountType)
+        {
+        	case 1:
+        	case 2:
+        		 $weiboModel = $this->db['AccountWeibo'];
+        		 $info = $weiboModel->getAccountInfo($where, '`users_id`, `fans_num`');
+        		 $fansNum		= $info['fans_num'];
+        		 $userAcountID	= $info['users_id'];
+        		 break;
+        	case 3:
+        		 $weixinModel = $this->db['AccountWeixin'];
+        		 $info = $weiboModel->getAccountInfo($where, '`users_id`, `fans_num`');
+        		 $fansNum = $info['fans_num'];
+        		 $userAcountID	= $info['users_id'];        		 
+        		 break;
+        	case 4:
+        		 $newsModel = $this->db['AccountNews'];
+        		 $info = $newsModel->getAccountInfo($where, '`users_id`, `fans_num`');
+        		 $fansNum = $info['fans_num'];
+        		 $userAcountID	= $info['users_id'];        		 
+        		 break;       		
+        }
+        
+        if ($uesr_id != $userAcountID) {
+            $msg = '该账号不属于您的哦' ;
+            parent::callback(1, '', array(
+                'followers_count' => $msg
+            ));
+        }
+       
+        
         if ($fansNum < $minFansNums) {
             $msg = '该账号的粉丝不足' . $minFansNums;
             parent::callback(1, '', array(
@@ -840,6 +878,7 @@ class SocialAccountAction extends MediaBaseAction {
             } elseif ($weiboType == 3) {
                 // 微信
                 $weiboName          = I('weibo_name', '', 'setString');
+                $weibo_id 			= I('weibo_id', '', 'setString');
                 $followersCount     = I('followers_count', 0, 'intval');
                 $weeklyReadAvg      = I('weekly_read_avg', 0, 'intval');
                 $malePrecent        = I('gender_distribution_male', 0, 'floatval');
@@ -885,6 +924,7 @@ class SocialAccountAction extends MediaBaseAction {
                     // 默认待审核
                     'status'      => 0,
                     'account_name'      => $weiboName,
+                    'weixinhao'      	=> $weibo_id,
                     'fans_num'          => $followersCount,
                     'dtb_money'         => $price,
                     'dtwdyt_money'      => $topPrice,
