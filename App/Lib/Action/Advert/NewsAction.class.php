@@ -32,7 +32,8 @@ class NewsAction extends AdvertBaseAction {
 			'GeneralizeNewsAccount' => 'GeneralizeNewsAccount',
 			'GeneralizeNewsFiles'=>'GeneralizeNewsFiles',
 			'Discss'	=>	'Discss',
-			'NewsView' => 'NewsView'
+			'NewsView' => 'NewsView',
+			'BlackorcollectionNews'=>'BlackorcollectionNews'
 	);
 	
 	//和构造方法
@@ -489,6 +490,32 @@ class NewsAction extends AdvertBaseAction {
 		$this->display();	
 	}
 	
+	
+	//拉黑
+	public function insert_blackorcollection()
+	{
+		$act = $this->_post('action');
+	
+		if ($act == 'add') {
+			$bool = $this->db['BlackorcollectionNews']->insertBlackorcollection($_POST,$this->oUser->id);
+			if($bool)
+			{
+				parent::callback(1,'操作成功!','ok');
+			}else{
+				parent::callback(0,'操作成功','no');
+			}
+		} elseif ($act == 'del') {
+			$bool = $this->db['BlackorcollectionNews']->deleteBlackorcollection($_POST,$this->oUser->id);
+			if($bool)
+			{
+				parent::callback(1,'操作成功!','ok');
+			}else{
+				parent::callback(0,'操作成功','no');
+			}
+		}
+	
+	
+	}
 	
 }	
 

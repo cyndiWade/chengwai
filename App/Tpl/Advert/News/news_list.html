@@ -25,30 +25,16 @@
 		<table class="tab01-cate l">
 		
 		  <tr>
-			<td class="t1">地区筛选：</td>
+			<td class="t1">行业分类：</td>
 			<td class="t2">
-				<div class="part02-price fl">
-				<volist name="view_data['dqsx']" id="vo">
-					<span class="dqsx_tags" data-tag_class="dqsx_tags" data-tag_id="{$vo.id}"  data-classify="地区筛选" data-field="dqsx" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
-				</volist>
-				</div>
-				<div class="part01-citysel fl">
-					<select class="fl region_left"></select>
-					<select class="fl region_right" data-tag_class="dqsx_tags" data-classify="地区筛选" data-repetition="no"  data-field="dqsx"></select>
-				</div><span class="btn okbtn fl btn_confirm_dqmr">确定</span></td>
-		  </tr>
-		  <!--  
-		  <tr>
-			<td class="t1">优惠专区：</td>
-			<td class="t2">
-				<div class="part02-price fl">
-				<volist name="view_data['yhzq']" id="vo">
-					<span class="yhzq_tags" data-tag_class="yhzq_tags" data-tag_id="{$vo.id}"  data-classify="优惠专区" data-field="yhzq" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
-				</volist>
-				</div>
+				<div class="part01-cate fl">
+				<volist name="view_data['hyfl']" id="vo">
+					<span class="hyfl_tags" data-tag_class="hyfl_tags" data-tag_id="{$vo.id}"  data-classify="行业分类" data-field="hyfl" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>			
+				</div><div class="more fl" id="morecate">更多</div>
 			</td>
 		  </tr>
-		   -->
+		  
 		  <tr>
 			<td class="t1">价格：</td>
 			<td class="t2">
@@ -62,7 +48,34 @@
 				</div><span class="btn okbtn fl btn_jiage_yes" data-tag_class="jg_tags">确定</span>
 			</td>
 		  </tr>
+		
+		  <tr>
+			<td class="t1">地区筛选：</td>
+			<td class="t2">
+				<div class="part02-price fl">
+				<volist name="view_data['dqsx']" id="vo">
+					<span class="dqsx_tags" data-tag_class="dqsx_tags" data-tag_id="{$vo.id}"  data-classify="地区筛选" data-field="dqsx" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>
+				</div>
+				<div class="part01-citysel fl">
+					<select class="fl region_left"></select>
+					<select class="fl region_right" data-tag_class="dqsx_tags" data-classify="地区筛选" data-repetition="no"  data-field="dqsx"></select>
+				</div><span class="btn okbtn fl btn_confirm_dqmr">确定</span></td>
+		  </tr>
 		  
+		  <!--  
+		  <tr>
+			<td class="t1">优惠专区：</td>
+			<td class="t2">
+				<div class="part02-price fl">
+				<volist name="view_data['yhzq']" id="vo">
+					<span class="yhzq_tags" data-tag_class="yhzq_tags" data-tag_id="{$vo.id}"  data-classify="优惠专区" data-field="yhzq" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+				</volist>
+				</div>
+			</td>
+		  </tr>
+		   -->
+
 		  <tr>
 			<td class="t1">门户类型：</td>
 			<td class="t2">
@@ -75,17 +88,6 @@
 		  </tr>
 		  
 		  <tr>
-			<td class="t1">行业分类：</td>
-			<td class="t2">
-				<div class="part01-cate fl">
-				<volist name="view_data['hyfl']" id="vo">
-					<span class="hyfl_tags" data-tag_class="hyfl_tags" data-tag_id="{$vo.id}"  data-classify="行业分类" data-field="hyfl" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
-				</volist>			
-				</div><div class="more fl" id="morecate">更多</div>
-			</td>
-		  </tr>
-		   
-		  <tr>
 			<td class="t1">是否新闻源：</td>
 			<td class="t2">
 				<div class="part02-price fl">
@@ -95,6 +97,7 @@
 				</div>
 			</td>
 		  </tr>
+		  <ol></ol>
 		  <tr>
 			<td class="t1">带链接情况：</td>
 			<td class="t2">
@@ -171,14 +174,13 @@
   
 		</table>
 		<div class="weibo-bot l">
-			<div class="page-wb fr system_page">
+			<div class="controlbox fl">
+				<span class="all_selected">全选</span><span id="batch"  class="add_selected_box">批量添加账号</span>	
+			</div>
+			<div class="page-wb fl system_page">
 
 			</div>
-			<div class="controlbox fl">
-				<span class="all_selected">全选</span><span id="batch"  class="add_selected_box">批量添加账号</span>
-				
-				
-			</div>
+			
 		</div>
 	</div>
 </div>
@@ -269,7 +271,7 @@ var public_post_fn = function (obj_data) {
 		}
 		
 		//拉黑和收藏功能
-		News.lahei_and_shoucang_fn('{:U('/Advert/Weibo/insert_blackorcollection')}');
+		News.lahei_and_shoucang_fn('{:U('/Advert/News/insert_blackorcollection')}');
 
 		News.dataNum_And_PageNum(result.data.count);
 		

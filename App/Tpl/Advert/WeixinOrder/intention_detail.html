@@ -27,14 +27,16 @@
 	<div class="location l">
 		当前位置：<a href="#">首页</a>  >  <a href="#">微信推广</a> > <span class="blue">意向单详情页</span>
 	</div>
+	
 	<div class="area01-myorder l">
+		
 		<div class="box01-myorder fl">
 			<div class="top-myorder l">
 				<b>“{$view_data.order_info.yxd_name}”的详细信息</b>
 				<b><a href="{:U('Advert/Weixin/celebrity_weixin',array('order_id'=>$view_data['order_id']))}">继续添加媒体</a></b>
 			</div>
 			<table class="tab01-myorder l">
-<tr>
+				<tr>
 				<th class="t1">活动名称：</th>
 				<td class="t2">{$view_data.order_info.title}</td>
 				<th class="t1">活动ID：</th>
@@ -76,14 +78,19 @@
 			  </tr>
 			  <tr>
 				<th class="t1">直发内容：</th>
-				<td colspan="5">{$view_data.order_info.zw_info}</td>
+				<td colspan="5" >
+				<div style="width:1048px !important;overflow :auto;">{$view_data.order_info.zw_info}</div>
+				</td>
 			  </tr>
 			  <tr>
 				<th class="t1">活动备注：</th>
-				<td colspan="5">{$view_data.order_info.bz_info}</td>
+				<td colspan="5">
+					<div style="width:1048px !important;overflow :auto;">{$view_data.order_info.bz_info}</div>	
+				</td>
 			  </tr>
 			</table>
 		</div>
+	
 		<div class="box02-myorder l">
 			<div class="top-myorder l"><b>以下媒体正在为您服务</b></div>
 			<div class="searnum fl">
@@ -108,7 +115,7 @@
 				<th class="last">操作</th>
 
 			  </tr>
-			<volist name="view_data['account_order_list']" id="vo">
+				<volist name="view_data['account_order_list']" id="vo">
 			  <tr>
 			  	<td class="t1">
 			  		<if condition="($vo['create_order_status'] eq true)">
@@ -140,6 +147,8 @@
 	
 		
 	</div>
+	
+	
 	<if condition="($view_data.order_info.status eq 2)">
 		<div class="btn_class">
 			<input type="submit" class="btn brownbtn" id="create_all_order" value="创建活动">

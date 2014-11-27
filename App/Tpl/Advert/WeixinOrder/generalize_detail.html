@@ -55,12 +55,16 @@
 				<td class="t2">{$view_data.order_info.sfyq|getFenm}</td>
 			  </tr>
 			  <tr>
+			  	<!-- 
 				<th class="t1">手机号：</th>
 				<td class="t2">{$view_data.order_info.dx_phone}</td>
 				<th class="t1">是否短信通知：</th>
 				<td class="t2">{$view_data.order_info.dx_status|getFenm}</td>
+				-->
 				<th class="t1">广告位：</th>
 				<td class="t2">{$view_data.order_info.ggw_type|adGet}</td>
+				<th class="t1">创建时间：</th>
+				<td class="t2">{$view_data.order_info.create_time|date="Y-m-d H:i:s",###}</td>
 			  </tr>
 			  <tr>
 				<th class="t1">直发内容：</th>
