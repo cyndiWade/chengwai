@@ -1,4 +1,4 @@
-ALTER TABLE `app_generalize_files` CHANGE `type` `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '�ϴ��ļ����� 1��ֱ����ͼ 2���ϴ�֤�� 3��ִ����ɵĽ�ͼ�ϴ�';
+﻿ALTER TABLE `app_generalize_files` CHANGE `type` `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '�ϴ��ļ����� 1��ֱ����ͼ 2���ϴ�֤�� 3��ִ����ɵĽ�ͼ�ϴ�';
 
 
 2014/10/11  18:15  张炜林——SQL修改记录
@@ -24,3 +24,7 @@ ALTER TABLE `app_generalize_files` CHANGE `type` `type` TINYINT(1) UNSIGNED NOT 
 ALTER TABLE  `app_generalize_order` ADD  `wa_url_status` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '文案是否含链接:1包含、0不包含' AFTER  `zw_info`
 
 ALTER TABLE  `app_account_weibo` ADD  `ck_money` DECIMAL( 9, 2 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '名人参考价格' AFTER  `dj_money`
+
+2014-11-27 增加微信行业分类
+ALTER TABLE `app_account_weixin` ADD `area_id` TINYINT NOT NULL DEFAULT '0' COMMENT '地区（城市ID）' AFTER `id`, ADD `industries` TINYINT NOT NULL DEFAULT '0' COMMENT '行业分类' AFTER `area_id`;
+ALTER TABLE `app_account_weixin` CHANGE `industries` `industries` INT(4) NOT NULL DEFAULT '0' COMMENT '行业分类';

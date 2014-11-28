@@ -406,6 +406,9 @@ class AppBaseAction extends GlobalParameterAction {
 			$grass_info['audience_man'] = $AccountWeixinInfo['male_precent'];
 			$grass_info['audience_women'] = $AccountWeixinInfo['female_precent'];
 			$grass_info['recommend'] = $AccountWeixinInfo['recommended_status'];
+			//add by bumtime 20141127
+			$grass_info['cirymedia'] 	= $AccountWeixinInfo['area_id'];
+			$grass_info['common'] 		= $AccountWeixinInfo['industries'];
 			switch($AccountWeixinInfo['is_celebrity'])
 			{
 				//草根

@@ -457,9 +457,11 @@ class SocialAccountAction extends MediaBaseAction {
                         case 3:
                             // 微信公众号
                             // $insertId = $this->db['AccountWeixin']->addBatchAccount($insertData);
-                           
+                            //行业分类（常见分类）add by bumtime 20141127
+                            $categoryTagsModel = $this->db['CategoryTags'];
+                            $categoryTagsList = $categoryTagsModel->getTagsList(array(222));
                             $weixinModel = $this->db['AccountWeixin'];
-                           
+                          
                             for ($i = 1; $i <= $len; $i++) {
                                 //通过循环得到EXCEL文件中每行记录的值
                                 $temp_info = explode(',', iconv('GBK', 'UTF-8', $temp[$i]));
@@ -474,21 +476,49 @@ class SocialAccountAction extends MediaBaseAction {
                                 $faceUrl        = setString(trim($temp_info[7]));
                                 $qrCode         = setString(trim($temp_info[8]));
                                 $fansShot       = setString(trim($temp_info[9]));
+                                //add by bumtime 20141127
+                                $province       = setString(trim($temp_info[10]));
+                                $city           = setString(trim($temp_info[11]));
+                                //$area           = setString(trim($temp_info[12]));
+                                $common         = setString(trim($temp_info[12]));
+                                $introduction   = setString(trim($temp_info[13])); 
+                                $commonID		= 0;                               
+                                
+                                
+                                //行业分类转换
+                                foreach ($categoryTagsList  as $value)
+                                {
+                                	if($common == $value['title'])
+                                	{
+	                                	$commonID = $value['id'];
+	                                	break;
+                                	}
+                                }
+                              
                                 
                                 $malePrecent = ($malePrecent <= 0 ? 0 : ($malePrecent >= 101) ? 100 : $malePrecent);
                                 $lessPrecent = 100 - $malePrecent;
                                 $femalePrecent = $femalePrecent <= $lessPrecent ? $femalePrecent : $lessPrecent;
-                               
-                                if (empty($accountName) || empty($price)
-                                || !Validate::checkAccount($weixinCode)
-                                || (!empty($qrCode) && !Validate::checkUrl($faceUrl))
-                                || (!empty($qrCode) && !Validate::checkUrl($qrCode))
-                                || (!empty($qrCode) &&!Validate::checkUrl($fansShot)))
+                                 
+                                if (empty($accountName) || empty($price)  || !Validate::checkAccount($weixinCode))
                                 {
                                     continue;
                                 }
+                                if (!empty($faceUrl) && !Validate::checkUrl($faceUrl))
+                                {
+                                    continue;
+                                }
+                                if (!empty($qrCode) && !Validate::checkUrl($qrCode))
+                                {
+                                    continue;
+                                } 
+                                if (!empty($fansShot) && !Validate::checkUrl($fansShot))
+                                {
+                                    continue;
+                                }
+                                
                                 $where = array(
-                                    'account_name'  => $accountName,
+                                    'weixinhao'  => $accountName,
                                     'is_del'        => 0
                                 );
                                 
@@ -497,12 +527,28 @@ class SocialAccountAction extends MediaBaseAction {
                                     continue;
                                 }
                                 $userInfos = parent::get_session('user_info');
-                                $apiInfos = $weixinModel->getInfosFromApi($accountName, $accountType);
+                                //$apiInfos = $weixinModel->getInfosFromApi($accountName, $accountType);
                                 $priceRatio = C('WEIXIN_PRICE_RATIO');
-                                $fansNums = $apiInfos['followers_count'] ? $apiInfos['followers_count'] : $fansNums;
+                                $fansNums = $fansNums;//$apiInfos['followers_count'] ? $apiInfos['followers_count'] : $fansNums;
+                                
+                                $regionModel = $this->db['Region'];
+                                $whereForArea = array(
+                                    array(
+                                        'region_type' => 1,
+                                        'region_name' => array('LIKE', '%' . $province . '%')
+                                    ),
+                                    array(
+                                        'region_type' => 2,
+                                        'region_name' => array('LIKE', '%' . $city . '%')
+                                    ),  
+                                    '_logic' => 'OR'
+                                );
+                                $cityID = $regionModel->where($whereForArea)
+                                    ->order('region_type DESC')->getField('region_id');
+                                    
                                 $insertData = array(
                                     'users_id'          => $userInfos['id'],
-                                    'is_celebrity'      => intval($apiInfos['verified']),
+                                    'is_celebrity'      => 0,//intval($apiInfos['verified']),
                                     'pt_type'           => 1,
                                     'weixinhao'         => $weixinCode,
                                     'account_name'      => $accountName,
@@ -519,7 +565,12 @@ class SocialAccountAction extends MediaBaseAction {
                                     'male_precent'      => $malePrecent,
                                     'female_precent'    => $femalePrecent,
                                     'create_time'       => $_SERVER['REQUEST_TIME'],
+                                     //add by bumtime 20141127
+                                    'introduction'		=> $introduction,
+                                    'area_id'			=> $cityID,
+                                    'industries'		=> $commonID
                                 );
+                               
                                 $insertId = $weixinModel->add($insertData);
                                 if ($insertId) {
                                     // 更新索引表
@@ -552,7 +603,7 @@ class SocialAccountAction extends MediaBaseAction {
                                 $mediaShot      = setString(trim($temp_info[15]));
                                 $lenlimit      	= intval(trim($lenlimit[16]));
                                 $industries     = intval(trim($temp_info[17]));
-                                
+                               
                                 if (empty($accountName) || empty($channalName) || empty($price)
                                 || (!empty($exampleUrl) && !Validate::checkUrl($exampleUrl)) || (!empty($mediaShot) && !Validate::checkUrl($mediaShot))) {
                                     continue;
