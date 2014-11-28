@@ -28,3 +28,10 @@ ALTER TABLE  `app_account_weibo` ADD  `ck_money` DECIMAL( 9, 2 ) UNSIGNED NOT NU
 2014-11-27 增加微信行业分类
 ALTER TABLE `app_account_weixin` ADD `area_id` TINYINT NOT NULL DEFAULT '0' COMMENT '地区（城市ID）' AFTER `id`, ADD `industries` TINYINT NOT NULL DEFAULT '0' COMMENT '行业分类' AFTER `area_id`;
 ALTER TABLE `app_account_weixin` CHANGE `industries` `industries` INT(4) NOT NULL DEFAULT '0' COMMENT '行业分类';
+
+ALTER TABLE `app_account_weibo` ADD `area_id` TINYINT NOT NULL DEFAULT '0' COMMENT '地区（城市ID）' AFTER `id`, ADD `industries` INT(4) NOT NULL DEFAULT '0' COMMENT '行业分类' AFTER `area_id` ;
+
+2014-11-28 增加媒体地址
+ALTER TABLE `app_account_news` ADD `currentUrl` VARCHAR(64) NOT NULL COMMENT '媒体网址' AFTER `url`;
+ALTER TABLE `app_account_news` ADD `industries` int(4) NOT NULL COMMENT '行业分类' ;
+ALTER TABLE `app_account_news` CHANGE `industries` `industries` INT(4) UNSIGNED NOT NULL DEFAULT '0' COMMENT '行业分类';

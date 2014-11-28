@@ -335,14 +335,17 @@ class AppBaseAction extends GlobalParameterAction {
 		{
 			//需要同步的数据
 			$int_info['fansnumber'] = $grass_info['fans_num'] = $AccountWeiboInfo['fans_num'];
-			$int_info['ck_price'] = $AccountWeiboInfo['ck_money'];
-			$int_info['yc_money'] = $AccountWeiboInfo['yc_money'];
+			$int_info['ck_price']   = $AccountWeiboInfo['ck_money'];
+			$int_info['yc_money']   = $AccountWeiboInfo['yc_money'];
 			
 			$grass_info['yg_zhuanfa'] = $AccountWeiboInfo['yg_zhuanfa'];
-			$grass_info['yg_zhifa'] = $AccountWeiboInfo['yg_zhifa'];
+			$grass_info['yg_zhifa']   = $AccountWeiboInfo['yg_zhifa'];
 			$grass_info['rg_zhuanfa'] = $AccountWeiboInfo['rg_zhuanfa'];
-			$grass_info['rg_zhifa'] = $AccountWeiboInfo['rg_zhifa'];
-			$grass_info['recommend'] = $AccountWeiboInfo['recommended_status'];
+			$grass_info['rg_zhifa']   = $AccountWeiboInfo['rg_zhifa'];
+			$grass_info['recommend']  = $AccountWeiboInfo['recommended_status'];
+			$grass_info['common'] 	  = $AccountWeiboInfo['industries'];
+			$grass_info['cirymedia']  = $AccountWeiboInfo['area_id'];
+			
 			switch($AccountWeiboInfo['is_celebrity'])
 			{
 				//草根

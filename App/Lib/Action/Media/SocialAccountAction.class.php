@@ -407,18 +407,26 @@ class SocialAccountAction extends MediaBaseAction {
                     
                     // 根据帐号类型插入不同的表
                     switch($accountType) {
-                        // 腾讯微博
-                        case 1:
                         // 新浪微博
+                        case 1:
+                        // 腾讯微博
                         case 2:
                             $weiboModel = $this->db['AccountWeibo'];
+                            $categoryTagsModel = $this->db['CategoryTags'];
+                            $categoryTagsList = $categoryTagsModel->getTagsList(array(295));
+                             
                             for ($i = 1; $i <= $len; $i++) {
                                 //通过循环得到EXCEL文件中每行记录的值
                                 $temp_info = explode(',', iconv('GBK', 'UTF-8', $temp[$i]));
                                 $accountName    = setString($temp_info[0]);
                                 $price          = floatval($temp_info[1]);
+                                //add by bumtime 20141128
+                                $rgPrice        = floatval($temp_info[2]); 
+                                $province       = setString(trim($temp_info[3]));
+                                $city           = setString(trim($temp_info[4]));
+                                $common         = setString(trim($temp_info[5]));
                                 
-                                if (empty($accountName) || empty($price)) {
+                                if (empty($accountName) || empty($price) || empty($rgPrice)) {
                                     continue;
                                 }
                                 $where = array(
@@ -429,22 +437,54 @@ class SocialAccountAction extends MediaBaseAction {
                                 if ($exists) {
                                     continue;
                                 }
+                                
+                                $regionModel = $this->db['Region'];
+                                $whereForArea = array(
+                                    array(
+                                        'region_type' => 1,
+                                        'region_name' => array('LIKE', '%' . $province . '%')
+                                    ),
+                                    array(
+                                        'region_type' => 2,
+                                        'region_name' => array('LIKE', '%' . $city . '%')
+                                    ),  
+                                    '_logic' => 'OR'
+                                );
+                                $cityID = $regionModel->where($whereForArea)
+                                    ->order('region_type DESC')->getField('region_id');
+                                    
+                                $commonID		= 0;                               
+                                //行业分类转换
+                                foreach ($categoryTagsList  as $value)
+                                {
+                                	if($common == $value['title'])
+                                	{
+	                                	$commonID = $value['id'];
+	                                	break;
+                                	}
+                                }   
+                                
                                 $userInfos = parent::get_session('user_info');
                                 $apiInfos = $weiboModel->getInfosFromApi($accountName, $accountType);
+                                 
                                 $priceRatio = C('WEIBO_PRICE_RATIO');
                                 $insertData = array(
                                     'users_id'      => $userInfos['id'],
                                     'is_celebrity'  => intval($apiInfos['verified']),
                                     'pt_type'       => $accountType,
                                     'account_name'  => $accountName,
-                                    'fans_num'      => intval($apiInfos['followers_count']),
-                                    'yg_zhuanfa'    => $price * $priceRatio['retweetPrice'],
-                                    'yg_zhifa'      => $price * $priceRatio['tweetPrice'],
-                                    'rg_zhuanfa'    => $price * $priceRatio['softRetweetPrice'],
-                                    'rg_zhifa'      => $price * $priceRatio['softTweetPrice'],
-                                    'dj_money'      => $price * $priceRatio['contentPrice'],
+                                    'fans_num'      => intval($apiInfos['followers_count ']),
+                                    'yg_zhuanfa'    => $price,//$price * $priceRatio['retweetPrice'],
+                                    'yg_zhifa'      => $rgPrice,//$price * $priceRatio['tweetPrice'],
+                                    'rg_zhuanfa'    => $price,//$price * $priceRatio['softRetweetPrice'],
+                                    'rg_zhifa'      => $rgPrice,//$price * $priceRatio['softTweetPrice'],
+                                    //'dj_money'      => $price * $priceRatio['contentPrice'],
                                     'create_time'   => $_SERVER['REQUEST_TIME'],
+                                    'head_img'  	=> $apiInfos['avatar_large'],
+                                    'area_id'		=> $cityID,
+                                    'industries'	=> $commonID
                                 );
+                                
                                 $insertId = $weiboModel->add($insertData);
                                 if ($insertId) {
                                     // 更新索引表
@@ -494,8 +534,7 @@ class SocialAccountAction extends MediaBaseAction {
 	                                	break;
                                 	}
                                 }
-                              
-                                
+     
                                 $malePrecent = ($malePrecent <= 0 ? 0 : ($malePrecent >= 101) ? 100 : $malePrecent);
                                 $lessPrecent = 100 - $malePrecent;
                                 $femalePrecent = $femalePrecent <= $lessPrecent ? $femalePrecent : $lessPrecent;
@@ -504,6 +543,7 @@ class SocialAccountAction extends MediaBaseAction {
                                 {
                                     continue;
                                 }
+                                
                                 if (!empty($faceUrl) && !Validate::checkUrl($faceUrl))
                                 {
                                     continue;
@@ -518,11 +558,12 @@ class SocialAccountAction extends MediaBaseAction {
                                 }
                                 
                                 $where = array(
-                                    'weixinhao'  => $accountName,
+                                    'weixinhao'  => $weixinCode,
                                     'is_del'        => 0
                                 );
-                                
+                               
                                 $exists = $weixinModel->getAccountInfo($where, 'id');
+                                
                                 if ($exists) {
                                     continue;
                                 }
@@ -570,7 +611,7 @@ class SocialAccountAction extends MediaBaseAction {
                                     'area_id'			=> $cityID,
                                     'industries'		=> $commonID
                                 );
-                               
+                  
                                 $insertId = $weixinModel->add($insertData);
                                 if ($insertId) {
                                     // 更新索引表
@@ -582,13 +623,15 @@ class SocialAccountAction extends MediaBaseAction {
                             // 新闻媒体
                             // $insertId = $this->db['AccountNews']->addBatchAccount($insertData);
                             $mediaNewsModel = $this->db['AccountNews'];
+                            $categoryTagsModel = $this->db['CategoryTags'];
+                            $categoryTagsList = $categoryTagsModel->getTagsList(array(295));
                             for ($i = 1; $i <= $len; $i++) {
                                 //通过循环得到EXCEL文件中每行记录的值
                                 $temp_info = explode(',', iconv('GBK', 'UTF-8', $temp[$i]));
                                 $accountName    = setString(trim($temp_info[0]));
                                 $channalName    = setString(trim($temp_info[1]));
                                 $price          = floatval($temp_info[2]);
-                                $title          = setString(trim($temp_info[3]));
+                                $currentUrl     = setString(trim($temp_info[3]));
                                 $province       = setString(trim($temp_info[4]));
                                 $city           = setString(trim($temp_info[5]));
                                 $area           = setString(trim($temp_info[6]));
@@ -602,13 +645,19 @@ class SocialAccountAction extends MediaBaseAction {
                                 $typeOfPortal   = setString(trim($temp_info[14]));
                                 $mediaShot      = setString(trim($temp_info[15]));
                                 $lenlimit      	= intval(trim($lenlimit[16]));
-                                $industries     = intval(trim($temp_info[17]));
-                               
-                                if (empty($accountName) || empty($channalName) || empty($price)
-                                || (!empty($exampleUrl) && !Validate::checkUrl($exampleUrl)) || (!empty($mediaShot) && !Validate::checkUrl($mediaShot))) {
+                                $industries     = setString(trim($temp_info[17]));
+                                
+                                if (empty($accountName) || empty($channalName) || empty($price)) {
                                     continue;
                                 }
-                                
+                                if (!empty($exampleUrl) && !Validate::checkUrl($exampleUrl)) 
+                                {
+                                    continue;
+                                }                               
+                                if (!empty($mediaShot) && !Validate::checkUrl($mediaShot)) 
+                                {
+                                    continue;
+                                }                                 
                                 $newsSource = in_array($newsSource, array(0, 1, 2, 3)) ? $newsSource : 0;
                                 $included = in_array($included, array(0, 1, 2, 3, 4, 5, 6, 7, 8)) ? $included : 0;
                                 $needSource = in_array($needSource, array(0, 1)) ? $needSource : 0;
@@ -616,8 +665,19 @@ class SocialAccountAction extends MediaBaseAction {
                                 $link = in_array($link, array(0, 1, 2, 3, 4, 5)) ? $link : 0;
                                 $typeOfPortal = in_array($typeOfPortal, array(0, 1, 2, 3, 4)) ? $typeOfPortal : 0;
                                 $lenlimit = in_array($lenlimit, array(0, 1, 2, 3, 4)) ? $lenlimit : 0;
-                                $industries = in_array($industries, array(0, 1, 2, 3, 4)) ? $industries : 0;
-                                
+                                $commonID = 0;
+                              
+                                //$industries = in_array($industries, array(0, 1, 2, 3, 4)) ? $industries : 0;
+                                 //行业分类转换
+                                foreach ($categoryTagsList  as $value)
+                                {
+                                	if($industries == $value['title'])
+                                	{
+	                                	$commonID = $value['id'];
+	                                	break;
+                                	}
+                                }
+
                                 $where = array(
                                     'account_name'  => $accountName,
                                     'is_del'        => 0
@@ -645,13 +705,13 @@ class SocialAccountAction extends MediaBaseAction {
                                 );
                                 $areaId = $regionModel->where($whereForArea)
                                     ->order('region_type DESC')->getField('region_id');
-                                
+                               
                                 $userInfos = parent::get_session('user_info');
                                 $insertData = array(
                                     'users_id'          => $userInfos['id'],
                                     'pt_type'           => $typeOfPortal,
                                     // 默认待审核
-                                    'status'      => 0,
+                                    'status'      		=> 0,
                                     'account_name'      => $accountName,
                                     'web_type'          => $included,
                                     'money'             => $price,
@@ -666,12 +726,14 @@ class SocialAccountAction extends MediaBaseAction {
                                     'press_weekly'      => $pressWeekly,
                                     'url'               => $exampleUrl,
                                     'is_need_source'    => $needSource,
-                                    'is_need_source'    => $needSource,
                                     'lenlimit'    		=> $lenlimit,
-                                    'industries'    	=> $industries,
+                                    'industries'    	=> $commonID,
                                     'create_time'       => $_SERVER['REQUEST_TIME'],
+                                    'currentUrl'		=> $currentUrl,
+                                    'title'				=> ''
                                 );
                                 $insertId = $mediaNewsModel->add($insertData);
+                                
                                 if ($insertId) {
                                     // 更新索引表
                                     parent::newsDataprocess($insertId);
