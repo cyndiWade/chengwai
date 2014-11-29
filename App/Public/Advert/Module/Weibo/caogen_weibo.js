@@ -69,6 +69,8 @@ Weibo.prototype.init = function () {
 	this.export_csv = $('.export_csv');
 	
 	this.account_all_html = $('.account_all_html');
+	
+	this.add_one_selected_box = $('.add_one_selected_box');//新版添加购物城
 }
 
 
@@ -703,14 +705,184 @@ Weibo.prototype.all_selected_fn = function () {
 Weibo.prototype.add_selected_box_fn = function () {
 	var _father_this = this;
 	
+	_father_this.add_selected_box.click(function () {
+		var selected_account = _father_this.get_list_selected_account();
+		$.each(selected_account,function (i,n){
+			_father_this.add_account_to_cart(n,true);
+		});
+	}); 
+}
+//添加单个到购物车流程控制
+Weibo.prototype.add_one_selected_box_fn = function () {
+	var _father_this = this;
+	_father_this.add_one_selected_box.click(function () {
+		var _this = $(this);
+		_father_this.add_account_to_cart(_this.data('id'),_this.prop('checked'));
+	});
+	
+}
+//添加一个账号到购物车中
+Weibo.prototype.add_account_to_cart = function (account_id,status) {
+	var _father_this = this;
+	_father_this.init();
+	if (status == true) {
+		//对已经在容器的微博账号不再添加，避免重复
+		if (System.in_array(account_id,_father_this.get_order_vessel_ids()) == false) {
+			//添加账号HTML部分
+			var _now_account_x = $('.accounts_'+account_id);	//列表的行
+			var _name = _now_account_x.find('.account_name').data('account_name');
+
+			var _money1 = _now_account_x.find('.now_money').eq(0).data('money');
+			var _money2 = _now_account_x.find('.now_money').eq(1).data('money');
+			var _money3 = _now_account_x.find('.now_money').eq(2).data('money');
+			var _money4 = _now_account_x.find('.now_money').eq(3).data('money');
+			
+			var html = '<li data-select_account_id="'+account_id+'" data-money1="'+_money1+'"  data-money2="'+_money2+'" data-money3="'+_money3+'" data-money4="'+_money4+'">';			
+			html += '<span class="del fr delet_account"></span><strong>'+_name+'</strong>';			
+			html += ' | 硬广转发('+_money1+')';
+			html += ' | 软广转发('+_money2+')';
+			html += ' | 硬广直发('+_money3+')';
+			html += ' | 软广直发('+_money4+')';
+			html += '</li>';
+			var html = 
+			_father_this.account_selected.append(html);
+		}
+	} else {
+		_father_this.account_selected.children('li').each(function () {
+			var _li_this = $(this);
+			 if(_li_this.data('select_account_id') == account_id) {
+				 _li_this.remove();
+			 }
+		});
+	}
+	
+	_father_this.set_order_data();
+	
+	_father_this.delet_account_fn();
+	
+	_father_this.close_order_vessel_fn();
+	
+	_father_this.confirm_order_fn();
+	
+	_father_this.order_vessel.show();
+}
+//获取选中的账号
+Weibo.prototype.get_list_selected_account = function () {
+	var _father_this = this;
+	_account_ids = [];
+	_father_this.now_selected.each(function () {
+		var _this = $(this);
+		if (_this.prop('checked') == true) {
+			_account_ids.push(_this.data('id'))
+		}
+	});	
+	return _account_ids;
+}
+//在订单容器中，获取已经选择的订单
+Weibo.prototype.get_order_vessel_ids = function () {
+	var _father_this = this;
+	var have_ids = [];
+	
+	_father_this.account_selected.children().each(function (){
+		var id = $(this).data('select_account_id');
+		if (id != undefined) {
+			have_ids.push(id);
+		}
+	});
+	return have_ids;
+} 
+//计算当前的账号总数和价格总数
+Weibo.prototype.set_order_data = function () {
+	var _father_this = this;	
+	var money_sum_1 = 0;
+	var money_sum_2 = 0;
+	var money_sum_3 = 0;
+	var money_sum_4 = 0;
+	var account_sum = 0;
+	_father_this.account_selected.children().each(function (){
+		var _this = $(this);
+		money_sum_1 += Number(_this.data('money1'));
+		money_sum_2 += Number(_this.data('money2'));
+		money_sum_3 += Number(_this.data('money3'));
+		money_sum_4 += Number(_this.data('money4'));
+		//money_sum += Number(_this.data('money'));
+		account_sum += 1;
+	});
+	
+	_father_this.account_all_html.html('已选择<b class="account_num">'+account_sum+'</b>个账号，计费： 硬广转发价：<b class="account_money">'+money_sum_1+'</b>元， 软广转发价：<b class="account_money">'+money_sum_2+'</b>元 ，硬广直发价：<b class="account_money">'+money_sum_3+'</b>元 ，软广直发价：<b class="account_money">'+money_sum_4+'</b>元');
+
+}
+//删除一个已经选择的订单
+Weibo.prototype.delet_account_fn = function () {
+	var _father_this = this;
+	_father_this.init();
+	_father_this.delet_account.unbind();	//清除之前绑定的事件
+	_father_this.delet_account.click(function () {
+		$(this).parent().remove();
+		_father_this.set_order_data();
+	});
+}
+//关闭窗口
+Weibo.prototype.close_order_vessel_fn = function () {
+	var _father_this = this;
+	_father_this.close_order_vessel.unbind();
+	_father_this.close_order_vessel.click(function () {
+		//弹窗插件
+		_father_this.order_vessel.hide();
+	});
+};
+//确认提交订单
+Weibo.prototype.confirm_order_fn = function () {	
+	var _father_this = this;
+	
+	_father_this.confirm_order.unbind();
+	_father_this.confirm_order.click(function () {
+		var selected_account_ids = [];	//已选中的ID
+		
+		selected_account_ids = _father_this.get_order_vessel_ids();
+		
+		if (selected_account_ids == '') {
+			alert('请重新选择后提交！')
+			return false;
+		} else {
+			var post_data = {};
+			post_data.account_ids = selected_account_ids.join(',');
+			post_data.pt_type = _father_this.pt_type.val();
+			post_data.order_id = _father_this.order_id.val();
+	
+				//提交操作
+			var result = System.ajax_post_setup(system_info.post_order_url,post_data,'JSON');
+			if (result.status == 0) {
+				//alert(result.msg);
+				window.location.href= result.data.go_to_url;	//跳转
+			} else {
+			//	alert(result.msg);
+			}
+		}	
+	});	
+}
+//添加连接外带的账号到购物车中
+Weibo.prototype.add_haved_to_cart = function () {
+	var _father_this = this;
+	_father_this.now_selected.prop('checked',true);
+	var account_ids = _father_this.get_list_selected_account();
+	$.each(account_ids,function (i,n) {
+		_father_this.add_account_to_cart(n,true);
+	});
+}
+
+
+/*
+//批量添加数据源
+Weibo.prototype.add_selected_box_fn = function () {
+	var _father_this = this;
+	
 	_father_this.add_selected_box.unbind();
 	//点击批量添加账号时
 	_father_this.add_selected_box.click(function () {
 		_father_this.add_selected_account_to_vessel()
 	}); 
 }
-
-
 
 //批量订单实际流程
 Weibo.prototype.add_selected_account_to_vessel = function () {
@@ -864,161 +1036,8 @@ Weibo.prototype.add_selected_account_to_vessel = function () {
 		});
 	}();
 }
+*/
 
-
-//批量添加数据源
-Weibo.prototype.add_selected_box_fn = function () {
-	var _father_this = this;
-	var _account_ids;	//账号IDs
-	
-	_father_this.add_selected_box.unbind();
-	//点击批量添加账号时	
-	_father_this.add_selected_box.click(function () {
-		//if (confirm('确认操作？') == false) return false;
-		
-		_father_this.init();
-		_account_ids = [];
-		_father_this.now_selected.each(function () {
-			var _this = $(this);
-			if (_this.prop('checked') == true) {
-				_account_ids.push(_this.data('id'))
-			}
-		});
-		if (_account_ids == '') {
-			alert('请选择账号！');
-			return false;
-		} else {
-			cache_select_account();
-		}
-	});
-	
-
-	//缓存选择后的账号的数据数据在HTML中
-	var cache_select_account = function () {
-		var _vessel_ids = get_order_vessel_ids();
-		//遍历已经选择的微博ID
-		$.each( _account_ids, function(i, n){
-			//对已经在容器的微博账号不再添加，避免重复
-			if (System.in_array(n,_vessel_ids) == false) {
-				var _now_account_x = $('.accounts_'+n);	//列表的行
-				var _name = _now_account_x.find('.account_name').data('account_name');
-
-				var _money1 = _now_account_x.find('.now_money').eq(0).data('money');
-				var _money2 = _now_account_x.find('.now_money').eq(1).data('money');
-				var _money3 = _now_account_x.find('.now_money').eq(2).data('money');
-				var _money4 = _now_account_x.find('.now_money').eq(3).data('money');
-				
-				var html = '<li data-select_account_id="'+n+'" data-money1="'+_money1+'"  data-money2="'+_money2+'" data-money3="'+_money3+'" data-money4="'+_money4+'">';			
-				html += '<span class="del fr delet_account"></span><strong>'+_name+'</strong>';			
-				html += ' | 硬广转发('+_money1+')';
-				html += ' | 软广转发('+_money2+')';
-				html += ' | 硬广直发('+_money3+')';
-				html += ' | 软广直发('+_money4+')';
-				html += '</li>';
-				var html = 
-				_father_this.account_selected.append(html);
-			}
-		});
-		
-		set_order_data();	
-		
-		delet_account_fn();
-		
-		//弹窗插件
-		_father_this.order_vessel.show();
-	}
-	
-	
-	//在订单容器中，获取已经选择的数据
-	var get_order_vessel_ids = function () {
-		var have_ids = [];
-		
-		_father_this.account_selected.children().each(function (){
-			var id = $(this).data('select_account_id');
-			if (id != undefined) {
-				have_ids.push(id);
-			}
-		});
-		return have_ids;
-	} 
-	
-	
-	//计算当前的账号总数和价格总数
-	var set_order_data = function () {
-		
-		var money_sum_1 = 0;
-		var money_sum_2 = 0;
-		var money_sum_3 = 0;
-		var money_sum_4 = 0;
-		var account_sum = 0;
-		_father_this.account_selected.children().each(function (){
-			var _this = $(this);
-			money_sum_1 += Number(_this.data('money1'));
-			money_sum_2 += Number(_this.data('money2'));
-			money_sum_3 += Number(_this.data('money3'));
-			money_sum_4 += Number(_this.data('money4'));
-			//money_sum += Number(_this.data('money'));
-			account_sum += 1;
-		});
-		
-		_father_this.account_all_html.html('已选择<b class="account_num">'+account_sum+'</b>个账号，计费： 硬广转发价：<b class="account_money">'+money_sum_1+'</b>元， 软广转发价：<b class="account_money">'+money_sum_2+'</b>元 ，硬广直发价：<b class="account_money">'+money_sum_3+'</b>元 ，软广直发价：<b class="account_money">'+money_sum_4+'</b>元');
-
-		//_father_this.account_money.text(money_sum);
-		//_father_this.account_num.text(account_sum);
-	}
-	
-	
-	//删除一个已经选择的订单
-	var delet_account_fn = function () {
-		_father_this.init();
-		
-		_father_this.delet_account.unbind();	//清除之前绑定的事件
-		_father_this.delet_account.click(function () {
-			$(this).parent().remove();
-			set_order_data();
-		});
-	}
-	
-	
-	//确认提交订单
-	_father_this.confirm_order_fn = function () {
-		_father_this.confirm_order.click(function () {
-			var selected_account_ids = [];	//已选中的ID
-			_father_this.account_selected.children().each(function (){
-				var _this = $(this);
-				selected_account_ids.push(_this.data('select_account_id'));
-			});
-			
-			if (selected_account_ids == '') {
-				alert('请重新选择后提交！')
-				return false;
-			} else {
-				var post_data = {};
-				post_data.account_ids = selected_account_ids.join(',');
-				post_data.pt_type = _father_this.pt_type.val();
-				post_data.order_id = _father_this.order_id.val();
-		
-				//提交操作
-				var result = System.ajax_post_setup(system_info.post_order_url,post_data,'JSON');
-				if (result.status == 0) {
-					//alert(result.msg);
-					window.location.href= result.data.go_to_url;	//跳转
-				} else {
-					//alert(result.msg);
-				}
-			}
-			
-		});
-	}();
-	
-	//关闭窗口
-	var close_order_vessel_fn = function () {
-		_father_this.close_order_vessel.click(function () {
-			//弹窗插件
-			_father_this.order_vessel.hide();
-		});
-	}();
-}
 
 Weibo.prototype.orderspan_fn = function () {
 	var _father_this = this; 

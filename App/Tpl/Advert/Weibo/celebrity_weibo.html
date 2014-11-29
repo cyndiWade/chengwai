@@ -307,17 +307,19 @@ var public_post_fn = function (obj_data) {
 		
 		Weibo.create_details_fn('{:U('/Advert/WeiboOrder/getAccountInfo')}');
 		
-		Weibo.add_selected_box_fn();
+		//Weibo.add_selected_box_fn();
+		Weibo.add_one_selected_box_fn();
 		
 		Weibo.page_init_fn();	//加载页面初始化
 		
 		//更新page
 		if (system_info.account_ids == '') {
 			page_now_list(result.data.count,result.data.p,system_info.page_limit);
-			Weibo.add_selected_box_fn(system_info.account_ids);
+			//Weibo.add_selected_box_fn(system_info.account_ids);
 		} else {
-			Weibo.now_selected.prop('checked',true);
-			Weibo.add_selected_account_to_vessel();
+			Weibo.add_haved_to_cart();
+			//Weibo.now_selected.prop('checked',true);
+			//Weibo.add_selected_account_to_vessel();
 		}
 		
 	} 

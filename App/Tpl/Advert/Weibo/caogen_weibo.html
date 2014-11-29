@@ -287,15 +287,18 @@ var public_post_fn = function (obj_data) {
 		
 		Weibo.create_details_fn('{:U('/Advert/WeiboOrder/getAccountInfo')}');
 		
+		Weibo.add_one_selected_box_fn();
+		
 		Weibo.page_init_fn();	//加载页面初始化
 		
 		//更新page
 		if (system_info.account_ids == '') {
 			page_now_list(result.data.count,result.data.p,system_info.page_limit);
-			Weibo.add_selected_box_fn(system_info.account_ids);
+			//Weibo.add_selected_box_fn(system_info.account_ids);
 		} else {
-			Weibo.now_selected.prop('checked',true);
-			Weibo.add_selected_account_to_vessel();
+			Weibo.add_haved_to_cart();
+			//Weibo.now_selected.prop('checked',true);
+			//Weibo.add_selected_account_to_vessel();
 		}
 		
 		
@@ -317,7 +320,7 @@ var create_now_html = function ($data,$post_data) {
 	var html = '';
 	html += '<tr class="accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_month_order_nub+'"  data-fans_num="'+$data.bs_fans_num+'">';
 	html += '<td class="t1">';
-	html += '<div class="weibopart"><input type="checkbox" class="check now_selected add_selected_box" data-field="id" data-id="'+$data.bs_id+'"/>';
+	html += '<div class="weibopart"><input type="checkbox" class="check now_selected add_one_selected_box" data-field="id" data-id="'+$data.bs_id+'"/>';
 
 	if ($data.bs_head_img == '') {
 		html += '<img src="'+system_info.Global_Resource_Path+'images/default_nothing.jpg" class="wbimg" />';
