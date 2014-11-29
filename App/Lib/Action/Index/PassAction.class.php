@@ -174,7 +174,7 @@ class PassAction extends IndexBaseAction {
 		if($ver_arr['expired'] - time() < 0 ) parent::callback(C('STATUS_OTHER'),'验证码已经超时！');
 		if($id!='')
 		{
-			$update = array('password'=>md5($password));
+			$update = array('password'=>pass_encryption($password));
 			$now_bool = $this->db['Users']->where(array('id'=>$id))->save($update);
 			if($now_bool)
 			{
