@@ -76,12 +76,12 @@ class UserAction extends AdminBaseAction {
 		$user_info = $Users->get_user_info(array('id'=>$this->oUser->id,'is_del'=>0));
 
 		//验证密码
-		if (md5($password) != $user_info['password']) {
+		if (pass_encryption($password) != $user_info['password']) {
 			$this->error('原密码错误！');
 
 		} else {//密码修改
 			
-			$mes=$Users->modifi_user_password($this->oUser->id,md5($new_password));
+			$mes=$Users->modifi_user_password($this->oUser->id,pass_encryption($new_password));
 			if ($mes == true)	{ 
 					$this->success('密码修改成功！新密码为 '.$new_password);
 			} else {
@@ -136,7 +136,7 @@ class UserAction extends AdminBaseAction {
 						
 					$Users->create();
 					if (!Validate::checkNull($_POST['password_old'])) {
-						$Users->password = md5($_POST['password_old']);
+						$Users->password = pass_encryption($_POST['password_old']);
 					}
 					$Users->update_user_info($id) ? $this->success('修改成功！') : $this->error('没有做出修改');
 					exit;
@@ -186,6 +186,21 @@ class UserAction extends AdminBaseAction {
 	
 		}
 	
+	}
+	
+	
+	
+	//对原账号进行双MD5处理
+	public function set_pass_two_md5() {
+		$users = $this->db['Users']->select();
+		if (!empty($users)) {
+			foreach ($users as $key=>$val) {
+				$now_data = $this->db['Users']->where(array('id'=>$val['id']))->find();
+				$new_password = md5($now_data['password']);
+				$this->db['Users']->where(array('id'=>$val['id']))->save(array('password'=>$new_password));
+			}
+		}
+		//dump($users);
 	}
 	
 	

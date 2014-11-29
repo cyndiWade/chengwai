@@ -48,5 +48,22 @@
 			);
 			return $this->where($where)->delete();
 		}
+		
+		
+		public function check_is_sc_or_lh ($array) {
+			$where = array(
+					'pt_type'=>$array['pt_type'],
+					'is_celebrity'=>$array['is_celebrity'],
+					'or_type'=>$array['or_type'],
+					'user_id'=>$array['user_id'],
+					'weibo_id'=>$array['weibo_id']
+			);
+			$count = $this->where($where)->count();
+			if($count > 0) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
 
 	}

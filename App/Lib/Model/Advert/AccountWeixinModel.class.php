@@ -101,8 +101,6 @@
 				->select();
 			}	
 			
-			
-			
 			$tags_ids = C('Big_Nav_Class_Ids.weixin_caogen_tags_ids');		
 			$CategoryTagsInfo = D('CategoryTags')->get_classify_data($tags_ids['top_parent_id']);
 			$data['cjfl'] = $CategoryTagsInfo[$tags_ids['cjfl']];
@@ -116,6 +114,12 @@
 				
 			if ($list == true) {
 				foreach ($list as $key=>$val) {
+					//是否收藏
+					$list[$key]['pg_sc'] = $Blackorcollection->check_is_sc_or_lh(array('user_id'=>$id,'or_type'=>1,'weixin_id'=>$val['bs_id'],'is_celebrity'=>$is_celebrity));
+					//是否拉黑
+					$list[$key]['pg_lh'] = $Blackorcollection->check_is_sc_or_lh(array('user_id'=>$id,'or_type'=>0,'weixin_id'=>$val['bs_id'],'is_celebrity'=>$is_celebrity));
+								
+					
 					//价格换算
 					$list[$key]['bs_dtb_money'] = $val['bs_dtb_money'] + ($val['bs_dtb_money'] * $gloubid);
 					$list[$key]['bs_dtwdyt_money'] = $val['bs_dtwdyt_money'] + ($val['bs_dtwdyt_money'] * $gloubid);
@@ -370,6 +374,11 @@
 			
 			if($list == true) {
 				foreach ($list as $key=>$val) {
+					//是否收藏
+					$list[$key]['pg_sc'] = $Blackorcollection->check_is_sc_or_lh(array('user_id'=>$id,'or_type'=>1,'weixin_id'=>$val['bs_id'],'is_celebrity'=>$is_celebrity));
+					//是否拉黑
+					$list[$key]['pg_lh'] = $Blackorcollection->check_is_sc_or_lh(array('user_id'=>$id,'or_type'=>0,'weixin_id'=>$val['bs_id'],'is_celebrity'=>$is_celebrity));
+					
 					//参考报价
 					$list[$key]['bs_ck_money'] = $val['bs_ck_money'] + ($val['bs_ck_money'] * $gloubid);
 

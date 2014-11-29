@@ -6,7 +6,7 @@ class UsersModel extends AdminBaseModel {
 	//添加账号
 	public function add_account($type) {
 		//写入数据库
-		$this->password = md5($this->password);
+		$this->password = pass_encryption($this->password);
 		$time = time();
 		$this->last_login_time = $time;
 		$this->last_login_ip = get_client_ip();

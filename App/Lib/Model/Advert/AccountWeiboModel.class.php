@@ -115,6 +115,11 @@
 			{
 				foreach($list as $key=>$val)
 				{
+					//是否收藏
+					$list[$key]['pg_sc'] = $Blackorcollection->check_is_sc_or_lh(array('user_id'=>$id,'or_type'=>1,'weibo_id'=>$val['bs_id'],'is_celebrity'=>$is_celebrity,'pt_type'=>$type));
+					//是否拉黑
+					$list[$key]['pg_lh'] = $Blackorcollection->check_is_sc_or_lh(array('user_id'=>$id,'or_type'=>0,'weibo_id'=>$val['bs_id'],'is_celebrity'=>$is_celebrity,'pt_type'=>$type));
+
 					$list[$key]['bs_yg_zhuanfa'] = $val['bs_yg_zhuanfa'] + ($val['bs_yg_zhuanfa'] * $gloubid);
 					$list[$key]['bs_yg_zhifa'] = $val['bs_yg_zhifa'] + ($val['bs_yg_zhifa'] * $gloubid);
 					$list[$key]['bs_rg_zhuanfa'] = $val['bs_rg_zhuanfa'] + ($val['bs_rg_zhuanfa'] * $gloubid);
@@ -338,6 +343,13 @@
 			
 			if($list == true) {
 				foreach ($list as $key=>$val) {
+					
+					//是否收藏
+					$list[$key]['pg_sc'] = $Blackorcollection->check_is_sc_or_lh(array('user_id'=>$id,'or_type'=>1,'weibo_id'=>$val['bs_id'],'is_celebrity'=>$is_celebrity,'pt_type'=>$type));
+					//是否拉黑
+					$list[$key]['pg_lh'] = $Blackorcollection->check_is_sc_or_lh(array('user_id'=>$id,'or_type'=>0,'weibo_id'=>$val['bs_id'],'is_celebrity'=>$is_celebrity,'pt_type'=>$type));
+					
+					
 					//重新计算价格
 					$list[$key]['bs_ck_money'] = $val['bs_ck_money'] + ($gloubid * $val['bs_ck_money']);
 

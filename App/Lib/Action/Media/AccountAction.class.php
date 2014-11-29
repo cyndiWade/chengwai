@@ -154,7 +154,7 @@ class AccountAction extends MediaBaseAction {
 				}
 				
 				//验证密码
-				if (md5($password) != $user_info['password']) {
+				if (pass_encryption($password) != $user_info['password']) {
 					//$this->error("密码错误"); 
 					parent::callback(C('STATUS_OTHER'),'密码错误！');
 				} else {

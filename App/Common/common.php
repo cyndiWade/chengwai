@@ -767,4 +767,9 @@ function format_array(&$array,$fields,$is_not = false) {
 }
 
 
+
+function pass_encryption ($str){
+	return md5(md5($str));
+}
+
 ?>

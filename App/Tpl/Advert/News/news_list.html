@@ -139,7 +139,9 @@
        	-->
         <dl class="filter_type">
         	<dt>媒体类型：</dt>
-        	<dd id="typeall" class="selected"><b></b>全部</dd>
+        	<dd id="mtypeall" class="three_sidebar_type selected" data-field="all" data-val=""><b></b>全部</dd>
+        	<dd id="mcollect" class="three_sidebar_type" data-field="cksc" data-val="1"><b></b>收藏</dd>
+	      	<dd id="mblacklist" class="three_sidebar_type" data-field="ckhmd" data-val="1"><b></b>黑名单</dd>
         	<!--<dd id="collect"><b></b>收藏</dd>-->
         </dl>
         <!--  <div class="pagin pagin-m"><span class="text"><i>1</i>/2</span><span class="prev-disabled">上一页<b></b></span><a href="javascript:;" class="next">下一页<b></b></a></div>-->
@@ -149,30 +151,34 @@
     <!-- end 排序条件 -->
 	 
 	<div class="col01-wx l">
-		<table class="tab01-weibo tab01-mt l">
-			<thead>
-			  <tr>
-				<th class="t1"><b>媒体名称</b></th>
-				<th class="t2">门户类型</th>
-				<th class="t3">价格</th>
-				<!--<th class="t4">入口</th>-->
-				<th class="t5">新闻源</th>
-				<!--<th class="t6">网页收录</th> -->
-				<!--   <th class="t7">标题字数</th>-->
-				<!-- <th class="t8">是否需要来源</th>-->
-				<th class="t9">地区</th>
-				<!--  <th class="t10">周末能否发稿</th>-->
-				<th class="t11">能否带文本链接</th>
-				<!--
-				<th class="last">案例</th>
-				 -->
-			  </tr>
-		  	</thead>
-		  	<tbody id="list_content">
-			 
-			</tbody>
-  
+	
+		<table class="tab01-weibo tab01-mt01 l">
+		
+			
+		<thead>
+		  <tr class="even">
+			<th class="t1"><b>新闻媒体</b></th>
+			<th class="t2">优惠价</th>
+			<th class="t3">门户类型</th>
+			<th class="t4">新闻源</th>
+			<th class="t5">周末发稿</th>
+			<th class="t6">收录</th>
+			<th class="t7">地区</th>
+			<th class="t8">能否带文本链接</th>
+			<th class="last">操作</th>
+		  </tr>
+		 </thead>
+		 
+		 <tbody id="list_content"> 
+		  
+		  </tbody>
+	
 		</table>
+		
+		
+		
+		
+		
 		<div class="weibo-bot l">
 			<div class="controlbox fl">
 				<span class="all_selected">全选</span><span id="batch"  class="add_selected_box">批量添加账号</span>	
@@ -267,7 +273,7 @@ var public_post_fn = function (obj_data) {
 	if (result.status == 1) {
 		list_content.empty();
 		for (var key in result.data.list) {
-			list_content.append(create_now_html(result.data.list[key]));
+			list_content.append(create_now_html(result.data.list[key],post_data));
 		}
 		
 		//拉黑和收藏功能
@@ -291,7 +297,61 @@ var public_post_fn = function (obj_data) {
 	system_info.account_ids = '';
 }
 
-
+var create_now_html = function ($data,$post_data) {
+//console.log($data);
+	var html = '';
+	html += '<tr class="accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_week_order_num+'"  data-money="'+$data.bs_money+'">';
+	html += '<td class="t1">';
+	html += '	<div class="mediapart">';
+	html += '		<input type="checkbox" class="check" class="check now_selected add_selected_box" data-field="id" data-id="'+$data.bs_id+'" />';
+	
+	//html += '		<img src="{$global_tpl_view.Global_Resource_Path}images/mt_img01.gif" class="mtimg" />';
+	if ($data.bs_head_img == '') {
+		html += '<img src="{$global_tpl_view.Global_Resource_Path}images/mt_img01.gif" class="mtimg" />';
+	} else {
+		html += '<img src="'+$data.bs_head_img+'" class="mtimg" />';
+	}
+	
+	html += '		<div class="grp fl">';
+	html += '			<h5 class="l"><b class="account_name" data-account_name="'+$data.bs_account_name+'">'+$data.bs_account_name+'</b></h5>';
+	html += '			<div class="desc l">[<a href="http://'+$data.bs_url+'" target="_blank">案例</a>]'+$data.pg_type_of_portal_explain+'';
+	html += '			</div>';
+	html += '		</div>';
+	html += '	</div>';
+	html += '</td>';
+	html += '<td class="t2"><b class="red now_money" data-money="'+($data.bs_money)+'">'+($data.bs_money)+'元</b></td>';
+	html += '<td class="t3">'+$data.pg_type_of_portal_explain+'</td>';
+	html += '<td class="t4">'+$data.pg_news_explain+'</td>';
+	html += '<td class="t5">是</td>';
+	html += '<td class="t6">是</td>';
+	html += '<td class="t7">'+$data.pg_area_name+'</td>';
+	html += '<td class="t8">'+$data.pg_links_explain+'</td>';
+	html += '<td class="last">'
+	html += '<div class="ctrl">';
+	
+	if ($post_data.cksc == 1) {
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-news_id="' + $data.bs_id + '">取消收藏</span><br/>';
+	} else if ($post_data.ckhmd == 1) {
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-news_id="' + $data.bs_id + '">取消拉黑</span><br/>';
+	} else {
+		if ($data.pg_sc == 1) {
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-news_id="' + $data.bs_id + '">已收藏</span><br/>';
+		} else {
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-news_id="' + $data.bs_id + '">收藏</span><br/>';
+		}
+		if ($data.pg_lh == 1) {
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-news_id="' + $data.bs_id + '">已拉黑</span><br/>';
+		} else {
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-news_id="' + $data.bs_id + '">拉黑</span><br/>';
+		} 
+	}
+	
+	html += '</div>';
+	html += '</td>';
+	html += '</tr>';
+	return html;
+}
+/*
 var create_now_html = function ($data) {
 	//console.log($data.bs_area_name);
 	//return false;
@@ -325,6 +385,7 @@ var create_now_html = function ($data) {
 	html += '</tr>';
 	return html;
 } 
+*/
 
 //地区菜单
 var Region = new Region('{:U('/Advert/Tool/get_Region_Data')}');

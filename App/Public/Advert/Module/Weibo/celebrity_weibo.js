@@ -678,6 +678,9 @@ Weibo.prototype.create_now_html = function (result,$post_data) {
 
 	for (var key in result) {
 		var $data = result[key];
+		//console.log($data);
+		//return false;
+		
 		var html = '';
 		html += '<div class="box01-cele fl accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_month_order_nub+'"  data-fans_num="'+$data.bs_fans_num+'">';
 		html += '<input type="checkbox" class="check fl now_selected add_selected_box" data-field="id" data-id="'+$data.bs_id+'" />';
@@ -691,6 +694,7 @@ Weibo.prototype.create_now_html = function (result,$post_data) {
 		
 		html += '<div class="ctrl">';
 
+		/*
 		if ($post_data.cksc == undefined) {
 			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weibo_id="'+$data.bs_id+'">收藏</span>';
 		}else if ($post_data.cksc == 1) {
@@ -702,6 +706,26 @@ Weibo.prototype.create_now_html = function (result,$post_data) {
 		}else if ($post_data.ckhmd == 1) {
 			html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weibo_id="'+$data.bs_id+'">取消拉黑</span>';
 		}
+		*/
+		
+
+		if ($post_data.cksc == 1) {
+			html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weibo_id="' + $data.bs_id + '">取消收藏</span>';
+		} else if ($post_data.ckhmd == 1) {
+			html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weibo_id="' + $data.bs_id + '">取消拉黑</span>';
+		} else {
+			if ($data.pg_sc == 1) {
+				html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weibo_id="' + $data.bs_id + '">已收藏</span>';
+			} else {
+				html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weibo_id="' + $data.bs_id + '">收藏</span>';
+			}
+			if ($data.pg_lh == 1) {
+				html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weibo_id="' + $data.bs_id + '">已拉黑</span>';
+			} else {
+				html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weibo_id="' + $data.bs_id + '">拉黑</span>';
+			} 
+		}
+		
 		
 		html += '</div>';
 		html += '</div>';

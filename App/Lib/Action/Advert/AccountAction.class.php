@@ -143,7 +143,7 @@ class AccountAction extends AdvertBaseAction {
 					//alertBack($status_info[$user_info['status']]['explain']);
 				}
 				//验证密码
-				if (md5($password) != $user_info['password']) {
+				if (pass_encryption($password) != $user_info['password']) {
 					parent::callback(C('STATUS_OTHER'),'密码错误！'); 
 				} else {
 					$moneyget = $this->db['UserAdvertisement']->getMoney($user_info['id']);

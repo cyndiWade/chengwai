@@ -505,8 +505,10 @@ News.prototype.three_sidebar_type_fn = function () {
 	
 	_father_this.three_sidebar_type.click(function () {
 		_father_this.three_sidebar_type.removeClass("select");
+		_father_this.three_sidebar_type.removeClass("selected");
 		var _this = $(this);
 		_this.addClass("select");
+		_this.addClass("selected");
 		public_post_fn({});
 	});
 	
@@ -558,15 +560,42 @@ News.prototype.get_search_account = function () {
 
 //拉黑收藏功能
 News.prototype.lahei_and_shoucang_fn = function ($urL) {
+	/*
 	var _father_this = this;
 	_father_this.init();
 	_father_this.lahei_and_shoucang.click(function () {
 		var _this = $(this);
 		var post_data = {
-			'pt_type' :system_info.pt_type,	
-			'is_celeprity' :system_info.is_celeprity,
 			'or_type' : _this.data('or_type'),
-			'News_id' : _this.data('News_id')
+			'news_id' : _this.data('news_id')
+		};
+		var result = System.ajax_post_setup($urL,post_data,'JSON');
+		console.log(result);
+		return false;
+		if (result.status == 1) {
+			//alert(result.msg);
+			public_post_fn({});
+		} else {
+			//alert(result.msg);
+		}
+	});
+	*/
+	
+	
+	var _father_this = this;
+	_father_this.init();
+	_father_this.lahei_and_shoucang.click(function () {
+		
+		var _this = $(this);
+		
+		if (_this.data('or_type') == 0) {
+			if (confirm('确认操作?') == false) return false; 
+		}
+		
+		var post_data = {
+			'action' : _this.data('action'),
+			'or_type' : _this.data('or_type'),
+			'news_id' : _this.data('news_id')
 		};
 		var result = System.ajax_post_setup($urL,post_data,'JSON');
 		

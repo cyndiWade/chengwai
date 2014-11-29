@@ -51,24 +51,27 @@
 				}else{
 					return false;
 				}
-			}else if($addvalue['cksc']==1)
-			{
-				$weixinId_array = $Blackorcollection->getAdvertUser($id,1);
+			}else if($addvalue['cksc']==1){
+				$newsId_array = $Blackorcollection->getAdvertUser($id,1);
 				//去除黑名单的weibo_id
-				if(!empty($weixinId_array))
+				if(!empty($newsId_array))
 				{
 					$where['w.id'] = array('IN',$newsId_array);
 				}else{
 					return false;
 				}
 			}else{
-				$weixinId_array = $Blackorcollection->getAdvertUser($id,0);
-				//去除黑名单的weibo_id
-				if(!empty($weixinId_array))
+				$newsId_array = $Blackorcollection->getAdvertUser($id,0);
+		
+				//去除黑名单的news_id
+				if(!empty($newsId_array))
 				{
 					$where['w.id'] = array('NOT IN',$newsId_array);
-				}
+					//$where['w.id'] = array('NOT IN',$weixinId_array);
+				}		
 			}
+			
+			
 			$where['w.is_del'] = 0;
 			$where['w.status'] = 1;
  			$count = $this->where($where)
@@ -123,6 +126,12 @@
 			
 			if ($list == true) {
 				foreach ($list as $key=>$val) {
+					//是否收藏
+					$list[$key]['pg_sc'] = $Blackorcollection->check_is_sc_or_lh(array('user_id'=>$id,'or_type'=>1,'news_id'=>$val['bs_id']));
+					//是否拉黑
+					$list[$key]['pg_lh'] = $Blackorcollection->check_is_sc_or_lh(array('user_id'=>$id,'or_type'=>0,'news_id'=>$val['bs_id']));
+					
+					
 					//加上价格比例
 					$list[$key]['bs_money'] = $val['bs_money'] + $gloubid;
 

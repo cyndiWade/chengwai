@@ -342,6 +342,24 @@ var create_now_html = function ($data,$post_data) {
 	
 	html += '<div class="ctrl">';
 	
+	
+	if ($post_data.cksc == 1) {
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weixin_id="' + $data.bs_id + '">取消收藏</span>';
+	} else if ($post_data.ckhmd == 1) {
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weixin_id="' + $data.bs_id + '">取消拉黑</span>';
+	} else {
+		if ($data.pg_sc == 1) {
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weixin_id="' + $data.bs_id + '">已收藏</span>';
+		} else {
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weixin_id="' + $data.bs_id + '">收藏</span>';
+		}
+		if ($data.pg_lh == 1) {
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weixin_id="' + $data.bs_id + '">已拉黑</span>';
+		} else {
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weixin_id="' + $data.bs_id + '">拉黑</span>';
+		} 
+	}
+	/*
 	if ($post_data.cksc == undefined) {
 		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weixin_id="'+$data.bs_id+'">收藏</span>';
 	} else if($post_data.cksc ==1) {
@@ -352,7 +370,7 @@ var create_now_html = function ($data,$post_data) {
 		html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weixin_id="'+$data.bs_id+'">拉黑</span>';
 	}else if ($post_data.ckhmd == 1) {
 		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weixin_id="'+$data.bs_id+'">取消拉黑</span>';
-	}		
+	}*/	
 	
 	html += '</div>';
 	html += '</div>';

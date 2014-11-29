@@ -7,7 +7,7 @@ class UsersModel extends AdvertBaseModel {
 	public function add_account($account,$password) {
 		//写入数据库
 		$map['account'] = $account;
-		$map['password'] = md5($password);
+		$map['password'] = pass_encryption($password);
 		$map['last_login_time'] = time();
 		$map['last_login_ip'] = get_client_ip();
 		$map['create_time'] = time();
@@ -65,9 +65,9 @@ class UsersModel extends AdvertBaseModel {
 			if($array['new_pass']==$array['new_passes'])
 			{
 				$oldPass = $this->where(array('id'=>$users_id))->field('password')->find();
-				if($oldPass['password']==md5($array['old_pass']))
+				if($oldPass['password']==pass_encryption($array['old_pass']))
 				{
-					$update = array('password'=>md5($array['new_pass']));
+					$update = array('password'=>pass_encryption($array['new_pass']));
 					$bool = $this->where(array('id'=>$users_id))->save($update);
 					if($bool)
 					{

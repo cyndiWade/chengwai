@@ -7,7 +7,7 @@ class UsersModel extends MediaBaseModel {
 	public function add_account($account,$password) {
 		//写入数据库
 		$map['account'] = $account;
-		$map['password'] = md5($password);
+		$map['password'] = pass_encryption($password);
 		$map['last_login_time'] = time();
 		$map['last_login_ip'] = get_client_ip();
 		$map['create_time'] = time();

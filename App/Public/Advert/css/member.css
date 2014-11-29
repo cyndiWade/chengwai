@@ -209,11 +209,18 @@ text-align:center; line-height:38px; float:left; margin-left:23px;
 .tab01-mt .t10{ width:80px;text-align:center;}
 .tab01-mt .t11{ width:100px;text-align:center;}
 .tab01-mt .last{ text-align:center;}
+/*
 .mediapart input{ float:left; margin-top:64px;}
 .mediapart .mtimg{ float:left; width:118px; margin-left:5px; height:138px; border:1px solid #babab7;}
 .mediapart .grp{ float:left; padding-top:50px; width:80px; padding-left:10px;}
 .mediapart .grp h5{ padding-bottom:18px;}
 .mediapart .grp h5 b{ padding-left:0; color:#ea6060;}
+*/
+.mediapart input{ float:left; margin-top:14px;}
+.mediapart .mtimg{ float:left; width:120px; margin-left:5px; height:40px; border:1px solid #babab7;}
+.mediapart .grp{ float:left;  padding-top:50px; width:150px; padding-left:10px;}
+.mediapart .grp h5{ padding-bottom:8px;}
+.mediapart .grp h5 b{ padding-left:0;  color:#ea6060;}
 /*微博名人*/
 .order{ padding-left:28px; background:url(../images/voc_icon01.gif) no-repeat 0 0; font-weight:bold; color:#ea6060; margin-left:20px;}
 .box01-process p{ padding-bottom:25px;}
@@ -281,3 +288,26 @@ text-align:center; line-height:38px; float:left; margin-left:23px;
 .part02-mrfx p{ padding:10px; line-height:22px;}
 .part02-mrfx .info{padding:10px; line-height:22px;}
 .part02-mrfx .info span{ margin-right:40px;}
+
+/*20141118添加*/
+.tab01-mt01 .t1{ width:315px;}
+.tab01-mt01 .t1 b{padding-left:18px;}
+.tab01-mt01 .t2{ width:89px;}
+.tab01-mt01 .t3{ width:84px;}
+.tab01-mt01 .t4{ width:82px;}
+.tab01-mt01 .t5{ width:73px;}
+.tab01-mt01 .t6{ width:79px;}
+.tab01-mt01 .t7{ width:86px;}
+.tab01-mt01 .t8{ width:119px;}
+.tab01-mt01 .t9{ width:74px;}
+.tab01-mt01 .t10{ width:86px;}
+
+
+.mediapart .grp  .desc{ color:#238cc8;}
+
+.tab01-mt01 td { padding: 15px 0;}
+.tab01-mt01 .mediapart .grp{ float:left; padding-top:0px; width:150px; padding-left:10px;}
+.tab01-mt01 .mediapart .grp h5{ padding-bottom:8px;}
+.tab01-mt01 .mediapart .grp h5 b{ padding-left:0;  color:#333; }
+
+

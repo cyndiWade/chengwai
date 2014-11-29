@@ -44,7 +44,7 @@ Weixin.prototype.init = function () {
 	
 	this.clear_tags = $('.clear_tags');	//清空选项
 	
-	this.three_sidebar_type = $('.three_sidebar_type');	//三级导航选项
+	this.three_sidebar_type = $('.three_sidebar_type');	//
 	
 	this.search = $('#search');				//search按钮
 	this.search_account = $('.search_account');		//搜索的值
