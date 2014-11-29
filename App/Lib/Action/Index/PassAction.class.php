@@ -182,7 +182,7 @@ class PassAction extends IndexBaseAction {
 				$Verify->where(array('telephone'=>$telephone,'verify'=>$phone_verify))->save($status);
 				parent::callback(C('STATUS_SUCCESS'),'ok',array(),array('goto_url'=>U('Index/Pass/endpass')));
 			}else{
-				parent::callback(C('STATUS_OTHER'),'修改失败！');
+				parent::callback(C('STATUS_OTHER'),'原始密码无变化！');
 			}
 		}
 	}
