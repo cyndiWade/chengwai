@@ -368,8 +368,6 @@ class WeiboOrderAction extends AdvertBaseAction {
 				$info = '您提交的内容中含有敏感词 "' . $bool['keyword'] . '",请修改!';
 				alertBack($info);
 			}
-
-			var_dump($_POST);
 			//获得新增数据ID
 			$id = $this->db['GeneralizeOrder']->insertPost($_POST,$this->oUser->id);
 			
@@ -439,30 +437,27 @@ class WeiboOrderAction extends AdvertBaseAction {
 				}
 			}
 		}
-		for($j=0;$j<=9;$j++)
+		$genuineFile = $save_file['genuineFile'];
+		if($genuineFile!='')
 		{
-			$genuineFile = $save_file['genuineFile'.$j];
-			if($genuineFile!='')
+			$status_genuineFile = parent::upload_file($genuineFile,$dir,5120000);
+			if($status_genuineFile['status']==true)
 			{
-				$status_genuineFile = parent::upload_file($genuineFile,$dir,5120000);
-				if($status_genuineFile['status']==true)
+				$img_where['users_id'] = $this->oUser->id;
+				if($bool==true)
 				{
-					$img_where['users_id'] = $this->oUser->id;
-					if($bool==true)
-					{
-						$img_where['generalize_order_id'] = $order_id;
-					}else{
-						$img_where['intention_order_id'] = $order_id;
-					}
-					$img_where['type'] = 2;
-					$img_where['url'] = $status_genuineFile['info'][0]['savename'];
-				}
-				if($type==2)
-				{
-					$this->db['IntentionWeiboFiles']->add($img_where);
+					$img_where['generalize_order_id'] = $order_id;
 				}else{
-					$this->db['GeneralizeFiles']->add($img_where);
+					$img_where['intention_order_id'] = $order_id;
 				}
+				$img_where['type'] = 2;
+				$img_where['url'] = $status_genuineFile['info'][0]['savename'];
+			}
+			if($type==2)
+			{
+				$this->db['IntentionWeiboFiles']->add($img_where);
+			}else{
+				$this->db['GeneralizeFiles']->add($img_where);
 			}
 		}
 	}
