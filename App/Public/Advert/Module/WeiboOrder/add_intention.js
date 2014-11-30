@@ -197,6 +197,11 @@ init_check_form();
 		
 		btn_del.unbind();
 		btn_del.click(function () {
+			var count = $('.ipt_file').size();
+			if (count <= 1) {
+				alert('最少保留一张');
+				return false;
+			}
 			$('.tr_zhuanfa:last').remove();
 		});
 	}
