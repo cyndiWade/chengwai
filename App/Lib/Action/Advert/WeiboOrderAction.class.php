@@ -334,8 +334,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 			$pt_type = intval($_GET['pttype']);
 			if($id!='')
 			{
-				$img_array = $this->upload_img($_FILES,$id,false);
-				$this->db['IntentionWeiboFiles']->insertImg($img_array);
+				$img_array = $this->upload_img($_FILES,$id,false,2);
+				//$this->db['IntentionWeiboFiles']->insertImg($img_array);
 				if($account_id!='')
 				{
 					$arr = array('order_id'=>$id,'pt_type'=>$pt_type,'account_ids'=>$account_id);
@@ -369,6 +369,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 				alertBack($info);
 			}
 
+			var_dump($_POST);
 			//获得新增数据ID
 			$id = $this->db['GeneralizeOrder']->insertPost($_POST,$this->oUser->id);
 			
@@ -378,8 +379,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 			$pt_type = intval($_GET['pttype']);
 			if($id!='')
 			{
-				$img_array = $this->upload_img($_FILES,$id);
-				$this->db['GeneralizeFiles']->insertImg($img_array);
+				$img_array = $this->upload_img($_FILES,$id,true,1);
+				//$this->db['GeneralizeFiles']->insertImg($img_array);
 				//根据ID跳转
 				if($account_id!='')
 				{
@@ -408,46 +409,62 @@ class WeiboOrderAction extends AdvertBaseAction {
 
 
 	//上传图片 传入表单路径 和 订单ID 上传文件name contentTypeRetweet genuineFile
-	private function upload_img($save_file,$order_id,$bool=true)
+	private function upload_img($save_file,$order_id,$bool=true,$type)
 	{
-		$img_where = array();
-		$contentTypeRetweet = $save_file['contentTypeRetweet'];
 		$upload_dir = C('UPLOAD_DIR');
 		$dir = $upload_dir['web_dir'].$upload_dir['image'];
-		if($contentTypeRetweet!='')
+		for($i=0;$i<=9;$i++)
 		{
-			$status_content = parent::upload_file($contentTypeRetweet,$dir,5120000);
-			if($status_content['status']==true)
+			$contentTypeRetweet = $save_file['contentTypeRetweet'.$i];
+			if($contentTypeRetweet!='')
 			{
-				$img_where['contentTypeRetweet']['users_id'] = $this->oUser->id;
-				if($bool==true)
+				$status_content = parent::upload_file($contentTypeRetweet,$dir,5120000);
+				if($status_content['status']==true)
 				{
-					$img_where['contentTypeRetweet']['generalize_order_id'] = $order_id;
-				}else{
-					$img_where['contentTypeRetweet']['intention_order_id'] = $order_id;
+					$content['users_id'] = $this->oUser->id;
+					if($bool==true)
+					{
+						$content['generalize_order_id'] = $order_id;
+					}else{
+						$content['intention_order_id'] = $order_id;
+					}
+					$content['type'] = 1;
+					$content['url'] = $status_content['info'][0]['savename'];
 				}
-				$img_where['contentTypeRetweet']['type'] = 1;
-				$img_where['contentTypeRetweet']['url'] = $status_content['info'][0]['savename'];
+				if($type==2)
+				{
+					$this->db['IntentionWeiboFiles']->add($content);
+				}else{
+					$this->db['GeneralizeFiles']->add($content);
+				}
 			}
 		}
-		$genuineFile = $save_file['genuineFile'];
-		if($genuineFile!='')
+		for($j=0;$j<=9;$j++)
 		{
-			$status_genuineFile = parent::upload_file($genuineFile,$dir,5120000);
-			if($status_genuineFile['status']==true)
+			$genuineFile = $save_file['genuineFile'.$j];
+			if($genuineFile!='')
 			{
-				$img_where['genuineFile']['users_id'] = $this->oUser->id;
-				if($bool==true)
+				$status_genuineFile = parent::upload_file($genuineFile,$dir,5120000);
+				if($status_genuineFile['status']==true)
 				{
-					$img_where['genuineFile']['generalize_order_id'] = $order_id;
-				}else{
-					$img_where['genuineFile']['intention_order_id'] = $order_id;
+					$img_where['users_id'] = $this->oUser->id;
+					if($bool==true)
+					{
+						$img_where['generalize_order_id'] = $order_id;
+					}else{
+						$img_where['intention_order_id'] = $order_id;
+					}
+					$img_where['type'] = 2;
+					$img_where['url'] = $status_genuineFile['info'][0]['savename'];
 				}
-				$img_where['genuineFile']['type'] = 2;
-				$img_where['genuineFile']['url'] = $status_genuineFile['info'][0]['savename'];
+				if($type==2)
+				{
+					$this->db['IntentionWeiboFiles']->add($img_where);
+				}else{
+					$this->db['GeneralizeFiles']->add($img_where);
+				}
 			}
 		}
-		return $img_where;
 	}
 	
 	

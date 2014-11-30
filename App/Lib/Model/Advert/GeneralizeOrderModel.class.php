@@ -12,30 +12,30 @@
 			{
 				$new_post[$key] = addslashes($value);
 			}
- 			$now_val['users_id'] = $id;
- 			$now_val['tfpt_type'] = $new_post['tfpt_type'];
- 			$now_val['fslx_type'] = $new_post['fslx_type'];
- 			$now_val['ryg_type'] = $new_post['ryg_type'];
- 			$now_val['hd_name'] = $new_post['hd_name'];
- 			$now_val['zf_url'] = $new_post['zf_url'];
- 			$now_val['zfy_type'] = $new_post['zfy_type'];
- 			$now_val['zw_info'] = $new_post['zw_info'];
- 			$now_val['zfnr_type'] = $new_post['zfnr_type'];
- 			$now_val['wa_url_status'] = $new_post['wa_url_status'];
- 			$now_val['start_time'] = strtotime($new_post['start_time']);
- 			$now_val['over_time'] = strtotime($new_post['over_time']);
- 			$now_val['sfyq'] = $new_post['sfyq']=='' ? 0 : 1;
- 			$now_val['bz_info'] = $new_post['bz_info'];
- 			$now_val['dx_status'] = $new_post['dx_status'];
- 			$now_val['dx_phone'] = $new_post['dx_phone'];
- 			$now_val['create_time'] = time();
-			// $this->create();
-			// $this->users_id = $id;
-			// $this->start_time = strtotime($new_post['start_time']);
-			// $this->over_time = strtotime($new_post['over_time']);
-			// $this->sfyq = $new_post['sfyq']=='' ? 0 : 1;
-			// $this->create_time = time();
-			return $this->add($now_val);
+ 			// $now_val['users_id'] = $id;
+ 			// $now_val['tfpt_type'] = $new_post['tfpt_type'];
+ 			// $now_val['fslx_type'] = $new_post['fslx_type'];
+ 			// $now_val['ryg_type'] = $new_post['ryg_type'];
+ 			// $now_val['hd_name'] = $new_post['hd_name'];
+ 			// $now_val['zf_url'] = $new_post['zf_url'];
+ 			// $now_val['zfy_type'] = $new_post['zfy_type'];
+ 			// $now_val['zw_info'] = $new_post['zw_info'];
+ 			// $now_val['zfnr_type'] = $new_post['zfnr_type'];
+ 			// $now_val['wa_url_status'] = $new_post['wa_url_status'];
+ 			// $now_val['start_time'] = strtotime($new_post['start_time']);
+ 			// $now_val['over_time'] = strtotime($new_post['over_time']);
+ 			// $now_val['sfyq'] = $new_post['sfyq']=='' ? 0 : 1;
+ 			// $now_val['bz_info'] = $new_post['bz_info'];
+ 			// $now_val['dx_status'] = $new_post['dx_status'];
+ 			// $now_val['dx_phone'] = $new_post['dx_phone'];
+ 			// $now_val['create_time'] = time();
+			$this->create();
+			$this->users_id = $id;
+			$this->start_time = strtotime($new_post['start_time']);
+			$this->over_time = strtotime($new_post['over_time']);
+			$this->sfyq = $new_post['sfyq']=='' ? 0 : 1;
+			$this->create_time = time();
+			return $this->add();
 		}
 		
 		
@@ -103,30 +103,30 @@
 		{
 			if($arr!='')
 			{
-				$add['users_id'] = $arr['users_id'];
-				$add['tfpt_type'] = $arr['tfpt_type'];
-				$add['fslx_type'] = $arr['fslx_type'];
-				$add['ryg_type'] = $arr['ryg_type'];
-				$add['hd_name'] = $arr['yxd_name'];
-				$add['zf_url'] = $arr['zf_url'];
-				$add['zfy_type'] = $arr['zfy_type'];
-				$add['zw_info'] = $arr['zw_info'];
-				$add['wa_url_status'] = $arr['wa_url_status'];
-				$add['zfnr_type'] = $arr['zfnr_type'];
-				$add['start_time'] = $arr['start_time'];
-				$add['over_time'] = $arr['over_time'];
-				$add['sfyq'] = $arr['sfyq'];
-				$add['dx_status'] = $arr['dx_status'];
-				$add['dx_phone'] = $arr['dx_phone'];
-				$add['bz_info'] = $arr['bz_info'];
-				$add['all_price'] = $arr['all_price'];
-				// $this->create();
-				// $this->hd_name = $arr['yxd_name'];
-				// $this->source_type = 1;
-				// $this->create_time = time();
-				$add['source_type'] = 1;
-				$add['create_time'] = time();
-				return $this->add($add);
+				// $add['users_id'] = $arr['users_id'];
+				// $add['tfpt_type'] = $arr['tfpt_type'];
+				// $add['fslx_type'] = $arr['fslx_type'];
+				// $add['ryg_type'] = $arr['ryg_type'];
+				// $add['hd_name'] = $arr['yxd_name'];
+				// $add['zf_url'] = $arr['zf_url'];
+				// $add['zfy_type'] = $arr['zfy_type'];
+				// $add['zw_info'] = $arr['zw_info'];
+				// $add['wa_url_status'] = $arr['wa_url_status'];
+				// $add['zfnr_type'] = $arr['zfnr_type'];
+				// $add['start_time'] = $arr['start_time'];
+				// $add['over_time'] = $arr['over_time'];
+				// $add['sfyq'] = $arr['sfyq'];
+				// $add['dx_status'] = $arr['dx_status'];
+				// $add['dx_phone'] = $arr['dx_phone'];
+				// $add['bz_info'] = $arr['bz_info'];
+				// $add['all_price'] = $arr['all_price'];
+				$this->create();
+				$this->hd_name = $arr['yxd_name'];
+				$this->source_type = 1;
+				$this->create_time = time();
+				// $add['source_type'] = 1;
+				// $add['create_time'] = time();
+				return $this->add();
 			}
 		}	
 	}
