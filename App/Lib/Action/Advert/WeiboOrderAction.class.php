@@ -124,7 +124,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$Page       = new Page($count,10);
 		$show       = $Page->show();
 		$list = $GeneralizeOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
-		->order('id desc')->field('id,hd_name,tfpt_type,fslx_type,ryg_type,start_time,all_price,status,smallnumber')->select();
+		->order('id desc')->field('id,hd_name,tfpt_type,fslx_type,ryg_type,start_time,all_price,status,smallnumber,create_time')->select();
 		$new_list_id = array();
 		foreach($list as $value)
 		{

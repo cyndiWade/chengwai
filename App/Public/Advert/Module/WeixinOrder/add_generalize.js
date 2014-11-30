@@ -11,14 +11,20 @@ var init_check_form = function () {
 		
 		//表单验证之前，提交时执行的函数
 		beforeCheck:function(curform){	
-			//var TextArea1 = $('#TextArea1');
-			//alert(TextArea1.val().length)
 			//在表单提交执行验证之前执行的函数，curform参数是当前表单对象。
 				//这里明确return false的话将不会继续执行验证操作;	
 		},
 			
 		//表单验证成功，提交时执行的函数
 		beforeSubmit:function(curform){
+			
+			var stemTxt = CKEDITOR.instances.TextArea1.document.getBody().getText(); //取得纯文本 
+			var stemHtml = CKEDITOR.instances.TextArea1.getData();	//获取HTML数据
+			
+			if (stemHtml == '') {
+				$.Showmsg("请输入内容");
+				return false;
+			}
 			//在验证成功后，表单提交前执行的函数，curform参数是当前表单对象。
 			//这里明确return false的话表单将不会提交;
 			//return false;
@@ -168,6 +174,8 @@ WeixinOrderAddGeneralize.prototype.init = function () {
 	this.pop_dtw = $('.pop_dtw');
 	this.pop_photoview = $('.pop_photoview');
 	this.pop_ly_url = $('.pop_ly_url');
+	
+	this.zy_div = $('.zy_div');
 	
 }
 
@@ -333,6 +341,24 @@ WeixinOrderAddGeneralize.prototype.tooltip_tonus_fn = function () {
 	});
 }
 
+WeixinOrderAddGeneralize.prototype.form_change_fn = function () {
+	var _father_this = this; 
+
+	var ld_ipt_change_fn = function () {
+		var type = _father_this.get_GgwType_Val_Fn();
+		if (type == 1) {
+			_father_this.zy_div.hide();
+		} 
+	}
+	
+	_father_this.ggw_type.click(function () {
+		_father_this.zy_div.show();
+		ld_ipt_change_fn();
+	});
+	
+	ld_ipt_change_fn();
+}
+
 
 
 //执行
@@ -345,6 +371,8 @@ WeixinOrderAddGeneralize.prototype.run = function () {
 	
 	_father_this.tooltip_tonus_fn();
 	
+	_father_this.form_change_fn();
+	
 	//_father_this.phonebox.popOn();
 }
 
@@ -356,25 +384,3 @@ window.onload = function () {
 	WeixinOrderAddGeneralize.run();	
 }
 
-//$('#phoneview').click(function(){
-//	$('.phonebox').popOn();
-//})
-//$('.top-view li').click(function(){
-//	var i=$(this).index();
-//	$(this).addClass('select');
-//	$(this).siblings().removeClass('select');
-//	$('.part01-view').hide();
-//	$('.part01-view').eq(i).show();
-//	$('.part01-detail').hide();
-//})
-//$('.part01-view a').click(function(){
-//	$('.part01-view').hide();
-//	$('.part01-detail').show();
-//})
-
-
-//(function () {
-//	$('#phoneview').click(function(){
-//		$('.phonebox').popOn();
-//	})
-//})();

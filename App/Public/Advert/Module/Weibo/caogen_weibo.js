@@ -739,10 +739,15 @@ Weibo.prototype.add_account_to_cart = function (account_id,status) {
 			
 			var html = '<li data-select_account_id="'+account_id+'" data-money1="'+_money1+'"  data-money2="'+_money2+'" data-money3="'+_money3+'" data-money4="'+_money4+'">';			
 			html += '<span class="del fr delet_account"></span><strong>'+_name+'</strong>';			
-			html += ' | 硬广转发('+_money1+')';
-			html += ' | 软广转发('+_money2+')';
-			html += ' | 硬广直发('+_money3+')';
-			html += ' | 软广直发('+_money4+')';
+			
+			//html += ' | 硬广转发('+_money1+')';
+			//html += ' | 软广转发('+_money2+')';
+			//html += ' | 硬广直发('+_money3+')';
+			//html += ' | 软广直发('+_money4+')';
+			
+			html += '<p class="fr">  硬转('+_money1+')';
+			html += ' | 软广('+_money2+')  | 硬直('+_money3+') | 软直('+_money4+' ) </p> ';
+			
 			html += '</li>';
 			var html = 
 			_father_this.account_selected.append(html);
@@ -809,7 +814,17 @@ Weibo.prototype.set_order_data = function () {
 		account_sum += 1;
 	});
 	
-	_father_this.account_all_html.html('已选择<b class="account_num">'+account_sum+'</b>个账号，计费： 硬广转发价：<b class="account_money">'+money_sum_1+'</b>元， 软广转发价：<b class="account_money">'+money_sum_2+'</b>元 ，硬广直发价：<b class="account_money">'+money_sum_3+'</b>元 ，软广直发价：<b class="account_money">'+money_sum_4+'</b>元');
+	var html = '<p>已选择<b class="account_num">'+account_sum+'</b>个账号</p>';
+	html += '<ul class="cart_ul">';
+	html += '<li>硬广转发价：<b class="account_money">'+money_sum_1+'</b>元</li>';
+	html += '<li>软广转发价：<b class="account_money">'+money_sum_2+'</b>元</li>';
+	html += '<li>硬广直发价：<b class="account_money">'+money_sum_3+'</b>元</li>';
+	html += '<li>软广直发价：<b class="account_money">'+money_sum_4+'</b>元</li>';
+	html += '</ul>';
+	
+	_father_this.account_all_html.html(html);
+	
+	//_father_this.account_all_html.html('已选择<b class="account_num">'+account_sum+'</b>个账号，计费： 硬广转发价：<b class="account_money">'+money_sum_1+'</b>元， 软广转发价：<b class="account_money">'+money_sum_2+'</b>元 ，硬广直发价：<b class="account_money">'+money_sum_3+'</b>元 ，软广直发价：<b class="account_money">'+money_sum_4+'</b>元');
 
 }
 //删除一个已经选择的订单
