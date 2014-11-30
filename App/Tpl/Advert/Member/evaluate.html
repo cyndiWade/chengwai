@@ -2,6 +2,7 @@
 <html>
 <head>
 	<include file="Public:top" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/common.css" type="text/css" />
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/manager.css" type="text/css" />
 	<title>评价管理</title>
 </head>
@@ -73,7 +74,10 @@
 					</table>
 				</div>
 			</div>
-			{$view_data.page}
+			<div class="page fr">
+				{$view_data.page}
+			</div>
+			
 		</div>
 	
 	</div>

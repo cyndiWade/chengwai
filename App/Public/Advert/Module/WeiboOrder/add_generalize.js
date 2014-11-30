@@ -145,6 +145,33 @@ init_check_form();
 		var _this = $(this);
 		change_html(_this.val());
 	});
+	
+	
+	var change_zhifa_placeholder = function () {
+		$('.zfnr_type').click(function () {
+			var _this = $(this);
+			if (_this.val() == 2) {
+				$('.zfnr_info').attr('placeholder','与产品相关正面评论，禁止星座、段子！');
+			} else {
+				$('.zfnr_info').attr('placeholder','');
+			}
+		});
+	}
+	
+	
+	var change_zhuanfa_placeholder = function () {
+		$('.zfy_type').click(function () {
+			var _this = $(this);
+			$('.td_zw_info').show();
+			if (_this.val() == 1) {
+				$('.zw_info').attr('placeholder','');
+			} else if (_this.val() == 2) {
+				$('.zw_info').attr('placeholder','与产品相关正面评论，禁止星座、段子！');
+			} else if (_this.val() == 3) {
+				$('.td_zw_info').hide();
+			}
+		});
+	}
 
 		
 	var change_html = function ($type) {
@@ -163,6 +190,8 @@ init_check_form();
 			tr_zhifa.eq(2).append(add_html('zhifa3'));
 		} 
 		init_check_form();
+		change_zhifa_placeholder();
+		change_zhuanfa_placeholder();
 	}
 	
 	var add_html = function ($key) {
@@ -184,18 +213,18 @@ init_check_form();
 		html_obj.zhifa2	+=	'<span class="soft fl"><input type="radio" name="zfy_type" class="radio zfy_type" value="3" datatype="*" errormsg="请正确选择"  nullmsg="请选择转发语类型"/><strong>无转发语</strong></span>';
 		html_obj.zhifa2	+=	'</td>'
 			
-		html_obj.zhifa3 = '<td class="t1"><span><strong>转发语：</strong></span></td>';
-		html_obj.zhifa3 += '<td class="t2"><div class="forward"><textarea name="zw_info" class="textarea zw_info" ignore="ignore" datatype="*0-500" errormsg="请正确填写范围是10-500个字符" ></textarea><p>此内容会直接发出，请不要填写与转发语无关的信息。请不要超过140字，您还可以输入140个字</p></div>';
+		html_obj.zhifa3 = '<td class="t1"><span><strong>内容语：</strong></span></td>';
+		html_obj.zhifa3 += '<td class="t2"><div class="forward td_zw_info"><textarea name="zw_info" class="textarea zw_info" ignore="ignore" datatype="*0-500" errormsg="请正确填写范围是10-500个字符" ></textarea><p>此内容会直接发出，请不要填写与转发语无关的信息。请不要超过140字，您还可以输入140个字</p></div>';
 		html_obj.zhifa3 += '</td>'
 		
 			
 		//转发HTML
 		html_obj.zhuanfa1 = '<td class="t1"><span><i>*</i><strong>直发内容类型：</strong></span></td>';
-		html_obj.zhuanfa1 += '<td class="t2"> <input type="radio" name="zfnr_type" class="zfnr_type" id="content_type_1" value="1" datatype="*" errormsg="请正确选择"  nullmsg="请选择直发内容类型" /> 指定直发内容';
-		html_obj.zhuanfa1 += '<input type="radio" name="zfnr_type" class="zfnr_type" id="content_type_2" value="2" datatype="*" errormsg="请正确选择"  nullmsg="请选择直发内容类型" checked="checked"/> 博主自拟直发内容';
+		html_obj.zhuanfa1 += '<td class="t2"> <input type="radio" name="zfnr_type" class="zfnr_type" id="content_type_1" value="1" datatype="*" errormsg="请正确选择"  nullmsg="请选择直发内容类型" checked="checked"/> 指定直发内容';
+		html_obj.zhuanfa1 += '<input type="radio" name="zfnr_type" class="zfnr_type" id="content_type_2" value="2" datatype="*" errormsg="请正确选择"  nullmsg="请选择直发内容类型" /> 博主自拟直发内容';
 		html_obj.zhuanfa1 += '</td>';
 			
-		html_obj.zhuanfa2 = '<td class="t1"><span><strong>直发语：</strong></span></td>';
+		html_obj.zhuanfa2 = '<td class="t1"><span><strong>内容语：</strong></span></td>';
 		html_obj.zhuanfa2 += '<td class="t2"><div class="forward"><textarea name="zfnr_info" class="textarea zfnr_info" ignore="ignore" datatype="*0-500" errormsg="请正确填写范围是10-500个字符" ></textarea><p>此内容会直接发出，请不要填写与转发语无关的信息。请不要超过140字，您还可以输入140个字</p></div>';
 		html_obj.zhuanfa2 += '</td>'			
 		
@@ -207,9 +236,12 @@ init_check_form();
 		
 	}
 	
+	
 	change_html(fslx_type.val());
 	
-})()
+})();
+
+
 
 
 

@@ -890,11 +890,14 @@ Weixin.prototype.add_account_to_cart = function (account_id,status) {
 			
 			html += '<span class="del fr delet_account"></span><strong>'+_name+'</strong>';
 			
-			html += ' | 单图文('+_money1+')';
-			html += ' | 第一条('+_money2+')';
-			html += ' | 第二条('+_money3+')';
-			html += ' | 第3-N条('+_money4+')';
-			
+//			html += ' | 单图文('+_money1+')';
+//			html += ' | 第一条('+_money2+')';
+//			html += ' | 第二条('+_money3+')';
+//			html += ' | 第3-N条('+_money4+')';
+		
+			html += '<p class="fr"> 单图 ('+_money1+')';
+			html += ' | 多图文 ( '+_money2+' | '+_money3+' | '+_money4+' ) </p> ';
+		
 			html += '</li>';
 			
 			_father_this.account_selected.append(html);
@@ -960,7 +963,18 @@ Weixin.prototype.set_order_data = function () {
 		money_sum_4 += Number(_this.data('money4'));
 		account_sum += 1;
 	});
-	_father_this.account_all_html.html('已选择<b class="account_num">'+account_sum+'</b>个账号，计费： 单图文：<b class="account_money">'+money_sum_1+'</b>元， 多图文第一条：<b class="account_money">'+money_sum_2+'</b>元 ，多图文第二条：<b class="account_money">'+money_sum_3+'</b>元 ，多图文第三-N：<b class="account_money">'+money_sum_4+'</b>元');
+	
+	var html = '<p>已选择<b class="account_num">'+account_sum+'</b>个账号</p>';
+	html += '<ul class="cart_ul">';
+	html += '<li>单图文：<b class="account_money">'+money_sum_1+'</b>元</li>';
+	html += '<li>多图文第一条：<b class="account_money">'+money_sum_2+'</b>元</li>';
+	html += '<li>多图文第二条：<b class="account_money">'+money_sum_3+'</b>元</li>';
+	html += '<li>多图文第三-N：<b class="account_money">'+money_sum_4+'</b>元</li>';
+	html += '</ul>';
+	
+	//var html = '已选择<b class="account_num">'+account_sum+'</b>个账号，计费： 单图文：<b class="account_money">'+money_sum_1+'</b>元， 多图文第一条：<b class="account_money">'+money_sum_2+'</b>元 ，多图文第二条：<b class="account_money">'+money_sum_3+'</b>元 ，多图文第三-N：<b class="account_money">'+money_sum_4+'</b>元';
+
+	_father_this.account_all_html.html(html);
 
 }
 //删除一个已经选择的订单
