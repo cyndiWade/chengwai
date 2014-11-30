@@ -12,30 +12,30 @@
 			{
 				$new_post[$key] = addslashes($value);
 			}
-// 			$now_val['users_id'] = $id;
-// 			$now_val['tfpt_type'] = $new_post['tfpt_type'];
-// 			$now_val['fslx_type'] = $new_post['fslx_type'];
-// 			$now_val['ryg_type'] = $new_post['ryg_type'];
-// 			$now_val['hd_name'] = $new_post['hd_name'];
-// 			$now_val['zf_url'] = $new_post['zf_url'];
-// 			$now_val['zfy_type'] = $new_post['zfy_type'];
-// 			$now_val['zw_info'] = $new_post['zw_info'];
-// 			$now_val['zfnr_type'] = $new_post['zfnr_type'];
-// 			$now_val['wa_url_status'] = $new_post['wa_url_status'];
-// 			$now_val['start_time'] = strtotime($new_post['start_time']);
-// 			$now_val['over_time'] = strtotime($new_post['over_time']);
-// 			$now_val['sfyq'] = $new_post['sfyq']=='' ? 0 : 1;
-// 			$now_val['bz_info'] = $new_post['bz_info'];
-// 			$now_val['dx_status'] = $new_post['dx_status'];
-// 			$now_val['dx_phone'] = $new_post['dx_phone'];
-// 			$now_val['create_time'] = time();
-			$this->create();
-			$this->users_id = $id;
-			$this->start_time = strtotime($new_post['start_time']);
-			$this->over_time = strtotime($new_post['over_time']);
-			$this->sfyq = $new_post['sfyq']=='' ? 0 : 1;
-			$this->create_time = time();
-			return $this->add();
+ 			$now_val['users_id'] = $id;
+ 			$now_val['tfpt_type'] = $new_post['tfpt_type'];
+ 			$now_val['fslx_type'] = $new_post['fslx_type'];
+ 			$now_val['ryg_type'] = $new_post['ryg_type'];
+ 			$now_val['hd_name'] = $new_post['hd_name'];
+ 			$now_val['zf_url'] = $new_post['zf_url'];
+ 			$now_val['zfy_type'] = $new_post['zfy_type'];
+ 			$now_val['zw_info'] = $new_post['zw_info'];
+ 			$now_val['zfnr_type'] = $new_post['zfnr_type'];
+ 			$now_val['wa_url_status'] = $new_post['wa_url_status'];
+ 			$now_val['start_time'] = strtotime($new_post['start_time']);
+ 			$now_val['over_time'] = strtotime($new_post['over_time']);
+ 			$now_val['sfyq'] = $new_post['sfyq']=='' ? 0 : 1;
+ 			$now_val['bz_info'] = $new_post['bz_info'];
+ 			$now_val['dx_status'] = $new_post['dx_status'];
+ 			$now_val['dx_phone'] = $new_post['dx_phone'];
+ 			$now_val['create_time'] = time();
+			// $this->create();
+			// $this->users_id = $id;
+			// $this->start_time = strtotime($new_post['start_time']);
+			// $this->over_time = strtotime($new_post['over_time']);
+			// $this->sfyq = $new_post['sfyq']=='' ? 0 : 1;
+			// $this->create_time = time();
+			return $this->add($now_val);
 		}
 		
 		
