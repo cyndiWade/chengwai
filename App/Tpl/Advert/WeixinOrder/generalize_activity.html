@@ -22,11 +22,14 @@
 				<a href="#" class="help fr">帮助手册！</a>
 				<a href="{:U('/Advert/WeixinOrder/add_generalize')}" class="btn bluebtn fl">添加活动</a>
 				<div class="searnum fl">
-					<b>【{$view_data.zxz}】</b>执行中，<b>【{$view_data.yqx}】</b>已取消，<b>【{$view_data.caogao}】</b>草稿，<b>【{$view_data.ywc}】</b>个已完成
+					<a href="{:U('Advert/WeixinOrder/generalize_activity',array('zxz'=>on))}"><b>【{$view_data.zxz}】</b></a>执行中，
+					<a href="{:U('Advert/WeixinOrder/generalize_activity',array('yqx'=>on))}"><b>【{$view_data.yqx}】</b></a>已取消，
+					<a href="{:U('Advert/WeixinOrder/generalize_activity',array('caogao'=>on))}"><b>【{$view_data.caogao}】</b></a>草稿，
+					<a href="{:U('Advert/WeixinOrder/generalize_activity',array('ywc'=>on))}"><b>【{$view_data.ywc}】</b></a>个已完成
 				</div>
 			</div>
 			<div class="box01-time l">
-				<form method="POST" method="{:U('Advert/WeiboOrder/generalize_activity')}">
+				<form method="POST" method="{:U('Advert/WeixinOrder/generalize_activity')}">
 					<!-- <strong class="fr">排序：<select class="first"><option>默认排序</option></select></strong> -->
 					<span class="span-start fl">起止时间：</span>
 					<div class="startime pr fl"><em class="pa"></em><input type="text" name="start_time" value="{$view_data.start_time}" class="timetext fl timeSubject" /></div>

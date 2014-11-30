@@ -77,6 +77,27 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$new_array = addsltrim($_REQUEST);
 		$start_time = strtotime($new_array['start_time']);
 		$end_time = strtotime($new_array['end_time']);
+		//执行订单
+		if($new_array['zxz']!='')
+		{
+			$where['status'] = 4;
+		}
+		//已取消
+		if($new_array['yqx']!='')
+		{
+			$where['status'] = 6;
+		}
+		//草稿
+		if($new_array['caogao']!='')
+		{
+			$where['status'] = array('IN',array('0','1','2'));
+			$where['smallnumber'] = 0;
+		}
+		//已完成
+		if($new_array['ywc']!='')
+		{
+			$where['status'] = 5;
+		}
 		//时间范围
 		if($new_array['start_time']!='' && $new_array['end_time']=='')
 		{
