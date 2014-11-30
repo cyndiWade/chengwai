@@ -62,7 +62,7 @@ class UserAdvertisementModel extends AdvertBaseModel
 	}
 
 	//从冻结资金里扣除总金额
-	public function updateFreeze($user_id,$all_price)
+	public function updateFreeze($user_id,$all_price,$type,$generalizeid)
 	{
 		$freeze_funds = $this->where(array('users_id'=>$user_id))->field('freeze_funds')->find();
 		$updateMoney['freeze_funds'] = $freeze_funds['freeze_funds'] - $all_price;
@@ -74,6 +74,8 @@ class UserAdvertisementModel extends AdvertBaseModel
 		$add['member_info'] = '消费冻结资金';
 		$add['admin_info'] = '消费冻结资金';
 		$add['time'] = time();
+		$add['adverttype'] = $type;
+		$add['generalizeid'] = $generalizeid;
 		$add['status'] = 1;
 		D('Fund')->add($add);
 		return $bool;
