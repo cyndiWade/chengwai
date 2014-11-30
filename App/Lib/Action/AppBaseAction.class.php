@@ -542,7 +542,7 @@ class AppBaseAction extends GlobalParameterAction {
 				$all_price = 0;
 				foreach($money as $value)
 				{
-					$all_price += $value['price'] + ($value['price'] * $value['rebate']);
+					$all_price += $value['price'] + $value['rebate'];
 				}
 				$GeneralizeNewsOrder = D('GeneralizeNewsOrder');
 				$users_id = $GeneralizeNewsOrder->where(array('id'=>$order_id))->getField('users_id');
