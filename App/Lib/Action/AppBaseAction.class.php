@@ -527,8 +527,11 @@ class AppBaseAction extends GlobalParameterAction {
 		}
 	}
 	
-	//强制取消
-	//1--新闻 2微信 3微博
+	/*
+	*	强制取消
+	*	$order_id 大订单ID
+	*	$status 1 新闻 2 微信 3 微博
+	*/
 	protected function cancelMoney($order_id,$status)
 	{
 		switch($status)
