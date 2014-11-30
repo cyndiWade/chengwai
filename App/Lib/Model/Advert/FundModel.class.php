@@ -34,11 +34,12 @@
 			$add['admin_info'] = $array['spinfo'];
 			$add['time'] = time();
 			$add['status'] = 0;
+			$add['paytype'] = 1;
 			return $this->add($add);
 		}
 
 		//冻结资金流水
-		public function djFund($account_id,$price)
+		public function djFund($account_id,$price,$generalize_id,$adverttype)
 		{
 			$insertArr = array(
 				'users_id'	=>	$account_id,
@@ -48,6 +49,8 @@
 				'member_info'	=>	'冻结资金',
 				'admin_info'	=>	'冻结资金',
 				'time'	=>	time(),
+				'generalizeid' => $generalize_id,
+				'adverttype' => $adverttype,
 				'status' => 1
 			);
 			$this->add($insertArr);

@@ -123,6 +123,8 @@
 					'member_info' => '冻结资金',
 					'admin_info' => '冻结资金',
 					'time' => time(),
+					'adverttype' => 2,
+					'generalizeid' => $arr['generalize_id'],
 					'status' => 1
 				);
 				$Fund->add($add_arr);
@@ -213,7 +215,7 @@
 						$save = array('status'=>$Account_Order_Status[4]['status'],'all_price'=>$price);
 						$WeixinOrderStatus =  D('GeneralizeWeixinOrder')->where(array('id'=>$zhifu_id))->save($save);
 						
-						D('Fund')->djFund($account_id,$price);
+						D('Fund')->djFund($account_id,$price,$zhifu_id,2);
 
 						//修改关联表的状态为已支付状态
 						$Account_Order_Status = C('Account_Order_Status');
@@ -356,12 +358,12 @@
 			if($small_order_id!='' && $users_id!='')
 			{
 				$Account_Order_Status = C('Account_Order_Status');
-				$all_array = $this->where(array('id'=>$small_order_id))->field('users_id,price,rebate')->find();
+				$all_array = $this->where(array('id'=>$small_order_id))->field('generalize_id,users_id,price,rebate')->find();
 				$UserMedia = D('UserMedia');
-				$UserMedia->insertPirce($all_array['users_id'],$all_array['price']);
+				$UserMedia->insertPirce($all_array['users_id'],$all_array['price'],2,$all_array['generalize_id']);
 				//计算折扣*原价从广告主冻结资金里面扣除
 				$sum_price = $all_array['price'] + ($all_array['price'] * $all_array['rebate']);
-				$bool = D('UserAdvertisement')->updateFreeze($users_id,$sum_price);
+				$bool = D('UserAdvertisement')->updateFreeze($users_id,$sum_price,2,$all_array['generalize_id']);
 				if($bool)
 				{
 					$update['audit_status'] = $Account_Order_Status[7]['status'];

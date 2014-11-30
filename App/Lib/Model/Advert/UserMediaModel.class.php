@@ -4,7 +4,7 @@
 	{
 
 		//塞入价格
-		public function insertPirce($user_id,$price)
+		public function insertPirce($user_id,$price,$adverttype,$generalizeid)
 		{
 			$money = $this->where(array('users_id'=>$user_id))->field('money')->find();
 			$update['money'] = $money['money'] + $price;
@@ -17,6 +17,8 @@
 			$add['member_info'] = '收入';
 			$add['admin_info'] = '收入';
 			$add['time'] = time();
+			$add['adverttype'] = $adverttype;
+			$add['generalizeid'] = $generalizeid;
 			$add['status'] = 1;
 			D('Fund')->add($add);
 		}

@@ -19,17 +19,25 @@
 	<div class="area01-memwb l">
 		<table class="tab01-water l">
 		  <tr>
-			<th class="t1">流水号</th>
-			<th class="t2">日期</th>
-			<th class="t3">操作</th>
-			<th class="last">金额</th>
+			<th class="t2" align="center">流水号</th>
+			<th class="t2" align="center">发生时间</th>
+			<th class="t2" align="center">分类</th>
+			<th class="t2" align="center">金额</th>
+			<th class="t2" align="center">支付平台</th>
+			<th class="t2" align="center">状态</th>
+			<th class="t2" align="center">事由来源</th>
+			<th class="t2" align="center">备注</th>
 		  </tr>
 			<volist name="view_data.list" id="vo">
 			  <tr>
-				<td class="t1">{$vo['shop_number']}</td>
-				<td class="t2">{$vo['time']|date="Y-m-d H:i:s",###}</td>
-				<td class="t3">{$vo['member_info']}({$vo['status']|recordStatus})</td>
-				<td class="last"><span class="red">{$vo['money']}</span>元</td>
+				<td class="t2" align="center">{$vo['shop_number']}</td>
+				<td class="t2" align="center">{$vo['time']|date="Y-m-d H:i:s",###}</td>
+				<td class="t2" align="center">{$vo['type']|recordType}</td>
+				<td class="t2" align="center"><span class="red">{$vo['money']}</span>元</td>
+				<td class="t2" align="center">{$vo['paytype']|recordAdmin}</td>
+				<td class="t2" align="center">{$vo['status']|recordStatus}</td>
+				<td class="t2" align="center">{:recordUrl($vo['adverttype'],$vo['generalizeid'])}</td>
+				<td class="t2" align="center">{$vo['member_info']}</td>
 			  </tr>
 			</volist>
 		</table>

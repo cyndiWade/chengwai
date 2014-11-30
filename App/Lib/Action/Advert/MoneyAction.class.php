@@ -66,7 +66,7 @@ class MoneyAction extends AdvertBaseAction {
 		$Page       = new Page($count,10);
 		$show       = $Page->show();
 		$list = $fund->where($where)->limit($Page->firstRow.','.$Page->listRows)->order('id desc')
-		->field('shop_number,money,time,member_info,status')->select();
+		->field('shop_number,money,time,member_info,status,type,paytype,adverttype,generalizeid')->select();
 		parent::data_to_view(array(
 			'page' => $show,
 			'list' => $list

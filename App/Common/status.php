@@ -276,4 +276,63 @@
 			break;
 		}
 	}
+
+	//record 分类
+	function recordType($id)
+	{
+		switch ($id) {
+			case 1:
+				return '充值';
+			break;
+			case 2:
+				return '退款';
+			break;
+			case 3:
+				return '消费';
+			break;
+			case 4:
+				return '冻结';
+			break;
+			case 4:
+				return '收入';
+			break;
+		}
+	}
+
+	//支付宝账户 系统账户
+	function recordAdmin($id)
+	{
+		switch($id)
+		{
+			case 1:
+				return '支付宝';
+			break;
+			case 2:
+				return '系统账户';
+			break;
+			default:
+				return '';
+			break;
+		}
+	}
+
+	//链接
+	function recordUrl($type,$id)
+	{
+		switch($type)
+		{
+			case 1:
+				return '<a href="'. U('Advert/News/generalize_detail',array('order_id'=>$id)) .'">新闻订单</a>';
+			break;
+			case 2:
+				return '<a href="'. U('Advert/WeixinOrder/generalize_detail',array('order_id'=>$id)) .'">微信订单</a>';
+			break;
+			case 3:
+				return '<a href="'. U('Advert/WeiboOrder/generalize_detail',array('order_id'=>$id)) .'">微博订单</a>';
+			break;
+			default:
+				return '其他';
+			break;
+		}
+	}
 ?>
