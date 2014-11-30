@@ -147,6 +147,7 @@ init_check_form();
 	});
 	
 	
+	
 	var change_zhifa_placeholder = function () {
 		$('.zfnr_type').click(function () {
 			var _this = $(this);
@@ -173,6 +174,33 @@ init_check_form();
 		});
 	}
 
+	//追加 | 较少 直发配图
+	var zj_zfpt_fn = function () {
+		var btn_zj = $('#btn_zj');
+		
+		var btn_del = $('#btn_del');
+		
+		btn_zj.unbind();
+		btn_zj.click(function () {
+			var count = $('.ipt_file').size();
+			if (count >= 9) {
+				alert('最多9张图片');
+				return false;
+			}
+			
+			var html = '<tr  class="tr_zhuanfa ipt_file">';
+			html += '<td class="t1"><span><strong>直发配图：</strong></span></td>';
+			html += '<td class="t2"> <input type="file" name="contentTypeRetweet'+(count+1)+'" >'; 
+			html += '</td>';		
+			html += '</tr>'
+			$('.tr_zhuanfa:last').after(html);
+		});
+		
+		btn_del.unbind();
+		btn_del.click(function () {
+			$('.tr_zhuanfa:last').remove();
+		});
+	}
 		
 	var change_html = function ($type) {
 		if ($type == 1) {	//直发
@@ -192,6 +220,7 @@ init_check_form();
 		init_check_form();
 		change_zhifa_placeholder();
 		change_zhuanfa_placeholder();
+		zj_zfpt_fn();
 	}
 	
 	var add_html = function ($key) {
@@ -229,7 +258,7 @@ init_check_form();
 		html_obj.zhuanfa2 += '</td>'			
 		
 		html_obj.zhuanfa3 = '<td class="t1"><span><strong>直发配图：</strong></span></td>';
-		html_obj.zhuanfa3 += '<td class="t2"> <input type="file" name="contentTypeRetweet" > ';
+		html_obj.zhuanfa3 += '<td class="t2"> <input type="file" name="contentTypeRetweet1" > <button type="button" id="btn_zj">增加</button><button type="button" id="btn_del">减少</button>（最多9张）';
 		html_obj.zhuanfa3 += '</td>';
 			
 		return html_obj[$key];

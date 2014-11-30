@@ -49,23 +49,29 @@
 				<div class="box02-comment-search l">
 					<table class="tab01-comment l">
 					  <tr>
-						<th class="t1">评分</th>
-						<th class="t5">评价内容</th>
-						<th class="t3">账号名称</th>
+						
 						<th class="t3">订单号</th>
+						<th class="t3">账号名称</th>
+						<th class="t5">评价内容</th>
+						<th class="t1">评分</th>
+						
 						<th class="t2">日期</th>
 						<th class="t3">来源</th>
 						<th class="last">操作</th>
 					  </tr>
 					  	<volist name="view_data.list" id="vo">
 						  <tr>
+							
+							<td class="t3">{$vo['ddid']}</td>
+							<td class="t3">{$vo['name']}</td>
+							<td class="t5">{$vo['pinlun']}</td>
 							<td class="t1"><div class="starbox">
 							<for start="0" end="$vo['pinfen']">
 								<em class="star"></em>
 							</for>
-							<td class="t5">{$vo['pinlun']}</td>
-							<td class="t3">{$vo['name']}</td>
-							<td class="t3">{$vo['ddid']}</td>
+							</div>
+							</td>
+							
 							<td class="t2">{$vo['times']|date="Y-m-d H:i:s",###}</td>
 							<td class="t3">{$vo['type']|getPltype}</td>
 							<td class="last"><div class="ctrl"><a data-source_id = "{$vo['id']}" href="javascript:;" class="delete">删除</a></div></td>

@@ -715,6 +715,7 @@ Weixin.prototype.create_details_fn = function ($url) {
 	var _father_this = this;
 	_father_this.init();
 	
+	_father_this.wxdetail.unbind();
 	_father_this.wxdetail.click(function(){
 		var _this = $(this);
 		var weixin_id = _this.data('weixin_id');
@@ -888,7 +889,7 @@ Weixin.prototype.add_account_to_cart = function (account_id,status) {
 			
 			var html = '<li data-select_account_id="'+account_id+'" data-money1="'+_money1+'"  data-money2="'+_money2+'" data-money3="'+_money3+'" data-money4="'+_money4+'">';
 			
-			html += '<span class="del fr delet_account"></span><strong>'+_name+'</strong>';
+			html += '<span class="del fr delet_account"></span><strong class="wxdetail" data-weixin_id="'+account_id+'">'+_name+'</strong>';
 			
 //			html += ' | 单图文('+_money1+')';
 //			html += ' | 第一条('+_money2+')';
@@ -918,6 +919,8 @@ Weixin.prototype.add_account_to_cart = function (account_id,status) {
 	_father_this.close_order_vessel_fn();
 	
 	_father_this.confirm_order_fn();
+	
+	_father_this.create_details_fn(system_info.getAccountInfo);
 	
 	_father_this.order_vessel.show();
 }

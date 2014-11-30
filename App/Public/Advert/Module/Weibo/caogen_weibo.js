@@ -567,6 +567,7 @@ Weibo.prototype.create_details_fn = function ($url) {
 	var _father_this = this;
 	_father_this.init();
 	
+	_father_this.wbdetail.unbind();
 	_father_this.wbdetail.click(function(){
 		var _this = $(this);
 		var weibo_id = _this.data('weibo_id');
@@ -738,7 +739,7 @@ Weibo.prototype.add_account_to_cart = function (account_id,status) {
 			var _money4 = _now_account_x.find('.now_money').eq(3).data('money');
 			
 			var html = '<li data-select_account_id="'+account_id+'" data-money1="'+_money1+'"  data-money2="'+_money2+'" data-money3="'+_money3+'" data-money4="'+_money4+'">';			
-			html += '<span class="del fr delet_account"></span><strong>'+_name+'</strong>';			
+			html += '<span class="del fr delet_account"></span><strong class="wbdetail" data-weibo_id="'+account_id+'">'+_name+'</strong>';			
 			
 			//html += ' | 硬广转发('+_money1+')';
 			//html += ' | 软广转发('+_money2+')';
@@ -768,6 +769,8 @@ Weibo.prototype.add_account_to_cart = function (account_id,status) {
 	_father_this.close_order_vessel_fn();
 	
 	_father_this.confirm_order_fn();
+	
+	_father_this.create_details_fn(system_info.getAccountInfo);
 	
 	_father_this.order_vessel.show();
 }

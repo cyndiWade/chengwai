@@ -766,6 +766,7 @@ Weibo.prototype.create_details_fn = function ($url) {
 	var _father_this = this;
 	_father_this.init();
 	
+	_father_this.mrdetail.unbind();
 	_father_this.mrdetail.click(function(){
 		var _this = $(this);
 		var weibo_id = _this.data('weibo_id');
@@ -890,7 +891,7 @@ Weibo.prototype.add_account_to_cart = function (account_id,status) {
 			var _now_account_x = $('.accounts_'+account_id);	//列表的行
 			var _name = _now_account_x.find('.account_name').data('account_name');
 			var _money = _now_account_x.find('.now_money').data('money');
-			_father_this.account_selected.append('<li data-select_account_id="'+account_id+'" data-money="'+_money+'"><span class="del fr delet_account"></span><strong>'+_name+'</strong><strong>'+_money+'</strong></li>');
+			_father_this.account_selected.append('<li data-select_account_id="'+account_id+'" data-money="'+_money+'"><span class="del fr delet_account"></span><strong class="mrdetail" data-weibo_id="'+account_id+'">'+_name+'</strong><strong>'+_money+'</strong></li>');
 	
 		}
 	} else {
@@ -909,6 +910,8 @@ Weibo.prototype.add_account_to_cart = function (account_id,status) {
 	_father_this.close_order_vessel_fn();
 	
 	_father_this.confirm_order_fn();
+	
+	_father_this.create_details_fn(system_info.getAccountInfo);
 	
 	_father_this.order_vessel.show();
 }

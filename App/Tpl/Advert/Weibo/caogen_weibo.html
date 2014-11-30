@@ -227,7 +227,8 @@ var system_info = {
 	post_order_url : '{:U('Advert/WeiboOrder/add_users')}',
 	Global_Resource_Path : '{$global_tpl_view['Global_Resource_Path']}',
 	export_url : '{:U('Advert/Member/ajax_export_order')}',
-	account_ids : '{$view_data.account_ids}'
+	account_ids : '{$view_data.account_ids}',
+	getAccountInfo : '{:U('/Advert/WeiboOrder/getAccountInfo')}'
 	
 }
 </script>
@@ -285,7 +286,7 @@ var public_post_fn = function (obj_data) {
 
 		Weibo.dataNum_And_PageNum(result.data.count);
 		
-		Weibo.create_details_fn('{:U('/Advert/WeiboOrder/getAccountInfo')}');
+		Weibo.create_details_fn(system_info.getAccountInfo);
 		
 		Weibo.add_one_selected_box_fn();
 		
