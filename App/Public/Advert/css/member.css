@@ -120,9 +120,9 @@
 .top-batch b{ margin-left:15px; font-size:14px; color:#2687c0}
 .top-batch .close{ top:7px; right:7px;}
 .mid-batch{ width:100%; height:320px;}
-.part01-batch{ padding:30px 0; color:#929292; margin-left:26px;}
+.part01-batch{ padding:10px 0; color:#929292; margin-left:26px;}
 .part01-batch b{ padding:0 4px; color:#459ecc; font-size:14px;}
-.part02-batch{ width:433px; border:1px solid #e9ece6; margin-bottom:36px;margin-left:26px; border-bottom:none;}
+.part02-batch{ width:433px; border:1px solid #e9ece6; margin-bottom:10px;margin-left:26px; border-bottom:none;}
 .part02-batch li{ width:100%; height:48px; line-height:48px; border-bottom:1px solid #e9ece6;}
 .part02-batch li strong{ padding-left:18px; color:#929292; font-weight:bold;}
 .part02-batch li .del{ background:url(../images/del.gif) no-repeat; width:16px; height:16px; margin:16px 9px 0 0; cursor:pointer;}
