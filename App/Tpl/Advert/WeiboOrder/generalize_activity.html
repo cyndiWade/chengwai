@@ -70,10 +70,14 @@
 						<td class="last" align="center">
 							<div class="ctrl">
 								<!-- <span>复制</span> |  -->
-								<span><a href="{:U('Advert/WeiboOrder/generalize_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
-								<if condition="($vo['status'] LT 4 && $vo['status'] neq 3)">
-									<span><a href="{:U('Advert/Weibo/caogen_weibo',array('order_id'=>$vo['id'],'pt_type'=>$vo['tfpt_type']))}">添加媒体</a></span>
-									<span class="delete_order" data-id="{$vo['id']}">删除</span>
+								<if condition="($vo['status'] neq 6)">
+									<span><a href="{:U('Advert/WeiboOrder/generalize_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
+									<if condition="($vo['status'] LT 4 && $vo['status'] neq 3)">
+										<span><a href="{:U('Advert/Weibo/caogen_weibo',array('order_id'=>$vo['id'],'pt_type'=>$vo['tfpt_type']))}">添加媒体</a></span>
+										<span class="delete_order" data-id="{$vo['id']}">删除</span>
+									</if>
+								<else />
+									已取消
 								</if>
 							</div>
 						</td>

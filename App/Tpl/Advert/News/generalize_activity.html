@@ -65,10 +65,14 @@
 						<td class="t8" align="center"><strong class="wpd">{$vo['status_explain']}</strong></td>
 						<td class="last" align="center">
 							<div class="ctrl">
-								<span><a href="{:U('Advert/News/generalize_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
-								<if condition="($vo['status'] LT 4 && $vo['status'] neq 3)">
-									<span><a href="{:U('Advert/News/news_list',array('order_id'=>$vo['id']))}">添加媒体</a></span>
-									<span class="delete_order" data-id="{$vo['id']}">删除</span>
+								<if condition="($vo['status'] neq 6)">
+									<span><a href="{:U('Advert/News/generalize_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
+									<if condition="($vo['status'] LT 4 && $vo['status'] neq 3)">
+										<span><a href="{:U('Advert/News/news_list',array('order_id'=>$vo['id']))}">添加媒体</a></span>
+										<span class="delete_order" data-id="{$vo['id']}">删除</span>
+									</if>
+								<else />
+									已取消
 								</if>
 							</div>
 						</td>
