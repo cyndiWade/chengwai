@@ -645,6 +645,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 			$bool = $this->db['GeneralizeAccount']->insertNewAccount($ien_id,$_POST['account_ids'],$this->oUser->id);
 			if(bool==true)
 			{
+				parent::updateMoney($this->oUser->id);
 				parent::callback(C('STATUS_SUCCESS'),'成功!');
 			}else{
 				parent::callback(C('STATUS_UPDATE_DATA'),'错误请稍后再试!');

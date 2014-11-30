@@ -94,28 +94,28 @@
 		{
 			if($arr!='')
 			{
-				// $add['users_id'] = $arr['users_id'];
-				// $add['tfpt_type'] = $arr['tfpt_type'];
-				// $add['fslx_type'] = $arr['fslx_type'];
-				// $add['ggw_type'] = $arr['ggw_type'];
-				// $add['yxd_name'] = $arr['yxd_name'];
-				// $add['title'] = $arr['title'];
-				// $add['fmzw_status'] = $arr['fmzw_status'];
-				// $add['zw_info'] = $arr['zw_info'];
-				// $add['ly_url'] = $arr['ly_url'];
-				// $add['start_time'] = $arr['start_time'];
-				// $add['over_time'] = $arr['over_time'];
-				// $add['sfyq'] = $arr['sfyq'];
-				// $add['dx_status'] = $arr['dx_status'];
-				// $add['dx_phone'] = $arr['dx_phone'];
-				// $add['bz_info'] = $arr['bz_info'];
-				// $add['all_price'] = $arr['all_price'];
-				// $add['source_type'] = 1;
-				// $add['create_time'] = time();
-				$this->users_id = $arr['users_id'];
-				$this->source_type = 1;
-				$this->create_time = time();
-				return $this->add();
+				$add['users_id'] = $arr['users_id'];
+				$add['tfpt_type'] = $arr['tfpt_type'];
+				$add['fslx_type'] = $arr['fslx_type'];
+				$add['ggw_type'] = $arr['ggw_type'];
+				$add['yxd_name'] = $arr['yxd_name'];
+				$add['title'] = $arr['title'];
+				$add['fmzw_status'] = $arr['fmzw_status'];
+				$add['zw_info'] = $arr['zw_info'];
+				$add['ly_url'] = $arr['ly_url'];
+				$add['start_time'] = $arr['start_time'];
+				$add['over_time'] = $arr['over_time'];
+				$add['sfyq'] = $arr['sfyq'];
+				$add['dx_status'] = $arr['dx_status'];
+				$add['dx_phone'] = $arr['dx_phone'];
+				$add['bz_info'] = $arr['bz_info'];
+				$add['all_price'] = $arr['all_price'];
+				$add['source_type'] = 1;
+				$add['create_time'] = time();
+				// $this->users_id = $arr['users_id'];
+				// $this->source_type = 1;
+				// $this->create_time = time();
+				return $this->add($add);
 			}
 		}	
 	}
