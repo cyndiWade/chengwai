@@ -117,7 +117,7 @@
 				$add_arr = array(
 					'users_id' => $id,
 					'shop_number' => 'DJ'.time(),
-					'money' => $update['all_price'],
+					'money' => $all_price,
 					'type' => 4,
 					'adormed' => 2,
 					'member_info' => '冻结资金',
@@ -245,7 +245,7 @@
 		}
 
 		//新增数据
-		public function insertNewAccount($ien_id,$explode_arr)
+		public function insertNewAccount($ien_id,$explode_arr,$user_id)
 		{
 			if($ien_id!='')
 			{
@@ -268,13 +268,80 @@
 					$upadte['audit_status'] = 8;
 					$IntentionWeixinAccount->where(array('id'=>array('in',$exp_arr)))->save($upadte);
 
-					//计算总价
-					$update_all['all_price'] = $this->where(array('generalize_id'=>$ien_id))->sum('price');
-					$bool = D('GeneralizeWeixinOrder')->where(array('id'=>$ien_id))->save($update_all);
-					if($bool)
+					//计算价格
+					$sum_price = $this->where(array('generalize_id'=>$ien_id))->field('price,rebate,audit_status')->select();
+					//状态未支付订单价格
+					$all_price = 0;
+					//总订单价格
+					$now_price = 0;
+					//获得小订单的数量
+					$number = 0;
+					foreach($sum_price as $price)
 					{
+						//获得未计算的小订单价格
+						if($price['audit_status']==0 || $price['audit_status']==1)
+						{
+							$all_price += $price['price'] + ($price['price'] * $price['rebate']);
+						}
+						$now_price += $price['price'] + ($price['price'] * $price['rebate']);
+						$number++;
+					}
+					$update['all_price'] = $now_price;
+					$update['smallnumber'] = $number;
+
+					$GeneralizeWeixinOrder = D('GeneralizeWeixinOrder');
+					$GeneralizeWeixinOrder->where(array('id'=>$ien_id))->save($update);
+
+
+					$UserAdvertisement = D('UserAdvertisement');
+
+					//获得用户的账户信息
+					$money = $UserAdvertisement->where(array('users_id'=>$user_id))->field('money,freeze_funds')->find();
+
+
+					$Fund = D('Fund');
+					$Order_Status = C('Order_Status');
+					$Account_Order_Status = C('Account_Order_Status');
+
+
+
+					if($money['money'] > $all_price)
+					{
+						$now_money['money'] = $money['money'] - $all_price;
+
+						$now_money['freeze_funds'] = $money['freeze_funds'] + $all_price;
+
+						$UserAdvertisement->where(array('users_id'=>$user_id))->save($now_money);
+
+						$add_arr = array(
+							'users_id' => $user_id,
+							'shop_number' => 'DJ'.time(),
+							'money' => $all_price,
+							'type' => 4,
+							'adormed' => 2,
+							'member_info' => '冻结资金',
+							'admin_info' => '冻结资金',
+							'time' => time(),
+							'status' => 1
+						);
+						$Fund->add($add_arr);
+
+						$all_status = array('audit_status'=>$Account_Order_Status[3]['status']);
+						$old_where['generalize_id'] = $ien_id;
+						$old_where['audit_status'] = array(array('eq',0),array('eq',1),'or');
+						$this->where($old_where)->save($all_status);
+						$gen_arr = array('status'=>$Order_Status[4]['status']);
+						$GeneralizeWeixinOrder->where(array('id'=>$ien_id))->save($gen_arr);
+
+						//$this->bigOrderChild($new_array['order_id']);
 						return true;
 					}else{
+						$update_status = array('status'=>$Order_Status[2]['status']);
+						$GeneralizeWeixinOrder->where(array('id'=>$ien_id))->save($update_status);
+						$audit_status = array('audit_status'=>$Account_Order_Status[1]['status']);
+						$old_where['generalize_id'] = $ien_id;
+						$old_where['audit_status'] = array(array('eq',0),array('eq',1),'or');
+						$this->where($old_where)->save($audit_status);
 						return false;
 					}
 				}

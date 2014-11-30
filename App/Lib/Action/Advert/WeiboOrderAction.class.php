@@ -642,7 +642,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 			$ien_id = $this->db['GeneralizeOrder']->insertGeneralize($intentval);
 			//获得ID 存入数据
 			$this->db['GeneralizeFiles']->insertImgs($ien_id,$img);	
-			$bool = $this->db['GeneralizeAccount']->insertNewAccount($ien_id,$_POST['account_ids']);
+			$bool = $this->db['GeneralizeAccount']->insertNewAccount($ien_id,$_POST['account_ids'],$this->oUser->id);
 			if(bool==true)
 			{
 				parent::callback(C('STATUS_SUCCESS'),'成功!');

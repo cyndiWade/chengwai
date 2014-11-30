@@ -648,7 +648,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 			$ien_id = $this->db['GeneralizeWeixinOrder']->insertGeneralize($intentval);
 			//获得ID 存入数据
 			$this->db['GeneralizeWeixinFiles']->insertImgs($ien_id,$img);
-			$bool = $this->db['GeneralizeWeixinAccount']->insertNewAccount($ien_id,$_POST['account_ids']);
+			$bool = $this->db['GeneralizeWeixinAccount']->insertNewAccount($ien_id,$_POST['account_ids'],$this->oUser->id);
 			if(bool==true)
 			{
 				//修改订单状态
