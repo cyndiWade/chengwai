@@ -131,13 +131,12 @@ class NewsAction extends AdvertBaseAction {
 		$Page       = new Page($count,10);
 		$show       = $Page->show();
 		$list = $GeneralizeNewsOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
-		->order('id desc')->field('id,title,start_time,web_url,all_price,status,create_time')->select();
+		->order('id desc')->field('id,title,start_time,web_url,all_price,status,create_time,smallnumber')->select();
 		$new_list_id = array();
 		foreach($list as $value)
 		{
 			$new_list_id[] =$value['id'];
 		}
-		$generalize_id_num = $this->db['GeneralizeNewsAccount']->getListNum($new_list_id);
 		$Order_Status = C('Order_Status');
 		if ($list == true) {
 			foreach ($list as $key=>$val) {
@@ -150,7 +149,6 @@ class NewsAction extends AdvertBaseAction {
 				'search_name' => $new_array['search_name'],
 				'start_time' => $new_array['start_time'],
 				'end_time' => $new_array['end_time'],
-				'generalize_id_num'=>$generalize_id_num,
 				'ywc'=>$number['ywc'],
 				'pdz'=>$number['pdz'],
 				'zxz'=>$number['zxz'],

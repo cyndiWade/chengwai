@@ -102,14 +102,12 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$Page       = new Page($count,10);
 		$show       = $Page->show();
 		$list = $GeneralizeOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
-		->order('id desc')->field('id,hd_name,tfpt_type,fslx_type,ryg_type,start_time,all_price,status')->select();
+		->order('id desc')->field('id,hd_name,tfpt_type,fslx_type,ryg_type,start_time,all_price,status,smallnumber')->select();
 		$new_list_id = array();
 		foreach($list as $value)
 		{
 			$new_list_id[] =$value['id'];
 		}
-
-		$generalize_id_num = $this->db['GeneralizeAccount']->getListNum($new_list_id);
 
 		$Order_Status = C('Order_Status');
 		if ($list == true) {
@@ -123,7 +121,6 @@ class WeiboOrderAction extends AdvertBaseAction {
 				'search_name' => $new_array['search_name'],
 				'start_time' => $new_array['start_time'],
 				'end_time' => $new_array['end_time'],
-				'generalize_id_num'=>$generalize_id_num,
 				'ywc'=>$number['ywc'],
 				'pdz'=>$number['pdz'],
 				'zxz'=>$number['zxz'],

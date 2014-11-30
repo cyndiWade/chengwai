@@ -22,7 +22,7 @@
 				<a href="#" class="help fr">帮助手册！</a>
 				<a href="{:U('/Advert/News/add_generalize')}" class="btn bluebtn fl">添加活动</a>
 				<div class="searnum fl">
-					<b>【{$view_data.ywc}】</b>个已完成，<b>【{$view_data.pdz}】</b>个派单中，<b>【{$view_data.zxz}】</b>执行中，<b>【{$view_data.yjd}】</b>已拒单，<b>【{$view_data.caogao}】</b>草稿
+					<b>【{$view_data.zxz}】</b>执行中，<b>【{$view_data.yjd}】</b>已取消，<b>【{$view_data.caogao}】</b>草稿，<b>【{$view_data.ywc}】</b>个已完成
 				</div>
 			</div>
 			<div class="box01-time l">
@@ -53,7 +53,7 @@
 						<td class="t2" align="center">{$vo['title']}</td>
 						<td class="t3" align="center">{$vo['all_price']}</td>
 						<td class="t5" align="center">{$vo['start_time']|date="Y-m-d H:i:s",###}</td>
-						<td class="t6" align="center">{$view_data[generalize_id_num][$vo['id']]}</td>
+						<td class="t6" align="center">{$vo['smallnumber']}</td>
 						<td class="t5" align="center">{$vo['create_time']|date="Y-m-d H:i:s",###}</td>
 						<td class="t6" align="center"></td>
 						<td class="t8" align="center"><strong class="wpd">{$vo['status_explain']}</strong></td>

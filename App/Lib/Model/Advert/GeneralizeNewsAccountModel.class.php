@@ -75,6 +75,8 @@
 			//总订单价格
 			$now_price = 0;
 
+			//获得小订单的数量
+			$number = 0;
 			foreach($sum_price as $price)
 			{
 				//获得未计算的小订单价格
@@ -83,9 +85,11 @@
 					$all_price += $price['price'] + $price['rebate'];
 				}
 				$now_price += $price['price'] + $price['rebate'];
+				$number++;
 			}
 
 			$update['all_price'] = $now_price;
+			$update['smallnumber'] = $number;
 
 			$GeneralizeNewsOrder->where(array('id'=>$arr['generalize_id']))->save($update);
 

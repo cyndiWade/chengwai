@@ -75,7 +75,7 @@
 					$caogao++;
 				}
 			}
-			return array('ywc'=>$ywc,'pdz'=>$pdz,'zxz'=>$zxz,'yjd'=>$yjd,'caogao'=>$caogao);
+			return array('ywc'=>$ywc,'pdz'=>$pdz,'zxz'=>$zxz,'yjd'=>$yjd,'caogao'=>$caogao+$pdz);
 		}
 
 		//删除书数据

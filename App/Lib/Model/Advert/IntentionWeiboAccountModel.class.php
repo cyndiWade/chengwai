@@ -32,6 +32,7 @@
 				
 			}
 			$update['all_price'] = $this->where(array('intention_id'=>$new_array['order_id']))->sum('price');
+			$update['smallnumber'] = $this->where(array('intention_id'=>$new_array['order_id']))->count();
 			$bool = D('IntentionWeiboOrder')->where(array('id'=>$new_array['order_id']))->save($update);
 			if($bool)
 			{
