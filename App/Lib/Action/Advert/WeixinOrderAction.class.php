@@ -71,6 +71,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 		parent::data_to_view(array(
 				//二级导航属性
 				'sidebar_two'=>array(3=>'select'),//第一个加依次类推
+				'sidebar_order'=>array(1=>'select'),//第一个加依次类推
 		));
 		$number = $this->db['GeneralizeWeixinOrder']->get_OrderInfo_num($this->oUser->id);
 		$new_array = addsltrim($_REQUEST);
@@ -200,6 +201,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 		parent::data_to_view(array(
 				//二级导航属性
 				'sidebar_two'=>array(4=>'select'),//第一个加依次类推
+				'sidebar_order'=>array(2=>'select'),//第一个加依次类推
 		));
 		$number = $this->db['IntentionWeixinOrder']->get_OrderInfo_num($this->oUser->id);
 		$new_array = addsltrim($_REQUEST);

@@ -100,6 +100,7 @@ class NewsAction extends AdvertBaseAction {
 		parent::data_to_view(array(
 				//二级导航属性
 			'sidebar_two'=>array(2=>'select'),//第一个加依次类推
+			'sidebar_order'=>array(0=>'select'),//第一个加依次类推
 		));
 		$number = $this->db['GeneralizeNewsOrder']->get_OrderInfo_num($this->oUser->id);
 		$new_array = addsltrim($_REQUEST);

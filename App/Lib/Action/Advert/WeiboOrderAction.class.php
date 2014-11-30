@@ -71,6 +71,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 		parent::data_to_view(array(
 				//二级导航属性
 				'sidebar_two'=>array(5=>'select'),//第一个加依次类推
+				'sidebar_order'=>array(3=>'select'),//第一个加依次类推
 		));
 		$number = $this->db['GeneralizeOrder']->get_OrderInfo_num($this->oUser->id);
 		//过滤去空格 防SQL
@@ -205,6 +206,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 		parent::data_to_view(array(
 				//二级导航属性
 				'sidebar_two'=>array(6=>'select'),//第一个加依次类推
+				'sidebar_order'=>array(4=>'select'),//第一个加依次类推
 		));
 		$number = $this->db['IntentionWeiboOrder']->get_OrderInfo_num($this->oUser->id);
 		//过滤去空格 防SQL
