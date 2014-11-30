@@ -31,51 +31,16 @@
 		//统计确认和执行的数量
 		public function get_OrderInfo_num($id)
 		{
-			$val = $this->where(array('users_id'=>$id))->getField('status',0);
-			//已完成
-			$ywc = 0;
-			//拍单中
-			$pdz = 0;
+			$new_array = array();
 			//执行中
-			$zxz = 0;
-			//已拒单
-			$yjd = 0;
-			foreach($val as $value)
-			{
-				switch($value)
-				{
-					case 5:
-						$ywc++;
-					break;
-					case 4:
-						$zxz++;
-					break;
-					case 3:
-						$yjd++;
-					break;
-					case 2:
-						$pdz++;
-					break;
-					case 1:
-						$pdz++;
-					break;
-					case 0:
-						$pdz++;
-					break;
-				}
-			}
-			$sql = 'select count(b.generalize_id) as aid from app_generalize_news_order as a left join app_generalize_news_account as b on a.id = b.generalize_id where a.users_id="'.$id.'" group by b.generalize_id';
-			$model = new Model();
-			$caogao_arr = $model->query($sql);
-			$caogao = 0;
-			foreach($caogao_arr as $v)
-			{
-				if($v['aid']==0)
-				{
-					$caogao++;
-				}
-			}
-			return array('ywc'=>$ywc,'pdz'=>$pdz,'zxz'=>$zxz,'yjd'=>$yjd,'caogao'=>$caogao+$pdz);
+			$new_array['zxz'] = $this->where(array('users_id'=>array('eq',$id),'status'=>array('eq',4),'smallnumber'=>array('neq',0)))->count();
+			//已取消
+			$new_array['yqx'] = $this->where(array('users_id'=>array('eq',$id),'status'=>array('eq',6),'smallnumber'=>array('neq',0)))->count();
+			//草稿
+			$new_array['caogao'] = $this->where(array('users_id'=>array('eq',$id),'smallnumber'=>array('eq',0),'status'=>array('IN',array('0','1','2'))))->count();
+			//已完成
+			$new_array['ywc'] = $this->where(array('users_id'=>array('eq',$id),'status'=>array('eq',5),'smallnumber'=>array('neq',0)))->count();
+			return $new_array;
 		}
 
 		//删除书数据

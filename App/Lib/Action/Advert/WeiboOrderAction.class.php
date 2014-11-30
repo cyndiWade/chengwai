@@ -121,11 +121,10 @@ class WeiboOrderAction extends AdvertBaseAction {
 				'search_name' => $new_array['search_name'],
 				'start_time' => $new_array['start_time'],
 				'end_time' => $new_array['end_time'],
-				'ywc'=>$number['ywc'],
-				'pdz'=>$number['pdz'],
 				'zxz'=>$number['zxz'],
-				'yjd'=>$number['yjd'],
+				'yqx'=>$number['yqx'],
 				'caogao'=>$number['caogao'],
+				'ywc'=>$number['ywc'],
 		));
 		$this->display();
 	}
