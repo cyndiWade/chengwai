@@ -189,6 +189,10 @@ $custom= array (
 				'status'=>5,
 				'explain'=>'执行完成'
 			),
+			6=>array(
+				'status'=>6,
+				'explain'=>'强制取消'
+			),
 		),
 		
 		

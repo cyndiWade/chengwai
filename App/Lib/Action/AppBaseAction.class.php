@@ -527,8 +527,71 @@ class AppBaseAction extends GlobalParameterAction {
 		}
 	}
 	
-	
-	
+	//强制取消
+	//1--新闻 2微信 3微博
+	protected function cancelMoney($order_id,$status)
+	{
+		switch($status)
+		{
+			case 1:
+				$GeneralizeNewsAccount = D('GeneralizeNewsAccount');
+				$money = $GeneralizeNewsAccount->where(array('generalize_id'=>$order_id,'audit_status'=>3))->field('price,rebate')->select();
+				$all_price = 0;
+				foreach($money as $value)
+				{
+					$all_price += $value['price'] + ($value['price'] * $value['rebate']);
+				}
+				$GeneralizeNewsOrder = D('GeneralizeNewsOrder');
+				$users_id = $GeneralizeNewsOrder->where(array('id'=>$order_id))->getField('users_id');
+				$UserAdvertisement = D('UserAdvertisement');
+				$user_money = $UserAdvertisement->where(array('users_id'=>$users_id))->field('money,freeze_funds')->find();
+				$mon['freeze_funds'] = $user_money['freeze_funds'] - $all_price;
+				$mon['money'] = $user_money['money'] + $all_price;
+				$UserAdvertisement->where(array('users_id'=>$users_id))->save($mon);
+				$Order_Status = C('Order_Status');
+				$update = array('status'=>$Order_Status['6']['status']);
+				$GeneralizeNewsOrder->where(array('id'=>$order_id))->save($update);
+			break;
+			case 2:
+				$GeneralizeWeixinAccount = D('GeneralizeWeixinAccount');
+				$money = $GeneralizeWeixinAccount->where(array('generalize_id'=>$order_id,'audit_status'=>3))->field('price,rebate')->select();
+				$all_price = 0;
+				foreach($money as $value)
+				{
+					$all_price += $value['price'] + ($value['price'] * $value['rebate']);
+				}
+				$GeneralizeWeixinOrder = D('GeneralizeWeixinOrder');
+				$users_id = $GeneralizeWeixinOrder->where(array('id'=>$order_id))->getField('users_id');
+				$UserAdvertisement = D('UserAdvertisement');
+				$user_money = $UserAdvertisement->where(array('users_id'=>$users_id))->field('money,freeze_funds')->find();
+				$mon['freeze_funds'] = $user_money['freeze_funds'] - $all_price;
+				$mon['money'] = $user_money['money'] + $all_price;
+				$UserAdvertisement->where(array('users_id'=>$users_id))->save($mon);
+				$Order_Status = C('Order_Status');
+				$update = array('status'=>$Order_Status['6']['status']);
+				$GeneralizeWeixinOrder->where(array('id'=>$order_id))->save($update);
+			break;
+			case 3:
+				$GeneralizeAccount = D('GeneralizeAccount');
+				$money = $GeneralizeAccount->where(array('generalize_id'=>$order_id,'audit_status'=>3))->field('price,rebate')->select();
+				$all_price = 0;
+				foreach($money as $value)
+				{
+					$all_price += $value['price'] + ($value['price'] * $value['rebate']);
+				}
+				$GeneralizeOrder = D('GeneralizeOrder');
+				$users_id = $GeneralizeOrder->where(array('id'=>$order_id))->getField('users_id');
+				$UserAdvertisement = D('UserAdvertisement');
+				$user_money = $UserAdvertisement->where(array('users_id'=>$users_id))->field('money,freeze_funds')->find();
+				$mon['freeze_funds'] = $user_money['freeze_funds'] - $all_price;
+				$mon['money'] = $user_money['money'] + $all_price;
+				$UserAdvertisement->where(array('users_id'=>$users_id))->save($mon);
+				$Order_Status = C('Order_Status');
+				$update = array('status'=>$Order_Status['6']['status']);
+				$GeneralizeOrder->where(array('id'=>$order_id))->save($update);
+			break;
+		}
+	}
 }
 
 
