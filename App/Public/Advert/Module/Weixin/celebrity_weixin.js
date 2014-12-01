@@ -798,7 +798,16 @@ Weixin.prototype.all_selected_fn = function () {
 
 	_father_this.all_selected.click(function () {
 		_father_this.init();
-		_father_this.now_selected.prop('checked',true);
+		var _this = $(this);
+		var is_check = _this.data('is_check');
+		
+		if (is_check == 1) {
+			_father_this.now_selected.prop('checked',true);
+			_this.data('is_check',0);
+		} else {
+			_father_this.now_selected.prop('checked',false);
+			_this.data('is_check',1);
+		} 
 	});
 }
 

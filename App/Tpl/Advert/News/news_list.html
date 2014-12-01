@@ -181,7 +181,7 @@
 		
 		<div class="weibo-bot l">
 			<div class="controlbox fl">
-				<span class="all_selected">全选</span><span id="batch"  class="add_selected_box">批量添加账号</span>	
+				<span class="all_selected" data-is_check="1">全选</span><span id="batch"  class="add_selected_box">批量添加账号</span>	
 			</div>
 			<div class="page-wb fl system_page">
 
@@ -316,7 +316,7 @@ var create_now_html = function ($data,$post_data) {
 	
 	html += '		<div class="grp fl">';
 	html += '			<h5 class="l"><b class="account_name" data-account_name="'+$data.bs_account_name+'">'+$data.bs_account_name+'</b></h5>';
-	html += '			<div class="desc l">[<a href="http://'+$data.bs_url+'" target="_blank">案例</a>]'+$data.pg_type_of_portal_explain+'';
+	html += '			<div class="desc l">[<a href="http://'+$data.bs_currentUrl+'" target="_blank">案例</a>]'+$data.pg_type_of_portal_explain+'';
 	html += '			</div>';
 	html += '		</div>';
 	html += '	</div>';
