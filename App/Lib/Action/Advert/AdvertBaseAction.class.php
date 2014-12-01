@@ -169,7 +169,7 @@ class AdvertBaseAction extends AppBaseAction {
 				0 => U('Advert/News/news_list'),
 				1 => U('Advert/Weixin/celebrity_weixin'),
 				2 => U('Advert/Weibo/celebrity_weibo',array('pt_type'=>1)),	
-				3 => '',
+				3 => U('Advert/News/generalize_activity'),
 				4 => U('Advert/Money/record'),
 				5 => U('Advert/Member/datum_edit'),
 				6 => U('Advert/Money/index')

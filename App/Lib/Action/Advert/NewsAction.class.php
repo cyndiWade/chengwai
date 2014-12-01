@@ -97,6 +97,10 @@ class NewsAction extends AdvertBaseAction {
 	
 	//推广活动订单
 	public function generalize_activity() {
+		//add by bumtime 20141201
+		$this->big_type = 3;
+		parent::big_type_urls($this->big_type);		//大分类URL
+		
 		parent::data_to_view(array(
 				//二级导航属性
 			'sidebar_two'=>array(2=>'select'),//第一个加依次类推
@@ -153,6 +157,7 @@ class NewsAction extends AdvertBaseAction {
 		$show       = $Page->show();
 		$list = $GeneralizeNewsOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
 		->order('id desc')->field('id,title,start_time,web_url,all_price,status,create_time,smallnumber')->select();
+		 
 		$new_list_id = array();
 		foreach($list as $value)
 		{
@@ -309,6 +314,10 @@ class NewsAction extends AdvertBaseAction {
 	public function generalize_detail () {
 		$order_id = $this->_get('order_id');
 		if (empty($order_id)) alertBack('非法操作！');
+		
+		//add by bumtime 20141201
+		$this->big_type = 3;
+		parent::big_type_urls($this->big_type);		//大分类URL
 		
 		//获取订单数据
 		$GeneralizeNewsOrder = $this->db['GeneralizeNewsOrder'];

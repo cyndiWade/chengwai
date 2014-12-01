@@ -209,7 +209,7 @@ $custom= array (
 				'status'=>1,			//城外圈审核通过即可支付
 				'explain'=>'审核通过',
 				'explain_yxd'=>'已接受',
-				'other' => '城外圈开始审核!'
+				'other' => '无'
 			),
 			2=>array(
 				'status'=>2,			//城外圈审核失败

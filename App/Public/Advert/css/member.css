@@ -124,7 +124,7 @@
 .part01-batch b{ padding:0 4px; color:#459ecc; font-size:14px;}
 .part02-batch{ width:433px; border:1px solid #e9ece6; margin-bottom:10px;margin-left:26px; border-bottom:none;}
 .part02-batch li{ width:100%; height:48px; line-height:48px; border-bottom:1px solid #e9ece6;}
-.part02-batch li strong{ padding-left:18px; color:#929292; font-weight:bold;}
+.part02-batch li strong{ padding-left:18px; color:#929292; font-weight:bold;cursor: pointer;}
 .part02-batch li .del{ background:url(../images/del.gif) no-repeat; width:16px; height:16px; margin:16px 9px 0 0; cursor:pointer;}
 .mid-batch .bluebtn{ width:136px; height:38px; text-align:center; line-height:38px; float:right; margin-right:26px;}
 .mid-batch .bluebtn_bjd{ width:136px; height:38px;
@@ -249,6 +249,7 @@ text-align:center; line-height:38px; float:left; margin-left:23px;
 .part02-cele{ width:980px; padding-left:19px;}
 .grp01-cele{ height:38px; border-bottom:1px solid #e5ece9; margin-bottom:20px;}
 .part02-cele .weibo{ display:block; background:url(../images/cer_img02.gif) no-repeat; width:22px; height:17px; margin-right:7px;}
+.part02-cele .qq_weibo{ display:block; background:url(../images/qq_weibo.jpg) no-repeat; width:22px; height:17px; margin-right:7px;}
 .part02-cele .v{ display:block; background:url(../images/cer_img03.gif) no-repeat; width:22px; height:17px; margin-right:10px;}
 .part02-cele .mrdetail{ padding-left:21px; background:url(../images/cer_img07.gif) no-repeat 0 0; color:#238cc8; margin-top:5px;}
 .part02-cele .femail{ padding-right:18px;background:url(../images/cer_img04.gif) no-repeat right 1px; font-size:16px; color:#238cc8; margin-right:10px; font-weight:bold;}

@@ -68,6 +68,10 @@ class WeixinOrderAction extends AdvertBaseAction {
 	
 	//推广活动订单
 	public function generalize_activity() {
+		//add by bumtime 20141201
+		$this->big_type = 3;
+		parent::big_type_urls($this->big_type);		//大分类URL
+		
 		parent::data_to_view(array(
 				//二级导航属性
 				'sidebar_two'=>array(3=>'select'),//第一个加依次类推
@@ -198,6 +202,9 @@ class WeixinOrderAction extends AdvertBaseAction {
 
 	//意向单列表
 	public function intention_list() {
+		//add by bumtime 20141201
+		$this->big_type = 3;
+		parent::big_type_urls($this->big_type);		//大分类URL
 		parent::data_to_view(array(
 				//二级导航属性
 				'sidebar_two'=>array(4=>'select'),//第一个加依次类推
@@ -460,6 +467,9 @@ class WeixinOrderAction extends AdvertBaseAction {
 		$order_id = $this->_get('order_id');
 		if (empty($order_id)) alertClose('非法操作！');
 		
+		//add by bumtime 20141201
+		$this->big_type = 3;
+		parent::big_type_urls($this->big_type);		//大分类URL
 		//获取订单数据
 		$GeneralizeWeixinOrder = $this->db['GeneralizeWeixinOrder'];
 		$order_info = $GeneralizeWeixinOrder->get_OrderInfo_By_Id($order_id,$this->oUser->id);
@@ -550,6 +560,9 @@ class WeixinOrderAction extends AdvertBaseAction {
 		$order_id = $this->_get('order_id');
 		if (empty($order_id)) alertClose('非法操作！');
 		
+		//add by bumtime 20141201
+		$this->big_type = 3;
+		parent::big_type_urls($this->big_type);		//大分类URL
 		//获取订单数据
 		$IntentionWeixinOrder = $this->db['IntentionWeixinOrder'];
 		$order_info = $IntentionWeixinOrder->get_OrderInfo_By_Id($order_id,$this->oUser->id);
