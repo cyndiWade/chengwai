@@ -1,0 +1,64 @@
+#guide-step{position:relative;}
+/* tipbar */
+.tipSwitch,.tipbox,.tipword,.progress li,.tipbar .arrow,.tipBarword{background:url(/news_skin/tinytools/images/guidebg.png) no-repeat;}
+#searchTip{overflow:hidden;}
+.tipbox{width:290px;position:relative;height:190px;display:none;background-position:0 0;}
+.tipbox .tipboxBtn{position:absolute;display:inline-block;width:25px;height:25px;left:236px;top:36px;cursor:pointer;}
+.tipboxNextbtn{position:absolute;display:inline-block;width:82px;height:28px;left:159px;top:127px;cursor:pointer;}
+.progress{position:absolute;left:60px;top:136px;width:100px;height:9px;line-height:9px;font-size:0px;}
+#step5 .progress{top:120px;}
+.progress li{float:left;width:9px;height:9px;margin-right:6px;font-size:0px;background-position:-935px -82px;}
+.progress .on{background-position:100% -82px;}
+.tipword{position:absolute;}
+#step1{z-index:10008;}
+#step2{z-index:10007;}
+#step3{z-index:10006;}
+#step4{z-index:10005;}
+#step5{z-index:10004;}
+#step6{z-index:10003;}
+#step7{z-index:10002;}
+#step1 .tipword{width:175px;height:56px;left:55px;top:60px;background-position:0 -217px;}
+#step2 .tipword{width:212px;height:56px;left:36px;top:65px;background-position:-175px -217px;}
+#step3 .tipword{width:195px;height:56px;left:46px;top:60px;background-position:-388px -217px;}
+#step4 .tipword{width:195px;height:56px;left:46px;top:60px;background-position:-388px -217px;}
+
+#step5 .tipword{width:210px;height:56px;left:43px;top:44px;background-position:0 -272px;}
+#step5{width:290px;height:190px;background-position:-294px 0;}
+#step5 .tipboxBtn{left:252px;top:20px;}
+#step5 .tipboxNextbtn{left:135px;top:118px;}
+#step6 .tipword{width:210px;height:56px;left:43px;top:44px;background-position:0 -272px;}
+#step6{width:290px;height:190px;background-position:-594px 0;}
+#step6 .tipboxBtn{left:252px;top:20px;}
+#step6 .tipboxNextbtn{left:85px;top:110px;}
+.tipbarwrap{position:absolute;width:100%;height:1px;left:0px;top:0px;z-index:10001;background-color:transparent;}
+.tipbardiv{position:relative;width:1200px;height:1px;margin:0px auto;}
+.tipbar{display:none;position:absolute;z-index:1000;}
+.tipbarInner{position:relative;}
+.tipbar .arrow{width:70px;height:46px;background-position:100% 0;position:absolute;}
+.tipBarword{position:absolute;}
+
+#tipbar1,#tipbar1 .tipbarInner{width:520px;height:60px;}
+#tipbar1{background:url(/news_skin/tinytools/images/weixin1.jpg) no-repeat;left:395px;top:58px;}
+#tipbar1 .arrow{left:284px;top:-42px;}
+#tipbar1 .tipBarword{width:75px;height:25px;left:375px;top:-39px;background-position:-85px -192px;}
+
+#tipbar2,#tipbar2 .tipbarInner{width:1200px;height:50px;}
+#tipbar2{background:url(/news_skin/tinytools/images/weixin2.jpg) no-repeat;top:235px;left:0px;}
+#tipbar2 .arrow{left:300px;top:-42px;}
+#tipbar2 .tipBarword{width:75px;height:24px;left:375px;top:-41px;background-position:-160px -192px;}
+#tipbar3,#tipbar3 .tipbarInner{width:1200px;height:280px;}
+#tipbar3{background:url(/news_skin/tinytools/images/weixin3.jpg) no-repeat;left:0px;top:305px;}
+#tipbar3 .arrow{left:300px;top:-35px;}
+#tipbar3 .tipBarword{width:75px;height:24px;background-position:-235px -192px;left:375px;top:-34px;}
+#tipbar4,#tipbar4 .tipbarInner{width:1200px;height:386px;}
+#tipbar4{background:url(/news_skin/tinytools/images/weixin4.jpg) no-repeat;left:0px;top:590px;}
+#tipbar4 .arrow{left:300px;top:-35px;}
+#tipbar4 .tipBarword{width:75px;height:24px;background-position:-310px -192px;left:375px;top:-34px;}
+#tipbar5,#tipbar5 .tipbarInner{width:498px;height:369px;}
+#tipbar5{background:url(/news_skin/tinytools/images/weixin5.jpg) no-repeat; right:0px; bottom:0px; position:fixed;}
+#tipbar5 .arrow{left:200px;top:-35px;}
+#tipbar5 .tipBarword{width:75px;height:24px;background-position:-385px -192px;left:275px;top:-34px;}
+.notip{position:absolute;left:160px;top:110px;}
+#notip{vertical-align:middle;}
+.notip label{vertical-align:middle;color:#0c5685;}
+.tipSwitch{width:80px;height:26px;cursor:pointer;background-position:0 -190px;cursor:pointer;position:absolute;top:15px;right:30px;}

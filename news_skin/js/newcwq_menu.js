@@ -18,8 +18,10 @@
 	$.jqtab("#From_tit","#From_con","mouseenter");
 	//$.jqtab(".accur-content",".accur_con","click");
 });
-document.writeln('<style type="text/css">*html{background-image:url(about:blank);background-attachment:fixed;}.solu_top{display:none;width:58px;height:80px;position:fixed;_position:absolute;bottom:65px;_bottom:auto;left: 50%; margin-left:600px;cursor:pointer;z-index:200;}.solu_top a {display:block;width:58px;height:44px;background:url(/news_skin/images/solu_top.png) no-repeat; font-size:18px; font-weight:bold;text-align:center;line-height:22px; padding:7px 0px;color:#fff;}.solu_top a:hover{text-decoration:none; color:#fff;}.solu_close{width:58px; height:20px; background:url(/news_skin/images/close-h.jpg) no-repeat;}.solu_top a#ToTop{background-position:0 0;}.solu_top a#ToTop:hover {background-position:-60px 0;text-decoration:none}.solu_top a.solu_a{background-position:0px -60px;}.solu_top a.solu_a:hover {background-position:-60px -60px;text-decoration:none}</style>');
+
+document.writeln('<style type="text/css">*html{background-image:url(about:blank);background-attachment:fixed;}.solu_top{display:none;width:58px;height:140px;position:fixed;_position:absolute;bottom:100px;_bottom:auto;left: 50%; margin-left:600px;cursor:pointer;z-index:200;}.solu_top a {display:block;width:58px;height:44px; font-size:18px; font-weight:bold;text-align:center;line-height:22px; padding:7px 0px;color:#fff;}.solu_top a.qqtop{background:url(/news_skin/images/qq.png) no-repeat;}.solu_top a.qqtop:hover{background:#d31d02; text-decoration:none; color:#fff;}.solu_top a.qqtop span{display:none;}.solu_top a.qqtop:hover span{display:block;background:#d31d02; color:#fff;}.solu_top a#ToTop{background:url(/news_skin/images/solu_top.png) no-repeat;}.solu_top a#ToTop:hover{text-decoration:none; color:#fff;}.solu_close{width:58px; height:20px; background:url(/news_skin/images/close-h.jpg) no-repeat;}.solu_top a#ToTop{background-position:0 0;}.solu_top a#ToTop:hover {background-position:-60px 0;text-decoration:none}.solu_top a.solu_a{background-position:0px -60px;}.solu_top a.solu_a:hover {background-position:-60px -60px;text-decoration:none}</style>');
 document.writeln('<div class="solu_top" id="solu_top">');
+document.writeln('<a href="http://wpa.qq.com/msgrd?v=3&uin=4006876308&site=qq&menu=yes" class="qqtop" target="_blank"><span>QQ<br>客服</span></a>');
 document.writeln('<a href="javascript:void(0);" id="ToTop" title="返回顶部"></a>');
 document.writeln('<div class="solu_close" title="关闭"></div>');
 document.writeln('</div>');
@@ -38,7 +40,7 @@ document.writeln('</div>');
 		var domWidth=$(window).width();
 		if($call<1){(st > 10) ? $('#solu_top').show() : $('#solu_top').hide();
         if(!window.XMLHttpRequest) { $('#solu_top').css("top", st + winh - 365);}//IE6
-		if(domWidth<980){$('#solu_top').css("margin-left", domWidth/2-60);}}
+		if(domWidth<1200){$('#solu_top').css("margin-left", domWidth/2-60);}}
 	});
 	$('#ToTop').click(function(){$('html,body').animate({scrollTop: '0px'}, 400);return false;});
 })();

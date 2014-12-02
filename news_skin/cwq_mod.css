@@ -1,6 +1,7 @@
 .spokesperson_banner{ background:#ffb44d;}
 .vip_banner{ background:#e7e5d8;}
 .case_banner {background: #e8e8e8;}
+.locate_banner {background: #ebbe4a;}
 
 .part_one{ height:285px; background:url(images/spokeimg/part_one.jpg) no-repeat}
 /*模块 begin*/
@@ -16,8 +17,8 @@
 
 .weixin_list{ float:left;width: 262px;border: 1px solid #fff;}
 .weixin_list:hover{border:1px solid #dedede;}
-.weixin_list dt{width:120px; height:120px;padding-right:10px; float:left; overflow:hidden;}
-.weixin_list dt img{width:120px;}
+.weixin_list dt{width:100px; height:100px;padding-right:10px; float:left; overflow:hidden;}
+.weixin_list dt img{width:100px;}
 .weixin_list dd{}
 .weixin_list dd h3{ font-size:14px; font-weight:bold;}
 .weixin_list dd p{ font-size:12px;}
@@ -286,7 +287,7 @@
 
 /*关于我们 end*/
 .question_left{ width:250px; position:absolute; left:0px; top:77px;}
-.question_right{ width:849px; padding:50px; border:1px solid #ff9217; float:right; overflow:hidden;background:url(images/abuot_left_bj.png) repeat-y left top;}
+.question_right{ width:849px; padding:50px; border:1px solid #ff9217; float:right; overflow:hidden;background:url(images/abuot_left_bj.png) repeat-y left top; min-height:700px}
 .question_menu{overflow:hidden;border:1px solid #ff9217; border-bottom:none;}
 .question_menu li{ line-height:60px; height:60px; overflow:hidden; text-align:center;}
 .question_menu li a{ color:#090909; font-size:14px;background:#fff; display:block;line-height:59px; height:59px; border-bottom:1px solid #ff9217;}
@@ -302,6 +303,10 @@
 .article-inf p{padding:10px 0}
 .article-inf img{max-width:633px;}
 .article-answer{float:left;width:42px;line-height:20px;padding-left:10px; background:url(images/bg_answer.gif) no-repeat;font-size:12px;font-weight:bold;color:#fff;}
-
-
+/*服务简介 begin*/
+.summary_title{ height:40px; border-bottom:1px solid #E5E5E5; font-size:18px; font-weight:bold; color:#CE0000}
+.summary_title span{ border-bottom:2px solid #CE0000; display:block; float:left;line-height:38px;}
+.summary{ padding:30px 0px; overflow:hidden;}
+.summary p{ text-indent:2em; color:#666; line-height:30px;}
+/*服务简介end*/
 /*关于我们end*/

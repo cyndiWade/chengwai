@@ -2,7 +2,7 @@
 
 .news_part1{width:100%; height:auto; margin:0px auto;background-color:#FFF;}
 .news_part2{width:100%; height:auto; margin:0px auto;background-color:#f3f3f3;}
-.news_part1 h3,.news_part2 h3{width:100%; height:46px; line-height:46px; text-align:center; font-size:28px;}
+.news_part1 h3,.news_part2 h3{width:100%; height:46px; line-height:46px; font-weight:bold; text-align:center; font-size:32px;}
 
 
 	.introwords{width:100%;height:auto;margin:0 auto; padding:0;}

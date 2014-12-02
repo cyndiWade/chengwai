@@ -54,8 +54,8 @@
 
 .login_text{ line-height:40px;}
 .login_text strong{ padding-right:10px; font-weight:normal;}
-.textbtn{ width:75px; height:30px; background:#ea6060; line-height:30px; font-size:14px; color:#fff;display: inline-block;cursor: pointer;border: none; text-align:center}
-.textbtn:hover{ background:#f00; color:#fff; text-decoration:none;}
+.login_text a.textbtn{ width:75px; height:30px; background:#ea6060; line-height:30px; font-size:14px; color:#fff;display: inline-block;cursor: pointer;border: none; text-align:center}
+.login_text a.textbtn:hover{ background:#f00; color:#fff; text-decoration:none;}
 .validcode{ float:left; width:200px; padding:0px 0px 0px 10px;}
 .validcode img{ padding-top:8px;float:left}
 .validcode span {float: left; padding:8px 0px 0px 10px;color: #666;}

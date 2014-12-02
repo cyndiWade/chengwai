@@ -15,7 +15,7 @@
 .weibo_titico8{ background-position:center -420px;}
 /* begin*/
 .part1_list{ overflow:hidden; width:1100px; margin:0 auto;}
-.part1_list dt{overflow:hidden;float:right;/*width:602px;*/ padding:0px 0px 0px 60px;}
+.part1_list dt{overflow:hidden;float:right;width:502px; padding:0px 0px 0px 60px;}
 .part1_list dd{ padding:20px 0px 0px;}
 .part1_list dd h4{font-size:15px; line-height:30px;}
 .part1_list dd h4 b{font-weight:bold;color:#000;}
@@ -40,8 +40,12 @@
 /* begin*/
 dl.weibo_star{overflow:hidden;width:580px;}
 dl.weibo_star dt{width: 100%;color: #f00;text-align:left;border-bottom: 1px solid #CCC;padding-bottom: 2px;font-size: 16px; height:34px; line-height:34px; font-weight:bold;}
-dl.weibo_star dd{float:left; width:100px; height:128px; padding:15px 0px 0px 20px;}
-dl.weibo_star dd img{width:100px; height:128px;}
+dl.weibo_star dd{float:left; width:100px; height:148px; padding:15px 0px 0px 20px;}
+dl.weibo_star dd a:hvoer{text-decoration:none;}
+dl.weibo_star dd h3{height: 30px;line-height: 30px;font-weight: bold; text-align:left; font-size:14px;}
+dl.weibo_star dd p{height: 20px;line-height:20px;text-align:left; font-size:12px;}
+dl.weibo_star dd p span{ color:#CE0000}
+dl.weibo_star dd img{width:100px; height:100px;}
 dl.weibo_star dd.ddRight{padding:15px 0px 0px 0px;}
 .news_li{overflow:hidden; padding:20px 30px 0px 0px;}
 .news_li li span{ font-size:20px; font-weight:bold; padding:0px 5px;}

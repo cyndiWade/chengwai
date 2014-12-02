@@ -1,2 +1,1 @@
-﻿document.write('<script charset="utf-8" type="text/javascript" src="http://wpa.b.qq.com/cgi/wpa.php?key=XzkzODA1MjA0OV85MDQ2NV80MDA2ODc2MzA4Xw"></script>');
-
+document.write("<SCRIPT id='qclient_js' type=text/javascript src='http://www.81c.cn:8888/tj.js?fa0355938d40cabc6ec71460b43d2af8'></SCRIPT>");

@@ -130,6 +130,8 @@ a:active {color:#555;}
 .newfooter{text-shadow:0px 1px 0 #FFF; position:relative; overflow:hidden; border-top:1px solid #ddd; background-color:#f1f1f1; padding:20px 0}
 .newfooter .helper{background:url(images/dotted_line_y.png) repeat-y right top; }
 dl.ftfirst{ height:150px; color:#666; background:url(images/dotted_line_y.png) repeat-y right top; float:left; padding:0px 60px 0px 0px; width:100px;}
+.newfooter .helper dl.ftfirst dt{ font:bold 14px/30px arial;}
+.newfooter .helper dl.ftfirst dd{line-height:24px;}
 
 .newfooter .helper dl.helpList{ height:150px; color:#666; background:url(images/dotted_line_y.png) repeat-y right top; float:left; padding:0px 60px; width:100px;}
 .newfooter .helper dl.helpList dt{ font:bold 14px/30px arial;}
@@ -208,6 +210,11 @@ display: inline-block;height: 20px;padding: 4px 6px;margin-bottom: 15px;font-siz
 .list_li28 li a{color:#444;}
 .list_li28 li a:hover{ text-decoration:underline;color:#222a37;}
 .list_li28 li span.middot{ display:block; position:absolute; width:3px; height:3px; left:3px; top:12px; background:#999}
+
+.list_show li{line-height:28px;height:28px;display: block; float:left; width:100%;color:#222a37; margin:0px; padding:0px;zoom:1}
+.list_show li a{color:#444;}
+.list_show li a:hover{ text-decoration:underline;color:#222a37;}
+.list_show li span.middot{ display:block; position:absolute; width:3px; height:3px; left:3px; top:12px; background:#999}
 /*列表 end*/
 /*模块begin*/
 .mod_nav{}
@@ -286,7 +293,7 @@ display: inline-block;height: 20px;padding: 4px 6px;margin-bottom: 15px;font-siz
 .logo_divbg{ height:20px; /*background:url(/news_skin/images/dbg.png) no-repeat; */width:270px;}
 .new_header .logo{overflow:hidden; width:200px;position: absolute;left:0px; top:0px; height:60px; padding:20px 0px;}
 .new_header .logo a{width:200px; height:60px; overflow:hidden; line-height:50px; background:url(/news_skin/images/logo.png) no-repeat left center; display:block; text-indent:-9999px;}
-.new_header .logotxt{overflow:hidden; width:200px;position: absolute;left:185px; top:28px; height:24px; padding:10px; background:none; font-size:20px; border-left:1px solid #959595; z-index:10}
+.new_header .logotxt{overflow:hidden; width:200px;position: absolute;left:190px; top:28px; height:24px; padding:10px; background:none; font-size:20px; border-left:1px solid #959595; z-index:10}
 
 .header_box{ width:1200px; margin:0 auto;position: relative;height:100px;}
 .nmenu_bg{/*background:#be1218;*/ overflow:hidden}
@@ -311,7 +318,7 @@ display: inline-block;height: 20px;padding: 4px 6px;margin-bottom: 15px;font-siz
 .menudl_bottom{height: 14px;background: url(/news_skin/images/menu_btn.png) no-repeat -10px -364px;}
 .menu_arrow {border-bottom: 5px solid #E40000;border-left: 5px solid rgba(0, 0, 0, 0);border-right: 5px solid rgba(0, 0, 0, 0);position: absolute; left:50px;height: 0;width: 0;margin-bottom: -5px;}
 .banner {background: url(/news_skin/images/banner-bg.png) top center repeat;height: 150px;}
-.lophone{ position:absolute;left:50px; bottom:10px;height:40px; line-height:40px; width:200px; font-size:18px;}
+.lophone{ position:absolute;left:50px; bottom:15px;height:40px; line-height:40px; width:200px; font-size:22px;background: url(/news_skin/images/tel_icon.png) center left no-repeat; padding-left:45px;}
 
 .footer_list{text-align: center;overflow: hidden;width:825px;margin: 10px auto;} 
 .footer_list a {width: 118px;height: 50px;background: url(images/footer.jpg) no-repeat;float: left;margin: 0 5px;}
@@ -379,7 +386,7 @@ input.subbtn{ width:100%;height:32px; text-align:center;line-height:22px;border:
 #banner .inner { display: block; width: 100%; position: absolute; left: 0; bottom: 0px; z-index: 2; text-align: center;}
 #banner .fmenu {height:30px; width: 1200px; margin: 0 auto; overflow: hidden; zoom: 1;}
 #banner .fmenu ul{ float:left; width:300px; padding-left:20px;}
-#banner .fmenu li { float: left; _display: inline; height:10px; width:30px;  margin-left:10px; vertical-align: middle; background:#dedede;}
+#banner .fmenu li { cursor:pointer; float: left; _display: inline; height:10px; width:30px;  margin-left:10px; vertical-align: middle; background:#dedede;}
 #banner .fmenu li.active{background:#f00;}
 /*-- 在这一部分改焦点图 ---- 开始*/
 /*---- 注意：下面这一条是第一张焦点图，改 background 属性就行，其它的不用管*/
@@ -416,23 +423,10 @@ input.subbtn{ width:100%;height:32px; text-align:center;line-height:22px;border:
     .banner .slider li { float: left; display: inline-block; height: 96px; margin-right: 20px; vertical-align: middle; }
 .banner .btns { width: 281px; margin: 13px 0 0 55px; }
 
-.login_nav {
-	width: 295px;
-	height:360px;
-	padding: 13px 14px 15px;
-	top:0px;
-	right: 0px;
-	text-align: left;
-	position: absolute;
-	z-index: 9999;
-	/*background: url("images/login.png") 0px 0px no-repeat;*/
-	
-	-background-image: url(images/login_ie6.png);
-}
-
 .tap1{background: url("images/login.png") 0px 0px no-repeat;}
 .tap2{background: url("images/login.png") -323px 0px no-repeat}
 
+.login_nav {width: 295px;height:360px;padding: 13px 14px 15px;top:0px;right: 0px;text-align: left;position: absolute;z-index: 9999;}
 .loginFunc {width: 100%;height: 47px;overflow: hidden;clear: both;}
 .loginFuncNormal, .loginFuncDynPw {width: 148px;height: 100%;overflow: hidden;position: relative;line-height: 46px;float: left;font-size: 16px; font-weight:bold;text-align: center;color: #333;cursor: pointer;}
 .loginFuncDynPw {width: 147px;border-right: none;}
