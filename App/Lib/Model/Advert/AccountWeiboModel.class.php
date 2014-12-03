@@ -88,7 +88,7 @@
 			//统计表字段，加上别名
 			$account_weibo_fields = parent::field_add_prefix('AccountWeibo','bs_','w.');
 			$grassroots_weibo_fields = parent::field_add_prefix('GrassrootsWeibo','sy_','b.');
-			
+			$Region = D('Region');	//区域表
 
 			if($addvalue['ids']!='')
 			{
@@ -109,6 +109,8 @@
 			
 			$tags_ids = C('Big_Nav_Class_Ids.caogen_tags_ids');
 			$CategoryTagsInfo = D('CategoryTags')->get_classify_data($tags_ids['top_parent_id']);
+			$data['cjfl'] = $CategoryTagsInfo[$tags_ids['cjfl']];
+			
 			
 			//重新计算价格
 			if($list==true)
@@ -124,6 +126,14 @@
 					$list[$key]['bs_yg_zhifa'] = $val['bs_yg_zhifa'] + ($val['bs_yg_zhifa'] * $gloubid);
 					$list[$key]['bs_rg_zhuanfa'] = $val['bs_rg_zhuanfa'] + ($val['bs_rg_zhuanfa'] * $gloubid);
 					$list[$key]['bs_rg_zhifa'] = $val['bs_rg_zhifa'] + ($val['bs_rg_zhifa'] * $gloubid);
+				
+					//地区
+					$region_info = $Region->get_regionInfo_by_id($val['sy_cirymedia']);
+					$list[$key]['pg_area_name'] = $region_info['region_name'] ? $region_info['region_name'] : '不限';	
+					
+					$cjfl = $data['cjfl'][$val['sy_common']]['title'];
+					$list[$key]['pg_cjfl_explain'] = $cjfl ? $cjfl : '不限';
+				
 				}
 			}
 

@@ -62,7 +62,7 @@
 						<td class="t7" align="center">{$vo['create_time']|date="Y-m-d H:i:s",###}</td>
 						<td class="last" align="center">
 							<div class="ctrl">
-								<span><a href="{:U('Advert/WeiboOrder/intention_detail',array('order_id'=>$vo['id']))}" >详情</a></span>
+								<span><a href="{:U('Advert/WeiboOrder/intention_detail',array('order_id'=>$vo['id']))}" target="_blank">详情</a></span>
 								<span><a href="{:U('Advert/Weibo/celebrity_weibo',array('order_id'=>$vo['id'],'pt_type'=>$vo['tfpt_type']))}">添加媒体</a></span>
 								<span class="delete_order" data-id="{$vo['id']}">删除</span>
 							</div>

@@ -83,6 +83,7 @@
 			//统计表字段，加上别名
 			$account_weixin_fields = parent::field_add_prefix('AccountWeixin','bs_','w.');
 			$grassroots_weixin_fields = parent::field_add_prefix('GrassrootsWeixin','sy_','b.');
+			$Region = D('Region');	//区域表
 			
 			if($addvalue['ids']!='')
 			{
@@ -105,7 +106,8 @@
 			$tags_ids = C('Big_Nav_Class_Ids.weixin_caogen_tags_ids');		
 			$CategoryTagsInfo = D('CategoryTags')->get_classify_data($tags_ids['top_parent_id']);
 			$data['cjfl'] = $CategoryTagsInfo[$tags_ids['cjfl']];
-			//
+			
+			
 			
 			//排序按照val排序数据
 			foreach ($data as $key=>$info) {
@@ -119,7 +121,10 @@
 					$list[$key]['pg_sc'] = $Blackorcollection->check_is_sc_or_lh(array('user_id'=>$id,'or_type'=>1,'weixin_id'=>$val['bs_id'],'is_celebrity'=>$is_celebrity));
 					//是否拉黑
 					$list[$key]['pg_lh'] = $Blackorcollection->check_is_sc_or_lh(array('user_id'=>$id,'or_type'=>0,'weixin_id'=>$val['bs_id'],'is_celebrity'=>$is_celebrity));
-								
+
+					//地区
+					$region_info = $Region->get_regionInfo_by_id($val['sy_cirymedia']);
+					$list[$key]['pg_area_name'] = $region_info['region_name'] ? $region_info['region_name'] : '不限';
 					
 					//价格换算
 					$list[$key]['bs_dtb_money'] = $val['bs_dtb_money'] + ($val['bs_dtb_money'] * $gloubid);

@@ -255,6 +255,7 @@ $custom= array (
 			9=>array(
 				'status'=>9,
 				'explain'=>'已取消',	//订单过期
+				'explain_yxd'=>'已过期',
 				'other' => '订单过期!'
 			),
 			10=>array(

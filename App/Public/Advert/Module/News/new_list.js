@@ -50,6 +50,7 @@ News.prototype.init = function () {
 	this.body = $('body');
 	this.list_content = $('#list_content');
 	this.mrdetail = $('.mrdetail');
+	this.newdetail = $('.newdetail');
 	this.batchboxdetail = $('.batchboxdetail');
 	
 	
@@ -601,6 +602,135 @@ News.prototype.dataNum_And_PageNum = function (data) {
 
 
 
+//创建详情页面
+News.prototype.create_details_fn = function ($url) {
+	var _father_this = this;
+	_father_this.init();
+	
+	_father_this.newdetail.unbind();
+	_father_this.newdetail.click(function(){
+		var _this = $(this);
+		var news_id = _this.data('news_id');
+		var post_data = {};
+		post_data.account_id = news_id;
+		
+		var result = System.ajax_post_setup($url,post_data,'JSON');
+		
+		if (result.status == 0) {
+			create_pop_html(result.data)	
+		}
+	})
+	
+	//创建HTML
+	var create_pop_html = function (data) {
+		_father_this.init();
+		
+		_father_this.batchboxdetail.remove();
+		
+		var html = '';
+	
+html += '<div class="batchboxdetail none tl">';
+html += '<div class="top-batchdetail l pr">';
+html += '<div class="title pa">';
+//html += '<i></i><span>全球头条新闻事件</span>';
+html += '</div>';
+html += '<span class="close cur pa"><img src="/App/Public/Advert/images/close.gif" /></span>';
+html += '<ul class="fl">';
+html += '<li class="li_a select"><strong>账号详情</strong></li>';
+//html += '<li class="li_b"><strong>账号被占用时段</strong></li>';
+html += '</ul>';
+html += '</div>';
+html += '<div class="mid-batchdetail l">';
+html += '<div class="box01-batchdetail fl">';
+html += '<table class="tab01-batchdetail">';
+html += '<tr>';
+html += '<td class="t1">账号ID：<em>'+data.bs_id+'</em></td>';
+html += '<td class="t1">账号名：<em>'+data.bs_account_name+'</em></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">月订单：<em>'+data.bs_month_order_nub+'</em></td>';
+html += '<td class="t1">周订单：<em>'+data.bs_week_order_num+'</em></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">优惠价：<em>'+data.bs_money+'</em></td>';
+html += '<td class="t1">门户类型：<em>'+data.pg_type_of_portal_explain+'</em></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">能否带文本链接：<em>'+data.pg_links_explain+'</em></td>';
+html += '<td class="t1">地区：<em>'+data.pg_area_name+'</em></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">是否新闻源：<em>'+data.pg_news_explain+'</em></td>';
+html += '<td class="t1">案例地址：<em><a href="http://'+data.bs_currentUrl+'" target="_blank">查看</a></em></td>';
+html += '</tr>';
+html += '<td class="t1">周否发稿：<em>'+data.pg_press_weekly_explain+'</em></td>';
+html += '</tr>';
+
+
+
+//html += '<tr>';
+//html += '<td colspan="2">账号ID：<em>'+data.bs_id+'</em></td>';
+//html += '</tr>';
+//html += '<tr>';
+//html += '<td colspan="2">账号分类：<em>资讯</em><em>时尚</em><em>服装箱包</em><em>服装</em></td>';
+//html += '</tr>';
+//html += '<tr>';
+//html += '<td colspan="2">账号标签：<em>IT数码游戏</em><em>母婴资讯</em><em>留学教育</em><em>服装</em></td>';
+//html += '</tr>';
+html += '</table>';
+//html += '<a href="#" class="btn graybtn fr">? 疑问建议</a>';
+html += '</div>';
+html += '<div class="box01-batchdetail none fl">';
+html += '<div class="part01-data fl">';
+html += '<strong>选择日期：</strong><span class="on">09月10日</span><span>09月11日</span><span>09月12日</span><span>09月13日</span>';
+html += '</div>';
+html += '<div class="datetip fl">明天（2014年09月12日） 账号的不可用时间段: </div>';
+html += '<table class="tab01-date">';
+html += '<tr>';
+html += '<td class="t1">早晨：</td>';
+html += '<td class="t2"></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">上午：</td>';
+html += '<td class="t2"></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">中午：</td>';
+html += '<td class="t2"> 12:30 -12:45</td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">下午：</td>';
+html += '<td class="t2"> 17:30 -17:45</td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">晚上： </td>';
+html += '<td class="t2"></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">凌晨： </td>';
+html += '<td class="t2"></td>';
+html += '</tr>';
+html += '</table>';
+html += '<p class="datetip gray fl">除以上时段外，其他时间均可用！</p>';
+html += '<a href="#" class="btn graybtn fr">? 疑问建议</a>';
+html += '</div>';
+html += '</div>';
+html += '</div>';
+		
+		_father_this.body.append(html);
+		
+		_father_this.init();
+		
+		_father_this.add_table_class();
+		
+		_father_this.batchboxdetail.popOn();
+
+		
+	}
+	
+}
+
+
 //全选/反选
 News.prototype.all_selected_fn = function () {
 	var _father_this = this;
@@ -654,7 +784,7 @@ News.prototype.add_account_to_cart = function (account_id,status) {
 			var _now_account_x = $('.accounts_'+account_id);	//列表的行
 			var _name = _now_account_x.find('.account_name').data('account_name');
 			var _money = _now_account_x.find('.now_money').data('money');
-			_father_this.account_selected.append('<li data-select_account_id="'+account_id+'" data-money="'+_money+'"><span class="del fr delet_account"></span><strong>'+_name+'</strong><strong>单价：'+_money+'</strong></li>');
+			_father_this.account_selected.append('<li data-select_account_id="'+account_id+'" data-money="'+_money+'"><span class="del fr delet_account"></span><strong class="newdetail" data-news_id="'+account_id+'">'+_name+'</strong><strong>单价：'+_money+'</strong></li>');
 		}
 	} else {
 		_father_this.account_selected.children('li').each(function () {
@@ -672,6 +802,8 @@ News.prototype.add_account_to_cart = function (account_id,status) {
 	_father_this.close_order_vessel_fn();
 	
 	_father_this.confirm_order_fn();
+	
+	_father_this.create_details_fn(system_info.getAccountInfo);
 	
 	//_father_this.order_vessel.show();
 	_father_this.mid_batch.show();

@@ -778,6 +778,7 @@ Weibo.prototype.create_details_fn = function ($url) {
 		var post_data = {};
 		post_data.account_id = weibo_id;
 		post_data.is_type = system_info.is_celebrity;
+		post_data.pt_type = system_info.pt_type;
 		var result = System.ajax_post_setup($url,post_data,'JSON');
 		
 		if (result.status == 0) {

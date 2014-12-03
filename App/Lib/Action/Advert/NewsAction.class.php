@@ -540,10 +540,22 @@ class NewsAction extends AdvertBaseAction {
 				parent::callback(0,'操作成功','no');
 			}
 		}
-	
-	
 	}
 	
+	
+	//微信查看详情
+	public function getAccountInfo()
+	{
+		$account_id = $this->_post('account_id');
+
+		$array = array('ids'=>$account_id);
+	
+		if($account_id!='')
+		{
+			$data = $this->db['AccountNews']->getPostArray($array,$this->oUser->id,$this->global_finance['news_proportion']);
+			parent::callback(C('STATUS_SUCCESS'),'获取成功',$data['list'][0]);
+		}
+	}
 }	
 
 ?>

@@ -299,6 +299,26 @@ class WeixinAction extends AdvertBaseAction {
 		create_excel('weixin',$new_array);
 	}
 
+	
+	//微信查看详情
+	public function getAccountInfo()
+	{
+		$account_id = $this->_post('account_id');
+		$is_type = $this->_post('is_type');
+	
+		$array = array('ids'=>$account_id);
+	
+		if($account_id!='' && !is_null($is_type))
+		{
+			if ($is_type == 1) {
+				$data = $this->db['AccountWeixin']->getPostmrArray($array,$this->oUser->id,$this->global_finance['weixin_proportion']);
+			} elseif ($is_type == 0) {
+				$data =  $this->db['AccountWeixin']->getPostcgArray($array,$this->oUser->id,$this->global_finance['weixin_proportion']);
+			}
+	
+			parent::callback(C('STATUS_SUCCESS'),'获取成功',$data['list'][0]);
+		}
+	}
 }
 
 ?>

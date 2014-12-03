@@ -182,8 +182,10 @@
 	      	<dt>媒体类型：</dt>	
 	      	<dd id="mtypeall" class="three_sidebar_type selected" data-field="all" data-val=""><b></b>全部</dd>
 	      	<dd id="mcollect" class="three_sidebar_type" data-field="cksc" data-val="1"><b></b>收藏</dd>
-	      	<dd id="mblacklist" class="three_sidebar_type" data-field="ckhmd" data-val="1"><b></b>黑名单</dd></dl>   
-	       
+	      	<dd id="mblacklist" class="three_sidebar_type" data-field="ckhmd" data-val="1"><b></b>黑名单</dd>   
+			<dd id="" class="three_sidebar_type" data-field="tj" data-val="1"><b></b>热门推荐</dd>
+			<dd id="" class="three_sidebar_type" data-field="xstj" data-val="1"><b></b>限时特价</dd>
+	      </dl>
 	      <div class="total"><span>共<strong id="all_data_num"></strong>个</span></div><span class="clr"></span></div>
 	      <div class="clear"></div>
 	    </div>
@@ -262,7 +264,7 @@ var system_info = {
 	Global_Resource_Path : '{$global_tpl_view['Global_Resource_Path']}',
 	export_url : '{:U('Advert/Member/ajax_export_order')}',
 	account_ids : '{$view_data.account_ids}',
-	getAccountInfo : '{:U('Advert/WeixinOrder/getAccountInfo')}'
+	getAccountInfo : '{:U('Advert/Weixin/getAccountInfo')}'
 }
 var list_content = $('#list_content');
 </script>

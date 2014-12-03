@@ -337,6 +337,30 @@ class WeiboAction extends AdvertBaseAction {
 		//var_dump($new_array);
 		create_excel('weibo',$new_array);
 	}
+	
+	//微博查看详情
+	public function getAccountInfo()
+	{
+		$account_id = $this->_post('account_id');
+		$is_type = $this->_post('is_type');
+		
+		$array = array('ids'=>$account_id);
+		$array['is_celebrity'] = $is_type;
+		$array['pt_type'] = $this->_post('pt_type');
+		
+		if($account_id!='' && !is_null($is_type))
+		{
+			//$list = $this->db['AccountWeibo']->getInfo($account_id,$is_type);
+			
+			if ($is_type == 1) {
+				$data = $this->db['AccountWeibo']->getPostmrArray($array,$array['pt_type'],$this->oUser->id,$this->global_finance['weibo_proportion']);
+			} elseif ($is_type == 0) {
+				$data = $this->db['AccountWeibo']->getPostcgArray($array,$array['pt_type'],$this->oUser->id,$this->global_finance['weibo_proportion']);
+			}
+			
+			parent::callback(C('STATUS_SUCCESS'),'获取成功',$data['list'][0]);
+		}
+	}
 
 }
 

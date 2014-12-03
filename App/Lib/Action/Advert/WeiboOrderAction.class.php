@@ -744,18 +744,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 		
 	}
 
-
-	//微博查看详情
-	public function getAccountInfo()
-	{
-		$account_id = $this->_post('account_id');
-		$is_type = $this->_post('is_type');
-		if($account_id!='' && !is_null($is_type))
-		{
-			$list = $this->db['AccountWeibo']->getInfo($account_id,$is_type);
-			parent::callback(C('STATUS_SUCCESS'),'获取成功',$list);
-		}
-	}
+	
 }
 
 ?>

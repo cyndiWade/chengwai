@@ -175,10 +175,7 @@
 	
 		</table>
 		
-		
-		
-		
-		
+
 		<div class="weibo-bot l">
 			<div class="controlbox fl">
 				<span class="all_selected" data-is_check="1">全选</span><span id="batch"  class="add_selected_box">批量添加账号</span>	
@@ -224,7 +221,8 @@ var system_info = {
 	page_limit : 10,	//每页条数
 	post_order_url : '{:U('Advert/News/add_people')}',
 	export_url : '{:U('Advert/Member/ajax_export_order')}',
-	account_ids : '{$view_data.account_ids}'
+	account_ids : '{$view_data.account_ids}',
+	getAccountInfo : '{:U('Advert/News/getAccountInfo')}'
 //tmp_limit : 
 }
 var list_content = $('#list_content');
@@ -281,6 +279,8 @@ var public_post_fn = function (obj_data) {
 
 		News.dataNum_And_PageNum(result.data.count);
 		
+		News.create_details_fn(system_info.getAccountInfo);
+		
 		News.add_one_selected_box_fn();
 		
 		News.page_init_fn();	//加载页面初始化
@@ -324,12 +324,14 @@ var create_now_html = function ($data,$post_data) {
 	html += '<td class="t2"><b class="red now_money" data-money="'+($data.bs_money)+'">'+($data.bs_money)+'元</b></td>';
 	html += '<td class="t3">'+$data.pg_type_of_portal_explain+'</td>';
 	html += '<td class="t4">'+$data.pg_news_explain+'</td>';
-	html += '<td class="t5">是</td>';
+	html += '<td class="t5">'+$data.pg_press_weekly_explain+'</td>';
 	html += '<td class="t6">是</td>';
 	html += '<td class="t7">'+$data.pg_area_name+'</td>';
 	html += '<td class="t8">'+$data.pg_links_explain+'</td>';
 	html += '<td class="last">'
 	html += '<div class="ctrl">';
+	
+	html += '<span class="newdetail" data-news_id="'+$data.bs_id+'">详情</span><br/>';
 	
 	if ($post_data.cksc == 1) {
 		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-news_id="' + $data.bs_id + '">取消收藏</span><br/>';

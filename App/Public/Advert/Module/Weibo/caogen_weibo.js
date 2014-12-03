@@ -577,6 +577,7 @@ Weibo.prototype.create_details_fn = function ($url) {
 		var post_data = {};
 		post_data.account_id = weibo_id;
 		post_data.is_type = system_info.is_celebrity;
+		post_data.pt_type = system_info.pt_type;
 		var result = System.ajax_post_setup($url,post_data,'JSON');
 		
 		if (result.status == 0) {
@@ -624,6 +625,21 @@ html += '</tr>';
 html += '<tr>';
 html += '<td class="t1">软广转发价格：<em>'+data.bs_rg_zhuanfa+'</em></td>';
 html += '<td class="t1">软广直发价格：<em>'+data.bs_rg_zhifa+'</em></td>';
+html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">常见分类：<em>'+data.pg_cjfl_explain+'</em></td>';
+html += '<td class="t1">地区：<em>'+data.pg_area_name+'</em></td>';
+html += '</tr>';
+html += '<td class="t1">粉丝量：<em>'+data.sy_fans_num+'</em></td>';
+var account_on_explain = '';
+if (data.sy_account_on == 0) {
+	account_on_explain = '未认证'; 
+} else if(data.sy_account_on == 1) {
+	account_on_explain = '已认证'; 
+} else {
+	account_on_explain = '暂无数据'
+}
+html += '<td class="t1">账号是否认证：<em>'+account_on_explain+'</em></td>';
 html += '</tr>';
 //html += '<tr>';
 //html += '<td class="t1">月流单率：<em>暂无报价</em></td>';

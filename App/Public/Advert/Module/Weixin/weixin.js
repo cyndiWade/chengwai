@@ -778,6 +778,24 @@ html += '<tr>';
 html += '<td class="t1">多图文第二条报价：<em>'+data.bs_dtwdet_money+'</em></td>';
 html += '<td class="t1">多图文第三条及N条报价：<em>'+data.bs_dtwqtwz_money+'</em></td>';
 html += '</tr>';
+html += '<tr>';
+html += '<td class="t1">常见分类：<em>'+data.pg_cjfl_explain+'</em></td>';
+html += '<td class="t1">地区：<em>'+data.pg_area_name+'</em></td>';
+html += '</tr>';
+html += '<td class="t1">粉丝量：<em>'+data.sy_fans_number+'</em></td>';
+var account_on_explain = '';
+if (data.sy_account_on == 0) {
+	account_on_explain = '未认证'; 
+} else if(data.sy_account_on == 1) {
+	account_on_explain = '已认证'; 
+} else {
+	account_on_explain = '暂无数据'
+}
+html += '<td class="t1">账号是否认证：<em>'+account_on_explain+'</em></td>';
+html += '</tr>';
+html += '<td class="t1">受众性别：<em>男：>'+data.sy_audience_man+'%,女：>'+data.sy_audience_women+'%</em></td>';
+html += '<td class="t1">周平均阅读数：<em>'+data.sy_read_number+'</em></td>';
+html += '</tr>';
 //html += '<tr>';
 //html += '<td colspan="2">账号ID：<em>'+data.bs_id+'</em></td>';
 //html += '</tr>';

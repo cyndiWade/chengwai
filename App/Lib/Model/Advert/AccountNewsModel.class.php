@@ -147,6 +147,15 @@
 	
 					//门户类型
 					$list[$key]['pg_type_of_portal_explain'] = $data['mh_type'][$val['sy_type_of_portal']]['title'] ? $data['mh_type'][$val['sy_type_of_portal']]['title'] : '所有';
+				
+					//周末发稿
+					if ($data['bs_press_weekly'] == 1) {
+						$list[$key]['pg_press_weekly_explain'] ='是';
+					} else if ($data['bs_press_weekly'] == 0) {
+						$list[$key]['pg_press_weekly_explain'] ='否';
+					} 
+					
+					//press_weekly
 				}
 			}
 			//exit;
