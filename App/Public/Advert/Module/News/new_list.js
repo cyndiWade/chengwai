@@ -664,6 +664,7 @@ html += '<td class="t1">是否新闻源：<em>'+data.pg_news_explain+'</em></td>
 html += '<td class="t1">案例地址：<em><a href="http://'+data.bs_currentUrl+'" target="_blank">查看</a></em></td>';
 html += '</tr>';
 html += '<td class="t1">周否发稿：<em>'+data.pg_press_weekly_explain+'</em></td>';
+html += '<td class="t1">频道：<em>'+data.bs_channel_name+'</em></td>';
 html += '</tr>';
 
 

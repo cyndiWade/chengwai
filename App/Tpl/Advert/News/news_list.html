@@ -193,7 +193,7 @@
 <include file="Public:member_footer" />
 
 <!-- 批量添加弹窗 -->
-<div class="batchbox  tl order_vessel" >
+<div class="batchbox  tl order_vessel"  >
 	<div class="top-batch l pr"><span class="close cur pa close_order_vessel"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>已选择账号</b></div>
 	<div class="mid-batch l" style="display:none;">
 		<div class="part01-batch fl">
@@ -204,7 +204,7 @@
 		</ul>
 		
 		<a class="bluebtn_bjd btn export_csv" href="javascript:;" data-base_src="/Advert/News/export_csv">批量导出报价单</a>
-		<a href="javascript:;" class="btn bluebtn confirm_order">立即派单</a>
+		<a href="javascript:;" class="btn bluebtn confirm_order" >立即派单</a>
 	</div>
 </div>
 
@@ -306,17 +306,19 @@ var create_now_html = function ($data,$post_data) {
 	html += '<td class="t1">';
 	html += '	<div class="mediapart">';
 	html += '		<input type="checkbox" class="check now_selected add_one_selected_box"  data-field="id" data-id="'+$data.bs_id+'" />';
-	
+	html += '	    <a href="'+$data.bs_currentUrl+'" target="_blank">';
 	//html += '		<img src="{$global_tpl_view.Global_Resource_Path}images/mt_img01.gif" class="mtimg" />';
+	
 	if ($data.bs_head_img == '') {
 		html += '<img src="{$global_tpl_view.Global_Resource_Path}images/mt_img01.gif" class="mtimg" />';
 	} else {
 		html += '<img src="'+$data.bs_head_img+'" class="mtimg" />';
 	}
+	html += '	</a>';
 	
 	html += '		<div class="grp fl">';
 	html += '			<h5 class="l"><b class="account_name" data-account_name="'+$data.bs_account_name+'">'+$data.bs_account_name+'</b></h5>';
-	html += '			<div class="desc l">[<a href="http://'+$data.bs_currentUrl+'" target="_blank">案例</a>]'+$data.pg_type_of_portal_explain+'';
+	html += '			<div class="desc l">[<a href="'+$data.bs_url+'" target="_blank">案例</a>]'+$data.pg_type_of_portal_explain+'';
 	html += '			</div>';
 	html += '		</div>';
 	html += '	</div>';

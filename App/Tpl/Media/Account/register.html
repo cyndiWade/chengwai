@@ -1,91 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<include file="Public:top" />
-
-	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/reg.css" type="text/css" />
-	
-	<title>注册媒体主</title>
+  <include file="Public:top" />
+  <title>注册媒体主_城外圈广告平台</title>
+  <link href="/news_skin/cwq_style.css" rel="stylesheet" media="screen" type="text/css" />
+  <link href="/news_skin/cwq_loginreg.css" rel="stylesheet" media="screen" type="text/css" />
+  <script src="/news_skin/js/jquery.min.js"></script>
 </head>
 <body>
-
 <include file="Web:Public:header" />
+<div class="login_container">
+<div class="newcwq_wrap clearfix"><div class="crumb">当前位置：<a href="/"  title="城外圈广告平台" style="cursor:pointer;">城外圈广告平台</a> &gt; 媒体主注册</div></div>
+<div class="blank30"></div>
+<div class="newcwq_wrap login_reg clearfix">
+  <div class="login_form">
+    <div class="login_mod login_bg1">
+      <div class="login_title"><span><a href="{:U('Advert/Account/register')}" target="_self">我是广告主</a><i class="popovers J_infoTrigger" title="什么是广告主？"><div class="popover fade bottom"><div class="popover_arrow"></div><div class="clear"></div><h3 class="popover-title">什么是广告主？</h3><div class="popover-content"><div style="width:200px;font-size:14px;">注册广告主可进行派单、发布竞标活动；广告主借助媒体账号的粉丝和影响力推广活动，达到广告效果。</div></div></div></i></span><span class="currot"><a href="{:U('Media/Account/register')}" target="_self">我是媒体主</a><i class="popovers J_infoTrigger" title="什么是媒体主？"><div class="popover fade bottom"><div class="popover_arrow"></div><div class="clear"></div><h3 class="popover-title">什么是媒体主？</h3><div class="popover-content"><div style="width:200px;font-size:14px;">注册媒体主可进行接单、竞标、互推；媒体主通过接单取得推广资格，获得广告收益。</div></div></div></i></span></div>
+      <div class="login_con clearfix">
+        <div class="form-group clearfix">
+        <label class="form-left"><em>*</em>会员名：</label>
+        <div class="form-right"><input type="text" class="text" name="account" /><div class="oktip"></div><div class="errortip">会员名不能为空</div>
+        </div>
+        </div>
+        <div class="blank20"></div>
+        <div class="form-group clearfix">
+        <label class="form-left"><em>*</em>登录密码：</label>
+        <div class="form-right"><input type="password" class="text" name="password"/><div class="oktip"></div><div class="errortip">登入密码不能为空</div></div>
+        </div>
+        <div class="blank20"></div>
+        <div class="form-group clearfix">
+        <label class="form-left"><em>*</em>重复输入密码：</label>
+        <div class="form-right"><input type="password" class="text" name="password_check"/><div class="oktip"></div><div class="errortip">两次密码不一致</div></div>
+        </div>
+        <div class="blank20"></div>
+        <div class="form-group clearfix">
+        <label class="form-left"><em>*</em>手机号码：</label>
+        <div class="form-right"><input type="text" class="text" name="iphone" style="width:180px;"/><div class="phoneclick">发送短信验证码</div><div class="oktip"></div><div class="errortip">手机号不能为空</div></div>
+        </div>
+        <div class="blank20"></div>
+        <div class="form-group clearfix">
+        <label class="form-left"><em>*</em>手机验证码：</label>
+        <div class="form-right"><input type="text" class="text" name="phone_verify"/><div class="oktip"></div><div class="errortip">手机验证码不能为空</div></div>
+        </div>
+        <div class="blank20"></div>
+        <div class="form-group clearfix">
+        <label class="form-left"></label>
+        <div class="form-right"><div class="agreebox"><input type="checkbox" class="check fl" checked="checked" /><em class="fl">同意<a href="#">服务协议</a></em></div>
+        <div class="blank20"></div>
+        <input type="submit" class="btn redbtn" value="立即注册" />
+        </div>
+        </div>
 
-<div class="wrap l">
-<div class="pbd">
-<div class="location l">
-	当前位置：<a href="/index.php">首页</a>  >  <span class="blue">会员注册</span>
+      </div>
+    </div>  
+  
+  </div>
+  <div class="login_aside">
+    <div class="login_text"><strong class="f14">» 已经是会员？请点击</strong><a class="textbtn" href="{:U('Media/Account/login')}"><i></i>会员登录</a></div>
+    <div class="blank10"></div>
+    <div class="login_text"><strong class="f14">» 忘记了密码？请点击</strong><a class="textbtn" href="{:U('Media/Account/changePassword')}"><i></i>找回密码</a></div>
+    <div class="blank10"></div>
+    <div class="login_text">» 注：<em class="red">*</em>为必填项</div>
+    <div class="blank10"></div>
+    <div class="login_text">
+    <p>遇到问题或不明白的地方，请联系客服QQ：<span><script src="/news_skin/js/cwq_qq.js"></script></span></p>
+    <p>或拨打电话：<span class="red">020-66695188</span></p>
+    </div>
+  </div>
 </div>
-<div class="adbox l">
-	<img src="{$global_tpl_view.Group_Resource_Path}images/ad_img02.gif" />
-</div>
-<div class="area01-reg area01-reg-media fl">
-	<div class="title-reg fl"><b>账号信息</b></div>
-	<div class="regtip fl">注：<em class="red">*</em>为必填项</div>
-	<div class="regbox l">
-		<div class="left-regbox fl">
-			<table class="tab01-reg l">
-			  <tr>
-				<td class="t1"><span><em>*</em>会员名：</span></td>
-				<td class="t2"><input type="text" class="text" name="account" /><div class="oktip"></div><div class="errortip">会员名不能为空</div></td>
-			  </tr>
-			  <tr>
-				<td class="t1"><span><em>*</em>登录密码：</span></td>
-				<td class="t2"><input type="password" class="text" name="password"/><div class="oktip"></div><div class="errortip">登入密码不能为空</div></td>
-			  </tr>
-			  <tr>
-				<td class="t1"><span><em>*</em>重复输入密码：</span></td>
-				<td class="t2"><input type="password" class="text" name="password_check"/><div class="oktip"></div><div class="errortip">两次密码不一致</div></td>
-			  </tr>
-			  <tr>
-				<td class="t1"><span><em>*</em>手机号码：</span></td>
-				<td class="t2"><input type="text" class="text" name="iphone" style="width:200px;"/><div class="oktip"></div><div class="errortip">手机号不能为空</div></td>
-			  </tr>
-			   <tr>
-			  	<td class="t1"></td>
-			  	<td class="t2"><div class="phoneclick">发送短信验证码</div></td>
-			  </tr>
-			  <tr>
-				<td class="t1"><span><em>*</em>输入手机验证码：</span></td>
-				<td class="t2"><input type="text" class="text" name="phone_verify"/><div class="oktip"></div><div class="errortip">手机验证码不能为空</div></td>
-			  </tr>
-			  <tr>
-				<td class="t1"></td>
-				<td class="t2"><div class="agreebox"><input type="checkbox" class="check fl" checked="checked" /><em class="fl">同意<a href="#">服务协议</a></em></div></td>
-			  </tr>
-			  <tr>
-				<td class="t1"></td>
-				<td class="t2"><input type="submit" class="btn redbtn" value="立即注册" /></td>
-			  </tr>
-			</table>
-		</div>
-		<div class="right-regbox fl">
-			<div class="part01-regtxt fl">
-				<p>» 已经是会员？请点击<a href="{:U('Media/Account/login')}">会员登录</a></p>
-				<p>» 忘记了密码？请点击<a href="{:U('Media/Account/changePassword')}">找回密码</a></p>
-			</div>
-			<div class="part02-regtxt fl">
-				请认真、仔细地填写以下信息，严肃的商业信息有助于您获得别人的信任，结交潜在的商业伙伴，获取商业机会！*为必填项
-			</div>
-			<div class="part02-regtxt fl">
-				遇到问题或不明白的地方，请联系客服QQ：<span><img src="{$global_tpl_view.Group_Resource_Path}images/qq.gif" /></span>或拨打电话：020-66695188
-			</div>
-		</div>
-	</div>
-</div>
-</div>
-</div>
-
+<div class="blank30"></div></div>
 <include file="Web:Public:footer" />
-
-
 <!-- JS底部文件 -->
-<include file="Public:bottom" />
-
 <!-- 自动引入当前的js文件 -->
 <script src="App/Public/Global/jquery/jquery-1.9.1.js" type="text/javascript"></script>
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/check_zhuce.js"></script>
-
 <script type="text/javascript">
 	$('input[name="account"]').blur(function()
 	{
