@@ -207,8 +207,36 @@
 		  </tr>
 		  </thead>
 		  <tbody id="list_content">
+		  	<!-- 
+			<tr data-fans_num="300000" data-order_num="1000" data-order_id="1" class="accounts_1">
+				<td class="t1">
+					<div class="weibopart">
+						<input type="checkbox" data-id="1" data-field="id" class="check now_selected add_one_selected_box">
+						<img class="wbimg" src="/App/Public/Global/images/default_media.jpg">
+						<div class="grp fl">
+							<h5 data-account_name="你好" class="l account_name"><b>你好</b></h5>
+						<div class="weixininfo l">
+							<span class="weixinhao fl">微信号：zhuchencong</span>
+						</div>
+						<div class="desc l">
+							简介：简介1
+						</div>
+						</div>
+					</div>
+				</td>
+				<td class="t7">
+					<b class="red">新闻资讯</b>
+				</td>
+				<td class="t7"><div class="fsbox"><p>30万</p></div></td>
+				<td class="t6"><div class="pricebox"><p>单图文价格：<em data-money="26" class="now_money">￥26</em></p><p>多图文第一条：<em data-money="104" class="now_money">￥104</em></p><p>多图文第二条：<em data-money="195" class="now_money">￥195</em></p><p>多图文第3-N条：<em data-money="390" class="now_money">￥390</em></p></div></td>
+				<td class="t4">1000</td>
+				<td class="t4"><img width="28" data-height="150px" data-width="150px" data-src="/App/Public/Advert/images/wx_img02.gif" src="/App/Public/Advert/images/wx_img02.gif" class="tooltip_tonus" alt=""></td>
+				<td class="t4"><div class="ctrl"><span data-weixin_id="1" class="wxdetail">详情</span><br><span data-weixin_id="1" data-or_type="1" data-action="add" class="lahei_and_shoucang">收藏</span><br><span data-weixin_id="1" data-or_type="0" data-action="add" class="lahei_and_shoucang">拉黑</span><br></div></td>
+			</tr>
+			-->
+		
+		
 		  
-
 		  </tbody>
 		</table>
 		<div class="weibo-bot l">
@@ -355,9 +383,9 @@ var public_post_fn = function (obj_data) {
 	} 
 	
 	system_info.account_ids = '';
-}
+} 
 
-
+//var create_now_html = function ($data,$post_data) {};
 var create_now_html = function ($data,$post_data) {
 	
 	var bs_qr_code = '';
