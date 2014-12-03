@@ -6,9 +6,11 @@
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/member.css" type="text/css" />
 	<title>微信列表页</title>
 	<style type="text/css">
+		/*
 		.t6 {
 			width:200px !important;
 		}
+		*/
 		#tooltip {
 			z-index:100001 !important;
 		}
@@ -191,6 +193,8 @@
 	    </div>
     	<!-- end 排序条件 -->
 	<div class="col01-wx l">
+		
+		<!-- 
 		<table class="tab01-weibo tab01-wx l">
 		 <thead>
 		  <tr>
@@ -198,47 +202,78 @@
 			<th class="t7">行业分类</th>
 			<th class="t7">粉丝</th>
 			<th class="t6">价格</th>
-			<!--  <th class="t5">性别比例</th>-->
-			<!--  <th class="t6">效果值</th>-->
 			<th class="t4">月订单量</th>
-			<!-- <th class="t8">可用广告位</th> -->
 			<th class="t4">二维码</th>
 			<th class="t4">操作</th>
 		  </tr>
 		  </thead>
 		  <tbody id="list_content">
-		  	<!-- 
-			<tr data-fans_num="300000" data-order_num="1000" data-order_id="1" class="accounts_1">
-				<td class="t1">
-					<div class="weibopart">
-						<input type="checkbox" data-id="1" data-field="id" class="check now_selected add_one_selected_box">
-						<img class="wbimg" src="/App/Public/Global/images/default_media.jpg">
-						<div class="grp fl">
-							<h5 data-account_name="你好" class="l account_name"><b>你好</b></h5>
-						<div class="weixininfo l">
-							<span class="weixinhao fl">微信号：zhuchencong</span>
-						</div>
-						<div class="desc l">
-							简介：简介1
-						</div>
-						</div>
-					</div>
-				</td>
-				<td class="t7">
-					<b class="red">新闻资讯</b>
-				</td>
-				<td class="t7"><div class="fsbox"><p>30万</p></div></td>
-				<td class="t6"><div class="pricebox"><p>单图文价格：<em data-money="26" class="now_money">￥26</em></p><p>多图文第一条：<em data-money="104" class="now_money">￥104</em></p><p>多图文第二条：<em data-money="195" class="now_money">￥195</em></p><p>多图文第3-N条：<em data-money="390" class="now_money">￥390</em></p></div></td>
-				<td class="t4">1000</td>
-				<td class="t4"><img width="28" data-height="150px" data-width="150px" data-src="/App/Public/Advert/images/wx_img02.gif" src="/App/Public/Advert/images/wx_img02.gif" class="tooltip_tonus" alt=""></td>
-				<td class="t4"><div class="ctrl"><span data-weixin_id="1" class="wxdetail">详情</span><br><span data-weixin_id="1" data-or_type="1" data-action="add" class="lahei_and_shoucang">收藏</span><br><span data-weixin_id="1" data-or_type="0" data-action="add" class="lahei_and_shoucang">拉黑</span><br></div></td>
-			</tr>
-			-->
-		
-		
-		  
+		  	
 		  </tbody>
 		</table>
+		-->
+		
+		<table class="table_list" id="table_list">
+		    <thead>
+		      <tr class="col_cen">
+		        <th>账号名称</th>
+				<th class="th85">二维码</th>
+		        <th class="th85">粉丝量</th>
+		        <th class="th95">单图文报价</th>
+		        <th class="th350">多图文报价</th>
+		        <th class="th85">阅读量</th>
+		        <th class="th85">月订单</th>
+		        <th class="th120">操作</th>
+		      </tr>
+		    </thead>
+		    <tbody id="list_content">
+		    	<!-- 
+		      <tr>
+		        <td class="thtxt">
+		        	<dl class="wechat_title">
+		        		<dt>
+		        			<input type="checkbox" class="check now_selected" data-field="id" data-id="2">
+							<img   src="http://img.weiboyi.com/img/uploadimg/weixin_follower_img/14113128103232235531541eecaa240b4.jpg" />
+						</dt>
+						<dd>
+							<h3><a target="_blank" href="http://fashion.msn.com.cn">最热门</a></h3>
+		            		<div class="news_p">微信号: zui-remen
+						
+							</div>
+						</dd>
+		         	</dl>
+				</td>
+				
+		        <td>
+		        	<i class="tippovers tips" title="粉丝量" style="z-index: 1;">1000万</i>	
+					<div class="have_authentication">已认证</div>
+				</td>
+		       
+			    <td><span class="red fs14">￥120</span></td>
+		        
+				<td>
+					<strong class="pr10">头条：<span class="red fs14">￥120</span></strong><strong class="pr10">第二条：<span class="red fs14">￥120</span></strong><strong>第3-N条：<span class="red fs14">￥120</span></strong>
+				</td>
+		        
+				<td>暂无数据</td>
+		        
+				<td>8</td>
+				
+		        <td>
+					<a href="javascript:;" class="js_collect" data-accountid="347992" data-accountname="详情">详情</a> | <a href="javascript:;" class="js_collect" data-accountid="347992" data-accountname="最热门">收藏</a> | <a href="javascript:;" class="js_add_to_black_list" data-accountid="347992" data-accountname="最热门">拉黑</a>
+					<div class="clear"></div>
+					<i class="tippovers tips" title="二维码" style="z-index: 10;">
+					</div>
+					</div>
+					</i>	
+				</td>
+		      
+			  </tr>
+			  -->
+			</tbody>
+		</table>
+  
+		
 		<div class="weibo-bot l">
 			
 			<div class="controlbox fl">
@@ -385,8 +420,113 @@ var public_post_fn = function (obj_data) {
 	system_info.account_ids = '';
 } 
 
-//var create_now_html = function ($data,$post_data) {};
 var create_now_html = function ($data,$post_data) {
+	var bs_qr_code = '';
+	if ($data.bs_qr_code == '') {
+		bs_qr_code = '{$global_tpl_view.Group_Resource_Path}images/wx_img02.gif';
+	} else {
+		bs_qr_code = $data.bs_qr_code;
+	}
+	
+	var account_on_explain = '';
+	if ($data.sy_account_on == 0) {
+		account_on_explain = '未认证'; 
+	} else if($data.sy_account_on == 1) {
+		account_on_explain = '已认证'; 
+	} else {
+		account_on_explain = '暂无数据'
+	}
+	
+	var pg_bs_head_img = '';
+	if ($data.bs_head_img == '') {
+		pg_bs_head_img = 'http://img.weiboyi.com/img/uploadimg/weixin_follower_img/14113128103232235531541eecaa240b4.jpg';
+	} else {
+		pg_bs_head_img = $data.bs_head_img;
+	}	
+	
+	var html = '';
+	
+	html += '<tr class="accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_month_order_nub+'"  data-fans_num="'+$data.bs_fans_num+'">';
+	html += '    <td class="thtxt">';
+	html += '    	<dl class="wechat_title">';
+	html += '    		<dt>';
+	html += '    			<input type="checkbox" class="check now_selected add_one_selected_box" data-field="id" data-id="'+$data.bs_id+'">';
+	
+	html += '				<img src="'+pg_bs_head_img+'" class="mtimg" />';
+
+	html += '			</dt>';
+	html += '			<dd>';
+	html += '				<h3><a class="account_name" data-account_name="'+$data.bs_account_name+'" href="javascript:;">'+$data.bs_account_name+'</a></h3>';
+
+	html += '        		<div class="news_p">微信号: '+$data.bs_weixinhao+'';
+				
+	html += '				</div>';
+	html += '			</dd>';
+	html += '     	</dl>';
+	html += '	</td>';
+		
+	html += '	<td><img class="tooltip_tonus" width="28" src="'+bs_qr_code+'" data-src="'+bs_qr_code+'" data-width="150px" data-height="150px" /></td>';	
+		
+	html += '    <td>';
+	html += '    	<i class="tippovers tips" title="粉丝量" style="z-index: 1;">'+$data.bs_fans_num / 10000+'万</i>';
+	html += '		<div class="have_authentication">'+account_on_explain+'</div>';
+	html += '	</td>';
+	   
+
+	html += '   <td><span class="red fs14 now_money" data-money="'+$data.bs_dtb_money+'">￥'+$data.bs_dtb_money+'</span></td>';
+	    
+	html += '	<td>';
+	html += '		<strong class="pr10">头条：<span class="red fs14 now_money" data-money="'+$data.bs_dtwdyt_money+'">￥'+$data.bs_dtwdyt_money+'</span></strong>';
+	html += '		<strong class="pr10">第二条：<span class="red fs14 now_money" data-money="'+$data.bs_dtwdet_money+'">￥'+$data.bs_dtwdet_money+'</span></strong>';
+	html += '		<strong>第3-N条：<span class="red fs14 now_money" data-money="'+$data.bs_dtwqtwz_money+'">￥'+$data.bs_dtwqtwz_money+'</span></strong>';
+	html += '	</td>';
+	    
+	html += '	<td>'+$data.sy_read_number+'</td>';
+	    
+	html += '	<td>'+$data.bs_month_order_nub+'</td>';
+		
+	html += '    <td>';
+	
+	html += '		<a href="javascript:;" class="js_collect wxdetail" data-weixin_id="'+$data.bs_id+'" >详情</a> | ';
+	
+	if ($post_data.cksc == 1) {
+		html += '	<a href="javascript:;" class="js_collect lahei_and_shoucang" data-action="del" data-or_type="1" data-weixin_id="' + $data.bs_id + '">取消收藏</a> | ';
+	} else if ($post_data.ckhmd == 1) {
+		html += '	<a href="javascript:;" class="js_add_to_black_list lahei_and_shoucang" data-action="del" data-or_type="0" data-weixin_id="' + $data.bs_id + '">取消拉黑</a>';
+	} else {
+		if ($data.pg_sc == 1) {
+			html += '<a href="javascript:;" class="js_collect lahei_and_shoucang" data-action="add" data-or_type="1" data-weixin_id="' + $data.bs_id + '">已收藏</a> | ';
+		} else {
+			html += '<a href="javascript:;" class="js_collect lahei_and_shoucang" data-action="add" data-or_type="1" data-weixin_id="' + $data.bs_id + '">收藏</a> | ';
+		}
+		
+		if ($data.pg_lh == 1) {
+			html += '<a href="javascript:;" class="js_add_to_black_list lahei_and_shoucang" data-action="add" data-or_type="0" data-weixin_id="' + $data.bs_id + '">已拉黑</a>';
+		} else {
+			html += '<a href="javascript:;" class="js_add_to_black_list lahei_and_shoucang" data-action="add" data-or_type="0" data-weixin_id="' + $data.bs_id + '">拉黑</a>';
+		} 
+	}
+	
+	//html += '		<a href="javascript:;" class="js_collect wxdetail" data-weixin_id="'+$data.bs_id+'" >详情</a> | ';
+	//html += '		<a href="javascript:;" class="js_collect">收藏</a> | ';
+	//html += '		<a href="javascript:;" class="js_add_to_black_list">拉黑</a>';
+	
+	
+	
+	html += '		<div class="clear"></div>';
+	html += '		</div>';
+	html += '		</div>';
+	html += '		</i>';
+	html += '	</td>';
+	  
+	html += '</tr>';
+	
+	return html;
+	
+};
+
+
+var create_now_html_bak = function ($data,$post_data) {
 	
 	var bs_qr_code = '';
 	if ($data.bs_qr_code == '') {
