@@ -101,6 +101,7 @@
 				->select();
 			}	
 			
+			
 			$tags_ids = C('Big_Nav_Class_Ids.weixin_caogen_tags_ids');		
 			$CategoryTagsInfo = D('CategoryTags')->get_classify_data($tags_ids['top_parent_id']);
 			$data['cjfl'] = $CategoryTagsInfo[$tags_ids['cjfl']];
@@ -233,7 +234,8 @@
 			$account_name = trim($addslArray['account']);
 			if($account_name!='')
 			{
-				$wheres['w.account_name'] = array('like','%'.$account_name.'%');
+				//$wheres['w.account_name'] = array('like','%'.$account_name.'%');
+				$wheres['w.account_name|w.weixinhao'] = array('like','%'.$account_name.'%');
 			}
 			return $wheres;
 		}

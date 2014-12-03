@@ -347,12 +347,12 @@ WeixinOrderAddGeneralize.prototype.form_change_fn = function () {
 	var ld_ipt_change_fn = function () {
 		var type = _father_this.get_GgwType_Val_Fn();
 		if (type == 1) {
-			_father_this.zy_div.hide();
+			_father_this.zy_div.show();
 		} 
 	}
 	
 	_father_this.ggw_type.click(function () {
-		_father_this.zy_div.show();
+		_father_this.zy_div.hide();
 		ld_ipt_change_fn();
 	});
 	

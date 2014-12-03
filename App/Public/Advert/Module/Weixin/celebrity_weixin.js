@@ -71,6 +71,8 @@ Weixin.prototype.init = function () {
 	this.export_csv = $('.export_csv');	//导出CSV按钮
 	
 	this.add_one_selected_box = $('.add_one_selected_box');//新版添加购物城
+	
+	this.mid_batch = $('.mid-batch');
 }
 
 
@@ -872,7 +874,8 @@ Weixin.prototype.add_account_to_cart = function (account_id,status) {
 	
 	_father_this.create_details_fn(system_info.getAccountInfo);
 	
-	_father_this.order_vessel.show();
+	//_father_this.order_vessel.show();
+	_father_this.mid_batch.show();
 }
 //获取选中的账号
 Weixin.prototype.get_list_selected_account = function () {
@@ -930,7 +933,8 @@ Weixin.prototype.close_order_vessel_fn = function () {
 	_father_this.close_order_vessel.unbind();
 	_father_this.close_order_vessel.click(function () {
 		//弹窗插件
-		_father_this.order_vessel.hide();
+		//_father_this.order_vessel.hide();
+		_father_this.mid_batch.hide();
 	});
 };
 //确认提交订单

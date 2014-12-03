@@ -23,7 +23,7 @@
 			</div>
 			<table class="tab01-myorder l">
 			 <tr>
-				<th class="t1">活动名称：</th>
+				<th class="t1">订单名称：</th>
 				<td class="t2">{$view_data.order_info.hd_name}</td>
 				<th class="t1">活动ID：</th>
 				<td class="t3">{$view_data.order_info.id}</td>
@@ -31,7 +31,7 @@
 				<td class="t2">{$view_data.order_info.tfpt_type|getPt}</td>
 			  </tr>
 			  <tr>
-				<th class="t1">转发地址：</th>
+				<th class="t1">转发链接：</th>
 				<td class="t2">{$view_data.order_info.zf_url}</td>
 				<th class="t1">转发语类型：</th>
 				<td class="t3">{$view_data.order_info.zfy_type|getZhuanf}</td>
@@ -41,7 +41,7 @@
 			  <tr>
 				<th class="t1">直发内容类型：</th>
 				<td class="t2">{$view_data.order_info.zfnr_type|zfNeir}</td>
-				<th class="t1">开始时间：</th>
+				<th class="t1">发布时间：</th>
 				<td class="t3">{$view_data.order_info.start_time|date="Y-m-d H:i:s",###}</td>
 				<th class="t1">反馈时间：</th>
 				<td class="t2"><if condition="($view_data.order_info.over_time neq 0)">{$view_data.order_info.over_time|date="Y-m-d H:i:s",###}<else />无</if></td>
@@ -59,7 +59,7 @@
 				<td class="t2">{$view_data.order_info.dx_phone}</td>
 				<th class="t1">是否短信通知：</th>
 				<td class="t2">{$view_data.order_info.dx_status|getFenm}</td>
-				<th class="t1">发送类型：</th>
+				<th class="t1">活动类型：</th>
 				<td class="t2">{$view_data.order_info.fslx_type|getFsT}</td>
 			  </tr>
 			  <tr>
@@ -90,7 +90,7 @@
 
 				<th class="t10">消费额</th>
 				<th class="t10">订单状态</th>
-				<th class="t12">执行截图</th>
+				<th class="t12">进度</th>
 				<th class="last">操作</th>
 
 			  </tr>

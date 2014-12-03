@@ -149,10 +149,13 @@ init_check_form();
 	
 	
 	var change_zhifa_placeholder = function () {
+		$('.strong_nry').html('<i>*</i>自拟要求：');
+		
 		$('.zfnr_type').click(function () {
 			var _this = $(this);
 			if (_this.val() == 2) {
 				$('.zfnr_info').attr('placeholder','与产品相关正面评论，禁止星座、段子！');
+				$('.strong_nry').html('<i>*</i>自拟要求：');
 			} else {
 				$('.zfnr_info').attr('placeholder','');
 			}
@@ -161,20 +164,25 @@ init_check_form();
 	
 	
 	var change_zhuanfa_placeholder = function () {
+		$('.strong_nry').html('<i>*</i>转发语：');
 		$('.zfy_type').click(function () {
 			var _this = $(this);
 			$('.td_zw_info').show();
 			if (_this.val() == 1) {
 				$('.zw_info').attr('placeholder','');
+				$('.strong_nry').html('<i>*</i>转发语：');
 			} else if (_this.val() == 2) {
 				$('.zw_info').attr('placeholder','与产品相关正面评论，禁止星座、段子！');
+				$('.strong_nry').html('<i>*</i>自拟要求：');
+				
 			} else if (_this.val() == 3) {
+				$('.strong_nry').html('');
 				$('.td_zw_info').hide();
 			}
 		});
 	}
 
-	//追加 | 较少 直发配图
+	//追加 | 减少 直发配图
 	var zj_zfpt_fn = function () {
 		var btn_zj = $('#btn_zj');
 		
@@ -215,6 +223,7 @@ init_check_form();
 			tr_zhuanfa.eq(0).append(add_html('zhuanfa1'));
 			tr_zhuanfa.eq(1).append(add_html('zhuanfa2'));
 			tr_zhuanfa.eq(2).append(add_html('zhuanfa3'));
+			change_zhifa_placeholder();
 			
 		} else if ($type == 2) {	//转发
 			tr_zhifa.empty();
@@ -222,10 +231,9 @@ init_check_form();
 			tr_zhifa.eq(0).append(add_html('zhifa1'));
 			tr_zhifa.eq(1).append(add_html('zhifa2'));
 			tr_zhifa.eq(2).append(add_html('zhifa3'));
+			change_zhuanfa_placeholder();
 		} 
 		init_check_form();
-		change_zhifa_placeholder();
-		change_zhuanfa_placeholder();
 		zj_zfpt_fn();
 	}
 	
@@ -248,7 +256,7 @@ init_check_form();
 		html_obj.zhifa2	+=	'<span class="soft fl"><input type="radio" name="zfy_type" class="radio zfy_type" value="3" datatype="*" errormsg="请正确选择"  nullmsg="请选择转发语类型"/><strong>无转发语</strong></span>';
 		html_obj.zhifa2	+=	'</td>'
 			
-		html_obj.zhifa3 = '<td class="t1"><span><strong>内容语：</strong></span></td>';
+		html_obj.zhifa3 = '<td class="t1"><span><strong class="strong_nry"></strong></span></td>';
 		html_obj.zhifa3 += '<td class="t2"><div class="forward td_zw_info"><textarea name="zw_info" class="textarea zw_info" ignore="ignore" datatype="*0-500" errormsg="请正确填写范围是10-500个字符" ></textarea><p>此内容会直接发出，请不要填写与转发语无关的信息。请不要超过140字，您还可以输入140个字</p></div>';
 		html_obj.zhifa3 += '</td>'
 		
@@ -259,7 +267,7 @@ init_check_form();
 		html_obj.zhuanfa1 += '<input type="radio" name="zfnr_type" class="zfnr_type" id="content_type_2" value="2" datatype="*" errormsg="请正确选择"  nullmsg="请选择直发内容类型" /> 博主自拟直发内容';
 		html_obj.zhuanfa1 += '</td>';
 			
-		html_obj.zhuanfa2 = '<td class="t1"><span><strong>内容语：</strong></span></td>';
+		html_obj.zhuanfa2 = '<td class="t1"><span><strong class="strong_nry"></strong></span></td>';
 		html_obj.zhuanfa2 += '<td class="t2"><div class="forward"><textarea name="zfnr_info" class="textarea zfnr_info" ignore="ignore" datatype="*0-500" errormsg="请正确填写范围是10-500个字符" ></textarea><p>此内容会直接发出，请不要填写与转发语无关的信息。请不要超过140字，您还可以输入140个字</p></div>';
 		html_obj.zhuanfa2 += '</td>'			
 		
