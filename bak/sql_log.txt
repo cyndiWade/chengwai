@@ -58,3 +58,10 @@ CREATE TABLE IF NOT EXISTS `app_order_complain` (
   `type` tinyint(2) NOT NULL DEFAULT '1' COMMENT '投诉类型 1投诉 2申诉',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='评论表' AUTO_INCREMENT=1 ;
+
+2014-12-4 修改
+ALTER TABLE  `app_celeprityindex_weixin` ADD  `recommend` TINYINT( 2 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '1为推荐 0为不推荐' AFTER  `ctrategy_c`
+
+2014-12-04 资金记录
+ALTER TABLE `app_fund` ADD `paytype` TINYINT NOT NULL DEFAULT '2' COMMENT '支付平台 1为支付宝 2为系统账户' AFTER `time`, ADD `adverttype` TINYINT NOT NULL DEFAULT '1' COMMENT '1为新闻 2为微信 3为微博' AFTER `paytype`, ADD `generalizeid` INT NOT NULL COMMENT '订单ID' AFTER `adverttype`;
+
