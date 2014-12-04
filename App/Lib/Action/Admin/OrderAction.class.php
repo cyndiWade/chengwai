@@ -726,6 +726,4 @@ class OrderAction extends AdminBaseAction {
     	
     	return $money;
     }
-	
-
 }
