@@ -67,7 +67,7 @@
 				<if condition='$vo.audit_status eq 3'>
 				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="4"><span>拒单</span></a> 
 				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="5"><span>同意接单</span></a>  
-				 <elseif condition='$vo.audit_status eq 5'/> 
+				 <elseif condition='($vo.audit_status eq 5) and ($vo.start_time lt time())'/> 
 				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="6"><span>上传反馈数据</span></a> 
 				 </if>
 				 </div></td>

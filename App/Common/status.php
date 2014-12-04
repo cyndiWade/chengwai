@@ -293,9 +293,12 @@
 			case 4:
 				return '冻结';
 			break;
-			case 4:
+			case 5:
 				return '收入';
 			break;
+			case 6:
+				return '解冻';
+			break;			
 		}
 	}
 

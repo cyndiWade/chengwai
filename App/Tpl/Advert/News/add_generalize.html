@@ -28,7 +28,7 @@
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>标题：</strong></span></td>
 				<td class="t2">
-					<input type="text" name="title" class="text" datatype="*1-50" errormsg="请正确填写范围是1-50个字符" nullmsg="请填写标题"  />
+					<input type="text" name="title" class="text" datatype="*1-50" errormsg="请正确填写范围是1-50个字符" nullmsg="请填写标题" onkeyup="checkLen(this.value, 100)"  />
 					<p class="writetip">请不要超过50个字</p>
 				</td>
 			  </tr>
@@ -91,7 +91,30 @@
 var system_info = {
 	news_view_url : '/Advert/News/news_view',
 }
-
+//计算当前输入的个数，汉字算两个字符
+function checkLen(value,length)
+{
+	var len = getStringLen(value);
+	//提示当前输入的个数
+	$(".writetip").html("还可以输入：<font color='red'>"+(length-len)+"</font>字符");
+	if(len>length){
+		flag = false;
+	}else{
+		flag = true;
+	}	
+}
+function  getStringLen(Str)
+{   
+		var   i,len,code;   
+		if(Str==null || Str == "")   return   0;   
+		len   =   Str.length;   
+		for   (i   =   0;i   <   Str.length;i++)     
+		{     
+		code   =   Str.charCodeAt(i);   
+		if   (code   >   255) {len ++;}   
+		}   
+		return   len;   
+} 	
 </script>
 
 

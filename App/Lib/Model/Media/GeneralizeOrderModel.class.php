@@ -109,6 +109,7 @@ class GeneralizeOrderModel extends MediaBaseModel
                         'order_status'  => $info['audit_status'],
                         'order_status_name'  => getAccountStatus($info['audit_status']),
                         'mark'          => $orderInfo['bz_info'],
+                         'now_time'		=> time()
                     );
                     $datas[] = $temp;
                 }

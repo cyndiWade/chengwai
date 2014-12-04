@@ -1047,9 +1047,9 @@ class SocialAccountAction extends MediaBaseAction {
                     'weekly_read_avg'   => $weeklyReadAvg,
                     'male_precent'      => $malePrecent,
                     'female_precent'    => $femalePrecent,
-                    'account_avatar'    => $viewPath['domain'] . $viewPath['dir'] . $uploadImgAvatar,
-                    'qr_code'           => $viewPath['domain'] . $viewPath['dir'] . $uploadImgQrCode,
-                    'follower_shot'     => $viewPath['domain'] . $viewPath['dir'] . $uploadImgFollowers,
+                    'account_avatar'    => $viewPath['domain'] . $viewPath['dir'].'images/'. $uploadImgAvatar,
+                    'qr_code'           => $viewPath['domain'] . $viewPath['dir'].'images/' . $uploadImgQrCode,
+                    'follower_shot'     => $viewPath['domain'] . $viewPath['dir'].'images/' . $uploadImgFollowers,
                     'create_time'       => $_SERVER['REQUEST_TIME'],
                 );
                 
@@ -1306,7 +1306,7 @@ class SocialAccountAction extends MediaBaseAction {
      */
     public function leavedetails()
     {
-        if ($this->isGet()) {
+       /* if ($this->isGet()) {
             $accountId      = I('get.accountId', 0, 'intval');
             $accountType    = I('get.accountType', 0, 'intval');
             
@@ -1333,7 +1333,7 @@ class SocialAccountAction extends MediaBaseAction {
             exit;
         } else {
             die('ERROR');
-        }
+        }*/
     }
     
     /**

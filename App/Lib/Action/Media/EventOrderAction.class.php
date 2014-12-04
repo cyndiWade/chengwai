@@ -81,9 +81,12 @@ class EventOrderAction extends MediaBaseAction {
         	$arryAll = array_keys($mediaWeixinList );
         if(!is_array($mediaNewsList))
         	$arryAll = array_keys( $mediaNewsList);
-                
-        $whereWeibo['account_id'] = array("in", $arryAll) ;
-        $orderEvaluate = M('evaluate')->where($whereWeibo)->getField('type', true); 
+         
+        if(!empty($arryAll))
+        {       
+	        $whereWeibo['account_id'] = array("in", $arryAll) ;
+	        $orderEvaluate = M('evaluate')->where($whereWeibo)->getField('type', true); 
+        }
         $allDatas = $orderEvaluate ? array_count_values($orderEvaluate) : array(0, 0);
         $all = $allDatas[1] + $allDatas[2]  + $allDatas[3];
         $allDatas = $all >0 ?  round($allDatas[1] / $all, 2)  * 100 : 0; 
@@ -340,8 +343,7 @@ class EventOrderAction extends MediaBaseAction {
 			$show       = $Page->show();
  
 			$list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."generalize_order go on ga.generalize_id = go.id")->where($where)->limit($Page->firstRow.','.$Page->listRows)
-					->order('ga.id desc')->field('`generalize_id`, `account_type`, `account_id`, `price`, `status`,  go.`id` as order_id, ga.id,
-												 `tfpt_type`, `fslx_type`, `ryg_type`, `hd_name`, `start_time`, `all_price`, `status`')->select();
+					->order('ga.id desc')->field('`generalize_id`, `account_type`, `account_id`, `price`,  go.`id` as order_id, ga.id,ga.audit_status, `tfpt_type`, `fslx_type`, `ryg_type`, `hd_name`, `start_time`, `all_price`, `status`')->select();
 			
 			 
 			if($list)
@@ -406,7 +408,7 @@ class EventOrderAction extends MediaBaseAction {
 		$order_info = $GeneralizeOrder->getOrderInfo($order_id);
 		 
 		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_weibo wb on ga.account_id = wb.id")->where($where)
-					->order('ga.id desc')->field('ga.id, `price`, ga.`status`,`account_name`')->select();
+					->order('ga.id desc')->field('ga.id, `price`, ga.`status`,`account_name`, ga.audit_status')->select();
 					 
 		//统计
 		$count      	= $GeneralizeAccount->where($where)->count();
@@ -505,7 +507,7 @@ class EventOrderAction extends MediaBaseAction {
 			$show       = $Page->show();
  
 			$list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."generalize_weixin_order go on ga.generalize_id = go.id")->where($where)->limit($Page->firstRow.','.$Page->listRows)
-					->order('ga.id desc')->field('`generalize_id`, `account_id`, `price`, `status`,  go.`id` as order_id, ga.id,
+					->order('ga.id desc')->field('`generalize_id`, `account_id`, `price`, `status`,  go.`id` as order_id, ga.id,ga.audit_status,
 												 `ggw_type`, `yxd_name`, `title`, `start_time`, `status`')->select();
 				 
 					 
@@ -570,7 +572,7 @@ class EventOrderAction extends MediaBaseAction {
 		$order_info = $GeneralizeOrder->getOrderInfo($order_id);
 		 
 		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_weixin wb on ga.account_id = wb.id")->where($where)
-					->order('ga.id desc')->field('ga.id, `price`, ga.`status`,`account_name`')->select();
+					->order('ga.id desc')->field('ga.id, `price`, wb.`status`,`account_name`, ga.audit_status')->select();
 				 
 		//统计
 		$count      	= $GeneralizeAccount->where($where)->count();
@@ -670,7 +672,7 @@ class EventOrderAction extends MediaBaseAction {
 			$show       = $Page->show();
  
 			$list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."generalize_news_order go on ga.generalize_id = go.id")->where($where)->limit($Page->firstRow.','.$Page->listRows)
-					->order('ga.id desc')->field('`generalize_id`, `account_id`, `price`, `status`, go.`id` as order_id, ga.id,
+					->order('ga.id desc')->field('`generalize_id`, `account_id`, `price`, `status`, go.`id` as order_id, ga.id, ga.audit_status, 
 												 `title`, `start_time`, `web_url`, `bz_info`, `zf_info`, `create_time`, `status`')->select();
 
 			if($list)
@@ -734,7 +736,7 @@ class EventOrderAction extends MediaBaseAction {
 		$order_info = $GeneralizeOrder->getOrderInfo($order_id);
 		
 		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_news wb on ga.account_id = wb.id")->where($where)
-					->order('ga.id desc')->field('ga.id, `price`, ga.`status`,`account_name`')->select();
+					->order('ga.id desc')->field('ga.id, `price`, ga.`status`,`account_name`, ga.audit_status')->select();
 					 
 		//统计
 		$count      	= $GeneralizeAccount->where($where)->count();
