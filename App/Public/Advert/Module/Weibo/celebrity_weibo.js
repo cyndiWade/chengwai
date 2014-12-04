@@ -976,7 +976,12 @@ Weibo.prototype.delet_account_fn = function () {
 	_father_this.init();
 	_father_this.delet_account.unbind();	//清除之前绑定的事件
 	_father_this.delet_account.click(function () {
-		$(this).parent().remove();
+		var _this_parent = $(this).parent();
+		
+		_father_this.cancel_select_ipt_fn(_this_parent.data('select_account_id'));
+		
+		_this_parent.remove();
+		
 		_father_this.set_order_data();
 	});
 }
@@ -1029,7 +1034,18 @@ Weibo.prototype.add_haved_to_cart = function () {
 		_father_this.add_account_to_cart(n,true);
 	});
 }
-
+//取消当前选中的复选框
+Weibo.prototype.cancel_select_ipt_fn = function (account_id) {
+	var _father_this = this;
+	_father_this.init();
+	_father_this.now_selected.each(function () {
+		var _this = $(this);
+		if (_this.data('id') == account_id) {
+			_this.prop('checked',false);
+			return false;
+		}
+	});
+}
 
 /*
 //批量添加数据源

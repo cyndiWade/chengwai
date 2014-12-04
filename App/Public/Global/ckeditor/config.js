@@ -7,5 +7,5 @@ CKEDITOR.editorConfig = function( config )
 {
 	config.language = 'zh-cn';
 	config.uiColor = '#FFF';
-	//onfig.filebrowserImageUploadUrl = '?s=/Home/Index/editor';
+	config.filebrowserImageUploadUrl = '/Api/Upload/image/';
 };

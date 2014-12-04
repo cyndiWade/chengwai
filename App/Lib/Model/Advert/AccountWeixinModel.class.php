@@ -486,6 +486,18 @@
 			{
 				$wheres['b.ctrategy_c'] = 1;
 			}
+			
+			//为您推荐
+			if($addslArray['tj']!='')
+			{
+				$wheres['b.recommend'] = 1;
+			}
+			//折扣
+			if($addslArray['xstj']!='')
+			{
+				$wheres['b.specialoffer'] = 1;
+			}
+			
 			//搜索框的账号名
 			$account_name = trim($addslArray['account']);
 			if($account_name!='')
