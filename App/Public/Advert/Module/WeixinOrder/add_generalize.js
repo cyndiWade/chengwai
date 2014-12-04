@@ -166,6 +166,8 @@ WeixinOrderAddGeneralize.prototype.init = function () {
 	this.zhaiyao = $('textarea[name=zhaiyao]');	//系统摘要
 	this.zw_info = $('textarea[name=zw_info]');	//正文
 	this.ly_url = $('input[name=ly_url]');	//来源网址
+	this.fmzw_status = $('select[name=fmzw_status]');	//封面是否显示在正文中
+	
 	
 	//pop
 	this.pop_title = $('.pop_title');
@@ -174,6 +176,7 @@ WeixinOrderAddGeneralize.prototype.init = function () {
 	this.pop_dtw = $('.pop_dtw');
 	this.pop_photoview = $('.pop_photoview');
 	this.pop_ly_url = $('.pop_ly_url');
+	this.pop_fmzw_img = $('.pop_fmzw_img');
 	
 	this.zy_div = $('.zy_div');
 	
@@ -257,6 +260,7 @@ WeixinOrderAddGeneralize.prototype.show_phoneview_fn = function ($type) {
 	_father_this.part01_view.hide();
 	_father_this.part01_detail.hide();
 	_father_this.top_view_li.hide();
+	_father_this.pop_fmzw_img.hide();
 	
 	//var stemTxt = CKEDITOR.instances.TextArea1.document.getBody().getText(); //取得纯文本 
 	
@@ -264,7 +268,10 @@ WeixinOrderAddGeneralize.prototype.show_phoneview_fn = function ($type) {
 	
 	_father_this.pop_photoview.html(stemHtml);
 	
-	
+	if (_father_this.fmzw_status.val() == 1) {
+		_father_this.pop_fmzw_img.show();
+	}
+
 	//单图文
 	if ($type == 1) {
 		

@@ -35,3 +35,7 @@ ALTER TABLE `app_account_weibo` ADD `area_id` TINYINT NOT NULL DEFAULT '0' COMME
 ALTER TABLE `app_account_news` ADD `currentUrl` VARCHAR(64) NOT NULL COMMENT '媒体网址' AFTER `url`;
 ALTER TABLE `app_account_news` ADD `industries` int(4) NOT NULL COMMENT '行业分类' ;
 ALTER TABLE `app_account_news` CHANGE `industries` `industries` INT(4) UNSIGNED NOT NULL DEFAULT '0' COMMENT '行业分类';
+
+
+2014-12-4 修改
+ALTER TABLE  `app_celeprityindex_weixin` ADD  `recommend` TINYINT( 2 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '1为推荐 0为不推荐' AFTER  `ctrategy_c`
