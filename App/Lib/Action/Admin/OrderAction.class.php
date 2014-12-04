@@ -544,11 +544,8 @@ class OrderAction extends AdminBaseAction {
 		    		//总金额
 		    		foreach ($accoutList  as $value)
 		    		{
-
 		    			$totalPrice += getAdMoney($value['price'], 'weixin', $value['rebate']);
-
-		    			$totalPrice += $this->getAdMoney($value['price'], 'weixin', $value['rebate']);
-
+		    			//$totalPrice += $this->getAdMoney($value['price'], 'weixin', $value['rebate']);
 		    		}
 					//给广告主解冻
 		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID);
