@@ -40,13 +40,9 @@
 		//统计确认和执行的数量
 		public function get_OrderInfo_num($id)
 		{
-			$val = $this->where(array('users_id'=>$id))->field('status')->select();
-			$new_val = array();
-			foreach($val as $v)
-			{
-				$new_val[] = $v['status'];
-			}
-			return array_count_values($new_val);
+			$qrz = $this->where(array('users_id'=>array('eq',$id),'status'=>array('IN',array(0,1))))->count();
+			$yqr = $this->where(array('users_id'=>array('eq',$id),'status'=>array('eq',2)))->count();
+			return array('qrz'=>$qrz,'yqr'=>$yqr);
 		}
 
 		//删除数据

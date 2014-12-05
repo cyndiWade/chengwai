@@ -24,7 +24,8 @@
 				<a href="#" class="help fr">帮助手册！</a>
 				<a href="{:U('/Advert/WeiboOrder/add_intention')}" class="btn brownbtn fl">创建意向单页</a>
 				<div class="searnum fl">
-					<b class="red">【{$view_data.status_0}】</b>个派单中，<b class="red">【{$view_data.status_1}】</b>个待审核，<b class="red">【{$view_data.status_2}】</b>个审核通过，<b class="red">【{$view_data.status_3}】</b>个已拒单
+					<a href="{:U('Advert/WeiboOrder/intention_list',array('qrz'=>'on'))}"><b class="red">【{$view_data.qrz}】</b></a>个确认中，
+					<a href="{:U('Advert/WeiboOrder/intention_list',array('yqr'=>'on'))}"><b class="red">【{$view_data.yqr}】</b></a>已确认
 				</div>
 			</div>
 			<div class="box01-time l">

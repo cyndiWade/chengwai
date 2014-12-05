@@ -221,6 +221,14 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$new_array = addsltrim($_REQUEST);
 		$start_time = strtotime($new_array['start_time']);
 		$end_time = strtotime($new_array['end_time']);
+		if($new_array['qrz']=='on')
+		{
+			$where['status'] = array('IN',array(0,1));
+		}
+		if($new_array['yqr']=='on')
+		{
+			$where['status'] = array('eq',2);
+		}
 		//时间范围
 		if($new_array['start_time']!='' && $new_array['end_time']=='')
 		{
@@ -259,10 +267,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 				'search_name' => $new_array['search_name'],
 				'start_time' => $new_array['start_time'],
 				'end_time' => $new_array['end_time'],
-				'status_0' => empty($number[0]) ? 0 : $number[0],
-				'status_1' => empty($number[1]) ? 0 : $number[1],
-				'status_2' => empty($number[2]) ? 0 : $number[2],
-				'status_3' => empty($number[3]) ? 0 : $number[3],
+				'qrz' => $number['qrz'],
+				'yqr' => $number['yqr'],
 				'intention_id_num' => $intention_id_num
 		));
 		$this->display();

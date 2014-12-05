@@ -136,6 +136,7 @@
 				$gen_arr = array('status'=>$Order_Status[4]['status']);
 				D('GeneralizeOrder')->where(array('id'=>$new_array['order_id']))->save($gen_arr);
 
+				$this->send_media_mess($arr['generalize_id']);
 
 				// $this->bigOrderChild($new_array['order_id']);
 				return true;
@@ -235,6 +236,9 @@
 
 						//修改关联表的状态为已支付状态
 						if ($OrderStatus == true) {
+
+							$this->send_media_mess($zhifu_id);
+
 							return $this->where(array('generalize_id'=>$zhifu_id,'audit_status'=>$Account_Order_Status[1]['status']))->save(array('audit_status'=>$Account_Order_Status[3]['status']));
 						}
 						//return true;
@@ -337,7 +341,9 @@
 						$this->where($old_where)->save($all_status);
 						$gen_arr = array('status'=>$Order_Status[4]['status']);
 						$GeneralizeOrder->where(array('id'=>$ien_id))->save($gen_arr);
-
+						
+						$this->send_media_mess($ien_id);
+						
 						//$this->bigOrderChild($new_array['order_id']);
 						return true;
 					}else{
@@ -413,6 +419,25 @@
 					}
 				}
 				return $last_array;
+			}
+		}
+
+		//给状态为3的每个媒体主账户发送短信
+		private function send_media_mess($generalize_id)
+		{
+			$Account_Order_Status = C('Account_Order_Status');
+			$users_array = $this->where(array('generalize_id'=>array('eq',$generalize_id),'audit_status'=>array('eq',$Account_Order_Status[3]['status'])))->field('users_id,account_id')->select();
+			$account_weibo = D('account_weibo');
+			$user_media = D('user_media');
+			foreach($users_array as $value)
+			{
+				$account_name = $account_weibo->where(array('id'=>$value['account_id']))->getField('account_name');
+				$phone = $user_media->where(array('users_id'=>array('eq',$value['users_id'])))->getField('iphone');
+				if($phone!='')
+				{
+					$msg = '媒体主你好：您发布的账号名称：'. $account_name . ' 已被广告主确认下单，需要执行！';
+					parent::send_mall($phone,$msg);
+				}
 			}
 		}
 	}
