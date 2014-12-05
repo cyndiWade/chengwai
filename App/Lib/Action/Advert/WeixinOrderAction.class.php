@@ -476,6 +476,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 	
 		
 		if (empty($order_info)) alertBack('订单不存在');
+		$order_info['zw_info'] = stripslashes($order_info['zw_info']);
 		
 		//获取订单下的账号列表
 		$GeneralizeWeixinAccount = $this->db['GeneralizeWeixinAccount'];

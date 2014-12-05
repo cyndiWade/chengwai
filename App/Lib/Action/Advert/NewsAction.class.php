@@ -325,6 +325,8 @@ class NewsAction extends AdvertBaseAction {
 		
 		if (empty($order_info)) alertBack('订单不存在！');
 		
+		$order_info['zf_info'] = stripslashes($order_info['zf_info']);
+		
 		//获取订单下的账号列表
 		$GeneralizeNewsAccount = $this->db['GeneralizeNewsAccount'];
 		$account_order_list = $GeneralizeNewsAccount->get_account_order($order_id);
