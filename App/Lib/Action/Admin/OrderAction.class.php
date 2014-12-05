@@ -138,6 +138,24 @@ class OrderAction extends AdminBaseAction {
 				//创建日志
 				$this->OrderLog->create();
 				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
+
+				//如果已支付，拒绝就需要退款 20141204 bumtime
+				if($status == 3)
+				{
+					$totalPrice = 0 ;
+					$order_info = $this->db['GeneralizeNewsOrder']->where(array('id'=>$order_id))->find();
+					$adUserID = $order_info['users_id'];
+					
+		    		$accoutList = $this->db['GeneralizeNewsAccount']->where(array('generalize_id'=>$order_id))->field('`account_id`, `price`, `rebate`, `audit_status`')->select();
+		    		//总金额
+		    		foreach ($accoutList  as $value)
+		    		{
+		    			$totalPrice += $this->getAdMoney($value['price'], 'weibo', $value['rebate']);
+		    		}
+					//给广告主解冻
+		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID);
+		    		
+				}
 			}
 			
 		} elseif ($act == 'update_order') {
@@ -256,6 +274,24 @@ class OrderAction extends AdminBaseAction {
 				//创建日志
 				$this->OrderLog->create();
 				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
+				
+				//如果已支付，拒绝就需要退款 20141204 bumtime
+				if($status == 3)
+				{
+					$totalPrice = 0 ;
+					$order_info = $this->db['GeneralizeOrder']->where(array('id'=>$order_id))->find();
+					$adUserID = $order_info['users_id'];
+					
+		    		$accoutList = $this->db['GeneralizeAccount']->where(array('generalize_id'=>$order_id))->field('`account_id`, `price`, `rebate`, `audit_status`')->select();
+		    		//总金额
+		    		foreach ($accoutList  as $value)
+		    		{
+		    			$totalPrice += $this->getAdMoney($value['price'], 'weibo', $value['rebate']);
+		    		}
+					//给广告主解冻
+		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID);
+		    		
+				}
 			}
 			
 		}elseif ($act == 'update_order') {

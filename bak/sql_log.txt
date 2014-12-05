@@ -43,3 +43,18 @@ ALTER TABLE `app_fund` ADD `paytype` TINYINT NOT NULL DEFAULT '2' COMMENT '支�
 
 2014-12-4 修改
 ALTER TABLE  `app_celeprityindex_weixin` ADD  `recommend` TINYINT( 2 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '1为推荐 0为不推荐' AFTER  `ctrategy_c`
+
+
+2014-12-4新加投拆表
+CREATE TABLE IF NOT EXISTS `app_order_complain` (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `users_id` int(10) NOT NULL DEFAULT '0' COMMENT '操作用户ID',
+  `parent_id` int(10) NOT NULL DEFAULT '0' COMMENT '父节点',
+  `content` text NOT NULL COMMENT '内容',
+  `order_id` int(10) NOT NULL DEFAULT '0' COMMENT '主订单ID',
+  `ddid` int(10) NOT NULL DEFAULT '0' COMMENT '小订单ID',
+  `times` int(11) NOT NULL DEFAULT '0' COMMENT '提交日期',
+  `media_type` tinyint(2) NOT NULL DEFAULT '1' COMMENT '媒体类型 1新闻 2微信 3微博',
+  `type` tinyint(2) NOT NULL DEFAULT '1' COMMENT '投诉类型 1投诉 2申诉',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='评论表' AUTO_INCREMENT=1 ;

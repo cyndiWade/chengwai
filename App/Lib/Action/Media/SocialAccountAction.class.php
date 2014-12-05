@@ -459,7 +459,7 @@ class SocialAccountAction extends MediaBaseAction {
                                 {
                                 	if($common == $value['title'])
                                 	{
-	                                	$commonID = $value['id'];
+	                                	$commonID = $value['val'];
 	                                	break;
                                 	}
                                 }   
@@ -530,7 +530,7 @@ class SocialAccountAction extends MediaBaseAction {
                                 {
                                 	if($common == $value['title'])
                                 	{
-	                                	$commonID = $value['id'];
+	                                	$commonID = $value['val'];
 	                                	break;
                                 	}
                                 }
@@ -673,7 +673,7 @@ class SocialAccountAction extends MediaBaseAction {
                                 {
                                 	if($industries == $value['title'])
                                 	{
-	                                	$commonID = $value['id'];
+	                                	$commonID = $value['val'];
 	                                	break;
                                 	}
                                 }

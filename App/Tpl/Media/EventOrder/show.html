@@ -5,6 +5,7 @@
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
 	<title>订单详情_媒体主_个人主页</title>
 </head>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
 <body>
 <!-- 头部 -->
 <include file="Public:header" />
@@ -42,18 +43,31 @@
 					<td class="t3">{$view_data.order_info.zfy_type|getZfyType}</td>
 					</if>
 					<th class="t1">正品证明：</th>
-					<td class="t2"><if condition="$view_data['order_info']['order_file']  neq ''"><img src="{$view_data.order_info.order_file}" /> <else /> 无 </if></td>
+					<td class="t2"><if condition="$view_data['order_info']['file'][2]  neq ''"><img src="{$Think.config.PUBLIC_VISIT.domain}{$Think.config.UPLOAD_DIR.image}{$view_data.order_info.file.2}" onload="DrawImage(this,100,80)" /> <else /> 无 </if></td>
 					<!--<th class="t1">配图：</th>
 					<td class="t2">无</td>-->
 				  </tr>
 				  <tr>
 				  <if condition="$view_data['order_info']['fslx_type'] eq 1">
 					<th class="t1">直发内容：</th>
-					<td colspan="5">{$view_data.order_info.zw_info}</td>
+					<td colspan="3">{$view_data.order_info.zw_info}</td>
 				 <elseif condition="$view_data['order_info']['fslx_type'] eq 2" />	
 					<th class="t1">转发内容：</th>
-					<td colspan="5">{$view_data.order_info.zw_info}</td>
+					<td colspan="3">{$view_data.order_info.zw_info}</td>
 				</if>
+					<th class="t1">封面图：</th>
+					<td style="padding: 5px;">
+					<foreach name="$view_data['order_info']['file'][1]" item="vo">
+						<empty name="$vo"><else /> </empty>
+					</foreach>
+					<php>
+					foreach ($view_data['order_info']['file'][1] as $value)
+					{
+						if(!empty($value))	
+							echo '<img src="'.C('PUBLIC_VISIT')[domain].C('UPLOAD_DIR')[image].$value.'"  onload="DrawImage(this,200,100)"/><br/>';
+					}
+					</php>
+					</td>	
 				  </tr>
 				  <tr>
 					<th class="t1">活动备注：</th>
@@ -91,7 +105,7 @@
 						<if condition="$vo['audit_status'] eq 3">
 						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="4">拒绝</a>	&nbsp;&nbsp;&nbsp;&nbsp;
 						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="5">同意接单</a>	
-						 <elseif condition="($vo['audit_status'] eq 5) and ($vo.start_time lt time())" />
+						 <elseif condition="($vo['audit_status'] eq 5) and ($view_data['order_info']['start_time'] lt time())" />
 						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="6">上传反馈数据</a>	
 						<else />
 						暂无
@@ -177,7 +191,7 @@
 
 <script type="text/javascript" src="/App/Public/Global/jquery/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.pop.js"></script>
-<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+
 <script type="text/javascript">
 $(function(){
 	$('.tab01-allorder tr:even').addClass('even');

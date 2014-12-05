@@ -182,7 +182,7 @@
                 <div class="box02-userorder fl">
                     <span class="totalspan fl">今日订单量统计</span>
                     <div class="totaldiv fl">
-                        <span>总<b>{$view_data.mediaTotal.day.0}</b>个/<b>￥{$view_data.mediaPrice.day.0}</b></span><span>完成<b>{$view_data.mediaPrice.day.1}</b>个/<b>￥{$view_data.mediaPrice.month.1}</b></span><span>执行<b>{$view_data.mediaTotal.day.6}</b>个/<b>￥{$view_data.mediaPrice.day.6}</b></span><span>派单<b>{$view_data.mediaTotal.day.6}</b>个/<b>￥{$view_data.mediaPrice.day.6}</b></span><span>流单<b class="red">{$view_data.mediaTotal.day.3}</b>个/<b class="red">￥{$view_data.mediaPrice.month.3}</b></span><span>拒单<b class="red">{$view_data.mediaTotal.day.4}</b>个/<b class="red">￥{$view_data.mediaPrice.month.4}</b></span><span>取消<b>{$view_data.mediaTotal.day.5}</b>个/<b>￥{$view_data.mediaPrice.day.5}</b></span>
+                        <span>总<b>{$view_data.mediaTotal.day.0}</b>个/<b>￥{$view_data.mediaPrice.day.0}</b></span><span>完成<b>{$view_data.mediaPrice.day.1}</b>个/<b>￥{$view_data.mediaPrice.month.1}</b></span><span>执行<b>{$view_data.mediaTotal.day.6}</b>个/<b>￥{$view_data.mediaPrice.day.6}</b></span><span>派单<b>{$view_data.mediaTotal.day.6}</b>个/<b>￥{$view_data.mediaPrice.day.6}</b></span><span>流单<b class="red">{$view_data.mediaTotal.day.3}</b>个/<b class="red">￥{$view_data.mediaPrice.month.3}</b></span><span>拒单<b class="red">{$view_data.mediaTotal.day.4}</b>个/<b class="red">￥{$view_data.mediaPrice.month.4}</b></span><span>取消<b>{$view_data.mediaTotal.day.5}</b>个<!--/<b>￥{$view_data.mediaPrice.day.5}</b></span>-->
                     </div>
                 </div>
           
@@ -378,6 +378,20 @@ function getOrderList(type) {
                         ? ('<a href="javascript:;" onclick="toOperation(this);" class="yel affirm_order" data-order_id="' + item.order_id + '" data-child_order_id="' + item.child_order_id + '" data-account_type="' + item.type_info + '" type="6">上传反馈数据</a>')
                         : '暂无'
                     );
+                    if(item.type_info == 'weibo')
+                    {
+                    	allUrl = "/Media/EventOrder/show/id/"+item.order_id+".html";
+                    }
+                    else if(item.type_info == 'weixin')
+                    {
+                    	allUrl = "/Media/EventOrder/showWeixin/id/"+item.order_id+".html";
+                    }
+                    else if(item.type_info == 'news')
+                    {
+                    	allUrl = "/Media/EventOrder/showNews/id/"+item.order_id+".html";
+                    }                                           
+                    statusHtml +='  <a href="'+allUrl+'">查看</a>';
+                    
                     html += '<tr>' +
                         '<td class="t1">' + item.order_id + '</td>' +
                         '<td class="t3">' + item.title + '</td>' +

@@ -408,16 +408,22 @@ class EventOrderAction extends MediaBaseAction {
 		$order_info = $GeneralizeOrder->getOrderInfo($order_id);
 		 
 		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_weibo wb on ga.account_id = wb.id")->where($where)
-					->order('ga.id desc')->field('ga.id, `price`, ga.`status`,`account_name`, ga.audit_status')->select();
+					->order('ga.id desc')->field('ga.id, `price`, wb.`status`,`account_name`, ga.audit_status')->select();
 					 
 		//统计
 		$count      	= $GeneralizeAccount->where($where)->count();
 		$sum			= $GeneralizeAccount->where($where)->sum('price');
+
 		//配图
-		$file_where = array("generalize_order_id"=>$order_id, "type"=>2);
-		$order_file = D('GeneralizeFiles')->field('url')->where($file_where)->find();
-		$order_info["order_file"] = $order_file ? $order_file : "";
-		
+		$file_where = array("generalize_order_id"=>$order_id);
+		$order_file_new = array();
+		$order_file = D('GeneralizeFiles')->where($file_where)->field('type,url')->select();
+		foreach ($order_file as $value)
+		{
+			$order_file_new[$value['type']][] = $value['url'];
+		}
+		$order_info['file'] = $order_file_new;
+
 		parent::data_to_view(array(
 				'order_info'		=> $order_info,
 				'account_list'	=> $account_list,
@@ -578,10 +584,9 @@ class EventOrderAction extends MediaBaseAction {
 		$count      	= $GeneralizeAccount->where($where)->count();
 		$sum			= $GeneralizeAccount->where($where)->sum('price');
 		//配图
-		$file_where = array("generalize_order_id"=>$order_id, "type"=>2);
-		$order_file = D('GeneralizeWeixinFiles')->field('url')->where($file_where)->find();
-		$order_info["order_file"] = $order_file ? $order_file : "";
-		
+		$file_where = array("generalize_order_id"=>$order_id);
+		$order_file = D('GeneralizeWeixinFiles')->where($file_where)->getField('type,url');
+		$order_info['file'] = $order_file;
 		parent::data_to_view(array(
 				'order_info'		=> $order_info,
 				'account_list'	=> $account_list,
@@ -736,15 +741,17 @@ class EventOrderAction extends MediaBaseAction {
 		$order_info = $GeneralizeOrder->getOrderInfo($order_id);
 		
 		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_news wb on ga.account_id = wb.id")->where($where)
-					->order('ga.id desc')->field('ga.id, `price`, ga.`status`,`account_name`, ga.audit_status')->select();
+					->order('ga.id desc')->field('ga.id, `price`, wb.`status`,`account_name`, ga.audit_status')->select();
 					 
 		//统计
 		$count      	= $GeneralizeAccount->where($where)->count();
 		$sum			= $GeneralizeAccount->where($where)->sum('price');
+		
 		//配图
-		$file_where = array("generalize_order_id"=>$order_id, "type"=>2);
-		$order_file = D('GeneralizeNewsFiles')->field('url')->where($file_where)->find();
-		$order_info["order_file"] = $order_file ? $order_file : "";
+		$file_where = array("generalize_order_id"=>$order_id);
+		$order_file = D('GeneralizeNewsFiles')->where($file_where)->getField('type,url');
+		$order_info['file'] = $order_file;
+	
 		
 		parent::data_to_view(array(
 				'order_info'		=> $order_info,
