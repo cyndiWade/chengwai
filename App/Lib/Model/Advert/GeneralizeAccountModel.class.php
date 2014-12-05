@@ -148,7 +148,7 @@
 				$old_where['generalize_id'] = $new_array['order_id'];
 				$old_where['audit_status'] = array(array('eq',0),array('eq',1),'or');
 				$this->where($old_where)->save($audit_status);
-				return false;
+				return true;
 			}
 		}
 
