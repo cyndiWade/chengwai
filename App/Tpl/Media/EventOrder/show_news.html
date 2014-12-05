@@ -74,7 +74,6 @@
 						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="4">拒绝</a>	&nbsp;&nbsp;&nbsp;&nbsp;
 						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="5">同意接单</a>	
 						 <elseif condition="($vo['audit_status'] eq 5)  and ($view_data['order_info']['start_time'] lt time()) " />
-						 <elseif condition="($vo['audit_status'] eq 5) and ($vo.start_time lt time())" />
 						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="6">上传反馈数据</a>	
                         <elseif condition="$vo['audit_status'] eq 11" />
                             <!-- 申诉 add by chenchao  -->

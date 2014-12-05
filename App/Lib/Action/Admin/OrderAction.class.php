@@ -151,6 +151,7 @@ class OrderAction extends AdminBaseAction {
 		    		foreach ($accoutList  as $value)
 		    		{
 		    			$totalPrice += getAdMoney($value['price'], 'news', $value['rebate']);
+		    			//$totalPrice += $this->getAdMoney($value['price'], 'weibo', $value['rebate']);
 		    		}
 					//给广告主解冻
 		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID);
@@ -287,6 +288,7 @@ class OrderAction extends AdminBaseAction {
 		    		foreach ($accoutList  as $value)
 		    		{
 		    			$totalPrice += getAdMoney($value['price'], 'weibo', $value['rebate']);
+		    		//	$totalPrice += $this->getAdMoney($value['price'], 'weibo', $value['rebate']);
 		    		}
 					//给广告主解冻
 		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID);
