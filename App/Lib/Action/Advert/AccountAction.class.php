@@ -152,9 +152,9 @@ class AccountAction extends AdvertBaseAction {
 						'account' => $user_info['account'],
 						'nickname' => $user_info['nickname'],
 						'type'=>$user_info['type'],
-						'money' => $moneyget['money'],
-						'freeze_funds' => $moneyget['freeze_funds'],
-						'all_price' => $moneyget['money'] + $moneyget['freeze_funds']
+						//'money' => $moneyget['money'],
+						//'freeze_funds' => $moneyget['freeze_funds'],
+						//'all_price' => $moneyget['money'] + $moneyget['freeze_funds']
 					);
 				}
 				//写入SESSION

@@ -38,6 +38,13 @@ class AdvertBaseAction extends AppBaseAction {
 		
 		$path = preg_replace("/[\\\+]/", "/",dirname($_SERVER['SCRIPT_NAME']));
 	
+		//剩余资金
+		$money_info = D('UserAdvertisement')->getMoney($this->oUser->id);
+		
+		//'money' => $moneyget['money'],
+		//'freeze_funds' => $moneyget['freeze_funds'],
+		//'all_price' => $moneyget['money'] + $moneyget['freeze_funds']
+		
 		//全局模板变量
 		parent::global_tpl_view(array(
 				'button'=>array(
@@ -59,9 +66,12 @@ class AdvertBaseAction extends AppBaseAction {
 		
 				'user_info' => array(
 					'account' => $this->oUser->account,
-					'money' => $this->oUser->money,
-					'freeze_funds' => $this->oUser->freeze_funds,
-					'all_price' => $this->oUser->all_price,
+					'money' => $money_info['money'],
+					'freeze_funds' => $money_info['freeze_funds'],
+					'all_price' => $money_info['money'] + $money_info['freeze_funds'],
+					//'money' => $this->oUser->money,
+					//'freeze_funds' => $this->oUser->freeze_funds,
+					//'all_price' => $this->oUser->all_price,
 				),
 			));
 
