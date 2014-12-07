@@ -17,7 +17,12 @@ class AccountNewsModel extends AdminBaseModel {
 		->where(array('a.is_del'=>0))
 		->select();
 	
-		if ($result) parent::set_all_time($result,array('ac_create_time'));
+		if ($result) {
+			//foreach ($result as $key=>$val) {
+				//$result[$key]['pg_account_num'] = $this->where(array('users_id'=>$val['bs_id']));
+			//}
+			parent::set_all_time($result,array('ac_create_time'));
+		}
 	
 		return $result;
 	}

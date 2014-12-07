@@ -95,7 +95,18 @@ class UsersModel extends AdminBaseModel {
 			->select();
 		}
 		
+		//统计订单总数
+		foreach ($result as $key=>$val) {
+			$result[$key]['ac_news_num'] = D('AccountNews')->where(array('users_id'=>$val['bs_id']))->count();
+			$result[$key]['ac_weibo_num'] = D('AccountWeibo')->where(array('users_id'=>$val['bs_id']))->count();
+			$result[$key]['ac_weixin_num'] = D('AccountWeixin')->where(array('users_id'=>$val['bs_id']))->count();
+			$result[$key]['pg_all_account_num'] = $result[$key]['ac_news_num'] + $result[$key]['ac_weibo_num'] + $result[$key]['ac_weixin_num'];
+		}
+		
+		
 		parent::set_all_time($result, array('bs_last_login_time'));
+		parent::set_all_time($result, array('bs_create_time'));
+		
 		
 		
 		return $result;
@@ -103,6 +114,7 @@ class UsersModel extends AdminBaseModel {
 	
 	
 	public function get_user_detail_info_one ($id = 2) {
+		$user_status = C('ACCOUNT_STATUS');		//状态
 		$result = array();
 		
 		$users_fields = parent::field_add_prefix('Users','bs_');
@@ -122,6 +134,9 @@ class UsersModel extends AdminBaseModel {
 			$result  = array_merge($user_base,$user_advert_info);
 		}
 		
+		if (!empty($result)) {
+			$result['pg_status_explain'] = $user_status[$result['bs_status']]['explain'];
+		}
 		
 		
 		return $result;

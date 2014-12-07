@@ -45,8 +45,12 @@ class AccountWeiboAction extends AdminBaseAction {
 				$list[$key]['pa_edit_url'] = U(GROUP_NAME.'/'.MODULE_NAME.'/edit',array('act'=>'edit','id'=>$val['ac_id']));
 				
 				$list[$key]['pg_status_explain'] = $this->Medie_Account_Status[$val['ac_status']]['explain'];
+				
+				$list[$key]['pg_ac_yg_zhuanfa'] = ($this->global_finance['weibo_proportion'] * $val['ac_yg_zhuanfa']) + $val['ac_yg_zhuanfa'];
 			}
 		}
+		
+		//dump($list);
 		
 		$data['list'] = $list;
 		
