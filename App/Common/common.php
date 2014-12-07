@@ -772,4 +772,29 @@ function pass_encryption ($str){
 	return md5(md5($str));
 }
 
+ /**
+     * 计算加价的总金额
+     * 
+     * @param  float 	$money	订单账号的金额
+     * @param  string	$type	类型：weibo weixin news
+     * @author bumtime
+     * @date   2014-11-15
+     * 
+     * @return array   
+     **/
+    function getAdMoney($money, $type, $rebate)
+    {
+    	switch($type)
+    	{
+    		case 'weibo' :
+    		case 'weixin' : 
+    			$money = $money * (1+$rebate);
+    			break;
+    		case 'news' :
+    			$money = $money + $rebate;
+    			break;
+    	}
+    	
+    	return $money;
+    }
 ?>
