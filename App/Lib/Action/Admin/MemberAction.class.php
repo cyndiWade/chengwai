@@ -8,7 +8,7 @@ class MemberAction extends AdminBaseAction {
 	private $module_name = '会员管理';
 	
 	protected  $db = array(
-		'Users' => 'Users'		
+		'Users' => 'Users'	
 	);
 	
 	
@@ -55,6 +55,32 @@ class MemberAction extends AdminBaseAction {
 		}	
 		$this->display($page_name);
 	}
+	
+	//用户详细信息
+	public function user_detail () {
+		$user_id = $this->_get('user_id');
+		
+		$user_info = $this->db['Users']->get_user_detail_info_one($user_id);
+		
+		//广告主
+		if ($user_info['bs_type'] == C('ACCOUNT_TYPE.Advert')) {
+			$Str_name = '广告主';
+			$Str_page = 'advert_detail';
+		} elseif ($user_info['bs_type'] == C('ACCOUNT_TYPE.Media')) {
+			$Str_name = '媒体主';
+			$Str_page = 'media_detail';
+		}
+		//dump($user_info);
+		//advert_detail
+		parent::global_tpl_view(array(
+				'action_name'=>'账号管理',
+				'title_name'=>$Str_name,
+				'add_name' => '账号详情',
+		));	
+		$this->data_to_view($user_info);
+		$this->display($Str_page);
+	}
+	
 	
 	/**
 	 * 修改用户账号状态

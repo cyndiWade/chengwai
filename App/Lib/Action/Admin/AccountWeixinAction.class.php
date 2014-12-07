@@ -40,8 +40,12 @@ class AccountWeixinAction extends AdminBaseAction {
 				$list[$key]['pa_edit_url'] = U(GROUP_NAME.'/'.MODULE_NAME.'/edit',array('act'=>'edit','id'=>$val['ac_id']));
 		
 				$list[$key]['pg_status_explain'] = $this->Medie_Account_Status[$val['ac_status']]['explain'];
+				
+				$list[$key]['pg_ac_dtb_money'] = ($this->global_finance['weixin_proportion'] * $val['ac_dtb_money']) + $val['ac_dtb_money'];
 			}
+			
 		}
+		
 		
 		$data['list'] = $list;
 		
