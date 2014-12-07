@@ -69,7 +69,7 @@
 				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="5"><span>同意接单</span></a>
                  <elseif condition="$vo.audit_status eq 11" />
                  <!-- 申诉 add by chenchao  -->
-                 | <a id="complain" ddid="{$vo.id}" complain_order_id="{$vo.order_id}" href="javascript:void(0);" >申诉</a> 
+                 | <a id="complain" ddid="{$vo.id}" complain_order_id="{$vo.order_id}" href="javascript:void(0);" >申诉</a>
 				 <elseif condition='($vo.audit_status eq 5) and ($vo.start_time lt time())'/> 
 				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="6"><span>上传反馈数据</span></a> 
 				 </if>

@@ -409,7 +409,6 @@ class EventOrderAction extends MediaBaseAction {
 		 
 		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_weibo wb on ga.account_id = wb.id")->where($where)
 					->order('ga.id desc')->field('ga.id, `price`, wb.`status`,`account_name`, ga.audit_status')->select();
-					 
 		//统计
 		$count      	= $GeneralizeAccount->where($where)->count();
 		$sum			= $GeneralizeAccount->where($where)->sum('price');
@@ -742,7 +741,7 @@ class EventOrderAction extends MediaBaseAction {
 		
 		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_news wb on ga.account_id = wb.id")->where($where)
 					->order('ga.id desc')->field('ga.id, `price`, wb.`status`,`account_name`, ga.audit_status')->select();
-					 
+		
 		//统计
 		$count      	= $GeneralizeAccount->where($where)->count();
 		$sum			= $GeneralizeAccount->where($where)->sum('price');
