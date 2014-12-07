@@ -39,7 +39,9 @@ class UserAdvertisementModel extends AdminBaseModel
 	    		
 	}
 	
-	
+	public function save_info ($users_id,$data) {
+		return $this->where(array('users_id'=>$users_id))->save($data);
+	}
 	
 	
 }

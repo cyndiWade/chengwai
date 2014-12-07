@@ -22,10 +22,11 @@
 	<div class="area01-myorder l">
 			<div class="box01-addorder l">
 				<a href="#" class="help fr">帮助手册！</a>
-				<a href="{:U('/Advert/WeixinOrder/add_intention',array('account_ids'=>$_GET['account_ids']))}" class="btn brownbtn fl">创建意向单页</a>
+				<a href="{:U('Advert/WeixinOrder/add_intention',array('account_ids'=>$_GET['account_ids']))}" class="btn brownbtn fl">创建意向单页</a>
 				<div class="searnum fl">
 					
-					<b class="red">【{$view_data.status_0}】</b>个派单中，<b class="red">【{$view_data.status_1}】</b>个待审核，<b class="red">【{$view_data.status_2}】</b>个审核通过，<b class="red">【{$view_data.status_3}】</b>个已拒单
+					<a href="{:U('Advert/WeixinOrder/intention_list',array('qrz'=>'on'))}"><b class="red">【{$view_data.qrz}】</b></a>个确认中，
+					<a href="{:U('Advert/WeixinOrder/intention_list',array('yqr'=>'on'))}"><b class="red">【{$view_data.yqr}】</b></a>已确认
 					
 					<!--
 					<b class="red">【{$view_data.status_0}】</b>个预约中，<b class="red">【{$view_data.status_1}】</b>个已过期，<b class="red">【{$view_data.status_2}】</b>个确认需要修改，<b class="red">【{$view_data.status_3}】</b>个已确认

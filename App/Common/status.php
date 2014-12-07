@@ -298,7 +298,16 @@
 			break;
 			case 6:
 				return '解冻';
-			break;			
+			break;
+			case 7:
+				return '系统增加';
+			break;
+			case 8:
+				return '系统扣除';
+			break;
+			case 9:
+				return '系统提现';
+			break;
 		}
 	}
 
