@@ -69,6 +69,9 @@
 				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="5"><span>同意接单</span></a>  
 				 <elseif condition='$vo.audit_status eq 5 and ($vo.start_time lt time())'/> 
 				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="6"><span>上传反馈数据</span></a> 
+                 <elseif condition="$vo.audit_status eq 11" />
+                 <!-- 申诉 add by chenchao  -->
+                 | <a id="complain" ddid="{$vo.id}" order_id="{$vo.order_id}" href="javascript:void(0);" >申诉</a>
 				 </if>
 				 </div></td>
 			  </tr>
@@ -154,6 +157,37 @@
 	</div>
 </div>
 
+<!-- 申诉弹窗  add by chenchao 2014-12-06 -->
+<div class="batchbox4 tl">
+    <div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>投诉</b></div>
+    <div class="mid-batch pr l">
+        <form action="{:U('Advert/OrderComplain/add_complain')}" onsubmit="return complainCheck();" method="get" class="generalize_form" enctype="multipart/form-data" >
+			<table class="tab01-inten l">
+			  <tr>
+				<td class="t1"><span><i>*</i><strong>申诉原因：</strong></span></td>
+				<td class="t2">
+					<div class="forward">
+						<textarea style="width: 400px;" class="textarea bz_info" name="content" id="complain_content" ignore="ignore" datatype="*0-300" errormsg="请正确填写范围是10-300个字符"  nullmsg="请输入"></textarea>
+						<p>请填写申诉信息，请不要超过300个汉字！</p>
+					</div>
+				</td>
+			  </tr>
+			  <tr>
+				<td class="t1"></td>
+				<td class="t2">
+                    <input type="hidden" value="2" id="complain_type" name="type" />
+                    <input type="hidden" value="1" name="media_type" />
+                    <input type="hidden" value="0" id="order_id" name="order_id" />
+                    <input type="hidden" value="0" id="ddid" name="ddid" />
+				    <input type="submit" class="btn brownbtn" value="提交" />
+				</td>
+			  </tr>
+			</table>
+        </form>
+	</div>
+</div>
+<!-- 申诉弹窗  add by chenchao 2014-12-06 -->
+
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
@@ -192,7 +226,30 @@ $(function(){
 	    minView:2,
 	    autoclose:true
     }); 
+    //申诉弹出框 add by chenchao 2014-12-06  
+    $("#complain").click(function(){
+        $("#complain_content").val('');
+        //订单ID
+        $("#order_id").val($(this).attr('order_id'));
+        $("#ddid").val($(this).attr('ddid'));
+        //弹出输入框
+        $('.batchbox3').popOn();
+   	});
+    //申诉弹出框 add by chenchao 2014-12-06
 })
+
+//检查申诉提交信息 add by chenchao 2014-12-06
+function complainCheck(){
+    if($("#order_id").val() == '0'){
+        alert("提交失败，请重试！");
+        return false;
+    }
+    if(($("#complain_content").val().length < '10') || ($("#complain_content").val().length > 300)){
+        alert("请输入10-30个字符！");
+        return false;
+    }
+    return true;   
+}
 </script>
 </body>
 </html>

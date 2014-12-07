@@ -1,0 +1,25 @@
+﻿@charset "utf-8";
+.batchbox3{ width:650px; border:5px solid #636362; display:none; position:absolute; background:#fff; border-radius:3px;}
+
+.top-batch{ height:38px; line-height:38px; background:#eb6b4c; width:100%;}
+.top-batch b{ margin-left:15px; font-size:14px; color:#fff}
+.top-batch .close{ top:7px; right:7px;}
+
+.mid-batch{ width:100%; padding:23px 0;}
+.mid-batch .bluebtn{ width:136px; height:38px; text-align:center; line-height:38px; float:right; margin-right:26px;}
+
+.tab01-inten{ width:643px;}
+.tab01-inten td{ vertical-align:top; height:54px;}
+.tab01-inten .t1{ width:145px; text-align:right; padding-right:4px;}
+.tab01-inten .t1 i{ font-style:normal; color:#f87e47; padding-right:4px;}
+.tab01-inten .t1 span{ float:right; padding-top:10px;}
+.tab01-inten .text{ width:450px; padding-left:4px; height:26px; margin-bottom:4px; line-height:normal; line-height:26px\9; border:1px solid #c1bfba; float:left;}
+.tab01-inten p{ color:#a3a199; clear:both;}
+.tab01-inten .errortip{ background:url(../images/errortip.gif) no-repeat; width:16px; height:16px; padding-left:20px; display:block; float:left; width:440px; color:#eb6b4c;}
+
+.tab01-inten .errortip-pic{ width:100px; float:left;}
+.tab01-inten .file{  float:left;}
+.tab01-inten .graybtn{ margin-right:20px;}
+.tab01-inten .trtxt td{ height:25px;}
+.tab01-inten .file{ margin-top:3px;}
+

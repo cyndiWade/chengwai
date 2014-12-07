@@ -263,7 +263,24 @@ $custom= array (
 				'explain'=>'不合格',	//订单执行不合格
 				'other' => '订单执行不合格!'
 			),			
-			
+			//增加投诉流程 订单状态 add by chenchao 2014-12-06
+            11=>array(
+				'status'=>11,
+				'explain'=>'投诉中'
+			),
+            12=>array(
+				'status'=>12,
+				'explain'=>'申诉中'
+			),
+            13=>array(
+				'status'=>13,
+				'explain'=>'投诉成功'
+			),
+            14=>array(
+				'status'=>14,
+				'explain'=>'申诉成功'
+			),
+            //增加投诉流程 订单状态 add by chenchao 2014-12-06	
 		),
 	
 		//大导航分类ID集合
