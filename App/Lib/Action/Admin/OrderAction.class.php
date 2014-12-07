@@ -150,7 +150,7 @@ class OrderAction extends AdminBaseAction {
 		    		//总金额
 		    		foreach ($accoutList  as $value)
 		    		{
-		    			$totalPrice += $this->getAdMoney($value['price'], 'weibo', $value['rebate']);
+		    			$totalPrice += getAdMoney($value['price'], 'news', $value['rebate']);
 		    		}
 					//给广告主解冻
 		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID);
@@ -286,7 +286,7 @@ class OrderAction extends AdminBaseAction {
 		    		//总金额
 		    		foreach ($accoutList  as $value)
 		    		{
-		    			$totalPrice += $this->getAdMoney($value['price'], 'weibo', $value['rebate']);
+		    			$totalPrice += getAdMoney($value['price'], 'weibo', $value['rebate']);
 		    		}
 					//给广告主解冻
 		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID);
@@ -493,7 +493,7 @@ class OrderAction extends AdminBaseAction {
 		    		//总金额
 		    		foreach ($accoutList  as $value)
 		    		{
-		    			$totalPrice += $this->getAdMoney($value['price'], 'weixin', $value['rebate']);
+		    			$totalPrice += getAdMoney($value['price'], 'weixin', $value['rebate']);
 		    		}
 					//给广告主解冻
 		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID);
@@ -618,37 +618,6 @@ class OrderAction extends AdminBaseAction {
 		$this->display();
 	}
 	
-	
-	
-	 /**
-     * 计算加价的总金额
-     * 
-     * @param  float 	$money	订单账号的金额
-     * @param  int		$type	类型：weibo weixin news
-     * @author bumtime
-     * @date   2014-11-15
-     * 
-     * @return array   
-     **/
-    private function getAdMoney($money, $type, $rebate)
-    {
-    	switch($type)
-    	{
-    		case 'weibo' :
-    		case 'weixin' : 
-    			$money = $money * (1+$rebate);
-    			break;
-    		case 'news' :
-    			$money = $money + $rebate;
-    			break;
-    	}
-    	
-    	return $money;
-    }
-	
-	
-	
-
 	
     
 }

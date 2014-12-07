@@ -158,8 +158,8 @@
 .grp02-view li img{ width:40px; height:40px; float:right;}
 .grp02-view li strong{ float:left; padding-right:10px; width:205px; padding-top:3px; line-height:20px;}
 .pop_photoview {
-	max-width:200px;
-	max-height:393px;
+	/*max-width:200px;*/
+	max-height:190px;
 }
 
 
@@ -195,3 +195,5 @@ ul{ margin:0; padding:0; list-style: none;}
 .wbtab01 .hmd{ padding-left:26px; /*background:url(../images/wb_f.gif) no-repeat 0 15px;*/}
 
 .wbtab01 li.select a{ color:#ea6060;}
+
+.pop_title{ width:248px;overflow: hidden;}

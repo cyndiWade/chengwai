@@ -299,7 +299,7 @@
 /*订单详情*/
 .box01-myorder{ margin-bottom:15px;}
 .box02-myorder .top-myorder{ width:100%; border:none;}
-.top-myorder{height:48px; border:1px solid #e9ece6; background:#eff3f4; line-height:48px; border-bottom:1px solid #eb6b4c; width:998px;}
+.top-myorder{height:48px; border:1px solid #e9ece6; background:#eff3f4; line-height:48px; border-bottom:1px solid #eb6b4c;}
 .top-myorder b{ padding-left:18px; }
 .tab01-myorder td,.tab01-myorder th{ border:1px solid #e9ece6; height:48px; line-height:48px;}
 .tab01-myorder td{ padding-left:10px;}

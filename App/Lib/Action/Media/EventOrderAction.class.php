@@ -829,7 +829,7 @@ class EventOrderAction extends MediaBaseAction {
 	    		//处理返回冻结金额（给广告主解冻金额）
 	    		$adUserID = $orderModel->where(array("id"=>$media_Info['generalize_id']))->getField('users_id');
 	    		//总金额
-	    		$allMoney = $this->getAdMoney($media_Info['price'], $type, $media_Info['rebate']);
+	    		$allMoney = getAdMoney($media_Info['price'], $type, $media_Info['rebate']);
 	    		D("UserAdvertisement")->setMoney($allMoney, $adUserID);
     		}
     		    		
@@ -1387,29 +1387,5 @@ class EventOrderAction extends MediaBaseAction {
 		return array("total"=>$arryTotal, 'price'=>$arryPrice);
     }
     
-    /**
-     * 计算加价的总金额
-     * 
-     * @param  float 	$money	订单账号的金额
-     * @param  int		$type	类型：weibo weixin news
-     * @author bumtime
-     * @date   2014-11-15
-     * 
-     * @return array   
-     **/
-    private function getAdMoney($money, $type, $rebate)
-    {
-    	switch($type)
-    	{
-    		case 'weibo' :
-    		case 'weixin' : 
-    			$money = $money * (1+$rebate);
-    			break;
-    		case 'news' :
-    			$money = $money + $rebate;
-    			break;
-    	}
-    	
-    	return $money;
-    }
+   
 }

@@ -41,7 +41,7 @@ $system  = array(
 		'OUTPUT_ENCODE'         =>  false, 			// 页面压缩输出
 
 		//项目分组
-		'APP_GROUP_LIST'        => 'Home,Admin,Api,Main,Media,Advert,Index',  	// 项目分组设定,多个组之间用逗号分隔,例如'Home,Admin'
+		'APP_GROUP_LIST'        => 'Home,Admin,Api,Main,Media,Advert,Index,Service',  	// 项目分组设定,多个组之间用逗号分隔,例如'Home,Admin'
 		'DEFAULT_GROUP'         => 'Index',  					// 默认分组
 		'DEFAULT_MODULE' 		=> 'Index',
 		'DEFAULT_ACTION'        => 'index', 					// 默认操作名称
@@ -113,7 +113,7 @@ $custom= array (
 		//外部文件访问地址(用来填写专用的文件服务器)
 		'PUBLIC_VISIT' => array(
  				//'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
- 				'domain' =>	'http://121.199.1.100/',
+ 				'domain' =>	'http://local_cwq.com/',
 				'dir' => 'files/chengwai/',							//项目文件目录
 		),
 
