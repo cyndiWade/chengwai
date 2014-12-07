@@ -34,9 +34,6 @@ class MemberAction extends AdminBaseAction {
 		$Users = D('Users');
 		$user_status = C('ACCOUNT_STATUS');		//状态
 		$user_list = $Users->get_user_detail_info_list($this->type);
-	
-		
-		//dump($user_list);
 		
 		foreach ($user_list AS $key=>$val) {
 			$user_list[$key]['status_explain'] = $user_status[$val['bs_status']]['explain'];
