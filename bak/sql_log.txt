@@ -98,4 +98,8 @@ CREATE TABLE IF NOT EXISTS `app_order_complain` (
 
 //20141207新增执行时间
 ALTER TABLE `app_generalize_news_account` ADD `execute_time` INT NOT NULL DEFAULT '0'COMMENT '执行时间' 
-ALTER TABLE `app_generalize_account` ADD `execute_time` INT NOT NULL DEFAULT '0' COMMENT '执行时间';ALTER TABLE `app_generalize_weixin_account` ADD `execute_time` INT NOT NULL DEFAULT '0' COMMENT '执行时间' 
+ALTER TABLE `app_generalize_account` ADD `execute_time` INT NOT NULL DEFAULT '0' COMMENT '执行时间';ALTER TABLE `app_generalize_weixin_account` ADD `execute_time` INT NOT NULL DEFAULT '0' COMMENT '执行时间'
+//20141207新增投诉状态
+ALTER TABLE `app_order_complain`
+ADD COLUMN `status`  tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态：0未处理、1已处理' AFTER `type`;
+ 
