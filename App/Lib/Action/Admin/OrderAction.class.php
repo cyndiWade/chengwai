@@ -72,6 +72,8 @@ class OrderAction extends AdminBaseAction {
 		
 		$this->Account_Order_Status = C('Account_Order_Status');
 		
+		import("@.Tool.Validate");	//验证类
+		
 		$this->where['status'] = array('IN',array(1,2,3,4,5));
 	}
 	
@@ -117,6 +119,7 @@ class OrderAction extends AdminBaseAction {
 		$order_id = $this->_get('id');
 		$type = 1;
 		$act = $this->_get('act');						//操作类型
+		$content = $this->_post('content');				//留言内容
 		
 		if ($act == 'update') {
 			if ($this->isPost()) {
@@ -136,9 +139,11 @@ class OrderAction extends AdminBaseAction {
 				$GeneralizeNewsAccount->where(array('generalize_id'=>$order_id))->save(array('audit_status'=>$audit_status));
 				
 				//创建日志
-				$this->OrderLog->create();
-				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
-
+				if (Validate::checkNull($content) == false) {
+					$this->OrderLog->create();
+					$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
+				}
+				
 				//如果已支付，拒绝就需要退款 20141204 bumtime
 				if($status == 3)
 				{
@@ -187,17 +192,15 @@ class OrderAction extends AdminBaseAction {
 		$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 		$data['order_log_list'] = $order_log_list;
 		
-		
+		//媒体列表
 		$account_list = $this->db['GeneralizeNewsAccount']->where(array('generalize_id'=>$order_id))->select();
 		if($account_list == true) {
 			foreach ($account_list as $key=>$val) {
-				$account_data = $this->db['AccountNews']->where(array('id'=>$val['account_id']))->find();
-				$account_list[$key]['account_name'] =$account_data['account_name'];
-				$account_list[$key]['status_explain'] = $this->Account_Order_Status[$val['audit_status']]['explain'];
-				
+				$account_data =  $this->db['AccountNews']->get_account_data_one($val['account_id']);
+				$account_list[$key]['status_explain'] = $this->Account_Order_Status[$val['audit_status']]['explain'];				
+				$account_list[$key] = array_merge($account_list[$key],$account_data);
 			}
 		}
-	
 		
 		$data['account_list'] = $account_list;
 		
@@ -207,6 +210,20 @@ class OrderAction extends AdminBaseAction {
 				'add_name'=>'添加类别'
 		));
 		
+		parent::data_to_view($data);
+		$this->display();
+	}
+	
+	//订单详情
+	public function news_generalize_detail () {
+		$order_id = $this->_get('id');
+		$order_info = $this->db['GeneralizeNewsOrder']->where(array('id'=>$order_id))->find();
+		$data['order_info'] = $order_info;
+		parent::global_tpl_view( array(
+				'action_name'=>'新闻媒体推广单',
+				'title_name'=>'新闻媒体推广单',
+				'add_name'=>'订单详情'
+		));
 		parent::data_to_view($data);
 		$this->display();
 	}
@@ -253,6 +270,7 @@ class OrderAction extends AdminBaseAction {
 		$order_id = $this->_get('id');
 		$type = 2;
 		$act = $this->_get('act');						//操作类型
+		$content = $this->_post('content');				//留言内容
 		
 		if ($act == 'update') {
 			if ($this->isPost()) {
@@ -272,9 +290,11 @@ class OrderAction extends AdminBaseAction {
 				$GeneralizeAccount->where(array('generalize_id'=>$order_id))->save(array('audit_status'=>$audit_status));
 				
 				//创建日志
-				$this->OrderLog->create();
-				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
-				
+				if (Validate::checkNull($content) == false) {
+					$this->OrderLog->create();
+					$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
+				}
+								
 				//如果已支付，拒绝就需要退款 20141204 bumtime
 				if($status == 3)
 				{
@@ -322,7 +342,19 @@ class OrderAction extends AdminBaseAction {
 		
 		$this->display();
 	}
-	
+	//订单详情
+	public function weibo_generalize_detail () {
+		$order_id = $this->_get('id');
+		$order_info = $this->db['GeneralizeOrder']->where(array('id'=>$order_id))->find();
+		$data['order_info'] = $order_info;
+		parent::global_tpl_view( array(
+				'action_name'=>'微博推广单',
+				'title_name'=>'微博推广单',
+				'add_name'=>'订单详情'
+		));
+		parent::data_to_view($data);
+		$this->display();
+	}
 	
 	
 	
@@ -363,6 +395,7 @@ class OrderAction extends AdminBaseAction {
 		$order_id = $this->_get('id');
 		$type = 3;
 		$act = $this->_get('act');						//操作类型
+		$content = $this->_post('content');				//留言内容
 		
 		if ($act == 'update') {
 			if ($this->isPost()) {
@@ -382,10 +415,12 @@ class OrderAction extends AdminBaseAction {
 				$IntentionWeiboAccount= $this->db['IntentionWeiboAccount'];
 				$IntentionWeiboAccount->where(array('intention_id'=>$order_id))->save(array('audit_status'=>$audit_status));
 				
-				
 				//创建日志
-				$this->OrderLog->create();
-				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
+				if (Validate::checkNull($content) == false) {
+					$this->OrderLog->create();
+					$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
+				}
+				
 			}
 			
 			
@@ -416,7 +451,19 @@ class OrderAction extends AdminBaseAction {
 		parent::data_to_view($data);
 		$this->display();
 	}
-	
+	//订单详情
+	public function weibo_intention_detail () {
+		$order_id = $this->_get('id');
+		$order_info = $this->db['IntentionWeiboOrder']->where(array('id'=>$order_id))->find();
+		$data['order_info'] = $order_info;
+		parent::global_tpl_view( array(
+				'action_name'=>'微博意向单',
+				'title_name'=>'微博意向单',
+				'add_name'=>'订单详情'
+		));
+		parent::data_to_view($data);
+		$this->display();
+	}
 	
 	
 
@@ -458,6 +505,7 @@ class OrderAction extends AdminBaseAction {
 		$order_id = $this->_get('id');
 		$type = 4;
 		$act = $this->_get('act');						//操作类型
+		$content = $this->_post('content');				//留言内容
 		
 		if ($act == 'update') {
 			if ($this->isPost()) {
@@ -477,10 +525,11 @@ class OrderAction extends AdminBaseAction {
 				$GeneralizeWeixinAccount = $this->db['GeneralizeWeixinAccount'];
 				$GeneralizeWeixinAccount->where(array('generalize_id'=>$order_id))->save(array('audit_status'=>$audit_status));
 				
-				
 				//创建日志
-				$this->OrderLog->create();
-				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
+				if (Validate::checkNull($content) == false) {
+					$this->OrderLog->create();
+					$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
+				}
 				
 				//如果已支付，拒绝就需要退款 20141204 bumtime
 				if($status == 3)
@@ -528,6 +577,19 @@ class OrderAction extends AdminBaseAction {
 		$this->display();
 	}
 	
+	//订单详情
+	public function weixin_generalize_detail () {
+		$order_id = $this->_get('id');
+		$order_info = $this->db['GeneralizeWeixinOrder']->where(array('id'=>$order_id))->find();
+		$data['order_info'] = $order_info;
+		parent::global_tpl_view( array(
+				'action_name'=>'微信推广单',
+				'title_name'=>'微信推广单',
+				'add_name'=>'订单详情'
+		));
+		parent::data_to_view($data);
+		$this->display();
+	}
 	
 	
 	//微信意向单
@@ -566,6 +628,7 @@ class OrderAction extends AdminBaseAction {
 		$order_id = $this->_get('id');
 		$type = 5;
 		$act = $this->_get('act');						//操作类型
+		$content = $this->_post('content');				//留言内容
 		
 		if ($act == 'update') {
 			if ($this->isPost()) {
@@ -585,10 +648,11 @@ class OrderAction extends AdminBaseAction {
 				$IntentionWeixinAccount = $this->db['IntentionWeixinAccount'];
 				$IntentionWeixinAccount->where(array('generalize_id'=>$order_id))->save(array('audit_status'=>$audit_status));
 				
-				
 				//创建日志
-				$this->OrderLog->create();
-				$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
+				if (Validate::checkNull($content) == false) {
+					$this->OrderLog->create();
+					$is_insert = $this->OrderLog->add_order_log($this->oUser->id,$order_id,$type);
+				}
 			}
 		
 		}elseif ($act == 'update_order') {
@@ -613,6 +677,19 @@ class OrderAction extends AdminBaseAction {
 				'action_name'=>'微信意向单',
 				'title_name'=>'微信意向单',
 				'add_name'=>'添加类别'
+		));
+		parent::data_to_view($data);
+		$this->display();
+	}
+	//订单详情
+	public function weixin_intention_detail () {
+		$order_id = $this->_get('id');
+		$order_info = $this->db['IntentionWeixinOrder']->where(array('id'=>$order_id))->find();
+		$data['order_info'] = $order_info;
+		parent::global_tpl_view( array(
+				'action_name'=>'微信推广单',
+				'title_name'=>'微信推广单',
+				'add_name'=>'订单详情'
 		));
 		parent::data_to_view($data);
 		$this->display();
