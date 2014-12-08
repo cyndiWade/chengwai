@@ -113,7 +113,6 @@ class RunAction extends AppBaseAction
 		//活动执行前一小时提醒媒体主执行
 		$Noticewhere['audit_status'] = array("in", "3,5");
 		
-		//订单过期
 		$weiboList	= $this->db['GeneralizeAccount']->where($Noticewhere)->field('id,audit_status,generalize_id,users_id, execute_time')->select();
 		$weixinList	= $this->db['GeneralizeWeixinAccount']->where($Noticewhere)->field('id,audit_status,generalize_id,users_id, execute_time')->select();
 		$newsList	= $this->db['GeneralizeNewsAccount']->where($Noticewhere)->field('id,audit_status,generalize_id,users_id, execute_time')->select();	
@@ -375,10 +374,13 @@ class RunAction extends AppBaseAction
 				//活动执行前一小时提醒媒体主执行
 				if("3" == $value['audit_status'])
 				{
-					//$orderObject ->
-					$iphone = M('user_media')->where(array("users_id"=>$value['users_id']))->getField('iphone');
-					$msg = C('SMS_TIPS');
-					parent::send_shp($iphone, $msg['orderTips']);
+					$stat_time = $orderObject ->where(array("id"=>$value['generalize_id']))->getField("start_time");
+					if($stat_time < time() -3600)
+					{
+						$iphone = M('user_media')->where(array("users_id"=>$value['users_id']))->getField('iphone');
+						$msg = C('SMS_TIPS');
+						parent::send_shp($iphone, $msg['orderTips']);
+					}
 				}
 						
 				//执行订单后第3天提醒上传数据截图
