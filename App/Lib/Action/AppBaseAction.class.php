@@ -595,6 +595,12 @@ class AppBaseAction extends GlobalParameterAction {
 			break;
 		}
 	}
+	
+	
+	protected function easy_page ($p = 1,$limit = 500) {
+		$offset = ($p - 1) * $limit;
+		return array($offset,$limit);
+	}
 }
 
 

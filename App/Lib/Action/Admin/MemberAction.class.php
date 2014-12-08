@@ -33,8 +33,11 @@ class MemberAction extends AdminBaseAction {
 	public function index () {
 		$Users = D('Users');
 		$user_status = C('ACCOUNT_STATUS');		//状态
-		$user_list = $Users->get_user_detail_info_list($this->type);
 		
+		$page_info = parent::easy_page(1,500);
+		
+		$user_list = $Users->get_user_detail_info_list($this->type,$page_info[0],$page_info[1]);
+
 		foreach ($user_list AS $key=>$val) {
 			$user_list[$key]['status_explain'] = $user_status[$val['bs_status']]['explain'];
 		}
