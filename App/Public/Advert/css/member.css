@@ -253,6 +253,10 @@ text-align:center; line-height:38px; float:left; margin-left:23px;
 .part02-cele .v{ display:block; background:url(../images/cer_img03.gif) no-repeat; width:22px; height:17px; margin-right:10px;}
 .part02-cele .mrdetail{ padding-left:21px; background:url(../images/cer_img07.gif) no-repeat 0 0; color:#238cc8; margin-top:5px;}
 .part02-cele .femail{ padding-right:18px;background:url(../images/cer_img04.gif) no-repeat right 1px; font-size:16px; color:#238cc8; margin-right:10px; font-weight:bold;}
+.part02-cele .femail_man{ padding-right:18px;background:url(../images/cer_img04-01.jpg) no-repeat right 1px; font-size:16px; color:#238cc8; margin-right:10px; font-weight:bold;}
+.part02-cele .femail_none{ padding-right:18px;font-size:16px; color:#238cc8; margin-right:10px; font-weight:bold;}
+
+
 .part02-cele .name{padding-right:18px; font-size:16px; color:#238cc8; margin-right:10px; font-weight:bold;}
 .part02-cele .city{padding:0 5px 0 21px; line-height:20px; height:20px; border:1px solid #e5ece9; background:url(../images/cer_img05.gif) no-repeat 5px 3px; margin-right:10px;}
 .part02-cele .yxl{padding:0 5px 0 25px; line-height:20px; height:20px; border:1px solid #ea6060; background:url(../images/cer_img06.gif) no-repeat 5px 2px; display:block; color:#ea6060;}

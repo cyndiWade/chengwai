@@ -847,10 +847,10 @@ Weibo.prototype.set_order_data = function () {
 	
 	var html = '<p>已选择<b class="account_num">'+account_sum+'</b>个账号</p>';
 	html += '<ul class="cart_ul">';
-	html += '<li>硬广转发价：<b class="account_money">'+money_sum_1+'</b>元</li>';
-	html += '<li>软广转发价：<b class="account_money">'+money_sum_2+'</b>元</li>';
-	html += '<li>硬广直发价：<b class="account_money">'+money_sum_3+'</b>元</li>';
-	html += '<li>软广直发价：<b class="account_money">'+money_sum_4+'</b>元</li>';
+	html += '<li>硬广转发价：<b class="account_money">'+money_sum_1.toFixed(2)+'</b>元</li>';
+	html += '<li>软广转发价：<b class="account_money">'+money_sum_2.toFixed(2)+'</b>元</li>';
+	html += '<li>硬广直发价：<b class="account_money">'+money_sum_3.toFixed(2)+'</b>元</li>';
+	html += '<li>软广直发价：<b class="account_money">'+money_sum_4.toFixed(2)+'</b>元</li>';
 	html += '</ul>';
 	
 	_father_this.account_all_html.html(html);

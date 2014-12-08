@@ -999,10 +999,10 @@ Weixin.prototype.set_order_data = function () {
 	
 	var html = '<p>已选择<b class="account_num">'+account_sum+'</b>个账号</p>';
 	html += '<ul class="cart_ul">';
-	html += '<li>单图文：<b class="account_money">'+money_sum_1+'</b>元</li>';
-	html += '<li>多图文第一条：<b class="account_money">'+money_sum_2+'</b>元</li>';
-	html += '<li>多图文第二条：<b class="account_money">'+money_sum_3+'</b>元</li>';
-	html += '<li>多图文第三-N：<b class="account_money">'+money_sum_4+'</b>元</li>';
+	html += '<li>单图文：<b class="account_money">'+money_sum_1.toFixed(2)+'</b>元</li>';
+	html += '<li>多图文第一条：<b class="account_money">'+money_sum_2.toFixed(2)+'</b>元</li>';
+	html += '<li>多图文第二条：<b class="account_money">'+money_sum_3.toFixed(2)+'</b>元</li>';
+	html += '<li>多图文第三-N：<b class="account_money">'+money_sum_4.toFixed(2)+'</b>元</li>';
 	html += '</ul>';
 	
 	//var html = '已选择<b class="account_num">'+account_sum+'</b>个账号，计费： 单图文：<b class="account_money">'+money_sum_1+'</b>元， 多图文第一条：<b class="account_money">'+money_sum_2+'</b>元 ，多图文第二条：<b class="account_money">'+money_sum_3+'</b>元 ，多图文第三-N：<b class="account_money">'+money_sum_4+'</b>元';

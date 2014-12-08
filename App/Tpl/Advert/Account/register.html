@@ -19,7 +19,10 @@
       <div class="login_con clearfix">
         <div class="form-group clearfix">
         <label class="form-left"><em>*</em>会员名：</label>
-        <div class="form-right"><input type="text" class="text" name="account"/><div class="oktip"></div><div class="errortip">会员名不能为空</div>
+        <div class="form-right">
+        	<input type="text" class="text" name="account"/>
+			<div class="oktip"></div>
+			<div class="errortip">会员名不能为空</div>
         </div>
         </div>
         <div class="blank20"></div>
@@ -35,7 +38,10 @@
         <div class="blank20"></div>
         <div class="form-group clearfix">
         <label class="form-left"><em>*</em>手机号码：</label>
-        <div class="form-right"><input type="text" class="text" name="iphone" style="width:180px;"/><div class="phoneclick">发送短信验证码</div><div class="oktip"></div><div class="errortip">手机号不能为空</div></div>
+        <div class="form-right">
+        	<input type="text" class="text" name="iphone" style="width:180px;"/>
+			<div class="phoneclick">发送短信验证码</div>
+			<div class="errortip">手机号不能为空</div></div>
         </div>
         <div class="blank20"></div>
         <div class="form-group clearfix">
@@ -187,7 +193,7 @@
 	*/
 	function settime(){
 		var _this = $('.phoneclick');
-		var thist = parseInt(_this.html().substr(4,2));
+		var thist = parseInt(_this.html().substr(4,3));
 		var nextt = thist - 1 ;
 		if(nextt==0)
 		{
@@ -244,7 +250,7 @@
 		}
 		else
 		{
-			_this.next().hide();
+			//_this.next().hide();
 			_this.next().next().html('该手机已被使用').show();
 		}
 			
@@ -252,7 +258,7 @@
 			if(_this.val()!='')
 			{
 				_this.attr('class','text text-error');
-				_this.next().hide();
+				//_this.next().hide();
 				_this.next().next().html('手机号格式不正确！').show();
 			}else{
 				_this.next().next().html('手机号不能为空！').show();

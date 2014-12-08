@@ -914,7 +914,7 @@ Weixin.prototype.set_order_data = function () {
 		account_sum += 1;
 	});
 	
-	_father_this.account_money.text(money_sum);
+	_father_this.account_money.text(money_sum.toFixed(2));
 	_father_this.account_num.text(account_sum);
 }
 //删除一个已经选择的订单

@@ -342,9 +342,17 @@ var create_now_html = function ($data,$post_data) {
 		html += '<img src="'+$data.bs_head_img+'" class="mtimg" />';
 	}
 	
+	var sex_css = '';
+	if ($data.sy_sex == 1) {	//男
+		sex_css = 'femail_man';
+	}else if ($data.sy_sex == 2){	//女
+		sex_css = 'femail';
+	} else {
+		sex_css = 'femail_none';
+	}
+	
 	html += '<div class="ctrl">';
-	
-	
+
 	if ($post_data.cksc == 1) {
 		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weixin_id="' + $data.bs_id + '">取消收藏</span>';
 	} else if ($post_data.ckhmd == 1) {
@@ -379,7 +387,10 @@ var create_now_html = function ($data,$post_data) {
 	html += '<div class="part02-cele fl">';
 	html += '<div class="grp01-cele l">';
 	html += '<span class="mrdetail cur fr" data-weixin_id="'+$data.bs_id+'">查看详情</span><i class="weixin fl"></i><i class="v fl"></i>';
-	html += '<span class="femail fl account_name" data-account_name="'+$data.bs_account_name+'">'+$data.bs_account_name+' '+$data.pg_mrxb_explain+'</span>';
+	
+	//html += '<span class="femail fl account_name" data-account_name="'+$data.bs_account_name+'">'+$data.bs_account_name+' '+$data.pg_mrxb_explain+'</span>';
+	html += '<span class="'+sex_css+' fl account_name" data-account_name="'+$data.bs_account_name+'">'+$data.bs_account_name+'</span>';
+
 	html += '<span class="city fl">'+$data.pg_cirymedia_explain+'</span>';
 	//html += '<span class="yxl fl">影响力：1212</span>';
 	html += '</div>';

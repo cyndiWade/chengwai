@@ -685,6 +685,15 @@ Weibo.prototype.create_now_html = function (result,$post_data) {
 		var $data = result[key];
 		//console.log($data);
 		//return false;
+		//alert($data.sy_sex);
+		var sex_css = '';
+		if ($data.sy_sex == 1) {	//男
+			sex_css = 'femail_man';
+		}else if ($data.sy_sex == 2){	//女
+			sex_css = 'femail';
+		} else {
+			sex_css = 'femail_none';
+		}
 		
 		var html = '';
 		html += '<div class="box01-cele fl accounts_'+$data.bs_id+'" data-order_id="'+$data.bs_id+'" data-order_num="'+$data.bs_month_order_nub+'"  data-fans_num="'+$data.bs_fans_num+'">';
@@ -736,7 +745,7 @@ Weibo.prototype.create_now_html = function (result,$post_data) {
 		html += '</div>';
 		html += '<div class="part02-cele fl">';
 		html += '<div class="grp01-cele l">';
-		html += '<span class="mrdetail cur fr" data-weibo_id="'+$data.bs_id+'">查看详情</span><i class="'+weibo_class+'"></i><i class="v fl"></i><span class="femail fl account_name" data-account_name="'+$data.bs_account_name+'"><a href="'+weibo_url + $data.bs_account_name+'" target="_blank">'+$data.bs_account_name+'</a></span>';
+		html += '<span class="mrdetail cur fr" data-weibo_id="'+$data.bs_id+'">查看详情</span><i class="'+weibo_class+'"></i><i class="v fl"></i><span class="'+sex_css+' fl account_name" data-account_name="'+$data.bs_account_name+'"><a href="'+weibo_url + $data.bs_account_name+'" target="_blank">'+$data.bs_account_name+'</a></span>';
 		html += '<span class="city fl">'+$data.pg_cirymedia_explain+'</span>';
 		//html += '<span class="yxl fl">影响力：1212</span>';
 		html += '</div>';
@@ -967,7 +976,7 @@ Weibo.prototype.set_order_data = function () {
 		account_sum += 1;
 	});
 	
-	_father_this.account_money.text(money_sum);
+	_father_this.account_money.text(money_sum.toFixed(2));
 	_father_this.account_num.text(account_sum);
 }
 //删除一个已经选择的订单
