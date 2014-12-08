@@ -145,5 +145,40 @@ class AppBaseModel extends Model {
 			return false;
 		}
 	}
+	
+	
+	/**
+	 * 游标模式从数据库获取数据
+	 * @param Object $Obj_Dao		dao的对象
+	 * @param String $Str_vernier_field	游标的字段，这个字段保存的值必须是INT类型
+	 * @param Array $Arr_where		基础的查询条件
+	 * @param Int $Int_limit		每次拿出的值
+	 * @param Array $Arr_field		拿出的字段
+	 * @param Array $Arr_order_by	数据库排序
+	 * @return Array
+	 */
+	protected  function vernier_for_data ($Obj_Dao,$Str_vernier_field,$Arr_where = array(),$Int_limit = 500,$Arr_field = array(),$Arr_order_by = array()) {
+	
+		$Int_now_id = 0;	//当前游标的ID
+	
+		$Arr_base_where = $Arr_where;
+	
+		$Arr_result = array();
+	
+		while (true) {
+			$Arr_extend_Where[$Str_vernier_field.' > ?'] = $Int_now_id;
+			$Arr_query_where = array_merge($Arr_base_where,$Arr_extend_Where);
+			$Arr_data_list = $Obj_Dao->field($Arr_field)->where($Arr_query_where)->order($Arr_order_by)->limit('0,'.$Int_limit)->select();
+			$Int_list_count = count($Arr_data_list);	//统计本次查询条数
+			$Int_now_id = $Arr_data_list[$Int_list_count-1][$Str_vernier_field];	//记录本次查询数据的最后一条的ID
+				
+			$Arr_result = array_merge($Arr_result,$Arr_data_list);	//组合数组
+				
+			if ($Int_list_count < $Int_limit) break;
+		}
+	
+		return $Arr_result;
+	}
+	
 }
 ?>

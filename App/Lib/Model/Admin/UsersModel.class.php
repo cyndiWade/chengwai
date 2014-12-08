@@ -70,10 +70,10 @@ class UsersModel extends AdminBaseModel {
 	}
 
 	
-	public function get_user_detail_info_list ($type) {
+	public function get_user_detail_info_list ($type,$offset=0,$limit=500) {
 		$users_fields = parent::field_add_prefix('Users','bs_','u.');
 		$result = array();
-	
+		
 		//媒体主
 		if ($type == C('ACCOUNT_TYPE.Media')) {
 			
@@ -82,6 +82,7 @@ class UsersModel extends AdminBaseModel {
 			->table($this->prefix.'users AS u')
 			->join($this->prefix.'user_media AS m ON u.id = m.users_id')
 			->where(array('u.type'=>$type,'u.is_del'=>0))
+			->limit($offset.','.$limit)
 			->select();
 
 		//广告主	
@@ -92,9 +93,10 @@ class UsersModel extends AdminBaseModel {
 			->table($this->prefix.'users AS u')
 			->join($this->prefix.'user_advertisement AS a ON u.id = a.users_id')
 			->where(array('u.type'=>$type,'u.is_del'=>0))
+			->limit($offset.','.$limit)
 			->select();
 		}
-		
+	
 		//统计订单总数
 		foreach ($result as $key=>$val) {
 			$result[$key]['ac_news_num'] = D('AccountNews')->where(array('users_id'=>$val['bs_id']))->count();
@@ -106,8 +108,6 @@ class UsersModel extends AdminBaseModel {
 		
 		parent::set_all_time($result, array('bs_last_login_time'));
 		parent::set_all_time($result, array('bs_create_time'));
-		
-		
 		
 		return $result;
 	}
