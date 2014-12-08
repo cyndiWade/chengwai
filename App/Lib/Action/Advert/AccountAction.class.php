@@ -169,6 +169,53 @@ class AccountAction extends AdvertBaseAction {
 	}
 	
 	
+	//验证用户名是否可注册
+	public function checkUserName()
+	{
+		if ($this->isPost())
+		{
+			$account = $this->_post("account");
+			$id = D('Users')->account_is_have($account);
+	
+			if($id !='')
+			{
+				parent::callback(0 ,'该用户已被注册！');
+			}
+			else
+			{
+				parent::callback(1 ,'该用户可注册！');
+			}
+		}
+		else
+		{
+			$this->error('非法访问！');
+		}
+	}
+	
+	
+	//验证手机号
+	public function checkPhone()
+	{
+		if ($this->isPost())
+		{
+			$telephone = $this->_post("telephone");
+			$id = D('UserAdvertisement')->iphone_is_have($telephone);
+	
+			if($id !='')
+			{
+				parent::callback(0 ,'该手机已被使用！');
+			}
+			else
+			{
+				parent::callback(1 ,'该手机可以使用！');
+			}
+		}
+		else
+		{
+			$this->error('非法访问！');
+		}
+	}
+	
 	//退出登陆
     public function logout () {
     	if (session_start()) {

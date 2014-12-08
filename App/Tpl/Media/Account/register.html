@@ -208,7 +208,7 @@
 			{
 				_this.attr('class','text');
 				_this.next().next().html('发送手机验证码中...').show();
-				phone_this.html('倒计时 '+ '30' +' 秒');
+				phone_this.html('倒计时 '+ '120' +' 秒');
 				settime();
 				$.ajax({
 					url : "{:U('Api/SendMsg/media_register_send')}",

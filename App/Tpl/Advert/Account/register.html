@@ -78,6 +78,31 @@
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/check_zhuce.js"></script>
 
 <script type="text/javascript">
+	
+	$('input[name="account"]').blur(function()
+	{
+		var account =  $('input[name="account"]').val();
+		if(account != "") 
+		{
+			$.ajax({
+				url : "{:U('Advert/Account/checkUserName')}",
+				type : "POST",
+				async : false,
+				cache :　false,
+				data : {account:account},
+				success : function(val){
+					if(val.status=='0')
+					{
+						_this = $('input[name="account"]');
+						_this.attr('class','text text-error');
+						_this.next().hide();
+						_this.next().next().html(val.msg).show();
+					}
+				}
+			});
+		}
+	});
+	
 	$('.btn').click(function()
 	{
 		if(all_submit()===true)
@@ -104,6 +129,7 @@
 			});
 		}
 	});
+	/*
 	function settime(){
 		var _this = $('.phoneclick');
 		var thist = parseInt(_this.html().substr(4,3));
@@ -140,13 +166,88 @@
 						if (result_data.status == 0) {
 							
 						} else {
-							alert(result_data.msg);
+							//alert(result_data.msg);
 						}
 						_this.next().show();
 						_this.next().next().hide();
 					}
 				});
 			}
+		}else{
+			if(_this.val()!='')
+			{
+				_this.attr('class','text text-error');
+				_this.next().hide();
+				_this.next().next().html('手机号格式不正确！').show();
+			}else{
+				_this.next().next().html('手机号不能为空！').show();
+			}
+		}
+	});
+	*/
+	function settime(){
+		var _this = $('.phoneclick');
+		var thist = parseInt(_this.html().substr(4,2));
+		var nextt = thist - 1 ;
+		if(nextt==0)
+		{
+			_this.html('发送短信验证码');
+			clearTimeout(t);
+		}else{
+			_this.html('倒计时 '+nextt +' 秒');
+			var t = setTimeout(settime,1000);
+		}
+	}
+	
+	$('.phoneclick').click(function(){
+		var isPhoneReg = false;
+		var phone_this = $(this);
+		var _this = $('input[name="iphone"]');
+		if(phone(_this.val())===true)
+		{
+			//电话是否可以注册
+			$.ajax({
+				url : "{:U('Advert/Account/checkPhone')}",
+				type : "POST",
+				async : false,
+				cache :　false,
+				data : {telephone:_this.val()},
+				success : function(val)
+				{
+					if(val.status=='1')
+					{
+						isPhoneReg = true;
+					}
+				}
+			});
+		if(isPhoneReg)	
+		{
+			if(phone_this.html()=='发送短信验证码')
+			{
+				_this.attr('class','text');
+				_this.next().next().html('发送手机验证码中...').show();
+				phone_this.html('倒计时 '+ '120' +' 秒');
+				settime();
+				$.ajax({
+					url : "{:U('Api/SendMsg/advert_register_send')}",
+					type : "POST",
+					async : false,
+					cache :　false,
+					data : {telephone:_this.val()},
+					success : function(value)
+					{
+						_this.next().show();
+						_this.next().next().hide();
+					}
+				});
+			}
+		}
+		else
+		{
+			_this.next().hide();
+			_this.next().next().html('该手机已被使用').show();
+		}
+			
 		}else{
 			if(_this.val()!='')
 			{
