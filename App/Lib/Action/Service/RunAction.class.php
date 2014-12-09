@@ -67,7 +67,7 @@ class RunAction extends AppBaseAction
 		
 		if($weixinOrderList)
 		{
-			 $this->setStatus($weixinOrderList, 'wexin');	 
+			 $this->setStatus($weixinOrderList, 'weixin');	 
 		}	
 			
 		if($newsOrderList)
@@ -102,30 +102,33 @@ class RunAction extends AppBaseAction
      **/
 	private function setStatus($orderList, $type)
 	{
+		$AccoutList = array();
+		$arryID = array_keys($orderList);
+		$whereAccout['generalize_id'] = array('in', implode(",", $arryID));
+
 		
 		switch($type)
 		{
 			case 'weibo':
-				$mediaObject = D('GeneralizeAccount');
-				$orderObject = D('GeneralizeOrder');
+				$mediaObject = M('GeneralizeAccount');
+				$orderObject = M('GeneralizeOrder');	
 				break;
 				
 			case 'weixin':
-				$mediaObject = D('GeneralizeWeixinAccount');
-				$orderObject = D('GeneralizeWeixinOrder');
+				$mediaObject = M('GeneralizeWeixinAccount');
+				$orderObject = M('GeneralizeWeixinOrder');
 				break;			
 				
 			case 'news':
-				$mediaObject = D('GeneralizeNewsAccount');
-				$orderObject = D('GeneralizeNewsOrder');
+				$mediaObject = M('GeneralizeNewsAccount');
+				$orderObject = M('GeneralizeNewsOrder');
 				break;				
 				
 		}
-		 
-		$arryID = array_keys($orderList);
-		$whereAccout['generalize_id'] = array('in', implode(",", $arryID));
+		
+		 $AccoutList = M('GeneralizeAccount')->where($whereAccout)->field('id,audit_status,generalize_id')->select();
 
-		$AccoutList = D('GeneralizeAccount')->where($whereAccout)->field('id,audit_status,generalize_id')->select();
+
 		 
 		 
 		if($AccoutList)

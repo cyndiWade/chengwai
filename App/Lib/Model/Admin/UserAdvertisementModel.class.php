@@ -31,7 +31,7 @@ class UserAdvertisementModel extends AdminBaseModel
 		$add['money'] = $money;
 		$add['adormed'] = 2;
 		$add['type'] = 6;
-		$add['member_info'] = '该订单无法执行，解冻订单金额并返回';
+		$add['member_info'] = '系统取消订单，解冻订单金额并返回';
 		$add['admin_info']  = '解冻资金';
 		$add['time'] = time();
 		$add['status'] = 1;
@@ -42,6 +42,40 @@ class UserAdvertisementModel extends AdminBaseModel
 	public function save_info ($users_id,$data) {
 		return $this->where(array('users_id'=>$users_id))->save($data);
 	}
+	
+	/**	
+	 *  广告主冻结的资金直接扣款
+	 *
+	 * @param int   $money	订单中媒体号价格
+	 * @param int   $userID	广告主用户ID
+	 * 
+	 * @author bumtime 2014-12-06
+	 * @return array
+	 */	
+	public function setXFMoney($money,  $userID)
+	{
+		//计算折扣*原价从广告主冻结资金里面扣除
+		
+		$userInfo = $this->field('money, freeze_funds')->where(array("users_id"=>$userID))->find();
+	
+	    $freeze_funds   = $userInfo['freeze_funds'] - $money;
+		$arryMoney['freeze_funds']	= $freeze_funds;
+	    $this->where(array("users_id"=>$userID))->save($arryMoney);
+	    
+	    //保存资金记录
+	    $add['users_id'] = $userID;
+		$add['shop_number'] = 'XF'.time();
+		$add['money'] = $money;
+		$add['adormed'] = 2;
+		$add['type'] = 3;
+		$add['member_info'] = '该订单执行完成，按订单金额支出';
+		$add['admin_info']  = '消费';
+		$add['time'] = time();
+		$add['status'] = 1;
+		D('Fund')->add($add);
+	    		
+	}
+	
 	
 	
 }

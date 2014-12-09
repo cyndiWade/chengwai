@@ -1,7 +1,7 @@
 <?php
 
 //用户数据模型
-class UserAdvertisementModel extends Model  
+class UserAdvertisementModel extends AppBaseModel  
 {
 	/**	
 	 *  给广告主解冻金额
