@@ -4,7 +4,7 @@
  * 活动订单下子媒体类
  * 
  */
-class GeneralizeWeixinAccountModel extends MediaBaseModel
+class GeneralizeWeixinAccountModel extends AppBaseModel
 {
 	/**
 	 *  更新媒体订单状态

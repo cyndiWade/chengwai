@@ -4,7 +4,7 @@
  * 活动订单类
  * 
  */
-class GeneralizeOrderModel extends MediaBaseModel
+class GeneralizeOrderModel extends AppBaseModel
 {
 	/**
 	 *  取统计信息

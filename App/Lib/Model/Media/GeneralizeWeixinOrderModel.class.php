@@ -4,7 +4,7 @@
  * 活动订单类
  * 
  */
-class GeneralizeWeixinOrderModel extends MediaBaseModel
+class GeneralizeWeixinOrderModel extends AppBaseModel
 {
 	/**
 	 *  取统计信息
