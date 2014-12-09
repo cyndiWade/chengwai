@@ -49,6 +49,14 @@ class RunAction extends AppBaseAction
 		parent::__construct();
 	}
 	
+	/**	
+	 *  
+	 *  订单状态的批量更新
+	 * 
+	 *
+	 * @author bumtime 2014-12-06
+	 * @return array
+	 */
 	public function index()
 	{
 		$where  = array();
@@ -59,20 +67,20 @@ class RunAction extends AppBaseAction
 		$weixinOrderList	=	$this->db['GeneralizeWeixinOrder']->where($where)->getField('id, status');
 		$newsOrderList		=	$this->db['GeneralizeNewsOrder']->where($where)->getField('id, status');	
 
-		/*if($weiboOrderList)
+		if($weiboOrderList)
 		{ 
 			 $this->setStatus($weiboOrderList, 'weibo');	 
-		}*/
+		}
 
 		if($weixinOrderList)
 		{
 			 $this->setStatus($weixinOrderList, 'weixin');	 
 		}	
-		/*	
+		
 		if($newsOrderList)
 		{
 			 $this->setStatus($newsOrderList, 'news');	 
-		}	*/		
+		}		
 		
 		//意向单过期
 		$weiboIntenOrderList	=	$this->db['IntentionWeiboOrder']->where($where)->getField('id, status');
@@ -87,8 +95,45 @@ class RunAction extends AppBaseAction
 			$this->setIntStatus($weixinIntenOrderList, "weixin");
 		}
 		
+		
+		
 	}
 	
+
+	/**	
+	 *  
+	 *  广告主冻结的资金直接扣款
+	 * 
+	 *
+	 * @author bumtime 2014-12-07
+	 * @return array
+	 */
+	public function sendMessage()
+	{
+		//活动执行前一小时提醒媒体主执行
+		$Noticewhere['audit_status'] = array("in", "3,5");
+		
+		//订单过期
+		$weiboList	= $this->db['GeneralizeAccount']->where($Noticewhere)->field('id,audit_status,generalize_id,users_id, execute_time')->select();
+		$weixinList	= $this->db['GeneralizeWeixinAccount']->where($Noticewhere)->field('id,audit_status,generalize_id,users_id, execute_time')->select();
+		$newsList	= $this->db['GeneralizeNewsAccount']->where($Noticewhere)->field('id,audit_status,generalize_id,users_id, execute_time')->select();	
+		
+		if($weiboList)
+		{ 
+			 $this->setStatusMessage($weiboList, 'weibo');	 
+		}
+
+		if($weixinList)
+		{
+			 $this->setStatusMessage($weixinList, 'weixin');	 
+		}	
+		
+		if($newsList)
+		{
+			 $this->setStatusMessage($newsList, 'news');	 
+		}
+
+	}
 	 /**
      * 处理推广单的状态
      * 
@@ -104,7 +149,7 @@ class RunAction extends AppBaseAction
 		$AccoutList = array();
 		$arryID = array_keys($orderList);
 		$whereAccout['generalize_id'] = array('in', implode(",", $arryID));
-
+		$orderID = array();
 		
 		switch($type)
 		{
@@ -143,12 +188,11 @@ class RunAction extends AppBaseAction
 					case 2:
 					case 0:
 						$mediaObject->where(array('id'=>$value['id']))->save(array('audit_status'=>9)); 
+						$orderID[] = $value['generalize_id'];
 						break;
 						
 					//支付后过期自动退款
 					case 3:
-						
-
 						$totalPrice = 0 ;
 						$order_info = $orderObject->field('users_id, id, start_time')->where(array('id'=>$value['generalize_id']))->find();
 						$adUserID 	= $order_info['users_id'];
@@ -165,7 +209,7 @@ class RunAction extends AppBaseAction
 			    		
 			    		$mediaObject->where(array('id'=>$value['id']))->save(array('audit_status'=>9)); 
 			    		
-			    		$orderObject->where(array("id"=>$order_info['id']))->save(array('status'=>5));	 	
+			    		$orderID[] = $value['generalize_id'];
 						break;
 						
 					//媒体主执行中，5天后没上传资料转为订单完成，并退款
@@ -189,9 +233,9 @@ class RunAction extends AppBaseAction
 				    		D("Media/UserAdvertisement")->setMoney($totalPrice, $adUserID, 2, $mediaType, $order_info['id']);
 				    		
 				    		$mediaObject->where(array('id'=>$value['id']))->save(array('audit_status'=>7)); 
+				    		$orderID[] = $value['generalize_id'];
 						}
 						
-				    	$orderObject->where(array("id"=>$order_info['id']))->save(array('status'=>5));
 						break;
 						
 					//媒体主执行完成，5天后转为订单完成
@@ -220,11 +264,19 @@ class RunAction extends AppBaseAction
 				    		D("Media/UserAdvertisement")->setXFMoney($totalPrice, $adUserID);
 
 				    		$mediaObject->where(array('id'=>$value['id']))->save(array('audit_status'=>7)); 
+				    		
+				    		$orderID[] = $value['generalize_id'];
 						}
-						$orderObject->where(array("id"=>$order_info['id']))->save(array('status'=>5));
+						
 						break;					
 				}
 				
+			}
+			//更新主订单状态
+			if($orderID)
+			{
+				$orderWhere['id'] = array('in', $orderID);
+				$orderObject->where($orderWhere)->save(array('status'=>5));
 			}
 		}
 	}
@@ -254,10 +306,10 @@ class RunAction extends AppBaseAction
 				$orderObject = $this->db['IntentionWeixinOrder'];
 				break;				
 		}
-		
+		$orderID = array();
 		$arryID = array_keys($orderList);
 		$whereAccout['intention_id'] = array('in', $arryID);
-		$AccoutList = $mediaObject->where($whereAccout)->field('id,audit_status')->select();
+		$AccoutList = $mediaObject->where($whereAccout)->field('id,audit_status,intention_id')->select();
 			 
 		if($AccoutList)
 		{
@@ -269,9 +321,75 @@ class RunAction extends AppBaseAction
 					case 0:
 					case 3:
 						$mediaObject->where(array('id'=>$value['id']))->save(array('audit_status'=>9)); 
+						$orderID[] = $value['intention_id'] ;
 						break;	
 				}	
 			}
+		}
+		//更新主订单状态
+		if($orderID)
+		{
+			$orderWhere['id'] = array('in', $orderID);
+			$orderObject->where($orderWhere)->save(array('status'=>5));
+		}
+	}
+
+/**
+     * 根据状态发短信提醒
+     * 
+     * @param  array 	$orderList	媒体数组
+     * @param  string   $type	    类型：weibo weixin news
+     * @author bumtime
+     * @date   2014-12-07
+     * 
+     * @return array   
+     **/
+	private function setStatusMessage($mediaList, $type)
+	{
+	
+		switch($type)
+		{
+			case 'weibo':
+				$mediaObject = M('GeneralizeAccount');
+				$orderObject = M('GeneralizeOrder');
+				$mediaType	 =	3;
+				break;
+				
+			case 'weixin':
+				$mediaObject = M('GeneralizeWeixinAccount');
+				$orderObject = M('GeneralizeWeixinOrder');
+				$mediaType	 =	2;
+				break;			
+				
+			case 'news':
+				$mediaObject = M('GeneralizeNewsAccount');
+				$orderObject = M('GeneralizeNewsOrder');
+				$mediaType	 =	1;
+				break;				
+				
+		}
+		if($mediaList)
+		{
+			foreach ($mediaList as $value) 
+			{
+				//活动执行前一小时提醒媒体主执行
+				if("3" == $value['audit_status'])
+				{
+					//$orderObject ->
+					$iphone = M('user_media')->where(array("users_id"=>$value['users_id']))->getField('iphone');
+					$msg = C('SMS_TIPS');
+					parent::send_shp($iphone, $msg['orderTips']);
+				}
+						
+				//执行订单后第3天提醒上传数据截图
+				elseif("5" == $value['audit_status'] && $value['execute_time'] < time() - 3*24*3600)
+				{
+					$iphone = M('user_media')->where(array("users_id"=>$value['users_id']))->getField('iphone');
+					$msg = C('SMS_TIPS');
+					parent::send_shp($iphone, $msg['executeTips']);
+				}
+			}
+			
 		}
 	}
 }
