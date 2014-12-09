@@ -93,8 +93,8 @@ class OrderComplainAction extends AdminBaseAction
             $status = $this->_post('status');
             $GeneralizeAccount->where(array('id' => $info['ddid']))->save(array('audit_status' => $status));
             //订单状态更改
-            $status = '5';
-            $Generalize->where(array('id' => $info['order_id']))->save(array('status' => $status));
+            $order_status = '5';
+            $Generalize->where(array('id' => $info['order_id']))->save(array('status' => $order_status));
             
             //记录订单处理LOG
             $orderlog = D('OrderLog');
@@ -114,10 +114,10 @@ class OrderComplainAction extends AdminBaseAction
                 $money = getAdMoney($orderinfo['price'], $mtype, $orderinfo['rebate']);
                 if ($status == '13') {
                     //返还资金到广告主
-                    $advertisement->setMoney($money, $order['users_id']);
+                    $advertisement->setMoney($money, $order['users_id'], 2, $info['media_type'], $info['order_id']);
                 }else{
                     //扣广告主的钱
-                    $advertisement->setXFMoney($money, $order['users_id']);
+                    $advertisement->setXFMoney($money, $order['users_id'], $info['media_type'], $info['order_id']);
                     //打款给媒体主
                     $Media = D('UserMedia');
                     $Media->insertPirce($orderinfo['users_id'], $orderinfo['price'], $info['media_type'], $info['order_id']);

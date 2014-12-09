@@ -97,13 +97,13 @@ class UsersModel extends AdminBaseModel {
 			->select();
 		}
 	
-		//统计订单总数
+		/*//统计订单总数  
 		foreach ($result as $key=>$val) {
 			$result[$key]['ac_news_num'] = D('AccountNews')->where(array('users_id'=>$val['bs_id']))->count();
 			$result[$key]['ac_weibo_num'] = D('AccountWeibo')->where(array('users_id'=>$val['bs_id']))->count();
 			$result[$key]['ac_weixin_num'] = D('AccountWeixin')->where(array('users_id'=>$val['bs_id']))->count();
 			$result[$key]['pg_all_account_num'] = $result[$key]['ac_news_num'] + $result[$key]['ac_weibo_num'] + $result[$key]['ac_weixin_num'];
-		}
+		}*/
 		
 		
 		parent::set_all_time($result, array('bs_last_login_time'));

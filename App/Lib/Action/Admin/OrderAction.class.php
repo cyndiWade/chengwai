@@ -159,7 +159,7 @@ class OrderAction extends AdminBaseAction {
 		    			//$totalPrice += $this->getAdMoney($value['price'], 'weibo', $value['rebate']);
 		    		}
 					//给广告主解冻
-		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID);
+		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID, 1, 1, $order_id);
 		    		
 				}
 			}
@@ -311,7 +311,7 @@ class OrderAction extends AdminBaseAction {
 		    		//	$totalPrice += $this->getAdMoney($value['price'], 'weibo', $value['rebate']);
 		    		}
 					//给广告主解冻
-		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID);
+		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID, 1, 3, $order_id);
 		    		
 				}
 			}
@@ -548,7 +548,7 @@ class OrderAction extends AdminBaseAction {
 		    			//$totalPrice += $this->getAdMoney($value['price'], 'weixin', $value['rebate']);
 		    		}
 					//给广告主解冻
-		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID);
+		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID, 1, 2, $order_id);
 		    		
 				}
 			}

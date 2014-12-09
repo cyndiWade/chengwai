@@ -203,6 +203,7 @@ class SocialAccountAction extends MediaBaseAction {
         foreach ($data AS $key => $val) {
             if ($accountModel) {
                 $apiInfos = $accountModel->getInfosFromApi($val['account_name'], $type);
+                
                 if ($type == 1) {
                     $faceUrl = $apiInfos['profile_image_url'];
                     $url = $apiInfos['url'];
@@ -210,7 +211,7 @@ class SocialAccountAction extends MediaBaseAction {
                     $faceUrl = $apiInfos['profile_image_url'];
                     $url = $apiInfos['url'];
                 } elseif ($type == 3) {
-                    $faceUrl = $apiInfos['profile_image_url'];
+                    $faceUrl = $val['head_img'];
                     $url = $apiInfos['url'];
                 } elseif (type == 4) {
                     $faceUrl = $val['media_shot'];
@@ -539,11 +540,11 @@ class SocialAccountAction extends MediaBaseAction {
                                 $lessPrecent = 100 - $malePrecent;
                                 $femalePrecent = $femalePrecent <= $lessPrecent ? $femalePrecent : $lessPrecent;
                                  
-                                if (empty($accountName) || empty($price)  || !Validate::checkAccount($weixinCode))
+                                if (empty($accountName) || empty($price)  /*|| !Validate::checkAccount($weixinCode)*/)
                                 {
                                     continue;
                                 }
-                                
+                              
                                 if (!empty($faceUrl) && !Validate::checkUrl($faceUrl))
                                 {
                                     continue;
@@ -563,7 +564,7 @@ class SocialAccountAction extends MediaBaseAction {
                                 );
                                
                                 $exists = $weixinModel->getAccountInfo($where, 'id');
-                                
+                               
                                 if ($exists) {
                                     continue;
                                 }
@@ -600,7 +601,7 @@ class SocialAccountAction extends MediaBaseAction {
                                     'dtwdet_money'      => $price * $priceRatio['multiGraphicSecondPrice'],
                                     'dtwqtwz_money'     => $price * $priceRatio['multiGraphicOtherPrice'],
                                     'dj_money'          => $price * $priceRatio['contentPrice'],
-                                    'account_avatar'    => $faceUrl,
+                                    'head_img'    		=> $faceUrl,
                                     'qr_code'           => $qrCode,
                                     'follower_shot'     => $fansShot,
                                     'male_precent'      => $malePrecent,
@@ -1818,7 +1819,7 @@ class SocialAccountAction extends MediaBaseAction {
                     // 微信号
                     'weibo_id'  => $accountInfos['weixinhao'],
                     // 头像
-                    'screen_portrait' => $accountInfos['account_avatar'],
+                    'screen_portrait' => $accountInfos['head_img'],
                     // 二维码
                     'screen_shot_qr_code' => $accountInfos['qr_code'],
                     // 粉丝截图

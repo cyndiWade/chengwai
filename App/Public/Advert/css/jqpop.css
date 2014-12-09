@@ -1,7 +1,7 @@
 ﻿@charset "utf-8";
 .batchbox3{ width:650px; border:5px solid #636362; display:none; position:absolute; background:#fff; border-radius:3px;}
 
-.top-batch{ height:38px; line-height:38px; background:#eb6b4c; width:100%;}
+.top-batch{ height:38px; line-height:38px; background:#2e4653; width:100%;}
 .top-batch b{ margin-left:15px; font-size:14px; color:#fff}
 .top-batch .close{ top:7px; right:7px;}
 

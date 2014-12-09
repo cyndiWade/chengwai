@@ -4,7 +4,7 @@ define(function (require) {
         target.full_path = ko.computed(function(){
             var defaultSrc = option.defaultImage || '/App/Public/Media/images/myimg/weixin_no_img_default.gif';
             var src = target();
-            return src ? option.viewBasePath + src : defaultSrc;
+            return src ?  ((/^http/.test(src) === false) ? option.viewBasePath + src : src) : defaultSrc;
         });
 
         target.plupload_cfg = {

@@ -14,7 +14,7 @@ class Validate { //表单验证
 
 	//账号验证
 	static public function checkAccount($string) {								
-		$check1 = preg_match("/^[A-Za-z][\w]{4,30}$/", $string);						//普通账号验证
+		$check1 = preg_match("/^[A-Za-z_\-][\w]{4,30}$/", $string);						//普通账号验证
 		$check2 = preg_match("/^([\w\.\-]+)\@([\w]+)\.(com|cn)$/u", $string);	//邮箱验证
 
 		if ($check1 || $check2) {

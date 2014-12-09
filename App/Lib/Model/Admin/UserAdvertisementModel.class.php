@@ -8,7 +8,7 @@ class UserAdvertisementModel extends AdminBaseModel
 	 *
 	 * @param int   $money	订单中媒体号价格
 	 * @param int   $userID	广告主用户ID
-	 * @param int   $type	操作类型，1为拒单退款，2为过期退款
+	 * @param int   $type	操作类型，1为取消订单退款，2为质检不过关退款
 	 * @param int   $adverttype	1为新闻 2为微信 3为微博
 	 * @param int   $order_id	订单ID
 	 * 
@@ -34,7 +34,7 @@ class UserAdvertisementModel extends AdminBaseModel
 		$add['money'] = $money;
 		$add['adormed'] = 2;
 		$add['type'] = 6;
-		$add['member_info'] = $type==1 ? '该订单无法执行，解冻金额返回' : "该订单已过期，解冻金额返回";
+		$add['member_info'] = $type==1 ? '该订单已被平台强制取消，解冻金额返回' : "该订单质检不过关，解冻金额返回";
 		$add['admin_info']  = '解冻资金';
 		$add['time'] = time();
 		$add['status'] = 1;

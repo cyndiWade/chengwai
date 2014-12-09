@@ -95,15 +95,15 @@ return array(
     // 微信图文价格比率
     'WEIXIN_PRICE_RATIO' => array(
         // 单图报价
-        'singleGraphicPrice'        => 1,
+        'singleGraphicPrice'        => 1.3,
         // 多图文第一条报价
-        'multiGraphicTopPrice'      => 0.7,
+        'multiGraphicTopPrice'      => 1,
         // 多图文第二条报价
-        'multiGraphicSecondPrice'   => 0.4,
+        'multiGraphicSecondPrice'   => 0.7,
         // 多图文其他位置报价
-        'multiGraphicOtherPrice'    => 0.25,
+        'multiGraphicOtherPrice'    => 0.4,
         // 带号价
-        'contentPrice'              => 0.25,
+        'contentPrice'              => 0.4,
     ),
 );
 ?>

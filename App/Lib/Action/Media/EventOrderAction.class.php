@@ -778,6 +778,7 @@ class EventOrderAction extends MediaBaseAction {
     	$type		= I('type');
    		$reason 	= I("reason");
    		$typeTip	= "";
+   		$type_info	= 1;
    		
    		switch ($type)
    		{
@@ -786,18 +787,21 @@ class EventOrderAction extends MediaBaseAction {
     			$mediaObject		= D('AccountWeibo');
     			$orderModel			= M('generalize_order');
     			$typeTip			= 2;
+    			$type_info			= 3;
     			break;
    			case 'weixin':
    				$GeneralizeAccount	= D('GeneralizeWeixinAccount');
     			$mediaObject		= D('AccountWeixin');
     			$orderModel			= M('generalize_weixin_order');
     			$typeTip			= 4;
+    			$type_info			= 2;
     			break; 
    			case 'news':
    				$GeneralizeAccount	= D('GeneralizeNewsAccount');
     			$mediaObject		= D('AccountNews');
     			$orderModel			= M('generalize_news_order');
     			$typeTip			= 1;
+    			$type_info			= 1;
     			break;    			   			
    		}
 
@@ -829,15 +833,19 @@ class EventOrderAction extends MediaBaseAction {
 	    		$adUserID = $orderModel->where(array("id"=>$media_Info['generalize_id']))->getField('users_id');
 	    		//总金额
 	    		$allMoney = getAdMoney($media_Info['price'], $type, $media_Info['rebate']);
-	    		D("UserAdvertisement")->setMoney($allMoney, $adUserID);
-    		}
+	    		D("UserAdvertisement")->setMoney($allMoney, $adUserID, 1, $type_info, $order_id);
     		    		
-    		$GeneralizeAccount->setAccountStatus($id, $status);
-			$this->success('处理成功');
+	    		$GeneralizeAccount->setAccountStatus($id, $status);
+				$this->success('处理成功');
+    		}
+    		else 
+	    	{
+	    		$this->error('处理失败');
+	    	} 
     	}
     	else 
     	{
-    		$this->error('处理失败');
+    		$this->error('订单信息不完');
     	} 
     }
     
