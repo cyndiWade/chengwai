@@ -138,6 +138,7 @@ class MoneyAction extends AdminBaseAction {
 			$user_list[$key]['status_explain'] = $user_status[$val['bs_status']]['explain'];
 		}
 		
+		
 		parent::global_tpl_view( array(
 				'action_name'=>'提现',
 				'title_name'=>'数据列表',

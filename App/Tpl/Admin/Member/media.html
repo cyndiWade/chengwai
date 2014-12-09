@@ -51,14 +51,14 @@
 									<thead>
 										<tr>
 											<th>账号ID</th>											<th>账号</th>	
-											<th class="hidden-480">最后登录时间</th>											<th class="hidden-480">最后登录IP</th>											<th class="hidden-480">账号状态</th>
+											<th class="hidden-480">最后登录时间</th>											<th class="hidden-480">最后登录IP</th>											<th class="hidden-480">账号状态</th>											<th class="hidden-480">余额</th>											<th class="hidden-480">冻结资金</th>
 											<th >操作</th>
 										</tr>
 									</thead>
 									<tbody>																		<volist name="user_list" id="vo">
 										<tr class="odd gradeX">											<td>{$vo.bs_id}</td>
 											<td>{$vo.bs_account}</td>
-											<td class="center hidden-480">{$vo.bs_last_login_time}</td>											<td class="center hidden-480">{$vo.bs_last_login_ip}</td>											<td class="center hidden-480">												{$vo.status_explain}											</td>											
+											<td class="center hidden-480">{$vo.bs_last_login_time}</td>											<td class="center hidden-480">{$vo.bs_last_login_ip}</td>											<td class="center hidden-480">												{$vo.status_explain}											</td>											<td>{$vo.mt_money}</td>											<td>{$vo.mt_freeze_funds}</td>
 											<td >												<if condition="($vo['bs_status'] eq 0)">													<a href="{:U('Admin/User/user_status',array('id'=>$vo['bs_id'],'status'=>2))}" class="check">禁用</span></a>												<else />													<a href="{:U('Admin/User/user_status',array('id'=>$vo['bs_id'],'status'=>0))}" class="check">启用</a>												</if>													| <a href="{:U('Admin/User/del_account',array('id'=>$vo['bs_id']))}" class="check">删除</a>																								| <a data-url="{:U('Admin/Money/record',array('user_id'=>$vo['bs_id'],'adormed'=>1))}" href="javascript:;" class="btn_bak" data-record_prev="1">查看流水</a>																						| <a data-url="{:U('Admin/Money/money_change',array('user_id'=>$vo['bs_id'],'adormed'=>1))}" href="javascript:;" class="btn_bak" data-record_prev="1">资金调节</a>											</td>
 										</tr>										</volist>
 									</tbody>

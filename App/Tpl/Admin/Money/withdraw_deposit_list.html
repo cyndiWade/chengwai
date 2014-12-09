@@ -50,11 +50,11 @@
 								<table class="table table-striped table-bordered table-hover sample_1">
 									<thead>
 										<tr>
-											<th>账号ID</th>											<th>账号</th>												<th class="hidden-480">最后登录时间</th>											<th class="hidden-480">最后登录IP</th>											<th class="hidden-480">账号状态</th>											<th >操作</th>
+											<th>账号ID</th>											<th>账号</th>												<th class="hidden-480">最后登录时间</th>											<th class="hidden-480">最后登录IP</th>											<th class="hidden-480">账号状态</th>											<th class="hidden-480">余额</th>											<th class="hidden-480">冻结资金</th>											<th >操作</th>
 										</tr>
 									</thead>
 									<tbody>																		<volist name="view_data.user_list" id="vo">
-										<tr class="odd gradeX">											<td>{$vo.bs_id}</td>											<td>{$vo.bs_account}</td>											<td class="center hidden-480">{$vo.bs_last_login_time}</td>											<td class="center hidden-480">{$vo.bs_last_login_ip}</td>											<td class="center hidden-480">												{$vo.status_explain}											</td>																						<td >																								<a data-url="{:U('Admin/Money/record',array('user_id'=>$vo['bs_id'],'adormed'=>1))}" href="javascript:;" class="btn_bak" data-record_prev="1">查看流水</a>																								| <a data-url="{:U('Admin/Money/withdraw_deposit',array('user_id'=>$vo['bs_id'],'adormed'=>1))}" href="javascript:;" class="btn_bak" data-record_prev="1">提现</a>											</td>																					</tr>										</volist>
+										<tr class="odd gradeX">											<td>{$vo.bs_id}</td>											<td>{$vo.bs_account}</td>											<td class="center hidden-480">{$vo.bs_last_login_time}</td>											<td class="center hidden-480">{$vo.bs_last_login_ip}</td>											<td class="center hidden-480">												{$vo.status_explain}											</td>											<td class="center hidden-480">{$vo.mt_money}</td>											<td class="center hidden-480">{$vo.mt_freeze_funds}</td>											<td >																								<a data-url="{:U('Admin/Money/record',array('user_id'=>$vo['bs_id'],'adormed'=>1))}" href="javascript:;" class="btn_bak" data-record_prev="1">查看流水</a>																								| <a data-url="{:U('Admin/Money/withdraw_deposit',array('user_id'=>$vo['bs_id'],'adormed'=>1))}" href="javascript:;" class="btn_bak" data-record_prev="1">提现</a>											</td>																					</tr>										</volist>
 									</tbody>
 								</table>
 							</div>	

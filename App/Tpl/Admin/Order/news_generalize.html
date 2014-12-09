@@ -124,8 +124,9 @@
 											<td>{$vo.status_explain}</td>
 											
 											<td class="center">
-												<a href="javascript:;" class="btn_bak"  data-record_prev="1" data-url="{:U('Admin/Order/news_generalize_edit',array('act'=>'update','id'=>$vo['id']))}">操作</a>
+												<a href="javascript:;" class="btn_bak"  data-record_prev="1" data-url="{:U('Admin/Order/news_generalize_edit',array('act'=>'update','id'=>$vo['id']))}">审核</a>
 												
+												| <a href="javascript:;" class="btn_bak"  data-record_prev="1" data-url="{:U('Admin/Order/news_generalize_detail',array('id'=>$vo['id']))}">详情</a>
 												<!--| <a href="{:U('Admin/Order/news_generalize_edit',array('act'=>'delete','id'=>$vo['id']))}" class="check" >删除</a>-->
 											</td>
 										</tr>
