@@ -36,7 +36,12 @@
 				<td class="t2" align="center">{$vo['money']}</span>元</td>
 				<td class="t2" align="center">{$vo['paytype']|recordAdmin}</td>
 				<td class="t2" align="center">{$vo['status']|recordStatus}</td>
-				<td class="t2" align="center">{:recordUrl($vo['adverttype'],$vo['generalizeid'])}</td>
+				<td class="t2" align="center">
+				{:recordUrl($vo['adverttype'],$vo['generalizeid'])}
+				<if condition="$vo['generalizeid'] != ''">
+				[id:{$vo['generalizeid']}]
+				</if>
+				</td>
 				<td class="t2" align="center">{$vo['member_info']}</td>
 			  </tr>
 			</volist>

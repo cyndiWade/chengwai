@@ -157,7 +157,7 @@ News.prototype.select_tag_fn = function () {
 			'field' : _this.data('field'),
 			'repetition' : _this.data('repetition')
 		});
-		var ipt_val = _this.data('val').split("-");
+		var ipt_val = _this.data('show_title').split("-");
 		_father_this.ipt_jiage_start.val(ipt_val[0]);
 		_father_this.ipt_jiage_over.val(ipt_val[1]);
 	});

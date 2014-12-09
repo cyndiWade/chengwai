@@ -40,7 +40,20 @@
 			<td class="t2">
 				<div class="part02-price fl">
 				<volist name="view_data['jg']" id="vo">
-					<span class="jg_tags" data-tag_class="jg_tags" data-tag_id="{$vo.id}"  data-classify="价格" data-field="jg" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					<php>
+						if (empty($vo['val'])) {
+							$now_tile = $vo['title'];
+						} else {
+							$Arr_qx = explode('-',$vo['val']);
+							$left_money = ($view_data['news_proportion'] + $Arr_qx[0]);
+							$right_money = ($view_data['news_proportion'] + $Arr_qx[1]);
+							$now_tile = $left_money .'-'.$right_money.'元';
+						
+						}
+					</php>
+					<span class="jg_tags" data-tag_class="jg_tags" data-tag_id="{$vo.id}"  data-classify="价格" data-field="jg" data-repetition="no" data-show_title="{$left_money}-{$right_money}" data-title="{$now_tile}" data-val="{$vo.val}">
+						{$now_tile}
+					</span>
 				</volist>
 				</div>
 				<div class="part03-price fl">
@@ -333,22 +346,22 @@ var create_now_html = function ($data,$post_data) {
 	html += '<td class="last">'
 	html += '<div class="ctrl">';
 	
-	html += '<span class="newdetail" data-news_id="'+$data.bs_id+'">详情</span><br/>';
+	html += '<span class="newdetail" data-news_id="'+$data.bs_id+'">详情</span>';
 	
 	if ($post_data.cksc == 1) {
-		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-news_id="' + $data.bs_id + '">取消收藏</span><br/>';
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-news_id="' + $data.bs_id + '">取消收藏</span>';
 	} else if ($post_data.ckhmd == 1) {
-		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-news_id="' + $data.bs_id + '">取消拉黑</span><br/>';
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-news_id="' + $data.bs_id + '">取消拉黑</span>';
 	} else {
 		if ($data.pg_sc == 1) {
-			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-news_id="' + $data.bs_id + '">已收藏</span><br/>';
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-news_id="' + $data.bs_id + '">已收藏</span>';
 		} else {
-			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-news_id="' + $data.bs_id + '">收藏</span><br/>';
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-news_id="' + $data.bs_id + '">收藏</span>';
 		}
 		if ($data.pg_lh == 1) {
-			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-news_id="' + $data.bs_id + '">已拉黑</span><br/>';
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-news_id="' + $data.bs_id + '">已拉黑</span>';
 		} else {
-			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-news_id="' + $data.bs_id + '">拉黑</span><br/>';
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-news_id="' + $data.bs_id + '">拉黑</span>';
 		} 
 	}
 	

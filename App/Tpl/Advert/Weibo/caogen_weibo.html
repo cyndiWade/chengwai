@@ -152,8 +152,8 @@
 	    </div>
     	<!-- end 排序条件 -->
 	 
-	<div class="col01-weibo l">
-		<table class="tab01-weibo l">
+	<div class="col01-wx l">
+		<table class="tab01-weibo tab01-mt01 l">
 			<thead>
 			  <tr>
 				<th class="t1"><b>微博名称</b></th>
@@ -336,6 +336,7 @@ var create_now_html = function ($data,$post_data) {
 	html += 		'</div>';
 	html += '</div>';
 	html += '</td>';
+	
 	html += '<td class="t2"><b class="red">'+($data.bs_fans_num / 10000)+'万</b></td>';
 	//html += '<td class="t3">1.00</td>';
 	html += '<td class="t4 now_money" data-money="'+$data.bs_yg_zhuanfa+'">'+$data.bs_yg_zhuanfa+'元</td>';
@@ -345,7 +346,9 @@ var create_now_html = function ($data,$post_data) {
 	html += '<td class="t8" data-week_order_num="'+$data.bs_week_order_num+'">'+$data.bs_week_order_num+'</td>';
 	//html += '<td class="t9"><div class="sex"><p>男：占20%</p><p>女：占20%</p></div></td>';
 	//html += '<td class="t10"><div class="date"><p class="select">09月10日</p><p>09月11日</p><p>09月12日</p></div></td>';
-	html += '<td class="t4"><div class="ctrl"><span class="wbdetail" data-weibo_id="'+$data.bs_id+'">详情</span><br />';
+	html += '<td class="last"><div class="ctrl">';
+	
+	html += '<span class="wbdetail" data-weibo_id="'+$data.bs_id+'">详情</span>';
 	
 	/*
 	if ($post_data.cksc == undefined) {
@@ -362,19 +365,19 @@ var create_now_html = function ($data,$post_data) {
 	*/
 
 	if ($post_data.cksc == 1) {
-		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weibo_id="' + $data.bs_id + '">取消收藏</span><br/>';
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="1" data-weibo_id="' + $data.bs_id + '">取消收藏</span>';
 	} else if ($post_data.ckhmd == 1) {
-		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weibo_id="' + $data.bs_id + '">取消拉黑</span><br/>';
+		html += '<span class="lahei_and_shoucang" data-action="del" data-or_type="0" data-weibo_id="' + $data.bs_id + '">取消拉黑</span>';
 	} else {
 		if ($data.pg_sc == 1) {
-			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weibo_id="' + $data.bs_id + '">已收藏</span><br/>';
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weibo_id="' + $data.bs_id + '">已收藏</span>';
 		} else {
-			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weibo_id="' + $data.bs_id + '">收藏</span><br/>';
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="1" data-weibo_id="' + $data.bs_id + '">收藏</span>';
 		}
 		if ($data.pg_lh == 1) {
-			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weibo_id="' + $data.bs_id + '">已拉黑</span><br/>';
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weibo_id="' + $data.bs_id + '">已拉黑</span>';
 		} else {
-			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weibo_id="' + $data.bs_id + '">拉黑</span><br/>';
+			html += '<span class="lahei_and_shoucang" data-action="add" data-or_type="0" data-weibo_id="' + $data.bs_id + '">拉黑</span>';
 		} 
 	}
 	

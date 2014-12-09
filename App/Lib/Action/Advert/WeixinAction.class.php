@@ -68,7 +68,8 @@ class WeixinAction extends AdvertBaseAction {
 				0=>'select',//第一个加
 			),
 			'order_id'=>$order_id,
-			'account_ids'=>$account_ids
+			'account_ids'=>$account_ids,
+			'weixin_proportion'=>$this->global_finance['weixin_proportion']
 				
 		));
 		$this->display();

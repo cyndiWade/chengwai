@@ -79,7 +79,8 @@ class NewsAction extends AdvertBaseAction {
 			//二级导航属性
 			'sidebar_two'=>array(0=>'select',),//第一个加依次类推
 			'order_id' =>$order_id,
-			'account_ids'=>$account_ids
+			'account_ids'=>$account_ids,
+			'news_proportion'=>$this->global_finance['news_proportion'],
 		));
 		$this->display();
 	}
@@ -188,6 +189,7 @@ class NewsAction extends AdvertBaseAction {
 	{
 		//判断是名人还是草根
 		$list_new = $this->db['AccountNews']->getPostArray($_POST,$this->oUser->id,$this->global_finance['news_proportion']);
+		
 		parent::callback(1,'获取成功所有',array('list'=>$list_new['list'],'count'=>$list_new['count'],'p'=>$list_new['p']));
 	}
 	
