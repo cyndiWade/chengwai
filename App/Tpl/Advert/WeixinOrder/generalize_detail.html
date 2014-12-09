@@ -123,7 +123,9 @@
 				</td>
 				<td class="">
 					<if condition="($vo['is_show_affirm_btn'] eq 6)">
-					<a href="javascript:;" class="blue affirm_order" data-order_id="{$vo.g_id}">确认完成</a>
+					    <a href="javascript:;" class="blue affirm_order" data-order_id="{$vo.g_id}">确认完成</a>
+                        <!-- 投诉 add by chenchao  -->
+     	                <a id="complain" ddid="{$vo['g_id']}" order_id="{$view_data.order_info.id}" href="javascript:void(0);" >投诉</a>
 					<elseif condition="($vo['is_show_affirm_btn'] eq 7)"/>
 					<a href="javascript:;" class="blue jump" data-order_id="{$vo.g_id}">评论</a>
 					<else />
@@ -167,10 +169,44 @@
 	
 </div>
 
+<!-- 投诉弹窗  add by chenchao 2014-12-06 -->
+<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/jqpop.css" type="text/css" />
+<div class="batchbox3 tl">
+    <div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>投诉</b></div>
+    <div class="mid-batch pr l">
+        <form action="{:U('Advert/OrderComplain/add_complain')}" onsubmit="return complainCheck();" method="get" class="generalize_form" enctype="multipart/form-data" >
+			<table class="tab01-inten l">
+			  <tr>
+				<td class="t1"><span><i>*</i><strong>投诉原因：</strong></span></td>
+				<td class="t2">
+					<div class="forward">
+						<textarea style="width: 400px;" class="textarea bz_info" name="content" id="complain_content" ignore="ignore" datatype="*0-300" errormsg="请正确填写范围是10-300个字符"  nullmsg="请输入"></textarea>
+						<p>请填写投诉信息，请不要超过300个汉字！</p>
+					</div>
+				</td>
+			  </tr>
+			  <tr>
+				<td class="t1"></td>
+				<td class="t2">
+                    <input type="hidden" value="1" id="complain_type" name="type" />
+                    <input type="hidden" value="2" name="media_type" />
+                    <input type="hidden" value="0" id="order_id" name="order_id" />
+                    <input type="hidden" value="0" id="ddid" name="ddid" />
+				    <input type="submit" class="btn brownbtn" value="提交" />
+				</td>
+			  </tr>
+			</table>
+        </form>
+	</div>
+</div>
+<!-- 投诉弹窗  add by chenchao 2014-12-06 -->
+
 <include file="Public:member_footer" />
 
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
+<script type="text/javascript" src="/App/Public/Global/jquery/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.pop.js"></script>
 <script type="text/javascript">
 $(function(){
 	var className;
@@ -209,6 +245,16 @@ $(function(){
 		
 		$(this).parent().next(".dpCont").text(dpTextC);
 	});
+    //投诉弹出框 add by chenchao 2014-12-06  
+    $("#complain").click(function(){
+        $("#complain_content").val('');
+        //订单ID
+        $("#order_id").val($(this).attr('order_id'));
+        $("#ddid").val($(this).attr('ddid'));
+        //弹出输入框
+        $('.batchbox3').popOn();
+   	});
+    //投诉弹出框 add by chenchao 2014-12-06
 });
 </script>
 <script type="text/javascript">
@@ -301,6 +347,18 @@ $(function(){
 	});
 })();
 
+//检查投诉提交信息 add by chenchao 2014-12-06
+function complainCheck(){
+    if($("#order_id").val() == '0'){
+        alert("提交失败，请重试！");
+        return false;
+    }
+    if(($("#complain_content").val().length < '10') || ($("#complain_content").val().length > 300)){
+        alert("请输入10-30个字符！");
+        return false;
+    }
+    return true;   
+}
 </script>
 </body>
 </html>
