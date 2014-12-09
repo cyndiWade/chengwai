@@ -1,6 +1,6 @@
 <?php
 // 媒体主信息模型
-class UserMediaModel extends MediaBaseModel 
+class UserMediaModel extends AppBaseModel  
 {
 	//判断信息是否存在
 	public function add_account_list($array)
@@ -81,4 +81,24 @@ class UserMediaModel extends MediaBaseModel
         }
         return $this->add($datas);
     }
+    
+	//塞入价格
+	public function insertPirce($user_id,$price,$adverttype,$generalizeid)
+	{
+		$money = $this->where(array('users_id'=>$user_id))->field('money')->find();
+		$update['money'] = $money['money'] + $price;
+		$this->where(array('users_id'=>$user_id))->save($update);
+		$add['users_id'] = $user_id;
+		$add['shop_number'] = 'SL'.time();
+		$add['money'] = $price;
+		$add['type'] = 5;
+		$add['adormed'] = 1;
+		$add['member_info'] = '收入';
+		$add['admin_info'] = '收入';
+		$add['time'] = time();
+		//$add['adverttype'] = $adverttype;
+		//$add['generalizeid'] = $generalizeid;
+		$add['status'] = 1;
+		D('Fund')->add($add);
+	}
 }
