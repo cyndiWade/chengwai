@@ -25,6 +25,9 @@ class IndexAction extends IndexBaseAction {
 	private function _init_data_ () {
 		$this->two_urls();
 		
+		//dump(parent::get_group_session('Advert'));
+		$this->data_to_view(array('Advert_info'=>parent::get_group_session('Advert')));
+		$this->data_to_view(array('Media_info'=>parent::get_group_session('Media')));
 	}
 	
 	//初始化数据库连接

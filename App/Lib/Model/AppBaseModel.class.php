@@ -166,7 +166,9 @@ class AppBaseModel extends Model {
 		$Arr_result = array();
 	
 		while (true) {
-			$Arr_extend_Where[$Str_vernier_field.' > ?'] = $Int_now_id;
+			//$Arr_extend_Where[$Str_vernier_field.' > ?'] = $Int_now_id;
+			$Arr_extend_Where[$Str_vernier_field] = array('gt',$Int_now_id);
+			
 			$Arr_query_where = array_merge($Arr_base_where,$Arr_extend_Where);
 			$Arr_data_list = $Obj_Dao->field($Arr_field)->where($Arr_query_where)->order($Arr_order_by)->limit('0,'.$Int_limit)->select();
 			$Int_list_count = count($Arr_data_list);	//统计本次查询条数

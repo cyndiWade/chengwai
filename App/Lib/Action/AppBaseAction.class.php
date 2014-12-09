@@ -195,6 +195,10 @@ class AppBaseAction extends GlobalParameterAction {
 		return $_SESSION[C('SESSION_DOMAIN')][GROUP_NAME][$key];
 	}
 	
+	protected function get_group_session($GROUP_NAME) {
+		return $_SESSION[C('SESSION_DOMAIN')][$GROUP_NAME];
+	}
+	
 	//删除域->分组下的session
 	protected function del_session ($key) {
 		if ($key == GROUP_NAME) {	//如果key和分组名相同，则删除此分组下所有数据
