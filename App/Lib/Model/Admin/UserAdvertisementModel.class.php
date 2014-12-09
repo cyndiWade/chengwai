@@ -8,11 +8,14 @@ class UserAdvertisementModel extends AdminBaseModel
 	 *
 	 * @param int   $money	订单中媒体号价格
 	 * @param int   $userID	广告主用户ID
+	 * @param int   $type	操作类型，1为拒单退款，2为过期退款
+	 * @param int   $adverttype	1为新闻 2为微信 3为微博
+	 * @param int   $order_id	订单ID
 	 * 
 	 * @author bumtime 2014-11-14
 	 * @return array
 	 */	
-	public function setMoney($money,  $userID)
+	public function setMoney($money,  $userID, $type =1, $adverttype = 1, $order_id =0)
 	{
 		//计算折扣*原价从广告主冻结资金里面扣除
 		
@@ -27,20 +30,20 @@ class UserAdvertisementModel extends AdminBaseModel
 	    
 	    //保存资金记录
 	    $add['users_id'] = $userID;
-		$add['shop_number'] = 'XF'.time();
+		$add['shop_number'] = 'JD'.time();
 		$add['money'] = $money;
 		$add['adormed'] = 2;
 		$add['type'] = 6;
-		$add['member_info'] = '系统取消订单，解冻订单金额并返回';
+		$add['member_info'] = $type==1 ? '该订单无法执行，解冻金额返回' : "该订单已过期，解冻金额返回";
 		$add['admin_info']  = '解冻资金';
 		$add['time'] = time();
 		$add['status'] = 1;
+		$add['paytype']  = 2;
+		$add['adverttype'] = $adverttype;
+		$add['generalizeid'] = $order_id;		
+
 		D('Fund')->add($add);
 	    		
-	}
-	
-	public function save_info ($users_id,$data) {
-		return $this->where(array('users_id'=>$users_id))->save($data);
 	}
 	
 	/**	
@@ -48,11 +51,13 @@ class UserAdvertisementModel extends AdminBaseModel
 	 *
 	 * @param int   $money	订单中媒体号价格
 	 * @param int   $userID	广告主用户ID
+	 * @param int   $adverttype	1为新闻 2为微信 3为微博
+	 * @param int   $order_id	订单ID
 	 * 
 	 * @author bumtime 2014-12-06
 	 * @return array
 	 */	
-	public function setXFMoney($money,  $userID)
+	public function setXFMoney($money,  $userID, $adverttype = 1, $order_id =0)
 	{
 		//计算折扣*原价从广告主冻结资金里面扣除
 		
@@ -72,10 +77,16 @@ class UserAdvertisementModel extends AdminBaseModel
 		$add['admin_info']  = '消费';
 		$add['time'] = time();
 		$add['status'] = 1;
+		$add['paytype']  = 2;
+		$add['adverttype'] = $adverttype;
+		$add['generalizeid'] = $order_id;	
 		D('Fund')->add($add);
 	    		
 	}
 	
+	public function save_info ($users_id,$data) {
+		return $this->where(array('users_id'=>$users_id))->save($data);
+	}
 	
 	
 }

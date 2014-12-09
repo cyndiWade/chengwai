@@ -54,26 +54,25 @@ class RunAction extends AppBaseAction
 		$where  = array();
 		$arryID	=	array();
 		$where['start_time'] = array("lt", time());
-		
 		//订单过期
 		$weiboOrderList		=	$this->db['GeneralizeOrder']->where($where)->getField('id, status');
 		$weixinOrderList	=	$this->db['GeneralizeWeixinOrder']->where($where)->getField('id, status');
 		$newsOrderList		=	$this->db['GeneralizeNewsOrder']->where($where)->getField('id, status');	
-			
-		if($weiboOrderList)
+
+		/*if($weiboOrderList)
 		{ 
 			 $this->setStatus($weiboOrderList, 'weibo');	 
-		}
-		
+		}*/
+
 		if($weixinOrderList)
 		{
 			 $this->setStatus($weixinOrderList, 'weixin');	 
 		}	
-			
+		/*	
 		if($newsOrderList)
 		{
 			 $this->setStatus($newsOrderList, 'news');	 
-		}			
+		}	*/		
 		
 		//意向单过期
 		$weiboIntenOrderList	=	$this->db['IntentionWeiboOrder']->where($where)->getField('id, status');
@@ -111,30 +110,32 @@ class RunAction extends AppBaseAction
 		{
 			case 'weibo':
 				$mediaObject = M('GeneralizeAccount');
-				$orderObject = M('GeneralizeOrder');	
+				$orderObject = M('GeneralizeOrder');
+				$mediaType	 =	3;
 				break;
 				
 			case 'weixin':
 				$mediaObject = M('GeneralizeWeixinAccount');
 				$orderObject = M('GeneralizeWeixinOrder');
+				$mediaType	 =	2;
 				break;			
 				
 			case 'news':
 				$mediaObject = M('GeneralizeNewsAccount');
 				$orderObject = M('GeneralizeNewsOrder');
+				$mediaType	 =	1;
 				break;				
 				
 		}
 		
-		 $AccoutList = M('GeneralizeAccount')->where($whereAccout)->field('id,audit_status,generalize_id')->select();
+		 $AccoutList = $mediaObject->where($whereAccout)->field('id,audit_status,generalize_id')->select();
 
-
-		 
 		 
 		if($AccoutList)
 		{
 			foreach ($AccoutList as $value) 
 			{
+					    		
 				switch ($value['audit_status'])	
 				{
 					//未付款执行时间过期转成已过期
@@ -142,6 +143,29 @@ class RunAction extends AppBaseAction
 					case 2:
 					case 0:
 						$mediaObject->where(array('id'=>$value['id']))->save(array('audit_status'=>9)); 
+						break;
+						
+					//支付后过期自动退款
+					case 3:
+						
+
+						$totalPrice = 0 ;
+						$order_info = $orderObject->field('users_id, id, start_time')->where(array('id'=>$value['generalize_id']))->find();
+						$adUserID 	= $order_info['users_id'];
+		
+			    		$accoutList = $mediaObject->where(array('generalize_id'=>$order_info['id']))->field('`account_id`, `price`, `rebate`, `audit_status`')->select();
+					
+			    		//总金额
+			    		foreach ($accoutList  as $value2)
+			    		{
+			    			$totalPrice += getAdMoney($value2['price'], $type, $value2['rebate']);
+			    		}
+						//给广告主解冻
+			    		D("Media/UserAdvertisement")->setMoney($totalPrice, $adUserID, 2, $mediaType, $order_info['id']);
+			    		
+			    		$mediaObject->where(array('id'=>$value['id']))->save(array('audit_status'=>9)); 
+			    		
+			    		$orderObject->where(array("id"=>$order_info['id']))->save(array('status'=>5));	 	
 						break;
 						
 					//媒体主执行中，5天后没上传资料转为订单完成，并退款
@@ -157,16 +181,17 @@ class RunAction extends AppBaseAction
 							
 				    		$accoutList = $mediaObject->where(array('generalize_id'=>$order_info['id']))->field('`account_id`, `price`, `rebate`, `audit_status`')->select();
 				    		//总金额
-				    		foreach ($accoutList  as $value)
+				    		foreach ($accoutList  as $value2)
 				    		{
-				    			$totalPrice += getAdMoney($value['price'], $type, $value['rebate']);
+				    			$totalPrice += getAdMoney($value2['price'], $type, $value2['rebate']);
 				    		}
 							//给广告主解冻
-				    		D("Media/UserAdvertisement")->setMoney($totalPrice, $adUserID);
+				    		D("Media/UserAdvertisement")->setMoney($totalPrice, $adUserID, 2, $mediaType, $order_info['id']);
 				    		
 				    		$mediaObject->where(array('id'=>$value['id']))->save(array('audit_status'=>7)); 
 						}
-				    	
+						
+				    	$orderObject->where(array("id"=>$order_info['id']))->save(array('status'=>5));
 						break;
 						
 					//媒体主执行完成，5天后转为订单完成
@@ -182,13 +207,13 @@ class RunAction extends AppBaseAction
 				    		$accoutList = $mediaObject->where(array('generalize_id'=>$order_info['id']))->field('`account_id`, `price`, `rebate`, `audit_status`,	users_id')->select();
 				    		
 				    		//总金额
-				    		foreach ($accoutList  as $value)
+				    		foreach ($accoutList  as $value2)
 				    		{
 								//统计订单总金额
-				    			$totalPrice += getAdMoney($value['price'], $type, $value['rebate']);
+				    			$totalPrice += getAdMoney($value2['price'], $type, $value2['rebate']);
 				    			
 				    			//给媒体主加款
-				    			$UserMedia = D('Advert/UserMedia');
+				    			$UserMedia = D('Media/UserMedia');
 								$UserMedia->insertPirce($value['users_id'], $value['price'], 3, $order_info['id']);	
 				    		}
 				    		//给广告主扣款
@@ -196,7 +221,7 @@ class RunAction extends AppBaseAction
 
 				    		$mediaObject->where(array('id'=>$value['id']))->save(array('audit_status'=>7)); 
 						}
-						
+						$orderObject->where(array("id"=>$order_info['id']))->save(array('status'=>5));
 						break;					
 				}
 				
