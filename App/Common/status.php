@@ -114,9 +114,21 @@
 			break;
 			case 9:
 				return '已取消';
-			break;			
-			case 10:
+			break;	
+            case 10:
 				return '不合格';
+            break;		
+			case 11:
+				return '投诉中';
+            break;
+            case 12:
+				return '申诉中';
+            break;
+            case 13:
+				return '投诉成功';
+            break;
+            case 14:
+				return '申诉成功';
 			break;			
 			
 		}

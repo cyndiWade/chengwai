@@ -72,7 +72,7 @@
 				 | <a href="javascript:;" class="action" data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="6"><span>上传反馈数据</span></a> 
                  <elseif condition="$vo.audit_status eq 11" />
                  <!-- 申诉 add by chenchao  -->
-                 | <a id="complain" ddid="{$vo.id}" order_id="{$vo.order_id}" href="javascript:void(0);" >申诉</a>
+                 | <a id="complain" ddid="{$vo.id}" complain_order_id="{$vo.order_id}" href="javascript:void(0);" >申诉</a>
 				 </if>
 				 </div></td>
 			  </tr>
@@ -160,9 +160,9 @@
 
 <!-- 申诉弹窗  add by chenchao 2014-12-06 -->
 <div class="batchbox4 tl">
-    <div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>投诉</b></div>
+    <div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>申诉</b></div>
     <div class="mid-batch pr l">
-        <form action="{:U('Advert/OrderComplain/add_complain')}" onsubmit="return complainCheck();" method="get" class="generalize_form" enctype="multipart/form-data" >
+        <form action="{:U('Media/OrderComplain/add_complain')}" onsubmit="return complainCheck();" method="get" class="generalize_form" enctype="multipart/form-data" >
 			<table class="tab01-inten l">
 			  <tr>
 				<td class="t1"><span><i>*</i><strong>申诉原因：</strong></span></td>
@@ -178,7 +178,7 @@
 				<td class="t2">
                     <input type="hidden" value="2" id="complain_type" name="type" />
                     <input type="hidden" value="3" name="media_type" />
-                    <input type="hidden" value="0" id="order_id" name="order_id" />
+                    <input type="hidden" value="0" id="complain_order_id" name="complain_order_id" />
                     <input type="hidden" value="0" id="ddid" name="ddid" />
 				    <input type="submit" class="btn brownbtn" value="提交" />
 				</td>
@@ -231,10 +231,10 @@ $(function(){
     $("#complain").click(function(){
         $("#complain_content").val('');
         //订单ID
-        $("#order_id").val($(this).attr('order_id'));
+        $("#complain_order_id").val($(this).attr('complain_order_id'));
         $("#ddid").val($(this).attr('ddid'));
         //弹出输入框
-        $('.batchbox3').popOn();
+        $('.batchbox4').popOn();
    	});
     //申诉弹出框 add by chenchao 2014-12-06
    
@@ -242,7 +242,7 @@ $(function(){
 
 //检查申诉提交信息 add by chenchao 2014-12-06
 function complainCheck(){
-    if($("#order_id").val() == '0'){
+    if($("#complain_order_id").val() == '0'){
         alert("提交失败，请重试！");
         return false;
     }

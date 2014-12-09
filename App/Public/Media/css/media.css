@@ -323,3 +323,6 @@
 .tab01-order .t9{ width:72px;}
 .tab01-order .t10{ width:109px;}
 .tab01-order .t11{ width:73px;}
+/* 媒体主申诉弹窗 Modify By chenchao 2014-12-08*/
+.tab01-inten td{vertical-align:middle;}
+.tab01-inten .t2{padding-top: 15px;}

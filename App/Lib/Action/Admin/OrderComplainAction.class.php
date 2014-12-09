@@ -72,32 +72,57 @@ class OrderComplainAction extends AdminBaseAction
             switch ($info['media_type']) {
                 case '3':
                     $type = '2'; //日志类型
+                    $mtype = 'weibo';
                     $GeneralizeAccount = D('GeneralizeAccount');
+                    $Generalize        = D('GeneralizeOrder');
                     break;
                 case '2':
                     $type = '4';
+                    $mtype = 'weixin';
                     $GeneralizeAccount = D('GeneralizeWeixinAccount');
+                    $Generalize        = D('GeneralizeWeixinOrder');
                     break;
                 case '1':
                     $type = '1';
+                    $mtype = 'news';
                     $GeneralizeAccount = D('GeneralizeNewsAccount');
+                    $Generalize        = D('GeneralizeNewsOrder');
                     break;
             }
+            //更改子订单状态
             $status = $this->_post('status');
-            $GeneralizeAccount->where(array('ddid' => $info['ddid']))->save(array('status' => $status));
+            $GeneralizeAccount->where(array('id' => $info['ddid']))->save(array('audit_status' => $status));
+            //订单状态更改
+            $status = '5';
+            $Generalize->where(array('id' => $info['order_id']))->save(array('status' => $status));
+            
             //记录订单处理LOG
             $orderlog = D('OrderLog');
             $orderlog->content = '投诉处理，更改订单状态';
             $orderlog->add_order_log($this->user_id, $info['order_id'], $type);
-            
-            //退款给广告主,待处理
-            if ($status == '13') {
-                
+            //资金处理
+            //读取订单信息
+            $order = $Generalize->where(array('id' => $info['order_id']))->find();
+            //读取子订单信息
+            $orderinfo = $GeneralizeAccount->where(array('id' => $info['ddid']))->find();
+
+            //订单信息不全，提示操作失败
+            if (!isset($order['users_id']) || !isset($orderinfo['price']) || !isset($info['order_id'])){
+                $this->error('订单信息不全，处理失败！');
             }else{
-                //打款给媒体主
+                $advertisement = D('UserAdvertisement');
+                $money = getAdMoney($orderinfo['price'], $mtype, $orderinfo['rebate']);
+                if ($status == '13') {
+                    //返还资金到广告主
+                    $advertisement->setMoney($money, $order['users_id']);
+                }else{
+                    //扣广告主的钱
+                    $advertisement->setXFMoney($money, $order['users_id']);
+                    //打款给媒体主
+                    $Media = D('UserMedia');
+                    $Media->insertPirce($orderinfo['users_id'], $orderinfo['price'], $info['media_type'], $info['order_id']);
+                }
             }
-            
-            
 
             //处理后跳转列表页
             $this->success('处理成功！', '/Admin/OrderComplain/complain_list.html');
