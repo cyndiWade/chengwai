@@ -113,7 +113,8 @@ $custom= array (
 		//外部文件访问地址(用来填写专用的文件服务器)
 		'PUBLIC_VISIT' => array(
  				//'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
- 				'domain' =>	'http://local_cwq.com/',
+				'domain' =>	'http://'.$_SERVER['SERVER_ADDR'].'/',
+ 				//'domain' =>	'http://local_cwq.com/',
 				'dir' => 'files/chengwai/',							//项目文件目录
 		),
 

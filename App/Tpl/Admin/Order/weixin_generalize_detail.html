@@ -244,14 +244,14 @@
 									<div class="control-group">
 										<label class="control-label">封面是否显示在正文中：</label>
 										<div class="controls">
-											<input type="text" disabled="disabled" class="span4 m-wrap" data-required="1"  value="{$view_data.order_info.fmzw_status|getFenm}" >
+											<input type="text" disabled="disabled" class="span4 m-wrap ckeditor" data-required="1"  value="{$view_data.order_info.fmzw_status|getFenm}" >
 										</div>
 									</div>
 									
 									<div class="control-group">
 										<label class="control-label">正文HTML：<span class="required"></span></label>
 										<div class="controls">
-											<textarea rows="3" disabled="disabled" name="zw_info" class="span4 m-wrap">{$view_data['order_info']['zw_info']}</textarea>
+											<textarea rows="3" disabled="disabled" name="zw_info" class="span4 m-wrap ckeditor">{$view_data['order_info']['zw_info']}</textarea>
 										</div>
 									</div>
 									
@@ -270,6 +270,7 @@
 										</div>
 									</div>
 										
+									<!--
 									<div class="control-group">
 										<label class="control-label">短信通知反馈结果：</label>
 										
@@ -285,12 +286,30 @@
 											<input type="text" disabled="disabled" class="span4 m-wrap" data-required="1"  name="dx_phone" value="{$view_data['order_info']['dx_phone']}" >
 										</div>
 									</div>
-									
-									
+									-->
+				
 									<div class="control-group">
 										<label class="control-label">备注：<span class="required"></span></label>
 										<div class="controls">
 											<textarea rows="3" disabled="disabled" name="bz_info" class="span4 m-wrap">{$view_data['order_info']['bz_info']}</textarea>
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">封面：<span class="required"></span></label>
+										<div class="controls">
+											<volist name="view_data['files'][1]" id="vo">
+												<p><img src="{$vo['url']}" /></p>
+											</volist>
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">资质文件：<span class="required"></span></label>
+										<div class="controls">
+											<volist name="view_data['files'][2]" id="vo">
+												<p><img src="{$vo['url']}" /></p>
+											</volist>
 										</div>
 									</div>
 									
