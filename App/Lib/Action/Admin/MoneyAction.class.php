@@ -1,6 +1,6 @@
 <?php
 /**
- * 新闻媒体账号
+ * 资金管理
  */
 class MoneyAction extends AdminBaseAction {
   	
@@ -127,7 +127,7 @@ class MoneyAction extends AdminBaseAction {
 	}
 	
 	
-	//媒体主提现
+	//媒体主提现列表
 	public function withdraw_deposit_list () {
 		$Users = $this->db['Users'];
 		$user_status = C('ACCOUNT_STATUS');		//状态
@@ -149,6 +149,7 @@ class MoneyAction extends AdminBaseAction {
 	}
 	
 	
+	//媒体主提现
 	public function withdraw_deposit () {
 		$data = $this->db['Users']->get_account(array('id'=>$this->user_id));
 		if (empty($data)) $this->error('此用户不存在！');

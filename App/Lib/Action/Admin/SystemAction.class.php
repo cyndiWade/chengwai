@@ -1,6 +1,6 @@
 <?php
 /**
- * 系统设置控制器
+ * 网站管理
  */
 class SystemAction extends AdminBaseAction {
   	
@@ -34,7 +34,7 @@ class SystemAction extends AdminBaseAction {
 	
 	
 	
-	//数据列表
+	//基本设置查看
 	public function index () {
 	
 		
@@ -50,7 +50,7 @@ class SystemAction extends AdminBaseAction {
 		$this->display();
 	}
 	
-	
+	//基本设置编辑
 	public function edit () {
 		$act = $this->_get('act');						//操作类型
 		$SystemBase= $this->db['SystemBase'];			//系统基本表
@@ -88,7 +88,7 @@ class SystemAction extends AdminBaseAction {
 	}
 	
 	
-	
+	//财务设置
 	public function finance () {
 		
 		$finance_data = $this->db['SystemFinance']->where(array('id'=>self::$system_finance_id))->find();

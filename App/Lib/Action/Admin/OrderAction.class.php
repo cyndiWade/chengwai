@@ -119,6 +119,7 @@ class OrderAction extends AdminBaseAction {
 		$this->display();
 	}
 	
+	//新闻订单编辑
 	public function news_generalize_edit() {
 		
 		$order_id = $this->_get('id');
@@ -220,7 +221,7 @@ class OrderAction extends AdminBaseAction {
 		$this->display();
 	}
 	
-	//订单详情
+	//新闻订单详情
 	public function news_generalize_detail () {
 		$order_id = $this->_get('id');
 		$order_info = $this->db['GeneralizeNewsOrder']->where(array('id'=>$order_id))->find();
@@ -349,7 +350,7 @@ class OrderAction extends AdminBaseAction {
 		
 		$this->display();
 	}
-	//订单详情
+	//微博订单详情
 	public function weibo_generalize_detail () {
 		$order_id = $this->_get('id');
 		$order_info = $this->db['GeneralizeOrder']->where(array('id'=>$order_id))->find();
@@ -473,7 +474,7 @@ class OrderAction extends AdminBaseAction {
 		parent::data_to_view($data);
 		$this->display();
 	}
-	//订单详情
+	//微博订单详情
 	public function weibo_intention_detail () {
 		$order_id = $this->_get('id');
 		$order_info = $this->db['IntentionWeiboOrder']->where(array('id'=>$order_id))->find();
@@ -612,7 +613,7 @@ class OrderAction extends AdminBaseAction {
 		$this->display();
 	}
 	
-	//订单详情
+	//微信订单详情
 	public function weixin_generalize_detail () {
 		$order_id = $this->_get('id');
 		$order_info = $this->db['GeneralizeWeixinOrder']->where(array('id'=>$order_id))->find();
@@ -639,7 +640,7 @@ class OrderAction extends AdminBaseAction {
 	}
 	
 	
-	//微信意向单
+	//微信意向单列表
 	public function weixin_intention () {
 		$IntentionWeixinOrder = $this->db['IntentionWeixinOrder'];
 		$where = $this->where;
@@ -728,7 +729,7 @@ class OrderAction extends AdminBaseAction {
 		parent::data_to_view($data);
 		$this->display();
 	}
-	//订单详情
+	//微信订单详情
 	public function weixin_intention_detail () {
 		$order_id = $this->_get('id');
 		$order_info = $this->db['IntentionWeixinOrder']->where(array('id'=>$order_id))->find();
