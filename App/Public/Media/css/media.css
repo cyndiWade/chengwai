@@ -154,7 +154,7 @@
 .tab01-date .t1{ width:73px;}
 .tab01-date .t2{ width:73px;}
 
-.content-user{ width:950px;}
+.content-user{ width:750px;}
 .box01-userorder{ height:50px; background:#f9f9f6; margin-bottom:15px;}
 .box01-userorder li{ margin-left:10px; font-size:14px; position:relative; height:50px; line-height:50px; padding:0 20px; border-top:2px solid #f9f9f6; float:left; cursor:pointer;}
 .box01-userorder li.select{ border-top:2px solid #eb6b4c; background:#fff; color:#4662b1;}

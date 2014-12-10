@@ -337,7 +337,7 @@
 
 								<!-- BEGIN FORM-->
 
-								<form action="{:U('Admin/Order/weixin_intention_edit',array('act'=>'update','id'=>$view_data['order_id']))}" id="form_sample_1" method="post" class="form-horizontal">
+								<form action="{:U('Admin/Order/weixin_intention_edit',array('act'=>'update','id'=>$view_data['order_id']))}" id="form_sample_1" method="post" class="form-horizontal" onsubmit="return checkFrm();">
                      
 									<div class="alert alert-error hide">
 
@@ -369,7 +369,7 @@
 									<div class="control-group">
 										<label class="control-label">留言：<span class="required"></span></label>
 										<div class="controls">
-											<textarea rows="3" name="content" class="span4 m-wrap">{$view_data.content}</textarea>
+											<textarea rows="3" name="content" id="content" class="span4 m-wrap">{$view_data.content}</textarea>
 										</div>
 									</div>
 
@@ -506,7 +506,16 @@
 		
 			
 		});
-
+		function checkFrm()
+		{
+			content = $('#content').val() ;
+			if(content =="")
+			{
+				alert("请录入原因");
+				return false;
+			}
+			return true;
+		}
 	</script>
 
 	<!-- END JAVASCRIPTS -->   
