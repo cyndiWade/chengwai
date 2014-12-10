@@ -43,6 +43,11 @@ class OrderAction extends AdminBaseAction {
 			
 		//订单日志表	
 		'OrderLog'=>'OrderLog',
+			
+		'GeneralizeFiles'=>'GeneralizeFiles',
+		'GeneralizeWeixinFiles'	=> 'GeneralizeWeixinFiles',
+		'IntentionWeiboFiles'=>'IntentionWeiboFiles',
+		'IntentionWeixinFiles'=>'IntentionWeixinFiles'
 
 	);
 
@@ -349,6 +354,21 @@ class OrderAction extends AdminBaseAction {
 		$order_id = $this->_get('id');
 		$order_info = $this->db['GeneralizeOrder']->where(array('id'=>$order_id))->find();
 		$data['order_info'] = $order_info;
+		
+		//图片
+		$files_data = $this->db['GeneralizeFiles']->where(array('generalize_order_id'=>$order_id))->select();
+		if (!empty($files_data)) {
+			parent::public_file_dir($files_data,array('url'),'images/');
+			$Arr_files_format = array();
+			foreach ($files_data as $key=>$val) {
+				$Arr_files_format[$val['type']][] = $val;
+			}
+			$data['files'] = $Arr_files_format;
+		}
+
+		//dump($data['files']);
+		//exit;
+		
 		parent::global_tpl_view( array(
 				'action_name'=>'微博推广单',
 				'title_name'=>'微博推广单',
@@ -458,6 +478,18 @@ class OrderAction extends AdminBaseAction {
 		$order_id = $this->_get('id');
 		$order_info = $this->db['IntentionWeiboOrder']->where(array('id'=>$order_id))->find();
 		$data['order_info'] = $order_info;
+		
+		//图片
+		$files_data = $this->db['IntentionWeiboFiles']->where(array('intention_order_id'=>$order_id))->select();
+		if (!empty($files_data)) {
+			parent::public_file_dir($files_data,array('url'),'images/');
+			$Arr_files_format = array();
+			foreach ($files_data as $key=>$val) {
+				$Arr_files_format[$val['type']][] = $val;
+			}
+			$data['files'] = $Arr_files_format;
+		}
+		
 		parent::global_tpl_view( array(
 				'action_name'=>'微博意向单',
 				'title_name'=>'微博意向单',
@@ -585,6 +617,18 @@ class OrderAction extends AdminBaseAction {
 		$order_id = $this->_get('id');
 		$order_info = $this->db['GeneralizeWeixinOrder']->where(array('id'=>$order_id))->find();
 		$data['order_info'] = $order_info;
+		
+		//图片
+		$files_data = $this->db['GeneralizeWeixinFiles']->where(array('generalize_order_id'=>$order_id))->select();
+		if (!empty($files_data)) {
+			parent::public_file_dir($files_data,array('url'),'images/');
+			$Arr_files_format = array();
+			foreach ($files_data as $key=>$val) {
+				$Arr_files_format[$val['type']][] = $val;
+			}
+			$data['files'] = $Arr_files_format;
+		}
+		
 		parent::global_tpl_view( array(
 				'action_name'=>'微信推广单',
 				'title_name'=>'微信推广单',
@@ -689,6 +733,18 @@ class OrderAction extends AdminBaseAction {
 		$order_id = $this->_get('id');
 		$order_info = $this->db['IntentionWeixinOrder']->where(array('id'=>$order_id))->find();
 		$data['order_info'] = $order_info;
+		
+		//图片
+		$files_data = $this->db['IntentionWeixinFiles']->where(array('generalize_order_id'=>$order_id))->select();
+		if (!empty($files_data)) {
+			parent::public_file_dir($files_data,array('url'),'images/');
+			$Arr_files_format = array();
+			foreach ($files_data as $key=>$val) {
+				$Arr_files_format[$val['type']][] = $val;
+			}
+			$data['files'] = $Arr_files_format;
+		}
+		
 		parent::global_tpl_view( array(
 				'action_name'=>'微信推广单',
 				'title_name'=>'微信推广单',

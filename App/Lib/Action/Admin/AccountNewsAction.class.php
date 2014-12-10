@@ -60,7 +60,7 @@ class AccountNewsAction extends AdminBaseAction {
 		$act = $this->_get('act');						//操作类型
 		$id = $this->_get('id');						//上一页地址
 		$recommended_status = $this->_get('recommended_status');		//推荐状态
-	
+			
 		$info = $this->db['NowAccountObj']->get_account_data_one($id);
 		
 		if($act == 'recommended') {

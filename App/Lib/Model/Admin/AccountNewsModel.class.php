@@ -30,6 +30,7 @@ class AccountNewsModel extends AdminBaseModel {
 	
 	//一条详细数据
 	public function get_account_data_one ($id = 2) {
+	
 		$users_fields = parent::field_add_prefix('Users','bs_','u.');
 		$now_base_fields = parent::field_add_prefix('AccountNews','ac_','a.');
 	
