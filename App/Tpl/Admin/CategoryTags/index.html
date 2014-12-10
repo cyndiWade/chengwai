@@ -59,7 +59,7 @@
 											<td>{$vo.val}</td>											<td>{$vo.show_status_explain}</td>
 											<td class="center">
 												<a href="javascript:;" class="btn_bak"  data-url="{:U('Admin/CategoryTags/index',array('parent_id'=>$vo['id']))}">查看子组</a>
-												| <a href="javascript:;" class="btn_bak"  data-url="{:U('Admin/CategoryTags/edit',array('act'=>update,'id'=>$vo['id']))}">编辑</a>
+												| <a href="javascript:;" class="btn_bak" data-record_prev="1" data-url="{:U('Admin/CategoryTags/edit',array('act'=>update,'id'=>$vo['id']))}">编辑</a>
 												| <a href="{:U('Admin/CategoryTags/edit',array('act'=>delete,'id'=>$vo['id']))}" class="check" >删除</a>												| <if condition="($vo['show_status'] eq 1)">													<a href="{:U('Admin/CategoryTags/edit',array('act'=>is_show,'id'=>$vo['id'],'show_status'=>0))}" class="check">不显示</span></a>													<else />													<a href="{:U('Admin/CategoryTags/edit',array('act'=>is_show,'id'=>$vo['id'],'show_status'=>1))}" class="check">显示</a>												</if>												 												<!-- 												| <a href="{:U('Admin/CategoryTags/edit',array('act'=>init_data,'parent_id'=>$vo['id']))}" class="check" >初始化数据</a>												| <a href="{:U('Admin/CategoryTags/edit',array('act'=>cp_data,'parent_id'=>$vo['id']))}" class="check" >cp数据</a>												  -->											</td>
 										</tr>
 									</volist>

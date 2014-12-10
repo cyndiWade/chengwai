@@ -70,7 +70,19 @@
 				</div>
 				<div class="part02-price fl">
 				<volist name="view_data['jg']" id="vo">
-				<span class="jg_tags" data-tag_class="jg_tags"  data-tag_id="{$vo.id}" data-classify="价格" data-field="jg" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">{$vo.title}</span>
+					<php>
+						if (empty($vo['val'])) {
+							$now_tile = $vo['title'];
+						} else {
+							$Arr_qx = explode('-',$vo['val']);
+							$left_money = $Arr_qx[0] + ($view_data['weixin_proportion'] * $Arr_qx[0]);
+							$right_money = $Arr_qx[1] + ($view_data['weixin_proportion'] * $Arr_qx[1]);
+							$now_tile = round($left_money) .'-'.round($right_money).'元';
+						}
+					</php>
+				<span class="jg_tags" data-tag_class="jg_tags"  data-tag_id="{$vo.id}" data-classify="价格" data-field="jg" data-repetition="no" data-show_title="{$left_money}-{$right_money}" data-title="{$now_tile}" data-val="{$vo.val}">
+					{$now_tile}
+				</span>
 				</volist>
 				</div>
 				<div class="part03-price fl">

@@ -70,12 +70,11 @@
 							$Arr_qx = explode('-',$vo['val']);
 							$left_money = $Arr_qx[0] + ($view_data['weixin_proportion'] * $Arr_qx[0]);
 							$right_money = $Arr_qx[1] + ($view_data['weixin_proportion'] * $Arr_qx[1]);
-							//$now_tile = round($left_money / 10000) .'-'.round($right_money / 10000).'万';
-							$now_tile = ($left_money / 10000) .'-'.($right_money / 10000).'万';
+							$now_tile = round($left_money / 10000) .'-'.($right_money / 10000).'万';
 						}
 					</php>
-					<span class="jg_tags" data-tag_class="jg_tags"  data-tag_id="{$vo.id}" data-classify="价格" data-field="jg" data-repetition="no" data-title="{$vo.title}" data-val="{$vo.val}">
-						{$vo.title}
+					<span class="jg_tags" data-tag_class="jg_tags"  data-tag_id="{$vo.id}" data-classify="价格" data-field="jg" data-repetition="no" data-show_title="{$left_money}-{$right_money}" data-title="{$now_tile}" data-val="{$vo.val}">
+						{$now_tile}
 					</span>
 					</volist>
 				</div>

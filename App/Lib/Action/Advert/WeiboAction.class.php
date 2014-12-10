@@ -113,8 +113,8 @@ class WeiboAction extends AdvertBaseAction {
 			'sidebar_two'=>array($show_num=>'select',),//第一个加依次类推
 			'pt_type' => $this->pt_type,
 			'order_id' => $order_id,
-			'account_ids'=>$account_ids
-				
+			'account_ids'=>$account_ids,
+			'weibo_proportion'=>$this->global_finance['weibo_proportion']
 		));
 		$this->display();
 	}
@@ -147,7 +147,8 @@ class WeiboAction extends AdvertBaseAction {
 			'sidebar_two'=>array($show_num=>'select'),//第一个加
 			'pt_type' => $this->pt_type,
 			'order_id' => $order_id,
-			'account_ids'=>$account_ids
+			'account_ids'=>$account_ids,
+			'weibo_proportion'=>$this->global_finance['weibo_proportion']
 		));
 		
 		$this->display();
