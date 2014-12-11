@@ -34,9 +34,12 @@ class MemberAction extends AdminBaseAction {
 		$Users = D('Users');
 		$user_status = C('ACCOUNT_STATUS');		//状态
 		
-		$page_info = parent::easy_page(1,500);
+		import('ORG.Util.Page');
+		$count =  $Users->get_account_count(array('type'=>$this->type,'is_del'=>0));
+		$Page  = new Page($count,100);
+		$show   = $Page->show();
 		
-		$user_list = $Users->get_user_detail_info_list($this->type,$page_info[0],$page_info[1]);
+		$user_list = $Users->get_user_detail_info_list($this->type,$Page->firstRow,$Page->listRows);
 
 		foreach ($user_list AS $key=>$val) {
 			$user_list[$key]['status_explain'] = $user_status[$val['bs_status']]['explain'];
@@ -48,6 +51,9 @@ class MemberAction extends AdminBaseAction {
 				'add_name' => '添加账号'
 		));
 		$this->assign('user_list',$user_list);
+		
+		$data['page'] = $show ;
+		parent::data_to_view($data);
 		
 		if ($this->type == 1) {
 			$page_name = 'media';

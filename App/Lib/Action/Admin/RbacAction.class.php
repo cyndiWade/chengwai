@@ -347,14 +347,14 @@ class RbacAction extends AdminBaseAction {
 		//所有用户列表
 		$userList = $Users->field('u.id,u.account,u.nickname')
 		->table(C('DB_PREFIX').'users AS u')
-		->where(array('u.is_del'=>0))
+		->where(array('u.is_del'=>0,'u.type'=>0))
 		->select();
 		
 		//已有用户
 		$userYesList = $Db->field('u.id,u.account,g.user_id,u.nickname')
 		->table(C('DB_PREFIX').'group_user AS g')
 		->join(C('DB_PREFIX')."users AS u ON g.user_id=u.id")
-		->where(array('g.group_id'=>$id,'u.is_del'=>0))
+		->where(array('g.group_id'=>$id,'u.is_del'=>0,'u.type'=>0))
 		->select();
 
 		//计算当前组下已有的用户id

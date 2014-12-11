@@ -62,8 +62,8 @@
 											<td >												<a data-url="{:U('Admin/Member/user_detail',array('user_id'=>$vo['bs_id']))}" href="javascript:;" class="btn_bak" data-record_prev="1" >详情</a>												|												<if condition="($vo['bs_status'] eq 0)">													<a href="{:U('Admin/User/user_status',array('id'=>$vo['bs_id'],'status'=>2))}" class="check">禁用</span></a>												<else />													<a href="{:U('Admin/User/user_status',array('id'=>$vo['bs_id'],'status'=>0))}" class="check">启用</a>												</if>													| <a href="{:U('Admin/User/del_account',array('id'=>$vo['bs_id']))}" class="check">删除</a>																								| <a data-url="{:U('Admin/Money/record',array('user_id'=>$vo['bs_id'],'adormed'=>1))}" href="javascript:;" class="btn_bak" data-record_prev="1">查看流水</a>																						| <a data-url="{:U('Admin/Money/money_change',array('user_id'=>$vo['bs_id'],'adormed'=>1))}" href="javascript:;" class="btn_bak" data-record_prev="1">资金调节</a>											</td>
 										</tr>										</volist>
 									</tbody>
-								</table>
-							</div>	
+								</table>																
+							</div>												<p class="page_type_show">{$view_data.page}</p>							
 						</div>
 						<!-- END EXAMPLE TABLE PORTLET-->
 					</div>

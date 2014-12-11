@@ -51,9 +51,9 @@
 										<tr>											<td>{$vo.ac_id}</td>											<td>{$vo.ac_weixinhao}</td>											<td>{$vo.ac_account_name}</td>											<td><a class="btn_bak" data-record_prev="1" href="javascript:;" data-url="{:U('Admin/Member/user_detail',array('user_id'=>$vo['bs_id']))}" >{$vo.bs_account}</a></td>											<td>{$vo.pg_type_explain}</td>											<td>{$vo.pg_celebrity_explain}</td>											<td>{$vo.pg_fans_num}</td>											<td>{$vo.ac_dtb_money}</td>											<td>{$vo.pg_ac_dtb_money}</td>											<td>{$vo.ac_create_time}</td>											<td>{$vo.pg_status_explain}</td>											<td class="center">																						<a href="{$vo.pa_edit_url}" >详情</a>												<!-- 详情 -->																								<!-- 												<if condition="($vo['recommended_status'] eq 1)">													<a href="{:U('Admin/AccountWeibo/edit',array('act'=>'recommended','id'=>$vo['id'],'recommended_status'=>0))}" class="check">取消推荐</a>												<else />													<a href="{:U('Admin/AccountWeibo/edit',array('act'=>'recommended','id'=>$vo['id'],'recommended_status'=>1))}" class="check">首页推荐</a>												</if>												 -->											</td>
 										</tr>
 									</volist>
-								</table>
-							</div>
-						</div>
+								</table>								
+							</div>														<p class="page_type_show">{$view_data.page}</p>
+						</div>						
 						<!-- END EXAMPLE TABLE PORTLET-->
 					</div>
 				</div>

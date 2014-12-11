@@ -3,6 +3,10 @@
 //用户数据模型
 class UsersModel extends AdminBaseModel {
 	
+	public function get_account_count ($where) {
+		return $this->where($where)->count();
+	}
+	
 	//添加账号
 	public function add_account($type) {
 		//写入数据库

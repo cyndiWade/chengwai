@@ -3,9 +3,9 @@ if (!defined('THINK_PATH'))exit();
 
 return array(
 
-		'DEFAULT_GROUP'         => 'Admin',  // 默认分组
-		'DEFAULT_MODULE'        => 'Login', // 默认模块名称
-		'DEFAULT_ACTION'        => 'login', // 默认操作名称
+		//'DEFAULT_GROUP'         => 'Admin',  // 默认分组
+		//'DEFAULT_MODULE'        => 'Login', // 默认模块名称
+		//'DEFAULT_ACTION'        => 'login', // 默认操作名称
 
 
 		/* 后台不需要验证的模块 */

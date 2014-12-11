@@ -30,7 +30,12 @@ class AccountWeixinAction extends AdminBaseAction {
 	//数据列表
 	public function index () {
 
-		$list = $this->db['NowAccountObj']->get_account_data_list();
+		import('ORG.Util.Page');
+		$count =  $this->db['NowAccountObj']->get_account_count(array('is_del'=>0));	
+		$Page  = new Page($count,100);
+		$show   = $Page->show();
+
+		$list = $this->db['NowAccountObj']->get_account_data_list($Page->firstRow,$Page->listRows);
 		
 		if ($list == true ) {
 			foreach ($list as $key=>$val) {
@@ -48,6 +53,8 @@ class AccountWeixinAction extends AdminBaseAction {
 		
 		
 		$data['list'] = $list;
+		
+		$data['page'] = $show ;
 		
 		parent::global_tpl_view( array(
 			'action_name'=>'数据列表',
