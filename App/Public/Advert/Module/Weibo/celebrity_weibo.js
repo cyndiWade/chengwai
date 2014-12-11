@@ -469,6 +469,7 @@ Weibo.prototype.del_select_tag_fn = function () {
 	var _father_this = this;
 	_father_this.init();
 	
+	_father_this.delete_tags.unbind();
 	_father_this.delete_tags.click(function () {
 		$(this).parent().remove();
 		_father_this.bu_xian_init_fn(this);

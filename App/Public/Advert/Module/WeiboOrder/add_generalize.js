@@ -77,6 +77,12 @@ init_check_form();
 		var sixteen_minutes = 16 * 60 * 1000;
 		var fourteen_day = 14 * 24 * 60 * 60 * 1000;
 		
+		if (select_date - now_date_format <  sixteen_minutes) {
+			_this.val('');
+			alert('请选择当前时间60分钟后时间');
+		}
+		
+		/*
 		if (select_date - now_date_format <  sixteen_minutes
 		|| 	
 		   select_date - now_date_format > fourteen_day
@@ -84,6 +90,7 @@ init_check_form();
 			_this.val('');
 			alert('请选择当前时间60分钟后，14天之内的时间');
 		}	
+		*/
 	}
 	
 	
