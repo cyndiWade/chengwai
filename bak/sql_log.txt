@@ -79,12 +79,12 @@ ALTER TABLE  `app_user_media` ADD INDEX (  `users_id` )
 alter table app_users add index idx_cx_accout(type,is_del,account)
 alter table app_users drop index idx_ac_st
 
-//优化索引表
+//优化关系表
 alter table app_blackorcollection_weixin add index idx_cx_gx(is_celebrity,user_id)
 
 //优化微信表
 alter table app_account_weixin add index idx_cx_fl(is_del,status,is_celebrity)
 
-
+//优化索引表
 alter table app_grassroots_weixin add index idx_cx_cg(weixin_id)
 
