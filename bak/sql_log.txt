@@ -63,3 +63,28 @@ ALTER TABLE `app_generalize_account` ADD `execute_time` INT NOT NULL DEFAULT '0'
 //20141207新增投诉状态
 ALTER TABLE `app_order_complain`
 ADD COLUMN `status`  tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态：0未处理、1已处理' AFTER `type`;
+
+
+
+
+//2014/12/11 SQL性能优化
+//优化标签表
+create index idx_cx on app_category_tags(`is_del`,`show_status`,`parent_id`))
+
+//优化用户信息表
+ALTER TABLE  `app_user_advertisement` ADD INDEX (  `users_id` )
+ALTER TABLE  `app_user_media` ADD INDEX (  `users_id` )
+
+//优化用户表
+alter table app_users add index idx_cx_accout(type,is_del,account)
+alter table app_users drop index idx_ac_st
+
+//优化索引表
+alter table app_blackorcollection_weixin add index idx_cx_gx(is_celebrity,user_id)
+
+//优化微信表
+alter table app_account_weixin add index idx_cx_fl(is_del,status,is_celebrity)
+
+
+alter table app_grassroots_weixin add index idx_cx_cg(weixin_id)
+
