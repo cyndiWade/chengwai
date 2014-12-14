@@ -335,7 +335,8 @@
 var system_info = {
 	is_celebrity : 0,	//是否是名人1是、0不是
 	page_limit : 10,	//每页条数
-	post_order_url : '{:U('Advert/WeixinOrder/add_account')}',
+	post_order_url : '{$view_data.post_order_url}',
+	
 	Global_Resource_Path : '{$global_tpl_view['Global_Resource_Path']}',
 	export_url : '{:U('Advert/Member/ajax_export_order')}',
 	account_ids : '{$view_data.account_ids}',
@@ -451,7 +452,7 @@ var create_now_html = function ($data,$post_data) {
 	
 	var pg_bs_head_img = '';
 	if ($data.bs_head_img == '') {
-		pg_bs_head_img = 'http://img.weiboyi.com/img/uploadimg/weixin_follower_img/14113128103232235531541eecaa240b4.jpg';
+		pg_bs_head_img =  system_info.Global_Resource_Path+'images/weixin_default.jpg';
 	} else {
 		pg_bs_head_img = $data.bs_head_img;
 	}	

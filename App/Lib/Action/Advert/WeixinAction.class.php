@@ -30,7 +30,8 @@ class WeixinAction extends AdvertBaseAction {
 			'Users' => 'Users',
 			'AccountWeixin' => 'AccountWeixin',
 			'BlackorcollectionWeixin' => 'BlackorcollectionWeixin',
-			'GeneralizeWeixinOrder' => 'GeneralizeWeixinOrder'
+			'GeneralizeWeixinOrder' => 'GeneralizeWeixinOrder',
+			'IntentionWeixinOrder' => 'IntentionWeixinOrder'
 	);
 	
 	//和构造方法
@@ -58,48 +59,69 @@ class WeixinAction extends AdvertBaseAction {
 	
 	//微信名人列表页
 	public function celebrity_weixin () {
-		$order_id = $this->_get('order_id') ;
+		$order_id = I('order_id', 0, 'intval') ;
 		$account_ids = $this->_get('account_ids') ;
 		$this->show_celebrity_category_tags();
+		$sideBar = U('/Advert/WeixinOrder/add_intention/type/1');
+
 		parent::data_to_view(array(
-					
+			
 			//二级导航加样式
 			'sidebar_two'=>array(
 				0=>'select',//第一个加
+				1=> ($order_id >0 ) ? 'select_hidden' : "",
 			),
 			'order_id'=>$order_id,
 			'account_ids'=>$account_ids,
-			'weixin_proportion'=>$this->global_finance['weixin_proportion']
-				
+			'weixin_proportion'=>$this->global_finance['weixin_proportion'],
+			'sideBar' => $sideBar
 		));
+		
 		$this->display();
 	}
 	
 	
 	//微信
 	public function weixin() {
-
 		//验证
-		$order_id = $this->_get('order_id') ;
+		$order_id = I('order_id', 0, 'intval') ;
 		$account_ids = $this->_get('account_ids') ;
+		$inten_type = I('inten_type', 0, 'intval') ;
 		if (!empty($order_id)) {
-			$order_info = $this->db['GeneralizeWeixinOrder']->get_OrderInfo_By_Id($order_id,$this->oUser->id);
-			if ($order_info == false) {
-				$this->redirect('Advert/WeixinOrder/add_generalize');
+			//意向单
+			if(1 == $inten_type)
+			{
+				$order_info = $this->db['IntentionWeixinOrder']->get_OrderInfo_By_Id($order_id,$this->oUser->id);
+				if ($order_info == false) {
+					$this->redirect('Advert/WeixinOrder/add_intention');
+				}
+			}
+			else 
+			{
+				$order_info = $this->db['GeneralizeWeixinOrder']->get_OrderInfo_By_Id($order_id,$this->oUser->id);
+				if ($order_info == false) {
+					$this->redirect('Advert/WeixinOrder/add_generalize');
+				}
 			}
 		}
 
 		$this->show_caogen_category_tags();
+		$sideBar = U('Advert/WeixinOrder/add_intention');
+		
 		parent::data_to_view(array(
 			
 			//二级导航加样式
 			'sidebar_two'=>array(
+				0=> $order_id >0 ? 'select_hidden' : "",
 				1=>'select',//第一个加
 			),
 				
 			'order_id'=>$order_id,
 			'account_ids'=>$account_ids,
-			'weixin_proportion'=>$this->global_finance['weixin_proportion']
+			'weixin_proportion'=>$this->global_finance['weixin_proportion'],
+			'sideBar' => $sideBar,
+			'inten_type'=>$inten_type,
+			'post_order_url' => ($inten_type ==1 )  ? U('Advert/WeixinOrder/add_yxaccount'): U('Advert/WeixinOrder/add_account')
 		));
 		$this->display();
 		

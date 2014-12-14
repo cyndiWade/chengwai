@@ -163,7 +163,7 @@ body{ background:#fefefe;}
 
 /*page*/
 .page-wb{ color:#808080; padding-right:5px; color:#000; height:34px; line-height:34px;}
-.page-wb a,.page-wb .next,.page-wb .text{ float:left; margin-left:8px; font-size:14px; text-align:center; display:inline; width:36px; height:34px; line-height:34px; border:1px solid #d1d6d4;}
+.page-wb a,.page-wb .next,.page-wb .text{ float:left; margin-left:8px; font-size:14px; text-align:center; display:inline; width:48px; height:34px; line-height:34px; border:1px solid #d1d6d4;}
 .page-wb em{width:19px; height:34px; line-height:34px; font-weight:bold; display:inline-block; float:left; margin-left:10px;}
 .page-wb .on{ background:#eb6b4c; color:#fff;}
 .page-wb .text{width:22px; height:32px; line-height:32px;border:1px solid #d1d6d4; margin-right:10px;}

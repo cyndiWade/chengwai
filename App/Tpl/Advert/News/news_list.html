@@ -235,9 +235,11 @@ var system_info = {
 	post_order_url : '{:U('Advert/News/add_people')}',
 	export_url : '{:U('Advert/Member/ajax_export_order')}',
 	account_ids : '{$view_data.account_ids}',
-	getAccountInfo : '{:U('Advert/News/getAccountInfo')}'
+	getAccountInfo : '{:U('Advert/News/getAccountInfo')}',
+	Global_Resource_Path : '{$global_tpl_view['Global_Resource_Path']}'
 //tmp_limit : 
 }
+
 var list_content = $('#list_content');
 </script>
 
@@ -323,7 +325,8 @@ var create_now_html = function ($data,$post_data) {
 	//html += '		<img src="{$global_tpl_view.Global_Resource_Path}images/mt_img01.gif" class="mtimg" />';
 	
 	if ($data.bs_head_img == '') {
-		html += '<img src="{$global_tpl_view.Global_Resource_Path}images/mt_img01.gif" class="mtimg" />';
+		html += '<img src="'+system_info.Global_Resource_Path+'images/news_default.jpg" class="mtimg" />';
+		
 	} else {
 		html += '<img src="'+$data.bs_head_img+'" class="mtimg" />';
 	}

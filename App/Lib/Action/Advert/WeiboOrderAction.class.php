@@ -197,9 +197,11 @@ class WeiboOrderAction extends AdvertBaseAction {
 
 	//添加意向单
 	public function add_intention () {
+		$type = I('type', 0, 'intval');
 		parent::data_to_view(array(
 				//二级导航属性
 				'sidebar_two'=>array(6=>'select'),//第一个加依次类推
+				'type' =>$type
 		));
 		$this->display();
 	}
@@ -254,7 +256,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 		$Page       = new Page($count,5);
 		$show       = $Page->show();
 		$list = $IntentionWeiboOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
-		->order('id desc')->field('id,yxd_name,tfpt_type,fslx_type,ryg_type,start_time,over_time,status,create_time')->select();
+		->order('id desc')->field('id,yxd_name,tfpt_type,fslx_type,ryg_type,start_time,over_time,status,create_time,is_celebrity')->select();
 		$new_list_id = array();
 		foreach($list as $value)
 		{
@@ -280,7 +282,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 
 		if($this->isPost())
 		{
-			if(intval($_POST['order_id']!=''))
+			$order_id = I('order_id', 0 ,'intval');
+			if($order_id >0)
     		{
 				$status = $this->db['GeneralizeAccount']->insertAll($_POST,$this->oUser->id,$this->global_finance['weibo_proportion']);
 				if ($status == true) {
@@ -306,13 +309,14 @@ class WeiboOrderAction extends AdvertBaseAction {
 
 		if($this->isPost())
 		{
-			if(intval($_POST['order_id']!=''))
+			$order_id = I('order_id', 0 ,'intval');
+			if($order_id >0)
     		{
 				$status = $this->db['IntentionWeiboAccount']->insertAll($_POST,$this->oUser->id,$this->global_finance['weibo_proportion']);
 				if ($status == true) {
 					
 					//修改订单状态为1，平台审核的类型
-					$this->db['IntentionWeiboOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
+					$this->db['IntentionWeiboOrder']->where(array('id'=>$order_id))->save(array('status'=>1));
 					
 					parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('/Advert/WeiboOrder/intention_list')));
 				} else {
@@ -322,7 +326,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 				
 				//$account_ids = passport_encrypt($_POST['account_ids'],'account_ids');
 				$account_ids = urlencode($_POST['account_ids']);
-				parent::callback(C('STATUS_SUCCESS'),'正在跳转...',array('go_to_url'=>U('Advert/WeiboOrder/add_intention',array('account_ids'=>$account_ids,'pttype'=>$_POST['pt_type']))));
+				parent::callback(C('STATUS_SUCCESS'),'正在跳转...',array('go_to_url'=>U('Advert/WeiboOrder/add_intention',array('account_ids'=>$account_ids,'pttype'=>$_POST['pt_type'],'type'=>1))));
 			}
 		}
 	}
@@ -357,14 +361,12 @@ class WeiboOrderAction extends AdvertBaseAction {
 					//修改订单状态为1，平台审核的类型
 					$this->db['IntentionWeiboOrder']->where(array('id'=>$id))->save(array('status'=>1));
 					$this->redirect('Advert/WeiboOrder/intention_list');
-				}else{
-					if($_POST['tfpt_type']==1)
-					{
-						$this->redirect('Advert/Weibo/celebrity_weibo',array('pt_type'=>1,'order_id'=>$id));
-					}else{
-						$this->redirect('Advert/Weibo/celebrity_weibo',array('pt_type'=>2,'order_id'=>$id));
-					}
-				}
+				}else{			 
+						if($_POST['is_celebrity'] ==1)
+							$this->redirect('Advert/Weibo/celebrity_weibo',array('pt_type'=>$_POST['tfpt_type'],'order_id'=>$id));
+						else 
+							$this->redirect('Advert/Weibo/caogen_weibo',array('pt_type'=>$_POST['tfpt_type'],'order_id'=>$id, 'inten_type'=>1));					
+					 }
 			}else{
 				parent::callback(C('STATUS_DATA_LOST'),'参数错误!');
 			}
@@ -478,8 +480,9 @@ class WeiboOrderAction extends AdvertBaseAction {
 	
 	
 	//订单详情
-	public function generalize_detail () {
-			$order_id = $this->_get('order_id');
+	public function generalize_detail () 
+	{
+		$order_id = I('order_id', 0, 'intval');
 		if (empty($order_id)) alertClose('非法操作！');
 		
 		//add by bumtime 20141201
@@ -537,6 +540,17 @@ class WeiboOrderAction extends AdvertBaseAction {
 			}
 		}
 		
+		//配图
+		$file_where = array("generalize_order_id"=>$order_id);
+		$order_file_new = array();
+		$order_file = D('GeneralizeFiles')->where($file_where)->field('type,url')->select();
+	
+		foreach ($order_file as $value)
+		{
+			$order_file_new[$value['type']][] = $value['url'];
+		}
+		$order_info['file'] = $order_file_new;
+		 
 
 		//获取订单下的关联账号列表
 		parent::data_to_view(array(
@@ -569,7 +583,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 	
 	//意向单订单详情
 	public function intention_detail () {
-		$order_id = $this->_get('order_id');
+		$order_id = I('order_id', 0, 'intval');
 		if (empty($order_id)) alertClose('非法操作！');
 		
 		//add by bumtime 20141201
@@ -633,7 +647,18 @@ class WeiboOrderAction extends AdvertBaseAction {
 			}
 		}
 		
-
+		//配图
+		$file_where = array("intention_order_id"=>$order_id);
+		$order_file_new = array();
+		$order_file = D('IntentionWeiboFiles')->where($file_where)->field('type,url')->select();
+	
+		foreach ($order_file as $value)
+		{
+			$order_file_new[$value['type']][] = $value['url'];
+		}
+		$order_info['file'] = $order_file_new;
+		
+ 
 		//获取订单下的关联账号列表
 		parent::data_to_view(array(
 			'sidebar_two'=>array(6=>'select',),//第一个加依次类推，//二级导航属性

@@ -247,7 +247,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 		$Page       = new Page($count,10);
 		$show       = $Page->show();
 		$list = $IntentionWeixinOrder->where($where)->limit($Page->firstRow.','.$Page->listRows)
-		->order('id desc')->field('id,tfpt_type,fslx_type,ggw_type,yxd_name,start_time,over_time,status,create_time')->select();
+		->order('id desc')->field('id,tfpt_type,fslx_type,ggw_type,yxd_name,start_time,over_time,status,create_time,is_celebrity')->select();
 		$new_list_id = array();
 		foreach($list as $value)
 		{
@@ -271,9 +271,11 @@ class WeixinOrderAction extends AdvertBaseAction {
 	
 	//添加意向单
 	public function add_intention () {
+		$type = I('type', 0, 'intval');
 		parent::data_to_view(array(
 				//二级导航属性
 				'sidebar_two'=>array(4=>'select'),//第一个加依次类推
+				'type' =>$type
 		));
 		$this->display();
 	}
@@ -309,7 +311,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 					//$this->db['GeneralizeWeixinOrder']->where(array('id'=>$id))->save(array('status'=>1));
 	    			$this->redirect('Advert/WeixinOrder/generalize_activity');
 	    		}else{
-	    			$this->redirect('Advert/Weixin/weixin',array('order_id'=>$id));
+	    			$this->redirect('Advert/Weixin/weixin',array('order_id'=>$id,'inten_type'=>0));
 	    		}
 	    	}
     	}
@@ -326,7 +328,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 				$info = '您提交的内容中含有敏感词 "' . $bool['keyword'] . '",请修改!';
 				alertBack($info);
 			}
-			
+		
 	    	$id = $this->db['IntentionWeixinOrder']->insertPost($_POST,$this->oUser->id);
 	    	//走先选择账号流程
 			//$account_id = trim($_GET['account_ids']);
@@ -343,8 +345,11 @@ class WeixinOrderAction extends AdvertBaseAction {
 					//修改订单状态为1，平台审核的类型
 					$this->db['IntentionWeixinOrder']->where(array('id'=>$id))->save(array('status'=>1));
 					$this->redirect('Advert/WeixinOrder/intention_list');
-				}else{
-					$this->redirect('Advert/Weixin/celebrity_weixin',array('order_id'=>$id));
+				}else{		
+					if($_POST['is_celebrity'] == 1)
+							$this->redirect('Advert/Weixin/celebrity_weixin',  array('order_id'=>$id));
+					else 
+							$this->redirect('Advert/Weixin/weixin', array('order_id'=>$id,'inten_type'=>1));
 				}
 	    	}
     	}
@@ -378,7 +383,8 @@ class WeixinOrderAction extends AdvertBaseAction {
     {
     	if($this->isPost())
     	{
-    		if(intval($_POST['order_id']!=''))
+    		$order_id = I('order_id', 0, "intval");
+    		if(!empty($order_id))
     		{
 	    		$status = $this->db['GeneralizeWeixinAccount']->insertAll($_POST,$this->oUser->id,$this->global_finance['weixin_proportion']);
 				if ($status == true) {
@@ -393,6 +399,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 			}else{
 				//$account_ids = passport_encrypt($_POST['account_ids'],'account_ids');
 				$account_ids = urlencode($_POST['account_ids']);
+
 				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/add_generalize',array('account_ids'=>$account_ids))));
 			}
     	}
@@ -403,21 +410,23 @@ class WeixinOrderAction extends AdvertBaseAction {
     {
     	if($this->isPost())
     	{
-    		if(intval($_POST['order_id']!=''))
+    		$order_id = I('order_id', 0, 'intval');
+    		if($order_id >0 )
     		{
 	    		$status = $this->db['IntentionWeixinAccount']->insertAll($_POST,$this->oUser->id,$this->global_finance['weixin_proportion']);
+	     
 				if ($status == true) {
 					//修改订单状态为1，平台审核的类型
 					$this->db['IntentionWeixinOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
 
 					parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/intention_list')));
 				} else {
-					parent::callback(C('STATUS_UPDATE_DATA'),'添加是失败');
+					parent::callback(C('STATUS_UPDATE_DATA'),'添加失败');
 				}
 			}else{
 				//$account_ids = passport_encrypt($_POST['account_ids'],'account_ids');
 				$account_ids = urlencode($_POST['account_ids']);
-				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/add_intention',array('account_ids'=>$account_ids))));
+				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/add_intention',array('account_ids'=>$account_ids, 'type'=>1))));
 			}
     	}
     }
@@ -467,10 +476,10 @@ class WeixinOrderAction extends AdvertBaseAction {
 	
 	
 	//订单详情
-	public function generalize_detail () {
-		$order_id = $this->_get('order_id');
+	public function generalize_detail () { 
+		$order_id = I('order_id', 0, 'intval');
 		if (empty($order_id)) alertClose('非法操作！');
-		
+	
 		//add by bumtime 20141201
 		$this->big_type = 3;
 		parent::big_type_urls($this->big_type);		//大分类URL
@@ -528,6 +537,18 @@ class WeixinOrderAction extends AdvertBaseAction {
 				$is_show_order_btn = true;
 			}
 		}
+		
+		//配图
+		$file_where = array("generalize_order_id"=>$order_id);
+		$order_file_new = array();
+		$order_file = D('GeneralizeWeixinFiles')->where($file_where)->field('type,url')->select();
+	
+		foreach ($order_file as $value)
+		{
+			$order_file_new[$value['type']][] = $value['url'];
+		}
+		$order_info['file'] = $order_file_new;
+		 
 		
 
 		//获取订单下的关联账号列表
@@ -626,6 +647,16 @@ class WeixinOrderAction extends AdvertBaseAction {
 			}
 		}
 		
+		//配图
+		$file_where = array("generalize_order_id"=>$order_id);
+		$order_file_new = array();
+		$order_file = D('IntentionWeixinFiles')->where($file_where)->field('type,url')->select();
+	 
+		foreach ($order_file as $value)
+		{
+			$order_file_new[$value['type']][] = $value['url'];
+		}
+		$order_info['file'] = $order_file_new;
 
 		//获取订单下的关联账号列表
 		parent::data_to_view(array(

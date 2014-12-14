@@ -103,18 +103,37 @@ class WeiboAction extends AdvertBaseAction {
 		}
 
 		$this->show_celebrity_category_tags();
+		
+		$sideBar = U('Advert/WeiboOrder/add_intention?type=1');
+		$showClass = array();		
 		if ($this->pt_type == 1) {
 			$show_num = 0;
 		} elseif ($this->pt_type == 2) {
 			$show_num = 2;
 		}
+		//过滤掉菜单的显示
+		if($order_id >0)
+		{
+			for($i=0; $i<4; $i++)
+			{
+				if($i == $show_num)
+					$showClass[$i] = "select";
+				else
+					$showClass[$i] = "select_hidden";
+			}
+		}
+		else 
+		{
+			$showClass = array($show_num=>'select');
+		}
 		parent::data_to_view(array(
 			//二级导航属性
-			'sidebar_two'=>array($show_num=>'select',),//第一个加依次类推
+			'sidebar_two'=> $showClass,//第一个加依次类推
 			'pt_type' => $this->pt_type,
 			'order_id' => $order_id,
 			'account_ids'=>$account_ids,
-			'weibo_proportion'=>$this->global_finance['weibo_proportion']
+			'weibo_proportion'=>$this->global_finance['weibo_proportion'],
+			'sideBar' => $sideBar
 		));
 		$this->display();
 	}
@@ -125,12 +144,24 @@ class WeiboAction extends AdvertBaseAction {
 		$this->check_url();
 		
 		//验证
-		$order_id = $this->_get('order_id') ;
+		$order_id = I('order_id', 0, 'intval') ;
 		$account_ids = $this->_get('account_ids') ;
+		$inten_type = I('inten_type', 0, 'intval') ;
 		if (!empty($order_id)) {
-			$order_info = $this->db['GeneralizeOrder']->get_OrderInfo_By_Id($order_id,$this->oUser->id);
-			if ($order_info == false) {
-				$this->redirect('/Advert/WeiboOrder/add_generalize');
+			//意向单
+			if(1 == $inten_type)
+			{
+				$order_info = $this->db['IntentionWeiboOrder']->get_OrderInfo_By_Id($order_id,$this->oUser->id);
+				if ($order_info == false) {
+					$this->redirect('Advert/WeiboOrder/add_intention');
+				}
+			}
+			else 
+			{
+				$order_info = $this->db['GeneralizeOrder']->get_OrderInfo_By_Id($order_id,$this->oUser->id);
+				if ($order_info == false) {
+					$this->redirect('/Advert/WeiboOrder/add_generalize');
+				}
 			}
 		}
  		
@@ -142,13 +173,35 @@ class WeiboAction extends AdvertBaseAction {
 		} elseif ($this->pt_type == 2) {
 			$show_num = 3;
 		}
+		
+		//过滤掉菜单的显示
+		if($order_id >0)
+		{
+			for($i=0; $i<4; $i++)
+			{
+				if($i == $show_num)
+					$showClass[$i] = "select";
+				else
+					$showClass[$i] = "select_hidden";
+			}
+		}
+		else 
+		{
+			$showClass = array($show_num=>'select');
+		}
+		
+		$sideBar = U('Advert/WeiboOrder/add_intention');
+		
 		parent::data_to_view(array(
 			//二级导航属性
-			'sidebar_two'=>array($show_num=>'select'),//第一个加
+			'sidebar_two'=> $showClass,//第一个加依次类推
 			'pt_type' => $this->pt_type,
 			'order_id' => $order_id,
 			'account_ids'=>$account_ids,
-			'weibo_proportion'=>$this->global_finance['weibo_proportion']
+			'weibo_proportion'=>$this->global_finance['weibo_proportion'],
+			'sideBar' => $sideBar,
+			'inten_type'=>$inten_type,
+			'post_order_url' => ($inten_type ==1 )  ? U('Advert/WeiboOrder/add_intens'): U('Advert/WeiboOrder/add_users')
 		));
 		
 		$this->display();

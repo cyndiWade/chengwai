@@ -18,6 +18,7 @@
 		}
 	</style>
 </head>
+<script src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
 <body>
 <!-- 头部 -->
 <include file="Public:member_header" />
@@ -80,7 +81,20 @@
 			  </tr>
 			  <tr>
 				<th class="t1">直发内容：</th>
-				<td colspan="5">{$view_data.order_info.zfnr_info}</td>
+				<td colspan="3">{$view_data.order_info.zfnr_info}</td>
+				<th class="t1">封面图：</th>
+				<td style="padding: 5px;" >
+				<foreach name="$view_data['order_info']['file'][1]" item="vo">
+					<empty name="$vo"><else /> </empty>
+				</foreach>
+				<php>
+				foreach ($view_data['order_info']['file'][1] as $value)
+				{
+					if(!empty($value))	
+						echo '<img src="'.C('PUBLIC_VISIT')[domain].C('UPLOAD_DIR')[image].$value.'"  onload="DrawImage(this,200,100)"/><br/>';
+				}
+				</php>
+			   </td>	
 			  </tr>
 			  <tr>
 				<th class="t1">活动备注：</th>

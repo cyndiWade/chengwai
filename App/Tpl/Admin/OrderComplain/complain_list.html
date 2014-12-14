@@ -125,7 +125,7 @@
 											<!--<td>{$vo.ddid}</td>-->
                                             <td>{$vo.content}</td>
 											<td>{$vo.times}</td>
-											<td><if condition='$vo.status eq 0'>未处理<else />已处理</if></td>
+											<td><if condition='$vo.status eq 0'>未处理 <elseif condition='$vo.status eq 1'> 投诉成功 <else />申诉成功</if></td>
 											<td class="center">
                                             <if condition='$vo.status eq 0'>
 												<a href="javascript:;" class="btn_bak"  data-record_prev="1" data-url="{:U('Admin/OrderComplain/complain_edit',array('act'=>'update','id'=>$vo['id']))}">操作</a>

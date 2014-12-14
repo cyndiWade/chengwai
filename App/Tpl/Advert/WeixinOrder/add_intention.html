@@ -153,7 +153,9 @@
 			  </tr>
 			  <tr>
 				<td class="t1"></td>
-				<td class="t2"><span class="phone cur fl" id="phoneview"><img src="{$global_tpl_view.Group_Resource_Path}images/phone.gif" /></span><input type="submit" class="btn brownbtn" value="提交" /></td>
+				<td class="t2">
+				<input type="hidden" name ="is_celebrity" value="{$view_data.type}" />
+				<span class="phone cur fl" id="phoneview"><img src="{$global_tpl_view.Group_Resource_Path}images/phone.gif" /></span><input type="submit" class="btn brownbtn" value="提交" /></td>
 			  </tr>
 			</table>
 			</form>

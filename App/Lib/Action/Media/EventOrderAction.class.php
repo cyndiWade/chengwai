@@ -835,13 +835,11 @@ class EventOrderAction extends MediaBaseAction {
 	    		$allMoney = getAdMoney($media_Info['price'], $type, $media_Info['rebate']);
 	    		D("UserAdvertisement")->setMoney($allMoney, $adUserID, 1, $type_info, $order_id);
     		    		
-	    		$GeneralizeAccount->setAccountStatus($id, $status);
-				$this->success('处理成功');
+	    		
     		}
-    		else 
-	    	{
-	    		$this->error('处理失败');
-	    	} 
+    		$GeneralizeAccount->setAccountStatus($id, $status);
+			$this->success('处理成功');
+	
     	}
     	else 
     	{

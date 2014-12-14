@@ -465,6 +465,19 @@ class OrderAction extends AdminBaseAction {
 		$order_log_list = $this->OrderLog->get_order_list(array('order_id'=>$order_id,'type'=>$type));
 		$data['order_log_list'] = $order_log_list;
 		
+		
+		//图片
+		$files_data = $this->db['IntentionWeiboFiles']->where(array('intention_order_id'=>$order_id))->select();
+		
+		if (!empty($files_data)) {
+			parent::public_file_dir($files_data,array('url'),'images/');
+			$Arr_files_format = array();
+			foreach ($files_data as $key=>$val) {
+				$Arr_files_format[$val['type']][] = $val;
+			}
+			$data['files'] = $Arr_files_format;
+		}
+
 		parent::global_tpl_view( array(
 				'action_name'=>'微博意向单',
 				'title_name'=>'微博意向单',

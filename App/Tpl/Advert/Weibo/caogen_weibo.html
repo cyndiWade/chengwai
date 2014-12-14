@@ -15,7 +15,7 @@
 <div class="wrap l">
 <div class="pbd">
 <div class="location l">
-	当前位置：<a href="#">首页</a>  >  <a href="{:U('Advert/Weibo/celebrity_weibo',array('pt_type'=>1))}">微博推广</a> > <span class="blue">查看草根{$view_data.pt_info.pt_name}微博</span>
+	当前位置：<a href="/">首页</a>  >  <a href="{:U('Advert/Weibo/celebrity_weibo',array('pt_type'=>1))}">微博推广</a> > <span class="blue">查看草根{$view_data.pt_info.pt_name}微博</span>
 </div>
 
 <include file="Public:weibo_sidebar" />	
@@ -236,7 +236,8 @@ var system_info = {
 	pt_type:{$view_data.pt_info.pt_type},	//平台类型1新浪、2腾讯
 	is_celebrity : 0,	//是否是名人1是、0不是
 	page_limit : 10,	//每页条数
-	post_order_url : '{:U('Advert/WeiboOrder/add_users')}',
+	post_order_url : '{$view_data.post_order_url}',
+	
 	Global_Resource_Path : '{$global_tpl_view['Global_Resource_Path']}',
 	export_url : '{:U('Advert/Member/ajax_export_order')}',
 	account_ids : '{$view_data.account_ids}',
@@ -326,8 +327,10 @@ var create_now_html = function ($data,$post_data) {
 	var weibo_url;
 	if (system_info.pt_type == 1) {
 		weibo_url = 'http://weibo.com/';
+		default_img = system_info.Global_Resource_Path+'images/weibo_default.jpg';
 	} else if (system_info.pt_type ==  2) {
 		weibo_url = 'http://t.qq.com/';
+		default_img = system_info.Global_Resource_Path+'images/default_nothing.jpg';
 	}
 	
 	var html = '';
@@ -336,7 +339,7 @@ var create_now_html = function ($data,$post_data) {
 	html += '<div class="weibopart"><input type="checkbox" class="check now_selected add_one_selected_box" data-field="id" data-id="'+$data.bs_id+'"/>';
 
 	if ($data.bs_head_img == '') {
-		html += '<img src="'+system_info.Global_Resource_Path+'images/default_nothing.jpg" class="wbimg" />';
+		html += '<img src="'+default_img+'" class="wbimg" />';
 	} else {
 		html += '<img src="'+$data.bs_head_img+'" class="mtimg" />';
 	}

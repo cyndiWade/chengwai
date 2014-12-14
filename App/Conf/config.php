@@ -1,8 +1,6 @@
 <?php
 if (!defined('THINK_PATH'))exit();
-
 $db_config = require("config.inc.php");	//数据库配置
-
 //其他系统配置
 $system  = array(
 		
@@ -21,7 +19,6 @@ $system  = array(
 	    
 		/* SESSOIN配置 */
 		'SESSION_AUTO_START'    => true,		//常开
-
 		/* URL配置 */
 		'URL_MODEL'             => 2,
 		'URL_ROUTER_ON'   => false, 	//开启路由
@@ -39,7 +36,6 @@ $system  = array(
 		'TMPL_EXCEPTION_FILE'   => THINK_PATH.'Tpl/think_exception.tpl',// 异常页面的模板文件
 		'TMPL_DETECT_THEME'     => false,       // 自动侦测模板主题
 		'OUTPUT_ENCODE'         =>  false, 			// 页面压缩输出
-
 		//项目分组
 		'APP_GROUP_LIST'        => 'Home,Admin,Api,Main,Media,Advert,Index,Service',  	// 项目分组设定,多个组之间用逗号分隔,例如'Home,Admin'
 		'DEFAULT_GROUP'         => 'Index',  					// 默认分组
@@ -54,7 +50,6 @@ $system  = array(
 		), 			
 		'APP_SUB_DOMAIN_DENY'   => array(), 			//  子域名禁用列表
 		
-
 		//语言包
 		'LANG_SWITCH_ON'=> true,				//开启语言包功能
 		'LANG_AUTO_DETECT'=> false,			//是否自动检测语言
@@ -90,8 +85,6 @@ $system  = array(
 		'DEFAULT_AJAX_RETURN' => '',		//默认AJAX返回值
 		
 );
-
-
 /* 自定设置 */
 $custom= array (		
 		'SESSION_DOMAIN' => 'chengwai',	//项目session域
@@ -103,7 +96,6 @@ $custom= array (
 			'Advert' => 2,			//广告主
 			'Salesman'=>3,			//销售员
 		),
-
 		//上传文件目录
 		'UPLOAD_DIR' => array(
 				'web_dir' => $_SERVER['DOCUMENT_ROOT'].'/',
@@ -117,13 +109,11 @@ $custom= array (
  				//'domain' =>	'http://local_cwq.com/',
 				'dir' => 'files/chengwai/',							//项目文件目录
 		),
-
 		//短信平台账号
 		'SHP' => array(
 // 			'TYPE' => 'SHP',	//使用哪种短信接口
 //  				'NAME'=>'cheshen_gd',
 //  				'PWD'=>'cheshen801'
-
 // 				'NAME'=>'rikee',
 // 				'PWD'=>'zyzylove2'	
 				
@@ -343,7 +333,6 @@ $custom= array (
 				'zhyc' => 580,				//是否支持原创
 				'mrxb' => 581,				//名人性别		
 			), 
-
 			//新闻媒体
 			'xinwen_tags_ids' => array(
 				'top_parent_id'=>652,		//分类最顶层ID
@@ -374,24 +363,18 @@ $custom= array (
 		'STATUS_LUCKY_NO' => '701',					//没中奖
 		
 );
-
 return array_merge($db_config,$system,$custom);
-
-
 /*		系统常量 (手册附录)
  echo __SELF__  . '<br />';					//当前URL所有参数
 echo __URL__  . '<br />';						//当前模块地址(控制器地址)
 echo __APP__	. '<br />';						//当前项目入口文件
 echo __ACTION__  . '<br />';				//当前模块控制器地址 (当前模块控制器地址)
 echo ACTION_NAME . '<br />'; 			//当前方法名称
-
 echo '<br />';
-
 echo APP_PATH . '<br />'; 					//当前项目目录
 echo APP_NAME . '<br />'; 					//当前项目名称
 echo APP_TMPL_PATH . '<br />'; 		//当前项目模板路径
 echo APP_PUBLIC_PATH . '<br />'; 	//项目公共文件目录
 echo CACHE_PATH . '<br />'; 				//当前项目编译缓存文件
-
 */
 ?>

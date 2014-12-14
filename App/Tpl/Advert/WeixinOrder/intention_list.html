@@ -22,7 +22,8 @@
 	<div class="area01-myorder l">
 			<div class="box01-addorder l">
 				<a href="#" class="help fr">帮助手册！</a>
-				<a href="{:U('Advert/WeixinOrder/add_intention',array('account_ids'=>$_GET['account_ids']))}" class="btn brownbtn fl">创建意向单页</a>
+				<a href="{:U('Advert/WeixinOrder/add_intention',array('account_ids'=>$_GET['account_ids'],'type'=>1))}" class="btn brownbtn fl">创建名人意向单</a>&nbsp;&nbsp;&nbsp;
+				<a href="{:U('Advert/WeixinOrder/add_intention',array('account_ids'=>$_GET['account_ids']))}" class="btn brownbtn fl">创建草根意向单</a>
 				<div class="searnum fl">
 					
 					<a href="{:U('Advert/WeixinOrder/intention_list',array('qrz'=>'on'))}"><b class="red">【{$view_data.qrz}】</b></a>个确认中，
@@ -71,7 +72,11 @@
 						<td class="last" align="center">
 							<div class="ctrl" >
 								<span><a href="{:U('Advert/WeixinOrder/intention_detail',array('order_id'=>$vo['id']))}" target="_blank">详情</a></span>
+								<if condition="$vo['is_celebrity'] eq 1">
 								<span><a href="{:U('Advert/Weixin/celebrity_weixin',array('order_id'=>$vo['id']))}">添加媒体</a></span>
+								<else />
+								<span><a href="{:U('Advert/Weixin/weixin',array('order_id'=>$vo['id'],'inten_type'=>1))}">添加媒体</a></span>
+								</if>
 								<span class="delete_order" data-id="{$vo['id']}">删除</span>
 							</div>
 						</td>

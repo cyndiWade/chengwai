@@ -22,7 +22,8 @@
 	<div class="area01-myorder l">
 			<div class="box01-addorder l">
 				<a href="#" class="help fr">帮助手册！</a>
-				<a href="{:U('/Advert/WeiboOrder/add_intention')}" class="btn brownbtn fl">创建意向单页</a>
+				<a href="{:U('/Advert/WeiboOrder/add_intention/type/1')}" class="btn brownbtn fl">创建名人意向单</a>
+				<a href="{:U('/Advert/WeiboOrder/add_intention')}" class="btn brownbtn fl">创建草根意向单</a>
 				<div class="searnum fl">
 					<a href="{:U('Advert/WeiboOrder/intention_list',array('qrz'=>'on'))}"><b class="red">【{$view_data.qrz}】</b></a>个确认中，
 					<a href="{:U('Advert/WeiboOrder/intention_list',array('yqr'=>'on'))}"><b class="red">【{$view_data.yqr}】</b></a>已确认
@@ -64,7 +65,11 @@
 						<td class="last" align="center">
 							<div class="ctrl">
 								<span><a href="{:U('Advert/WeiboOrder/intention_detail',array('order_id'=>$vo['id']))}" target="_blank">详情</a></span>
+								<if condition="$vo['is_celebrity'] eq 1">
 								<span><a href="{:U('Advert/Weibo/celebrity_weibo',array('order_id'=>$vo['id'],'pt_type'=>$vo['tfpt_type']))}">添加媒体</a></span>
+								<else />
+								<span><a href="{:U('Advert/Weibo/caogen_weibo',array('order_id'=>$vo['id'],'pt_type'=>$vo['tfpt_type'],'inten_type'=>1))}">添加媒体</a></span>
+								</if>
 								<span class="delete_order" data-id="{$vo['id']}">删除</span>
 							</div>
 						</td>

@@ -12,8 +12,8 @@
 */
 
 //倒入状态位
-include 'status.php';
 
+include APP_PATH.'Common/status.php';
 
 function isPost($value) {
 	//是post提交 ，并且post值存在，或者post值不为空

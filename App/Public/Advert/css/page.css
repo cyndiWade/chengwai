@@ -89,7 +89,7 @@
 .tab01-order .t7 a{ text-decoration:underline;}
 /*活动订单*/
 .box01-addorder .bluebtn{ width:116px; height:50px; text-align:center; line-height:50px;}
-.box01-addorder .brownbtn{ width:160px; text-align:center;}
+.box01-addorder .brownbtn{ width:160px; text-align:center;margin-right:20px;}
 .box01-addorder .searnum b.red{ color:#e24d46;}
 .box01-addorder .searnum{ padding-top:19px; border-bottom:none; padding-bottom:0;}
 .box01-addorder .searnum b{ color:#238cc8;}

@@ -66,8 +66,11 @@ class OrderComplainAction extends AdminBaseAction
         $info = $OrderComplain->getOrderComplainInfo($where);
 
         if ($this->isPost() && !empty($info)) {
+        	
+        	 $status = $this->_post('status');
+        	 $cStatus = ($status == '13') ? 1 : 2;
             //修改申诉处理状态为已处理
-            $OrderComplain->where($where)->save(array('status' => '1'));
+            $OrderComplain->where($where)->save(array('status' => $cStatus));
             //修改订单状态
             switch ($info['media_type']) {
                 case '3':
@@ -90,7 +93,7 @@ class OrderComplainAction extends AdminBaseAction
                     break;
             }
             //更改子订单状态
-            $status = $this->_post('status');
+
             $GeneralizeAccount->where(array('id' => $info['ddid']))->save(array('audit_status' => $status));
             //订单状态更改
             $order_status = '5';
