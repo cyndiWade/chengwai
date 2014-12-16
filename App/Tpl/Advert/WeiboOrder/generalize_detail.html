@@ -75,7 +75,7 @@
 				foreach ($view_data['order_info']['file'][1] as $value)
 				{
 					if(!empty($value))	
-						echo '<img src="'.C('PUBLIC_VISIT')[domain].C('UPLOAD_DIR')[image].$value.'"  onload="DrawImage(this,200,100)"/><br/>';
+						echo '<img src="{$Think.config.PUBLIC_VISIT.domain}{$Think.config.UPLOAD_DIR.image}'.$value.'"  onload="DrawImage(this,200,100)"/><br/>';
 				}
 				</php>
 			   </td>	

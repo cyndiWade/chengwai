@@ -101,4 +101,23 @@ class UserMediaModel extends AppBaseModel
 		$add['status'] = 1;
 		D('Fund')->add($add);
 	}
+	
+	/**
+     * 根据用户ID获取用户信息
+     * 
+     * @param int $id 用户ID
+     * @param array $field 查找的字段
+     * 
+     * @author bumtime
+     * @date   2014-12-15
+     * @return void
+     */
+    public function getInfoById($id, $field)
+    {
+        if (empty($id)) {
+            return array();
+        }
+        $info = $this->field($field)->where(array('users_id' =>$id))->find();
+        return $info;
+    }
 }

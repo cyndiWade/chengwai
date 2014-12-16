@@ -82,8 +82,10 @@
 				<php>
 				foreach ($view_data['order_info']['file'][1] as $value)
 				{
-					if(!empty($value))	
-						echo '<img src="'.C('PUBLIC_VISIT')[domain].C('UPLOAD_DIR')[image].$value.'"  onload="DrawImage(this,200,100)"/><br/>';
+						$public_dir =  C('PUBLIC_VISIT');
+						$img_dif = C('UPLOAD_DIR');
+						if(!empty($value))	
+							echo '<img src="'.$public_dir['domain'].$img_dif['image'].$value.'"  onload="DrawImage(this,200,100)"/><br/>';	
 				}
 				</php>
 			  </tr>

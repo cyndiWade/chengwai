@@ -18,7 +18,9 @@ class SendMsgAction extends ApiBaseAction {
 		$this->verify =  mt_rand(111111,999999);				//生成随机验证码
 		$this->date = date('Y-m-d H:i');						//日期
 		
-		$this->telephone = $this->_post('telephone');
+		$this->telephone = I('telephone');
+		$this->type		 = I('type');
+		
 	}
 	
 	//初始化数据库连接
@@ -120,6 +122,8 @@ class SendMsgAction extends ApiBaseAction {
 		$this->assign('name','telephone');
 		$this->display('Login:sendSHP');
 	}
+	
+	
 	
 	
 	

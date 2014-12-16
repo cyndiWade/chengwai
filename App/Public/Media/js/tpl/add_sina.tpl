@@ -15,6 +15,13 @@
                 <p data-bind="html: retweet_price.notice_text, css: retweet_price.notice_css" class="cBox_tip" id="reTweetPrice_error" style="padding-right:47px;"></p>
             </td>
           </tr>
+         <tr>
+            <td class="t1"><span><i>*</i><strong>粉丝数：</strong></span></td>
+            <td class="t2">
+                <input type="text" class="text text-error" name="followers_count" data-bind="value: followers_count, placeholder: '请输入正整数', validThreeState: followers_count" />
+                <p data-bind="html: followers_count.notice_text, css: followers_count.notice_css" class="cBox_tip" id="FollowersCount_error"></p>
+            </td>
+          </tr>
           <tr>
             <td class="t1"><span><i>*</i><strong>帐号类型：</strong></span></td>
             <td class="t2">

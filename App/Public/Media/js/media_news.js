@@ -104,7 +104,7 @@ define(function(require, exports) {
             columns: [
                 {
                     align: "left",
-                    text: "账号名",
+                    text: "新闻名称",
                     cls: "t1",
                     width: 200,
                     dataIndex: "weibo_name",
@@ -160,7 +160,7 @@ define(function(require, exports) {
                         }
                     }
                 },
-               /* {
+                {
                     align: "left",
                     text: "接单状态",
                     cls: "t1",
@@ -181,7 +181,7 @@ define(function(require, exports) {
                             return div.append("否&nbsp;").append(a);
                         }
                     }
-                },*/
+                },
                 {
                     align: "left",
                     text: renderTitle("是否上架", "shifoushangjia"),
@@ -271,7 +271,6 @@ define(function(require, exports) {
             }
         });
     }
-
 
 
     function hideAllTips() {

@@ -340,7 +340,7 @@
 		}
 	}
 
-	//链接
+	//广告主链接
 	function recordUrl($type,$id)
 	{
 		switch($type)
@@ -358,5 +358,40 @@
 				return '其他';
 			break;
 		}
+	}
+	
+	//媒体主链接
+	function recordUrlMedia($type,$id)
+	{
+		switch($type)
+		{
+			case 1:
+				return '<a href="'. U('Media/EventOrder/showNews',array('id'=>$id)) .'">新闻订单</a>';
+			break;
+			case 2:
+				return '<a href="'. U('Media/EventOrder/showWeixin',array('id'=>$id)) .'">微信订单</a>';
+			break;
+			case 3:
+				return '<a href="'. U('Media/EventOrder/show',array('id'=>$id)) .'">微博订单</a>';
+			break;
+			default:
+				return '其他';
+			break;
+		}
+	}
+	
+	/**
+     * 获取意向单子订单状态
+     * 
+     * @param int   $id 状态值
+
+     * @author bumtime
+     * @date   2014-12-14
+     * @return array
+     */
+	function getYxdStatus($id)
+	{
+		$status = C('Account_Order_Status');
+		return  isset($status['id']['explain_yxd']) ? $status['id']['explain_yxd'] : "";
 	}
 ?>

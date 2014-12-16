@@ -327,8 +327,8 @@ class WeixinOrderAction extends AdvertBaseAction {
 			{
 				$info = '您提交的内容中含有敏感词 "' . $bool['keyword'] . '",请修改!';
 				alertBack($info);
-			}
-		
+			}	
+	
 	    	$id = $this->db['IntentionWeixinOrder']->insertPost($_POST,$this->oUser->id);
 	    	//走先选择账号流程
 			//$account_id = trim($_GET['account_ids']);
@@ -340,7 +340,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 				$this->db['IntentionWeixinFiles']->insertImg($img_array);
 				if($account_id!='')
 				{
-					$arr = array('order_id'=>$id,'account_ids'=>$account_id);
+					$arr = array('order_id'=>$id,'account_ids'=>$account_id, 'audit_status'=>1);
 					$this->db['IntentionWeixinAccount']->insertAll($arr,$this->oUser->id,$this->global_finance['weixin_proportion']);
 					//修改订单状态为1，平台审核的类型
 					$this->db['IntentionWeixinOrder']->where(array('id'=>$id))->save(array('status'=>1));

@@ -1186,7 +1186,7 @@ define(function(require, exports) {
                         }
                     }
                 },
-                {
+               /* {
                     align: "left",
                     text: renderTitleMiddelImg("是否", "shifoushangjia", '<br/>上架'),
                     dataIndex: "is_online",
@@ -1209,7 +1209,7 @@ define(function(require, exports) {
 
                         }
                     }
-                },
+                },*/
                 {
                     align: "center",
                     text: renderTitleMiddelImg("暂不", "zanbujiedan", '<br/>接单'),

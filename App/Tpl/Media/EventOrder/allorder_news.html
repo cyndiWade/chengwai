@@ -48,20 +48,22 @@
 			<table class="tab01-allorder l">
 			  <tr>
 				<th class="t1">订单ID</th>
-				<th class="t3">账号名</th>
-				<th class="t3">活动</th>
+				<th class="t3">订单名称</th>
+				<th class="t4">推广账号</th>
 				<th class="t4">价格</th>
-				<th class="t5">开始时间</th>
+				<th class="t5">发布时间</th>
+				<th class="t5">创建时间</th>
 				<th class="t12">状态</th>
 				<th class="last">操作</th>
 			  </tr>
 			  <volist name="view_data.list" id="vo">
 			  <tr>
 				<td class="t1">{$vo.order_id}</td>
-				<td class="t6">{$vo.account_name}</td> 
 				<td class="t6">{$vo.title}</td>
+				<td class="t6">{$vo.account_name}</td> 
 				<td class="t6">{$vo.price} 元 </td>
 				<td class="t6">{$vo.start_time|date="Y-m-d H:i:s",###}</td>
+				<td class="t6">{$vo.create_time|date="Y-m-d H:i:s",###}</td>
 				<td class="t6">{$vo.audit_status|getAccountStatus}</td>
 				<td class="last"><div class="ctrl"><span><a href="{:U('Media/EventOrder/showNews?id='.$vo[generalize_id])}">查看</a></span>
 				<if condition='$vo.audit_status eq 3'>
@@ -69,6 +71,8 @@
 				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="5"><span>同意接单</span></a>  
 				 <elseif condition='$vo.audit_status eq 5 and ($vo.start_time lt time())'/> 
 				 | <a href="javascript:;" class="action"  data-account_id="{$vo.id}" order_id="{$vo.order_id}" type="6"><span>上传反馈数据</span></a> 
+				  <elseif condition="($vo.audit_status eq 6)" />
+						<a href="javascript:;"  class="action" data-account_id="{$vo.id}" type="7" order_id="{$vo.order_id}" >查看反馈数据</a>
                  <elseif condition="$vo.audit_status eq 11" />
                  <!-- 申诉 add by chenchao  -->
                  | <a id="complain" ddid="{$vo.id}" complain_order_id="{$vo.order_id}" href="javascript:void(0);" >申诉</a>
@@ -188,6 +192,22 @@
 </div>
 <!-- 申诉弹窗  add by chenchao 2014-12-06 -->
 
+
+<!-- 查看反馈链接 -->
+<div class="batchbox5 tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>查看反馈链接</b></div>
+	<div class="mid-batch pr l" > 
+		 <table class="tab01-inten l">
+				  <tr>
+					<td class="t1"></td>
+					<td class="t2" id="showExcute">
+						 
+					</td>
+				  </tr>
+		</table> 
+	</div>
+</div>
+
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 <script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
@@ -218,6 +238,35 @@ $(function(){
 		{
 			$('.batchbox3').popOn();	
 		}
+		//查看反馈数据
+		else if(status == 7)
+		{
+		    type = 1;
+		    
+			    $.ajax({
+			        url : "{:U('Media/EventOrder/showExcuteInfo')}",
+			        type: 'post',
+			        data: {'type' : type, 'aid' : id, 'order_id' : order_id},
+			        async: false,
+			        success : function(data)
+			        {
+			        	info = "";
+			        	if(data.data.img !="")
+			        	{
+			        		info+="<img src='"+data.data.img+"' onload='DrawImage(this,100,100)' />";
+			        	}
+			        	if(data.data.url!="")
+			        	{
+			        		info+="<br/><a href='"+data.data.url+"' target='_blank'>查看执行链接</a>"; 
+			        	}
+						$("#showExcute").html(info);
+			        },
+			        error: function(error){
+			        }
+			    });
+			    
+			$('.batchbox5').popOn();	
+		}		
 	})
 	$('#start_time, #end_time')
     .datetimepicker({

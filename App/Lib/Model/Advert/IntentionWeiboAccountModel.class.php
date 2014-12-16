@@ -3,7 +3,6 @@
 
 	class IntentionWeiboAccountModel extends AdvertBaseModel
 	{
-
 		public function insertAll($array,$id,$finance)
 		{
 			$new_array = array();
@@ -17,6 +16,8 @@
 			$arr['account_type'] = $new_array['pt_type'];
 			//调用折扣比例
 			$arr['rebate'] = $finance;
+			
+			
 			//微博账号
 			$account_id = explode(',', $new_array['account_ids']);
 			foreach($account_id as $value)

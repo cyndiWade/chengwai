@@ -74,6 +74,8 @@
 			}
 			$where['w.is_del'] = 0;
 			$where['w.status'] = 1;
+			$where['w.tmp_receiving_status'] = 0;
+			$where['w.receiving_status'] = 1;
 			$count = $this->where($where)
 			->table('app_account_weixin as w')
 			->join('app_grassroots_weixin as b on w.id = b.weixin_id')

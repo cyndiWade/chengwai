@@ -4,6 +4,7 @@
 	<include file="Public:top" />
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
 	<title>订单详情_媒体主_个人主页</title>
+	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
 </head>
 <body>
 <!-- 头部 -->
@@ -74,7 +75,9 @@
 						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="4">拒绝</a>	&nbsp;&nbsp;&nbsp;&nbsp;
 						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="5">同意接单</a>	
 						 <elseif condition="($vo['audit_status'] eq 5)  and ($view_data['order_info']['start_time'] lt time()) " />
-						<a href="javascript:;" class="yel affirm_order" data-order_id="{$vo.id}" type="6">上传反馈数据</a>	
+						<a href="javascript:;" class="yel affirm_order" data-a_id="{$vo.id}" data-order_id="{$view_data.order_info.id}" type="6">上传反馈数据</a>
+						 <elseif condition="($vo['audit_status'] eq 6)" />
+						<a href="javascript:;"  class="yel affirm_order" data-a_id="{$vo.id}" type="7" data-order_id="{$view_data.order_info.id}" >查看反馈数据</a>	
                         <elseif condition="$vo['audit_status'] eq 11" />
                             <!-- 申诉 add by chenchao  -->
      	                    <a id="complain" ddid="{$vo.id}" complain_order_id="{$view_data.order_info.id}" href="javascript:void(0);" >申诉</a>
@@ -188,6 +191,23 @@
 </div>
 <!-- 申诉弹窗  add by chenchao 2014-12-06 -->
 
+
+<!-- 查看反馈链接 -->
+<div class="batchbox5 tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>查看反馈链接</b></div>
+	<div class="mid-batch pr l" > 
+		 <table class="tab01-inten l">
+				  <tr>
+					<td class="t1"></td>
+					<td class="t2" id="showExcute">
+						 
+					</td>
+				  </tr>
+		</table> 
+	</div>
+</div>
+
+
 <!-- JS底部文件 -->
 <include file="Public:bottom" />
 
@@ -210,12 +230,44 @@ $(function(){
 		}
 		else if(status == 6)
 		{
+			id	= $(this).attr('data-a_id');
+			$("input[name='a_id']").val(id); 
 			$('.batchbox2').popOn();
 		}
 		else if(status == 5)
 		{
 			$('.batchbox3').popOn();	
 		}
+		//查看反馈数据
+		else if(status == 7)
+		{
+		    type = 1;
+			aid = $(this).attr('data-a_id');
+			 
+			    $.ajax({
+			        url : "{:U('Media/EventOrder/showExcuteInfo')}",
+			        type: 'post',
+			        data: {'type' : type, 'aid' : aid, 'order_id' : id},
+			        async: false,
+			        success : function(data)
+			        {
+			        	info = "";
+			        	if(data.data.img !="")
+			        	{
+			        		info+="<img src='"+data.data.img+"' onload='DrawImage(this,100,100)' />";
+			        	}
+			        	if(data.data.url!="")
+			        	{
+			        		info+="<br/><a href='"+data.data.url+"' target='_blank'>查看执行链接</a>"; 
+			        	}
+						$("#showExcute").html(info);
+			        },
+			        error: function(error){
+			        }
+			    });
+			    
+			$('.batchbox5').popOn();	
+		}		
 	})
     
     //申诉弹出框 add by chenchao 2014-12-06  

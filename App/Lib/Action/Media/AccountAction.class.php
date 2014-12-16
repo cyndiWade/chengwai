@@ -12,6 +12,7 @@ class AccountAction extends MediaBaseAction {
 	
 	//控制器说明
 	private $module_explain = '媒体主';
+	
 
 
 	//初始化数据库连接
@@ -248,16 +249,16 @@ class AccountAction extends MediaBaseAction {
         if ($this->isPost()) {
             $truename   = I('post.truename', '', 'addslashes');
             $campany    = I('post.campany', '', 'addslashes');
-            $iphone     = I('post.phone', '', 'addslashes');
+            //$iphone     = I('post.phone', '', 'addslashes');
             $tel        = I('post.tel', '', 'addslashes');
             $email      = I('post.email', '', 'addslashes');
             $qq         = I('post.qq', 0, 'intval');
             $msn        = I('post.msn', '', 'addslashes');
             
             import("@.Tool.Validate");
-            if (!Validate::checkPhone($iphone)) {
+           /* if (!Validate::checkPhone($iphone)) {
                 parent::callback(C('STATUS_OTHER'), '手机号码格式错误');
-            }
+            }*/
             if (!Validate::checkQQ($qq)) {
                 parent::callback(C('STATUS_OTHER'), 'QQ号码错误');
             }
@@ -267,7 +268,7 @@ class AccountAction extends MediaBaseAction {
             $datas = array(
                 'name'          => $truename,
                 'company_name'  => $campany,
-                'iphone'        => $iphone,
+                //'iphone'        => $iphone,
                 'tel_phone'     => $tel,
                 'email'         => $email,
                 'qq'            => $qq,
@@ -299,9 +300,10 @@ class AccountAction extends MediaBaseAction {
             parent::data_to_view(array_merge($userInfos, array(
                 //二级导航
                 'secondSiderbar' => array(
-                    '用户信息' => array('select' => true, 'url' => U('/Media/Account/userInfo')),
-                    '修改密码' => array('select' => false, 'url' => U('/Media/Account/changepw')),
-                    '支付信息' => array('select' => false, 'url' => U('/Media/Account/payinfo')),
+	                '用户信息' => array('select' => true, 'url' => U('/Media/Account/userInfo')),
+	                '修改密码' => array('select' => false, 'url' => U('/Media/Account/changepw')),
+	                '修改手机号' => array('select' => false, 'url' => U('/Media/Account/changePhone')),
+	                '支付信息' => array('select' => false, 'url' => U('/Media/Account/payinfo')),
                 ),
                 'secondPosition' => '用户信息',
             )));
@@ -323,12 +325,35 @@ class AccountAction extends MediaBaseAction {
             'secondSiderbar' => array(
                 '用户信息' => array('select' => false, 'url' => U('/Media/Account/userInfo')),
                 '修改密码' => array('select' => true, 'url' => U('/Media/Account/changepw')),
+                '修改手机号' => array('select' => false, 'url' => U('/Media/Account/changePhone')),
                 '支付信息' => array('select' => false, 'url' => U('/Media/Account/payinfo')),
             ),
             'secondPosition' => '修改密码',
         ));
         $this->display();
     }
+    
+ /**
+     * 修改手机号
+     * 
+     * @author bumtime
+     * @date   2014-12-14
+     * @return void
+     */
+    function changePhone()
+    {
+        parent::data_to_view(array(
+            //二级导航
+            'secondSiderbar' => array(
+                '用户信息' => array('select' => false, 'url' => U('/Media/Account/userInfo')),
+                '修改密码' => array('select' => false, 'url' => U('/Media/Account/changepw')),
+                '修改手机号' => array('select' => true, 'url' => U('/Media/Account/changePhone')),
+                '支付信息' => array('select' => false, 'url' => U('/Media/Account/payinfo')),
+            ),
+            'secondPosition' => '修改手机号',
+        ));
+        $this->display();
+    }   
     
     /**
      * 支付信息
@@ -344,6 +369,7 @@ class AccountAction extends MediaBaseAction {
             'secondSiderbar' => array(
                 '用户信息' => array('select' => false, 'url' => U('/Media/Account/userInfo')),
                 '修改密码' => array('select' => false, 'url' => U('/Media/Account/changepw')),
+                '修改手机号' => array('select' => false, 'url' => U('/Media/Account/changePhone')),
                 '支付信息' => array('select' => true, 'url' => U('/Media/Account/payinfo')),
             ),
             'secondPosition' => '支付信息',
@@ -492,4 +518,116 @@ class AccountAction extends MediaBaseAction {
             parent::callback(0, '数据保存错误, 请重新提交', array($status));
         }
     }
+    
+    /**
+	 * 媒体主修改手机号或密码发短信
+	 * post 请求  telephone = 电话号码
+	 */
+	public function MsgByChangePhone () 
+	{
+		if ($this->isPost()) 
+		{
+			$type  = I("type", 0, 'intval');
+			$phone = I('phone'); 
+			$messageType = C('MESSAGE_TPYE');
+			
+			if(!in_array($type, $messageType))
+			{
+				parent::callback(C('STATUS_OTHER'),'操作失败');
+			}
+
+			$userObject = $this->db['User_media'];
+			$userInfo = $userObject->getInfoById($this->oUser->id, array('iphone'));
+
+			if (empty($userInfo)) {
+				parent::callback(C('STATUS_OTHER'),'该用户不存在');
+			}
+			if($userInfo['iphone'] != $phone)
+			{
+				parent::callback(C('STATUS_OTHER'),'手机输入错误');
+			}
+
+			$expired_time = 2;
+			$Verify['telephone']	= $phone;			//电话号码
+			$Verify['verify']		=  mt_rand(111111,999999);				//验证码
+			$Verify['expired']		= strtotime('+'.$expired_time.' minute',time());				//过期时间设置为30分钟后
+			$Verify['type']			= 5;														
+			//写入数据库
+			D("Verify")->add($Verify);
+		
+			$msg = $Verify['verify'].'，为您的修改手机号验证码，请在'.$expired_time.'分钟内完成修改，如非本人修改，请忽略；'.date('Y-m-d H:i:s').'。';	
+			parent::send_shp($phone, $msg);
+			
+			exit;
+		}
+		else {
+			parent::callback(C('STATUS_OTHER'),'非法操作');
+		}
+	}
+	
+	/**
+     * 保存手机号
+     * 
+     * @author bumtime
+     * @date   2014-12-15
+     * @return void
+     */
+	public function SavePhone()
+	{
+		if ($this->isPost()) 
+		{
+			$phone = I('phone'); 
+			$newPhone = I('newPhone'); 
+			$verify = I('verify', 0, 'intval');  
+			if($phone == $newPhone)
+			{
+				$this->error("手机号两个一样哦，不需要再修改了");
+			}
+			$userInfo = $this->db['User_media']->getInfoById($this->oUser->id);
+			if (empty($userInfo)) {
+				$this->error("该用户不存在，请不要非法操作");
+			}
+			if(!parent::check_verify($phone, 5, $verify))
+			{
+				$this->error("验证码不正常哦，亲");
+			}
+			$arryData['iphone'] = $newPhone;
+			$where['users_id']  = $this->oUser->id;
+			$status = $this->db['User_media']->saveAccount($where, $arryData);
+			 
+			$status ? $this->success("修改成功") : $this->error("验证码不正常哦，亲");
+			
+		}
+	}
+	
+    //验证手机号是不是本人
+	public function checkPhoneByUser()
+	{
+		if ($this->isPost()) 
+		{
+			$telephone = I("phone");
+			$where = array("iphone"=>$telephone);
+			$userInfo = D('UserMedia')->where($where)->field('users_id')->find();
+
+			if(!empty($userInfo))
+			{
+				if($userInfo['users_id'] == $this->oUser->id)
+				{
+					parent::callback(C('STATUS_OTHER') ,'您的手机号没改哦，亲！');
+				}
+				else 
+				{
+					parent::callback(1 ,'操作成功！');
+				}
+			}
+			else
+			{
+				parent::callback(C('STATUS_OTHER') ,'录入的不是您的手机号哦，亲！');
+			}
+		} 
+		else 
+		{
+			parent::callback(C('STATUS_OTHER'),'非法操作');
+		}
+	}
 }

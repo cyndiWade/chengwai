@@ -362,6 +362,9 @@ $custom= array (
 		'STATUS_LUCKY_YES' => '700',					//中奖了
 		'STATUS_LUCKY_NO' => '701',					//没中奖
 		
+		//短信类型
+		'MESSAGE_TPYE'=> array(1, 2, 3, 4, 5, 6)//1:媒体主注册，2广告主注册，3:媒体主修改密码，4：广告主修改密码 5:媒体主修改手机号，6：广告主修改手机号
+		
 );
 return array_merge($db_config,$system,$custom);
 /*		系统常量 (手册附录)

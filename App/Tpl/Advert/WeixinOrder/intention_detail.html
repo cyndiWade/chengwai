@@ -91,8 +91,10 @@
 				<php>
 				foreach ($view_data['order_info']['file'][1] as $value)
 				{
-					if(!empty($value))	
-						echo '<img src="'.C('PUBLIC_VISIT')[domain].C('UPLOAD_DIR')[image].$value.'"  onload="DrawImage(this,200,100)"/><br/>';
+						$public_dir =  C('PUBLIC_VISIT');
+						$img_dif = C('UPLOAD_DIR');
+						if(!empty($value))	
+							echo '<img src="'.$public_dir['domain'].$img_dif['image'].$value.'"  onload="DrawImage(this,200,100)"/><br/>';	
 				}
 				</php>
 			  </tr>
@@ -149,9 +151,8 @@
 				<td class="">
 					<if condition="($vo['create_order_status'] eq true)">
 						<span class="create_order" data-account_id="{$vo.g_id}">创建活动</span>
-					<elseif condition="$name eq 2"/>
 					<else />
-					{$vo['other']}
+					无
 					</if>
 				</td>
 			  </tr>

@@ -5,7 +5,7 @@
     <form method="post" action="information/account/submitaccount" name="accountRegistor" id="accountRegistor">
     <table class="tab01-inten l add_account">
       <tr>
-        <td class="t1"><span><i>*</i><strong>账号名：</strong></span></td>
+        <td class="t1"><span><i>*</i><strong>微信名称：</strong></span></td>
         <td class="t2">
             <input name="weibo_name" data-bind="noticeImg: platform_account_name_img, validThreeState: weibo_name, value: weibo_name" type="text" class="text text-error" />
             <p data-bind="html: weibo_name.notice_text, css: weibo_name.notice_css" class="cBox_tip"></p>

@@ -121,7 +121,7 @@ class SocialAccountAction extends MediaBaseAction {
         $minprice       = $minprice ? floatval($minprice) : '';
         $maxprice       = $maxprice ? floatval($maxprice) : '';
         $isfamous       = $isfamous ? intval($isfamous) : '';
-        
+       
         $userInfos = parent::get_session('user_info');
         $where['users_id'] = &$userInfos['id'];
         
@@ -160,7 +160,7 @@ class SocialAccountAction extends MediaBaseAction {
         } elseif ($type == 4) {
             $list = $this->db['AccountNews']->getLists($where, 'id DESC', $page, $pageSize);
         }
-        
+     
         ($list['count'] && $list['list']) ? $list['list'] = $this->bulidRowCell($type, $list['list']) : '';
         parent::callback(1, '成功获取数据', array(
             'start' => floor($start/$pageSize) * $pageSize,
@@ -196,28 +196,31 @@ class SocialAccountAction extends MediaBaseAction {
         } elseif ($type == 3) {
             $accountModel = $this->db['AccountWeixin'];
         }
-        
+         
         // echo '<pre>';
         // print_r($data);
         
         foreach ($data AS $key => $val) {
-            if ($accountModel) {
-                $apiInfos = $accountModel->getInfosFromApi($val['account_name'], $type);
-                
-                if ($type == 1) {
-                    $faceUrl = $apiInfos['profile_image_url'];
-                    $url = $apiInfos['url'];
-                } elseif ($type == 2) {
-                    $faceUrl = $apiInfos['profile_image_url'];
-                    $url = $apiInfos['url'];
-                } elseif ($type == 3) {
-                    $faceUrl = $val['head_img'];
-                    $url = $apiInfos['url'];
-                } elseif (type == 4) {
-                    $faceUrl = $val['media_shot'];
-                    $url = $apiInfos['url'];
-                }
+         
+            if($accountModel)
+            {
+	            if ($type == 1) {
+	            	$apiInfos = $accountModel->getInfosFromApi($val['account_name'], $type);
+	                $faceUrl = $apiInfos['profile_image_url'];
+	                $url = $apiInfos['url'];
+	            } elseif ($type == 2) {
+	                $faceUrl = $apiInfos['profile_image_url'];
+	                $url = $apiInfos['url'];
+	            } elseif ($type == 3) {
+	                $faceUrl = $val['head_img'];
+	                $url = "";//$apiInfos['url'];
+	            }
+            } 
+            elseif ($type == 4) {
+                $faceUrl = $val['media_shot'];
+                $url = $val['currentUrl'];
             }
+             
             $temp = array(
                 "id"    => $val['id'],
                 "weibo_type" => $type,
@@ -327,7 +330,7 @@ class SocialAccountAction extends MediaBaseAction {
                     "soft_retweet_price_u" => 1,
                     "admin_name" => $val['name'],
                     "admin_qq" => "800003455,1007",
-                    // 是否接单
+                    // 暂不接单
                     "leave" => $val['tmp_receiving_status'] ? true : false,
                     // 接单上限
                     "periodMax" => $val['receiving_num_status'] ? true : false,
@@ -379,7 +382,7 @@ class SocialAccountAction extends MediaBaseAction {
                 }
             }
             $temp['cells'] = array_merge($temp['cells'], $diffPrice);
-            $newData[] = $temp;
+            $newData[] = $temp;        
         }
         return $newData;
     }
@@ -426,6 +429,7 @@ class SocialAccountAction extends MediaBaseAction {
                                 $province       = setString(trim($temp_info[3]));
                                 $city           = setString(trim($temp_info[4]));
                                 $common         = setString(trim($temp_info[5]));
+                                $fans         	= intval($temp_info[6]);
                                 
                                 if (empty($accountName) || empty($price) || empty($rgPrice)) {
                                     continue;
@@ -474,7 +478,7 @@ class SocialAccountAction extends MediaBaseAction {
                                     'is_celebrity'  => intval($apiInfos['verified']),
                                     'pt_type'       => $accountType,
                                     'account_name'  => $accountName,
-                                    'fans_num'      => intval($apiInfos['followers_count ']),
+                                    'fans_num'      => $fans ? $fans :  intval($apiInfos['followers_count']),
                                     'yg_zhuanfa'    => $price,//$price * $priceRatio['retweetPrice'],
                                     'yg_zhifa'      => $rgPrice,//$price * $priceRatio['tweetPrice'],
                                     'rg_zhuanfa'    => $price,//$price * $priceRatio['softRetweetPrice'],
@@ -914,6 +918,8 @@ class SocialAccountAction extends MediaBaseAction {
                 $common	= I('common', 0, 'intval');
 				// 地区
                 $sex	= I('sex', 0, 'intval');
+                
+                $fans	= I('followers_count', 0, 'intval');
 				
 				
 				
@@ -939,7 +945,7 @@ class SocialAccountAction extends MediaBaseAction {
                     'is_celebrity'  => intval($apiInfos['verified']),
                     'pt_type'       => ($weiboType == 1) ? 1: 2,
                     'account_name'  => $weiboId,
-                    'fans_num'      => intval($apiInfos['followers_count']),
+                    'fans_num'      => $fans ? $fans : intval($apiInfos['followers_count']),
                     'yg_zhuanfa'    => $retweetPrice * $weiboPriceRatio['retweetPrice'],
                     'yg_zhifa'      => $retweetPrice * $weiboPriceRatio['tweetPrice'],
                     'rg_zhuanfa'    => $retweetPrice * $weiboPriceRatio['softRetweetPrice'],
@@ -1307,7 +1313,7 @@ class SocialAccountAction extends MediaBaseAction {
      */
     public function leavedetails()
     {
-       /* if ($this->isGet()) {
+        if ($this->isGet()) {
             $accountId      = I('get.accountId', 0, 'intval');
             $accountType    = I('get.accountType', 0, 'intval');
             
@@ -1334,7 +1340,7 @@ class SocialAccountAction extends MediaBaseAction {
             exit;
         } else {
             die('ERROR');
-        }*/
+        }
     }
     
     /**
@@ -1351,7 +1357,7 @@ class SocialAccountAction extends MediaBaseAction {
             $accountType    = I('post.account_type', 0, 'intval');
             $leave          = I('post.leave', 0, 'intval');
             $processall     = I('post.processall', 0, 'intval');
-            
+           
             if (empty($accountId) || empty($accountType)) {
                 echo json_encode(array(
                     'status' => false,

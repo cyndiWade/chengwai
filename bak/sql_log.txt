@@ -94,3 +94,21 @@ alter table app_grassroots_weixin add index idx_cx_cg(weixin_id)
 ALTER TABLE `app_intention_weibo_order` ADD `is_celebrity` TINYINT NOT NULL DEFAULT '0' COMMENT '是否名人';
 
 ALTER TABLE `app_intention_weixin_order` ADD `is_celebrity` TINYINT NOT NULL DEFAULT '0' COMMENT '是否名人';
+
+
+ALTER TABLE `app_intention_weixin_order` ADD `smallnumber` INT NOT NULL DEFAULT '0' COMMENT '小订单数量' AFTER `all_price`;
+
+ALTER TABLE `app_intention_weibo_order` ADD `smallnumber` INT NOT NULL DEFAULT '0' COMMENT '小订单数量' AFTER `all_price`;
+
+//20141216接单状态
+ALTER TABLE `app_account_weixin` ADD `receiving_status` TINYINT NOT NULL DEFAULT '1' COMMENT '是否接单状态' AFTER `status`;
+
+ALTER TABLE `app_account_weibo` ADD `receiving_status` TINYINT NOT NULL DEFAULT '1' COMMENT '是否接单状态' AFTER `status`;
+
+ALTER TABLE `app_account_news` ADD `receiving_status` TINYINT NOT NULL DEFAULT '1' COMMENT '是否接单状态' AFTER `status`;
+
+ALTER TABLE `app_account_weixin` ADD `tmp_receiving_status` TINYINT NOT NULL DEFAULT '0' COMMENT '暂不接单' AFTER `status`;
+
+ALTER TABLE `app_account_weibo` ADD `tmp_receiving_status` TINYINT NOT NULL DEFAULT '0' COMMENT '暂不接单' AFTER `status`;
+
+ALTER TABLE `app_account_news` ADD `tmp_receiving_status` TINYINT NOT NULL DEFAULT '0' COMMENT '暂不接单' AFTER `status`;

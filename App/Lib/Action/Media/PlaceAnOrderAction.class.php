@@ -11,7 +11,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
 	protected  $not_check_fn = array();	//无需登录和验证rbac的方法名
 	
 	//控制器说明
-	private $module_explain = '预约订单';
+	private $module_explain = '意向单列表';
 
 
 	//初始化数据库连接
@@ -29,7 +29,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
 	}
     
     /**
-     * 预约订单首页(待执行订单)
+     * 意向单列表首页(待执行订单)
      * 
      * @author lurongchang
      * @date   2014-09-19
@@ -63,12 +63,13 @@ class PlaceAnOrderAction extends MediaBaseAction {
             //二级导航
 			'secondSiderbar' => array(
 				//'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
-				'微博预约订单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorder')),
-				'微信预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
+				'微博意向单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorder')),
+				'微信意向单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
 			),
-            'secondPosition' => '微博预约订单',
+            'secondPosition' => '微博意向单',
 		));
 		
+
 		$new_array = addsltrim($_REQUEST);
 		
 		$data = $this->searchWeiboList();
@@ -91,7 +92,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
 	
 	
 	 /**
-     * 微博预约订单详情
+     * 微博意向单详情
      * 
      * @author bumtime
      * @date   2014-10-08
@@ -103,10 +104,10 @@ class PlaceAnOrderAction extends MediaBaseAction {
             //二级导航
 			'secondSiderbar' => array(
 				//'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
-				'微博预约订单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorder')),
-				'微信预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
+				'微博意向单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorder')),
+				'微信意向单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
 			),
-            'secondPosition' => '微博预约订单',
+            'secondPosition' => '微博意向单',
 		));
 
 		//过滤去空格 防SQL
@@ -124,7 +125,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
 		$order_info = $GeneralizeOrder->getOrderInfo($order_id);
 		 
 		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_weibo wb on ga.account_id = wb.id")->where($where)
-					->order('ga.id desc')->field('ga.id,  ga.`audit_status`,`account_name`')->select();
+					->order('ga.id desc')->field('ga.id,  ga.`audit_status`,`account_name`, price')->select();
 				
 					 
 		//统计
@@ -159,10 +160,10 @@ class PlaceAnOrderAction extends MediaBaseAction {
             //二级导航
 			'secondSiderbar' => array(
 				//'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
-				'微博预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorder')),
-				'微信预约订单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
+				'微博意向单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorder')),
+				'微信意向单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
 			),
-            'secondPosition' => '微信预约订单',
+            'secondPosition' => '微信意向单',
 		));
 		
 		$new_array = addsltrim($_REQUEST);
@@ -186,7 +187,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
 	}	  
 	
 	 /**
-     * 微信预约订单详情
+     * 微信意向单详情
      * 
      * @author bumtime
      * @date   2014-10-08
@@ -198,10 +199,10 @@ class PlaceAnOrderAction extends MediaBaseAction {
             //二级导航
 			'secondSiderbar' => array(
 				//'待执行订单'		=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/index')),
-				'微博预约订单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorder')),
-				'微信预约订单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
+				'微博意向单'	=> array('select' => false, 'url' => U('/Media/PlaceAnOrder/allorder')),
+				'微信意向单'	=> array('select' => true, 'url' => U('/Media/PlaceAnOrder/allorderWeixin')),
 			),
-            'secondPosition' => '微信预约订单',
+            'secondPosition' => '微信意向单',
 		));
 
 		//过滤去空格 防SQL
@@ -219,7 +220,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
 		$order_info = $GeneralizeOrder->getOrderInfo($order_id);
 		 
 		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_weixin wb on ga.account_id = wb.id")->where($where)
-					->order('ga.id desc')->field('ga.id,  ga.`audit_status`,`account_name`')->select();
+					->order('ga.id desc')->field('ga.id,  ga.`audit_status`,`account_name`, price')->select();
 				
 					 
 		//统计
@@ -380,7 +381,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
  
 			$list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."intention_weibo_order go on ga.intention_id = go.id")->where($where)->limit($Page->firstRow.','.$Page->listRows)
 					->order('ga.id desc')->field('`intention_id`, `account_type`, `account_id`, `audit_status`,  go.`id` as order_id, 
-						ga.`id`,`tfpt_type`, `fslx_type`, `ryg_type`, `yxd_name`, `start_time`, `over_time`, `create_time`, `status`')->select();
+						ga.`id`,`tfpt_type`, `fslx_type`, `ryg_type`, `yxd_name`, `start_time`, `over_time`, `create_time`, `status`, price')->select();
 			
 			if($list)
 			{
@@ -471,7 +472,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
  
 			$list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."intention_weixin_order go on ga.generalize_id = go.id")->where($where)->limit($Page->firstRow.','.$Page->listRows)
 					->order('ga.id desc')->field('`generalize_id`, `account_id`, `audit_status`,  go.`id` as order_id, 
-						ga.`id`,`ggw_type`, `yxd_name`, `title`, `start_time`, `over_time`, `create_time`, `status`')->select();
+						ga.`id`,`ggw_type`, `yxd_name`, `title`, `start_time`, `over_time`, `create_time`, `status`, price')->select();
 			
 			if($list)
 			{

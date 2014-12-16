@@ -21,8 +21,6 @@ class VerifyModel extends MediaBaseModel {
 		return $this->where(array('id'=>$id))->data(array('status'=>1))->save();
 	}
 	
-	
-	
 }
 
 ?>

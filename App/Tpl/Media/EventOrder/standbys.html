@@ -203,13 +203,13 @@
                     <thead>
                     <tr>
                         <th class="t1">订单号</th>
-                        <th class="t3">活动</th>
-                        <th class="t2">发布时间</th>
+                        <th class="t3">订单名称</th>
                         <th class="t2">账号名</th>
-						<th class="t4">广告位</th>
-                        <th class="t4">价格(元)</th>
-                        <!--<th class="t2">推广平台</th>
-                        <th class="t5">创建时间</th>-->
+						<th class="t2">广告位</th>
+						<th class="t2">推广平台</th>
+                        <th class="t2">价格(元)</th>
+                        <th class="t2">发布时间</th>
+                        <!--<th class="t5">创建时间</th>-->
                         <th class="t6">订单状态</th>
                         <th class="last">操作</th>
                     </tr>
@@ -235,13 +235,13 @@
                     <thead>
                       <tr>
                         <th class="t1">订单号</th>
-                        <th class="t3">活动</th>
-                        <th class="t2">发布时间</th>
+                        <th class="t3">订单名称</th>
                         <th class="t2">账号名</th>
-					<!--<th class="t4">广告位</th>-->
-                        <th class="t4">价格(元)</th>
-                        <th class="t2">推广平台</th>
-                       <!-- <th class="t5">创建时间</th>-->
+						<th class="t2">广告位</th>
+						<th class="t2">推广平台</th>
+                        <th class="t2">价格(元)</th>
+                        <th class="t2">发布时间</th>
+                       <!-- <th class="t2">创建时间</th>-->
                         <th class="t6">订单状态</th>
                         <th class="last">操作</th>
                     </tr>
@@ -293,8 +293,6 @@
 			<td class="t1"><span><i>*</i><strong>上传媒体截图：</strong></span></td>
 			<td class="t2"><input class="file fl" type="file" name="upload_info"></td>
 		  </tr>
-
-		 
 		  <tr>
 			<td class="t1"></td>
 			<td class="t2">
@@ -325,6 +323,22 @@
 		  </tr>
 		</table>
 	</form>
+	</div>
+</div>
+
+
+<!-- 查看反馈链接 -->
+<div class="batchbox5 tl">
+	<div class="top-batch l pr"><span class="close cur pa"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>查看反馈链接</b></div>
+	<div class="mid-batch pr l" > 
+		 <table class="tab01-inten l">
+				  <tr>
+					<td class="t1"></td>
+					<td class="t2" id="showExcute">
+						 
+					</td>
+				  </tr>
+		</table> 
 	</div>
 </div>
 
@@ -373,11 +387,15 @@ function getOrderList(type) {
                     var statusHtml = (item.order_status == 3) ? 
                         ('<a href="javascript:;" onclick="toOperation(this);" class="yel affirm_order" data-order_id="' + item.order_id + '" data-child_order_id="' + item.child_order_id + '" data-account_type="' + item.type_info + '" type="4">拒绝</a> | ' + 
 						'<a href="javascript:;" onclick="toOperation(this);" class="yel affirm_order" data-order_id="' + item.order_id + '" data-child_order_id="' + item.child_order_id + '" data-account_type="' + item.type_info + '" type="5">执行</a>')
-                    : (
-                        (item.order_status == 5  &&  item.start_time < item.now_time)
+                    : "";
+                    
+                    statusHtml += (item.order_status == 5  &&  item.is_time_now)
                         ? ('<a href="javascript:;" onclick="toOperation(this);" class="yel affirm_order" data-order_id="' + item.order_id + '" data-child_order_id="' + item.child_order_id + '" data-account_type="' + item.type_info + '" type="6">上传反馈数据</a>')
-                        : '暂无'
-                    );
+                        : '';
+                   /*  statusHtml +=(item.order_status == 6)
+                        ? ('<a href="javascript:;" onclick="toOperation(this);" class="yel affirm_order" data-order_id="' + item.order_id + '" data-child_order_id="' + item.child_order_id + '" data-account_type="' + item.type_info + '" type="7">查看反馈数据</a>')
+                        : '';    */
+ 
                     typeInfoTips =  "";
                     if(item.type_info == 'weibo')
                     {
@@ -398,12 +416,13 @@ function getOrderList(type) {
                     
                     html += '<tr>' +
                         '<td class="t1">' + item.order_id + '</td>' +
-                        '<td class="t3">' + item.title + '</td>' +
-                        '<td class="t2">' + item.start_time + '</td>' +                        
+                        '<td class="t3">' + item.title + '</td>' +                      
                         '<td class="t2">' + item.account_name + '</td>' +
-                        //'<td class="t3">' + item.account_type + '</td>' +
-                        '<td class="t4">' + typeInfoTips + '</td>' +
-                        '<td class="t4">' + item.price + '</td>' + 
+                        '<td class="t2">' + item.account_type + '</td>' +
+                        '<td class="t2">' + typeInfoTips + '</td>' +
+                        '<td class="t2">' + item.price + '</td>' + 
+                        '<td class="t2">' + item.start_time + '</td>' +  
+                        //'<td class="t2">' + item.create_time + '</td>' +  
                         '<td class="last">' + item.order_status_name + '</td>' +
                         '<td class="last">' + statusHtml + '</td>' +
                     '</tr>';
@@ -452,6 +471,35 @@ function toOperation(obj)
     {
         $('.batchbox3').popOn();
     }
+    //查看反馈数据
+	/*else if(status == 7)
+	{
+	    type = 1;
+	    
+		    $.ajax({
+		        url : "{:U('Media/EventOrder/showExcuteInfo')}",
+		        type: 'post',
+		        data: {'type' : type, 'aid' : childorderid, 'order_id' : orderid},
+		        async: false,
+		        success : function(data)
+		        {
+		        	info = "";
+		        	if(data.data.img !="")
+		        	{
+		        		info+="<img src='"+data.data.img+"' onload='DrawImage(this,100,100)' />";
+		        	}
+		        	if(data.data.url!="")
+		        	{
+		        		info+="<br/><a href='"+data.data.url+"' target='_blank'>查看执行链接</a>"; 
+		        	}
+					$("#showExcute").html(info);
+		        },
+		        error: function(error){
+		        }
+		    });
+		    
+		$('.batchbox5').popOn();	
+	}		*/
 }
 </script>
 </body>

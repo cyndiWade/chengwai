@@ -259,7 +259,7 @@ define(function(require, exports) {
                         }
                     }
                 },
-                {
+               /* {
                     align: "left",
                     text: renderTitleMiddelImg("是否", "shifoushangjia", '<br/>上架'),
                     dataIndex: "is_online",
@@ -280,7 +280,7 @@ define(function(require, exports) {
 
                         }
                     }
-                },
+                },*/
                 /* {
                     align: "center",
                     text: renderTitleMiddelImg("是否", "shifouyingguang", '<br/>接硬广'),
@@ -1004,7 +1004,7 @@ define(function(require, exports) {
                         },
                         data: {
                             accountId: id,
-                            accountType: type
+                            accountType: weibo_type
                         }
                     });
                 }

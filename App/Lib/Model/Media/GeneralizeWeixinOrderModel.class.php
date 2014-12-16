@@ -90,6 +90,7 @@ class GeneralizeWeixinOrderModel extends AppBaseModel
                     }
                 }
                 foreach ($orderAccountList AS $info) {
+                	
                     if (isset($accountInfo[$info['account_id']])) {
                         $accountName = $accountInfo[$info['account_id']];
                     } else {
@@ -100,7 +101,7 @@ class GeneralizeWeixinOrderModel extends AppBaseModel
                         'child_order_id'=> $info['id'],
                         'order_id'      => $info['generalize_id'],
                         'account_name'  => $accountName,
-                        'account_type'  => 4,
+                        'account_type'  => adGet($orderInfo['ggw_type']),
                         'type_info'     => 'weixin',
                         'title'         => $orderInfo['title'],
                         'price'         => $info['price'],
@@ -108,7 +109,7 @@ class GeneralizeWeixinOrderModel extends AppBaseModel
                         'order_status'  => $info['audit_status'],
                         'order_status_name'  => getAccountStatus($info['audit_status']),
                         'mark'          => $orderInfo['bz_info'],
-                         'now_time'		=> time()
+                        'is_time_now'	=>  $orderInfo['start_time'] < time() ? true : false
                     );
                     $datas[] = $temp;
                 }

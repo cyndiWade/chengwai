@@ -15,6 +15,8 @@
 			$arr['generalize_id'] = $new_array['order_id'];
 			//调用折扣比例
 			$arr['rebate'] = $finance;
+			
+			
 			//微博账号
 			$account_id = explode(',', $new_array['account_ids']);
 			foreach($account_id as $value)

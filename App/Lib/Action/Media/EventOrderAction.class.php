@@ -193,8 +193,8 @@ class EventOrderAction extends MediaBaseAction {
 
         parent::data_to_view(array(
 			//二级导航
-			'secondSiderbar' => array(
-				'待执行订单'	=> array('select' => true, 'url' => U('/Media/EventOrder/index')),
+			'secondSiderbar' 	=> array(
+				'待执行订单'		=> array('select' => true, 'url' => U('/Media/EventOrder/index')),
 				'新闻媒体订单'	=> array('select' => false, 'url' => U('/Media/EventOrder/allorderNews')),
 				'微信订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorderWeixin')),
 				'微博订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorder')),
@@ -278,9 +278,9 @@ class EventOrderAction extends MediaBaseAction {
 			//二级导航
 			'secondSiderbar' => array(
 				'待执行订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/index')),
-				'微博订单'		=> array('select' => true, 'url' => U('/Media/EventOrder/allorder')),
-				'微信订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorderWeixin')),
 				'新闻媒体订单'	=> array('select' => false, 'url' => U('/Media/EventOrder/allorderNews')),
+				'微信订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorderWeixin')),
+				'微博订单'		=> array('select' => true, 'url' => U('/Media/EventOrder/allorder')),
 			)
 		)); 
 		
@@ -343,7 +343,7 @@ class EventOrderAction extends MediaBaseAction {
 			$show       = $Page->show();
  
 			$list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."generalize_order go on ga.generalize_id = go.id")->where($where)->limit($Page->firstRow.','.$Page->listRows)
-					->order('ga.id desc')->field('`generalize_id`, `account_type`, `account_id`, `price`,  go.`id` as order_id, ga.id,ga.audit_status, `tfpt_type`, `fslx_type`, `ryg_type`, `hd_name`, `start_time`, `all_price`, `status`')->select();
+					->order('ga.id desc')->field('`generalize_id`, `account_type`, `account_id`, `price`,  go.`id` as order_id, ga.id,ga.audit_status, `tfpt_type`, `fslx_type`, `ryg_type`, `hd_name`, `start_time`, `all_price`, `create_time`, `status`')->select();
 			
 			 
 			if($list)
@@ -387,9 +387,9 @@ class EventOrderAction extends MediaBaseAction {
 			//二级导航
 			'secondSiderbar' => array(
 				'待执行订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/index')),
-				'微博订单'		=> array('select' => true, 'url' => U('/Media/EventOrder/allorder')),
+				'新闻媒体订单'	=> array('select' => false, 'url' => U('/Media/EventOrder/allorderNews')),
 				'微信订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorderWeixin')),
-				'新闻媒体订单'	=> array('select' => false, 'url' => U('/Media/EventOrder/allorderNews'))
+				'微博订单'		=> array('select' => true, 'url' => U('/Media/EventOrder/allorder')),
 			)
 		)); 
 		
@@ -447,9 +447,9 @@ class EventOrderAction extends MediaBaseAction {
 			//二级导航
 			'secondSiderbar' => array(
 				'待执行订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/index')),
-				'微博订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorder')),
-				'微信订单'		=> array('select' => true, 'url' => U('/Media/EventOrder/allorderWeixin')),
 				'新闻媒体订单'	=> array('select' => false, 'url' => U('/Media/EventOrder/allorderNews')),
+				'微信订单'		=> array('select' => true, 'url' => U('/Media/EventOrder/allorderWeixin')),
+				'微博订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorder')),
 			)
 		)); 
 		
@@ -513,7 +513,7 @@ class EventOrderAction extends MediaBaseAction {
  
 			$list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."generalize_weixin_order go on ga.generalize_id = go.id")->where($where)->limit($Page->firstRow.','.$Page->listRows)
 					->order('ga.id desc')->field('`generalize_id`, `account_id`, `price`, `status`,  go.`id` as order_id, ga.id,ga.audit_status,
-												 `ggw_type`, `yxd_name`, `title`, `start_time`, `status`')->select();
+												 `ggw_type`, `yxd_name`, `title`, `start_time`, `create_time`, `status`')->select();
 				 
 					 
 			if($list)
@@ -556,9 +556,9 @@ class EventOrderAction extends MediaBaseAction {
 			//二级导航
 			'secondSiderbar' => array(
 				'待执行订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/index')),
-				'微博订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorder')),
+				'新闻媒体订单'	=> array('select' => false, 'url' => U('/Media/EventOrder/allorderNews')),
 				'微信订单'		=> array('select' => true, 'url' => U('/Media/EventOrder/allorderWeixin')),
-				'新闻媒体订单'	=> array('select' => false, 'url' => U('/Media/EventOrder/allorderNews'))
+				'微博订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorder')),
 			)
 		)); 
 		
@@ -610,9 +610,9 @@ class EventOrderAction extends MediaBaseAction {
 			//二级导航
 			'secondSiderbar' => array(
 				'待执行订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/index')),
-				'微博订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorder')),
-				'微信订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorderWeixin')),
 				'新闻媒体订单'	=> array('select' => true, 'url' => U('/Media/EventOrder/allorderNews')),
+				'微信订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorderWeixin')),
+				'微博订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorder')),
 			)
 		)); 
 		
@@ -719,9 +719,9 @@ class EventOrderAction extends MediaBaseAction {
 			//二级导航
 			'secondSiderbar' => array(
 				'待执行订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/index')),
-				'微博订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorder')),
+				'新闻媒体订单'	=> array('select' => true, 'url' => U('/Media/EventOrder/allorderNews')),
 				'微信订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorderWeixin')),
-				'新闻媒体订单'	=> array('select' => true, 'url' => U('/Media/EventOrder/allorderNews'))
+				'微博订单'		=> array('select' => false, 'url' => U('/Media/EventOrder/allorder')),
 			)
 		)); 
 		
@@ -940,7 +940,45 @@ class EventOrderAction extends MediaBaseAction {
     		$this->error('处理失败');
     	} 
     }
-    
+        
+     /**
+     * 查看执行反馈数据
+     * 
+     * @author bumtime
+     * @date   2014-12-14
+     * @return void
+     */
+    public function showExcuteInfo()
+    {
+    	$id 		= I("aid", 0, "intval");
+    	$order_id 	= I("order_id", 0, "intval");
+    	$type		= I('type', 0, "intval");
+
+    	switch ($type)
+   		{
+   			case 3:
+    			$fileObject			= M('GeneralizeFiles');
+    			break;
+   			case 2:
+    			$fileObject			= M('GeneralizeWeixinFiles');
+    			break; 
+   			case 1:
+    			$fileObject			= M('GeneralizeNewsFiles');
+    			break;    			   			
+   		}
+   		//配图 
+   		if($order_id && $id)
+   		{
+			$file_where = array("users_id"=>$this->oUser->id, "generalize_order_id"=>$order_id, "account_id"=>$id, 'type'=>3);
+			$order_file = $fileObject->where($file_where)->field('link_url,url')->find();
+		    $imgDir =  C('UPLOAD_DIR');
+			parent::callback(1, '成功获取数据', array("img"=> "/".$imgDir['image'].'screenshot/'.$order_file['url'], 'url'=>$order_file['link_url']));
+        } 
+        else {
+            parent::callback(C('STATUS_ACCESS'), '数据出错');
+        }
+	
+    }
     /**
      * 统计日 周 月订单数
      * 

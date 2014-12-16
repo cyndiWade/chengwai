@@ -101,7 +101,7 @@ class GeneralizeOrderModel extends AppBaseModel
                         'child_order_id'=> $info['id'],
                         'order_id'      => $info['generalize_id'],
                         'account_name'  => $accountName,
-                        'account_type'  => $orderInfo['tfpt_type'],
+                        'account_type'  => getFsT($orderInfo['fslx_type']),
                         'type_info'     => 'weibo',
                         'title'         => $orderInfo['hd_name'],
                         'price'         => $info['price'],
@@ -109,7 +109,7 @@ class GeneralizeOrderModel extends AppBaseModel
                         'order_status'  => $info['audit_status'],
                         'order_status_name'  => getAccountStatus($info['audit_status']),
                         'mark'          => $orderInfo['bz_info'],
-                         'now_time'		=> time()
+                        'is_time_now'	=>  $orderInfo['start_time'] < time() ? true : false
                     );
                     $datas[] = $temp;
                 }
