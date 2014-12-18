@@ -64,14 +64,20 @@ class AccountNewsAction extends AdminBaseAction {
 		$info = $this->db['NowAccountObj']->get_account_data_one($id);
 		
 		if($act == 'recommended') {
-			$Help->show_status = $show_status;
+			$Help->show_status = $recommended_status;
 			$is_up = $this->db['NowAccountObj']->where(array('id'=>$id))->save(array('recommended_status'=>$recommended_status));
 			$is_up ? $this->success('修改成功！') : $this->error('修改失败！');
 			exit;
 		} elseif ($act == 'edit') {
 			
 			if ($this->isPost()) {
+				//dump($_POST);
+				//exit;
 				$this->db['NowAccountObj']->create();
+				if ($this->_post('area_id_sub') != ''){ 
+					$this->db['NowAccountObj']->area_id = $this->_post('area_id_sub');
+				}
+				
 				$this->db['NowAccountObj']->where(array('id'=>$id))->save();
 				
 				parent::newsDataprocess($id);	//同步方法

@@ -466,12 +466,15 @@ class AppBaseAction extends GlobalParameterAction {
 		$AccountNewsInfo = D('AccountNews')->where(array('id'=>$id))->find();
 		if($AccountNewsInfo!='')
 		{
+			
 			$new_info['area'] = $AccountNewsInfo['area_id'];
 			$new_info['price'] = $AccountNewsInfo['money'];
 			$new_info['type_of_portal'] = $AccountNewsInfo['pt_type'];
 			$new_info['is_news'] = $AccountNewsInfo['url_type'];
 			$new_info['links'] = $AccountNewsInfo['url_status'];
 			$new_info['classification'] = $AccountNewsInfo['industries'];
+			$new_info['recommend']  = $AccountNewsInfo['recommended_status'];
+			$new_info['specialoffer'] = $AccountNewsInfo['specialoffer'];
 			//判断索引表数据是否已经存在
 			$IndexNews = D('IndexNews');
 			$where = array('news_id'=>$id);
