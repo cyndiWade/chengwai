@@ -10,6 +10,9 @@ class AccountWeiboAction extends AdminBaseAction {
 	//初始化数据库连接
 	protected  $db = array(
 		'NowAccountObj'=>'AccountWeibo',
+		'CategoryTags'=>'CategoryTags',
+		'CeleprityindexWeibo'=>'CeleprityindexWeibo',
+		'GrassrootsWeibo'=>'GrassrootsWeibo'
 	);
 	
 	private $type_explain = array(
@@ -70,7 +73,34 @@ class AccountWeiboAction extends AdminBaseAction {
 		$recommended_status = $this->_get('recommended_status');		//推荐状态
 		
 		$info = $this->db['NowAccountObj']->get_account_data_one($id);
-	
+
+		$Big_Nav_Class_Ids = C('Big_Nav_Class_Ids');
+
+		$CategoryTags = $this->db['CategoryTags'];
+
+		if($info['ac_is_celebrity']==1)
+		{
+			$id_info = $this->db['CeleprityindexWeibo']->where(array('weibo_id'=>array('eq',$info['ac_id'])))->find();
+			if($id_info!='')
+			{
+				$info['id_info'] = $id_info;
+			}
+			$info['mrzy'] = $CategoryTags->get_classify_data($Big_Nav_Class_Ids['celebrity_tags_ids']['mrzy'])[$Big_Nav_Class_Ids['celebrity_tags_ids']['mrzy']];
+			$info['mtly'] = $CategoryTags->get_classify_data($Big_Nav_Class_Ids['celebrity_tags_ids']['mtly'])[$Big_Nav_Class_Ids['celebrity_tags_ids']['mtly']];
+			$info['dfmr_mt'] = $CategoryTags->get_classify_data($Big_Nav_Class_Ids['celebrity_tags_ids']['dfmr_mt'])[$Big_Nav_Class_Ids['celebrity_tags_ids']['dfmr_mt']];
+			$info['phd'] = $CategoryTags->get_classify_data($Big_Nav_Class_Ids['celebrity_tags_ids']['phd'])[$Big_Nav_Class_Ids['celebrity_tags_ids']['phd']];
+			$info['zhyc'] = $CategoryTags->get_classify_data($Big_Nav_Class_Ids['celebrity_tags_ids']['zhyc'])[$Big_Nav_Class_Ids['celebrity_tags_ids']['zhyc']];
+		}else{
+			$id_info = $this->db['GrassrootsWeibo']->where(array('weibo_id'=>array('eq',$info['ac_id'])))->find();
+			if($id_info!='')
+			{
+				$info['id_info'] = $id_info;
+			}
+			$info['cjfl'] = $CategoryTags->get_classify_data($Big_Nav_Class_Ids['caogen_tags_ids']['cjfl'])[$Big_Nav_Class_Ids['caogen_tags_ids']['cjfl']];
+			$info['dfmr_mt'] = $CategoryTags->get_classify_data($Big_Nav_Class_Ids['caogen_tags_ids']['dfmr_mt'])[$Big_Nav_Class_Ids['caogen_tags_ids']['dfmr_mt']];
+			$info['fans_sex'] = $CategoryTags->get_classify_data($Big_Nav_Class_Ids['caogen_tags_ids']['fans_sex'])[$Big_Nav_Class_Ids['caogen_tags_ids']['fans_sex']];
+		}
+
 		if($act == 'recommended') {
 			$Help->show_status = $show_status;
 			$is_up = $this->db['NowAccountObj']->where(array('id'=>$id))->save(array('recommended_status'=>$recommended_status));
@@ -81,8 +111,32 @@ class AccountWeiboAction extends AdminBaseAction {
 			if ($this->isPost()) {
 				$this->db['NowAccountObj']->create();
 				$this->db['NowAccountObj']->where(array('id'=>$id))->save();
+
+				$CeleprityindexWeibo = $this->db['CeleprityindexWeibo'];
+
+				if($CeleprityindexWeibo->where(array('weibo_id'=>array('eq',$id)))->find())
+				{
+					$CeleprityindexWeibo->create();
+					$CeleprityindexWeibo->where(array('weibo_id'=>array('eq',$id)))->save();
+
+				}else{
+					$CeleprityindexWeibo->create();
+					$CeleprityindexWeibo->where(array('weibo_id'=>array('eq',$id)))->add();
+				}
+
+				$GrassrootsWeibo = $this->db['GrassrootsWeibo'];
+
+				if($GrassrootsWeibo->where(array('weibo_id'=>array('eq',$id)))->find())
+				{
+					$GrassrootsWeibo->create();
+					$GrassrootsWeibo->where(array('weibo_id'=>array('eq',$id)))->save();
+
+				}else{
+					$GrassrootsWeibo->create();
+					$GrassrootsWeibo->where(array('weibo_id'=>array('eq',$id)))->add();
+				}
 				
-				parent::weiboDataprocess($id);	//同步方法
+				//parent::weiboDataprocess($id);	//同步方法
 				$this->redirect(GROUP_NAME.'/'.MODULE_NAME.'/edit',array('act'=>$act,'id'=>$id));
 			}
 			

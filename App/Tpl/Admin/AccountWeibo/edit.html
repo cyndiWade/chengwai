@@ -126,21 +126,40 @@
 										<label class="control-label">是否名人：</label>
 										<div class="controls">                                                
 											<label class="radio">
-												<div class="radio">
-												<span><input type="radio" name=is_celebrity value="1"></span>
-												</div>
+												<span>
+													<input type="radio" name="is_celebrity" <if condition="$view_data.ac_is_celebrity eq 1">checked="true"</if> value="1">
+												</span>
 												是
 											</label>
 
 											<label class="radio">
-												<div class="radio">
-													<span class="checked"><input type="radio" name="is_celebrity" value="0" ></span>
-												</div>
+												<span>
+													<input type="radio" name="is_celebrity" <if condition="$view_data.ac_is_celebrity eq 0">checked="true"</if> value="0">
+												</span>
 												否
 											</label>  
 										</div>
 									</div>
-									
+
+									<div class="control-group">
+										<label class="control-label">账号类型：</label>
+										<div class="controls">                                                
+											<label class="radio">
+												<span>
+													<input type="radio" <if condition="$view_data.ac_pt_type eq 1">checked="true"</if> name="pt_type" value="1">
+												</span>
+												新浪
+											</label>
+
+											<label class="radio">
+												<span>
+													<input type="radio" <if condition="$view_data.ac_pt_type eq 2">checked="true"</if> name="pt_type" value="2" >
+												</span>
+												腾讯
+											</label>  
+										</div>
+									</div>
+
 									<!--									<div class="control-group">
 										<label class="control-label">是否名人：</label>
 											<div class="controls">
@@ -210,7 +229,105 @@
 										</div>
 									</div>
 									
+									<if condition="$view_data.ac_is_celebrity eq 1">
+
+									<div class="control-group">
+										<label class="control-label">名人职业：</label>
+											<div class="controls">
+												<select name="occupation" tabindex="1" class="small m-wrap">
+														<volist name="view_data['mrzy']" id="vo">
+															<option value="{$vo['id']}" <if condition="($view_data['id_info']['occupation']==$vo['id'])">selected</if> >{$vo['title']}</option>
+														</volist>
+												</select>
+											</div>
+									</div>
+			
+									<div class="control-group">
+										<label class="control-label">媒体领域：</label>
+											<div class="controls">
+												<select name="field" tabindex="1" class="small m-wrap">
+														<volist name="view_data['mtly']" id="vo">
+															<option value="{$vo['id']}" <if condition="($view_data['id_info']['field']==$vo['id'])">selected</if> >{$vo['title']}</option>
+														</volist>
+												</select>
+											</div>
+									</div>
 									
+									<input type="hidden" class="span3 m-wrap" data-required="1" name="ck_price" value="{$view_data.ac_ck_money}" />
+
+									<input type="hidden" class="span3 m-wrap" data-required="1" name="yc_price" value="{$view_data.ac_yc_money}" />
+									
+									<div class="control-group">
+										<label class="control-label">地方名人/媒体：</label>
+											<div class="controls">
+												<select name="cirymedia" tabindex="1" class="small m-wrap">
+														<volist name="view_data['dfmr_mt']" id="vo">
+															<option value="{$vo['id']}">{$vo['title']}</option>
+														</volist>
+												</select>
+											</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">配合度：</label>
+											<div class="controls">
+												<select name="coordination" tabindex="1" class="small m-wrap">
+														<volist name="view_data['phd']" id="vo">
+															<option value="{$vo['val']}" <if condition="($view_data['id_info']['coordination']==$vo['val'])">selected</if> >{$vo['title']}</option>
+														</volist>
+												</select>
+											</div>
+									</div>
+									
+									<input type="hidden" class="span3 m-wrap" data-required="1" name="fansnumber" value="{$view_data.ac_fans_num}" />
+									
+									<div class="control-group">
+										<label class="control-label">支持原创：</label>
+											<div class="controls">
+												<select name="originality" tabindex="1" class="small m-wrap">
+														<volist name="view_data['zhyc']" id="vo">
+															<option value="{$vo['val']}" <if condition="($view_data['id_info']['originality']==$vo['val'])">selected</if> >{$vo['title']}</option>
+														</volist>
+												</select>
+											</div>
+									</div>
+
+									<else />
+
+									<div class="control-group">
+										<label class="control-label">常见分类：</label>
+											<div class="controls">
+												<select name="common" tabindex="1" class="small m-wrap">
+														<volist name="view_data['cjfl']" id="vo">
+															<option value="{$vo['id']}" <if condition="($view_data['id_info']['common']==$vo['id'])">selected</if> >{$vo['title']}</option>
+														</volist>
+												</select>
+											</div>
+									</div>
+
+									<div class="control-group">
+										<label class="control-label">地区：</label>
+											<div class="controls">
+												<select name="cirymedia" tabindex="1" class="small m-wrap">
+														<volist name="view_data['dfmr_mt']" id="vo">
+															<option value="{$vo['id']}">{$vo['title']}</option>
+														</volist>
+												</select>
+											</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">粉丝性别：</label>
+											<div class="controls">
+												<select name="sex" tabindex="1" class="small m-wrap">
+														<volist name="view_data['fans_sex']" id="vo">
+															<option value="{$vo['val']}" <if condition="($view_data['id_info']['sex']==$vo['val'])">selected</if> >{$vo['title']}</option>
+														</volist>
+												</select>
+											</div>
+									</div>
+
+									</if>
 									
 									<div class="control-group">
 										<label class="control-label">周订单：</label>
@@ -236,8 +353,7 @@
 												</select>
 											</div>
 									</div>
-									
-									
+
 									<div class="control-group">
 										<label class="control-label">备注：<span class="required"></span></label>
 										<div class="controls">
@@ -325,6 +441,15 @@
 			
 		});
 
+		$('input[name="is_celebrity"]').change(function(){
+			document.getElementById("form_sample_1").submit();
+		});
+
+		$('input[name="fans_num"]').keyup(function(){
+			var _this = $(this);
+			$('input[name="fansnumber"]').val(_this.val());
+		});
+		
 	</script>
 
 	<!-- END JAVASCRIPTS -->   
