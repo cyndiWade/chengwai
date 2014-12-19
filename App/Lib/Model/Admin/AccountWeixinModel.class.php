@@ -11,7 +11,7 @@ class AccountWeixinModel extends AdminBaseModel {
 	}
 	
 	//all
-	public function get_account_data_list ($offst = 0,$limit = 500) {
+	public function get_account_data_list ($offset = 0,$limit = 500) {
 		$users_fields = parent::field_add_prefix('Users','bs_','u.');
 		$now_base_fields = parent::field_add_prefix('AccountWeixin','ac_','a.');	
 		
@@ -20,9 +20,10 @@ class AccountWeixinModel extends AdminBaseModel {
 		->table($this->prefix.'account_weixin AS a')
 		->join($this->prefix.'users AS u ON a.users_id = u.id')
 		->where(array('a.is_del'=>0))
-		->limit($offst.','.$limit)
+		->order('a.id ASC')
+		->limit($offset.','.$limit)
 		->select();
-		
+
 		if ($result) parent::set_all_time($result,array('ac_create_time'));
 		
 		return $result;

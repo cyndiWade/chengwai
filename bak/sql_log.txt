@@ -124,3 +124,7 @@ ALTER TABLE  `app_account_weixin` CHANGE  `female_precent`  `female_precent` TIN
 ALTER TABLE  `app_account_weixin` CHANGE  `area_id`  `area_id` INT( 10 ) NOT NULL DEFAULT  '0' COMMENT  '地区（城市ID）'
 
 ALTER TABLE  `app_account_weibo` CHANGE  `area_id`  `area_id` INT( 10 ) NOT NULL DEFAULT  '0' COMMENT  '地区（城市ID）'
+
+ALTER TABLE  `app_celeprityindex_weibo` ADD  `recommend` TINYINT( 2 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '1为推荐 0为不推荐' AFTER  `strategic_c`
+
+ALTER TABLE  `app_celeprityindex_weibo` ADD  `specialoffer` TINYINT( 2 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '0为正常 1为折扣' AFTER  `recommend`

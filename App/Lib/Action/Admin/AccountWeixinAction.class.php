@@ -88,7 +88,7 @@ class AccountWeixinAction extends AdminBaseAction {
 				$this->db['NowAccountObj']->create();
 				if ($this->_post('area_id_sub') != ''){
 					$this->db['NowAccountObj']->area_id = $this->_post('area_id_sub');
-				}		
+				}
 				$this->db['NowAccountObj']->where(array('id'=>$id))->save();
 				
 				//微信草根索引表
