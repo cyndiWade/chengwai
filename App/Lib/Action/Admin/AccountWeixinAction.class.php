@@ -10,6 +10,8 @@ class AccountWeixinAction extends AdminBaseAction {
 	//初始化数据库连接
 	protected  $db = array(
 		'NowAccountObj'=>'AccountWeixin',
+		'GrassrootsWeixin' => 'GrassrootsWeixin', //微信草根索引表
+		'CeleprityindexWeixin' => 'CeleprityindexWeixin' //微信名人索引表	
 	);
 	
 
@@ -74,17 +76,34 @@ class AccountWeixinAction extends AdminBaseAction {
 		$info = $this->db['NowAccountObj']->get_account_data_one($id);
 		
 		if($act == 'recommended') {
-			$Help->show_status = $show_status;
+			$Help->show_status = $recommended_status;
 			$is_up = $this->db['NowAccountObj']->where(array('id'=>$id))->save(array('recommended_status'=>$recommended_status));
 			$is_up ? $this->success('修改成功！') : $this->error('修改失败！');
 			exit;
 		} elseif ($act == 'edit') {
-			
+
 			if ($this->isPost()) {
+				
+				//微信基础表
 				$this->db['NowAccountObj']->create();
+				if ($this->_post('area_id_sub') != ''){
+					$this->db['NowAccountObj']->area_id = $this->_post('area_id_sub');
+				}		
 				$this->db['NowAccountObj']->where(array('id'=>$id))->save();
 				
+				//微信草根索引表
+				if ($this->_post('is_celebrity') == 0) {
+					$this->db['GrassrootsWeixin']->create();
+					$this->db['GrassrootsWeixin']->where(array('weixin_id'=>$id))->save();
+				
+				//微信名人索引表
+				} else if ($this->_post('is_celebrity') == 1) {
+					$this->db['CeleprityindexWeixin']->create();
+					$this->db['CeleprityindexWeixin']->where(array('weixin_id'=>$id))->save();
+				}
+							
 				parent::weixinDataprocess($id);	//同步方法
+				
 				$this->redirect(GROUP_NAME.'/'.MODULE_NAME.'/edit',array('act'=>$act,'id'=>$id));
 			}
 			

@@ -112,3 +112,15 @@ ALTER TABLE `app_account_weixin` ADD `tmp_receiving_status` TINYINT NOT NULL DEF
 ALTER TABLE `app_account_weibo` ADD `tmp_receiving_status` TINYINT NOT NULL DEFAULT '0' COMMENT '暂不接单' AFTER `status`;
 
 ALTER TABLE `app_account_news` ADD `tmp_receiving_status` TINYINT NOT NULL DEFAULT '0' COMMENT '暂不接单' AFTER `status`;
+
+
+//关联属性表
+ALTER TABLE  `app_account_news` ADD  `specialoffer` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '限时特价，1是，0否' AFTER  `receiving_status`
+
+ALTER TABLE  `app_account_weixin` CHANGE  `male_precent`  `male_precent` TINYINT( 2 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '性别分布：男'
+
+ALTER TABLE  `app_account_weixin` CHANGE  `female_precent`  `female_precent` TINYINT( 2 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '性别分布：女'
+
+ALTER TABLE  `app_account_weixin` CHANGE  `area_id`  `area_id` INT( 10 ) NOT NULL DEFAULT  '0' COMMENT  '地区（城市ID）'
+
+ALTER TABLE  `app_account_weibo` CHANGE  `area_id`  `area_id` INT( 10 ) NOT NULL DEFAULT  '0' COMMENT  '地区（城市ID）'

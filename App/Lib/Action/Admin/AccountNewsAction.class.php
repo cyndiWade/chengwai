@@ -71,8 +71,7 @@ class AccountNewsAction extends AdminBaseAction {
 		} elseif ($act == 'edit') {
 			
 			if ($this->isPost()) {
-				//dump($_POST);
-				//exit;
+		
 				$this->db['NowAccountObj']->create();
 				if ($this->_post('area_id_sub') != ''){ 
 					$this->db['NowAccountObj']->area_id = $this->_post('area_id_sub');

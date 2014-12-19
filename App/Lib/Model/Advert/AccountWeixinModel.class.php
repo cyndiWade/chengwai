@@ -134,7 +134,7 @@
 					$list[$key]['bs_dtwdet_money'] = $val['bs_dtwdet_money'] + ($val['bs_dtwdet_money'] * $gloubid);
 					$list[$key]['bs_dtwqtwz_money'] = $val['bs_dtwqtwz_money'] + ($val['bs_dtwqtwz_money'] * $gloubid);
 
-					//名人领域
+					//草根常见分类
 					$cjfl = $data['cjfl'][$val['sy_common']]['title'];
 					$list[$key]['pg_cjfl_explain'] = $cjfl ? $cjfl : '不限';
 				}
@@ -232,7 +232,7 @@
 			{
 				$wheres['b.is_hot'] = 1;
 			}
-			//折扣
+			//限时特价
 			if($addslArray['xstj']!='')
 			{
 				$wheres['b.specialoffer'] = 1;

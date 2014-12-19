@@ -401,10 +401,14 @@ class AppBaseAction extends GlobalParameterAction {
 		if($AccountWeixinInfo!='')
 		{
 			//需要同步的数据
+			//名人索引表数据
 			$cele_info['fansnumber'] = $grass_info['fans_number'] = $AccountWeixinInfo['fans_num'];
 			$cele_info['ck_price'] = $AccountWeixinInfo['ck_money'];
 			$cele_info['yc_price'] = $AccountWeixinInfo['yc_money'];
+			$cele_info['cirymedia'] = $AccountWeixinInfo['area_id'];
+			$cele_info['recommend'] = $AccountWeixinInfo['recommended_status'];
 			
+			//草根索引表数据
 			$grass_info['dtb_money'] = $AccountWeixinInfo['dtb_money'];
 			$grass_info['dtwdyt_money'] = $AccountWeixinInfo['dtwdyt_money'];
 			$grass_info['dtwdet_money'] = $AccountWeixinInfo['dtwdet_money'];
