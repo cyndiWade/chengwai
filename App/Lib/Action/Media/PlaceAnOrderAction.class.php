@@ -136,6 +136,7 @@ class PlaceAnOrderAction extends MediaBaseAction {
 		$order_file = D('IntentionWeiboFiles')->field('url')->where($file_where)->find();
 		$order_info["order_file"] = $order_file ? $order_file : "";
 		
+		
 		parent::data_to_view(array(
 				'order_info'		=> $order_info,
 				'account_list'	=> $account_list,

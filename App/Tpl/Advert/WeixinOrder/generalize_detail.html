@@ -66,6 +66,17 @@
 				<td class="t2">{$view_data.order_info.ggw_type|adGet}</td>
 				<th class="t1">创建时间：</th>
 				<td class="t2">{$view_data.order_info.create_time|date="Y-m-d H:i:s",###}</td>
+				<th class="t1">资质证明：</th>
+				<td style="padding: 5px;" >
+				<php>
+				foreach ($view_data['order_info']['file'][2] as $value)
+				{
+						$public_dir =  C('PUBLIC_VISIT');
+						$img_dif = C('UPLOAD_DIR');
+						if(!empty($value))	
+							echo '<img src="'.$public_dir['domain'].$img_dif['image'].$value.'"  onload="DrawImage(this,200,100)"/><br/>';	
+				}
+				</php>
 			  </tr>
 			  <tr>
 				<th class="t1">直发内容：</th>
@@ -76,9 +87,6 @@
 				</td>
 				<th class="t1">封面图：</th>
 				<td style="padding: 5px;" >
-				<foreach name="$view_data['order_info']['file'][1]" item="vo">
-					<empty name="$vo"><else /> </empty>
-				</foreach>
 				<php>
 				foreach ($view_data['order_info']['file'][1] as $value)
 				{
@@ -131,7 +139,7 @@
 				<td class=""><strong class="finish">{$vo.g_status_explain}</strong></td>
 				<td class="">
 					<if condition="($vo.is_show_affirm_btn EGT 6)">
-						<a href="{:U('Advert/WeixinOrder/look_perform_pic',array('order_id'=>$view_data['order_id'],'account_id'=>$vo['g_account_id']))}" target="_blank" class="blue" data-order_id="{$vo.g_id}">查看执行截图</a>
+						<a href="{:U('Advert/WeixinOrder/look_perform_pic',array('order_id'=>$view_data['order_id'],'account_id'=>$vo['g_id']))}" target="_blank" class="blue" data-order_id="{$vo.g_id}">查看执行截图</a>
 					<else />
 						无
 					</if>

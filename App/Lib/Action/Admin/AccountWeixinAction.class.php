@@ -104,6 +104,17 @@ class AccountWeixinAction extends AdminBaseAction {
 							
 				parent::weixinDataprocess($id);	//同步方法
 				
+				//审核与未审核都要发送站内短信 add by bumtime 20141221
+				$status = I("status", 0 ,'intval');
+				
+				$tipsInfo = C('MESSAGE_TYPE_MEDIA');
+				$data['send_from_id']	=	$this->oUser->id;
+				$data['send_to_id']		=	$info['ac_users_id'];
+				$data['subject']		=	$tipsInfo[1]['subject'];
+				$data['content']		=	$status == 1 ? sprintf($tipsInfo[1]['content'], "微信", U('/Media/SocialAccount/manager/type/3'), $info['ac_account_name']) : sprintf($tipsInfo[2]['content'], "微信", U('/Media/SocialAccount/manager/type/3'), $info['ac_account_name']);
+				$data['message_time']	=	time();
+				parent::sendMessageInfo($data);
+				
 				$this->redirect(GROUP_NAME.'/'.MODULE_NAME.'/edit',array('act'=>$act,'id'=>$id));
 			}
 			

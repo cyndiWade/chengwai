@@ -155,18 +155,38 @@ class OrderAction extends AdminBaseAction {
 				{
 					$totalPrice = 0 ;
 					$order_info = $this->db['GeneralizeNewsOrder']->where(array('id'=>$order_id))->find();
-					$adUserID = $order_info['users_id'];
+					$adUserID 	= $order_info['users_id'];
 					
-		    		$accoutList = $this->db['GeneralizeNewsAccount']->where(array('generalize_id'=>$order_id))->field('`account_id`, `price`, `rebate`, `audit_status`')->select();
+		    		$accoutList = $this->db['GeneralizeNewsAccount']->where(array('generalize_id'=>$order_id))->field('`account_id`, `price`, `rebate`, `audit_status`, users_id')->select();
 		    		//总金额
+		    		$tipsInfo = C('MESSAGE_TYPE_ADMIN');
+		    		$k =0;
+		    		$messageData = array();
 		    		foreach ($accoutList  as $value)
 		    		{
 		    			$totalPrice += getAdMoney($value['price'], 'news', $value['rebate']);
 		    			//$totalPrice += $this->getAdMoney($value['price'], 'weibo', $value['rebate']);
+		    			
+						//取消发站内短信 add by bumtime 20141223
+		    		    $messageData[$k]['send_from_id']	=	$this->oUser->id;
+						$messageData[$k]['send_to_id']		=	$value['users_id'];
+						$messageData[$k]['subject']			=	$tipsInfo[1]['subject'];
+						$messageData[$k]['content']			=	sprintf($tipsInfo[1]['content'], $order_info['title'], U('/Media/EventOrder/showNews', array('id'=>$order_id)));
+						$messageData[$k]['message_time']	=	time();
+						$k++;
 		    		}
 					//给广告主解冻
 		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID, 1, 1, $order_id);
 		    		
+		    		//取消发站内短信(to 广告主) add by bumtime 20141223 
+	    		  	$messageData[$k]['send_from_id']	=	$this->oUser->id;
+					$messageData[$k]['send_to_id']		=	$adUserID;
+					$messageData[$k]['subject']			=	$tipsInfo[1]['subject'];
+					$messageData[$k]['content']			=	sprintf($tipsInfo[1]['content'], $order_info['title'], U('/Advert/News/generalize_detail', array('order_id'=>$info['order_id'])));
+					$messageData[$k]['message_time']	=	time();
+					
+					if($messageData)
+						parent::sendMessageInfo($messageData, 2);			
 				}
 			}
 			
@@ -309,16 +329,37 @@ class OrderAction extends AdminBaseAction {
 					$order_info = $this->db['GeneralizeOrder']->where(array('id'=>$order_id))->find();
 					$adUserID = $order_info['users_id'];
 					
-		    		$accoutList = $this->db['GeneralizeAccount']->where(array('generalize_id'=>$order_id))->field('`account_id`, `price`, `rebate`, `audit_status`')->select();
+		    		$accoutList = $this->db['GeneralizeAccount']->where(array('generalize_id'=>$order_id))->field('`account_id`, `price`, `rebate`, `audit_status`, users_id')->select();
+		    		
+		    		$tipsInfo = C('MESSAGE_TYPE_ADMIN');
+		    		$k =0;
+		    		$messageData = array();
+		    		
 		    		//总金额
 		    		foreach ($accoutList  as $value)
 		    		{
 		    			$totalPrice += getAdMoney($value['price'], 'weibo', $value['rebate']);
 		    		//	$totalPrice += $this->getAdMoney($value['price'], 'weibo', $value['rebate']);
+		    		
+		    		  	$messageData[$k]['send_from_id']	=	$this->oUser->id;
+						$messageData[$k]['send_to_id']		=	$value['users_id'];
+						$messageData[$k]['subject']			=	$tipsInfo[1]['subject'];
+						$messageData[$k]['content']			=	sprintf($tipsInfo[1]['content'], $order_info['title'], U('/Media/EventOrder/show', array('id'=>$order_id)));
+						$messageData[$k]['message_time']	=	time();
+						$k++;
 		    		}
 					//给广告主解冻
 		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID, 1, 3, $order_id);
 		    		
+		    		
+		    		//取消发站内短信(to 广告主) add by bumtime 20141223 
+	    		  	$messageData[$k]['send_from_id']	=	$this->oUser->id;
+					$messageData[$k]['send_to_id']		=	$adUserID;
+					$messageData[$k]['subject']			=	$tipsInfo[1]['subject'];
+					$messageData[$k]['content']			=	sprintf($tipsInfo[1]['content'], $order_info['title'], U('/Advert/WeiboOrder/generalize_detail', array('order_id'=>$info['order_id'])));
+					$messageData[$k]['message_time']	=	time();
+		    		if($messageData)
+						parent::sendMessageInfo($messageData, 2);	
 				}
 			}
 			
@@ -586,15 +627,38 @@ class OrderAction extends AdminBaseAction {
 					$order_info = $this->db['GeneralizeWeixinOrder']->where(array('id'=>$order_id))->find();
 					$adUserID = $order_info['users_id'];
 					
-		    		$accoutList = $this->db['GeneralizeWeixinAccount']->where(array('generalize_id'=>$order_id))->field('`account_id`, `price`, `rebate`, `audit_status`')->select();
+		    		$accoutList = $this->db['GeneralizeWeixinAccount']->where(array('generalize_id'=>$order_id))->field('`account_id`, `price`, `rebate`, `audit_status`, users_id')->select();
+		    		
+		    		$tipsInfo = C('MESSAGE_TYPE_ADMIN');
+		    		$k =0;
+		    		$messageData = array();
+		    		
 		    		//总金额
 		    		foreach ($accoutList  as $value)
 		    		{
 		    			$totalPrice += getAdMoney($value['price'], 'weixin', $value['rebate']);
 		    			//$totalPrice += $this->getAdMoney($value['price'], 'weixin', $value['rebate']);
+		    			//取消发站内短信 add by bumtime 20141223
+		    		    $messageData[$k]['send_from_id']	=	$this->oUser->id;
+						$messageData[$k]['send_to_id']		=	$value['users_id'];
+						$messageData[$k]['subject']			=	$tipsInfo[1]['subject'];
+						$messageData[$k]['content']			=	sprintf($tipsInfo[1]['content'], $order_info['title'], U('/Media/EventOrder/showNews', array('id'=>$order_id)));
+						$messageData[$k]['message_time']	=	time();
+						$k++;
 		    		}
+		    		
 					//给广告主解冻
 		    		D("UserAdvertisement")->setMoney($totalPrice, $adUserID, 1, 2, $order_id);
+		    		
+		    		//取消发站内短信(to 广告主) add by bumtime 20141223 
+	    		  	$messageData[$k]['send_from_id']	=	$this->oUser->id;
+					$messageData[$k]['send_to_id']		=	$adUserID;
+					$messageData[$k]['subject']			=	$tipsInfo[1]['subject'];
+					$messageData[$k]['content']			=	sprintf($tipsInfo[1]['content'], $order_info['title'], U('/Advert/WeixinOrder/generalize_detail', array('order_id'=>$info['order_id'])));
+					$messageData[$k]['message_time']	=	time();
+						
+		    		if($messageData)
+						parent::sendMessageInfo($messageData, 2);	
 		    		
 				}
 			}

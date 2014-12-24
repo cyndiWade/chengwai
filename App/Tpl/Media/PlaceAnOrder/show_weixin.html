@@ -3,6 +3,7 @@
 <head>
 	<include file="Public:top" />
 	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
+	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
 	<title>订单详情_媒体主_个人主页</title>
 </head>
 <body>
@@ -39,7 +40,7 @@
 					<th class="t1">是否延期：</th>
 					<td class="t3">{$view_data.order_info.sfyq}</td>
 					<th class="t1">正品证明：</th>
-					<td class="t2"><if condition="$view_data['order_info']['order_file']  neq ''"><img src="{$view_data.order_info.order_file}" /> <else /> 无 </if></td>
+					<td class="t2" style="padding: 5px;"><if condition="$view_data['order_info']['order_file']['url']  neq ''"><img src="{$Think.config.PUBLIC_VISIT.domain}{$Think.config.UPLOAD_DIR.image}{$view_data.order_info.order_file.url}" onload="DrawImage(this,100,80)" /> <else /> 无 </if></td>
 					<!--<th class="t1">配图：</th>
 					<td class="t2">无</td>-->
 				  </tr>

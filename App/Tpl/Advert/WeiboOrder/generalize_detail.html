@@ -32,16 +32,21 @@
 				<td class="t2">{$view_data.order_info.tfpt_type|getPt}</td>
 			  </tr>
 			  <tr>
+			  <if condition="$view_data['order_info']['fslx_type'] eq 2">
 				<th class="t1">转发链接：</th>
-				<td class="t2">{$view_data.order_info.zf_url}</td>
+				<td class="t2"><a href="{$view_data.order_info.zf_url}" target="_blank">查看链接</a></td>
 				<th class="t1">转发语类型：</th>
 				<td class="t3">{$view_data.order_info.zfy_type|getZhuanf}</td>
+				</if>
 				<th class="t1">文案包含链接：</th>
 				<td class="t2">{$view_data.order_info.wa_url_status|wenAn}</td>
 			  </tr>
 			  <tr>
+			    <tr>
+			<if condition="$view_data['order_info']['fslx_type'] eq 1">
 				<th class="t1">直发内容类型：</th>
 				<td class="t2">{$view_data.order_info.zfnr_type|zfNeir}</td>
+			</if>	
 				<th class="t1">发布时间：</th>
 				<td class="t3">{$view_data.order_info.start_time|date="Y-m-d H:i:s",###}</td>
 				<th class="t1">反馈时间：</th>
@@ -63,23 +68,42 @@
 				<th class="t1">活动类型：</th>
 				<td class="t2">{$view_data.order_info.fslx_type|getFsT}</td>
 			  </tr>
-			  <tr>
-				<th class="t1">直发语内容：</th>
-				<td colspan="3">{$view_data.order_info.zfnr_info}</td>
-				<th class="t1">封面图：</th>
+			   <tr>
+				<th class="t1">资质证明：</th>
 				<td style="padding: 5px;" >
-				<foreach name="$view_data['order_info']['file'][1]" item="vo">
-					<empty name="$vo"><else /> </empty>
-				</foreach>
 				<php>
-				foreach ($view_data['order_info']['file'][1] as $value)
+				foreach ($view_data['order_info']['file'][2] as $value)
 				{
-					if(!empty($value))	
-						echo '<img src="{$Think.config.PUBLIC_VISIT.domain}{$Think.config.UPLOAD_DIR.image}'.$value.'"  onload="DrawImage(this,200,100)"/><br/>';
+						$public_dir =  C('PUBLIC_VISIT');
+						$img_dif = C('UPLOAD_DIR');
+						if(!empty($value))	
+							echo '<img src="'.$public_dir['domain'].$img_dif['image'].$value.'"  onload="DrawImage(this,200,100)"/><br/>';	
 				}
 				</php>
 			   </td>	
+			    <if condition="$view_data['order_info']['fslx_type'] eq 1">
+			   <th class="t1">直发图：</th>
+				<td style="padding: 5px;" >
+				<php>
+				foreach ($view_data['order_info']['file'][1] as $value)
+				{
+						$public_dir =  C('PUBLIC_VISIT');
+						$img_dif = C('UPLOAD_DIR');
+						if(!empty($value))	
+							echo '<img src="'.$public_dir['domain'].$img_dif['image'].$value.'"  onload="DrawImage(this,200,100)"/><br/>';	
+				}
+				</php>
+			 </if>
 			 </tr>
+			  
+			  <if condition="$view_data['order_info']['fslx_type'] eq 1">
+			  <tr>
+				<th class="t1">直发语内容：</th>
+				<td colspan="5">{$view_data.order_info.zfnr_info}</td>
+			   </td>	
+			 </tr>
+			 </if>
+			 
 			  <tr>
 				<th class="t1">活动备注：</th>
 				<td colspan="5">
@@ -124,7 +148,7 @@
 				<td class=""><strong class="finish">{$vo.g_status_explain}</strong></td>
 				<td class="">
 					<if condition="($vo.is_show_affirm_btn EGT 6)">
-						<a href="{:U('Advert/WeiboOrder/look_perform_pic',array('order_id'=>$view_data['order_id'],'account_id'=>$vo['g_account_id']))}" target="_blank" class="blue" data-order_id="{$vo.g_id}">查看执行截图</a>
+						<a href="{:U('Advert/WeiboOrder/look_perform_pic',array('order_id'=>$view_data['order_id'],'account_id'=>$vo['g_id']))}" target="_blank" class="blue" data-order_id="{$vo.g_id}">查看执行截图</a>
 					<else />
 						无
 					</if>

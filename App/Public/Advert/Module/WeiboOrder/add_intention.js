@@ -247,7 +247,7 @@ init_check_form();
 		html_obj.zhifa2	+=	'</td>'
 			
 		html_obj.zhifa3 = '<td class="t1"><span><strong>内容语：</strong></span></td>';
-		html_obj.zhifa3 += '<td class="t2"><div class="forward td_zw_info"><textarea name="zw_info" class="textarea zw_info" ignore="ignore" datatype="*0-500" errormsg="请正确填写范围是10-500个字符" ></textarea><p>此内容会直接发出，请不要填写与转发语无关的信息。请不要超过140字，您还可以输入140个字</p></div>';
+		html_obj.zhifa3 += '<td class="t2"><div class="forward td_zw_info"><textarea name="zw_info" class="textarea zw_info" ignore="ignore" datatype="*0-500" errormsg="请正确填写范围是10-500个字符" ></textarea><p>此内容会直接发出，请不要填写与转发语无关的信息。请不要超过140字</p></div>';
 		html_obj.zhifa3 += '</td>'
 		
 			
@@ -258,7 +258,7 @@ init_check_form();
 		html_obj.zhuanfa1 += '</td>';
 			
 		html_obj.zhuanfa2 = '<td class="t1"><span><strong>内容语：</strong></span></td>';
-		html_obj.zhuanfa2 += '<td class="t2"><div class="forward"><textarea name="zfnr_info" class="textarea zfnr_info" ignore="ignore" datatype="*0-500" errormsg="请正确填写范围是10-500个字符" ></textarea><p>此内容会直接发出，请不要填写与转发语无关的信息。请不要超过140字，您还可以输入140个字</p></div>';
+		html_obj.zhuanfa2 += '<td class="t2"><div class="forward"><textarea name="zfnr_info" class="textarea zfnr_info" ignore="ignore" datatype="*0-500" errormsg="请正确填写范围是10-500个字符" ></textarea><p>此内容会直接发出，请不要填写与转发语无关的信息。请不要超过140字</p></div>';
 		html_obj.zhuanfa2 += '</td>'			
 		
 		html_obj.zhuanfa3 = '<td class="t1"><span><strong>直发配图：</strong></span></td>';

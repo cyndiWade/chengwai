@@ -1164,7 +1164,7 @@ class SocialAccountAction extends MediaBaseAction {
                         'money'         => $retweetPrice,
                         'url_type'      => $isNewsSource,
                         'url_status'    => $isTextLink,
-                        'media_shot'    => $viewPath['domain'] . $viewPath['dir'] . $imgPath,
+                        'media_shot'    => $viewPath['domain'] . $viewPath['dir'].'images/'. $imgPath,
                         'area_id'       => $areaId,
                         'channel_name'  => $channelName,
                         'entry'         => $entry,
@@ -1714,6 +1714,75 @@ class SocialAccountAction extends MediaBaseAction {
             } else {
                 // 更新搜索表
                 parent::newsDataprocess($accountId);
+                echo json_encode(array(
+                    'result'  => true,
+                    'message' => '资料修改成功!'
+                ));
+            }
+            exit;
+        } else {
+            parent::callback(C('STATUS_ACCESS'), 'error');
+        }
+    }
+    
+     /**
+     * 微信修改价格
+     * 
+     * @author lurongchang
+     * @date   2014-10-03
+     * @return void
+     */
+    public function updateMediaPrice()
+    {
+        if ($this->isGet()) {
+            $money          = I('get.price_type', '', 'setString');
+            $newPrice       = I('get.price_value', 0, 'floatval');
+            $rowFields      = I('get.row');
+            
+            $accountId      = intval($rowFields['account_id']);
+            $accountType    = intval($rowFields['weibo_type']);
+            $userId         = intval($rowFields['user_id']);
+            
+            $userInfos = parent::get_session('user_info');
+
+            if (empty($accountId) || empty($accountType) || ($userId != $userInfos['id']) ) 
+            {
+                echo json_encode(array(false, '提交数据错误,请检查填写数据是否正确'));
+                exit;
+            }
+            
+            $accountModel = $this->db['AccountWeixin'];
+            $where = array(
+                'id'        => $accountId,
+                'users_id'  => $userInfos['id']
+            );
+           
+            switch($money)
+            {
+            	case 'single_graphic_price' :
+	            		 $datas['dtb_money'] = $newPrice;
+	            		 break;
+             	case 'multi_graphic_top_price' :
+	            		 $datas['dtwdyt_money'] = $newPrice;
+	            		 break;
+            	case 'multi_graphic_second_price' :
+	            		 $datas['dtwdet_money'] = $newPrice;
+	            		 break;
+            	case 'multi_graphic_other_price' :
+	            		 $datas['dtwqtwz_money'] = $newPrice;
+	            		 break;	            		 	            		            		 
+            }
+            
+            $status = $accountModel->where($where)->save($datas);
+     
+            if ($status === false) {
+                echo json_encode(array(
+                    'result'    => false,
+                    'message' => '设置失败！'
+                ));
+            } else {
+                // 更新搜索表
+                parent::weixinDataprocess($accountId);
                 echo json_encode(array(
                     'result'  => true,
                     'message' => '资料修改成功!'

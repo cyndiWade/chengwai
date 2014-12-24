@@ -408,7 +408,8 @@ class EventOrderAction extends MediaBaseAction {
 		$order_info = $GeneralizeOrder->getOrderInfo($order_id);
 		 
 		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_weibo wb on ga.account_id = wb.id")->where($where)
-					->order('ga.id desc')->field('ga.id, `price`, wb.`status`,`account_name`, ga.audit_status')->select();
+					->order('ga.id desc')->field('ga.id, `price`, wb.`status`,`account_name`, ga.audit_status, account_id')->select();
+					
 		//统计
 		$count      	= $GeneralizeAccount->where($where)->count();
 		$sum			= $GeneralizeAccount->where($where)->sum('price');
@@ -422,6 +423,7 @@ class EventOrderAction extends MediaBaseAction {
 			$order_file_new[$value['type']][] = $value['url'];
 		}
 		$order_info['file'] = $order_file_new;
+
 
 		parent::data_to_view(array(
 				'order_info'		=> $order_info,
@@ -577,7 +579,7 @@ class EventOrderAction extends MediaBaseAction {
 		$order_info = $GeneralizeOrder->getOrderInfo($order_id);
 		 
 		$account_list = $GeneralizeAccount->alias('ga')->join(" ".C('db_prefix')."account_weixin wb on ga.account_id = wb.id")->where($where)
-					->order('ga.id desc')->field('ga.id, `price`, wb.`status`,`account_name`, ga.audit_status')->select();
+					->order('ga.id desc')->field('ga.id, `price`, wb.`status`,`account_name`, ga.audit_status,account_id')->select();
 				 
 		//统计
 		$count      	= $GeneralizeAccount->where($where)->count();
@@ -910,8 +912,8 @@ class EventOrderAction extends MediaBaseAction {
 				
 				$data['users_id']				= $this->oUser->id;
 				$data['generalize_order_id']	= $order_id;
-				//$data['account_id']				= $id;
-				$data['account_id']				= $media_Info['account_id'];  
+				$data['account_id']				= $id;
+				//$data['account_id']				= $media_Info['account_id'];  
 				$data['type']					= 3;
 				$data['url']					= $pic_url;
 				$data['link_url']				= $link_url;
@@ -923,8 +925,8 @@ class EventOrderAction extends MediaBaseAction {
 		{
 				$data['users_id']				= $this->oUser->id;
 				$data['generalize_order_id']	= $order_id;
-				//$data['account_id']				= $id;
-				$data['account_id'] = 			$media_Info['account_id']; 
+				$data['account_id']				= $id;
+				//$data['account_id'] = 			$media_Info['account_id']; 
 				$data['type']					= 3;
 				$data['link_url']				= $link_url;
 				$fileObject->add($data);
@@ -971,6 +973,7 @@ class EventOrderAction extends MediaBaseAction {
    		{
 			$file_where = array("users_id"=>$this->oUser->id, "generalize_order_id"=>$order_id, "account_id"=>$id, 'type'=>3);
 			$order_file = $fileObject->where($file_where)->field('link_url,url')->find();
+			
 		    $imgDir =  C('UPLOAD_DIR');
 			parent::callback(1, '成功获取数据', array("img"=> "/".$imgDir['image'].'screenshot/'.$order_file['url'], 'url'=>$order_file['link_url']));
         } 

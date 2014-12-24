@@ -43,7 +43,7 @@
 					<td class="t3">{$view_data.order_info.zfy_type|getZfyType}</td>
 					</if>
 					<th class="t1">正品证明：</th>
-					<td class="t2"><if condition="$view_data['order_info']['file'][2]  neq ''"><img src="{$Think.config.PUBLIC_VISIT.domain}{$Think.config.UPLOAD_DIR.image}{$view_data.order_info.file.2}" onload="DrawImage(this,100,80)" /> <else /> 无 </if></td>
+					<td class="t2"><if condition="$view_data['order_info']['file'][2][0]  neq ''"><img src="{$Think.config.PUBLIC_VISIT.domain}{$Think.config.UPLOAD_DIR.image}{$view_data.order_info.file.2.0}" onload="DrawImage(this,100,80)" /> <else /> 无 </if></td>
 					<!--<th class="t1">配图：</th>
 					<td class="t2">无</td>-->
 				  </tr>
@@ -110,7 +110,7 @@
 						 <elseif condition="($vo['audit_status'] eq 5) and ($view_data['order_info']['start_time'] lt time())" />
 						<a href="javascript:;" class="yel affirm_order" data-a_id="{$vo.id}" data-order_id="{$view_data.order_info.id}" type="6">上传反馈数据</a>
 						 <elseif condition="($vo['audit_status'] eq 6)" />
-						<a href="javascript:;"  class="yel affirm_order" data-a_id="{$vo.id}" type="7" data-order_id="{$view_data.order_info.id}" >查看反馈数据</a>	
+						<a href="javascript:;"  class="yel affirm_order" data-a_id="{$vo.account_id}" type="7" data-order_id="{$view_data.order_info.id}" >查看反馈数据</a>	
                         <elseif condition="$vo['audit_status'] eq 11" />
                             <!-- 申诉 add by chenchao  -->
      	                    <a id="complain" ddid="{$vo.id}" complain_order_id="{$view_data.order_info.id}" href="javascript:void(0);" >申诉</a>

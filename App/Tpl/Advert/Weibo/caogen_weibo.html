@@ -245,7 +245,7 @@ var system_info = {
 	
 }
 </script>
-
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
 <script src="{$global_tpl_view.Global_Resource_Path}Tool/Region.js"></script>
 <script src="{$global_tpl_view.Module_Resource_Path}caogen_weibo.js"></script>
 <script src="{$global_tpl_view.Group_Resource_Path}js/page.js"></script>
@@ -341,7 +341,7 @@ var create_now_html = function ($data,$post_data) {
 	if ($data.bs_head_img == '') {
 		html += '<img src="'+default_img+'" class="wbimg" />';
 	} else {
-		html += '<img src="'+$data.bs_head_img+'" class="mtimg" />';
+		html += '<img src="'+$data.bs_head_img+'" class="wbimg"  onload="DrawImage(this, 54, 54)"/>';
 	}
 	
 	html += 		'<div class="grp fl">';

@@ -105,8 +105,8 @@ $custom= array (
 		//外部文件访问地址(用来填写专用的文件服务器)
 		'PUBLIC_VISIT' => array(
  				//'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
-				'domain' =>	'http://'.$_SERVER['SERVER_ADDR'].'/',
- 				//'domain' =>	'http://local_cwq.com/',
+				//'domain' =>	'http://'.$_SERVER['SERVER_ADDR'].'/',
+ 				'domain' =>	'http://local_cwq.com/',
 				'dir' => 'files/chengwai/',							//项目文件目录
 		),
 		//短信平台账号
@@ -362,9 +362,35 @@ $custom= array (
 		'STATUS_LUCKY_YES' => '700',					//中奖了
 		'STATUS_LUCKY_NO' => '701',					//没中奖
 		
-		//短信类型
-		'MESSAGE_TPYE'=> array(1, 2, 3, 4, 5, 6)//1:媒体主注册，2广告主注册，3:媒体主修改密码，4：广告主修改密码 5:媒体主修改手机号，6：广告主修改手机号
+		/* 短信类型 */
+		'MESSAGE_TPYE'=> array(1, 2, 3, 4, 5, 6),//1:媒体主注册，2广告主注册，3:媒体主修改密码，4：广告主修改密码 5:媒体主修改手机号，6：广告主修改手机号
 		
+		/* 是否启用站内短信 */
+		'IS_MESSAGE_OPEN' => true,
+		/* 媒体主操作提示的站内短信 */
+		'MESSAGE_TYPE_MEDIA'=>array(
+			1=>array("subject"=>'账号审核通知', 'content'=>"您添加的%s账号<a href='%s' target='_blank'>[%s]</a>,已经通过平台的审核了！"),
+			2=>array("subject"=>'账号审核通知', 'content'=>"您添加的%s账号<a href='%s' target='_blank'>[%s]</a>,平台审核不通过，请联系我们的客服！"),
+			3=>array("subject"=>'新意向单通知', 'content'=>"您收到一个新的[%s]意向单，账号：<a href='%s' target='_blank'>[%s]</a>"),
+			4=>array("subject"=>'新活动单通知', 'content'=>"您收到一个新的[%s]活动单，账号：<a href='%s' target='_blank'>[%s]</a>"),
+			5=>array("subject"=>'活动单执行通知', 'content'=>"您的订单%s，还有30分钟就可以执行了, <a href='%s' target='_blank'>请查看</a>！"),		
+			6=>array("subject"=>'活动单执行通知', 'content'=>"您的订单%s，现在可以执行了, <a href='%s' target='_blank'>请查看</a>！"),					
+			7=>array("subject"=>'活动单投诉通知', 'content'=>"您收到一个投诉了，<a href='%s' target='_blank'>请查看</a>！！"),
+			8=>array("subject"=>'活动单完成通知', 'content'=>"广告主已确认了你的订单，订单确认完成，<a href='%s' target='_blank'>请查看</a>！"),	
+			9=>array("subject"=>'资金提现通知', 'content'=>"你的提现已经完成， <a href='%s' target='_blank'>请查看</a>！"),	
+			10=>array("subject"=>'活动单申诉通知', 'content'=>"您收到一个申诉了，<a href='%s' target='_blank'>请查看</a>！"),//广告主
+			),
+			
+		/* 后台操作提示的站内短信 */
+		'MESSAGE_TYPE_ADMIN'=>array(
+			1=>array("subject"=>'活动单取消通知', 'content'=>"订单[%s]已被平台取消，, <a href='%s' target='_blank'>请查看</a>！"),
+			2=>array("subject"=>'活动单申诉失败通知', 'content'=>"订单执行出错，广告主投诉成功， <a href='%s' target='_blank'>请查看</a>！"),
+			3=>array("subject"=>'活动单退款通知', 'content'=>"订单执行出错，款项已退回给您，<a href='%s' target='_blank'>请查看</a>！"),
+			4=>array("subject"=>'活动单申诉成功通知', 'content'=>"订单执行申诉成功，款项已收入<a href='%s' target='_blank'>请查看</a>！"),			
+			5=>array("subject"=>'活动单投拆失败通知', 'content'=>"订单执行投拆失败，款项已扣除<a href='%s' target='_blank'>请查看</a>！"),	
+			),
+		'MESSAGE_ADMIN_ID'=> 1,
+			
 );
 return array_merge($db_config,$system,$custom);
 /*		系统常量 (手册附录)

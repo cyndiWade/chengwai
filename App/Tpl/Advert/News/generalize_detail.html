@@ -88,7 +88,7 @@
 				<td class=""><strong class="finish">{$vo.g_status_explain}</strong></td>
 				<td class="">
 					<if condition="($vo.is_show_affirm_btn EGT 6)">
-						<a href="{:U('Advert/News/look_perform_pic',array('order_id'=>$view_data['order_id'],'account_id'=>$vo['g_account_id']))}" target="_blank" class="blue" data-order_id="{$vo.g_id}">查看执行链接</a>
+						<a href="{:U('Advert/News/look_perform_pic',array('order_id'=>$view_data['order_id'],'account_id'=>$vo['g_id']))}" target="_blank" class="blue" data-order_id="{$vo.g_id}">查看执行链接</a>
 					<else />
 						无
 					</if>

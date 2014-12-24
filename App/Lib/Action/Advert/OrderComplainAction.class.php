@@ -67,10 +67,10 @@ class OrderComplainAction extends AdvertBaseAction
      */
     public function add_complain()
     {
-        $order_id   = $this->_get('order_id'); //订单ID
-        $content    = $this->_get('content'); //投诉原因
-        $media_type = $this->_get('media_type'); //媒体类型
-        $ddid       = $this->_get('ddid'); //子订单ID
+        $order_id   = I('order_id', 0, 'intval'); //订单ID
+        $content    = I('content'); //投诉原因
+        $media_type = I('media_type', 0, 'intval'); //媒体类型
+        $ddid       = I('ddid', 0, 'intval'); //子订单ID
         $parent = array();
         
         //是否已存在些订单的投诉或申诉，防止重复提交
@@ -103,12 +103,15 @@ class OrderComplainAction extends AdvertBaseAction
        		{
        			case '3':
        				$GeneralizeAccount	= D('GeneralizeAccount');
+       				$urlTips			= U('/Media/EventOrder/show', array('id'=>$order_id));
         			break;
        			case '2':
        				$GeneralizeAccount	= D('GeneralizeWeixinAccount');
+       				$urlTips			= U('/Media/EventOrder/showWeixin', array('id'=>$order_id));
         			break; 
        			case '1':
        				$GeneralizeAccount	= D('GeneralizeNewsAccount');
+       				$urlTips			= U('/Media/EventOrder/showNews', array('id'=>$order_id));
         			break;    			   			
        		}
             //插入数据
@@ -134,7 +137,21 @@ class OrderComplainAction extends AdvertBaseAction
                 //更新子订单状态
                 $where['id'] = $ddid;
     		    $data['audit_status'] = $status;
-    		    $GeneralizeAccount->where($where)->save($data);
+    		    $GeneralizeAccount->where($where)->save($data);	    
+    		    
+    		    //投诉发站内短信 add by bumtime 20141223
+    		    $sendWhere['id'] = $ddid;
+    		    $send_to_id = $GeneralizeAccount->where($sendWhere)->getField('users_id');
+    		    $tipsInfo = C('MESSAGE_TYPE_MEDIA');
+    		    $messageData['send_from_id']	=	C('MESSAGE_ADMIN_ID');
+				$messageData['send_to_id']		=	$send_to_id;
+				$messageData['subject']			=	$tipsInfo[7]['subject'];
+				$messageData['content']			=	sprintf($tipsInfo[7]['content'], $urlTips);
+				$messageData['message_time']	=	time();
+
+				parent::sendMessageInfo($messageData);
+				
+    		    
                 $this->success('处理成功，请耐心等待处理！');
             }
         }

@@ -309,6 +309,10 @@ class WeixinOrderAction extends AdvertBaseAction {
 	    			parent::updateMoney($this->oUser->id);
 	    			//修改订单状态为1，平台审核的类型
 					//$this->db['GeneralizeWeixinOrder']->where(array('id'=>$id))->save(array('status'=>1));
+					
+					//下单发站内短信 add by bumtime 20141222
+					$this->messageOrderAdd($id, $account_id);
+					
 	    			$this->redirect('Advert/WeixinOrder/generalize_activity');
 	    		}else{
 	    			$this->redirect('Advert/Weixin/weixin',array('order_id'=>$id,'inten_type'=>0));
@@ -344,6 +348,10 @@ class WeixinOrderAction extends AdvertBaseAction {
 					$this->db['IntentionWeixinAccount']->insertAll($arr,$this->oUser->id,$this->global_finance['weixin_proportion']);
 					//修改订单状态为1，平台审核的类型
 					$this->db['IntentionWeixinOrder']->where(array('id'=>$id))->save(array('status'=>1));
+					
+					//下单发站内短信 add by bumtime 20141222
+					$this->messageOrderAdd($id, $account_id, 2);
+					
 					$this->redirect('Advert/WeixinOrder/intention_list');
 				}else{		
 					if($_POST['is_celebrity'] == 1)
@@ -384,6 +392,8 @@ class WeixinOrderAction extends AdvertBaseAction {
     	if($this->isPost())
     	{
     		$order_id = I('order_id', 0, "intval");
+    		$account_ids = urldecode(trim(I('post.account_ids')));
+    		
     		if(!empty($order_id))
     		{
 	    		$status = $this->db['GeneralizeWeixinAccount']->insertAll($_POST,$this->oUser->id,$this->global_finance['weixin_proportion']);
@@ -392,13 +402,18 @@ class WeixinOrderAction extends AdvertBaseAction {
 					//修改订单状态为1，平台审核的类型
 					//$this->db['GeneralizeWeixinOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
 					parent::updateMoney($this->oUser->id);
+							
+					//下单发站内短信 add by bumtime 20141222
+					$this->messageOrderAdd($order_id, $account_ids);
+					
+					
 					parent::callback(C('STATUS_SUCCESS'),'下单成功!',array('go_to_url'=>U('Advert/WeixinOrder/generalize_activity')));
 				} else {
 					parent::callback(C('STATUS_UPDATE_DATA'),'下单失败,请检查余额！');
 				}
 			}else{
 				//$account_ids = passport_encrypt($_POST['account_ids'],'account_ids');
-				$account_ids = urlencode($_POST['account_ids']);
+				//$account_ids = urlencode($_POST['account_ids']);
 
 				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/add_generalize',array('account_ids'=>$account_ids))));
 			}
@@ -411,13 +426,16 @@ class WeixinOrderAction extends AdvertBaseAction {
     	if($this->isPost())
     	{
     		$order_id = I('order_id', 0, 'intval');
+    		$account_ids = urlencode($_POST['account_ids']);
     		if($order_id >0 )
     		{
 	    		$status = $this->db['IntentionWeixinAccount']->insertAll($_POST,$this->oUser->id,$this->global_finance['weixin_proportion']);
 	     
 				if ($status == true) {
 					//修改订单状态为1，平台审核的类型
-					$this->db['IntentionWeixinOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
+					$this->db['IntentionWeixinOrder']->where(array('id'=>$order_id))->save(array('status'=>1));
+					//下单发站内短信 add by bumtime 20141222
+					$this->messageOrderAdd($order_id, $account_ids, 2);
 
 					parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/intention_list')));
 				} else {
@@ -425,7 +443,7 @@ class WeixinOrderAction extends AdvertBaseAction {
 				}
 			}else{
 				//$account_ids = passport_encrypt($_POST['account_ids'],'account_ids');
-				$account_ids = urlencode($_POST['account_ids']);
+				
 				parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('Advert/WeixinOrder/add_intention',array('account_ids'=>$account_ids, 'type'=>1))));
 			}
     	}
@@ -489,7 +507,10 @@ class WeixinOrderAction extends AdvertBaseAction {
 	
 		
 		if (empty($order_info)) alertBack('订单不存在');
-		$order_info['zw_info'] = stripslashes($order_info['zw_info']);
+
+		if (get_magic_quotes_gpc()) {
+		    $order_info['zw_info'] =  stripslashes(stripslashes($order_info['zw_info']));
+		}
 		
 		//获取订单下的账号列表
 		$GeneralizeWeixinAccount = $this->db['GeneralizeWeixinAccount'];
@@ -742,6 +763,22 @@ class WeixinOrderAction extends AdvertBaseAction {
 			if($bool)
 			{
 				parent::updateMoney($this->oUser->id);
+				
+				//确认收货发站内短信 add by bumtime 20141223
+				$tipsInfo = C('MESSAGE_TYPE_MEDIA');
+				
+    		    $sendWhere['id'] = $small_order_id;
+    		    $info = $this->db['GeneralizeWeixinAccount']->where($sendWhere)->field('`users_id`,`generalize_id`')->find();
+    		    $tipsInfo = C('MESSAGE_TYPE_MEDIA');
+    		    $messageData['send_from_id']	=	C('MESSAGE_ADMIN_ID');
+				$messageData['send_to_id']		=	$info['users_id'];
+				$messageData['subject']			=	$tipsInfo[8]['subject'];
+				$messageData['content']			=	sprintf($tipsInfo[8]['content'], U('/Media/EventOrder/showWeixin', array('id'=>$info['generalize_id'])));
+				$messageData['message_time']	=	time();
+
+				parent::sendMessageInfo($messageData);
+				
+				
 				parent::callback(C('STATUS_SUCCESS'),'支付成功!');
 			}else{
 				parent::callback(C('STATUS_UPDATE_DATA'),'支付失败,请稍后尝试!');
@@ -773,6 +810,44 @@ class WeixinOrderAction extends AdvertBaseAction {
 			parent::callback(C('STATUS_UPDATE_DATA'),'请勿重复评论!');
 		}
 	}
+	
+	//下单发站内短信 add by bumtime 20141222
+	private function messageOrderAdd($order_id, $account_id, $type=1)
+	{
+		$tipsInfo = C('MESSAGE_TYPE_MEDIA');
+		$data =  array();
+		//账号ID
+		$accoutWhere['id'] = array("in", $account_id);
+		
+		$accountList = $this->db['AccountWeixin']->where($accoutWhere)->getField("`id`, `users_id`, `account_name`");
+		
+		if($type == 1)
+		{
+			$tipsSubject = $tipsInfo[4]['subject'];
+			$tipsContent = $tipsInfo[4]['content'];
+			$tipsUrl	 = U('/Media/EventOrder/showWeixin',array('id'=>$order_id));
+		}
+		else {
+			$tipsSubject = $tipsInfo[3]['subject'];
+			$tipsContent = $tipsInfo[3]['content'];
+			$tipsUrl	 = U('/Media/PlaceAnOrder/showWeixin',array('id'=>$order_id));
+		}
+		$i =0 ;
+		foreach ($accountList as $value) 
+		{
+			$data[$i]['send_from_id']	=	C('MESSAGE_ADMIN_ID');
+			$data[$i]['send_to_id']		=	$value['users_id'];
+			$data[$i]['subject']		=	$tipsSubject;
+			$data[$i]['content']		=	sprintf($tipsContent, "微信", $tipsUrl, $value['account_name']);
+			$data[$i]['message_time']	=	time();
+			$i++;
+		}
+
+		if($data)
+			parent::sendMessageInfo($data, 2);
+	}
+	
+	
 	
 }
 

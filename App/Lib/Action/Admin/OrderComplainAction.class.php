@@ -78,18 +78,24 @@ class OrderComplainAction extends AdminBaseAction
                     $mtype = 'weibo';
                     $GeneralizeAccount = D('GeneralizeAccount');
                     $Generalize        = D('GeneralizeOrder');
+                    $tipsUrl 		   = U('/Media/EventOrder/show', array('id'=>$info['order_id']));
+                    $tipsAdUrl		   = U('/Advert/WeiboOrder/generalize_detail', array('order_id'=>$info['order_id']));  
                     break;
                 case '2':
                     $type = '4';
                     $mtype = 'weixin';
                     $GeneralizeAccount = D('GeneralizeWeixinAccount');
                     $Generalize        = D('GeneralizeWeixinOrder');
+                    $tipsUrl 		   = U('/Media/EventOrder/showWeixin', array('id'=>$info['order_id']));
+                    $tipsAdUrl		   = U('/Advert/WeixinOrder/generalize_detail', array('order_id'=>$info['order_id']));
                     break;
                 case '1':
                     $type = '1';
                     $mtype = 'news';
                     $GeneralizeAccount = D('GeneralizeNewsAccount');
                     $Generalize        = D('GeneralizeNewsOrder');
+                    $tipsUrl 		   = U('/Media/EventOrder/showNews', array('id'=>$info['order_id']));
+                    $tipsAdUrl		   = U('/Advert/News/generalize_detail', array('order_id'=>$info['order_id']));
                     break;
             }
             //更改子订单状态
@@ -118,12 +124,51 @@ class OrderComplainAction extends AdminBaseAction
                 if ($status == '13') {
                     //返还资金到广告主
                     $advertisement->setMoney($money, $order['users_id'], 2, $info['media_type'], $info['order_id']);
+                    
+    				//申诉失败发站内短信 add by bumtime 20141223
+	    		    $tipsInfo = C('MESSAGE_TYPE_ADMIN');
+	    		    $messageData[0]['send_from_id']		=	$this->oUser->id;
+					$messageData[0]['send_to_id']		=	$orderinfo['users_id'];
+					$messageData[0]['subject']			=	$tipsInfo[2]['subject'];
+					$messageData[0]['content']			=	sprintf($tipsInfo[2]['content'], $tipsUrl);
+					$messageData[0]['message_time']		=	time();
+					
+					//投诉成功发站内短信(to 广告主) add by bumtime 20141223
+	    		    $messageData[1]['send_from_id']		=	$this->oUser->id;
+					$messageData[1]['send_to_id']		=	$order['users_id'];
+					$messageData[1]['subject']			=	$tipsInfo[3]['subject'];
+					$messageData[1]['content']			=	sprintf($tipsInfo[3]['content'], $tipsAdUrl);
+					$messageData[1]['message_time']		=	time();
+					
+					
+	
+					parent::sendMessageInfo($messageData, 2);
+				
                 }else{
                     //扣广告主的钱
                     $advertisement->setXFMoney($money, $order['users_id'], $info['media_type'], $info['order_id']);
                     //打款给媒体主
                     $Media = D('UserMedia');
                     $Media->insertPirce($orderinfo['users_id'], $orderinfo['price'], $info['media_type'], $info['order_id']);
+   
+                    //申诉成功发站内短信 add by bumtime 20141223
+	    		    $tipsInfo = C('MESSAGE_TYPE_ADMIN');
+	    		    $messageData[0]['send_from_id']		=	$this->oUser->id;
+					$messageData[0]['send_to_id']		=	$orderinfo['users_id'];
+					$messageData[0]['subject']			=	$tipsInfo[4]['subject'];
+					$messageData[0]['content']			=	sprintf($tipsInfo[4]['content'], $tipsUrl);
+					$messageData[0]['message_time']		=	time();
+					
+					
+					//投诉失败发站内短信(to 广告主) add by bumtime 20141223
+	    		    $messageData[1]['send_from_id']		=	$this->oUser->id;
+					$messageData[1]['send_to_id']		=	$order['users_id'];
+					$messageData[1]['subject']			=	$tipsInfo[5]['subject'];
+					$messageData[1]['content']			=	sprintf($tipsInfo[5]['content'], $tipsAdUrl);
+					$messageData[1]['message_time']		=	time();
+	
+					parent::sendMessageInfo($messageData, 2);
+					
                 }
             }
 

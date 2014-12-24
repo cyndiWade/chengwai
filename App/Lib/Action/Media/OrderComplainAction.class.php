@@ -103,17 +103,24 @@ class OrderComplainAction extends MediaBaseAction
        		{
        			case '3':
        				$GeneralizeAccount	= D('GeneralizeAccount');
+       				$orderModel			= M('generalize_order');
+       				$tipsUrl	 = U('/Advert/WeiboOrder/generalize_detail', array('order_id'=>$order_id));
         			break;
        			case '2':
        				$GeneralizeAccount	= D('GeneralizeWeixinAccount');
+       				$orderModel			= M('generalize_weixin_order');
+       				$tipsUrl	 = U('/Advert/WeixinOrder/generalize_detail', array('order_id'=>$order_id));
         			break; 
        			case '1':
        				$GeneralizeAccount	= D('GeneralizeNewsAccount');
+       				$orderModel			= M('generalize_news_order');
+       				$tipsUrl	 = U('/Advert/News/generalize_detail', array('order_id'=>$order_id));
         			break;    			   			
        		}
+       		
             //插入数据
             $arryComplain = array();
-            $arryComplain['users_id']    = $this->oUser->id;
+            $arryComplain['users_id']   = $this->oUser->id;
             $arryComplain['order_id']   = $order_id;
             $arryComplain['ddid']       = $ddid;
             $arryComplain['content']    = $content;
@@ -127,6 +134,22 @@ class OrderComplainAction extends MediaBaseAction
                 $arryComplain['parent_id']   = 0;
             }
             $res = $this->db['OrderComplain']->orderComplainAdd($arryComplain);
+
+            
+			$tipsInfo = C('MESSAGE_TYPE_MEDIA');
+
+			$where_order['id']  = $order_id;
+			$order_user = $orderModel->where($where_order)->getField('users_id');
+			
+			$data['send_from_id']	=	C('MESSAGE_ADMIN_ID');
+			$data['send_to_id']		=	$order_user;
+			$data['subject']		=	$tipsInfo[10]['subject'];
+			$data['content']		=	sprintf($tipsInfo[10]['content'], $tipsUrl);
+			$data['message_time']	=	time();
+
+			if($data)
+				parent::sendMessageInfo($data, 1);
+			
             
             if ($res === false) {
                 $this->error('处理失败，请重试！');

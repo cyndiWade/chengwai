@@ -128,3 +128,21 @@ ALTER TABLE  `app_account_weibo` CHANGE  `area_id`  `area_id` INT( 10 ) NOT NULL
 ALTER TABLE  `app_celeprityindex_weibo` ADD  `recommend` TINYINT( 2 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '1为推荐 0为不推荐' AFTER  `strategic_c`
 
 ALTER TABLE  `app_celeprityindex_weibo` ADD  `specialoffer` TINYINT( 2 ) UNSIGNED NOT NULL DEFAULT  '0' COMMENT  '0为正常 1为折扣' AFTER  `recommend`
+
+
+--站内短信表20141224
+CREATE TABLE IF NOT EXISTS `app_message` (
+  `messageid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `send_from_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '发送人',
+  `send_to_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '收件人ID',
+  `type` tinyint(1) NOT NULL DEFAULT '2' COMMENT '类型，1为系统消息',
+  `subject` char(80) NOT NULL COMMENT '标题',
+  `content` text NOT NULL COMMENT '内容',
+  `readed` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '已读',
+  `read_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '阅读时间',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态（1为正常，0为删除）',
+  `message_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '发布时间',
+  PRIMARY KEY (`messageid`),
+  KEY `send_from_id` (`send_from_id`,`status`,`type`),
+  KEY `send_to_id` (`send_to_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

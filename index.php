@@ -8,6 +8,6 @@ define('APP_NAME','App');
 define('APP_PATH','App/');
 //引入框架核心文件
 
-require '../ThinkPHP/ThinkPHP3.1.3/ThinkPHP.php';
+require 'ThinkPHP/ThinkPHP3.1.3/ThinkPHP.php';
 
 ?>

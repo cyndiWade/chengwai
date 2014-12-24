@@ -5,7 +5,7 @@ input,button{margin:0;font-size:12px;vertical-align:middle;}
 body{font-size:12px;font-family:Arial, Helvetica, sans-serif;  text-align:center; margin:0 auto;color:#000;font-family:"宋体";}
 table{border-collapse:collapse;border-spacing:0;}
 a{color:#383838;text-decoration:none;}
-a:hover{color:#f60;}
+/*a:hover{color:#f60;}*/
 
 *:focus {outline: none;} 
 img{ display:block;}

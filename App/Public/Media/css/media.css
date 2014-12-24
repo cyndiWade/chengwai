@@ -216,7 +216,7 @@
 .tab01-account-admin .t6{ width:66px;}
 .tab01-account-admin .t11{ width:53px;}
 .tab01-account-admin .t12{ width:83px;}
-.emqa{ background:url(../images/qa_red.png) no-repeat; width:16px; height:16px; display:block; position:absolute; right:20px; top:-3px;}
+.emqa{ background:url(../images/qa_red.png) no-repeat; width:16px; height:16px; display:block; position:absolute; right:1px; top:-3px;}
 .tab01-account-admin .t11 .emqa{ right:10px;}
 .tab01-account-admin .t12 .emqa{ right:10px;}
 .tab01-account-admin td{ padding:10px 0; text-align:center;border-bottom:1px solid #eb6b4c;}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="Public:top" />
+	<link rel="stylesheet" href="{$global_tpl_view.Group_Resource_Path}css/media.css" type="text/css" />
+	<title>站内短消息_个人主页</title>
+</head>
+<body>
+<body>
+<!-- 头部 -->
+<include file="Public:header" />
+<div class="wrap l">
+<div class="pbd">
+	<div class="location l">
+		当前位置：<a href="{:U('Media/EventOrder/index')}">个人中心</a>  >  <span class="blue">站内短消息</span>
+	</div>
+	
+	<div class="box03-allorder l">
+		<em class="fl">显示类型：</em>
+		<a href="{:U('Media/Message/index')}"><span class="ordernav <eq name='view_data.status' value=''>select</eq> fl ">所有消息({$view_data.count.count})</span></a>
+		<a href="{:U('Media/Message/index?status=1')}"><span class="ordernav <eq name='view_data.status' value='1'>select</eq> fl">已读({$view_data.count.count_isReaded})</span></a>
+		<a href="{:U('Media/Message/index?status=2')}"><span class="ordernav <eq name='view_data.status' value='2'>select</eq> fl">未读({$view_data.count.count_isRead})</span></a>	
+	</div>
+		<div class="box04-allorder l">
+			<table class="tab01-allorder l">
+			  <tr>
+			   <th class="t2"></th>
+				
+				<th class="t3">标题</th>
+				<th class="t5">发布时间</th>
+				<th class="t2">状态</th>
+				<th class="last">操作</th>
+			  </tr>
+			  
+			  <volist name="view_data.list" id="vo">
+			  <tr>
+			    <td class="t2"><input type="checkbox" id="show{$vo.messageid}" name="show" value="{$vo.messageid}"       /> </td>
+			
+				<td class="t3">{$vo.subject}</td>
+				<td class="t5">{$vo.message_time|date="Y-m-d H:i:s",###}</td>
+				<td class="t2"><if condition='$vo.readed eq 1'>已读<else />未读</if></td>
+				<td class="last"><div class="ctrl"><span><a href="javascript:;" class="action" order_id="{$vo.messageid}" type="1">查看</a></span>
+				 | <a href="javascript:if(confirm('删除后不能恢复的哦，请问是否要删除呢？')) location.href='{:U('Media/Message/operate?type=1&id='.$vo[messageid])}';" order_id="{$vo.messageid}" type="2"><span>删除</span></a> 
+				 
+				 <if condition='$vo.readed eq 0'>
+				 | <a href="{:U('Media/Message/operate?type=2&id='.$vo[messageid])}"  order_id="{$vo.messageid}" type="3"><span>标记为已读</span></a> 
+				 </if>
+				 </div></td>
+			  </tr>	
+			  </volist>
+			 </table>
+		</div>
+
+		<div class="page-wb fr">
+			{$view_data.page}
+		</div>
+		
+		<div class="box05-allorder l">
+			<span><a href="javascript:;" id="checkall">全选</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" class="readInfo" type="2">标记为已读</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;"  class="readInfo" type="1">删除</a></span>
+		</div>
+	</div>
+</div>
+</div>
+
+
+<!-- 添加账号弹窗 -->
+<div class="batchbox tl">
+	<div class="top-batch l pr"><span class="close cur pa" onclick="javascript:parent.location.reload();"><img src="{$global_tpl_view.Group_Resource_Path}images/close.gif" /></span><b>查看详情</b></div>
+	<div class="mid-batch pr l">
+		<table class="tab01-inten l table-xwmt">  
+		  <tr>
+			<td class="t1"><span><i>*</i><strong>标题：</strong></span></td>
+			<td class="t2" id="title"></td>
+		  </tr>
+		  <tr>
+			<td class="t1"><span><i>*</i><strong>内容：</strong></span></td>
+			<td class="t2" id="content"></td>
+		  </tr>
+		  <tr>
+			<td class="t1"></td>
+			<td class="t2">
+			<span class="btn graybtn close" onclick="javascript:parent.location.reload();">取消</span></td>
+		  </tr>
+		</table>
+	
+	</div>
+</div>
+
+
+<!-- JS底部文件 -->
+<include file="Public:bottom" />
+<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/common.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	$("a[class='action']").click(function(){
+		id	= $(this).attr('order_id');
+
+	    $.ajax({
+	        url : "{:U('Media/Message/show')}",
+	        type: 'post',
+	        data: { 'id' : id},
+	        async: false,
+	        success : function(data)
+	        {
+				$("#title").html(data.data.subject);
+				$("#content").html(data.data.content);
+	        },
+	        error: function(error){
+	        }
+	    });
+	    
+		$('.batchbox').popOn();	
+		
+	})
+	
+	$('#checkall').click(function(){	
+		$("input[name='show']").each(function(idx, item) {
+			$(item).attr("checked", !$(item).attr("checked"));
+		}) 
+	});
+	
+	$('.readInfo').click(function(){
+		strTemp =  "";
+		check = false;
+		type = $(this).attr('type');
+		$("input[name='show']").each(function(idx, item) {
+			if($(item).attr("checked"))
+			{
+				strTemp += $(item).val()+",";
+				check = true;
+			}
+		}) 
+		if(!check)
+		{
+			alert("请先选择要处理的记录！");
+			return false;
+		}
+		strTemp = strTemp.substring(0, strTemp.length -1);
+		if(type == 1)
+		{
+			if(confirm('删除后不能恢复的哦，请问是否要删除呢？'))
+			{
+				location.href="{:U('Media/Message/operate?type=1')}"+"?temp="+strTemp;
+			}
+		}
+		else
+			location.href="{:U('Media/Message/operate?type=2')}"+"?temp="+strTemp;
+	});
+	
+})
+</script>
+</body>
+</html>

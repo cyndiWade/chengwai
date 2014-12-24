@@ -1,5 +1,5 @@
 var System = function () {
-	
+	var i =1;
 }
 
 System.prototype.init = function () {
@@ -72,7 +72,9 @@ System.prototype.run = function () {
 }
 
 var System = new System();
+
 window.onload = function () {
+
 	System.init();
 	System.run();	
 }

@@ -82,7 +82,7 @@ define(function(require, exports) {
         }
 
         function isPriceEditable(value, row,item_info) {
-            return row.cells.is_verify == 2;
+            return row.cells.is_verify == 1;
         }
 
         /**
@@ -124,7 +124,7 @@ define(function(require, exports) {
                     text: renderTitle("价格", "price"),
                     dataIndex: "money",
                     cls: "t3",
-                    editable: 1,
+                    editable: isPriceEditable,
                     editHandler: editHandler,
                     formatter: formatters.price
                 },

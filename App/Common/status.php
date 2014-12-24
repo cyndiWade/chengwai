@@ -394,4 +394,20 @@
 		$status = C('Account_Order_Status');
 		return  isset($status['id']['explain_yxd']) ? $status['id']['explain_yxd'] : "";
 	}
+	
+	/**
+     * 取站内短信的状态
+     * 
+     * @param int   $id 状态值
+
+     * @author bumtime
+     * @date   2014-12-19
+     * @return array
+     */
+	function getMessagStatus($id)
+	{
+		$status = C('MESSAGE_TYPE_INFO');
+		return  isset($status[$id]) ? $status[$id] : "消息";
+	}
+	
 ?>

@@ -283,6 +283,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 		if($this->isPost())
 		{
 			$order_id = I('order_id', 0 ,'intval');
+			$tfpt_type = I('tfpt_type', 1, 'intval');
+			$account_id = urldecode(trim(I('account_ids')));
 			if($order_id >0)
     		{
 				$status = $this->db['GeneralizeAccount']->insertAll($_POST,$this->oUser->id,$this->global_finance['weibo_proportion']);
@@ -291,13 +293,17 @@ class WeiboOrderAction extends AdvertBaseAction {
 					//修改订单状态为1，平台审核的类型
 					//$this->db['GeneralizeOrder']->where(array('id'=>$_POST['order_id']))->save(array('status'=>1));
 					parent::updateMoney($this->oUser->id);
+					
+					//下单发站内短信 add by bumtime 20141223
+					$this->messageOrderAdd($order_id, $account_id, 1, $tfpt_type);
+					
 					parent::callback(C('STATUS_SUCCESS'),'下单成功!',array('go_to_url'=>U('/Advert/WeiboOrder/generalize_activity')));
 				} else {
 					parent::callback(C('STATUS_UPDATE_DATA'),'下单失败,请检查余额！');
 				}
 			}else{
 				//$account_ids = passport_encrypt($_POST['account_ids'],'account_ids');
-				$account_ids = urlencode($_POST['account_ids']);
+				
 				parent::callback(C('STATUS_SUCCESS'),'正在跳转...',array('go_to_url'=>U('Advert/WeiboOrder/add_generalize',array('account_ids'=>$account_ids,'pttype'=>$_POST['pt_type']))));
 			}
 		}
@@ -310,6 +316,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 		if($this->isPost())
 		{
 			$order_id = I('order_id', 0 ,'intval');
+			$tfpt_type  = I('tfpt_type', 1, 'intval');
+			$account_id = urlencode(I('account_ids'));
 			if($order_id >0)
     		{
 				$status = $this->db['IntentionWeiboAccount']->insertAll($_POST,$this->oUser->id,$this->global_finance['weibo_proportion']);
@@ -317,6 +325,9 @@ class WeiboOrderAction extends AdvertBaseAction {
 					
 					//修改订单状态为1，平台审核的类型
 					$this->db['IntentionWeiboOrder']->where(array('id'=>$order_id))->save(array('status'=>1));
+					
+					//下单发站内短信 add by bumtime 20141223
+					$this->messageOrderAdd($order_id, $account_id, 2, $tfpt_type);
 					
 					parent::callback(C('STATUS_SUCCESS'),'添加成功',array('go_to_url'=>U('/Advert/WeiboOrder/intention_list')));
 				} else {
@@ -347,9 +358,11 @@ class WeiboOrderAction extends AdvertBaseAction {
 			$id = $this->db['IntentionWeiboOrder']->insertPost($_POST,$this->oUser->id);
 			
 			//$account_id = passport_decrypt(trim($_GET['account_ids']),'account_ids');
-			$account_id = urldecode(trim($_GET['account_ids']));
+			$account_id = urldecode(trim(I('account_ids')));
 			
 			$pt_type = intval($_GET['pttype']);
+			$tfpt_type = I('tfpt_type', 1, 'intval');
+			
 			if($id!='')
 			{
 				$img_array = $this->upload_img($_FILES,$id,false,2);
@@ -360,6 +373,10 @@ class WeiboOrderAction extends AdvertBaseAction {
 					$this->db['IntentionWeiboAccount']->insertAll($arr,$this->oUser->id,$this->global_finance['weibo_proportion']);
 					//修改订单状态为1，平台审核的类型
 					$this->db['IntentionWeiboOrder']->where(array('id'=>$id))->save(array('status'=>1));
+					
+					//下单发站内短信 add by bumtime 20141223
+					$this->messageOrderAdd($id, $account_id, 2, $tfpt_type);
+					
 					$this->redirect('Advert/WeiboOrder/intention_list');
 				}else{			 
 						if($_POST['is_celebrity'] ==1)
@@ -391,6 +408,7 @@ class WeiboOrderAction extends AdvertBaseAction {
 			$account_id = urldecode(trim($_GET['account_ids']));
 			
 			$pt_type = intval($_GET['pttype']);
+			$tfpt_type = I('tfpt_type', 1, 'intval');
 			if($id!='')
 			{
 				$img_array = $this->upload_img($_FILES,$id,true,1);
@@ -403,6 +421,10 @@ class WeiboOrderAction extends AdvertBaseAction {
 					//修改订单状态为1，平台审核的类型
 					//$this->db['GeneralizeOrder']->where(array('id'=>$id))->save(array('status'=>1));
 					parent::updateMoney($this->oUser->id);
+					
+					//下单发站内短信 add by bumtime 20141223
+					$this->messageOrderAdd($id, $account_id, 1, $tfpt_type);
+					
 					$this->redirect('Advert/WeiboOrder/generalize_activity');
 				}else{
 					if($_POST['tfpt_type']==1)
@@ -491,6 +513,11 @@ class WeiboOrderAction extends AdvertBaseAction {
 		//获取订单数据
 		$GeneralizeOrder = $this->db['GeneralizeOrder'];
 		$order_info = $GeneralizeOrder->get_OrderInfo_By_Id($order_id,$this->oUser->id);
+		
+		if (get_magic_quotes_gpc()) {
+	    	$order_info['zw_info'] =  stripslashes(stripslashes($order_info['zw_info']));
+	    	$order_info['zfnr_info'] =  stripslashes(stripslashes($order_info['zfnr_info']));
+		}
 		
 		if (empty($order_info)) alertBack('订单不存在！');
 		
@@ -713,8 +740,8 @@ class WeiboOrderAction extends AdvertBaseAction {
 	
 	//查看订单执行图
 	public function look_perform_pic () {
-		$order_id = $this->_get('order_id');
-		$account_id = $this->_get('account_id');
+		$order_id = I('get.order_id', 0, 'intval');
+		$account_id = I('get.account_id', 0, 'intval');
 	
 		$type = 3;
 		$where['generalize_order_id'] = $order_id;
@@ -735,13 +762,27 @@ class WeiboOrderAction extends AdvertBaseAction {
 	//确认支付
 	public function insertPrice()
 	{
-		$small_order_id = $this->_post('id');
+		$small_order_id =  I('post.id', 0, 'intval');
 		if($small_order_id!='')
 		{
 			$bool = $this->db['GeneralizeAccount']->getUserPr($small_order_id,$this->oUser->id);
 			if($bool)
 			{
 				parent::updateMoney($this->oUser->id);
+				
+				//确认收货发站内短信 add by bumtime 20141223
+				$tipsInfo = C('MESSAGE_TYPE_MEDIA');
+    		    $sendWhere['id'] = $small_order_id;
+    		    $info = $this->db['GeneralizeWeiboAccount']->where($sendWhere)->field('`users_id`,`generalize_id`')->find();
+    		    $tipsInfo = C('MESSAGE_TYPE_MEDIA');
+    		    $messageData['send_from_id']	=	C('MESSAGE_ADMIN_ID');
+				$messageData['send_to_id']		=	$info['users_id'];
+				$messageData['subject']			=	$tipsInfo[8]['subject'];
+				$messageData['content']			=	sprintf($tipsInfo[8]['content'], U('/Media/EventOrder/show', array('id'=>$info['generalize_id'])));
+				$messageData['message_time']	=	time();
+
+				parent::sendMessageInfo($messageData);
+				
 				parent::callback(C('STATUS_SUCCESS'),'支付成功!');
 			}else{
 				parent::callback(C('STATUS_UPDATE_DATA'),'支付失败,请稍后尝试!');
@@ -775,6 +816,43 @@ class WeiboOrderAction extends AdvertBaseAction {
 		
 	}
 
+	//下单发站内短信 add by bumtime 20141223
+	private function messageOrderAdd($order_id, $account_id, $type=1, $mediaType =1 )
+	{
+		$tipsInfo = C('MESSAGE_TYPE_MEDIA');
+		$data =  array();
+		//账号ID
+		$accoutWhere['id'] = array("in", $account_id);
+		
+		$accountList = $this->db['AccountWeibo']->where($accoutWhere)->getField("`id`, `users_id`, `account_name`");
+		
+		if($type == 1)
+		{
+			$tipsSubject = $tipsInfo[4]['subject'];
+			$tipsContent = $tipsInfo[4]['content'];
+			$tipsUrl	 = U('/Media/EventOrder/show',array('id'=>$order_id));
+		}
+		else {
+			$tipsSubject = $tipsInfo[3]['subject'];
+			$tipsContent = $tipsInfo[3]['content'];
+			$tipsUrl	 = U('/Media/PlaceAnOrder/showWeibo',array('id'=>$order_id));
+		}
+		$i =0 ;
+		$tipType = ($mediaType ==1) ? "新浪微博" : "腾讯微博";
+		
+		foreach ($accountList as $value) 
+		{
+			$data[$i]['send_from_id']	=	C('MESSAGE_ADMIN_ID');
+			$data[$i]['send_to_id']		=	$value['users_id'];
+			$data[$i]['subject']		=	$tipsSubject;
+			$data[$i]['content']		=	sprintf($tipsContent, $tipType, $tipsUrl, $value['account_name']);
+			$data[$i]['message_time']	=	time();
+			$i++;
+		}
+
+		if($data)
+			parent::sendMessageInfo($data, 2);
+	}
 	
 }
 

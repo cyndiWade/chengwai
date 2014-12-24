@@ -614,6 +614,27 @@ class AppBaseAction extends GlobalParameterAction {
 		$offset = ($p - 1) * $limit;
 		return array($offset,$limit);
 	}
+	
+	/**
+     * 列表
+     * 
+     * @param array	$arayFields  保存数组
+     * @param int	$type  1为单个，2为多个新增
+     * 
+     * @author bumtime
+     * @date   2014-12-19
+     * 
+     * @return bool $bool
+     */
+	protected function sendMessageInfo($arayFields, $type=1)
+	{
+		if(empty($arayFields))
+		{
+			return false;
+		}
+		$bool = ($type==1) ? D('Media/Message')->messageAdd($arayFields) : M('Message')->addAll($arayFields);
+		return $bool;
+	}
 }
 
 

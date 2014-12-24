@@ -6,7 +6,7 @@ define(function(require, exports) {
     var priceTpl = require('./tpl/weixin_price.tpl#');
 
     var weibo_type = 3;
-
+       
     var grid;
 
     new W.Tips({
@@ -48,9 +48,9 @@ define(function(require, exports) {
                 multi_graphic_other_price:'multi_graphic_hard_other_price'
             };
 
-            row.cells.hard_price_title = soft2hard[col.dataIndex];
+/*            row.cells.hard_price_title = soft2hard[col.dataIndex];
             row.cells.hard_price_value = formatters.price(row.cells[row.cells.hard_price_title],row);
-            row.cells.hard_price_operate_class = getOperateClass(row,soft2hard[col.dataIndex]);
+            row.cells.hard_price_operate_class = getOperateClass(row,soft2hard[col.dataIndex]);*/
 
             row.cells.soft_price_title = col.dataIndex;
             row.cells.soft_price_value = formatters.price(row.cells[col.dataIndex],row);
@@ -73,56 +73,41 @@ define(function(require, exports) {
             params['row'] = row.cells;
             var checkResult = true;
             var result = $.Deferred();
-            $.ajax({
-                    type:'GET',
-                    url:'/information/accountmanage/checkprice',
-                    data:params,
-                    async:false,
-                    dataType:'json',
-                    success:function(data){
-                        if(!data.isEditAble){
-                            W.alert(data.message);
-                            result.reject();
-                        }else{
-                            W.confirm(data.message,function(sure){
-                                if(sure){
-                                    $.ajax({
-                                            type:'GET',
-                                            url:'/information/accountmanage/updateprice',
-                                            data:params,
-                                            async:false,
-                                            dataType:'json',
-                                            success:function(data){
-                                                    if(!data.result){
-                                                        result.reject();
-                                                        W.alert(data.message);
-                                                    }else{
-                                                        W.alert(data.message, 'success');
-                                                        grid.reload();
-                                                    }
-                                            },
-                                            error:function (){
-                                                W.alert("更新失败，联系管理员！");
-                                            }
-                                            })
-                                    result.resolve();
-                                }else{
+            var name = (value > parseFloat(row.cells.money)) ? '提高' : '降低';
+            var message = name + '价格会影响到您的账号接单哦。确定要' + name + '价格吗？';
+            W.confirm(message,function(sure){
+                if (sure) {
+                    $.ajax({
+                        type:'GET',
+                        url:'/Media/SocialAccount/updateMediaPrice',
+                        data:params,
+                        async:false,
+                        dataType:'json',
+                        success:function(data){
+                                if(!data.result){
                                     result.reject();
+                                    W.alert(data.message);
+                                }else{
+                                    W.alert(data.message, 'success');
+                                    grid.reload();
                                 }
-
-                            })
+                        },
+                        error:function (){
+                            W.alert("更新失败，联系管理员！");
                         }
-                    },
-                   error:function (){
-                       W.alert("操作失败！请联系管理员");
-                   }
-                   });
+                    });
+                    result.resolve();
+                } else {
+                    result.reject();
+                }
+            });
             return result;
         }
 
-        function isPriceEditable(value, row,item_info) {
-            return row.cells.is_verify == 2;
+      function isPriceEditable(value, row,item_info) {
+            return row.cells.is_verify == 1;
         }
+		
 
         /**
          * 创建带tips的title
@@ -169,7 +154,9 @@ define(function(require, exports) {
                     text: renderTitleMiddelImg("单图文报", "singleGraphicPrice", '<br/>价'),
                     dataIndex: "single_graphic_price",
                     tmplPreprocessor: PreParseData,
-                    cls: "t8",
+                    cls: "t3",
+                    editable: isPriceEditable,
+                    editHandler: editHandler,
                     tmpl: priceTpl
                 },
                 {
@@ -177,7 +164,9 @@ define(function(require, exports) {
                     text: renderTitleMiddelImg('多图文第', "multiGraphicTopPrice", "<br/>一条报价"),
                     dataIndex: "multi_graphic_top_price",
                     tmplPreprocessor: PreParseData,
-                    cls: "t8",
+                    cls: "t3",
+                    editable: isPriceEditable,
+                    editHandler: editHandler,
                     tmpl: priceTpl
                 },
                 {
@@ -185,14 +174,18 @@ define(function(require, exports) {
                     text: renderTitleMiddelImg("多图文第", "multiGraphicSecondPrice", '<br/>二条报价'),
                     dataIndex: "multi_graphic_second_price",
                     tmplPreprocessor: PreParseData,
-                    cls: "t8",
+                    cls: "t3",
+                    editable: isPriceEditable,
+                    editHandler: editHandler,
                     tmpl: priceTpl
                 },
                 {
                     align: "left",
                     text: renderTitleMiddelImg("多图文其他", "multiGraphicOtherPrice", '<br/>位置报价'),
                     dataIndex: "multi_graphic_other_price",
-                    cls: "t8",
+                    cls: "t3",
+                    editable: isPriceEditable,
+                    editHandler: editHandler,
                     tmplPreprocessor: PreParseData,
                     tmpl: priceTpl
                 },

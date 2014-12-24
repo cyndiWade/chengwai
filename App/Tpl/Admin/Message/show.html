@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+
+<!-- BEGIN HEAD -->
+
+<head>
+
+	<!-- 全局样式 -->
+	<include file="Public:top" />
+
+	<!-- BEGIN PAGE LEVEL STYLES -->
+
+	<link rel="stylesheet" type="text/css" href="{$global_tpl_view.Group_Resource_Path}css/select2_metro.css" />
+
+	<link rel="stylesheet" type="text/css" href="{$global_tpl_view.Group_Resource_Path}css/chosen.css" />
+
+
+	<!-- END PAGE LEVEL STYLES -->
+
+	
+</head>
+
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+
+<body class="page-header-fixed">
+
+	<include file="Public:header" />
+
+	<!-- BEGIN CONTAINER -->
+
+	<div class="page-container row-fluid">
+
+		<!-- 左侧导航 -->
+		<include file="Public:sidebar" />
+
+		<!-- BEGIN PAGE -->  
+
+		<div class="page-content">
+
+			<!-- BEGIN PAGE CONTAINER-->
+
+			<div class="container-fluid">
+
+				<!-- BEGIN PAGE HEADER-->   
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN STYLE CUSTOMIZER -->
+						<!-- END BEGIN STYLE CUSTOMIZER -->     
+
+						<h3 class="page-title">
+
+						{$global_tpl_view.module_name}<small> {$global_tpl_view.action_name}</small>
+
+						</h3>
+		
+					</div>
+
+				</div>
+				<!-- END PAGE HEADER-->
+
+				<!-- 订单详情-->
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN VALIDATION STATES-->
+
+						<div class="portlet box blue">
+
+							<div class="portlet-title">
+
+								<div class="caption"><i class="icon-reorder"></i>{$global_tpl_view.title_name}</div>
+
+								<div class="tools">
+
+									<a href="javascript:;" class="collapse"></a>
+
+									<a href="javascript:;" class="reload"></a>				
+
+								</div>
+
+							</div>
+
+							<div class="portlet-body form">
+
+								<!-- BEGIN FORM-->
+ 
+									<div class="alert alert-error hide">
+
+										<button class="close" data-dismiss="alert"></button>
+
+										请在文本框输入相应内容.
+
+									</div>
+
+									<div class="alert alert-success hide">
+
+										<button class="close" data-dismiss="alert"></button>
+
+										验证成功
+
+									</div>
+								
+									<div class="control-group">
+										<label class="control-label">标题：</label>
+										<div class="controls">
+										{$view_data['subject']}
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">发送人：</label>
+										<div class="controls">
+											{$view_data['send_from_name']}
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">接收人：</label>
+										<div class="controls">
+											{$view_data['send_to_name']}
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">发送时间：</label>
+										<div class="controls">
+										{$view_data['message_time']|date='Y-m-d H:i:s',###}
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">是否已阅：</label>
+										<div class="controls">
+											<if condition="$view_data['readed'] eq 1">是<else /> 否</if>
+										</div>
+									</div>
+									
+									 
+									
+									<div class="control-group">
+										<label class="control-label">阅读时间：</label>
+										<div class="controls">
+										{$view_data['read_time']|date='Y-m-d H:i:s',###}
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">状态：</label>
+										<div class="controls">
+											<if condition="$view_data['status'] eq 1">正常<else /> 禁用</if>
+										</div>
+									</div>
+	
+									<div class="control-group">
+										<label class="control-label">内容：</label>
+										<div class="controls">
+											 {$view_data['content']}
+										</div>
+									</div>
+									
+
+								<!-- END FORM-->
+
+							</div>
+
+						</div>
+
+						<!-- END VALIDATION STATES-->
+
+					</div>
+
+				</div>
+				<!-- END PAGE CONTENT-->         
+			
+			</div>
+
+			<!-- END PAGE CONTAINER-->
+
+		</div>
+
+		<!-- END PAGE -->  
+
+	</div>
+
+	<!-- END CONTAINER -->
+
+	<!-- 页脚 -->
+	<include file="Public:foot" />
+
+
+	<!-- 核心插件 -->
+	<include file="Public:bottom" />
+
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+
+	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/jquery.validate.min.js"></script>
+
+	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/additional-methods.min.js"></script>
+
+	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/select2.min.js"></script>
+
+	<script type="text/javascript" src="{$global_tpl_view.Group_Resource_Path}js/chosen.jquery.min.js"></script>
+	
+
+
+	<!-- END PAGE LEVEL PLUGINS -->
+
+	<!-- BEGIN PAGE LEVEL STYLES -->
+
+	<script src="{$global_tpl_view.Group_Resource_Path}js/app.js"></script>
+
+	<script src="{$global_tpl_view.Group_Resource_Path}js/form-validation-Admin-Siri-edit.js"></script> 
+		
+	
+
+	<!-- END PAGE LEVEL STYLES -->    
+
+	<script>
+
+		jQuery(document).ready(function() {   
+
+		   // initiate layout and plugins
+
+		   App.init();
+
+		  // FormValidation.init();
+		
+			
+		});
+
+	</script>
+
+	<!-- END JAVASCRIPTS -->   
+
+
+<!-- END BODY -->
+
+</html>

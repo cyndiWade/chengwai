@@ -171,8 +171,8 @@
 				<td class="t1"><span><i>*</i><strong>申诉原因：</strong></span></td>
 				<td class="t2">
 					<div class="forward">
-						<textarea style="width: 400px;" class="textarea bz_info" name="content" id="complain_content" ignore="ignore" datatype="*0-300" errormsg="请正确填写范围是10-300个字符"  nullmsg="请输入"></textarea>
-						<p>请填写申诉信息，请不要超过300个汉字！</p>
+						<textarea style="width: 400px;" class="textarea bz_info" name="content" id="complain_content" ignore="ignore" datatype="*4-300" errormsg="请正确填写范围是4-300个字符"  nullmsg="请输入"></textarea>
+						<p>请填写申诉信息，请不要超过30个汉字！</p>
 					</div>
 				</td>
 			  </tr>
@@ -293,8 +293,8 @@ function complainCheck(){
         alert("提交失败，请重试！");
         return false;
     }
-    if(($("#complain_content").val().length < '10') || ($("#complain_content").val().length > 300)){
-        alert("请输入10-30个字符！");
+    if($("#complain_content").val().length < 4  || $("#complain_content").val().length > 300){
+        alert("请输入4-30个字符！");
         return false;
     }
     return true;   
