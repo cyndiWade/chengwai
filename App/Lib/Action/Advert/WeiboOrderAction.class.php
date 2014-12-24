@@ -815,6 +815,25 @@ class WeiboOrderAction extends AdvertBaseAction {
 		}
 		
 	}
+	
+	
+	//获取评论
+	public function get_now_pl_info () {
+		if ($this->isPost()) {
+			$ddid = $this->_post('ddid');	//小订单ID
+			$type = $this->_post('type');	//类型
+			$users_id = $this->oUser->id;	//用户ID
+				
+			$select = array('ddid'=>$ddid,'users_id'=>$this->oUser->id,'type'=>$type);
+			$result = D('Discss')->where($select)->find();
+			if (!empty($result)) {
+				parent::callback(C('STATUS_SUCCESS'),'获取成功!',$result);
+			} else {
+				parent::callback(C('STATUS_NOT_DATA'),'暂无数据!');
+	
+			}
+		}
+	}
 
 	//下单发站内短信 add by bumtime 20141223
 	private function messageOrderAdd($order_id, $account_id, $type=1, $mediaType =1 )

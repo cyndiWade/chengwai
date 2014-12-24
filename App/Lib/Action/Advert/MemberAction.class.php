@@ -110,6 +110,13 @@ class MemberAction extends AdvertBaseAction {
     	$Page       = new Page($all,10);
     	$show       = $Page->show();
     	$list = $Discss->where($map)->limit($Page->firstRow.','.$Page->listRows)->order('id desc')->select();
+    	
+    	if (!empty($list)) {
+    		foreach ($list as $key=>$val) {
+    			$list[$key]['show_pinlun'] = msubstr($val['pinlun'],0,15);
+    		}
+    	}
+    	
     	parent::data_to_view(array(
 				'page' => $show ,
 				'list' => $list,

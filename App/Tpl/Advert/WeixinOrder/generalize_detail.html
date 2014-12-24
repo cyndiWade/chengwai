@@ -331,6 +331,21 @@ $(function(){
 		var _this = $(this);
 		var id = _this.attr('data-order_id');
 		$('input[name="ddid"]').val(id);
+		
+		//获取评论数据
+		var post_data = {};
+		post_data.ddid = id;
+		post_data.type = 2;
+		var result = System.ajax_post_setup('{:U('Advert/News/get_now_pl_info')}',post_data);
+		if (result.status == 0) {
+			$('.pinlun').val(result.data.pinlun);
+			$('#dpStar3').addClass('selectS'+result.data.pinfen);
+			$('#dpCont1').text(result.data.pinfen);
+		} else {
+			$('.pinlun').val('');
+			$('#dpStar3').removeClass();
+		} 
+		
 		$('.jumpTK').show();
 	});
 	var hid = $('.hid');
